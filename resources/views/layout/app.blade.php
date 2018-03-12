@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="{{app()->getLocale()}}">
+  <head>
+    <!-- =====================================================-->
+    <!-- ==================HEAD=============================-->
+    <!-- =====================================================-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Vapulus">
+    <meta name="keywords" content="Vapulus">
+    <!-- =============== APP FAVICON ===============-->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('img/favicon/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('img/favicon/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('img/favicon/manifest.json')}}">
+    <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#22b681">
+    <meta name="msapplication-TileColor" content="#22b681">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#1c5ba8">
+    <!-- =============== APP TITLE ===============-->
+    <title>{{config('app.name')}}</title>
+    <!-- =============== APP STYLES ===============-->
+    <link rel="stylesheet" href="{{asset('css/style__rtl.css')}}">
+    <!-- =============== APP SCRIPT ===============-->
+    <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('js/modernizr.js')}}"></script>
+  </head>
+  <body>
+    <div class="toggled" id="wrapper">
+      <div class="layout_sidebar">
+        <div class="wrapper">
+          <!-- top navbar-->
+          <header class="topnavbar-wrapper">
+            <nav class="top-navbar navbar-expand-lg bgcolor--gray_m color--gray_d bradius--noborder bshadow--1 ">
+              <div class="container-fluid"><span></span>
+                <ul class="actionsbar moile-view hidden-lg hidden-md hidden-sm">
+                  <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i></a>
+                    <ul class="dropdowny-menu" role="menu">
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                      <li><a href="#">
+                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                          <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                            11:00:00AM</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <div class="collapse navbar-collapse nav pull-right bgcolor--gray_m" id="navbarSupportedContent">
+                  <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link   color--gray_d" href=" .html " title=" "> </a></li>
+                  </ul>
+                  <ul class="actionsbar desktop-view hidden-xs">
+                    <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i></a>
+                      <ul class="dropdowny-menu" role="menu">
+                        <li><a href="#">
+                            <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                            <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                              11:00:00AM</span></a></li>
+                        <li><a href="#">
+                            <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                            <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                              11:00:00AM</span></a></li>
+                        <li><a href="#">
+                            <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                            <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                              11:00:00AM</span></a></li>
+                        <li><a href="#">
+                            <div class="icon-container"><i class="fa fa-volume-up"></i></div>
+                            <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
+                              11:00:00AM</span></a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <div class="full-body">
+            <div class="overlay-toggle-up"></div>
+            <!-- sidebar-->
+            <!-- ==============================================================-->
+            <!-- ============================SIDEBAR==============================-->
+            <!-- ==============================================================-->
+            <!-- Sidebar-->
+            <nav class="navbar navbar-fixed-top bgcolor--gray_m bshadow--0 bradius--noborder " id="sidebar-wrapper" role="navigation">
+              <ul class="sidebar-navigation">
+                <li class="brand bgcolor--gray_m bshadow--0"><a href="index.html"> <img src="{{asset('img/logo/logo__dark.png')}}" alt="جسر الأمان"></a></li>
+              </ul>
+              <div class="coverglobal text-center bshadow--2" style="background:#f7f7f7  ;">
+                <button class="hamburger is-closed" type="button" data-toggle="offcanvas"><span class="hamb-top bgcolor--main_d"></span><span class="hamb-middle bgcolor--main_d"></span><span class="hamb-bottom bgcolor--main_d"></span></button>
+                <div class="text-center"><a href="user_profile.html"><img class="coverglobal__avatar bradius--circle" src="{{ asset('img/avaters/male.jpg') }}">
+                    <h3 class="coverglobal__title color--gray_d">George Sam</h3><small class="coverglobal__slogan color--gray_d">Verified</small></a></div>
+              </div>
+              <div class="side">
+                <ul class="side-menu">
+                  <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">البيانات الأساسية</a>
+                    <ul class="side__submenu">
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('issues_types')}}">انواع القضايا</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('governorates_cities')}}">المدن و المحافظات</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('courts_list')}}">اسماء المحاكم</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contracts_formulas_types')}}">انواع الصيغ و العقود</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('consultations_classification')}}">تصنيف الاستشارات</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('about')}}">عن جسر الأمان</a></li>
+                    </ul>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('formulas')}}">العقود و الصيغ</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('users_list')}}">المستخدمين</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('news_list')}}">الاخبار</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">العملاء</a>
+                    <ul class="side__submenu">
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('clients')}}">محتوى</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('notifications')}}">التنبيهات</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('complains')}}">الشكاوى و الاستفسارات</a></li>
+                    </ul>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('lawyers')}}">السادة المحامين</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('legal_consultations')}}">الاستشارات القانونية</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">القضايا و الخدمات</a>
+                    <ul class="side__submenu">
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('issues')}}">القضايا</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('services')}}">الخدمات</a></li>
+                    </ul>
+                  </li>
+                  <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">المهام</a>
+                    <ul class="side__submenu">
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('tasks_normal')}}">المهام العادية</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('tasks_emergency')}}">الحالات الطارئة</a></li>
+                    </ul>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('reports_statistics')}}">تقارير و احصائيات</a>
+                  </li>
+                  <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('records')}}">دفتر المحضرين</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <!-- Page content-->
+            <div class="container-fluid">
+              <!-- =============== Custom Content ===============-->
+              @yield('content')
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+            </div>
+          </div>
+          <!-- Page footer-->
+          <footer>
+            <!-- =====================================================-->
+            <!-- ==================FOOTER=============================-->
+            <!-- =====================================================-->
+            <div class="clear-fix"></div>
+            <div class="footer--1 text-center bgcolor--white color--main bradius--noborder bshadow--3">
+              <p>
+                 بنتافاليو<img src="{{ asset('img/powered.png') }}" alt="pentavalue" height="20">-<a href="http://pentavalue.com/en" target="_blank"></a>جميع الحقوق محفوظة  ©<span class="cp bgcolor--sec color--white bradius--small bshadow--0">جسر الأمان</span>2018</p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!-- =============== APP MAIN SCRIPTS ===============-->
+    <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+        <script type="text/javascript">
+      $(function() {
+        $('input, select').on('change', function(event) {
+          var $element = $(event.target),
+            $container = $element.closest('.example');
+      
+          if (!$element.data('tagsinput'))
+            return;
+      
+          var val = $element.val();
+          if (val === null)
+            val = "null";
+          $('code', $('pre.val', $container)).html( ($.isArray(val) ? JSON.stringify(val) : "\"" + val.replace('"', '\\"') + "\"") );
+          $('code', $('pre.items', $container)).html(JSON.stringify($element.tagsinput('items')));
+        }).trigger('change');
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function($) {
+        $(".knob").knob({
+          change : function (value) {
+            //console.log("change : " + value);
+          },
+          release : function (value) {
+            //console.log(this.$.attr('value'));
+            console.log("release : " + value);
+          },
+          cancel : function () {
+            console.log("cancel : ", this);
+          },
+          /*format : function (value) {
+            return value + '%';
+          },*/
+          draw : function () {
+      
+            // "tron" case
+            if(this.$.data('skin') == 'tron') {
+      
+              this.cursorExt = 0.3;
+      
+              var a = this.arc(this.cv)  // Arc
+                , pa                   // Previous arc
+                , r = 1;
+      
+              this.g.lineWidth = this.lineWidth;
+      
+              if (this.o.displayPrevious) {
+                pa = this.arc(this.v);
+                this.g.beginPath();
+                this.g.strokeStyle = this.pColor;
+                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa.d);
+                this.g.stroke();
+              }
+      
+              this.g.beginPath();
+              this.g.strokeStyle = r ? this.o.fgColor : this.fgColor ;
+              this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, a.s, a.e, a.d);
+              this.g.stroke();
+      
+              this.g.lineWidth = 2;
+              this.g.beginPath();
+              this.g.strokeStyle = this.o.fgColor;
+              this.g.arc( this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false);
+              this.g.stroke();
+      
+              return false;
+            }
+          }
+        });
+      
+        // Example of infinite knob, iPod click wheel
+        var v, up=0,down=0,i=0
+          ,$idir = $("div.idir")
+          ,$ival = $("div.ival")
+          ,incr = function() { i++; $idir.show().html("+").fadeOut(); $ival.html(i); }
+          ,decr = function() { i--; $idir.show().html("-").fadeOut(); $ival.html(i); };
+        $("input.infinite").knob(
+          {
+          min : 0
+          , max : 20
+          , stopper : false
+          , change : function () {
+            if(v > this.cv){
+              if(up){
+                decr();
+                up=0;
+              }else{up=1;down=0;}
+            } else {
+              if(v < this.cv){
+                if(down){
+                  incr();
+                  down=0;
+                }else{down=1;up=0;}
+              }
+            }
+            v = this.cv;
+          }
+        });
+      });
+      
+    </script>
+    <script type="text/javascript">
+      var form = $("#horizontal-pill-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        });
+        
+        
+      var form = $("#horizontal-tabs-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        enableFinishButton: false,
+        enablePagination: false,
+        enableAllSteps: true,
+        titleTemplate: "#title#",
+        cssClass: "tabcontrol"
+        });
+      
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        "use strict";
+      
+        $('.btn-message').click(function(){
+          swal("Here's a message!");
+        });
+      
+        $('.btn-title-text').click(function(){
+          swal("Here's a message!", "It's pretty, isn't it?")
+        });
+      
+        $('.btn-timer').click(function(){
+          swal({
+            title: "Auto close alert!",
+            text: "I will close in 2 seconds.",
+            timer: 2000,
+            showConfirmButton: false
+          });
+        });
+      
+        $('.btn-success').click(function(){
+          swal("Good job!", "You clicked the button!", "success");
+        });
+      
+        $('.btn-warning-confirm').click(function(){
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#4f5c6b',
+            confirmButtonText: 'نعم متأكد',
+            closeOnConfirm: false
+          },
+          function(){
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
+          });
+        });
+      
+        // $('.btn-warning-cancel').click(function(){
+        //   swal({
+        //     title: "هل أنت متأكد؟",
+        //     text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        //     type: "warning",
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#DD6B55',
+        //     confirmButtonText: 'نعم متأكد!',
+        //     cancelButtonText: "إلغاء",
+        //     closeOnConfirm: false,
+        //     closeOnCancel: false
+        //   },
+        //   function(isConfirm){
+        //     if (isConfirm){
+              
+        //       swal("تم الحذف!", "تم الحذف بنجاح", "success");
+        //     } else {
+        //       swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+        //     }
+        //   });
+        // });
+      
+        $('.btn-custom-icon').click(function(){
+          swal({
+            title: "Sweet!",
+            text: "Here's a custom image.",
+            imageUrl: 'img/favicon/apple-touch-icon-152x152.png'
+          });
+        });
+      
+        $('.btn-message-html').click(function(){
+          swal({
+            title: "HTML <small>Title</small>!",
+            text: 'A custom <span style="color:#F8BB86">html<span> message.',
+            html: true
+          });
+        });
+      
+        $('.btn-input').click(function(){
+          swal({
+            title: "An input!",
+            text: 'Write something interesting:',
+            type: 'input',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Write something",
+          },
+          function(inputValue){
+            if (inputValue === false) return false;
+      
+            if (inputValue === "") {
+              swal.showInputError("You need to write something!");
+              return false;
+            }
+      
+            swal("Nice!", 'You wrote: ' + inputValue, "success");
+      
+          });
+        });
+      
+        $('.btn-theme').click(function(){
+          swal({
+            title: "Themes!",
+            text: "Here's the Twitter theme for SweetAlert!",
+            confirmButtonText: "Cool!",
+            customClass: 'twitter'
+          });
+        });
+      
+        $('.btn-ajax').click(function(){
+          swal({
+            title: 'Ajax request example',
+            text: 'Submit to run ajax request',
+            type: 'info',
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+          }, function(){
+            setTimeout(function() {
+              swal('Ajax request finished!');
+            }, 2000);
+          });
+        });
+      
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $.fn.stars = function () {
+        return $(this).each(function () {
+          var rating = $(this).data("rating");
+          var numStars = $(this).data("numStars");
+          var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
+          var halfStar = ((rating % 1) !== 0) ? '<i class="fa fa-star-half-empty"></i>' : '';
+          var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o"></i>');
+          $(this).html(fullStar + halfStar + noStar);
+        });
+      }
+      $('.stars').stars();
+      
+    </script>
+    <script type="text/javascript">
+      var swiper = new Swiper('.slider .swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        autoplay: 2500,
+        keyboardControl: true,
+        loop: true,
+        autoplayDisableOnInteraction: false,
+        mousewheelControl: false,
+      });
+      var swiper = new Swiper('.slidespercolumn .swiper-container', {
+        slidesPerView: 3,
+        slidesPerColumn: 2,
+        paginationClickable: true,
+        spaceBetween: 5,
+        autoplay: 2500,
+        keyboardControl: true,
+        loop: false,
+        autoplayDisableOnInteraction: false,
+        mousewheelControl: false,
+      
+      });
+      
+      var swiper = new Swiper('.slideperview .swiper-container', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 4,
+        paginationClickable: true,
+        spaceBetween: 5,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        autoplay: 2500,
+        keyboardControl: true,
+        loop: true,
+        autoplayDisableOnInteraction: false,
+        mousewheelControl: false,
+      
+      });
+      
+      var galleryTop = new Swiper('.gallery-swiper-slider .gallery-top', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 10,
+        loop:true,
+        loopedSlides: 5,
+        mousewheelControl: false,
+      
+      });
+      var galleryThumbs = new Swiper('.gallery-swiper-slider .gallery-thumbs', {
+        spaceBetween: 10,
+        slidesPerView: 4,
+        touchRatio: 0.2,
+        loop:true,
+        loopedSlides: 5,
+        slideToClickedSlide: true,
+        mousewheelControl: false,
+      
+      });
+      galleryTop.params.control = galleryThumbs;
+      galleryThumbs.params.control = galleryTop;
+      
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        if ( $('html').attr('lang') == 'ar' ) {
+          $(".table-1").DataTable({
+            dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
+            "language": {
+              "search": "dd",
+              "sLengthMenu": "عرض _MENU_  ",
+              search: " البحث _INPUT_",
+              searchPlaceholder: "ابحث فى الجدول"          ,
+      
+              "emptyTable":     "لا توجد بيانات متاحه فى الجدول",
+              "info":           "عرض _START_ إلى _END_ من أصل _TOTAL_ مُدخل",
+              "infoEmpty":      " عرض  0 to 0 of 0 مُدخل",
+              "infoFiltered":   "(filtered from _MAX_ total entries)",
+      
+              "loadingRecords": "جارى التحميل...",
+              "processing":     "جارى المعالجة...",
+              "zeroRecords":    "لا توجد نتائج مطابخة",
+              "paginate": {
+                "first":      "الاول",
+                "last":       "الاخير",
+                "next":       "التالى",
+                "previous":   "السابق"
+              },
+              "aria": {
+                "sortAscending":  ": رتب تصاعدياً",
+                "sortDescending": ": رتب تنازلياً"
+              }
+      
+      
+            }
+          });
+        } else {
+          $(".table-1").DataTable({
+            dom: '   <"row"    <" filterbar" f + <"quick_filter_cont"  > + lr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
+            "language": {
+              "search": "dd",
+              "sLengthMenu": "Entries _MENU_  ",
+              search: " Search _INPUT_",
+              searchPlaceholder: "Search table ..."
+            }
+          });
+        }
+        $('.table-2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+      
+        $(".full-table").each(function() {
+          $(this).find(".filter__btns").appendTo($(this).find(".filter__btns_cont"));
+          $(this).find(".sortingr__btns").appendTo($(this).find(".sortingr__btns_cont"));
+          $(this).find(".bottomActions__btns").appendTo($(this).find(".tableActions__btns_cont"));
+          $(this).find(".quick_filter").appendTo($(this).find(".quick_filter_cont"));
+          $(this).find(".view_options").appendTo($(this).find(".view_options_cont"));
+      
+          });
+      
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        $('.date_range_picker').daterangepicker();
+        $('.date_time_range_picker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+      });
+      
+      $(function () {
+      $('.reservation').daterangepicker();
+      $('.reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        $().bootstrapSwitch && $(".make-switch").bootstrapSwitch();
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        $('.datepicker-popup').pickadate();
+        $('.timepicker-popup').pickatime();
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        $('.datepicker').datepicker({autoclose: true});
+        $(".timepicker").timepicker({showInputs: false});
+      });
+      
+    </script>
+    <script type="text/javascript">
+      $(function () {
+        $(".select2").select2();
+      });
+      
+    </script>
+    <script type="text/javascript">
+      (function(){
+        var options = {};
+        $('.js-uploader__box').uploader(options);
+      }());
+      
+    </script>
+    <script type="text/javascript">
+      $('.tree ul').fadeIn();
+        $(document).on('click', '.tree span', function(e) {
+          $(this).next('ul').fadeToggle();
+          e.stopPropagation();
+        });
+        $(document).on('change', '.tree input[type=checkbox]', function(e) {
+          $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
+          $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
+          e.stopPropagation();
+        });
+    </script>
+    <script type="text/javascript"></script>
+  </body>
+</html>
