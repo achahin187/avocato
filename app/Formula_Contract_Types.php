@@ -12,11 +12,11 @@ class Formula_Contract_Types extends Model
 
         public function parent()
     {
-        return $this->belongsTo('Formula_Contract_Types', 'formula_contract_types_id');
+        return $this->belongsTo('Formula_Contract_Types', 'parent_id');
     }
 
     public function children()
     {
-        return $this->hasMany('Formula_Contract_Types', 'formula_contract_types_id');
+        return $this->hasMany('Formula_Contract_Types', 'parent_id');
     }
 }

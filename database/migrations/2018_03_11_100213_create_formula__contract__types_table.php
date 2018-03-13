@@ -15,7 +15,7 @@ class CreateFormulaContractTypesTable extends Migration
     {
         Schema::create('formula_contract_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('formula_contract_types_id');
+            $table->integer('parent_id');
             $table->string('name');
             $table->timestamps();
         });

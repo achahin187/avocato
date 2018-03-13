@@ -2,17 +2,101 @@
  @section('content')
 
  <script >
-          $(document).ready(function(){
-  $('.btn-warning-cancel').click(function(){
-    alert('dhhdhjd');
-  });
+  $(document).ready(function(){
+    // $('.issue').click(function(){
+    //   alert($(this).attr('data-issue-id'));
+    // });
+
+        $('.btn-warning-cancel').click(function(){
+          var issue_id = $(this).closest('tr').attr('data-issue-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('issues_types_destroy')}}'+'/'+issue_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-issue-id='+issue_id+']').fadeOut();
+               }
+            });
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
         });
 
-   // $('tbody[name="issues"]').on('click', 'tr.issue_number', function(event)
-   //  {
-   //      alert($(this).attr('data-issue-id'));
-   //  }
-   //  );
+        $('.btn-warning-cancel-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-issue-id');
+          }).get();
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('issues_types_destroy_all')}}',
+               data:{ids:selectedIds,_token:_token},
+               success:function(data){
+                $.each( selectedIds, function( key, value ) {
+                  $('tr[data-issue-id='+value+']').fadeOut();
+                });
+               }
+            });
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+        $('.excel-btn').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-issue-id');
+          }).get();
+          $.ajax({
+           type:'GET',
+           url:'{{url('issues_types_excel')}}',
+           data:{ids:selectedIds},
+           success:function(response){
+                    var a = document.createElement("a");
+                    a.href = response.file; 
+                    a.download = response.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+          }
+            });
+        });
+
+
+
+
+  });
+
 
  </script>
 
@@ -35,18 +119,7 @@
                   </div>
                 </div>
                 <div class="col-lg-12">
-                  @if(count($errors) > 0)
-@foreach($errors->all() as $error)
-<div class="alert alert-danger">
-{{$error}}
-</div>
-@endforeach
-@endif
-@if(\session('error'))
-<div class="alert alert-danger">
-{{\session('error')}}
-</div>
-@endif
+
 @if(\session('success'))
 <div class="alert alert-success">
 {{\session('success')}}
@@ -69,7 +142,19 @@
                               <div class="col-sm-12">
                                 <div class="master_field">
                                   <label class="master_label" for="case_type_new">ادخال نوع جديد من انواع القضايا</label>
-                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" name="new_type"><span class="master_message color--fadegreen">message</span>
+                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" name="new_type"><span class="master_message color--fadegreen">
+@if(count($errors) > 0)
+@foreach($errors->all() as $error)
+
+{{$error}}
+
+@endforeach
+@endif
+@if(\session('error'))
+
+{{\session('error')}}
+
+@endif</span>
                                 </div>
                               </div>
                               <div class="clearfix"></div>
@@ -115,7 +200,7 @@
                           <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
                         </div>
                       </div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>

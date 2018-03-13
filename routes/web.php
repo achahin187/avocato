@@ -14,6 +14,9 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
+Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
+Route::post('/issues_types_destroy_all', 'IssuesTypesController@destroy_all')->name('issues_types_destroy_all');
+Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_types_excel');
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 
