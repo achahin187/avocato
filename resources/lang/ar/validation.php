@@ -116,6 +116,11 @@ return [
     |
     */
 
-    'attributes' => ['new_type' => 'نوع جديد'],
+    'attributes' => [
+        'new_type' => 'نوع جديد',
+        'gov_name' => 'إسم المحافظة',
+        'government_name' => 'إسم المحافظة',
+        'city_name'=> 'إسم المدينة'
+    ],
 
 ];

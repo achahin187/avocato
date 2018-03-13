@@ -16,6 +16,9 @@ Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types')
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
+Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
+Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
+Route::delete('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 

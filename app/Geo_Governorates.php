@@ -8,6 +8,7 @@ class Geo_Governorates extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'geo_governorates';
+    protected $fillable = ['name'];
     public $timestamps = true;
 
         public function cities()

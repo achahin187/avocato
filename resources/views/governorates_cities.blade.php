@@ -1,8 +1,9 @@
 @extends('layout.app')
 @section('content')
               <div class="row">
+                {{-- Start cover --}}
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -18,8 +19,126 @@
                     </div>
                   </div>
                 </div>
+                {{-- End cover --}}
+
+                {{-- Start alert messages --}}
+                <div class="col-lg-12">
+                  @if (Session::has('success'))
+                    <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+                  @endif
+                </div>
+                {{-- End alert --}}
+
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    <div class="col-md-2 col-sm-3 colxs-12 pull-right">
+
+                      {{-- Start Add button --}}
+                      <a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1">
+                        <i class="fa fa-plus"></i><span>إضافة</span>
+                      </a>
+                      {{-- End add button --}}
+                      
+                      <div class="remodal-bg"></div>
+
+                      {{-- Start Add modal forms --}}
+                      <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                          <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                          <div>
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <h3>إضافة</h3>
+                                <div class="tabs--wrapper">
+                                  <div class="clearfix"></div>
+                                  <ul class="tabs">
+                                    <li>المحافظات </li>
+                                    <li>المدن</li>
+                                  </ul>
+                                  <ul class="tab__content">
+
+                                  {{-- Start Add government form --}}
+                                  <li class="tab__content_item active" id="right_form">
+                                    <form action="{{ route('governoratesCities.addGovernment') }}" method="POST">
+                                      {{-- Cross Site Request Forgery field --}}
+                                      {{ csrf_field() }}
+                                        <div class="col-xs-12">        
+                                          <div class="master_field">
+                                            <label class="master_label mandatory" for="gov2">اسم المحافظة</label>
+                                            <input name="gov_name" class="master_input" type="text" placeholder="اسم المحافظة" id="gov2" value="{{ old('gov_name') }}" required>
+
+                                            {{-- Error message --}}
+                                            @if ($errors->has('gov_name'))
+                                              <span class="master_message color--fadegreen">{{ $errors->first('gov_name') }}</span>
+                                            @endif
+                                            
+                                          </div>
+                                        </div>
+                                      
+                                      <br>
+                                      <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                      <button type="submit" class="remodal-confirm">حفظ</button>
+                                    </form>
+                                  </li>
+                                  {{-- End Add government form --}}
+
+                                    {{-- Start Add cities "المدن" --}}
+                                    <li class="tab__content_item {{ ($errors->has('government_name') || $errors->has('city_name')) ? 'active' : '' }}" id="left_form">
+                                      <form action="{{ route('governoratesCities.addCity') }}" method="POST">
+                                        {{ csrf_field() }}
+
+                                        <div class="col-lg-12">
+                                        <div class="master_field">
+
+                                          {{-- Government name --}}
+                                          <label class="master_label mandatory" for="gov3">المحافظة </label>
+                                          <select name="government_id" class="master_input select2" id="gov3" style="width:100%;">
+                                            
+                                            @foreach ($governments as $government)
+                                              <option value="{{ $government->id }}">{{ $government->name }}</option>
+                                            @endforeach
+                                            
+                                          </select><span class="master_message color--fadegreen">
+                                            {{-- Error message --}}
+                                            @if ($errors->has('government_id'))
+                                              {{ $errors->first('government_id') }}
+                                            @endif
+                                          </span>
+                                        </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                          <div class="master_field">
+
+                                            {{-- City name --}}
+                                            <label class="master_label mandatory" for="city3">اسم المدينة</label>
+                                            <input name="city_name" class="master_input" type="text" placeholder="اسم المدينة" id="city3" value="{{ old('city_name') }}" required>
+                                            
+                                            <span class="master_message color--fadegreen">
+                                              {{-- Error message --}}
+                                              @if ($errors->has('city_name'))
+                                                <span class="master_message color--fadegreen">{{ $errors->first('city_name') }}</span>
+                                              @endif
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6 col-xs-12">
+                                          <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><span>حفظ واضافة المزيد</span>
+                                          </button>
+                                        </div>
+                                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                        <button type="submit" class="remodal-confirm">حفظ</button>
+                                      </form>
+                                    </li>
+                                    {{-- End Modal left side --}}
+                                  </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      {{-- End add modal forms --}}
+
+                    </div>
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -50,8 +169,15 @@
                           <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
                         </div>
                       </div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
+
+                      {{-- Buttons - extract excel & delete --}}
+                      <div class="bottomActions__btns">
+                        <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                        <a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
+                      {{-- End buttons --}}
+
+                      {{-- Start cities, government and procedures table --}}
                       <table class="table-1">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
@@ -62,80 +188,26 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">اسم المدينة</span></td>
-                            <td><span class="cellcontent">اسم المحافظة</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          
+                          @foreach ($cities as $city)
+                            <tr data-city="{{ $city->id }}">
+                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                              <td><span class="cellcontent">{{ $city->name }}</span></td>
+                              <td><span class="cellcontent">{{ $city->governorate->name }}</span></td>
+                              <td>
+                                <span class="cellcontent"> 
+                                  <button id="deleteRecord" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" data-id="{{ $city->id }}">
+                                    <i class="fa fa-trash-o"></i>
+                                  </button>
+                                </span>
+                              </td>
+                            </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
+                      {{-- End table --}}
+
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
@@ -294,63 +366,53 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-plus"></i><span>إضافة</span></a>
-                      <div class="remodal-bg"></div>
-                      <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                        <div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h3>إضافة</h3>
-                              <div class="tabs--wrapper">
-                                <div class="clearfix"></div>
-                                <ul class="tabs">
-                                  <li>المحافظات </li>
-                                  <li>المدن</li>
-                                </ul>
-                                <ul class="tab__content">
-                                  <li class="tab__content_item active">
-                                    <div class="col-xs-12">
-                                      <div class="master_field">
-                                        <label class="master_label mandatory" for="gov2">اسم المحافظة</label>
-                                        <input class="master_input" type="text" placeholder="اسم المحافظة" id="gov2"><span class="master_message color--fadegreen">message</span>
-                                      </div>
-                                    </div>
-                                  </li>
-                                  <li class="tab__content_item">
-                                    <div class="col-lg-12">
-                                      <div class="master_field">
-                                        <label class="master_label mandatory" for="gov3">المحافظة </label>
-                                        <select class="master_input select2" id="gov3" style="width:100%;">
-                                          <option>القاهرة</option>
-                                          <option>الأسكندرية</option>
-                                          <option>أسوان</option>
-                                        </select><span class="master_message color--fadegreen">message</span>
-                                      </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                      <div class="master_field">
-                                        <label class="master_label mandatory" for="city3">اسم المدينة</label>
-                                        <input class="master_input" type="text" placeholder="اسم المدينة" id="city3"><span class="master_message color--fadegreen">message</span>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                      <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadeblue bradius--small bshadow--0" type="submit"><span>حفظ واضافة المزيد</span>
-                                      </button>
-                                    </div>
-                                  </li>
-                                </ul>
-                              </div>
-                              <div class="clearfix"></div>
-                            </div>
-                          </div>
-                        </div><br>
-                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                      </div>
-                    </div>
                     <div class="clearfix"></div>
                   </div>
                 </div>
               </div>
+
+              <script>
+                $('.btn-warning-cancel').click(function(){
+                  
+                  var id = $(this).data("id");
+                  var token = '{{ csrf_token() }}';
+
+                  swal({
+                    title: "هل أنت متأكد؟",
+                    text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'نعم متأكد!',
+                    cancelButtonText: "إلغاء",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                  },
+                  function(isConfirm){
+                    if (isConfirm){
+                          $.ajax(
+                          {
+                              url: "/governorates_cities/destroy/"+id,
+                              type: 'DELETE',
+                              dataType: "JSON",
+                              data: {
+                                  "id": id,
+                                  "_method": 'DELETE',
+                                  "_token": token,
+                              },
+                              success: function ()
+                              {
+                                  swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                                  $('tr[data-city='+id+']').fadeOut();
+                              }
+                          });
+                      
+                    } else {
+                      swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+                    }
+                  });
+                });
+
+                
+              </script>
 @endsection

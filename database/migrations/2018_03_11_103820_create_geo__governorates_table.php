@@ -15,7 +15,7 @@ class CreateGeoGovernoratesTable extends Migration
     {
         Schema::create('geo_governorates', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
