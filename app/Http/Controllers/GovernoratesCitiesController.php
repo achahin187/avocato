@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Session;
 use Validator;
+use Excel;
 
 use App\Geo_Cities;
 use App\Geo_Governorates;
@@ -18,7 +19,8 @@ class GovernoratesCitiesController extends Controller
      */
     public function index()
     {
-        return view('governorates_cities')->with('cities', Geo_Cities::paginate(10))
+        // return all cities and governments
+        return view('governorates_cities')->with('cities', Geo_Cities::all())
                                         ->with('governments', Geo_Governorates::all());
     }
 
@@ -57,7 +59,7 @@ class GovernoratesCitiesController extends Controller
             'name' => $request->gov_name
         ]);
 
-        // redirect back
+        // redirect back with flash message
         Session::flash('success', 'تم إضافة المحافظة بنجاح');
         return redirect('/governorates_cities');
     }
@@ -89,7 +91,7 @@ class GovernoratesCitiesController extends Controller
             'name'           => $request->city_name
         ]);
 
-        // redirect back
+        // redirect back with flash message
         Session::flash('success', 'تم إضافة المدينة بنجاح');
         return redirect('/governorates_cities');
     }
@@ -143,5 +145,43 @@ class GovernoratesCitiesController extends Controller
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
+    }
+
+    /**
+     * Delete selected rows
+     */
+    public function destroySelected(Request $request) 
+    {
+        // get cities IDs from AJAX
+        $ids = $request->ids;
+
+        // transform $ids into array values then search and delete
+        Geo_Cities::whereIn('id', explode(",", $ids))->delete();
+        return response()->json([
+            'success' => 'Records deleted successfully!'
+        ]);
+    }
+
+    // export Excel sheets
+    public function exportXLS(Request $request)
+    {
+        $table = ['المدينة', 'المحافظة'];
+        $ids = $request->ids;
+        $data = Geo_Cities::whereIn('id', explode(",", $ids))->get()->toArray();
+        // dd($data);
+        $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
+            $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
+                $sheet->setRightToLeft(true);
+                $sheet->fromArray($data, null, 'A1', true, false);
+            });
+        });
+
+        $myFile = $myFile->string('xlsx');
+        $response = array(
+            'name' => 'المدن والمحافظات',
+            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 }
