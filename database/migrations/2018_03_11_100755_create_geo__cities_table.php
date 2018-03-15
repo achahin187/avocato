@@ -16,7 +16,7 @@ class CreateGeoCitiesTable extends Migration
         Schema::create('geo_cities', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('governorate_id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

@@ -19,6 +19,11 @@ Route::post('/issues_types_destroy_all', 'IssuesTypesController@destroy_all')->n
 Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_types_excel');
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
+Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
+Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
+Route::delete('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
+Route::delete('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
+Route::post('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 Route::get('/courts_get_city', 'CourtsListController@getCity')->name('courts_get_city');

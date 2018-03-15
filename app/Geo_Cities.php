@@ -8,6 +8,8 @@ class Geo_Cities extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'geo_cities';
+    protected $fillable = ['governorate_id', 'name'];
+    protected $hidden = ['id', 'created_at', 'updated_at'];
     public $timestamps = true;
 
         public function governorate()
