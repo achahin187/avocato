@@ -176,11 +176,12 @@ class GovernoratesCitiesController extends Controller
 
         $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
             $excel->setTitle('المدن والمحافظات');
-                // Chain the setters
-                $excel->setCreator('جسر الامان')
-                ->setCompany('جسر الامان');
-                // Call them separately
-                $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
+            // Chain the setters
+            $excel->setCreator('جسر الامان')
+            ->setCompany('جسر الامان');
+            // Call them separately
+            $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
+
             $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
                 $sheet->setRightToLeft(true);
                 $sheet->getStyle('A1:B1')->getFont()->setBold(true);
