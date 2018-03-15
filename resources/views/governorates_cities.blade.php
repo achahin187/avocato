@@ -512,7 +512,7 @@
           swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
           var a = document.createElement("a");
           a.href = response.file; 
-          a.download = response.name;
+          a.download = response.name+".xlsx";
           document.body.appendChild(a);
           a.click();
           a.remove();
