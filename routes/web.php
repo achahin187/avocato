@@ -21,8 +21,19 @@ Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_t
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
+Route::get('/courts_get_city', 'CourtsListController@getCity')->name('courts_get_city');
+Route::post('/courts_list_store', 'CourtsListController@store')->name('courts_list_store');
+Route::post('/courts_list_destroy/{id}', 'CourtsListController@destroy')->name('courts_list_destroy');
+Route::post('/courts_list_destroy_all', 'CourtsListController@destroy_all')->name('courts_list_destroy_all');
+Route::get('/courts_list_excel', 'CourtsListController@excel')->name('courts_list_excel');
 
 Route::get('/contracts_formulas_types', 'ContractsFormulasTypesController@index')->name('contracts_formulas_types');
+Route::post('/contracts_formulas_types_store', 'ContractsFormulasTypesController@store')->name('contracts_formulas_types_store');
+Route::post('/contracts_formulas_types_store_sub', 'ContractsFormulasTypesController@store_sub')->name('contracts_formulas_types_store_sub');
+Route::post('/contracts_formulas_types_destroy/{id}', 'ContractsFormulasTypesController@destroy')->name('contracts_formulas_types_destroy');
+Route::post('/contracts_formulas_types_destroy_all', 'ContractsFormulasTypesController@destroy_all')->name('contracts_formulas_types_destroy_all');
+Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@excel')->name('contracts_formulas_types_excel');
+
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');

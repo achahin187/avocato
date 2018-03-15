@@ -8,7 +8,7 @@
     // });
 
         $('.btn-warning-cancel').click(function(){
-          var issue_id = $(this).closest('tr').attr('data-issue-id');
+          var issue_id = $(this).closest('tr').attr('data-court-id');
           var _token = '{{csrf_token()}}';
           swal({
             title: "هل أنت متأكد؟",
@@ -84,7 +84,7 @@
            success:function(response){
                     var a = document.createElement("a");
                     a.href = response.file; 
-                    a.download = response.name;
+                    a.download = response.name+'.xlsx';
                     document.body.appendChild(a);
                     a.click();
                     a.remove();

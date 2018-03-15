@@ -38,7 +38,6 @@ class IssuesTypesController extends Controller
            foreach($ids as $id)
            {
             $typesArray[] = collect(Cases_Types::find($id,['id','name']))->toArray();
-
         }    
     }
         else{
@@ -56,10 +55,11 @@ class IssuesTypesController extends Controller
             $excel->setCreator('PentaValue')
             ->setCompany('PentaValue');
                     // Call them separately
-            $excel->setDescription('بيانات ما تم اتختياره من جدول أنواع القضايا');
+            $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
 
             $excel->sheet('أنواع القضايا', function($sheet) use($typesArray) {
                 $sheet->setRightToLeft(true); 
+                $sheet->getStyle( "A1:B1" )->getFont()->setBold( true );
                 // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
                 // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
                 // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
