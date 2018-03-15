@@ -165,14 +165,20 @@ class GovernoratesCitiesController extends Controller
     // export Excel sheets
     public function exportXLS(Request $request)
     {
-        $table = ['المدينة', 'المحافظة'];
-        $ids = $request->ids;
-        $data = Geo_Cities::whereIn('id', explode(",", $ids))->get()->toArray();
-        // dd($data);
+        $data = array(['المدينة', 'المحافظة']);
+        $ids = explode(",", $request->ids);
+        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
+
+        foreach($ids as $id) {
+            $d =  Geo_Cities::find($id);
+            array_push( $data, [$d->name, $d->governorate->name]);
+        }
+
         $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
             $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
                 $sheet->setRightToLeft(true);
-                $sheet->fromArray($data, null, 'A1', true, false);
+                $sheet->getStyle('A1:B1')->getFont()->setBold(true);
+                $sheet->fromArray($data, null, 'A1', false, false);
             });
         });
 
