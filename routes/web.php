@@ -22,7 +22,6 @@ Route::delete('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController
 Route::delete('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
 Route::post('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
 
-
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 
 Route::get('/contracts_formulas_types', 'ContractsFormulasTypesController@index')->name('contracts_formulas_types');

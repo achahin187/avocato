@@ -184,10 +184,11 @@ class GovernoratesCitiesController extends Controller
 
         $myFile = $myFile->string('xlsx');
         $response = array(
-            'name' => 'المدن والمحافظات',
+            'name' => 'المدن والمحافظات'.date('Y_m_d'),
             'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
         );
 
         return response()->json($response);
     }
+
 }
