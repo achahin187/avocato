@@ -8,6 +8,6 @@ class Fixed_Pages extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'fixed_pages';
-    protected $fillable = ['content'];
+    protected $fillable = ['name', 'content'];
     public $timestamps = true;
 }

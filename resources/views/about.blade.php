@@ -23,7 +23,7 @@
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="col-lg-12">
         
-        @if ($about->content)
+        @if (isset($about->content) && $about->content != null)
           {!! $about->content !!}
         @else
           لا يوجد معلومات كافية!

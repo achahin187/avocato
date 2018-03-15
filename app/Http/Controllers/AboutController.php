@@ -77,8 +77,16 @@ class AboutController extends Controller
         ]);
 
         // edit info
-        $edit = Fixed_Pages::where('name', 'about')->update(['name' => 'about', 'content' => $request->about]);
+        $edit = Fixed_Pages::where('name', 'about')->first();
 
+        if($edit == null) {
+            Fixed_Pages::create([
+                'name' => 'about',
+                'content' => $request->about
+            ]);
+        } else {
+            $edit->update(['name' => 'about', 'content' => $request->about]);
+        }
         // redirect back
         return redirect('about');
     }

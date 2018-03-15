@@ -33,7 +33,7 @@
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="about" id="article-ckeditor" cols="30" rows="10">{!! $about->content !!}</textarea>
+              <textarea name="about" id="article-ckeditor" cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
 
           </div>
           <hr>
