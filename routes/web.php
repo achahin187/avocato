@@ -47,6 +47,7 @@ Route::post('/consultations_classification/exportXLS', 'ConsultationsClassificat
 
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
+Route::patch('/about_edit', 'AboutController@update')->name('about.update');
 
 Route::get('/formulas', 'FormulasController@index')->name('formulas');
 Route::get('/formulas_create', 'FormulasController@create')->name('formulas_create');

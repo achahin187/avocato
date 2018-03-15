@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+
+use App\Fixed_Pages;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -13,7 +16,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('about');
+        return view('about')->with('about', Fixed_Pages::where('name', 'about')->first());
     }
 
     /**
@@ -56,7 +59,7 @@ class AboutController extends Controller
      */
     public function edit()
     {
-        return view('about_edit');
+        return view('about_edit')->with('about', Fixed_Pages::where('name', 'about')->first());
     }
 
     /**
@@ -66,9 +69,18 @@ class AboutController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // validate
+        $this->validate($request, [
+            'about' => 'required'
+        ]);
+
+        // edit info
+        $edit = Fixed_Pages::where('name', 'about')->update(['name' => 'about', 'content' => $request->about]);
+
+        // redirect back
+        return redirect('about');
     }
 
     /**
