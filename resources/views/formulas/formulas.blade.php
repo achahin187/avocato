@@ -1,6 +1,99 @@
 @extends('layout.app')
 @section('content')
+<script>
+  $(document).ready(function(){
 
+
+
+        $('.btn-warning-cancel').click(function(){
+          var contract_id = $(this).closest('tr').attr('data-contract-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('formulas_destroy')}}'+'/'+contract_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-contract-id='+contract_id+']').fadeOut();
+               }
+            });
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+
+                $('.btn-warning-cancel-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-contract-id');
+          }).get();
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('formulas_destroy_all')}}',
+               data:{ids:selectedIds,_token:_token},
+               success:function(data){
+                $.each( selectedIds, function( key, value ) {
+                  $('tr[data-contract-id='+value+']').fadeOut();
+                });
+               }
+            });
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+        $('.excel-btn').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-contract-id');
+          }).get();
+          $.ajax({
+           type:'GET',
+           url:'{{url('formulas_excel')}}',
+           data:{ids:selectedIds},
+           success:function(response){
+                    var a = document.createElement("a");
+                    a.href = response.file; 
+                    a.download = response.name+'.xlsx';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+          }
+            });
+        });
+
+
+      });
+</script>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
@@ -18,6 +111,11 @@
                   </div>
                 </div>
                 <div class="col-lg-12">
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg">
@@ -66,7 +164,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -80,102 +178,16 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          @foreach($contracts as $contract)
+                          <tr data-contract-id="{{$contract->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">{{$contract->name}}</span></td>
+                            <td><span class="cellcontent">{{$contract->sub->parent->name}}</span></td>
+                            <td><span class="cellcontent">{{$contract->sub->name}}</span></td>
+                            <td><span class="cellcontent">{{$contract->created_at}}</span></td>
+                            <td><span class="cellcontent"><a href= "{{route('formulas_edit',$contract->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">صيغ رقم</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">اسم تصنيف</span></td>
-                            <td><span class="cellcontent">10-10-الإضافة</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('formulas_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

@@ -18,4 +18,9 @@ class Formula_Contract_Types extends Model
     {
         return $this->hasMany('App\Formula_Contract_Types', 'parent_id');
     }
+
+        public function formula_contracts()
+    {
+        return $this->hasMany('App\Formula_Contracts','formula_contract_types_id');
+    }
 }
