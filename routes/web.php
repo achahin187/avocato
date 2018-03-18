@@ -61,6 +61,7 @@ Route::get('/users_list_edit', 'UsersListController@edit')->name('users_list_edi
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
 Route::get('/news_list_show', 'NewsListController@show')->name('news_list_show');
 Route::get('/news_list_create', 'NewsListController@create')->name('news_list_create');
+Route::post('/news_list_create', 'NewsListController@store')->name('news_store');
 Route::get('/news_list_edit', 'NewsListController@edit')->name('news_list_edit');
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
