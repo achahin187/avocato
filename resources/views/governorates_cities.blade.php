@@ -408,7 +408,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/governorates_cities/destroySelected",
+                  url: "{{ route('governorates_cities.destroySelected') }}",
                   type: 'DELETE',
                   dataType: "JSON",
                   data: {
@@ -455,7 +455,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/governorates_cities/destroy/"+id,
+                  url: "{{ url('/governorates_cities/destroy') }}" +"/"+ id,
                   type: 'DELETE',
                   dataType: "JSON",
                   data: {
@@ -499,7 +499,7 @@
       $.ajax(
       {
         cache: false,
-        url: "/governorates_cities/exportXLS",
+        url: "{{ route('governorates_cities.exportXLS') }}",
         type: 'POST',
         dataType: "JSON",
         data: {

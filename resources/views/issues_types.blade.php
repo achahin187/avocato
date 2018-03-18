@@ -8,7 +8,7 @@
     // });
 
         $('.btn-warning-cancel').click(function(){
-          var issue_id = $(this).closest('tr').attr('data-court-id');
+          var issue_id = $(this).closest('tr').attr('data-issue-id');
           var _token = '{{csrf_token()}}';
           swal({
             title: "هل أنت متأكد؟",
