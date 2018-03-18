@@ -102,12 +102,11 @@ class CourtsListController extends Controller
      */
     public function store(Request $request)
     {
-        $tab="tab";
         $validator = Validator::make($request->all(), [
             'court'=>'required',
             'govs'=>'required',
             'cities'=>'required',
-        ],$tab);
+        ]);
 
         if ($validator->fails()) {
             return redirect('courts_list#popupModal_1')
