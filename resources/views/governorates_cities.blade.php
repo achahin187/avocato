@@ -3,7 +3,7 @@
   <div class="row">
     {{-- Start cover --}}
     <div class="col-lg-12">
-      <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+      <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{ asset('img/covers/dummy2.jpg') }}' ) no-repeat center center; background-size:cover;">
         <div class="row">
           <div class="col-xs-12">
             <div class="text-xs-center">
@@ -121,7 +121,7 @@
                               </div>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12">
-                              <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><span>حفظ واضافة المزيد</span>
+                              <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit" value="addMore" name="addMore"><span>حفظ واضافة المزيد</span>
                               </button>
                             </div>
                             <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>

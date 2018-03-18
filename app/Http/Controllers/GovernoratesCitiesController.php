@@ -93,6 +93,11 @@ class GovernoratesCitiesController extends Controller
 
         // redirect back with flash message
         Session::flash('success', 'تم إضافة المدينة بنجاح');
+
+        if($request->addMore != null) {
+            return redirect('/governorates_cities#popupModal_1')->withErrors(['government_id' => 'اضف المزيد', 'city_name' => 'اضف المزيد']);
+        }
+
         return redirect('/governorates_cities');
     }
 
@@ -180,7 +185,7 @@ class GovernoratesCitiesController extends Controller
             $excel->setCreator('جسر الامان')
             ->setCompany('جسر الامان');
             // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
+            $excel->setDescription('بيانات ما تم اختياره من جدول المحافظات والمدن');
 
             $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
                 $sheet->setRightToLeft(true);

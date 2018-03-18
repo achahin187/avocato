@@ -40,8 +40,14 @@ Route::post('/contracts_formulas_types_destroy_all', 'ContractsFormulasTypesCont
 Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@excel')->name('contracts_formulas_types_excel');
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
+Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
+Route::delete('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
+Route::delete('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.deleteSelected');
+Route::post('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
+
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
+Route::patch('/about_edit', 'AboutController@update')->name('about.update');
 
 Route::get('/formulas', 'FormulasController@index')->name('formulas');
 Route::get('/formulas_create', 'FormulasController@create')->name('formulas_create');

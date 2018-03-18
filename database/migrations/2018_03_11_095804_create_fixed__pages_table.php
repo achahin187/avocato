@@ -16,7 +16,7 @@ class CreateFixedPagesTable extends Migration
         Schema::create('fixed_pages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
         });
     }
