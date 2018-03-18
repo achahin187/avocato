@@ -45,7 +45,13 @@ Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 
 Route::get('/formulas', 'FormulasController@index')->name('formulas');
 Route::get('/formulas_create', 'FormulasController@create')->name('formulas_create');
-Route::get('/formulas_edit', 'FormulasController@edit')->name('formulas_edit');
+Route::get('/formulas_get_sub', 'FormulasController@getSub')->name('formulas_get_sub');
+Route::post('/formulas_store', 'FormulasController@store')->name('formulas_store');
+Route::get('/formulas_edit/{id}', 'FormulasController@edit')->name('formulas_edit');
+Route::post('/formulas_update/{id}', 'FormulasController@update')->name('formulas_update');
+Route::post('/formulas_destroy/{id}', 'FormulasController@destroy')->name('formulas_destroy');
+Route::post('/formulas_destroy_all', 'FormulasController@destroy_all')->name('formulas_destroy_all');
+Route::get('/formulas_excel', 'FormulasController@excel')->name('formulas_excel');
 
 Route::get('/users_list', 'UsersListController@index')->name('users_list');
 Route::get('/user_profile', 'UsersListController@show')->name('user_profile');
