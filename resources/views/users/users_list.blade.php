@@ -1,9 +1,10 @@
  @extends('layout.app')             
  @section('content')
 
+
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -12,7 +13,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_create')}}">اضافة مستخدم </a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="users_list_add.html">اضافة مستخدم </a>
                       </div>
                     </div>
                   </div>
@@ -21,7 +22,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_client_list"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
                       <div class="remodal" data-remodal-id="filterModal_client_list" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -100,7 +101,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -112,7 +113,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -124,7 +125,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -136,7 +137,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -148,7 +149,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -160,7 +161,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -172,7 +173,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -184,7 +185,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -196,7 +197,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -208,7 +209,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -220,7 +221,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -232,7 +233,7 @@
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             <td><span class="cellcontent">09-2015</span></td>
                             <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('user_profile')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -397,5 +398,6 @@
                   </div>
                 </div>
               </div>
+            
 
  @endsection
