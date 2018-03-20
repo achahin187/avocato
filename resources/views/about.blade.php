@@ -22,7 +22,7 @@
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="col-lg-12">
-        
+        <h2>{{ $about->name }}</h2>
         @if (isset($about->content) && $about->content != null)
           {!! $about->content !!}
         @else

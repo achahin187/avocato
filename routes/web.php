@@ -78,10 +78,11 @@ Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
 
-Route::get('/individuals', 'IndividualsController@index')->name('individuals');
-Route::get('/individuals_show', 'IndividualsController@show')->name('individuals_show');
-Route::get('/individuals_create', 'IndividualsController@create')->name('individuals_create');
-Route::get('/individuals_edit', 'IndividualsController@edit')->name('individuals_edit');
+Route::get('/individuals', 'IndividualsController@index')->name('ind');
+Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
+Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
+Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
+Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind,edit');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies_show');

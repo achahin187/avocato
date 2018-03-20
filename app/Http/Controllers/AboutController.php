@@ -16,7 +16,7 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('about')->with('about', Fixed_Pages::where('name', 'about')->first());
+        return view('about')->with('about', Fixed_Pages::where('id', 1)->first());
     }
 
     /**
@@ -59,7 +59,7 @@ class AboutController extends Controller
      */
     public function edit()
     {
-        return view('about_edit')->with('about', Fixed_Pages::where('name', 'about')->first());
+        return view('about_edit')->with('about', Fixed_Pages::where('id', 1)->first());
     }
 
     /**
@@ -77,15 +77,15 @@ class AboutController extends Controller
         ]);
 
         // edit info
-        $edit = Fixed_Pages::where('name', 'about')->first();
+        $edit = Fixed_Pages::where('id', 1)->first();
 
         if($edit == null) {
             Fixed_Pages::create([
-                'name' => 'about',
+                'name' => 'من نحن',
                 'content' => $request->about
             ]);
         } else {
-            $edit->update(['name' => 'about', 'content' => $request->about]);
+            $edit->update(['name' => 'من نحن', 'content' => $request->about]);
         }
         // redirect back
         return redirect('about');
