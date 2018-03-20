@@ -16,6 +16,7 @@ class CreateFormulaContractsTable extends Migration
         Schema::create('formula_contracts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('formula_contract_types_id');
+            $table->tinyInteger('is_contract')->comment('0:formula 1:contract');
             $table->string('name');
             $table->string('file');
             $table->timestamps();

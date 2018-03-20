@@ -60,6 +60,19 @@ true).find("option[value]").remove();
                   @endif
                 <form role="form" action="{{route('formulas_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                   {{csrf_field()}}
+                  <div class="container" >
+                    <label class="master_label mandatory" for="is_contract">النوع</label>
+                   <div class="radio">
+                    <label><input type="radio" value="1" name="is_contract" >عقد</label>
+                  </div>
+                  <div class="radio">
+                    <label><input type="radio" value="0" name="is_contract">صيغه</label>
+                  </div>
+                  <span class="master_message color--fadegreen">
+                                    @if ($errors->has('is_contract'))
+                                    {{ $errors->first('is_contract')}}
+                                    @endif</span>
+                </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-xs-6">
                       <div class="master_field">

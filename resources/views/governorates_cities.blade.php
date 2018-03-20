@@ -499,7 +499,7 @@
       $.ajax(
       {
         cache: false,
-        url: "/governorates_cities/exportXLS",
+        url:'{{route('governorates_cities.exportXLS')}}',
         type: 'POST',
         dataType: "JSON",
         data: {

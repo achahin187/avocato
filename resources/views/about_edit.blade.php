@@ -51,9 +51,10 @@
     </div>
   </div>
 
-  <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+  <script src="{{url('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
   <script>
+     $(document).ready(function(){
       CKEDITOR.replace( 'article-ckeditor' );
-      
+            });
   </script>
 @endsection

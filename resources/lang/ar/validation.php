@@ -56,7 +56,7 @@ return [
         'string'  => 'The :attribute may not be greater than :max characters.',
         'array'   => 'The :attribute may not have more than :max items.',
     ],
-    'mimes'                => 'The :attribute must be a file of type: :values.',
+    'mimes'                => 'حقل :attribute يجب أن يكون نوع: :values.',
     'mimetypes'            => 'The :attribute must be a file of type: :values.',
     'min'                  => [
         'numeric' => 'The :attribute must be at least :min.',
@@ -132,6 +132,7 @@ return [
         'contract_name'=>'اسم العقد',
         'image'=>'الصوره',
         'file'=>'الملف',
+        'is_contract'=>'الصيغه أو العقد',
 
     ],
 
