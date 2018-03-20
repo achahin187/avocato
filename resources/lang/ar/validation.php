@@ -132,6 +132,10 @@ return [
         'contract_name'=>'اسم العقد',
         'image'=>'الصوره',
         'file'=>'الملف',
+        'newsName'  => 'عنوان الاخبار',
+        'newsContent' => 'تفاصيل الخبر',
+        'start_date'  => 'تاريخ النشر من',
+        'end_date'    => 'تاريخ النشر الي'
 
     ],
 

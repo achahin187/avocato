@@ -377,7 +377,8 @@
 
   <script>
 
-    // Delete selected checkboxes
+$(document).ready(function() {
+   // Delete selected checkboxes
     $('#deleteSelected').click(function(){
       var allVals = [];                   // selected IDs
       var token = '{{ csrf_token() }}';
@@ -523,5 +524,6 @@
       });
 
     });
+});
   </script>
 @endsection

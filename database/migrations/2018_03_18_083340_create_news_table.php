@@ -17,11 +17,11 @@ class CreateNewsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('body');
-            $table->string('photo')->default(null);
+            $table->string('photo')->nullable();
             $table->boolean('is_active')->default(0);
-            $table->dateTime('published_at')->default(null);
+            $table->dateTime('published_at')->nullable();
             $table->string('created_by');
-            $table->string('modified_by')->default(null);
+            $table->string('modified_by')->nullable();
             $table->timestamps();
         });
     }
