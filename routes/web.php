@@ -67,10 +67,16 @@ Route::get('/users_list_create', 'UsersListController@create')->name('users_list
 Route::get('/users_list_edit', 'UsersListController@edit')->name('users_list_edit');
 
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
-Route::get('/news_list_show', 'NewsListController@show')->name('news_list_show');
+Route::post('/news_list', 'NewsListController@filter')->name('news.filter');
+Route::get('/news_list_show/{id}', 'NewsListController@show')->name('news.view');
 Route::get('/news_list_create', 'NewsListController@create')->name('news_list_create');
-Route::post('/news_list_create', 'NewsListController@store')->name('news_store');
-Route::get('/news_list_edit', 'NewsListController@edit')->name('news_list_edit');
+Route::post('/news_list_create', 'NewsListController@store')->name('news.store');
+Route::get('/news_list_edit/{id}', 'NewsListController@edit')->name('news.edit');
+Route::post('/news_list_update/{id}', 'NewsListController@update')->name('news.update');
+Route::delete('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_destroy');
+Route::delete('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
+Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
+
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
 

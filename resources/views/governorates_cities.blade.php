@@ -377,7 +377,8 @@
 
   <script>
 
-    // Delete selected checkboxes
+$(document).ready(function() {
+   // Delete selected checkboxes
     $('#deleteSelected').click(function(){
       var allVals = [];                   // selected IDs
       var token = '{{ csrf_token() }}';
@@ -408,7 +409,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/governorates_cities/destroySelected",
+                  url: "{{ route('governorates_cities.destroySelected') }}",
                   type: 'DELETE',
                   dataType: "JSON",
                   data: {
@@ -455,7 +456,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/governorates_cities/destroy/"+id,
+                  url: "{{ url('/governorates_cities/destroy') }}" +"/"+ id,
                   type: 'DELETE',
                   dataType: "JSON",
                   data: {
@@ -499,7 +500,11 @@
       $.ajax(
       {
         cache: false,
+<<<<<<< HEAD
         url:'{{route('governorates_cities.exportXLS')}}',
+=======
+        url: "{{ route('governorates_cities.exportXLS') }}",
+>>>>>>> 3db8ac38467d83cfbf78dec9dc0199be7f2db738
         type: 'POST',
         dataType: "JSON",
         data: {
@@ -523,5 +528,6 @@
       });
 
     });
+});
   </script>
 @endsection
