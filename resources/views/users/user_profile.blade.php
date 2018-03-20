@@ -3,13 +3,13 @@
 
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{asset('img/covers/dummy2.jpg')}}') no-repeat center center; background-size:cover;"><span></span>
+                  <div class="coverglobal text-center bshadow--2" style="background:#000 url( '../img/covers/dummy2.jpg') no-repeat center center; background-size:cover;"><span></span>
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
+                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="../img/avaters/male.jpg">
                               <h3 class="coverglobal__title color--gray_d">محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit')}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المستخدم</a>
+                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="users_list_edit.html">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المستخدم</a>
                           </div>
                         </div>
                       </div>
@@ -436,6 +436,6 @@
                     </ul>
                   </div>
                 </div>
-              </div>  
+              </div>
 
  @endsection

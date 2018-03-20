@@ -84,11 +84,11 @@
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-md-2 col-xs-6">
-                      <button class="master-btn undefined btn-block color--white bgcolor--fadeblue bradius--small bshadow--0" type="submit"><i class="fa fa-plus"></i><span>اضافة</span>
+                      <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
                       </button>
                     </div>
                     <div class="col-md-2 col-xs-6">
-                      <button class="master-btn undefined btn-block color--white bgcolor--fadeorange bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
+                      <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
                       </button>
                     </div>
                     <div class="clearfix"></div>
