@@ -13,7 +13,7 @@ class Users extends Model
     public $timestamps = true;
     protected $dates = ['deleted_at'];
 
-            public function createdParent()
+    public function createdParent()
     {
         return $this->belongsTo('App\Users', 'created_by');
     }
@@ -23,7 +23,7 @@ class Users extends Model
         return $this->hasMany('App\Users', 'created_by');
     }
 
-                public function modifiedParent()
+    public function modifiedParent()
     {
         return $this->belongsTo('App\Users', 'modified_by');
     }
@@ -33,8 +33,16 @@ class Users extends Model
         return $this->hasMany('App\Users', 'modified_by');
     }
 
-        public function rules()
+    public function rules()
     {
         return $this->belongsToMany('App\Rules','users_rules','user_id','rule_id');
+    }
+
+    public function user_detail() {
+        return $this->belongsTo('App\UsersDetails');
+    }
+
+    public function subscription() {
+        return $this->belongsTo('App\Subscription', 'user_id');
     }
 }

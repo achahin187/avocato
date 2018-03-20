@@ -41,18 +41,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            DB::table('users')->insert(
-                array(
-                    'id'=>1,
-                    'name'=>'super',
-                    'password'=>'super',
-                    'full_name'=>'super_super',
-                    'email'=>'super@super.com',
-                    'phone'=>'033333330',
-                    'mobile'=>'01110900713',
-                    'is_active'=>1,
-                )
-            );
+            
 
 
         });
