@@ -58,6 +58,8 @@ Route::post('/formulas_update/{id}', 'FormulasController@update')->name('formula
 Route::post('/formulas_destroy/{id}', 'FormulasController@destroy')->name('formulas_destroy');
 Route::post('/formulas_destroy_all', 'FormulasController@destroy_all')->name('formulas_destroy_all');
 Route::get('/formulas_excel', 'FormulasController@excel')->name('formulas_excel');
+Route::post('/formulas_filter', 'FormulasController@filter')->name('formulas_filter');
+Route::get('/formulas_get_subs', 'FormulasController@getSubs')->name('formulas_get_subs');
 
 Route::get('/users_list', 'UsersListController@index')->name('users_list');
 Route::get('/user_profile', 'UsersListController@show')->name('user_profile');

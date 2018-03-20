@@ -500,7 +500,11 @@ $(document).ready(function() {
       $.ajax(
       {
         cache: false,
+<<<<<<< HEAD
+        url:'{{route('governorates_cities.exportXLS')}}',
+=======
         url: "{{ route('governorates_cities.exportXLS') }}",
+>>>>>>> 3db8ac38467d83cfbf78dec9dc0199be7f2db738
         type: 'POST',
         dataType: "JSON",
         data: {

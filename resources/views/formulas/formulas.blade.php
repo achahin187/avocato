@@ -2,8 +2,30 @@
 @section('content')
 <script>
   $(document).ready(function(){
-
-
+            $("select[name='mains[]']").change(function () {
+              var main_id = $("select[name='mains[]']").val();
+              if (main_id !== '' && main_id !== null) {
+                $("select[name='subs[]']").prop('disabled',
+                  false).find('option[value]').remove();
+                $.ajax({
+                  type: 'GET',
+        url: '{{route('formulas_get_subs')}}', // do not forget to register your route
+        data: {ids: main_id},
+        }).done(function (data) {
+          $.each(data, function (key, value) {
+            $("select[name='subs[]']")
+            .append($("<option></option>")
+              .attr("value", key)
+              .text(value));
+          });
+        }).fail(function(jqXHR, textStatus){
+          console.log(jqXHR);
+        });
+        } else {
+          $("select[name='subs[]']").prop('disabled',
+            true).find("option[value]").remove();
+        }
+        });
 
         $('.btn-warning-cancel').click(function(){
           var contract_id = $(this).closest('tr').attr('data-contract-id');
@@ -57,7 +79,7 @@
             if (isConfirm){
              $.ajax({
                type:'POST',
-               url:'{{url('formulas_destroy_all')}}',
+               url:'{{route('formulas_destroy_all')}}',
                data:{ids:selectedIds,_token:_token},
                success:function(data){
                 $.each( selectedIds, function( key, value ) {
@@ -73,13 +95,14 @@
         });
 
         $('.excel-btn').click(function(){
+         var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
           var selectedIds = $("input:checkbox:checked").map(function(){
             return $(this).closest('tr').attr('data-contract-id');
           }).get();
           $.ajax({
            type:'GET',
-           url:'{{url('formulas_excel')}}',
-           data:{ids:selectedIds},
+           url:'{{route('formulas_excel')}}',
+           data:{ids:selectedIds,filters:filter},
            success:function(response){
                     var a = document.createElement("a");
                     a.href = response.file; 
@@ -120,51 +143,53 @@
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      <form role="form" action="{{route('formulas_filter')}}" method="post" accept-charset="utf-8">
+                        {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="main_type"> التصنيف الرئيسي </label>
-                                <select class="master_input select2" id="main_type" multiple="multiple" data-placeholder="نوع الصيغة" style="width:100%;" ,>
-                                  <option>نوع 1</option>
-                                  <option>نوع 2</option>
-                                </select><span class="master_message color--fadegreen">message content</span>
+                                <select name="mains[]" class="master_input select2" id="main_type" multiple="multiple" data-placeholder="نوع الصيغة" style="width:100%;" ,>
+                                  @foreach($main_contracts as $main_contract)
+                                  <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
+                                  @endforeach
+                                </select><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="sec_type"> التصنيف الفرعي </label>
-                                <select class="master_input select2" id="sec_type" multiple="multiple" data-placeholder="نوع الصيغة" style="width:100%;" ,>
-                                  <option>نوع 1</option>
-                                  <option>نوع 2</option>
-                                </select><span class="master_message color--fadegreen">message content</span>
+                                <select name="subs[]" class="master_input select2" id="sec_type" multiple="multiple" data-placeholder="نوع الصيغة" style="width:100%;" ,>
+                                </select><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_from">تاريخ الإضافة من </label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الانشاء" id="date_from">
-                                </div><span class="master_message color--fadegreen">message content</span>
+                                  <input name="date_from" class="datepicker master_input" type="text" placeholder="تاريخ الانشاء" id="date_from">
+                                </div><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_to">تاريخ الإضافة الى </label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الانشاء" id="date_to">
-                                </div><span class="master_message color--fadegreen">message content</span>
+                                  <input name="date_to" class="datepicker master_input" type="text" placeholder="تاريخ الانشاء" id="date_to">
+                                </div><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                          <button class="remodal-confirm" type="submit">فلتر</button>
+                    </form>
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -173,6 +198,7 @@
                             <th><span class="cellcontent">اسم العقد - الصيغة</span></th>
                             <th><span class="cellcontent">التصنيف الرئيسي</span></th>
                             <th><span class="cellcontent">التصنيف الفرعي</span></th>
+                            <th><span class="cellcontent">النوع</span></th>
                             <th><span class="cellcontent">تاريخ الانشاء</span></th>
                             <th><span class="cellcontent">الاجراءات</span></th>
                           </tr>
@@ -184,6 +210,7 @@
                             <td><span class="cellcontent">{{$contract->name}}</span></td>
                             <td><span class="cellcontent">{{$contract->sub->parent->name}}</span></td>
                             <td><span class="cellcontent">{{$contract->sub->name}}</span></td>
+                            <td><span class="cellcontent">@if($contract->is_contract==1)عقد@else صيغه @endif</span></td>
                             <td><span class="cellcontent">{{$contract->created_at}}</span></td>
                             <td><span class="cellcontent"><a href= "{{route('formulas_edit',$contract->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
