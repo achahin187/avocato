@@ -97,7 +97,6 @@ class NewsListController extends Controller
         $this->validate($request, [
             'newsName'  => 'required',
             'newsImg'  => 'image|mimes:jpeg,jpg,png',
-            'activate'  => 'required',
             'newsContent'   => 'required'
         ]);
         
@@ -120,7 +119,7 @@ class NewsListController extends Controller
             $imgPath = null;
         }
 
-        $current_user = 'Ahmed Yacoub';
+        $current_user = 'Admin-Test';
         // $current_user = Auth::user()->name; // Get current username 
 
         News::create([
