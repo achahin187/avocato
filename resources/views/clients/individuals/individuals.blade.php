@@ -19,6 +19,15 @@
       </div>
     </div>
   </div>
+
+{{-- Start alert messages --}}
+    <div class="col-lg-12">
+      @if (Session::has('success'))
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+      @endif
+    </div>
+    {{-- End alert --}}
+
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="clearfix"></div>
@@ -101,6 +110,7 @@
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
         <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a><a class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
         </div>
+        
         <table class="table-1">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
@@ -125,11 +135,11 @@
                 <td><span class="cellcontent">{{ $user->full_name }}</span></td>
                 <td><span class="cellcontent">{{ $user->address }}</span></td>
                 <td><span class="cellcontent">{{ $user->mobile }}</span></td>
-                <td><span class="cellcontent">بلاتيني</span></td>
-                <td><span class="cellcontent">09-2015</span></td>
-                <td><span class="cellcontent">09-2015</span></td>
-                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                <td><span class="cellcontent"><a href= "{{route('individuals_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('individuals_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                <td><span class="cellcontent">{{ $user->subscription->package_type->name }}</span></td>
+                <td><span class="cellcontent">{{ $user->subscription->start_date->format('d - m - Y') }}</span></td>
+                <td><span class="cellcontent">{{ $user->subscription->end_date->format('d - m - Y') }}</span></td>
+                <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><a href= "{{route('ind.show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('ind.edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
               </tr>
             @endforeach
             

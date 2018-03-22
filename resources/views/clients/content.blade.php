@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="card--1"><a class="color--main" href="{{route('individuals')}}"><img class="img-responsive bradius--noborder  " src="{{asset('img/dynamic/clients-individual.jpg')}}">
+                    <div class="card--1"><a class="color--main" href="{{route('ind')}}"><img class="img-responsive bradius--noborder  " src="{{asset('img/dynamic/clients-individual.jpg')}}">
                         <h4 class="text-center">الأفراد</h4></a></div>
                   </div>
                 </div>

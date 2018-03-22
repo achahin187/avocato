@@ -11,6 +11,6 @@ class Package_Types extends Model
     public $timestamps = false;
 
     public function subscriptions() {
-       return $this->hasMany('App\Subscriptions');
-   }
+        return $this->hasMany('App\Subscriptions');
+    }
 }

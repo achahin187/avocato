@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
             $table->integer('modified_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
-        });
+      });
 
         DB::table('users')->insert(
             array(

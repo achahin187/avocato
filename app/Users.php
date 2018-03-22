@@ -69,5 +69,3 @@ class Users extends Authenticatable
        return $this->hasOne('App\ClientsPasswords');
    }
 }
-
-
