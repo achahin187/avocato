@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('full_name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('image')->nullable();
-            $table->string('phone')->unique();
-            $table->string('mobile')->unique();
+            $table->string('phone');
+            $table->string('mobile');
             $table->string('address')->nullable();
-            $table->string('code')->nullable();
+            $table->string('code')->nullable()->unique();
             $table->date('birthdate')->nullable();
             $table->string('creditcard_number')->nullable();
             $table->integer('creditcard_cvv')->nullable();
@@ -41,14 +41,7 @@ class CreateUsersTable extends Migration
             $table->integer('modified_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
-
-<<<<<<< HEAD
-            
-
-
-=======
->>>>>>> ed07be1c2160053be7bd4d2040bbee70a103f1e2
-        });
+      });
 
         DB::table('users')->insert(
             array(

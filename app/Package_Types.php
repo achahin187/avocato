@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PackagesTypes extends Model
+class Package_Types extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'package_types';
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function subscriptions() {
-        return $this->hasMany('App\Subscription');
+        return $this->hasMany('App\Subscriptions');
     }
 }

@@ -84,7 +84,7 @@ Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
-Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind,edit');
+Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind.edit');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies_show');
