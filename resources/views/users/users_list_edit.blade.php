@@ -3,7 +3,7 @@
 
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
                     <div class="edit-mode">Editing mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -18,26 +18,48 @@
                     </div>
                   </div>
                   <div class="col-lg-12">
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
+              <form role="form" action="{{route('users_list_update',$user->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                {{csrf_field()}}
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="client_name">اسم المستخدم</label>
-                          <input class="master_input" type="text" placeholder="اسم المستخدم" id="client_name"><span class="master_message color--fadegreen">message</span>
+                          <input name="user_name" value="{{$user->name}}" class="master_input" type="text" placeholder="اسم المستخدم" id="client_name"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('user_name'))
+                                    {{ $errors->first('user_name')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="client_full_name">الاسم بالكامل</label>
-                          <input class="master_input" type="text" placeholder="الاسم بالكامل" id="client_full_name"><span class="master_message color--fadegreen">message</span>
+                          <input name="full_name" value="{{$user->full_name}}" class="master_input" type="text" placeholder="الاسم بالكامل" id="client_full_name"><span class="master_message color--fadegreen"> 
+                                    @if ($errors->has('full_name'))
+                                    {{ $errors->first('full_name')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="user_position">دور المستخدم</label>
-                          <select class="master_input select2" id="user_position" style="width:100%;">
-                            <option>ادمن</option>
-                            <option>خدمة عملاء</option>
-                          </select><span class="master_message color--fadegreen">message</span>
+                          <select name="role" class="master_input select2" id="user_position" style="width:100%;">
+                          <option value="choose" disabled>اختر دور المستخدم</option>
+                          @foreach($roles as $role)
+                          <option value="{{$role->id}}"
+                            @foreach($user->rules as $rule)
+                            {{$rule->id==$role->id ? 'selected':''}}
+                            @endforeach
+                           >{{$role->name_ar}}</option>
+                          @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                    @if ($errors->has('role'))
+                                    {{ $errors->first('role')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
@@ -46,48 +68,65 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">صورة المستخدم</div>
-                              <input class="chooseFile" type="file" name="chooseFile">
+                              <input name="image" class="chooseFile" type="file" name="chooseFile">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div><span class="master_message color--fadegreen"> 
+                                  @if ($errors->has('image'))
+                                    {{ $errors->first('image')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="client_email">البريد الالكترونى</label>
-                          <input class="master_input" type="email" placeholder="ex:mail@mail.com" id="client_email"><span class="master_message color--fadegreen">message</span>
+                          <input name="email" value="{{$user->email}}" class="master_input" type="email" placeholder="ex:mail@mail.com" id="client_email"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('email'))
+                                    {{ $errors->first('email')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="phone">هاتف</label>
-                          <input class="master_input" type="number" placeholder="مثال : 0123456789" id="phone"><span class="master_message color--fadegreen">message</span>
+                          <input name="phone" value="{{$user->phone}}" class="master_input" type="number" placeholder="مثال : 0123456789" id="phone"><span class="master_message color--fadegreen">          @if ($errors->has('phone'))
+                                    {{ $errors->first('phone')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="mob">موبايل</label>
-                          <input class="master_input" type="number" placeholder="مثال : 0123456789" id="mob"><span class="master_message color--fadegreen">message</span>
+                          <input name="mobile" value="{{$user->mobile}}" class="master_input" type="number" placeholder="مثال : 0123456789" id="mob"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('mobile'))
+                                    {{ $errors->first('mobile')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory">كلمة المرور</label>
-                          <input class="master_input" type="password" placeholder="كلمة المرور"><span class="master_message color--fadegreen">message</span>
+                          <input name="password" class="master_input" type="password" placeholder="كلمة المرور"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('password'))
+                                    {{ $errors->first('password')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory">اعادة كتابة كلمة المرور</label>
-                          <input class="master_input" type="password" placeholder="اعادة كتابة كلمة المرور"><span class="master_message color--fadegreen">message</span>
+                          <input name="confirm_password" class="master_input" type="password" placeholder="اعادة كتابة كلمة المرور"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('confirm_password'))
+                                    {{ $errors->first('confirm_password')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="clearfix"></div>
                       <div class="col-md-4 col-xs-6">
                         <label class="master_label">تفعيل المستخدم</label>
                         <div class="master_field">       
-                          <input class="icon" type="radio" name="icon" id="radbtn_2" checked="true">
+                          <input class="icon" type="radio" name="is_active" value="1" id="radbtn_2" {{$user->is_active ? 'checked':''}}>
                           <label for="radbtn_2">مفعل</label>
-                          <input class="icon" type="radio" name="icon" id="radbtn_3">
+                          <input class="icon" type="radio" name="is_active" value="0" id="radbtn_3" {{!$user->is_active ? 'checked':''}}>
                           <label for="radbtn_3">غير مفعل</label>
                         </div>
                       </div>
@@ -102,6 +141,7 @@
                       </div>
                       <div class="clearfix"></div>
                     </div>
+                  </form>
                   </div>
                 </div>
               </div>

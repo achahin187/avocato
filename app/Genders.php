@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Users_Rules extends Model
+class Genders extends Model
 {
     protected $primaryKey = 'id';
-    protected $table = 'users_rules';
+    protected $table = 'genders';
     public $timestamps = false;
 }

@@ -125,7 +125,7 @@ class ContractsFormulasTypesController extends Controller
         if ($validator->fails()) {
             return redirect('contracts_formulas_types#popupModal_1')
             ->withErrors($validator)
-            ->withInput()->with('tab',$tab);
+            ->withInput();
         }
         $sub = new Formula_Contract_Types;
         $sub->name = $request->sub;
@@ -145,7 +145,7 @@ class ContractsFormulasTypesController extends Controller
         if ($validator->fails()) {
             return redirect('contracts_formulas_types#popupModal_1')
             ->withErrors($validator)
-            ->withInput()->with('tab',$tab);
+            ->withInput();
         }
         $sub = new Formula_Contract_Types;
         $sub->name = $request->sub;

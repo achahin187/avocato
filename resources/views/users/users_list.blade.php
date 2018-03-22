@@ -4,7 +4,7 @@
 
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -13,12 +13,17 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="users_list_add.html">اضافة مستخدم </a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_create')}}">اضافة مستخدم </a>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-12">
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_client_list"><i class="fa fa-filter"></i>filters</a></div>
@@ -91,150 +96,26 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach($users as $user)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">{{$user->id}}</span></td>
+                            <td><span class="cellcontent">{{$user->name}}</span></td>
+                            <td><span class="cellcontent">{{$user->email}}</span></td>
+                            <td><span class="cellcontent">
+                              @foreach($user->rules as $rule)
+                              @if($rule->id!=13)
+                              {{$rule->name_ar}}
+                              @endif
+                              @endforeach
+                            </span></td>
+                            <td><span class="cellcontent">{{$user->phone}}</span></td>
+                            <td><span class="cellcontent">@if($user->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadegreen fa-check"> @endif</span></td>
+                            <td><span class="cellcontent">{{$user->created_at}}</span></td>
+                            <td><span class="cellcontent">{{$user->last_login}}</span></td>
+                            <td><span class="cellcontent"><a href= "{{route('user_profile',$user->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit',$user->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">215</span></td>
-                            <td><span class="cellcontent">جون دو</span></td>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
-                            <td><span class="cellcontent">خدمة عملاء</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent">31-09-2017</span></td>
-                            <td><span class="cellcontent"><a href= user_profile.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= users_list_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

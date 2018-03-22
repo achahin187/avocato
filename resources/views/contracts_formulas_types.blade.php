@@ -84,6 +84,7 @@
              url:'{{url('contracts_formulas_types_excel')}}',
              data:{ids:selectedIds},
              success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
               var a = document.createElement("a");
               a.href = response.file; 
               a.download = response.name+'.xlsx';

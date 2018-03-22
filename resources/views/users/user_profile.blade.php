@@ -7,7 +7,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="../img/avaters/male.jpg">
+                          <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
                               <h3 class="coverglobal__title color--gray_d">محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
                           <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="users_list_edit.html">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المستخدم</a>
                           </div>

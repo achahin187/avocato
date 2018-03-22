@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
@@ -62,9 +63,11 @@ Route::post('/formulas_filter', 'FormulasController@filter')->name('formulas_fil
 Route::get('/formulas_get_subs', 'FormulasController@getSubs')->name('formulas_get_subs');
 
 Route::get('/users_list', 'UsersListController@index')->name('users_list');
-Route::get('/user_profile', 'UsersListController@show')->name('user_profile');
+Route::get('/user_profile/{id}', 'UsersListController@show')->name('user_profile');
 Route::get('/users_list_create', 'UsersListController@create')->name('users_list_create');
-Route::get('/users_list_edit', 'UsersListController@edit')->name('users_list_edit');
+Route::post('/users_list_store', 'UsersListController@store')->name('users_list_store');
+Route::get('/users_list_edit/{id}', 'UsersListController@edit')->name('users_list_edit');
+Route::post('/users_list_update/{id}', 'UsersListController@update')->name('users_list_update');
 
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
 Route::post('/news_list', 'NewsListController@filter')->name('news.filter');
@@ -141,3 +144,6 @@ Route::get('/records_create', 'RecordsController@create')->name('records_create'
 
 
 
+
+
+Route::get('/home', 'HomeController@index')->name('home');

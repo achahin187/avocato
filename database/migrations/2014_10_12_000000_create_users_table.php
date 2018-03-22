@@ -19,12 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('full_name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable();
             $table->string('image')->nullable();
-            $table->string('phone')->unique();
-            $table->string('mobile')->unique();
+            $table->string('phone')->nullable();
+            $table->string('mobile');
             $table->string('address')->nullable();
-            $table->string('code')->nullable();
+            $table->string('code')->nullable()->unique();
             $table->date('birthdate')->nullable();
             $table->string('creditcard_number')->nullable();
             $table->integer('creditcard_cvv')->nullable();
