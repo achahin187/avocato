@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersRulesTable extends Migration
+class CreateGeoCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreateUsersRulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('users_rules', function (Blueprint $table) {
+        Schema::create('geo_countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->integer('rule_id');
+            $table->string('name');
+            $table->string('nationality');
         });
 
-                DB::table('users_rules')->insert(
+                DB::table('geo_countries')->insert(
             array(
-                array( 'id' => 1,'user_id' => 1,'rule_id' =>1 ),
-                array( 'id' => 2,'user_id' => 1,'rule_id' => 13),
+                array( 'id' => 1,'name' => 'Egypt' ,'nationality' => 'Egyptian'),
             )
         );
     }
@@ -34,6 +33,6 @@ class CreateUsersRulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_rules');
+        Schema::dropIfExists('geo_countries');
     }
 }

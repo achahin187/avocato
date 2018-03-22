@@ -496,15 +496,10 @@ $(document).ready(function() {
       }
        
       var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-      
       $.ajax(
       {
         cache: false,
-<<<<<<< HEAD
-        url:'{{route('governorates_cities.exportXLS')}}',
-=======
         url: "{{ route('governorates_cities.exportXLS') }}",
->>>>>>> 3db8ac38467d83cfbf78dec9dc0199be7f2db738
         type: 'POST',
         dataType: "JSON",
         data: {

@@ -59,7 +59,7 @@ class FormulasController extends Controller
             );
         }    
     }
-    elseif(isset($_GET['filters'])){
+    elseif($_GET['filters']!=''){
      $filters = json_decode($_GET['filters']);
      foreach($filters as $filter)
      {

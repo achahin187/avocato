@@ -32,6 +32,12 @@
           <!-- top navbar-->
           <header class="topnavbar-wrapper">
             <nav class="top-navbar navbar-expand-lg bgcolor--gray_m color--gray_d bradius--noborder bshadow--1 ">
+              @if(\Auth::check())
+              <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                      {{ csrf_field() }}
+                 <button type="submit">خروج</button>
+              </form>
+              @endif
               <div class="container-fluid"><span></span>
                 <ul class="actionsbar moile-view hidden-lg hidden-md hidden-sm">
                   <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i></a>
@@ -102,11 +108,11 @@
             <!-- Sidebar-->
             <nav class="navbar navbar-fixed-top bgcolor--gray_m bshadow--0 bradius--noborder " id="sidebar-wrapper" role="navigation">
               <ul class="sidebar-navigation">
-                <li class="brand bgcolor--gray_m bshadow--0"><a href="index.html"> <img src="{{asset('img/logo/logo__dark.png')}}" alt="جسر الأمان"></a></li>
+                <li class="brand bgcolor--gray_m bshadow--0"><a href="{{route('home')}}"> <img src="{{asset('img/logo/logo__dark.png')}}" alt="جسر الأمان"></a></li>
               </ul>
               <div class="coverglobal text-center bshadow--2" style="background:#f7f7f7  ;">
                 <button class="hamburger is-closed" type="button" data-toggle="offcanvas"><span class="hamb-top bgcolor--main_d"></span><span class="hamb-middle bgcolor--main_d"></span><span class="hamb-bottom bgcolor--main_d"></span></button>
-                <div class="text-center"><a href="user_profile.html"><img class="coverglobal__avatar bradius--circle" src="{{ asset('img/avaters/male.jpg') }}">
+                <div class="text-center"><a href="user_profile.html"><img class="coverglobal__avatar bradius--circle" @if (\Auth::check())src="{{asset('users_images/'.\Auth::user()->image)}}" @endif>
                     <h3 class="coverglobal__title color--gray_d">George Sam</h3><small class="coverglobal__slogan color--gray_d">Verified</small></a></div>
               </div>
               <div class="side">
