@@ -48,7 +48,7 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One detail in 'user_details' table
    public function user_detail() {
-       return $this->hasOne('App\User_Details');
+       return $this->hasOne('App\User_Details','user_id');
    }
 
    // One user in 'users' table has One subscribtion in 'subscriptions' table

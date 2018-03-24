@@ -144,6 +144,20 @@ return [
        'password'=>'كلمه المرور',
        'confirm_password'=>'تأكيد كلمه المرور',
        'image'=>'الصوره',
+       'lawyer_name'=>'اسم المحامى',
+       'address'=>'العنوان',
+       'national_id'=>'الرقم القومى',
+       'nationality'=>'الجنسيه',
+       'birthdate'=>'عيد الميلاد',
+       'work_sector'=>'التخصص',
+       'work_sector_type'=>'الإختصاص المكانى',
+       'join_date'=>'تاريخ الإلتحاق بالعمل بالشركه',
+       'resign_date '=>'تاريخ انتهاء العمل بالشركة',
+       'work_type'=>'نوع العمل',
+       'authorization_copy'=>'صورة التوكيل',
+       'syndicate_level'=>'درجة القيد بالنقابة',
+       'syndicate_copy'=>'صورة كارنيه النقابة',
+       
     ],
 
 ];

@@ -12,7 +12,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="lawyer_add.html">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="lawyers_follow.html">متابعة أماكن المحامين</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_create')}}">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="lawyers_follow.html">متابعة أماكن المحامين</a>
                       </div>
                     </div>
                   </div>
@@ -103,186 +103,25 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach($lawyers as $lawyer)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                            <td><span class="cellcontent">{{$lawyer->code}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
+                            <td><span class="cellcontent">                              @foreach($lawyer->rules as $rule)
+                              {{$rule->name_ar}}
+                              @endforeach</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_level}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->address}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->nationality->nationality}}</span></td>
+                            <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadegreen fa-check"> @endif</span></td>
                             <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">معين بالمكتب</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('parent_id')->nullable();
             $table->string('name')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('full_name');
             $table->string('email')->nullable();
             $table->string('image')->nullable();
@@ -30,10 +30,10 @@ class CreateUsersTable extends Migration
             $table->integer('creditcard_cvv')->nullable();
             $table->integer('creditcard_month')->nullable();
             $table->string('creditcard_year')->nullable();
-            $table->tinyInteger('is_active');
+            $table->boolean('is_active')->default(1);
             $table->softDeletes();
             $table->string('verificaition_code')->nullable();
-            $table->tinyInteger('is_verification_code_expired')->nullable();
+            $table->boolean('is_verification_code_expired')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('api_token')->nullable();
             $table->string('device_token')->nullable();

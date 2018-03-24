@@ -111,6 +111,7 @@ Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
 Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
 Route::get('/lawyers_show', 'LawyersController@show')->name('lawyers_show');
 Route::get('/lawyers_create', 'LawyersController@create')->name('lawyers_create');
+Route::post('/lawyers_store', 'LawyersController@store')->name('lawyers_store');
 Route::get('/lawyers_edit', 'LawyersController@edit')->name('lawyers_edit');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');

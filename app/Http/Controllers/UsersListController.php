@@ -18,7 +18,9 @@ class UsersListController extends Controller
      */
     public function index()
     {   
-        $data['users'] = Users::all();
+        $data['users'] = Users::whereHas('rules', function($q){
+        $q->whereIn('name',['super admin','admin','data entry','call center']);
+    })->get();
         return view('users.users_list',$data);
     }
 
@@ -78,11 +80,7 @@ class UsersListController extends Controller
         }
         $user->image=$fileNameToStore;
         $user->save();
-        $user_rule = new Users_Rules;
-        Users_Rules::insert(array(
-            array('user_id'=>$user->id,'rule_id'=>$request->role),
-            array('user_id'=>$user->id,'rule_id'=>13),
-        ));
+        $user->rules()->attach([$request->role,13]);
         return redirect()->route('users_list_create')->with('success','تم إضافه مستخدم جديد بنجاح');
     }
 
@@ -129,6 +127,7 @@ class UsersListController extends Controller
             'password'=>'required|between:3,8|same:confirm_password',
             'confirm_password'=>'required|between:3,8|same:confirm_password',
             'image'=>'image|mimes:jpg,jpeg,png|max:1024',
+            'is_active'=>'required',
         ]);
 
         if ($validator->fails()) {
@@ -165,12 +164,8 @@ class UsersListController extends Controller
         }
         $user->image=$fileNameToStore;
         $user->save();
-        Users_Rules::where('user_id',$user->id)->delete();
-        $user_rule = new Users_Rules;
-        Users_Rules::insert(array(
-            array('user_id'=>$user->id,'rule_id'=>$request->role),
-            array('user_id'=>$user->id,'rule_id'=>13),
-        ));
+        $user->rules()->detach();
+        $user->rules()->attach([$request->role,13]);
         return redirect()->route('users_list')->with('success','تم تعديل بيانات العضويه بنجاح');
     }
 

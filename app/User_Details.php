@@ -14,6 +14,11 @@ class User_Details extends Model
 	public $timestamps = true;
 
 	public function user() {
-		return $this->belongsTo('App\Users');
+		return $this->belongsTo('App\Users','user_id');
 	}
+
+	    public function nationality()
+    {
+        return $this->belongsTo('App\Geo_Countries','nationality_id');
+    }
 }
