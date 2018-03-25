@@ -11,6 +11,11 @@
 |
 */
 Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
+
+
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
@@ -68,6 +73,11 @@ Route::get('/users_list_create', 'UsersListController@create')->name('users_list
 Route::post('/users_list_store', 'UsersListController@store')->name('users_list_store');
 Route::get('/users_list_edit/{id}', 'UsersListController@edit')->name('users_list_edit');
 Route::post('/users_list_update/{id}', 'UsersListController@update')->name('users_list_update');
+Route::get('/users_list_destroy_get/{id}', 'UsersListController@destroyGet')->name('users_list_destroy_get');
+Route::post('/users_list_destroy_post/{id}', 'UsersListController@destroyPost')->name('users_list_destroy_post');
+Route::post('/users_list_destroy_all', 'UsersListController@destroy_all')->name('users_list_destroy_all');
+Route::get('/users_list_excel', 'UsersListController@excel')->name('users_list_excel');
+Route::post('/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
 
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
 Route::post('/news_list', 'NewsListController@filter')->name('news.filter');
@@ -150,3 +160,11 @@ Route::get('/records_create', 'RecordsController@create')->name('records_create'
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
+
+});

@@ -25,6 +25,7 @@ class CreateEntitiesTable extends Migration
                 array( 'id' => 3,'name' => 'task_types'),
                 array( 'id' => 4,'name' => 'task_statuses'),
                 array( 'id' => 5,'name' => 'fixed_pages'),
+                array( 'id' => 6,'name' => 'geo_countries'),
             )
         );
     }

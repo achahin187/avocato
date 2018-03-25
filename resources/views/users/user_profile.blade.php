@@ -7,9 +7,9 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
-                              <h3 class="coverglobal__title color--gray_d">محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="users_list_edit.html">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المستخدم</a>
+                          <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('users_images/'.$user->image)}}">
+                              <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
+                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit',$user->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a>
                           </div>
                         </div>
                       </div>
@@ -23,15 +23,20 @@
                         <table class="verticaltable">
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent">الاسم بالكامل</span></th>
-                            <td><span class="cellcontent">محمد محروس السيد أحمد</span></td>
+                            <td><span class="cellcontent">{{$user->full_name}}</span></td>
                           </tr>
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent"> دور المستخدم</span></th>
-                            <td><span class="cellcontent">مندوب مبيعات</span></td>
+                            <td><span class="cellcontent">
+                              @foreach($user->rules as $rule)
+                              @if($rule->id!=13)
+                              {{$rule->name_ar}}
+                              @endif
+                            @endforeach</span></td>
                           </tr>
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent">البريد الالكترونى</span></th>
-                            <td><span class="cellcontent">mail@mail.com</span></td>
+                            <td><span class="cellcontent">{{$user->email}}</span></td>
                           </tr>
                         </table>
                         <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -198,15 +203,15 @@
                         <table class="verticaltable">
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent">رقم الهاتف</span></th>
-                            <td><span class="cellcontent">0123456789</span></td>
+                            <td><span class="cellcontent">{{$user->phone}}</span></td>
                           </tr>
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent">رقم الموبايل</span></th>
-                            <td><span class="cellcontent">0123466782</span></td>
+                            <td><span class="cellcontent">{{$user->mobile}}</span></td>
                           </tr>
                           <tr>
                             <th class=" color--gray_d"><span class="cellcontent">تاريخ التسجيل</span></th>
-                            <td><span class="cellcontent">12/11/2017</span></td>
+                            <td><span class="cellcontent">{{$user->created_at}}</span></td>
                           </tr>
                         </table>
                         <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

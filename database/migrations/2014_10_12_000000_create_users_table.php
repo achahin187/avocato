@@ -46,12 +46,11 @@ class CreateUsersTable extends Migration
         DB::table('users')->insert(
             array(
                 'id'=>1,
-                'name'=>'super',
-                'password'=>'super',
-                'full_name'=>'super_super',
-                'email'=>'super@super.com',
-                'phone'=>'033333330',
-                'mobile'=>'01110900713',
+                'name'=>'admin',
+                'password'=>'$2y$10$1gHFYPB4PMUG.rjq3Cs.X.XLYv4uBir20HbDRB2Y7TTwsCm4/DjvG',
+                'full_name'=>'admin',
+                'email'=>'admin@securebridge.com',
+                'image'=>'male.jpg',
                 'is_active'=>1,
             )
         );

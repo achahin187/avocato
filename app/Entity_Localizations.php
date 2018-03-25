@@ -9,4 +9,9 @@ class Entity_Localizations extends Model
     protected $primaryKey = 'id';
     protected $table = 'entity_localizations';
     public $timestamps = false;
+
+        public function entity()
+    {
+        return $this->belongsTo('App\Entities');
+    }
 }
