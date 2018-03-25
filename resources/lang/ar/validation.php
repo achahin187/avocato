@@ -157,6 +157,7 @@ return [
        'authorization_copy'=>'صورة التوكيل',
        'syndicate_level'=>'درجة القيد بالنقابة',
        'syndicate_copy'=>'صورة كارنيه النقابة',
+       'litigation_level'=>'درجه التقاضي',
        
     ],
 

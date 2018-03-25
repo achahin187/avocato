@@ -162,12 +162,19 @@ $myFile=Excel::create('العقود والصيغ', function($excel) use($formula
 
 
      })->get();
+        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
         foreach($data['contracts'] as $contract)
         {
             $filter_ids[]=$contract->id;
         }
-        Session::flash('filter_ids',$filter_ids);
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
+                if(!empty($filter_ids))
+        {
+                Session::flash('filter_ids',$filter_ids);
+        }
+        else{
+            $filter_ids[]=0;
+            Session::flash('filter_ids',$filter_ids);
+        }
         return view('formulas.formulas',$data);
         
     }
