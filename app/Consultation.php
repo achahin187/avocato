@@ -8,6 +8,7 @@ class Consultation extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'consultations';
+
     protected $fillable = ['code','consultation_type_id','is_paid','question','created_by','created_at','is_replied'];
     protected $date = ['id', 'created_at'];
     public $timestamps = false;
@@ -17,4 +18,8 @@ class Consultation extends Model
  		"question"=>"required",
  		
     ];
+    public function consultation_type()
+    {
+    	return $this->hasMany('App\Consultation_Types', 'consultation_type_id');
+    }
 }

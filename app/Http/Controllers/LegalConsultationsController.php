@@ -19,7 +19,16 @@ class LegalConsultationsController extends Controller
      */
     public function index()
     {
-        return view('legal_consultations.legal_consultations');
+        $consultations=Consultation::all();
+        // foreach ($consultations as $consultation) {
+           
+        //         $consultation_type=Consultation_types::where('id',$consultation->consultation_type_id)->first();
+               
+        //         $consultations['consultation_type']=$consultation_type->name;
+            
+        // }
+        
+        return view('legal_consultations.legal_consultations')->with('consultations',$consultations);
     }
 
     /**

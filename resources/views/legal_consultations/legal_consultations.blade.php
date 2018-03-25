@@ -101,126 +101,27 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                           @foreach($consultations as $consultation)
+                          <tr class="bgcolor--gray_mm color--gray_d">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
+                             <td><span class="cellcontent">{{$consultation->code}}</span></td>
+                            <td><span class="cellcontent">{{$consultation->consultation_type_id}}</span></td>
+                            <td><span class="cellcontent">{{$consultation->question}}</span></td>
+                            <td><span class="cellcontent">{{$consultation->created_at}}</span></td>
+                            @if($consultation->is_paid)
+                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مدفوعه</label></span></td>
+                            @else
+                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانيه</label></span></td>
+                            @endif
+                            @if($consultation->is_replied)
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                            @else
+                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
+                            @endif
                             <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">32135</span></td>
-                            <td><span class="cellcontent">التصنيف</span></td>
-                            <td><span class="cellcontent">نص السؤال</span></td>
-                            <td><span class="cellcontent">20-9-2014</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
