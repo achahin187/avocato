@@ -25,7 +25,7 @@ class Helper {
         
         $random = mt_rand($min, $max);
 
-        if ( $model::where($column, $random)->first() ) {
+        while ( $model::where($column, $random)->first() ) {
             $random = mt_rand($min, $max);
         }
 
