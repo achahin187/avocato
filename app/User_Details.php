@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class User_Details extends Model
 {
     protected $primaryKey = 'id';
-    protected $table = 'user_details';
+    protected $table = 'user__details';
     protected $fillable = ['user_id', 'country_id', 'nationality_id', 'gender_id', 'job_title',
     'national_id', 'work_sector', 'work_sector_type', 'discount_percentage',
     'join_date', 'resign_date', 'is_resigned', 'authorization_copy', 'syndicate_copy', 'syndicate_level'];

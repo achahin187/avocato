@@ -149,6 +149,7 @@ return [
        'national_id'=>'الرقم القومى',
        'nationality'=>'الجنسيه',
        'birthdate'=>'عيد الميلاد',
+       'work'   => 'العمل',
        'work_sector'=>'التخصص',
        'work_sector_type'=>'الإختصاص المكانى',
        'join_date'=>'تاريخ الإلتحاق بالعمل بالشركه',
@@ -157,6 +158,11 @@ return [
        'authorization_copy'=>'صورة التوكيل',
        'syndicate_level'=>'درجة القيد بالنقابة',
        'syndicate_copy'=>'صورة كارنيه النقابة',
+        'discount_rate' => 'قيمة التخفيض',
+        'start_date'    => 'تاريخ البداية',
+        'end_date'      => 'تاريخ النهاية',
+        'subscription_duration' => 'مدة التعاقد',
+        'subscription_value'    => 'قيمة التعاقد'
        
     ],
 
