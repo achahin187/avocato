@@ -116,7 +116,7 @@ Route::get('/lawyers_edit', 'LawyersController@edit')->name('lawyers_edit');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
-Route::get('/legal_consultations_create', 'LegalConsultationsController@create')->name('legal_consultations_create');
+Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->name('legal_consultations_edit');
 Route::get('/legal_consultations_assign', 'LegalConsultationsController@assign')->name('legal_consultations_assign');
 

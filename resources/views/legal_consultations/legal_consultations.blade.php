@@ -1,9 +1,11 @@
 @extends('layout.app')
 @section('content')
-
+    
+            
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -12,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('legal_consultations_create')}}">إضافة</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="http://localhost/secure_bridge/public/legal_consultation_add">إضافة</a>
                       </div>
                     </div>
                   </div>
@@ -83,7 +85,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -107,7 +109,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -117,7 +119,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -127,7 +129,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -137,7 +139,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -147,7 +149,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -157,7 +159,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -167,7 +169,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -177,7 +179,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -187,7 +189,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -197,7 +199,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -207,7 +209,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -217,7 +219,7 @@
                             <td><span class="cellcontent">20-9-2014</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultations_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= legal_consultation_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -382,5 +384,6 @@
                   </div>
                 </div>
               </div>
-
-@endsection
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+            
+ @endsection

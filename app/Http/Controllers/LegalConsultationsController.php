@@ -21,9 +21,9 @@ class LegalConsultationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
-        return view('legal_consultations.legal_consultations_create');
+        return view('legal_consultations.legal_consultation_add');
     }
 
     /**
