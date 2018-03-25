@@ -162,8 +162,12 @@ return [
         'start_date'    => 'تاريخ البداية',
         'end_date'      => 'تاريخ النهاية',
         'subscription_duration' => 'مدة التعاقد',
-        'subscription_value'    => 'قيمة التعاقد'
-       
+        'subscription_value'    => 'قيمة التعاقد',
+        'name'  => 'الاسم',
+        'job'   => 'العمل',
+        'national_id'   => 'الرقم القومي',
+        'birthday'  => 'تاريخ الميلاد',
+        'number_of_payments' => 'عدد الاقساط'
     ],
 
 ];
