@@ -36,17 +36,6 @@
         <strong>{{ Session::get('warning') }}</strong>  
       </div>
     @endif
-    
-    @if ($errors->any())
-      <div class="alert alert-warning text-center">
-        
-        @foreach ($errors->all() as $err)
-          <strong>{{ $err }}</strong>
-          <br>
-        @endforeach
-          
-      </div>
-    @endif
 
   </div>
   
@@ -63,7 +52,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="client_code">كود العميل</label>
-            <input name="code" value="{{ 'Code-'.$newId }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
+            <input name="code" value="{{ $newId }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
           </div>
         </div>
 
@@ -135,7 +124,7 @@
             <input name="national_id" value="{{ old('national_id') }}" class="master_input disScroll" type="number" placeholder="الرقم القومى" id="client_id">
             
               @if ($errors->has('national_id'))
-                <span class="master_message color--fadegreen">{{ $errors->first('nationalid') }}</span>
+                <span class="master_message color--fadegreen">{{ $errors->first('national_id') }}</span>
               @endif
           </div>
         </div>
@@ -213,6 +202,11 @@
           <div class="master_field">
             <label class="master_label mandatory" for="works_types">نوع قطاع الأعمال </label>
             <input name="work_type" value="{{ old('work_type') }}" class="master_input" type="text" placeholder="  .." id="works_types">
+
+            @if ($errors->has('work_type'))
+                <span class="master_message color--fadegreen">{{ $errors->first('work_type') }}</span>
+              @endif
+
           </div>
         </div>
 
@@ -245,9 +239,9 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2">
+            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked>
             <label for="radbtn_2">مفعل</label>
-            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3" checked="true">
+            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3"  {{ old('activate') == 0 ? 'checked' : ''  }} >
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -285,8 +279,8 @@
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
               <input name="end_date" value="{{ old('end_date') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
               
-              @if ($errors->has('old_date'))
-                <span class="master_message color--fadegreen">{{ $errors->first('old_date') }}</span>
+              @if ($errors->has('end_date'))
+                <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
               @endif
               
             </div>
@@ -341,7 +335,11 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input name="number_of_payments" value="{{ old('number_of_payments') }}" min="0" class="master_input disScroll" type="number" min="0" placeholder="عدد الاقساط" id="license_num">
+              <input name="number_of_payments" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+
+                @if ($errors->has('number_of_payments'))
+                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
+                @endif
             </div>
           </div>
           <div class="clearfix"></div>

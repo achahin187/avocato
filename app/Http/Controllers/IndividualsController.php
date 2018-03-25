@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Helper;
 use Session;
 
 use App\Users;
@@ -35,7 +36,8 @@ class IndividualsController extends Controller
     public function create()
     {
         $lastId = Users::orderBy('id', 'desc')->first();
-        $newId = $lastId->id + 1;
+
+        $newId  = Helper::generateRandom(Users::class, 'code', 6);
         
         $password = rand($newId, 99999999);
         $subscription_types = Package_Types::all();
@@ -69,7 +71,7 @@ class IndividualsController extends Controller
             'end_date'  => 'required',
             'subscription_duration' => 'required',
             'subscription_value' => 'required',
-
+            'number_of_payments' => 'required'
         ]);
 
         // upload image to storage/app/public
@@ -133,6 +135,7 @@ class IndividualsController extends Controller
             return redirect()->back()->withInput();
         }
         
+        // TODO: national_id missing
         // push into users_details
         try {
             User_Details::create([
