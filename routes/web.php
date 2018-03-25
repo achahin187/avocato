@@ -100,9 +100,9 @@ Route::post('/individuals/store', 'IndividualsController@store')->name('ind.stor
 Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind.edit');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
-Route::get('/companies_show', 'CompaniesController@show')->name('companies_show');
-Route::get('/companies_create', 'CompaniesController@create')->name('companies_create');
-Route::get('/companies_edit', 'CompaniesController@edit')->name('companies_edit');
+Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
+Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
+Route::get('/companies_edit', 'CompaniesController@edit')->name('companies.edit');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('individuals_companies');
 Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('individuals_companies_show');

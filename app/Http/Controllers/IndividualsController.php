@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Helper;
 use Session;
 
 use App\Users;
@@ -12,6 +13,7 @@ use App\Subscriptions;
 use App\Package_Types;
 use App\Installment;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use App\Rules;
 
 class IndividualsController extends Controller
@@ -34,7 +36,8 @@ class IndividualsController extends Controller
     public function create()
     {
         $lastId = Users::orderBy('id', 'desc')->first();
-        $newId = $lastId->id + 1;
+
+        $newId  = Helper::generateRandom(Users::class, 'code', 6);
         
         $password = rand($newId, 99999999);
         $subscription_types = Package_Types::all();
@@ -68,7 +71,7 @@ class IndividualsController extends Controller
             'end_date'  => 'required',
             'subscription_duration' => 'required',
             'subscription_value' => 'required',
-
+            'number_of_payments' => 'required'
         ]);
 
         // upload image to storage/app/public
@@ -83,69 +86,121 @@ class IndividualsController extends Controller
 
         // INSERT INDIVIDUAL DATA
         // push into users
-        $user = Users::create([
-            'name'      => $request->name,
-            'password'  => $request->password,
-            'full_name' => $request->name,
-            'email'     => $request->email,
-            'image'     => $newImg,
-            'phone'     => $request->phone,
-            'mobile'    => $request->mobile,
-            'address'   => $request->address,
-            'code'      => $request->code,
-            'birthday'  => $request->birthday,
-            'is_active' => $request->activate,
-            'created_by'=> 1
-        ]);
+        try {
+            $user = Users::create([
+                'name'      => $request->name,
+                'password'  => $request->password,
+                'full_name' => $request->name,
+                'email'     => $request->email,
+                'image'     => $imgPath,
+                'phone'     => $request->phone,
+                'mobile'    => $request->mobile,
+                'address'   => $request->address,
+                'code'      => $request->code,
+                'birthday'  => $request->birthday,
+                'is_active' => $request->activate,
+                'created_by'=> 1
+            ]);
+        } catch(QueryException $ex) {
+            Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
+            return redirect()->back()->withInput();
+        }
+        
 
         // push into users_rules
-        Users_Rules::create([
-            'user_id'   => $user->id,
-            'rule_id'   => 8
-        ]);
+        try {
+            Users_Rules::create([
+                'user_id'   => $user->id,
+                'rule_id'   => 8
+            ]);
+        } catch(QueryException $ex) {
+            Users::destroy($user->id);
+
+            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
+            return redirect()->back()->withInput();
+        }
 
         // push into client_passwords
-        ClientsPasswords::create([
-            'user_id'   => $user->id,
-            'password'  => $request->password,
-            'confirmation'  => 0
-        ]);
+        try {
+            ClientsPasswords::create([
+                'user_id'   => $user->id,
+                'password'  => $request->password,
+                'confirmation'  => 0
+            ]);
+        } catch(QueryException $ex) {
+            Users::destroy($user->id);
+            Users_Rules::where('user_id', $user->id)->delete();
 
+            Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+        
+        // TODO: national_id missing
         // push into users_details
-        User_Details::create([
-            'user_id'       => $user->id,
-            'country_id'    => 1,
-            'gender_id'     => $request->gender_id,
-            'job_title'     => $request->job,
-            'national_id'   => $request->national_id,
-            'work_sector'   => $request->work,
-            'work_sector_type'      => $request->work_type,
-            'discount_percentage'   => $request->discount_rate,
-        ]);
+        try {
+            User_Details::create([
+                'user_id'       => $user->id,
+                'country_id'    => 1,
+                'gender_id'     => $request->gender_id,
+                'job_title'     => $request->job,
+                'national_id'   => $request->national_id,
+                'work_sector'   => $request->work,
+                'work_sector_type'      => $request->work_type,
+                'discount_percentage'   => $request->discount_rate,
+            ]);
+        } catch(QueryException $ex) {
+            Users::destroy($user->id);
+            Users_Rules::where('user_id', $user->id)->delete();
+            ClientsPasswords::where('user_id', $user->id)->delete();
+
+            Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
 
         // push into subscriptions
-        $subscription = Subscriptions::create([
-            'user_id'    => $user->id,
-            'start_date' => date('Y-m-d H:i:s', strtotime($request->start_date)),
-            'end_date'   => date('Y-m-d H:i:s', strtotime($request->end_date)),
-            'package_type_id'   => $request->subscription_type,
-            'duaration' => $request->subscription_duration,
-            'value'     => $request->subscription_value,
-            'number_of_installments'    => $request->number_of_payments
-        ]);
+        try {
+            $subscription = Subscriptions::create([
+                'user_id'    => $user->id,
+                'start_date' => date('Y-m-d H:i:s', strtotime($request->start_date)),
+                'end_date'   => date('Y-m-d H:i:s', strtotime($request->end_date)),
+                'package_type_id'   => $request->subscription_type,
+                'duration' => $request->subscription_duration,
+                'value'     => $request->subscription_value,
+                'number_of_installments'    => $request->number_of_payments
+            ]);
+        } catch(QueryException $ex) {
+            Users::destroy($user->id);
+            Users_Rules::where('user_id', $user->id)->delete();
+            ClientsPasswords::where('user_id', $user->id)->delete();
+            User_Details::where('user_id', $user->id)->delete();
+
+            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
 
         // push into installments
-        if($request->number_of_payments != 0) {
-            for($i=0; $i < $request->number_of_payments; $i++) {
-                $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                Installment::create([
-                    'subscription_id'   => $subscription->id,
-                    'installment_number'=> $i+1,
-                    'value' => $request->payment[$i],
-                    'payment_date'  => $pay_date,
-                    'is_paid'   => 1 //$request->payment_status[i]
-                ]);
+        try {
+            if($request->number_of_payments != 0) {
+                for($i=0; $i < $request->number_of_payments; $i++) {
+                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => 1 //$request->payment_status[i]
+                    ]);
+                }
             }
+        } catch(QueryException $ex) {
+            Users::destroy($user->id);
+            Users_Rules::where('user_id', $user->id)->delete();
+            ClientsPasswords::where('user_id', $user->id)->delete();
+            User_Details::where('user_id', $user->id)->delete();
+            Subscriptions::destroy($subscription->id);
+
+            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
         }
 
         // redirect with success

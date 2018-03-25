@@ -20,6 +20,25 @@
       </div>
     </div>
   </div>
+
+  {{--  Flash messages  --}}
+  <div class="col-lg-12">
+    {{--  Success  --}}
+    @if (Session::has('success'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('success') }}</strong>  
+      </div>
+    @endif
+
+    {{--  Warning  --}}
+    @if (Session::has('warning'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('warning') }}</strong>  
+      </div>
+    @endif
+
+  </div>
+  
   <div class="col-lg-12">
 
     <form action="{{ route('ind.store') }}" method="POST" enctype="multipart/form-data">
@@ -33,7 +52,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="client_code">كود العميل</label>
-            <input name="code" value="{{ 'Code-'.$newId }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
+            <input name="code" value="{{ $newId }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
           </div>
         </div>
 
@@ -102,10 +121,10 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_id">الرقم القومى</label>
-            <input name="national_id" value="{{ old('nationalid') }}" class="master_input" type="number" placeholder="الرقم القومى" id="client_id">
+            <input name="national_id" value="{{ old('national_id') }}" class="master_input disScroll" type="number" placeholder="الرقم القومى" id="client_id">
             
               @if ($errors->has('national_id'))
-                <span class="master_message color--fadegreen">{{ $errors->first('nationalid') }}</span>
+                <span class="master_message color--fadegreen">{{ $errors->first('national_id') }}</span>
               @endif
           </div>
         </div>
@@ -138,7 +157,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
-            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input" type="number" placeholder="رقم الهاتف" id="client_tel">
+            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="number" placeholder="رقم الهاتف" id="client_tel">
             
               @if ($errors->has('phone'))
                 <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>
@@ -150,7 +169,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_mob">رقم الهاتف الجوال</label>
-            <input name="mobile" value="{{ old('mobile') }}" min="0" class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">
+            <input name="mobile" value="{{ old('mobile') }}" min="0" class="master_input disScroll" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">
             
               @if ($errors->has('mobile'))
                 <span class="master_message color--fadegreen">{{ $errors->first('mobile') }}</span>
@@ -182,7 +201,12 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="works_types">نوع قطاع الأعمال </label>
-            <input name="work_type" value="{{ old('workType') }}" class="master_input" type="text" placeholder="  .." id="works_types">
+            <input name="work_type" value="{{ old('work_type') }}" class="master_input" type="text" placeholder="  .." id="works_types">
+
+            @if ($errors->has('work_type'))
+                <span class="master_message color--fadegreen">{{ $errors->first('work_type') }}</span>
+              @endif
+
           </div>
         </div>
 
@@ -203,7 +227,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_discount">نسبة الخصم </label>
-            <input name="discount_rate" value="{{ old('discount_rate') }}" min="0" class="master_input" type="number" placeholder="%" id="client_discount">
+            <input name="discount_rate" value="{{ old('discount_rate') }}" min="0" class="master_input disScroll" type="number" placeholder="%" id="client_discount">
             
               @if ($errors->has('discount_rate'))
                 <span class="master_message color--fadegreen">{{ $errors->first('discount_rate') }}</span>
@@ -215,9 +239,9 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2">
+            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked>
             <label for="radbtn_2">مفعل</label>
-            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3" checked="true">
+            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3"  {{ old('activate') == 0 ? 'checked' : ''  }} >
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -253,10 +277,10 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ old('old_date') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
+              <input name="end_date" value="{{ old('end_date') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
               
-              @if ($errors->has('old_date'))
-                <span class="master_message color--fadegreen">{{ $errors->first('old_date') }}</span>
+              @if ($errors->has('end_date'))
+                <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
               @endif
               
             </div>
@@ -285,7 +309,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="subscription_duration" value="{{ old('subscription_duration') }}" min="0" class="master_input" type="number" placeholder="0" id="license_period">
+              <input name="subscription_duration" value="{{ old('subscription_duration') }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
             
               @if ($errors->has('subscription_duration'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_duration') }}</span>
@@ -298,7 +322,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input name="subscription_value" value="{{ old('subscription_value') }}" min="0" class="master_input" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input name="subscription_value" value="{{ old('subscription_value') }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
               
               @if ($errors->has('subscription_value'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
@@ -311,7 +335,11 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input name="number_of_payments" value="{{ old('number_of_payments') }}" min="0" class="master_input" type="number" min="0" placeholder="عدد الاقساط" id="license_num">
+              <input name="number_of_payments" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+
+                @if ($errors->has('number_of_payments'))
+                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
+                @endif
             </div>
           </div>
           <div class="clearfix"></div>
@@ -356,7 +384,7 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                        <input class="master_input" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
@@ -393,75 +421,16 @@
         $(this).removeClass('datepicker'); 
       });
 
-      $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    // Submit form
-      $('#ubmit_button').click(function(e) {
-        e.preventDefault();
-
-        // Variables
-        var code = $("input[name=code]").val();
-        var password = $("input[name=password]").val();
-        var name = $("input[name=name]").val();
-        var gender = $("select[name=gender]").val();
-        var job = $("input[name=job]").val();
-        var address = $("input[name=address]").val();
-        var national_id = $("input[name=national_id]").val();
-        var birthday = $("input[name=birthday]").val();
-        var nationality = $("input[name=nationality]").val();
-        var phone = $("input[name=phone]").val();
-        var mobile = $("input[name=mobile]").val();
-        var email = $("input[name=email]").val();
-        var work = $("input[name=work]").val();
-        var work_type = $("input[name=work_type]").val();
-        var personal_image = $("input[name=personal_image]").val();
-        var discount_rate = $("input[name=discount_rate]").val();
-        var activate = $("input[name=activate]").val();
-        var start_date = $("input[name=start_date]").val();
-        var end_date = $("input[name=end_date]").val();
-        var subscription_type = $("select[name=subscription_type]").val();
-        var subscription_duration = $("input[name=subscription_duration]").val();
-        var subscription_value = $("input[name=subscription_value]").val();
-        var number_of_payments = $("input[name=number_of_payments]").val();
-
-        console.log('Code: ' + code);
-        console.log('Password: ' + password);
-        console.log('Name: ' + name);
-        console.log('Gender: ' + gender);
-        console.log('Job: ' + job);
-        console.log('Address' + address);
-        console.log('national id: ' + national_id);
-        console.log('birthday: ' + birthday);
-        console.log('nationality: ' + nationality);
-        console.log('phone: ' + phone);
-        console.log('mobile: ' + mobile);
-        console.log('email: ' + email);
-        console.log('Work: ' + work);
-        console.log('Work type: '+ work_type);
-        console.log('Personal image: ' + personal_image);
-        console.log('discount rate: ' + discount_rate);
-        console.log('is active: ' + activate);
-        console.log('start_date: ' + start_date);
-        console.log('end_date: ' + end_date);
-        console.log('subscription type: ' + subscription_type);
-        console.log('subscription duration: ' + subscription_duration);
-        console.log('subscription_value: ' + subscription_value);
-        console.log('number of pyaments: ' + number_of_payments);
-
-        $.ajax({
-           type:'POST',
-           url:'{{ route('ind.store') }}',
-           data:{code: code, password: password, name:name, gender: gender, job: job, address: address, national_id: national_id, email:email},
-           success:function(data){
-              alert(data.success);
-           }
+        $('.disScroll').on('focus', 'input[type=number]', function (e) {
+          $(this).on('mousewheel.disableScroll', function (e) {
+            e.preventDefault()
+          })
         });
 
-      });
+        $('.disScroll').on('blur', 'input[type=number]', function (e) {
+          $(this).off('mousewheel.disableScroll')
+        });    
+
     });
 
     

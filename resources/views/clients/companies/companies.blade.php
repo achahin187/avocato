@@ -15,7 +15,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies_create')}}">اضافة شركة جديدة </a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.create')}}">اضافة شركة جديدة </a>
                       </div>
                     </div>
                   </div>
@@ -120,150 +120,22 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">2012</span></td>
-                            <td><span class="cellcontent">اسم الشركة</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">بلاتيني</span></td>
-                            <td><span class="cellcontent">09-2015</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('companies_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          
+                          @foreach ($companies as $company)
+                            <tr>
+                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                              <td><span class="cellcontent">{{ $company-> }}}</span></td>
+                              <td><span class="cellcontent">اسم الشركة</span></td>
+                              <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
+                              <td><span class="cellcontent">0123456789</span></td>
+                              <td><span class="cellcontent">بلاتيني</span></td>
+                              <td><span class="cellcontent">09-2015</span></td>
+                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                              <td><span class="cellcontent">محمد محمود السيد</span></td>
+                              <td><span class="cellcontent"><a href= "{{route('companies.show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('companies.edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
                       <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
