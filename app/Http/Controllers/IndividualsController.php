@@ -112,7 +112,6 @@ class IndividualsController extends Controller
                 'rule_id'   => 8
             ]);
         } catch(QueryException $ex) {
-            dd($ex);
             Users::destroy($user->id);
 
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
@@ -127,7 +126,6 @@ class IndividualsController extends Controller
                 'confirmation'  => 0
             ]);
         } catch(QueryException $ex) {
-            dd(3);
             Users::destroy($user->id);
             Users_Rules::where('user_id', $user->id)->delete();
 
@@ -148,7 +146,6 @@ class IndividualsController extends Controller
                 'discount_percentage'   => $request->discount_rate,
             ]);
         } catch(QueryException $ex) {
-            dd(4);
             Users::destroy($user->id);
             Users_Rules::where('user_id', $user->id)->delete();
             ClientsPasswords::where('user_id', $user->id)->delete();
@@ -193,7 +190,6 @@ class IndividualsController extends Controller
                 }
             }
         } catch(QueryException $ex) {
-            dd($ex);
             Users::destroy($user->id);
             Users_Rules::where('user_id', $user->id)->delete();
             ClientsPasswords::where('user_id', $user->id)->delete();
