@@ -15,6 +15,8 @@ use App\Installment;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use App\Rules;
+use App\Geo_Countries;
+use App\Entity_Localizations;
 
 class IndividualsController extends Controller
 {
@@ -25,7 +27,7 @@ class IndividualsController extends Controller
      */
     public function index()
     {
-        return view('clients.individuals.individuals')->with('users', Users::individuals()->get());
+        return view('clients.individuals.individuals')->with('users', Users::users(8)->get());
     }
 
     /**
@@ -35,13 +37,16 @@ class IndividualsController extends Controller
      */
     public function create()
     {
-        $lastId = Users::orderBy('id', 'desc')->first();
-
-        $newId  = Helper::generateRandom(Users::class, 'code', 6);
+        // custom helper function to generate a random number and check if this random number exists on a specific table
+        $code  = Helper::generateRandom(Users::class, 'code', 6);
         
-        $password = rand($newId, 99999999);
+        $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
-        return view('clients.individuals.individuals_create', compact(['newId', 'password', 'subscription_types']));
+
+        $geo = Geo_Countries::all();    // get all countries
+        $nationalities = Entity_Localizations::whereIn('item_id', $geo[0])->where('lang_id', 1)->get();  // select only arabic nationalities
+
+        return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
     }
 
     /**
@@ -79,7 +84,7 @@ class IndividualsController extends Controller
             $img = $request->personal_image;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
             $img->move('storage/app/public/individuals', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/individuals'.$newImg;       // new path: /storage/app/public/imageName
+            $imgPath = 'storage/app/public/individuals/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
             $imgPath = null;
         }

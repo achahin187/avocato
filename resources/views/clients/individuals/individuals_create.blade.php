@@ -52,7 +52,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="client_code">كود العميل</label>
-            <input name="code" value="{{ $newId }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
+            <input name="code" value="{{ $code }}" class="master_input" type="text" placeholder="كود العميل .." id="client_code" readonly>
           </div>
         </div>
 
@@ -142,15 +142,23 @@
         </div>
 
         {{--  Nationality  --}}
+        {{--  nationality  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_nationality">الجنسية </label>
-            <input name="nationality" value="{{ old('nationality') }}" class="master_input" type="text" placeholder="الجنسية" id="client_nationality">
-            
-              @if ($errors->has('nationality'))
-                <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
-              @endif
+            <label class="master_label mandatory" for="license_type">جنسية الشركة</label>
+            <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
+                
+              @foreach ($nationalities as $nat)
+                <option value="{{ $nat->item_id }}">{{ $nat->value }}</option>
+              @endforeach
+              
+            </select>
+            {{--  Error  --}}
+          @if ($errors->has('package_type_id'))
+              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>
+            @endif
           </div>
+          
         </div>
 
         {{--  landline phone  --}}
@@ -239,7 +247,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked>
+            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked="true">
             <label for="radbtn_2">مفعل</label>
             <input class="icon" type="radio" name="activate" value="0" id="radbtn_3"  {{ old('activate') == 0 ? 'checked' : ''  }} >
             <label for="radbtn_3">غير مفعل</label>
