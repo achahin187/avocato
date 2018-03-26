@@ -10,6 +10,7 @@ use App\Users;
 use App\Consultation_Types;
 use Illuminate\Support\Facades\Input;
 use App\User_Details;
+use App\Consultation_Replies;
 
 
 class LegalConsultationsController extends Controller
@@ -52,13 +53,7 @@ class LegalConsultationsController extends Controller
     public function store(Request $request)
     {
         $consultation=new Consultation();
-         $validator = Validator::make($request->all(),  $consultation::$rules);
-         if($validator->fails())
-         {
-            return  redirect()->route('legal_consultation_add')
-                    ->withErrors($validator)
-                    ->withInput();
-         }
+        
         if(\Auth::check())
             {
          $user=Users::where('api_token',$request->input('_token'))->first();
@@ -71,13 +66,20 @@ class LegalConsultationsController extends Controller
         $input['created_by']=\Auth::user()->id;
          $input['created_at']=Carbon::now()->format('Y-m-d H:i:s');
          $input['is_replied']=1;
-        // dd($input);
-        Consultation::Create($input);
+         
+        $consultation = Consultation::Create($input);
+        
+       $consultation-> consultation_reply()->create([
+            
+            'lawyer_id' => \Auth::user()->id,
+            'reply' => $request->input('consultation_answer'),
+            'is_perfect_answer' => 1
+        ]);
                 
             }
-        // dd(Input::all());
+        
         return  redirect()->route('legal_consultations');
-       // return redirect()->route('legal_consultation_add');
+       
     }
 
     /**

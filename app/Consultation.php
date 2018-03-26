@@ -22,4 +22,8 @@ class Consultation extends Model
     {
     	return $this->hasMany('App\Consultation_Types', 'consultation_type_id');
     }
+    public function consultation_reply()
+    {
+        return $this->hasMany('App\Consultation_Replies', 'consultation_id');
+    }
 }
