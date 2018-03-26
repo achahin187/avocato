@@ -66,6 +66,6 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One record in 'clients_passwords' table
    public function client_password() {
-       return $this->hasOne('App\ClientsPasswords');
+       return $this->hasOne('App\ClientsPasswords','user_id');
    }
 }

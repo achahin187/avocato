@@ -14,4 +14,10 @@ class Geo_Countries extends Model
     {
         return $this->hasMany('App\User_Details');
     }
+
+	//there is no any relation so don't use it (the fk id is different)
+        public function localizations()
+    {
+        return $this->hasMany('App\Entity_Localizations','item_id');
+    }
 }

@@ -11,6 +11,6 @@ class ClientsPasswords extends Model
 
     // inverse one to one realation
     public function user() {
-        return $this->belongsTo('App\Users');
+        return $this->belongsTo('App\Users','user_id');
     }
 }

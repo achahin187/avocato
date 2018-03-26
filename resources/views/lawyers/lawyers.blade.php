@@ -18,6 +18,11 @@
                   </div>
                 </div>
                 <div class="col-lg-12">
+              @if(\session('success'))
+                <div class="alert alert-success">
+                  {{\session('success')}}
+                </div>
+                @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg">
@@ -117,9 +122,15 @@
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->nationality->nationality}}</span></td>
+                            <td><span class="cellcontent">
+                              @foreach($nationalities as $nationality)
+                              @if($lawyer->user_detail->nationality->id == $nationality->item_id)
+                              {{$nationality->value}}
+                              @endif
+                              @endforeach
+                                </span></td>
                             <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadegreen fa-check"> @endif</span></td>
-                            <td><span class="cellcontent"><a href= lawyer_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= lawyer_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
                         </tbody>

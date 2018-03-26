@@ -8,6 +8,7 @@ use App\Users;
 use App\Rules;
 use App\Users_Rules;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 use Excel;
 use Session;
 
