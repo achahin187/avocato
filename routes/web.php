@@ -131,7 +131,7 @@ Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->na
 Route::get('/legal_consultation_assign', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
-Route::get('/legal_consultation_view', 'LegalConsultationsController@view')->name('legal_consultation_view');
+Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

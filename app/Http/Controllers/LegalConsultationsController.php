@@ -144,8 +144,11 @@ class LegalConsultationsController extends Controller
     }
 
 
-    public function view(Request $request)
+    public function view( $id)
     {
-        return view('legal_consultations.legal_consultation_view');
+        // dd($id);
+        $consultation = Consultation::where('id',$id)->with('consultation_reply')->first();
+        // dd($consultation->consultation_reply);
+        return view('legal_consultations.legal_consultation_view')->with('consultation',$consultation);
     }
 }
