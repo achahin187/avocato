@@ -148,7 +148,24 @@ class LegalConsultationsController extends Controller
     {
         // dd($id);
         $consultation = Consultation::where('id',$id)->with('consultation_reply')->first();
-        // dd($consultation->consultation_reply);
+        foreach($consultation->consultation_reply as $lawyer)
+        {
+            $user=Users::find($lawyer->lawyer_id);
+            $lawyer['lawyer_name']=$user->name;
+        }
         return view('legal_consultations.legal_consultation_view')->with('consultation',$consultation);
+    }
+
+    public function edit_lawyer_response(Request $request)
+    {
+        // dd($request->input('id'));
+        $consultation = Consultation_Replies::find( $request->input('id'));
+        $consultation->Update([
+            'reply' => $request->input('reply'),
+            'reviewed_by' => \Auth::user()->id ,
+             'updated_at' =>Carbon::now()->format('Y-m-d H:i:s') 
+            ]);
+        
+     return response()->json($consultation);
     }
 }
