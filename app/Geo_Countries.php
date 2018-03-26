@@ -10,7 +10,7 @@ class Geo_Countries extends Model
     protected $table = 'geo_countries';
     public $timestamps = false;
 
-        public function user_details()
+    public function user_details()
     {
         return $this->hasMany('App\User_Details');
     }

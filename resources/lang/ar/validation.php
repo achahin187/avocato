@@ -150,7 +150,7 @@ return [
        'nationality'=>'الجنسيه',
        'birthdate'=>'عيد الميلاد',
        'work'   => 'العمل',
-       'work_sector'=>'التخصص',
+       'work_sector'=>'قطاع العمل',
        'work_sector_type'=>'الإختصاص المكانى',
        'join_date'=>'تاريخ الإلتحاق بالعمل بالشركه',
        'resign_date '=>'تاريخ انتهاء العمل بالشركة',
@@ -167,7 +167,12 @@ return [
         'job'   => 'العمل',
         'national_id'   => 'الرقم القومي',
         'birthday'  => 'تاريخ الميلاد',
-        'number_of_payments' => 'عدد الاقساط'
+        'number_of_payments' => 'عدد الاقساط',
+        'commercial_registration_number' => 'رقم السجل التجاري',
+        'fax'   => 'فاكس',
+        'website' => 'موقع الشركة علي الانترنت',
+        'legal_representative_mobile' => 'اسم الممثل القانوني للشركة',
+        'legal_representative_name' => 'اسم الممثل القانوني للشركة'
     ],
 
 ];
