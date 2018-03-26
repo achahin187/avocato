@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
+use App\Entities;
 
 class Helper {
 
@@ -30,5 +31,24 @@ class Helper {
         }
 
         return $random;
+    }
+
+    public static function  localizations($table_name , $field , $item_id)
+    {
+      $value_localized = Entities::where('name',$table_name)->with([
+        'localizations' => function($query) use($field, $item_id)
+        {
+            $query->where('field', $field)->where('item_id', $item_id);
+        }
+      ])->get();
+      foreach ($value_localized as  $value) {
+        
+        foreach ($value->localizations as $value1) {
+                return $value1->value;       
+                 }
+      }
+
+     
+        
     }
 }

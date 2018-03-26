@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Users;
 use App\Consultation_Types;
 use Illuminate\Support\Facades\Input;
+use App\User_Details;
+
 
 class LegalConsultationsController extends Controller
 {
@@ -19,14 +21,14 @@ class LegalConsultationsController extends Controller
      */
     public function index()
     {
-        $consultations=Consultation::all();
-        // foreach ($consultations as $consultation) {
-           
-        //         $consultation_type=Consultation_types::where('id',$consultation->consultation_type_id)->first();
+        $consultations=Consultation::orderBy('created_at','desc')->get();
+        foreach ($consultations as $consultation) {
+          
+                 $consultation_type=Consultation_types::find($consultation->consultation_type_id);
                
-        //         $consultations['consultation_type']=$consultation_type->name;
+                 $consultation['consultation_type']=$consultation_type->name;
             
-        // }
+        }
         
         return view('legal_consultations.legal_consultations')->with('consultations',$consultations);
     }
@@ -74,7 +76,7 @@ class LegalConsultationsController extends Controller
                 
             }
         // dd(Input::all());
-        return  redirect()->route('legal_consultation_add');
+        return  redirect()->route('legal_consultations');
        // return redirect()->route('legal_consultation_add');
     }
 
@@ -102,7 +104,18 @@ class LegalConsultationsController extends Controller
 
     public function assign()
     {
-        return view('legal_consultations.legal_consultations_assign');
+        $lawyers=Users::whereHas('rules', function ($query) {
+        $query->where('rule_id', '5');
+        })->with(['user_detail'=>function($q) {
+                 $q->orderby('join_date','desc');
+                 }])->get();
+        foreach($lawyers as $detail){
+                $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
+              
+                $detail['nationality']=$value;
+                 }
+        
+        return view('legal_consultations.legal_consultation_assign')->with('lawyers',$lawyers);;
     }
 
     /**
@@ -126,5 +139,11 @@ class LegalConsultationsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function view(Request $request)
+    {
+        return view('legal_consultations.legal_consultation_view');
     }
 }
