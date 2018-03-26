@@ -27,6 +27,7 @@ class CreateUserDetailsTable extends Migration
             $table->date('join_date')->nullable();
             $table->date('resign_date')->nullable();
             $table->boolean('is_resigned')->default(0);
+            $table->string('litigation_level')->nullable();
             $table->string('authorization_copy')->nullable();
             $table->string('syndicate_copy')->nullable();
             $table->string('syndicate_level')->nullable();

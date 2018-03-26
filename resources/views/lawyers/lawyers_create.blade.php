@@ -176,12 +176,15 @@
                                     @endif </span>
                         </div>
                       </div>
-   {{--                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_degrees">درجة التقاضي</label>
-                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="lawyer_degrees"><span class="master_message color--fadegreen">message</span>
+                          <input name="litigation_level" class="master_input" type="text" placeholder="درجة التقاضي.." id="lawyer_degrees"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('litigation_level'))
+                                    {{ $errors->first('litigation_level')}}
+                                    @endif</span>
                         </div>
-                      </div> --}}
+                      </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>

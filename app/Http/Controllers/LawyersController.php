@@ -9,6 +9,7 @@ use App\User_Details;
 use App\Rules;
 use App\Geo_Countries;
 use Illuminate\Support\Facades\Input;
+use App\Entity_Localizations;
 
 
 class LawyersController extends Controller
@@ -40,6 +41,7 @@ class LawyersController extends Controller
     {
         $data['types']=Rules::whereIn('id',[11,12])->get();
         $data['nationalities']=Geo_Countries::all();
+        // $data['nationalities'] = Entity_Localizations::where('entity_id','6')->where('field','nationality')->get();
         return view('lawyers.lawyers_create',$data);
     }
 
@@ -55,7 +57,7 @@ class LawyersController extends Controller
             'lawyer_name'=>'required',
             'address'=>'required',
             'nationality'=>'required',
-            'national_id'=>'required',
+            'national_id'=>'required|numeric',
             'birthdate'=>'required',
             'phone'=>'required|digits_between:1,10',
             'mobile'=>'required|digits_between:1,12',
@@ -67,6 +69,7 @@ class LawyersController extends Controller
             'join_date'=>'required',
             'resign_date'=>'required',
             'work_type'=>'required',
+            'litigation_level'=>'required',
             'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
             'syndicate_level'=>'required',
             'syndicate_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
@@ -120,11 +123,12 @@ class LawyersController extends Controller
         $lawyer_details->work_sector_type = $request->work_sector_type;
         $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
         $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+        $lawyer_details->litigation_level = $request->litigation_level ;
         $lawyer_details->syndicate_level = $request->syndicate_level ;
         $lawyer_details->authorization_copy = $authorization_copy ;
         $lawyer_details->syndicate_copy = $syndicate_copy ;
         $lawyer->user_detail()->save($lawyer_details);
-
+        return redirect()->route('lawyers_create')->with('success','تم إضافه محامي جديد بنجاح');
 
     }
 

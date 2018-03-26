@@ -158,6 +158,7 @@ return [
        'authorization_copy'=>'صورة التوكيل',
        'syndicate_level'=>'درجة القيد بالنقابة',
        'syndicate_copy'=>'صورة كارنيه النقابة',
+       'litigation_level'=>'درجه التقاضي',
         'discount_rate' => 'قيمة التخفيض',
         'start_date'    => 'تاريخ البداية',
         'end_date'      => 'تاريخ النهاية',

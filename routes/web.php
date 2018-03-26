@@ -11,6 +11,11 @@
 |
 */
 Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
+
+
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
@@ -68,6 +73,11 @@ Route::get('/users_list_create', 'UsersListController@create')->name('users_list
 Route::post('/users_list_store', 'UsersListController@store')->name('users_list_store');
 Route::get('/users_list_edit/{id}', 'UsersListController@edit')->name('users_list_edit');
 Route::post('/users_list_update/{id}', 'UsersListController@update')->name('users_list_update');
+Route::get('/users_list_destroy_get/{id}', 'UsersListController@destroyGet')->name('users_list_destroy_get');
+Route::post('/users_list_destroy_post/{id}', 'UsersListController@destroyPost')->name('users_list_destroy_post');
+Route::post('/users_list_destroy_all', 'UsersListController@destroy_all')->name('users_list_destroy_all');
+Route::get('/users_list_excel', 'UsersListController@excel')->name('users_list_excel');
+Route::post('/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
 
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
 Route::post('/news_list', 'NewsListController@filter')->name('news.filter');
@@ -118,10 +128,12 @@ Route::get('/lawyers_edit', 'LawyersController@edit')->name('lawyers_edit');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
-Route::get('/legal_consultations_create', 'LegalConsultationsController@create')->name('legal_consultations_create');
+Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->name('legal_consultations_edit');
-Route::get('/legal_consultations_assign', 'LegalConsultationsController@assign')->name('legal_consultations_assign');
+Route::get('/legal_consultation_assign', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
+Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
+Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');
@@ -150,3 +162,11 @@ Route::get('/records_create', 'RecordsController@create')->name('records_create'
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
+
+});
