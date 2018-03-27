@@ -31,7 +31,6 @@ class CreateUserDetailsTable extends Migration
             $table->string('authorization_copy')->nullable();
             $table->string('syndicate_copy')->nullable();
             $table->string('syndicate_level')->nullable();
-            $table->timestamps();
         });
     }
 

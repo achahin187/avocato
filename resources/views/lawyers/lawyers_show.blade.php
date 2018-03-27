@@ -1,6 +1,26 @@
 @extends('layout.app')
 @section('content')
 
+
+<script type="text/javascript">
+  
+function initMap() {
+  var uluru = {lat: -25.363, lng: 131.044};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 4,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+
+</script>
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap">
+</script>
+
               
               <!-- =============== Custom Content ===============-->
               <div class="row">
@@ -9,9 +29,9 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="../img/avaters/male.jpg">
-                              <h3 class="coverglobal__title color--gray_d">محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="users_list_edit.html">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المحامي</a>
+                          <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset('users_images/'.$lawyer->image)}}">
+                              <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
+                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_destroy_get',$lawyer->id)}}">استبعاد المحامي</a>
                           </div>
                         </div>
                       </div>
@@ -22,31 +42,39 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="row"><b class="col-xs-3">عنوان المحامى </b>
-                        <div class="col-xs-9"> شارع 90 - التجمع الخامس</div>
+                        <div class="col-xs-9"> {{$lawyer->address}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">الرقم القومى </b>
-                        <div class="col-xs-9">1090903840</div>
+                        <div class="col-xs-9">{{$lawyer->user_detail->national_id}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">الجنسية</b>
-                        <div class="col-xs-9"> مصري</div>
+                        <div class="col-xs-9">
+                 @foreach($nationalities as $nationality)
+                  @if($lawyer->user_detail->nationality->id == $nationality->item_id)
+                  {{$nationality->value}}
+                  @endif
+                  @endforeach</div>
                       </div>
                       <div class="row"><b class="col-xs-3">تاريخ الميلاد </b>
-                        <div class="col-xs-9">20-12-2019</div>
+                        <div class="col-xs-9">{{$lawyer->birthdate}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">رقم الهاتف</b>
-                        <div class="col-xs-9">9123489</div>
+                        <div class="col-xs-9">{{$lawyer->phone}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">رقم الموبايل</b>
-                        <div class="col-xs-9">0123456789</div>
+                        <div class="col-xs-9">{{$lawyer->mobile}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">البريد الالكترونى </b>
-                        <div class="col-xs-9">mohamed@gmail.com</div>
+                        <div class="col-xs-9">{{$lawyer->email}}</div>
                       </div>
                       <div class="row"><b class="col-xs-3">درجة القيد بالنقابة </b>
-                        <div class="col-xs-9">محامي تحت التمرين</div>
+                        <div class="col-xs-9">{{$lawyer->user_detail->syndicate_level}}</div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12"><img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      {{-- <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"> --}}
+                      <div id="map" style="height: 140px;width:600px;"></div>
+                    </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="tabs--wrapper">
@@ -65,29 +93,29 @@
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="row">
                             <div class="col-xs-6"><b class="col-xs-4">التخصص </b>
-                              <div class="col-xs-8"> جنح</div>
+                              <div class="col-xs-8"> {{$lawyer->user_detail->work_sector}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-4">الاختصاص المكاني</b>
-                              <div class="col-xs-8">text</div>
+                              <div class="col-xs-8">{{$lawyer->user_detail->work_sector_type}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-4">تاريخ الإتحاق بالعمل بالشركة</b>
-                              <div class="col-xs-8">12/6/2017</div>
+                              <div class="col-xs-8">{{$lawyer->user_detail->join_date}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-4">تاريخ انتهاء العمل بالشركة</b>
-                              <div class="col-xs-8">12/6/2017</div>
+                              <div class="col-xs-8">{{$lawyer->user_detail->resign}}</div>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="../imghttps://printifycards.com/assets/templates/40000_legal/100_legal/legal_015_1_f_black_large.jpg">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset('lawyers_files/syndicate_copy/'.$lawyer->user_detail->syndicate_copy)}}">
                                   <h4 class="text-center">كارنيه النقابة</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="../imghttps://printifycards.com/assets/templates/40000_legal/100_legal/legal_003_1_f_white_large.jpg">
-                                  <h4 class="text-center">صورة التوكيل</h4></a></div>
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset('lawyers_files/authorization_copy/'.$lawyer->user_detail->authorization_copy)}}">
+                                  <h4 class="text-center">صوره التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
                           </div>

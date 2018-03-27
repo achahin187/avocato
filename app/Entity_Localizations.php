@@ -14,5 +14,17 @@ class Entity_Localizations extends Model
         public function entity()
     {
         return $this->belongsTo('App\Entities','entity_id');
+
+    }
+
+        public function lang()
+    {
+        return $this->belongsTo('App\Languages','lang_id');
+    }
+	//doesn't work correctly don't use it country()
+        public function country()
+    {
+        return $this->belongsTo('App\Geo_Countries','item_id');
+
     }
 }

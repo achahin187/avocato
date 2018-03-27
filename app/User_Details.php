@@ -13,13 +13,13 @@ class User_Details extends Model
     'join_date', 'resign_date', 'is_resigned', 'authorization_copy', 'syndicate_copy', 'syndicate_level'];
     public $timestamps = false;
 
+public function nationality()
+   {
+       return $this->belongsTo('App\Geo_Countries','nationality_id');
+   }
 	public function user() {
 		return $this->belongsTo('App\Users','user_id');
 	}
 
-	    public function nationality()
-    {
-        return $this->belongsTo('App\Geo_Countries','nationality_id');
-    }
 }
 
