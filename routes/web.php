@@ -121,10 +121,16 @@ Route::get('/complains_edit', 'ComplainsController@edit')->name('complains_edit'
 
 Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
 Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
-Route::get('/lawyers_show', 'LawyersController@show')->name('lawyers_show');
+Route::get('/lawyers_show/{id}', 'LawyersController@show')->name('lawyers_show');
 Route::get('/lawyers_create', 'LawyersController@create')->name('lawyers_create');
 Route::post('/lawyers_store', 'LawyersController@store')->name('lawyers_store');
-Route::get('/lawyers_edit', 'LawyersController@edit')->name('lawyers_edit');
+Route::get('/lawyers_edit/{id}', 'LawyersController@edit')->name('lawyers_edit');
+Route::post('/lawyers_update/{id}', 'LawyersController@update')->name('lawyers_update');
+Route::get('/lawyers_destroy_get/{id}', 'LawyersController@destroyGet')->name('lawyers_destroy_get');
+Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name('lawyers_destroy_post');
+Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
+Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
+Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
