@@ -161,19 +161,20 @@
               <div class="col-xs-6">
                 <div class="master_field">
                   <label class="master_label" for="last_activity-filter_from">من</label>
-                  <input class="datepicker-popup master_input" type="text" placeholder="تاريخ اخر مشاركة" id="last_activity-filter_from">
+                  <input name="date_from" class="datepicker master_input" type="text" placeholder="تاريخ اخر مشاركة" id="last_activity-filter_from">
                 </div>
               </div>
               <div class="col-xs-6">
                 <div class="master_field">
                   <label class="master_label" for="last_activity-filter_to">الى</label>
-                  <input class="datepicker-popup master_input" type="text" placeholder="تاريخ اخر مشاركة" id="last_activity-filter_to">
+                  <input name="date_to" class="datepicker master_input" type="text" placeholder="تاريخ اخر مشاركة" id="last_activity-filter_to">
                 </div>
               </div>
             </div>
           </div><br>
           <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
           <button class="remodal-confirm"  type="submit">تطبيق الفلاتر</button>
+        </form>
         </div>
         <table class="table-1">
           <thead>

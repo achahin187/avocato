@@ -1,9 +1,9 @@
- @extends('layout.app')             
- @section('content')
-
+@extends('layout.app')
+@section('content')
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -21,14 +21,14 @@
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                      <div class="col-md-12"><span class="pull-left"><b>نص السؤال :</b>&nbsp;
-                          وريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو</span>
-                        <div class="pull-right">
-                          بتاريخ
-                          10/10/2018
-                          &nbsp;<i class="fa fa-calendar"></i>
-                        </div>
-                      </div>
+                      <div class="col-md-12"><span class="pull-left"><b>نص سؤال الإستشارة المطلوب إرسالها</b>
+                          <div class="pull-right">
+                            بتاريخ
+                            10/10/2018
+                            &nbsp;<i class="fa fa-calendar"></i>
+                          </div>
+                          <hr>
+                          <p>وريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو</p></span></div>
                       <div class="clearfix"></div>
                     </div>
                     <div class="full-table">
@@ -100,7 +100,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">إختيار المحامي المحدد </a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">إرسال الإستشارة للمحامي المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -119,162 +119,26 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach($lawyers as $lawyer)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
+                            <td><span class="cellcontent">{{$lawyer->code}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->name}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->address}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                            @if($lawyer->is_active)
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                            @else
+                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
+                            @endif
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">12558</span></td>
-                            <td><span class="cellcontent">مجدي سليم</span></td>
-                            <td><span class="cellcontent">134567788899</span></td>
-                            <td><span class="cellcontent">مصري</span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                            <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                            <td><span class="cellcontent">0102345678</span></td>
-                            <td><span class="cellcontent">12-2016</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -438,6 +302,5 @@
                   </div>
                 </div>
               </div>
-
-
- @endsection
+              <!-- =============== PAGE VENDOR Triggers =================-->
+         @endsection

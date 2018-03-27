@@ -8,6 +8,7 @@ class Entities extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'entities';
+    protected $fillable=['name'];
     public $timestamps = false;
 
         public function localizations()

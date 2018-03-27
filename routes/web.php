@@ -124,13 +124,20 @@ Route::get('/lawyers_create', 'LawyersController@create')->name('lawyers_create'
 Route::post('/lawyers_store', 'LawyersController@store')->name('lawyers_store');
 Route::get('/lawyers_edit/{id}', 'LawyersController@edit')->name('lawyers_edit');
 Route::post('/lawyers_update/{id}', 'LawyersController@update')->name('lawyers_update');
+Route::get('/lawyers_destroy_get/{id}', 'LawyersController@destroyGet')->name('lawyers_destroy_get');
+Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name('lawyers_destroy_post');
+Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
+Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
+Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
-Route::get('/legal_consultations_create', 'LegalConsultationsController@create')->name('legal_consultations_create');
+Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->name('legal_consultations_edit');
-Route::get('/legal_consultations_assign', 'LegalConsultationsController@assign')->name('legal_consultations_assign');
+Route::get('/legal_consultation_assign', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
+Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
+Route::get('/legal_consultation_view', 'LegalConsultationsController@view')->name('legal_consultation_view');
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

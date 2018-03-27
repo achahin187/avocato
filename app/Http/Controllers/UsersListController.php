@@ -21,6 +21,7 @@ class UsersListController extends Controller
      */
     public function index()
     {   
+        // return Users::withTrashed()->restore();
         $data['users'] = Users::whereHas('rules', function($q){
         $q->whereIn('name',['super admin','admin','data entry','call center']);
     })->get();
@@ -371,7 +372,6 @@ else{
     {
         $user = Users::find($id);
         $user->delete();
-        return redirect()->route('users_list')->with('success','تم حذف العضويه بنجاح');
     }
 
         public function destroy_all()

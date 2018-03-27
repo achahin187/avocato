@@ -1,8 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
+use App\Consultation;
+use Carbon\Carbon;
+use App\Users;
+use App\Consultation_Types;
+use Illuminate\Support\Facades\Input;
+use App\User_Details;
+
 
 class LegalConsultationsController extends Controller
 {
@@ -13,7 +21,16 @@ class LegalConsultationsController extends Controller
      */
     public function index()
     {
-        return view('legal_consultations.legal_consultations');
+        $consultations=Consultation::orderBy('created_at','desc')->get();
+        foreach ($consultations as $consultation) {
+          
+                 $consultation_type=Consultation_types::find($consultation->consultation_type_id);
+               
+                 $consultation['consultation_type']=$consultation_type->name;
+            
+        }
+        
+        return view('legal_consultations.legal_consultations')->with('consultations',$consultations);
     }
 
     /**
@@ -21,9 +38,9 @@ class LegalConsultationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
-        return view('legal_consultations.legal_consultations_create');
+        return view('legal_consultations.legal_consultation_add');
     }
 
     /**
@@ -34,7 +51,33 @@ class LegalConsultationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $consultation=new Consultation();
+         $validator = Validator::make($request->all(),  $consultation::$rules);
+         if($validator->fails())
+         {
+            return  redirect()->route('legal_consultation_add')
+                    ->withErrors($validator)
+                    ->withInput();
+         }
+        if(\Auth::check())
+            {
+         $user=Users::where('api_token',$request->input('_token'))->first();
+        $consultation_type=Consultation_Types::where('name',$request->input('consultation_cat'))->first();
+        $input=[];
+        $input['code']=Helper::generateRandom(new Consultation(),'code',6);
+        $input['consultation_type_id']=$consultation_type->id;
+        $input['is_paid']=$request->input('consultation_type');
+        $input['question']=$request->input('consultation_question');
+        $input['created_by']=\Auth::user()->id;
+         $input['created_at']=Carbon::now()->format('Y-m-d H:i:s');
+         $input['is_replied']=1;
+        // dd($input);
+        Consultation::Create($input);
+                
+            }
+        // dd(Input::all());
+        return  redirect()->route('legal_consultations');
+       // return redirect()->route('legal_consultation_add');
     }
 
     /**
@@ -61,7 +104,18 @@ class LegalConsultationsController extends Controller
 
     public function assign()
     {
-        return view('legal_consultations.legal_consultations_assign');
+        $lawyers=Users::whereHas('rules', function ($query) {
+        $query->where('rule_id', '5');
+        })->with(['user_detail'=>function($q) {
+                 $q->orderby('join_date','desc');
+                 }])->get();
+        foreach($lawyers as $detail){
+                $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
+              
+                $detail['nationality']=$value;
+                 }
+        
+        return view('legal_consultations.legal_consultation_assign')->with('lawyers',$lawyers);;
     }
 
     /**
@@ -85,5 +139,11 @@ class LegalConsultationsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function view(Request $request)
+    {
+        return view('legal_consultations.legal_consultation_view');
     }
 }

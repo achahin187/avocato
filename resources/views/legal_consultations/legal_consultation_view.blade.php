@@ -1,9 +1,9 @@
 @extends('layout.app')
 @section('content')
-
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -12,7 +12,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('legal_consultations_assign')}}">ارسال الإستشارة لمحامي</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('legal_consultation_assign')}}">ارسال الإستشارة لمحامي</a>
                       </div>
                     </div>
                   </div>
@@ -21,7 +21,7 @@
                       <div class="caption">
                         <h3>كود الإستشارة: 0890807</h3>
                       </div>
-                      <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="{{route('legal_consultations_edit')}}">تعديل</a>
+                      <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="legal_consultation_edit.html">تعديل</a>
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
                     <div class="col-md-12">
@@ -40,7 +40,7 @@
                         <div class="col-md-12">
                           <div class="pull-left">
                             رد المحامي
-                            &nbsp;<b><a href="{{route('lawyers_show')}}">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
+                            &nbsp;<b><a href="lawyer_view.html">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
                           </div>
                           <div class="pull-right">
                             بتاريخ
@@ -59,9 +59,26 @@
                             <label for="perfect1">الرد الأمثل</label>
                           </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadegreen bradius--small bshadow--0" type="submit"><i class="fa fa-edit"></i><span>تعديل</span>
-                          </button>
+                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><a class="master-btn color--white bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#edit_individual_reply1"><i class="fa fa-edit"></i><span>تعديل الرد</span></a>
+                          <div class="remodal-bg"></div>
+                          <div class="remodal" data-remodal-id="edit_individual_reply1" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                            <div>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <h3>تعديل رد المحامي </h3><a href="lawyer_view.html">محمد محسن</a>
+                                  <div class="col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="individual_reply1">نص الرد</label>
+                                      <textarea class="master_input" name="textarea" id="individual_reply1" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                            <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                          </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                           <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-trash"></i><span>حذف</span>
@@ -73,7 +90,7 @@
                         <div class="col-xs-12">
                           <div class="pull-left">
                             رد المحامي
-                            &nbsp;<b><a href="{{route('lawyers_show')}}">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
+                            &nbsp;<b><a href="lawyer_view.html">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
                           </div>
                           <div class="pull-right">
                             بتاريخ
@@ -92,9 +109,26 @@
                             <label for="perfect2">الرد الأمثل</label>
                           </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadegreen bradius--small bshadow--0" type="submit"><i class="fa fa-edit"></i><span>تعديل</span>
-                          </button>
+                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><a class="master-btn color--white bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#edit_individual_reply2"><i class="fa fa-edit"></i><span>تعديل الرد</span></a>
+                          <div class="remodal-bg"></div>
+                          <div class="remodal" data-remodal-id="edit_individual_reply2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                            <div>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <h3>تعديل رد المحامي </h3><a href="lawyer_view.html">محمد محسن</a>
+                                  <div class="col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="individual_reply2">نص الرد</label>
+                                      <textarea class="master_input" name="textarea" id="individual_reply2" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                            <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                          </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                           <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-trash"></i><span>حذف</span>
@@ -133,5 +167,5 @@
                   </div>
                 </div>
               </div>
-
-@endsection
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+           @endsection
