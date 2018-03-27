@@ -24,11 +24,11 @@
                       <div class="col-md-12"><span class="pull-left"><b>نص سؤال الإستشارة المطلوب إرسالها</b>
                           <div class="pull-right">
                             بتاريخ
-                            10/10/2018
+                            {{$consultation->created_at}}
                             &nbsp;<i class="fa fa-calendar"></i>
                           </div>
                           <hr>
-                          <p>وريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو</p></span></div>
+                          <p>{{$consultation->question}}</p></span></div>
                       <div class="clearfix"></div>
                     </div>
                     <div class="full-table">

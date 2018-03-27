@@ -26,7 +26,7 @@ class LegalConsultationsController extends Controller
         foreach ($consultations as $consultation) {
           
                  $consultation_type=Consultation_types::find($consultation->consultation_type_id);
-               
+               // dd($consultation);
                  $consultation['consultation_type']=$consultation_type->name;
             
         }
@@ -99,13 +99,15 @@ class LegalConsultationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('legal_consultations.legal_consultations_edit');
+        return view('legal_consultations.legal_consultation_edit')->with('id',$id);
     }
 
-    public function assign()
+    public function assign($id)
     {
+        $consultation = Consultation::find($id);
+        // dd($consultation);
         $lawyers=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
@@ -117,7 +119,7 @@ class LegalConsultationsController extends Controller
                 $detail['nationality']=$value;
                  }
         
-        return view('legal_consultations.legal_consultation_assign')->with('lawyers',$lawyers);;
+        return view('legal_consultations.legal_consultation_assign',compact('lawyers','consultation'));
     }
 
     /**
@@ -140,7 +142,8 @@ class LegalConsultationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $consultation = Consultation::destroy( $id);
+        return  redirect()->route('legal_consultations');
     }
 
 
@@ -176,5 +179,20 @@ class LegalConsultationsController extends Controller
         
         
      return response()->json($consultation);
+    }
+    public function edit_consultation(Request $request ,$id)
+    {
+        $consultation = Consultation::find($id);
+        // dd($request->all());
+        $consultation_type=Consultation_Types::where('name',$request->input('consultation_cat'))->first();
+        $consultation->Update([
+            'consultation_type_id' => $consultation_type->id,
+            'is_paid' => $request->input('consultation_type') ,
+             'question' =>$request->input('consultation_question') 
+            ]);
+        Consultation_Replies::where('consultation_id',$id)->update([
+            'reply'=>$request->input('consultation_answer')
+        ]);
+        return  redirect()->route('legal_consultations');
     }
 }
