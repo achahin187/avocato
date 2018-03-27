@@ -19,5 +19,6 @@ class Geo_Countries extends Model
         public function localizations()
     {
         return $this->hasMany('App\Entity_Localizations','item_id');
+
     }
 }

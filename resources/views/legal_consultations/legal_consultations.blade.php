@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="http://localhost/secure_bridge/public/legal_consultation_add">إضافة</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('legal_consultation_add')}}">إضافة</a>
                       </div>
                     </div>
                   </div>
