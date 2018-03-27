@@ -73,7 +73,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       {{-- <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"> --}}
-                      <div id="map" style="height: 140px;width:200px;"></div>
+                      <div id="map" style="height: 140px;width:600px;"></div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
