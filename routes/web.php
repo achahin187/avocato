@@ -103,11 +103,13 @@ Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit', 'CompaniesController@edit')->name('companies.edit');
+Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
 
-Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('individuals_companies');
-Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('individuals_companies_show');
-Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('individuals_companies_create');
-Route::get('/individuals_companies_edit', 'IndividualsCompaniesController@edit')->name('individuals_companies_edit');
+Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
+Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
+Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('ind.com.create');
+Route::post('/individuals_companies_store', 'IndividualsCompaniesController@store')->name('ind.com.store');
+Route::get('/individuals_companies_edit', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
@@ -137,7 +139,9 @@ Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->na
 Route::get('/legal_consultation_assign', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
-Route::get('/legal_consultation_view', 'LegalConsultationsController@view')->name('legal_consultation_view');
+Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
+Route::post('/edit_lawyer_response', 'LegalConsultationsController@edit_lawyer_response')->name('edit_lawyer_response');
+
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

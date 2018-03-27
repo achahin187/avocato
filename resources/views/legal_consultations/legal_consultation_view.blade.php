@@ -19,7 +19,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="main-title-conts">
                       <div class="caption">
-                        <h3>كود الإستشارة: 0890807</h3>
+                        <h3>كود الإستشارة: {{$consultation->code}}</h3>
                       </div>
                       <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="legal_consultation_edit.html">تعديل</a>
                       </div><span class="mainseparator bgcolor--main"></span>
@@ -27,57 +27,64 @@
                     <div class="col-md-12">
                       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                         <div class="col-md-12"><span class="pull-left"><b>نص السؤال :</b>&nbsp;
-                            وريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو</span>
+                            {{$consultation->question}}</span>
                           <div class="pull-right">
                             بتاريخ
-                            10/10/2018
+                            {{$consultation->created_at}}
                             &nbsp;<i class="fa fa-calendar"></i>
                           </div>
                         </div>
                         <div class="clearfix"></div>
                       </div>
+                      @foreach($consultation->consultation_reply as $lawyer_reply)
                       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                         <div class="col-md-12">
                           <div class="pull-left">
                             رد المحامي
-                            &nbsp;<b><a href="lawyer_view.html">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
+                            &nbsp;<b><a href="lawyer_view.html">{{$lawyer_reply->lawyer_name}}</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
                           </div>
                           <div class="pull-right">
                             بتاريخ
-                            10/10/2018
+                            {{$lawyer_reply->created_at}}
                             &nbsp;<i class="fa fa-calendar"></i>
                           </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
                         <div class="col-md-12">
-                          <p><b>الرد :</b>لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس أيا كوممودو كونسيكيوات . ديواس أيوتي أريري دولار إن ريبريهينديرأيت فوليوبتاتي فيلايت أيسسي كايلليوم دولار أيو فيجايت نيولا باراياتيور. أيكسسيبتيور ساينت أوككايكات كيوبايداتات نون بروايدينت ,سيونت ان كيولبا كيو أوفيسيا ديسيريونتموليت انيم أيدي ايست لابوريوم</p>
+                          <p><b>:الرد </b><p id="original_reply.{{$lawyer_reply->id}}">{{$lawyer_reply->reply}}</p></p>
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-12 color--fadebrown bold">
                           <div class="radiorobo">
-                            <input type="radio" id="perfect1">
-                            <label for="perfect1">الرد الأمثل</label>
+                            @if($lawyer_reply->is_perfect_answer)
+                            <input type="radio"  checked name="perfect_answer" id="{{$lawyer_reply->id}}">
+                            <label for="{{$lawyer_reply->id}}">الرد الأمثل</label>
+                            @else
+                            <input type="radio"   name="perfect_answer" id="{{$lawyer_reply->id}}">
+                            <label for="{{$lawyer_reply->id}}">الرد الأمثل</label>
+                            @endif
+                            
                           </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><a class="master-btn color--white bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#edit_individual_reply1"><i class="fa fa-edit"></i><span>تعديل الرد</span></a>
+                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><a class="master-btn color--white bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#edit_individual_reply.{{$lawyer_reply->id}}"><i class="fa fa-edit"></i><span>تعديل الرد</span></a>
                           <div class="remodal-bg"></div>
-                          <div class="remodal" data-remodal-id="edit_individual_reply1" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                          <div class="remodal" data-remodal-id="edit_individual_reply.{{$lawyer_reply->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                             <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                             <div>
                               <div class="row">
                                 <div class="col-xs-12">
-                                  <h3>تعديل رد المحامي </h3><a href="lawyer_view.html">محمد محسن</a>
+                                  <h3>تعديل رد المحامي </h3><a href="lawyer_view.html">{{$lawyer_reply->lawyer_name}}</a>
                                   <div class="col-xs-12">
                                     <div class="master_field">
-                                      <label class="master_label mandatory" for="individual_reply1">نص الرد</label>
-                                      <textarea class="master_input" name="textarea" id="individual_reply1" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
+                                      <label class="master_label mandatory" for="individual_reply.{{$lawyer_reply->id}}">نص الرد</label>
+                                      <textarea class="master_input" name="textarea" id="individual_reply.{{$lawyer_reply->id}}" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div><br>
                             <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                            <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                            <button class="remodal-confirm" data-remodal-action="confirm" onclick="edit_reply({{$lawyer_reply->id}})">إضافة</button>
                           </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
@@ -86,56 +93,8 @@
                         </div>
                         <div class="clearfix"></div>
                       </div>
-                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="col-xs-12">
-                          <div class="pull-left">
-                            رد المحامي
-                            &nbsp;<b><a href="lawyer_view.html">محمد محسن</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
-                          </div>
-                          <div class="pull-right">
-                            بتاريخ
-                            10/10/2018
-                            &nbsp;<i class="fa fa-calendar"></i>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-                        <hr>
-                        <div class="col-md-12">
-                          <p><b>الرد :</b>لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس أيا كوممودو كونسيكيوات . ديواس أيوتي أريري دولار إن ريبريهينديرأيت فوليوبتاتي فيلايت أيسسي كايلليوم دولار أيو فيجايت نيولا باراياتيور. أيكسسيبتيور ساينت أوككايكات كيوبايداتات نون بروايدينت ,سيونت ان كيولبا كيو أوفيسيا ديسيريونتموليت انيم أيدي ايست لابوريوم</p>
-                        </div>
-                        <div class="col-md-8 col-sm-8 col-xs-12 color--fadebrown bold">
-                          <div class="radiorobo">
-                            <input type="radio" id="perfect2">
-                            <label for="perfect2">الرد الأمثل</label>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6"><a class="master-btn color--white bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#edit_individual_reply2"><i class="fa fa-edit"></i><span>تعديل الرد</span></a>
-                          <div class="remodal-bg"></div>
-                          <div class="remodal" data-remodal-id="edit_individual_reply2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
-                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                            <div>
-                              <div class="row">
-                                <div class="col-xs-12">
-                                  <h3>تعديل رد المحامي </h3><a href="lawyer_view.html">محمد محسن</a>
-                                  <div class="col-xs-12">
-                                    <div class="master_field">
-                                      <label class="master_label mandatory" for="individual_reply2">نص الرد</label>
-                                      <textarea class="master_input" name="textarea" id="individual_reply2" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div><br>
-                            <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                            <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
-                          </div>
-                        </div>
-                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-trash"></i><span>حذف</span>
-                          </button>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div>
+                      @endforeach
+                      
                       <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
                         <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
                         </button>
@@ -169,3 +128,26 @@
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
            @endsection
+           <script type="text/javascript">
+             function edit_reply(id)
+             {
+
+              var new_reply=document.getElementById("individual_reply."+id).value;
+              document.getElementById("original_reply."+id).innerHTML =new_reply;
+              
+
+              $.ajax({
+                        
+                        url: '{{route("edit_lawyer_response")}}',
+                        dataType : 'json',
+                        type: 'POST',
+
+                        data: { 'id' : id,'reply' : new_reply , '_token':"{{ csrf_token() }}"},
+                        success: function()
+                        {
+                            // alert("Settings has been updated successfully.");
+                        }
+                    });
+              // alert(new_reply);
+             }
+           </script>

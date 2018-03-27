@@ -58,14 +58,31 @@ class Users extends Authenticatable
 
    // Join between 'users' && 'users_rules'
    // get all users with user_type is 8 => individuals only
-   public function scopeIndividuals($query) {
-       $result = $query->select('users_rules.id as ur_id', 'users.id', 'name', 'full_name', 'email', 'phone', 'mobile', 'address', 'code', 'birthdate', 'creditcard_number', 'creditcard_cvv', 'creditcard_month', 'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code', 'is_verification_code_expired', 'last_login', 'api_token', 'device_token', 'created_by', 'modified_by', 'remember_token')
+   public function scopeUsers($query, $user_rule_id) {
+       $result = $query->select('users_rules.id as ur_id', 'users.id', 'name', 'parent_id', 'full_name', 'email', 'image', 'phone', 'mobile', 'address', 'code', 'birthdate', 'creditcard_number', 'creditcard_cvv', 'creditcard_month', 'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code', 'is_verification_code_expired', 'last_login', 'api_token', 'device_token', 'created_by', 'modified_by', 'remember_token')
                            ->join('users_rules', 'users.id', '=', 'users_rules.user_id')
-                           ->where('users_rules.rule_id', 8);
+                           ->where('users_rules.rule_id', $user_rule_id);
    }
 
    // One user in 'users' table has One record in 'clients_passwords' table
    public function client_password() {
        return $this->hasOne('App\ClientsPasswords','user_id');
    }
+
+   public function user_company_detail() {
+       return $this->hasOne('App\User_Company_Details', 'user_id');
+   }
+
+   // Self relation between individual and company
+   public function companyParent()
+   {
+       return $this->belongsTo('App\Users', 'parent_id');
+   }
+
+   // Self relation
+   public function companyChildren()
+   {
+       return $this->hasMany('App\Users', 'parent_id');
+   }
+
 }

@@ -118,7 +118,7 @@
                             @else
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
                             @endif
-                            <td><span class="cellcontent"><a href= "{{route('legal_consultation_view')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= "{{URL('legal_consultation_view/'.$consultation->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= legal_consultation_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
                           
