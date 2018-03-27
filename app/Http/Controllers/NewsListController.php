@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Auth;
 use Excel;
 use Session;
-use Auth;
 use App\News;
 use Validator;
 use \Carbon\Carbon;
@@ -113,24 +114,36 @@ class NewsListController extends Controller
         if($request->newsImg) {
             $img = $request->newsImg;
             $newImg = time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('storage/app/public/news', $newImg);      // move to /storage/app/public
+            $imgPath = 'storage/app/public/news/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
             $imgPath = null;
         }
 
-        $current_user = 'Admin-Test';
-        // $current_user = Auth::user()->name; // Get current username 
+        // check is active
+        if($request->activate) {
+            $activate = 0;
+        } else {
+            $activate = 1;
+        }
 
-        News::create([
-            'name'  => $request->newsName,
-            'body'  => $request->newsContent,
-            'photo' => $imgPath,
-            'is_active' => $request->activate,
-            'published_at' => $published_at,
-            'created_by'   => $current_user,
-            'modified_by'  => $current_user,
-        ]);
+        $current_user = Auth::user()->id;
+
+        try {
+            $news = new News;
+            $news->name  = $request->newsName;
+            $news->body  = $request->newsContent;
+            $news->photo = $imgPath;
+            $news->is_active = $activate;
+            $news->published_at = $published_at;
+            $news->created_by   = $current_user;
+            $news->modified_by  = $current_user;
+            $news->save();
+        } catch(Exception $ex) {
+            $news->forcedelete();
+            Session::flash('warning', 'حدث خطأ ما عند ادخال الخبر');
+            return redirect()->back()->withInput();
+        }
 
         return redirect('news_list');
     }
@@ -170,7 +183,6 @@ class NewsListController extends Controller
          $this->validate($request, [
             'newsName'  => 'required',
             'newsImg'  => 'image|mimes:jpeg,jpg,png',
-            'activate'  => 'required',
             'newsContent'   => 'required'
         ]);
         
@@ -198,17 +210,28 @@ class NewsListController extends Controller
             }
         }
 
-        $current_user = 'Ahmed Yacoub';
-        // $current_user = Auth::user()->name; // Get current username 
+        // check is active
+        if($request->activate == 1) {
+            $activate = 1;
+        } else {
+            $activate = 0;
+        }
 
+        $current_user = Auth::user()->id;
+
+        try {
         $news->name  = $request->newsName;
         $news->body  = $request->newsContent;
         $news->photo = $imgPath;
-        $news->is_active = $request->activate;
+        $news->is_active = $activate;
         $news->published_at = $published_at;
         $news->created_by   = $current_user;
         $news->modified_by  = $current_user;
         $news->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', 'حدث خطأ ما عند تعديل الخبر');
+            return redirect()->back()->withInput();
+        }
 
         return redirect('news_list');
     }

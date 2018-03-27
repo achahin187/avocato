@@ -20,8 +20,8 @@ class CreateNewsTable extends Migration
             $table->string('photo')->nullable();
             $table->boolean('is_active')->default(0);
             $table->dateTime('published_at')->nullable();
-            $table->string('created_by');
-            $table->string('modified_by')->nullable();
+            $table->integer('created_by');
+            $table->integer('modified_by')->nullable();
             $table->timestamps();
         });
     }

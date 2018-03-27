@@ -18,6 +18,18 @@
     </div>
   </div>
 
+{{-- Start alert messages --}}
+    <div class="col-lg-12">
+      @if (Session::has('success'))
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+      @endif
+
+      @if (Session::has('warning'))
+        <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+      @endif
+    </div>
+    {{-- End alert --}}
+
   <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
   <div class="col-lg-12">

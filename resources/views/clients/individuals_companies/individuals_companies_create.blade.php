@@ -120,7 +120,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_address">عنوان العميل</label>
-            <input class="master_input" type="text" placeholder="عنوان العميل .." id="client_address">             
+            <input name="address" value="{{ old('address') }}" class="master_input" type="text" placeholder="عنوان العميل .." id="client_address">             
             {{--  Error  --}}             
             @if ($errors->has('package_type_id'))               
             <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
@@ -132,7 +132,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_id">الرقم القومى</label>
-            <input class="master_input" type="number" placeholder="الرقم القومى" id="client_id">             
+            <input name="national_id" class="master_input" type="number" placeholder="الرقم القومى" id="client_id">             
             {{--  Error  --}}             
             @if ($errors->has('package_type_id'))               
             <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
@@ -159,45 +159,53 @@
           
         </div>
 
+        {{--  Birthday  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_birth">تاريخ الميلاد</label>
-            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="client_birth">             
+            <input name="birthday" value="{{ old('birthday') }}" class="datepicker-popup master_input" type="text" placeholder="ادخل تاريخ الميلاد" id="client_birth">             
             {{--  Error  --}}            
              @if ($errors->has('package_type_id'))              
               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>        
                    @endif
           </div>
         </div>
+
+        {{--  Phone  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
-            <input class="master_input" type="number" placeholder="رقم الهاتف" id="client_tel">          
+            <input name="phone" value="{{ old('phone') }}" class="master_input" type="number" placeholder="رقم الهاتف" id="client_tel">          
                {{--  Error  --}}         
                    @if ($errors->has('package_type_id'))          
                     <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>      
                            @endif
           </div>
         </div>
+
+        {{--  Mobile  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_mob">رقم الهاتف الجوال</label>
-            <input class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
+
+        {{--  email  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="client_email">البريد الالكترونى</label>
-            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="client_email">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="email" value="{{ old('email') }}"  class="master_input" type="email" placeholder="البريد الالكترونى" id="client_email">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
+
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_photo">صورة شخصية</label>
             <div class="file-upload">
               <div class="file-select">
                 <div class="file-select-name" id="noFile">اضغط هنا لرفع الصورة الشخصية للعميل </div>
-                <input class="chooseFile" type="file" name="chooseFile" id="client_photo">
+                <input class="chooseFile" type="file" name="personal_image" id="client_photo">
               </div>
             </div>             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
@@ -205,15 +213,15 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input class="master_input" type="number" placeholder="%" id="discount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="icon" id="radbtn_2" checked="true">
+            <input class="icon" type="radio" name="activate" id="radbtn_2" checked="true">
             <label for="radbtn_2">مفعل</label>
-            <input class="icon" type="radio" name="icon" id="radbtn_3">
+            <input class="icon" type="radio" name="activate" id="radbtn_3">
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -230,94 +238,66 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_start_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="start_date" value="{{ old('start_date') }}"  class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_start_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_end_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="end_date" value="{{ old('end_date') }}"  class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_end_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-12">     
+        
+        {{--  package type  --}}
+        <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="license_type">نوع الباقة </label>
-            <select class="master_input select2" id="license_type" style="width:100%;">
-              <option>ذهبي</option>
-              <option>بلاتيني</option>
-              <option>فضي</option>
-            </select>             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <label class="master_label mandatory" for="license_type">نوع الباقة</label>
+            <select name="package_type_id" class="master_input select2" id="license_type" style="width:100%;">
+                
+              @foreach ($subscription_types as $types)
+                <option value="{{ $types->id }}">{{ $types->name }}</option>
+              @endforeach
+              
+            </select>
+            {{--  Error  --}}
+          @if ($errors->has('package_type_id'))
+              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>
+            @endif
           </div>
+          
         </div>
+
+        {{--  subscriptioin duration  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-            <input class="master_input" type="number" placeholder="0" id="license_period">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="duration" value="{{ old('duration') }}" class="master_input" type="number" placeholder="0" id="license_period">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
+
+        {{--  value  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_amount">قيمة التعاقد</label>
-            <input class="master_input" type="number" placeholder="قيمة التعاقد" id="license_amount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="value" value="{{ old('value') }}"  class="master_input" type="number" placeholder="قيمة التعاقد" id="license_amount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
+
+        {{--  number of payments  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-            <input class="master_input" type="number" placeholder="عدد الاقساط" id="license_num">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="number_of_payments" value="{{ old('number_of_payments') }}"  class="master_input" type="number" placeholder="عدد الاقساط" id="license_num">             
+            {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
           </div>
         </div>
         <div class="clearfix"></div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label mandatory" for="premium1_amount">قيمة القسط الاول</label>
-            <input class="master_input" type="number" placeholder="قيمة القسط الاول" id="premium1_amount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
+
+        {{--  Generated input fields  --}}
+        <div id="generated">
         </div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label mandatory" for="license_date">تاريخ  سداد القسط الاول</label>
-            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
-        </div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label">حالة السداد للقسط الاول</label>
-            <div class="radiorobo">
-              <input type="radio" id="rad_1">
-              <label for="rad_1">نعم</label>
-            </div>
-            <div class="radiorobo">
-              <input type="radio" id="rad_2">
-              <label for="rad_2">لا</label>
-            </div>             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
-        </div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label mandatory" for="premium2_amount">قيمة القسط الثانى</label>
-            <input class="master_input" type="number" placeholder="قيمة القسط الثانى" id="premium2_amount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
-        </div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label mandatory" for="premium2_date">تاريخ  سداد القسط الثانى</label>
-            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="premium2_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
-        </div>
-        <div class="col-md-4 col-xs-12">
-          <div class="master_field">
-            <label class="master_label">حالة السداد للقسط الثانى</label>
-            <div class="radiorobo">
-              <input type="radio" id="rad_1">
-              <label for="rad_1">نعم</label>
-            </div>
-            <div class="radiorobo">
-              <input type="radio" id="rad_2">
-              <label for="rad_2">لا</label>
-            </div>             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
-          </div>
-        </div>
+
+
         <div class="clearfix"></div>
         <div class="col-md-2 col-md-3 col-sm-4 col-xs-12">
           <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
