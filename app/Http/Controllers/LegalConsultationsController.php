@@ -168,4 +168,13 @@ class LegalConsultationsController extends Controller
         
      return response()->json($consultation);
     }
+
+    public function delete_lawyer_response(Request $request)
+    {
+        // dd($request->input('id'));
+        $consultation = Consultation_Replies::destroy( $request->input('id'));
+        
+        
+     return response()->json($consultation);
+    }
 }

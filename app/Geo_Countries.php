@@ -12,6 +12,6 @@ class Geo_Countries extends Model
 
     public function user_details()
     {
-        return $this->hasMany('App\User_Details');
+        return $this->hasMany('App\User_Details','nationality_id');
     }
 }

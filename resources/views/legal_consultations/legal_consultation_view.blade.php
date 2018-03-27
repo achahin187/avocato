@@ -12,7 +12,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('legal_consultation_assign')}}">ارسال الإستشارة لمحامي</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{URL('legal_consultation_assign/'.$consultation->id)}}">ارسال الإستشارة لمحامي</a>
                       </div>
                     </div>
                   </div>
@@ -37,7 +37,7 @@
                         <div class="clearfix"></div>
                       </div>
                       @foreach($consultation->consultation_reply as $lawyer_reply)
-                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom" id="lawyer_div.{{$lawyer_reply->id}}">
                         <div class="col-md-12">
                           <div class="pull-left">
                             رد المحامي
@@ -88,7 +88,7 @@
                           </div>
                         </div>
                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-trash"></i><span>حذف</span>
+                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit" onclick="delete_reply({{$lawyer_reply->id}})"><i class="fa fa-trash"></i><span>حذف</span>
                           </button>
                         </div>
                         <div class="clearfix"></div>
@@ -150,4 +150,24 @@
                     });
               // alert(new_reply);
              }
+             function delete_reply(id)
+             {
+
+              var elem = document.getElementById("lawyer_div."+id);
+                   elem.parentNode.removeChild(elem);
+              
+              $.ajax({
+                        
+                        url: '{{route("delete_lawyer_response")}}',
+                        dataType : 'json',
+                        type: 'POST',
+
+                        data: { 'id' : id, '_token':"{{ csrf_token() }}"},
+                        success: function()
+                        {
+                            // alert("Reply Deleted Successfully.");
+                        }
+                    });
+              
+              }
            </script>

@@ -130,12 +130,12 @@ Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
 Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->name('legal_consultations_edit');
-Route::get('/legal_consultation_assign', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
+Route::get('/legal_consultation_assign/{id}', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
 Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 Route::post('/edit_lawyer_response', 'LegalConsultationsController@edit_lawyer_response')->name('edit_lawyer_response');
-
+Route::post('/delete_lawyer_response', 'LegalConsultationsController@delete_lawyer_response')->name('delete_lawyer_response');
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');
