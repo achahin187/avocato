@@ -13,7 +13,7 @@ class CreateUserDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user__details', function (Blueprint $table) {
+        Schema::create('user_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('country_id')->nullable();
@@ -31,7 +31,6 @@ class CreateUserDetailsTable extends Migration
             $table->string('authorization_copy')->nullable();
             $table->string('syndicate_copy')->nullable();
             $table->string('syndicate_level')->nullable();
-            $table->timestamps();
         });
     }
 
