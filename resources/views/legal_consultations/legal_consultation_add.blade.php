@@ -30,10 +30,10 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
-                        <select class="master_input " id="consultation_cat"  data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" name="consultation_cat">
-                          <option>جنايات</option>
-                          <option>مدنية</option>
-                          <option>مادية</option>
+                        <select class="master_input select2" id="consultation_cat"  data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" name="consultation_cat">
+                          @foreach($consultation_types as $type)
+                          <option value="{{$type->name}}">{{$type->name}}</option>
+                          @endforeach
                         </select><span class="master_message color--fadegreen">message content</span>
                       </div>
                     </div>
