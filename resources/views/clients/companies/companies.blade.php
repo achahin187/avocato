@@ -157,7 +157,6 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"></span></td>
                 <td>
                   <span class="cellcontent">
                     <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
