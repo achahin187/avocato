@@ -149,8 +149,8 @@
                 </td>
                 <td>
                   <span class="cellcontent">
-                    @if (isset($ind_com->companyParent->code))
-                      {{ $ind_com->companyParent->code }}
+                    @if (isset($ind_com->companyParent->name))
+                      {{ $ind_com->companyParent->name }}
                     @else
                       لا يوجد
                     @endif

@@ -148,7 +148,16 @@
                   </span>
                 </td>
                 <td><span class="cellcontent"><i class = "fa {{ $company->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
-                <td><span class="cellcontent">{{ $company->user_company_detail->legal_representative_name }}</span></td>
+                <td>
+                  <span class="cellcontent">
+                    @if ( isset($company->user_company_detail->legal_representative_name) )
+                      {{ $company->user_company_detail->legal_representative_name }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td><span class="cellcontent"></span></td>
                 <td>
                   <span class="cellcontent">
                     <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
