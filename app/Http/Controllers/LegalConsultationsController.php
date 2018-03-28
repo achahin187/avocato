@@ -32,7 +32,11 @@ class LegalConsultationsController extends Controller
           
                  $consultation_type=Consultation_types::find($consultation->consultation_type_id);
                // dd($consultation);
-                 $consultation['consultation_type']=$consultation_type->name;
+                 if($consultation_type)
+                 {
+                    $consultation['consultation_type']=$consultation_type->name;
+                 }
+                 
             
         }
         
