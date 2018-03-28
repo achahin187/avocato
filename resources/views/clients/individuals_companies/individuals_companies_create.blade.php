@@ -38,9 +38,6 @@
         <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
       @endif
 
-      @foreach ($errors->all() as $error)
-          <div class="alert alert-danger">{{ $error }}</div>
-      @endforeach
     </div>
     <div class="col-lg-12">
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
