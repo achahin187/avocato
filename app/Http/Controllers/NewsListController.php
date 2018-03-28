@@ -227,7 +227,7 @@ class NewsListController extends Controller
         $news->is_active = $activate;
         $news->published_at = $published_at;
         $news->created_by   = $current_user;
-        $news->modified_by  = $current_user;
+        $news->updated_by  = $current_user;
         $news->save();
         } catch(Exception $ex) {
             Session::flash('warning', 'حدث خطأ ما عند تعديل الخبر');
