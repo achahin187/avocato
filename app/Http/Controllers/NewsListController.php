@@ -141,6 +141,7 @@ class NewsListController extends Controller
             $news->save();
         } catch(Exception $ex) {
             $news->forcedelete();
+            dd($ex);
             Session::flash('warning', 'حدث خطأ ما عند ادخال الخبر');
             return redirect()->back()->withInput();
         }
