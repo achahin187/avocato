@@ -38,6 +38,7 @@
 
   var table = $('#example').DataTable();
  if ( ! table.data().any() ) {
+
     alert( 'Empty table' );
 }
 if ( table.rows( '.selected' ).any() ) {
