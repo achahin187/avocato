@@ -104,7 +104,7 @@ class IndividualsCompaniesController extends Controller
             $user = new Users();
             $user->parent_id = $request->company_code;
             $user->name      = $request->ind_name;
-            $user->password  = $request->password;
+            $user->password  = bcrypt($request->password);
             $user->full_name = $request->ind_name;
             $user->email     = $request->email;
             $user->image     = $imgPath;

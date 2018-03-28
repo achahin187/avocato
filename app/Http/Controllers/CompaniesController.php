@@ -103,7 +103,7 @@ class CompaniesController extends Controller
         try {
             $user = new Users();
             $user->name      = $request->name;
-            $user->password  = $request->password;
+            $user->password  = bcrypt($request->password);
             $user->full_name = $request->name;
             $user->email     = $request->email;
             $user->image     = $imgPath;
