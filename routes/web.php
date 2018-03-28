@@ -98,18 +98,21 @@ Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
 Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind.edit');
+Route::delete('/individuals/delete/{id}', 'IndividualsController@destroy')->name('ind.delete');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit', 'CompaniesController@edit')->name('companies.edit');
 Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
+Route::delete('/companies_delete/{id}', 'CompaniesController@destroy')->name('companies.delete');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
 Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
 Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('ind.com.create');
 Route::post('/individuals_companies_store', 'IndividualsCompaniesController@store')->name('ind.com.store');
 Route::get('/individuals_companies_edit', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
+Route::delete('/individuals_companies_delete/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.delete');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
@@ -135,13 +138,16 @@ Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
 Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
-Route::get('/legal_consultations_edit', 'LegalConsultationsController@edit')->name('legal_consultations_edit');
+Route::get('/legal_consultation_edit/{id}', 'LegalConsultationsController@edit')->name('legal_consultation_edit');
 Route::get('/legal_consultation_assign/{id}', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
 Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 Route::post('/edit_lawyer_response', 'LegalConsultationsController@edit_lawyer_response')->name('edit_lawyer_response');
 Route::post('/delete_lawyer_response', 'LegalConsultationsController@delete_lawyer_response')->name('delete_lawyer_response');
+Route::post('/legal_edit_consultation/{id}', 'LegalConsultationsController@edit_consultation')->name('legal_edit_consultation');
+Route::get('/legal_consultation_destroy/{id}', 'LegalConsultationsController@destroy')->name('legal_consultation_destroy');
+
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

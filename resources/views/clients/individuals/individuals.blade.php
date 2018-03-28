@@ -135,11 +135,58 @@
                 <td><span class="cellcontent">{{ $user->full_name }}</span></td>
                 <td><span class="cellcontent">{{ $user->address }}</span></td>
                 <td><span class="cellcontent">{{ $user->mobile }}</span></td>
-                <td><span class="cellcontent">{{ $user->subscription->package_type->name }}</span></td>
-                <td><span class="cellcontent">{{ $user->subscription->start_date->format('d - m - Y') }}</span></td>
-                <td><span class="cellcontent">{{ $user->subscription->end_date->format('d - m - Y') }}</span></td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($user->subscription->package_type->name))
+                      {{ $user->subscription->package_type->name }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($user->subscription->start_date))
+                      {{ $user->subscription->start_date->format('d - m - Y') }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($user->subscription->end_date))
+                      {{ $user->subscription->end_date->format('d - m - Y') }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
                 <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
-                <td><span class="cellcontent"><a href= "{{route('ind.show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('ind.edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                <td>
+                  <span class="cellcontent">
+
+                    {{--  Show  --}}
+                    <a href= "{{route('ind.show')}}" ,  class= "action-btn bgcolor--main color--white ">
+                      <i class = "fa  fa-eye"></i>
+                    </a>
+
+                    {{--  Edit  --}}
+                    <a href= "{{route('ind.edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                      <i class = "fa  fa-pencil"></i>
+                    </a>
+
+                    {{--  Delete  --}}
+                    <form action="{{ route('ind.delete', ['id' => $user->id]) }}" method="POST" class="form-inline">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="submit" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white">
+                        <i class = "fa fa-trash-o"></i>
+                      </button>
+                    </form>
+
+                  </span>
+                </td>
               </tr>
             @endforeach
             
