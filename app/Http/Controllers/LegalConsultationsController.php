@@ -36,6 +36,10 @@ class LegalConsultationsController extends Controller
                  {
                     $consultation['consultation_type']=$consultation_type->name;
                  }
+                 else
+                 {
+                    $consultation['consultation_type']='لا يوجد تصنيف';
+                 }
                  
             
         }
