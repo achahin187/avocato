@@ -21,6 +21,16 @@
       </div>
     </div>
   </div>
+
+{{-- Start alert messages --}}
+    <div class="col-lg-12">
+      @if (Session::has('success'))
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+      @endif
+    </div>
+{{-- End alert --}}
+
+
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="clearfix"></div>
@@ -127,16 +137,68 @@
             @foreach ($ind_coms as $ind_com)
               <tr>
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                <td><span class="cellcontent">{{ $ind_com->companyParent->code }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->companyParent->name }}</span></td>
+                
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($ind_com->companyParent->code))
+                      {{ $ind_com->companyParent->code }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($ind_com->companyParent->code))
+                      {{ $ind_com->companyParent->code }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
                 <td><span class="cellcontent">{{ $ind_com->code }}</span></td>
                 <td><span class="cellcontent">{{ $ind_com->full_name }}</span></td>
                 <td><span class="cellcontent">{{ $ind_com->address }}</span></td>
                 <td><span class="cellcontent">{{ $ind_com->mobile }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->subscription->package_type->name }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->subscription->end_date->format('d - m - Y') }}</span></td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($ind_com->companyParent->name))
+                      {{ $ind_com->subscription->package_type->name }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($ind_com->subscription->end_date))
+                      {{ $ind_com->subscription->end_date->format('d - m - Y') }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
                 <td><span class="cellcontent"><i class="fa {{ $ind_com->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
-                <td><span class="cellcontent"><a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= clients_individuals_companies_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                <td>
+                  <span class="cellcontent">
+                    <a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white ">
+                      <i class = "fa  fa-eye"></i>
+                    </a>
+                    <a href= clients_individuals_companies_edit.html ,  class= "action-btn bgcolor--fadegreen color--white ">
+                      <i class = "fa  fa-pencil"></i>
+                    </a>
+
+                    {{--  Delete  --}}
+                    <form action="{{ route('ind.com.delete', ['id' => $ind_com->id]) }}" method="POST" class="form-inline">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="submit" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white">
+                        <i class = "fa fa-trash-o"></i>
+                      </button>
+                    </form>
+
+                  </span>
+                </td>
               </tr>
             @endforeach
             

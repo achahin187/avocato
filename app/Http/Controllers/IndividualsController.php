@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Helper;
 use Session;
 use Exception;
@@ -110,7 +111,7 @@ class IndividualsController extends Controller
             $user->code      = $request->code;
             $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
-            $user->created_by= 1;
+            $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
             $user->forcedelete();
@@ -175,7 +176,7 @@ class IndividualsController extends Controller
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
             $subscription->end_date   = date('Y-m-d H:i:s', strtotime($request->end_date));
             $subscription->package_type_id   = $request->subscription_type;
-            $subscription->duration = $request->subscription_duration;
+            $subscription->duration  = $request->subscription_duration;
             $subscription->value     = $request->subscription_value;
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
@@ -261,6 +262,8 @@ class IndividualsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $individual = Users::find($id)->forcedelete();
+        Session::flash('success', 'تم حذف العميل');
+        return redirect()->back();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Helper;
 use Session;
 use Exception;
@@ -48,7 +49,7 @@ class IndividualsCompaniesController extends Controller
         for($i=0; $i < count($geo); $i++) {
             $ids[] = $geo[$i]['id'];
         }
-        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('lang_id', 1)->get();  // select only arabic nationalities
+        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
         
         $companies = Users::users(9)->get();
 
@@ -63,27 +64,27 @@ class IndividualsCompaniesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
-            'password' => 'required',
-            'name'  => 'required',
-            'nationality' => 'required',
-            'commercial_registration_number' => 'required',
-            'fax'   => 'required',
-            'website'   => 'required',
-            'legal_representative_name' => 'required',
-            'address'   => 'required',
-            'phone' => 'required',
-            'mobile'    => 'required',
-            'email' => 'required|email',
-            'work_sector' =>'required',
-            'legal_representative_mobile' => 'required',
-            'logo'=> 'image|mimes:jpeg,jpg,png',
+            'company_code'  => 'required',
+            'company_name'  => 'required',
+            'ind_name'      => 'required',
+            'gender'        => 'required',
+            'job'           => 'required',
+            'address'       => 'required',
+            'national_id'   => 'required',
+            'nationality'   => 'required',
+            'birthday'      => 'required',
+            'phone'         => 'required',
+            'mobile'        => 'required',
+            'email'         => 'required',
             'discount_percentage' => 'required',
+            'activate'      => 'required',
             'start_date'    => 'required',
-            'end_date'  => 'required',
-            'package_type_id' => 'required',
-            'subscription_duration' => 'required',
-            'subscription_value' => 'required',
+            'end_date'      => 'required',
+            'package_type_id'=> 'required',
+            'duration'      => 'required',
+            'value'         => 'required',
             'number_of_payments' => 'required'
         ]);
 
@@ -101,19 +102,20 @@ class IndividualsCompaniesController extends Controller
         // push into users
         try {
             $user = new Users();
-            $user->name      = $request->name;
+            $user->parent_id = $request->company_code;
+            $user->name      = $request->ind_name;
             $user->password  = $request->password;
-            $user->full_name = $request->name;
+            $user->full_name = $request->ind_name;
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
             $user->mobile    = $request->mobile;
             $user->address   = $request->address;
-            $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
+            $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
-            $user->created_by= 1;
+            $user->created_by= Auth::user()->id;
             $user->save();
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
             $user->forcedelete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
@@ -123,7 +125,7 @@ class IndividualsCompaniesController extends Controller
         try {
             $user->code = $user->id;
             $user->save();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -133,10 +135,10 @@ class IndividualsCompaniesController extends Controller
         try {
             $user_rules = new Users_Rules;
             $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 9;
+            $user_rules->rule_id   = 10;
             $user_rules->save();
         
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
             $users_rules->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
@@ -149,7 +151,8 @@ class IndividualsCompaniesController extends Controller
             $client_passwords->password = $request->password;
             $client_passwords->confirmation = 0;
             $client_passwords->save();
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
+            dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -171,7 +174,7 @@ class IndividualsCompaniesController extends Controller
             $user_details->work_sector_type      = $request->work_type;
             $user_details->discount_percentage   = $request->discount_rate;
             $user_details->save();
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -186,42 +189,49 @@ class IndividualsCompaniesController extends Controller
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
             $subscription->end_date   = date('Y-m-d H:i:s', strtotime($request->end_date));
             $subscription->package_type_id   = $request->package_type_id;
-            $subscription->duration = $request->subscription_duration;
-            $subscription->value     = $request->subscription_value;
+            $subscription->duration = $request->duration;
+            $subscription->value     = $request->value;
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
-        } catch(\Exception $ex) {
+        } catch(Exception $ex) {
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
             $user_details->forcedelete();
+            // dd($ex);
             
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
 
-        // push into user_company_detail
+        // push into installments
         try {
-            User_Company_Details::create([
-                'user_id'   => $user->id,
-                'commercial_registration_number' => $request->commercial_registration_number,
-                'fax'     => $request->fax,
-                'website' => $request->website,
-                'legal_representative_name'      => $request->legal_representative_name,
-                'legal_representative_mobile'    => $request->legal_representative_mobile
-            ]);
-        } catch(\Exception $ex) {
-            
-            Users::destroy($user->id);
-            Users_Rules::where('user_id', $user->id)->delete();
-            ClientsPasswords::where('user_id', $user->id)->delete();
-            User_Details::where('user_id', $user->id)->delete();
-            Subscriptions::destroy($subscription->id);
-            Installment::where('subscription_id', $subscription->id)->delete();
+            if($request->number_of_payments != 0) {
+                for($i=0; $i < $request->number_of_payments; $i++) {
+                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => 1 //$request->payment_status[i]
+                    ]);
+                }
+            }
+        } catch(Exception $ex) {
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
+            $subscription->forcedelete();
 
-            Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
+            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
+
+        // redirect with success
+        Session::flash('success', 'تم إضافة العميل بنجاح');
+        return redirect('/individuals_companies');
     }
 
     /**
@@ -266,6 +276,8 @@ class IndividualsCompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ind_com = Users::find($id)->forcedelete();
+        Session::flash('success', 'تم حذف عميل الشركة');
+        return redirect()->back();
     }
 }

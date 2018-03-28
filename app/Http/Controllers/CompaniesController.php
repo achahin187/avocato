@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Helper;
 use Session;
 use Exception;
@@ -111,7 +112,7 @@ class CompaniesController extends Controller
             $user->address   = $request->address;
             $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
-            $user->created_by= 1;
+            $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
             $user->forcedelete();
@@ -223,6 +224,31 @@ class CompaniesController extends Controller
             return redirect()->back()->withInput();
         }
 
+        // push into installments
+        try {
+            if($request->number_of_payments != 0) {
+                for($i=0; $i < $request->number_of_payments; $i++) {
+                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => 1 //$request->payment_status[i]
+                    ]);
+                }
+            }
+        } catch(Exception $ex) {
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
+            $subscription->forcedelete();
+
+            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
         // redirect with success
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/companies');
@@ -270,6 +296,8 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $company = Users::find($id)->forcedelete();
+        Session::flash('success', 'تم حذف الشركة');
+        return redirect()->back();
     }
 }

@@ -27,6 +27,21 @@
         </div>
       </div>
     </div>
+
+    {{-- Start alert messages --}}
+    <div class="col-lg-12">
+      @if (Session::has('success'))
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+      @endif
+
+      @if (Session::has('warning'))
+        <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+      @endif
+
+      @foreach ($errors->all() as $error)
+          <div class="alert alert-danger">{{ $error }}</div>
+      @endforeach
+    </div>
     <div class="col-lg-12">
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
         
@@ -55,8 +70,8 @@
             <label class="master_label mandatory" for="comp_name">اسم الشركة</label>
             <input name="company_name" value="{{ old('company_name') }}" class="master_input" type="text" readonly placeholder="اسم الشركة .." id="company_name">            
              {{--  Error  --}}            
-              @if ($errors->has('package_type_id'))             
-                <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>       
+              @if ($errors->has('company_name'))             
+                <span class="master_message color--fadegreen">{{ $errors->first('company_name') }}</span>       
               @endif
           </div>
         </div>
@@ -74,6 +89,10 @@
           <div class="master_field">
             <label class="master_label" for="client_name">اسم العميل</label>
             <input name="ind_name" value="{{ old('ind_name') }}" class="master_input" type="text" placeholder="اسم العميل .." id="client_name">
+            {{--  Error  --}}            
+              @if ($errors->has('ind_name'))             
+                <span class="master_message color--fadegreen">{{ $errors->first('ind_name') }}</span>       
+              @endif
           </div>
         </div>
 
@@ -81,11 +100,8 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="password">كلمة المرور</label>
-            <input name="password" value="{{ old('password') }}" class="master_input" type="text" placeholder="كلمة المرور .." id="password" disabled="true">             
-            {{--  Error  --}}            
-             @if ($errors->has('package_type_id'))               
-             <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
-             @endif
+            <input name="password" value="{{ $password }}" class="master_input" type="text" placeholder="كلمة المرور .." id="password" readonly>             
+            
           </div>
         </div>
 
@@ -98,8 +114,8 @@
               <option value="2">انثى</option>
             </select>             
             {{--  Error  --}}             
-            @if ($errors->has('package_type_id'))               
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
+            @if ($errors->has('gender'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('gender') }}</span>             
             @endif
           </div>
         </div>
@@ -110,8 +126,8 @@
             <label class="master_label mandatory" for="client_job">المسمى الوظيفي </label>
             <input name="job" value="{{ old('job') }}" class="master_input" type="text" placeholder="المسمى الوظيفي  .." id="client_job">             
             {{--  Error  --}}             
-            @if ($errors->has('package_type_id'))               
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
+            @if ($errors->has('job'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('job') }}</span>             
             @endif
           </div>
         </div>
@@ -122,8 +138,8 @@
             <label class="master_label mandatory" for="client_address">عنوان العميل</label>
             <input name="address" value="{{ old('address') }}" class="master_input" type="text" placeholder="عنوان العميل .." id="client_address">             
             {{--  Error  --}}             
-            @if ($errors->has('package_type_id'))               
-            <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
+            @if ($errors->has('address'))               
+            <span class="master_message color--fadegreen">{{ $errors->first('address') }}</span>             
             @endif
           </div>
         </div>
@@ -132,10 +148,10 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_id">الرقم القومى</label>
-            <input name="national_id" class="master_input" type="number" placeholder="الرقم القومى" id="client_id">             
+            <input name="national_id" value="{{ old('national_id') }}" class="master_input" type="number" placeholder="الرقم القومى" id="client_id">             
             {{--  Error  --}}             
-            @if ($errors->has('package_type_id'))               
-            <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             
+            @if ($errors->has('national_id'))               
+            <span class="master_message color--fadegreen">{{ $errors->first('national_id') }}</span>             
             @endif
           </div>
         </div>
@@ -152,8 +168,8 @@
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('package_type_id'))
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>
+          @if ($errors->has('nationality'))
+              <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
             @endif
           </div>
           
@@ -163,10 +179,10 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_birth">تاريخ الميلاد</label>
-            <input name="birthday" value="{{ old('birthday') }}" class="datepicker-popup master_input" type="text" placeholder="ادخل تاريخ الميلاد" id="client_birth">             
+            <input name="birthday" value="{{ old('birthday') }}" class="datepicker master_input" type="text" placeholder="ادخل تاريخ الميلاد" id="client_birth">             
             {{--  Error  --}}            
-             @if ($errors->has('package_type_id'))              
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>        
+             @if ($errors->has('birthday'))              
+              <span class="master_message color--fadegreen">{{ $errors->first('birthday') }}</span>        
                    @endif
           </div>
         </div>
@@ -176,10 +192,10 @@
           <div class="master_field">
             <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
             <input name="phone" value="{{ old('phone') }}" class="master_input" type="number" placeholder="رقم الهاتف" id="client_tel">          
-               {{--  Error  --}}         
-                   @if ($errors->has('package_type_id'))          
-                    <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>      
-                           @endif
+              {{--  Error  --}}         
+              @if ($errors->has('phone'))          
+                <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>      
+              @endif
           </div>
         </div>
 
@@ -187,7 +203,11 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_mob">رقم الهاتف الجوال</label>
-            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">             
+            {{--  Error  --}}             
+            @if ($errors->has('mobile'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('mobile') }}</span>             
+            @endif
           </div>
         </div>
 
@@ -195,10 +215,15 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="client_email">البريد الالكترونى</label>
-            <input name="email" value="{{ old('email') }}"  class="master_input" type="email" placeholder="البريد الالكترونى" id="client_email">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="email" value="{{ old('email') }}"  class="master_input" type="email" placeholder="البريد الالكترونى" id="client_email">             
+            {{--  Error  --}}             
+              @if ($errors->has('email'))               
+                <span class="master_message color--fadegreen">{{ $errors->first('email') }}</span>             
+              @endif
           </div>
         </div>
 
+        {{--  Personal Image  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_photo">صورة شخصية</label>
@@ -207,24 +232,37 @@
                 <div class="file-select-name" id="noFile">اضغط هنا لرفع الصورة الشخصية للعميل </div>
                 <input class="chooseFile" type="file" name="personal_image" id="client_photo">
               </div>
-            </div>             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            </div>             
+            {{--  Error  --}}             
+            @if ($errors->has('personal_image'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('personal_image') }}</span>             
+            @endif
           </div>
         </div>
+
+        {{--  discount percentage  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
+            {{--  Error  --}}             
+            @if ($errors->has('discount_percentage'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>             
+            @endif
           </div>
         </div>
+
+        {{--  Activation  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" id="radbtn_2" checked="true">
+            <input class="icon" type="radio" name="activate" id="radbtn_2" value="1" checked="true">
             <label for="radbtn_2">مفعل</label>
-            <input class="icon" type="radio" name="activate" id="radbtn_3">
+            <input class="icon" type="radio" name="activate" id="radbtn_3" value="0">
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
+
         <div class="clearfix"></div>
       </div>
       <div class="main-title-conts">
@@ -235,16 +273,28 @@
         </div><span class="mainseparator bgcolor--main"></span>
       </div>
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+
+        {{--  Start date  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-            <input name="start_date" value="{{ old('start_date') }}"  class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_start_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="start_date" value="{{ old('start_date') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
+            {{--  Error  --}}             
+            @if ($errors->has('start_date'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>             
+            @endif
           </div>
         </div>
+
+        {{--  End date  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-            <input name="end_date" value="{{ old('end_date') }}"  class="datepicker-popup master_input" type="text" placeholder="placeholder" id="license_end_date">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="end_date" value="{{ old('end_date') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
+            {{--  Error  --}}             
+            @if ($errors->has('end_date'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>             
+            @endif
           </div>
         </div>
         
@@ -271,7 +321,11 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-            <input name="duration" value="{{ old('duration') }}" class="master_input" type="number" placeholder="0" id="license_period">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="duration" value="{{ old('duration') }}" class="master_input" type="number" placeholder="0" id="license_period">             
+            {{--  Error  --}}             
+            @if ($errors->has('duration'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>             
+            @endif
           </div>
         </div>
 
@@ -279,7 +333,11 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_amount">قيمة التعاقد</label>
-            <input name="value" value="{{ old('value') }}"  class="master_input" type="number" placeholder="قيمة التعاقد" id="license_amount">             {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="value" value="{{ old('value') }}"  class="master_input" type="number" placeholder="قيمة التعاقد" id="license_amount">             
+            {{--  Error  --}}             
+            @if ($errors->has('value'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('value') }}</span>             
+            @endif
           </div>
         </div>
 
@@ -287,8 +345,11 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-            <input name="number_of_payments" value="{{ old('number_of_payments') }}"  class="master_input" type="number" placeholder="عدد الاقساط" id="license_num">             
-            {{--  Error  --}}             @if ($errors->has('package_type_id'))               <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>             @endif
+            <input name="number_of_payments" min="0" value=""  class="master_input" type="number" placeholder="عدد الاقساط" id="license_num">             
+            {{--  Error  --}}             
+            @if ($errors->has('number_of_payments'))               
+              <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>             
+            @endif
           </div>
         </div>
         <div class="clearfix"></div>
@@ -364,7 +425,7 @@
       
       $(function() {
           $('#company_code').change(function(){
-            $('#company_name').val('..' + $('#company_code option:selected').data('id'));
+            $('#company_name').val($('#company_code option:selected').data('id'));
           });
       });
 
