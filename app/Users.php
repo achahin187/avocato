@@ -85,4 +85,8 @@ class Users extends Authenticatable
        return $this->hasMany('App\Users', 'parent_id');
    }
 
+    public function consultations()
+   {
+       return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
+   }
 }

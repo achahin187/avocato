@@ -1,6 +1,79 @@
 @extends('layout.app')
 @section('content')
-    
+     <script>
+  $(document).ready(function(){
+
+    $('.btn-warning-cancel').click(function(){
+      var consultation_id = $(this).closest('tr').attr('data-consultation-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('legal_consultation_destroy')}}'+'/'+consultation_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-consultation-id='+consultation_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+
+    $('.btn-warning-cancel-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-consultation-id');
+      }).get();
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('legal_consultation_destroy_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-consultation-id='+value+']').fadeOut();
+            });
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+ 
+
+  });
+</script>
             
               <!-- =============== Custom Content ===============-->
               <div class="row">
@@ -24,24 +97,27 @@
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                          <form role="form" action="{{route('legal_consultation_filter')}}" method="post" accept-charset="utf-8">
+          {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_cat">التصنيف</label>
-                                <select class="master_input select2" id="consultation_cat" multiple="multiple" data-placeholder="التصنيف" style="width:100%;" ,>
-                                  <option>تصنيف 1</option>
-                                  <option>تصنيف2</option>
+                                <select class="master_input select2" id="consultation_cat" name="consultation_cat[]" multiple="multiple" data-placeholder="التصنيف" style="width:100%;" ,>
+                                   @foreach($consultation_types as $type)
+                                    <option value="{{$type->name}}">{{$type->name}}</option>
+                                    @endforeach
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_type"> النوع</label>
-                                <select class="master_input select2" id="consultation_type" multiple="multiple" data-placeholder="النوع" style="width:100%;" ,>
-                                  <option>مدفوع</option>
-                                  <option>مجانية</option>
+                                <select class="master_input select2" id="consultation_type" name="consultation_type[]" multiple="multiple" data-placeholder="النوع" style="width:100%;" ,>
+                                  <option value="1">مدفوع</option>
+                                  <option value="0">مجانية</option>
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -49,7 +125,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_date_from">تاريخ الاستشارة من</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" id="consultation_date_from">
+                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" id="consultation_date_from" name="consultation_date_from">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -57,7 +133,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_date_to">تاريخ الاستشارة الى</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" id="consultation_date_to">
+                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" id="consultation_date_to" name="consultation_date_to">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -65,15 +141,15 @@
                               <div class="master_field">
                                 <label class="master_label mandatory">الحالة</label>
                                 <div class="radiorobo">
-                                  <input type="radio" id="rad_1">
+                                  <input type="radio" id="rad_1" name="is_replied" value="2">
                                   <label for="rad_1">الكل</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="rad_2">
+                                  <input type="radio" id="rad_2" name="is_replied" value="1">
                                   <label for="rad_2">تم الرد</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="rad_3">
+                                  <input type="radio" id="rad_3" name="is_replied" value="0">
                                   <label for="rad_3">لم يتم الرد</label>
                                 </div>
                               </div>
@@ -81,11 +157,12 @@
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                          <button class="remodal-confirm"  type="submit">فلتر</button>
+                          </form>
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1" id="consultation_table">
                         <thead>
@@ -102,7 +179,7 @@
                         </thead>
                         <tbody>
                            @foreach($consultations as $consultation)
-                          <tr class="bgcolor--gray_mm color--gray_d">
+                          <tr  data-consultation-id="{{$consultation->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                              <td><span class="cellcontent">{{$consultation->code}}</span></td>
                             <td><span class="cellcontent">{{$consultation->consultation_type}}</span></td>
@@ -118,7 +195,7 @@
                             @else
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
                             @endif
-                            <td><span class="cellcontent"><a href= "{{URL('legal_consultation_view/'.$consultation->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('legal_consultation_edit/'.$consultation->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="{{URL('legal_consultation_destroy/'.$consultation->id)}}"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= "{{URL('legal_consultation_view/'.$consultation->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('legal_consultation_edit/'.$consultation->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
                           
@@ -291,6 +368,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
  <script type="text/javascript">
+
   function exportExcel() {
         alasql('SELECT * INTO XLSX("consultations.xlsx",{headers:true}) \
                     FROM HTML("#consultation_table",{headers:true})');

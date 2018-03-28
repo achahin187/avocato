@@ -29,7 +29,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset('users_images/'.$lawyer->image)}}">
+                          <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset(''.$lawyer->image)}}">
                               <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
                           <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_destroy_get',$lawyer->id)}}">استبعاد المحامي</a>
                           </div>
@@ -107,14 +107,14 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset('lawyers_files/syndicate_copy/'.$lawyer->user_detail->syndicate_copy)}}">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$lawyer->user_detail->syndicate_copy)}}">
                                   <h4 class="text-center">كارنيه النقابة</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset('lawyers_files/authorization_copy/'.$lawyer->user_detail->authorization_copy)}}">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$lawyer->user_detail->authorization_copy)}}">
                                   <h4 class="text-center">صوره التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>

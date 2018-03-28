@@ -50,7 +50,7 @@ class CreateUsersTable extends Migration
                 'password'=>'$2y$10$1gHFYPB4PMUG.rjq3Cs.X.XLYv4uBir20HbDRB2Y7TTwsCm4/DjvG',
                 'full_name'=>'admin',
                 'email'=>'admin@securebridge.com',
-                'image'=>'male.jpg',
+                'image'=>'users_images/male.jpg',
                 'is_active'=>1,
             )
         );

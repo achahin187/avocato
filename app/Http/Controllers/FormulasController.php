@@ -213,8 +213,8 @@ $myFile=Excel::create('العقود والصيغ', function($excel) use($formula
         $formula->formula_contract_types_id = $request->subs;
         $formula->is_contract=$request->is_contract;
         if($request->hasFile('file')){
-            $fileNameToStore=$request->contract_name.time().rand(111,999).'.'.Input::file('file')->getClientOriginalExtension();
             $destinationPath='contracts';
+            $fileNameToStore=$destinationPath.'/'.$request->contract_name.time().rand(111,999).'.'.Input::file('file')->getClientOriginalExtension();
             // dd($fileNameToStore);
             Input::file('file')->move($destinationPath,$fileNameToStore);
         }
@@ -275,7 +275,7 @@ $myFile=Excel::create('العقود والصيغ', function($excel) use($formula
         $formula->formula_contract_types_id = $request->subs;
         $formula->is_contract=$request->is_contract;
         if($request->hasFile('file')){
-            File::delete('contracts/'.$formula->file);
+            File::delete($formula->file);
             $fileNameToStore=$request->contract_name.time().rand(111,999).'.'.Input::file('file')->getClientOriginalExtension();
             $destinationPath='contracts';
             Input::file('file')->move($destinationPath,$fileNameToStore);
@@ -300,7 +300,7 @@ $myFile=Excel::create('العقود والصيغ', function($excel) use($formula
     public function destroy($id)
     {
         $formula = Formula_Contracts::find($id);
-        File::delete('contracts/'.$formula->file);
+        File::delete($formula->file);
         $formula->delete();
     }
 
@@ -310,7 +310,7 @@ $myFile=Excel::create('العقود والصيغ', function($excel) use($formula
         foreach($ids as $id)
         {
             $formula = Formula_Contracts::find($id);
-            File::delete('contracts/'.$formula->file);
+            File::delete($formula->file);
             $formula->delete();
         } 
     }
