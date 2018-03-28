@@ -24,9 +24,15 @@
                     <div class="col-lg-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
-                        <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" ,>
+                        <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" >
+                          <option>اختر تصنيف</option>
                           @foreach($consultation_types as $type)
+                          @if($consultation->consultation_type_id == $type->id)
+                          <option value="{{$type->name}}" selected>{{$type->name}}</option>
+                          @else
                           <option value="{{$type->name}}">{{$type->name}}</option>
+                          @endif
+                          
                           @endforeach
                         </select><span class="master_message color--fadegreen">message content</span>
                       </div>
@@ -35,19 +41,24 @@
                       <div class="master_field">
                         <label class="master_label">نوع الاستشارة</label>
                         <div class="radiorobo">
+                          @if(!$consultation->is_paid)
                           <input type="radio" id="rad_1" name="consultation_type" value="0">
                           <label for="rad_1">مجانية</label>
-                        </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="rad_2" name="consultation_type" value="1">
+                          <input type="radio" id="rad_2" name="consultation_type" value="1" checked="checked">
                           <label for="rad_2">مدفوع</label>
+                         @else 
+                          <input type="radio" id="rad_1" name="consultation_type" value="0" checked="checked">
+                          <label for="rad_1">مجانية</label>
+                          <input type="radio" id="rad_2" name="consultation_type" value="1" >
+                          <label for="rad_2">مدفوع</label>
+                          @endif
                         </div><span class="master_message color--fadegreen">message</span>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_question">نص السؤال</label>
-                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question"><span class="master_message color--fadegreen">message</span>
+                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question" value="{{$consultation->question}}"><span class="master_message color--fadegreen">message</span>
                       </div>
                     </div>
                     <div class="col-xs-12">
