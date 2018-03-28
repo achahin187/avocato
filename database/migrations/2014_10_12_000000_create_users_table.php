@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('image')->nullable();
             $table->string('phone')->nullable();
-            $table->string('mobile')->->nullable();
+            $table->string('mobile')->nullable();
             $table->string('address')->nullable();
             $table->string('code')->nullable()->unique();
             $table->date('birthdate')->nullable();
@@ -50,7 +50,7 @@ class CreateUsersTable extends Migration
                 'password'=>'$2y$10$1gHFYPB4PMUG.rjq3Cs.X.XLYv4uBir20HbDRB2Y7TTwsCm4/DjvG',
                 'full_name'=>'admin',
                 'email'=>'admin@securebridge.com',
-                'image'=>'male.jpg',
+                'image'=>'users_images/male.jpg',
                 'is_active'=>1,
             )
         );

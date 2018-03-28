@@ -206,7 +206,7 @@
                 @endforeach
               </span></td>
               <td><span class="cellcontent">{{$user->phone}}</span></td>
-              <td><span class="cellcontent">@if($user->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadegreen fa-check"> @endif</span></td>
+              <td><span class="cellcontent">@if($user->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</span></td>
                 <td><span class="cellcontent">{{$user->created_at}}</span></td>
                 <td><span class="cellcontent">{{$user->last_login}}</span></td>
                 <td><span class="cellcontent"><a href= "{{route('user_profile',$user->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('users_list_edit',$user->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-confirm btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>

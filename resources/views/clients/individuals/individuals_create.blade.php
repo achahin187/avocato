@@ -247,7 +247,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked="true">
+            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked>
             <label for="radbtn_2">مفعل</label>
             <input class="icon" type="radio" name="activate" value="0" id="radbtn_3"  {{ old('activate') == 0 ? 'checked' : ''  }} >
             <label for="radbtn_3">غير مفعل</label>
@@ -343,7 +343,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input name="number_of_payments" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+              <input name="number_of_payments" value="" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
 
                 @if ($errors->has('number_of_payments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>

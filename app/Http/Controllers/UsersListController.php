@@ -253,14 +253,15 @@ else{
         $user->is_active = '1';
         $user->password = bcrypt($request->password) ;
         if($request->hasFile('image')){
-            $fileNameToStore=$request->user_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             $destinationPath='users_images';
+            $fileNameToStore=$destinationPath.'/'.$request->user_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             // dd($fileNameToStore);
             Input::file('image')->move($destinationPath,$fileNameToStore);
         }
         else
         {
-            $fileNameToStore="male.jpg";
+            $destinationPath='users_images';
+            $fileNameToStore=$destinationPath.'/'."male.jpg";
         }
         $user->image=$fileNameToStore;
         $user->save();
@@ -328,22 +329,21 @@ else{
         $user->mobile = $request->mobile;
         $user->is_active = $request->is_active;
         $user->password = bcrypt($request->password) ;
-        if($request->hasFile('image')){
-            $fileNameToStore=$request->user_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
-            if($user->image!='male.jpg'){
-            File::delete('users_images/'.$user->image);    
-            }
             $destinationPath='users_images';
+        if($request->hasFile('image')){
+            $fileNameToStore = $destinationPath.'/'.$request->user_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
+            if($user->image!='users_images/male.jpg'){
+            File::delete($user->image);    
+            }
             Input::file('image')->move($destinationPath,$fileNameToStore);
         }
         else{
-            if($user->image!='male.jpg'){
-            $destinationPath='users_images';
-            $fileNameToStore=$request->user_name.time().rand(111,999).'.'.substr($user->image, strrpos($user->image, '.')+1);
-            rename(public_path($destinationPath.'/'.$user->image), public_path($destinationPath.'/'.$fileNameToStore));    
+            if($user->image!='users_images/male.jpg'){
+            $fileNameToStore=$destinationPath.'/'.$request->user_name.time().rand(111,999).'.'.substr($user->image, strrpos($user->image, '.')+1);
+            rename(public_path($user->image), public_path($fileNameToStore));    
             }
             else{
-                $fileNameToStore='male.jpg';
+                $fileNameToStore='users_images/male.jpg';
             }
 
         }

@@ -52,7 +52,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="comp_code">كود الشركة</label>
-            <input name="code" value="{{ $code }}" readonly class="master_input" type="text" placeholder="كود الشركة .." id="comp_code">
+            <input name="code" disabled readonly class="master_input" type="text" placeholder="كود الشركة .." id="comp_code">
           </div>
         </div>
         {{--  Password  --}}

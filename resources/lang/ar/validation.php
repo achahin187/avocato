@@ -173,7 +173,15 @@ return [
         'fax'   => 'فاكس',
         'website' => 'موقع الشركة علي الانترنت',
         'legal_representative_mobile' => 'اسم الممثل القانوني للشركة',
-        'legal_representative_name' => 'اسم الممثل القانوني للشركة'
+        'legal_representative_name' => 'اسم الممثل القانوني للشركة',
+        'company_name'  => 'اسم الشركة',
+        'ind_name'      => 'اسم العميل',
+        'personal_image'=> 'الصورة الشخصية',
+        'discount_percentage' => 'قيمة الخصم',
+        'duration'      => 'مدة التعاقد',
+        'value'         => 'القيمة',
+        
+
     ],
 
 ];

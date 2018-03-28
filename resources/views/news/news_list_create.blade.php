@@ -18,6 +18,18 @@
     </div>
   </div>
 
+{{-- Start alert messages --}}
+    <div class="col-lg-12">
+      @if (Session::has('success'))
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+      @endif
+
+      @if (Session::has('warning'))
+        <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+      @endif
+    </div>
+    {{-- End alert --}}
+
   <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
   <div class="col-lg-12">
@@ -61,7 +73,7 @@
         <div class="col-md-2 col-xs-4">
           <div class="master_field">
             <label class="master_label" for="sitch_1">تفعيل </label>
-            <input class="make-switch" type="checkbox" checked data-on-text="نعم" data-off-text="لا" value="1" name="activate">
+            <input class="" type="checkbox" checked data-on-text="نعم" data-off-text="لا" value="1" name="activate">
               
               @if ($errors->has('activate'))
                 <span class="master_message color--fadegreen">{{ $errors->first('activate') }}</span>

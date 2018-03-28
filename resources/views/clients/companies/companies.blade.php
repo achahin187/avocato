@@ -129,11 +129,52 @@
                 <td><span class="cellcontent">{{ $company->full_name }}</span></td>
                 <td><span class="cellcontent">{{ $company->address }}</span></td>
                 <td><span class="cellcontent">{{ $company->phone }}</span></td>
-                <td><span class="cellcontent">{{ $company->subscription->package_type->name }}</span></td>
-                <td><span class="cellcontent">{{ $company->subscription->end_date->format('d - m - Y') }}</span></td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($company->subscription->package_type->name))
+                      {{ $company->subscription->package_type->name }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    @if (isset($company->subscription->end_date))
+                      {{ $company->subscription->end_date->format('d - m - Y') }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
                 <td><span class="cellcontent"><i class = "fa {{ $company->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
-                <td><span class="cellcontent">{{ $company->user_company_detail->legal_representative_name }}</span></td>
-                <td><span class="cellcontent"><a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= clients_companies_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                <td>
+                  <span class="cellcontent">
+                    @if ( isset($company->user_company_detail->legal_representative_name) )
+                      {{ $company->user_company_detail->legal_representative_name }}
+                    @else
+                      لا يوجد
+                    @endif
+                  </span>
+                </td>
+                <td>
+                  <span class="cellcontent">
+                    <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
+                      <i class = "fa  fa-eye"></i>
+                    </a><a href= clients_companies_edit.html ,  class= "action-btn bgcolor--fadegreen color--white ">
+                    <i class = "fa  fa-pencil"></i>
+                    </a>
+                    {{--  Delete  --}}
+                    <form action="{{ route('companies.delete', ['id' => $company->id]) }}" method="POST" class="form-inline">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                      <button type="submit" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white">
+                        <i class = "fa fa-trash-o"></i>
+                      </button>
+                    </form>
+
+                  </span>
+                </td>
               </tr>
             @endforeach
             

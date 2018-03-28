@@ -98,18 +98,21 @@ Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
 Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind.edit');
+Route::delete('/individuals/delete/{id}', 'IndividualsController@destroy')->name('ind.delete');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit', 'CompaniesController@edit')->name('companies.edit');
 Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
+Route::delete('/companies_delete/{id}', 'CompaniesController@destroy')->name('companies.delete');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
 Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
 Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('ind.com.create');
 Route::post('/individuals_companies_store', 'IndividualsCompaniesController@store')->name('ind.com.store');
 Route::get('/individuals_companies_edit', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
+Route::delete('/individuals_companies_delete/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.delete');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
