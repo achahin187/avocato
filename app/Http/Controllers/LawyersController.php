@@ -305,20 +305,20 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         }
 
         if($request->hasFile('image')){
-            $image_name=$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             $destinationPath='users_images';
+            $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             Input::file('image')->move($destinationPath, $image_name);
         }
 
         if($request->hasFile('authorization_copy')){
-            $authorization_copy=$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
             $destinationPath='lawyers_files/authorization_copy';
+            $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
             Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
         }
 
         if($request->hasFile('syndicate_copy')){
-            $syndicate_copy=$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
             $destinationPath='lawyers_files/syndicate_copy';
+            $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
             Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
         }
 
@@ -431,10 +431,10 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         $lawyer->is_active = $request->is_active;
         $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
         if($request->hasFile('image')){
-            $image_name=$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             $destinationPath='users_images';
+            $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
             Input::file('image')->move($destinationPath, $image_name);
-            File::delete('users_images/'.$lawyer->image);
+            File::delete($lawyer->image);
             $lawyer->image = $image_name;
 
         }
@@ -461,18 +461,18 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         // $lawyer_plaintext = ClientsPasswords::where('user_id',$id)->first();
         // $lawyer_plaintext->password = $password;
         if($request->hasFile('authorization_copy')){
-            $authorization_copy=$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
             $destinationPath='lawyers_files/authorization_copy';
+            $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
             Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
-            File::delete('lawyers_files/authorization_copy/'.$lawyer_details->authorization_copy);
+            File::delete($lawyer_details->authorization_copy);
             $lawyer_details->authorization_copy = $authorization_copy ;
         }
 
         if($request->hasFile('syndicate_copy')){
-            $syndicate_copy=$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
             $destinationPath='lawyers_files/syndicate_copy';
+            $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
             Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
-            File::delete('lawyers_files/syndicate_copy/'.$lawyer_details->syndicate_copy);
+            File::delete($lawyer_details->syndicate_copy);
             $lawyer_details->syndicate_copy = $syndicate_copy ;
         }
         $lawyer->user_detail()->save($lawyer_details);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cases_Types;
 use Validator;
 use Excel;
+use App\Exports\TestExport;
 
 class IssuesTypesController extends Controller
 {
