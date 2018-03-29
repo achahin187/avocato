@@ -47,8 +47,8 @@ Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
-Route::delete('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
 Route::delete('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
+Route::delete('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
 Route::post('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
 
 Route::get('/about', 'AboutController@index')->name('about');
@@ -97,14 +97,16 @@ Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
-Route::get('/individuals/edit', 'IndividualsController@edit')->name('ind.edit');
+Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');
+Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.destroy');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
-Route::get('/companies_edit', 'CompaniesController@edit')->name('companies.edit');
+Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.edit');
+Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
 Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
@@ -113,7 +115,8 @@ Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->na
 Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
 Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('ind.com.create');
 Route::post('/individuals_companies_store', 'IndividualsCompaniesController@store')->name('ind.com.store');
-Route::get('/individuals_companies_edit', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
+Route::get('/individuals_companies_edit/{id}', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
+Route::post('/individuals_companies/update/{id}', 'IndividualsCompaniesController@update')->name('ind.com.update');
 Route::delete('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
 Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
 

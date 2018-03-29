@@ -165,7 +165,7 @@ class CompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender_id;
+            $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;

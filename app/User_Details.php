@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User_Details extends Model
 {
@@ -11,6 +12,7 @@ class User_Details extends Model
     protected $fillable = ['user_id', 'country_id', 'nationality_id', 'gender_id', 'job_title',
     'national_id', 'work_sector', 'work_sector_type', 'discount_percentage',
     'join_date', 'resign_date', 'is_resigned', 'authorization_copy', 'syndicate_copy', 'syndicate_level'];
+    protected $dates = ['deleted_at'];
     public $timestamps = false;
 
 public function nationality()

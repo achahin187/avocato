@@ -176,7 +176,7 @@
                     </a>
 
                     {{--  Edit  --}}
-                    <a href= "{{route('ind.edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                    <a href= "{{route('ind.edit', ['id' => $user->id])}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
                       <i class = "fa  fa-pencil"></i>
                     </a>
 
