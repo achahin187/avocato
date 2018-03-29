@@ -39,6 +39,12 @@
       var selectedIds = $("input:checkbox:checked").map(function(){
         return $(this).closest('tr').attr('data-consultation-id');
       }).get();
+      if(selectedIds.length == 0 )
+      {
+        swal("خطأ", "من فضلك اختر استشاره :)", "error");
+      }
+      else
+      {
       var _token = '{{csrf_token()}}';
       swal({
         title: "هل أنت متأكد؟",
@@ -68,10 +74,21 @@
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }
     });
+    }
     });
 
  
+var table = $('#consultation_table').DataTable();
+  var delete_selected_button = document.getElementById('delete_selected');
+ if ( ! table.data().any() ) {
 
+    delete_selected_button.style.pointerEvents="none";
+}
+else
+{
+ delete_selected_button.style.pointerEvents="auto";
+  
+}
   });
 </script>
             
@@ -162,7 +179,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#" id="delete_selected">حذف المحدد</a>
                       </div>
                       <table class="table-1" id="consultation_table">
                         <thead>
