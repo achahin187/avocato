@@ -330,7 +330,7 @@
               $.ajax(
               {
                   url: "/consultations_classification/destroySelected",
-                  type: 'POST',
+                  type: 'DELETE',
                   dataType: "JSON",
                   data: {
                       "ids": ids,
@@ -377,11 +377,11 @@
               $.ajax(
               {
                   url: "/consultations_classification/destroy/"+id,
-                  type: 'DELETE',
+                  type: 'POST',
                   dataType: "JSON",
                   data: {
                       "id": id,
-                      "_method": 'DELETE',
+                      "_method": 'POST',
                       "_token": token,
                   },
                   success: function ()
