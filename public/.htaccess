@@ -3,6 +3,14 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+<Directory />
+    AllowOverride All
+    <Limit GET HEAD POST PUT DELETE OPTIONS>
+        Order Allow,Deny
+        Allow from all
+    </Limit>
+</Directory>
+
     RewriteEngine On
 
     # Handle Authorization Header
