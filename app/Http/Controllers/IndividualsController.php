@@ -239,6 +239,7 @@ class IndividualsController extends Controller
     public function edit($id)
     {   
         $user = Users::find($id);
+        $password = $user->client_password->password;
         $subscription_types = Package_Types::all();
         $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
         // get all ids in one array
@@ -248,7 +249,7 @@ class IndividualsController extends Controller
         $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
         $installments = Installment::where('subscription_id', $user->subscription->id)->get();
 
-        return view('clients.individuals.individuals_edit', compact(['user', 'subscription_types', 'nationalities', 'installments']));
+        return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
 
     /**
