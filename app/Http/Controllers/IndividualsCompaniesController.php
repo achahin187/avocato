@@ -116,7 +116,7 @@ class IndividualsCompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
+            $user->delete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -126,7 +126,7 @@ class IndividualsCompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
-            $user->forcedelete();
+            $user->delete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
         }
@@ -139,7 +139,7 @@ class IndividualsCompaniesController extends Controller
             $user_rules->save();
         
         } catch(Exception $ex) {
-            $users_rules->forcedelete();
+            $users_rules->delete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -153,8 +153,8 @@ class IndividualsCompaniesController extends Controller
             $client_passwords->save();
         } catch(Exception $ex) {
             dd($ex);
-            $user->forcedelete();
-            $user_rules->forcedelete();
+            $user->delete();
+            $user_rules->delete();
 
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -167,7 +167,7 @@ class IndividualsCompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender_id;
+            $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;
@@ -175,9 +175,9 @@ class IndividualsCompaniesController extends Controller
             $user_details->discount_percentage   = $request->discount_rate;
             $user_details->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -194,10 +194,10 @@ class IndividualsCompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
+            $user_details->delete();
             // dd($ex);
             
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
@@ -219,11 +219,11 @@ class IndividualsCompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            $subscription->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
+            $user_details->delete();
+            $subscription->delete();
 
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();

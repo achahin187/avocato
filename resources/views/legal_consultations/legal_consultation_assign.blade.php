@@ -7,7 +7,13 @@
       var selectedIds = $("input:checkbox:checked").map(function(){
         return $(this).closest('tr').attr('data-lawyer-id');
       }).get();
-      var _token = '{{csrf_token()}}';
+      if(selectedIds.length == 0 )
+      {
+        swal("خطأ", "من فضلك اختر محامي :)", "error");
+      }
+      else
+      {
+        var _token = '{{csrf_token()}}';
       swal({
         title: "هل أنت متأكد؟",
         text: "سوف يتم ارسال الاستشاره الى المحامين المحددين",
@@ -34,16 +40,31 @@
         swal("تم الإلغاء", "لم يتم ارسال الاستشاره :)", "error");
       }
     });
+      }
+      
     });
 
   var table = $('#example').DataTable();
+  var consultation_button = document.getElementById('send_consultation_button');
+  // var checkboxes = document.getElementsByClassName('checkboxes');
  if ( ! table.data().any() ) {
 
-    alert( 'Empty table' );
+    consultation_button.style.pointerEvents="none";
 }
-if ( table.rows( '.selected' ).any() ) {
-    alert( 'Rows are selected' );
+else
+{
+// var selectedClass = $('input[type=checkbox]:checked').attr('class');
+//   if(selectedClass == true) {
+//     consultation_button.style.pointerEvents="auto";
+//   }
+//   else
+//   {
+//      consultation_button.style.pointerEvents="none";
+//   }
+ consultation_button.style.pointerEvents="auto";
+  
 }
+
 
   });
 
@@ -148,11 +169,11 @@ if ( table.rows( '.selected' ).any() ) {
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#">إرسال الإستشارة للمحامي المحدد</a>
+                      <div class="bottomActions__btns" ><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#" id="send_consultation_button">إرسال الإستشارة للمحامي المحدد</a>
                       </div>
                       <table class="table-1" id="example">
                         <thead>
-                          <tr class="bgcolor--gray_mm color--gray_d ">
+                          <tr class="bgcolor--gray_mm color--gray_d selected">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                             <th><span class="cellcontent">كود المحامي</span></th>
                             <th><span class="cellcontent">الاسم</span></th>

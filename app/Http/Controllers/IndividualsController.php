@@ -52,7 +52,6 @@ class IndividualsController extends Controller
         }
         $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
         
-        
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
     }
 
@@ -114,7 +113,7 @@ class IndividualsController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
+            $user->delete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -127,7 +126,7 @@ class IndividualsController extends Controller
             $user_rules->save();
         
         } catch(Exception $ex) {
-            $users_rules->forcedelete();
+            $users_rules->delete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -140,8 +139,8 @@ class IndividualsController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
+            $user->delete();
+            $user_rules->delete();
 
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -154,7 +153,7 @@ class IndividualsController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender_id;
+            $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;
@@ -162,9 +161,9 @@ class IndividualsController extends Controller
             $user_details->discount_percentage   = $request->discount_rate;
             $user_details->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -181,10 +180,10 @@ class IndividualsController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
+            $user_details->delete();
             
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -205,11 +204,11 @@ class IndividualsController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            $subscription->forcedelete();
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
+            $user_details->delete();
+            $subscription->delete();
 
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -237,9 +236,19 @@ class IndividualsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
-        return view('clients.individuals.individuals_edit');
+    public function edit($id)
+    {   
+        $user = Users::find($id);
+        $subscription_types = Package_Types::all();
+        $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
+        // get all ids in one array
+        for($i=0; $i < count($geo); $i++) {
+            $ids[] = $geo[$i]['id'];
+        }
+        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
+        $installments = Installment::where('subscription_id', $user->subscription->id)->get();
+
+        return view('clients.individuals.individuals_edit', compact(['user', 'subscription_types', 'nationalities', 'installments']));
     }
 
     /**
@@ -251,7 +260,155 @@ class IndividualsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validate data
+        $this->validate($request, [
+            'name'  => 'required',
+            'job'   => 'required',
+            'address'   => 'required',
+            'national_id'   => 'required',
+            'birthday'  => 'required',
+            'nationality'   => 'required',
+            'phone' => 'required',
+            'mobile'    => 'required',
+            'email' => 'required|email',
+            'work'  => 'required',
+            'work_type' =>'required',
+            'personal_image'=> 'image|mimes:jpeg,jpg,png',
+            'discount_rate' => 'required',
+            'start_date'    => 'required',
+            'end_date'  => 'required',
+            'subscription_duration' => 'required',
+            'subscription_value' => 'required',
+            'number_of_payments' => 'required'
+        ]);
+
+        // Find this user to edit him/her
+        $user = Users::find($id);
+        
+        // upload image to storage/app/public
+        if($request->personal_image) {
+            $img = $request->personal_image;
+            $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
+            $img->move('storage/app/public/individuals', $newImg);      // move to /storage/app/public
+            $imgPath = 'storage/app/public/individuals/'.$newImg;       // new path: /storage/app/public/imageName
+        } else {
+            $imgPath = $user->image;
+        }
+
+        // INSERT INDIVIDUAL DATA
+        // push into users
+        try {
+            $user->name      = $request->name;
+            if ( $request->password != null && $request->password != '' ) {
+                $user->password  = bcrypt($request->password);
+            }
+            $user->full_name = $request->name;
+            $user->email     = $request->email;
+            $user->image     = $imgPath;
+            $user->phone     = $request->phone;
+            $user->mobile    = $request->mobile;
+            $user->address   = $request->address;
+            $user->code      = $request->code;
+            $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
+            $user->is_active = $request->activate;
+            $user->created_by= Auth::user()->id;
+            $user->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
+            return redirect()->back()->withInput();
+        }
+        
+        // push into users_rules
+        try {
+            $user_rules = Users_Rules::where('user_id', $user->id)->first();
+            $user_rules->user_id   = $user->id;
+            $user_rules->rule_id   = 8;
+            $user_rules->save();
+        
+        } catch(Exception $ex) {
+            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
+            return redirect()->back()->withInput();
+        }
+
+        // push into client_passwords
+        try {
+            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            $client_passwords->user_id = $user->id;
+            if($request->password != null && $request->password != '') {
+                $client_passwords->password = $request->password;
+            }
+            $client_passwords->save();
+        } catch(Exception $ex) {
+            dd($ex);
+            Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+        
+        // TODO: national_id missing
+        // push into users_details
+        try {
+            $user_details = User_Details::where('user_id', $user->id)->first();
+            
+            $user_details->user_id       = $user->id;
+            $user_details->country_id    = $request->nationality;
+            $user_details->gender_id     = $request->gender;
+            $user_details->job_title     = $request->job;
+            $user_details->national_id   = $request->national_id;
+            $user_details->work_sector   = $request->work;
+            $user_details->work_sector_type      = $request->work_type;
+            $user_details->discount_percentage   = $request->discount_rate;
+            $user_details->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // push into subscriptions
+        try {
+            $subscription = Subscriptions::where('user_id', $user->id)->first();
+            $subscription->user_id    = $user->id;
+            $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $subscription->end_date   = date('Y-m-d H:i:s', strtotime($request->end_date));
+            $subscription->package_type_id   = $request->subscription_type;
+            $subscription->duration  = $request->subscription_duration;
+            $subscription->value     = $request->subscription_value;
+            $subscription->number_of_installments    = $request->number_of_payments;
+            $subscription->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // push into installments
+        try {
+            if($request->number_of_payments != 0) {
+                for($i=0; $i < $request->number_of_payments; $i++) {
+                    $key = array_keys($request->payment_status[$i]);
+                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+
+                    $installment = Installment::where('subscription_id', $subscription->id)->where('installment_number', $i+1)->first();
+                    $installment->subscription_id   = $subscription->id;
+                    $installment->installment_number = $i+1;
+                    $installment->value = $request->payment[$i];
+                    $installment->payment_date  = $pay_date;
+                    $installment->is_paid   = $key[0];
+                    $installment->save(); 
+                }
+            }
+        } catch(Exception $ex) {
+            $user->delete();
+            $user_rules->delete();
+            $client_passwords->delete();
+            $user_details->delete();
+            $subscription->delete();
+
+            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // redirect with success
+        Session::flash('success', 'تم تعديل العميل بنجاح');
+        return redirect('/individuals');
     }
 
     public function destroy($id)
