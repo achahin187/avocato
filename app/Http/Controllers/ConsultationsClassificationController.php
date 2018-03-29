@@ -101,9 +101,10 @@ class ConsultationsClassificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // Find and delete this record
+        $id = $request->id;
         Consultation_Types::destroy($id);
 
         Session::flash('success', 'تم الحذف بنجاح');
