@@ -376,7 +376,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/consultations_classification/destroy/",
+                  url: "/consultations_classification/destroy",
                   type: 'POST',
                   dataType: "JSON",
                   data: {
