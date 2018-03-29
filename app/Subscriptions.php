@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscriptions extends Model
 {
+	use SoftDeletes;
 	protected $primaryKey = 'id';
 	protected $table = 'subscriptions';
 	protected $fillable = ['user_id', 'package_type_id', 'start_date', 'end_date', 'duration',

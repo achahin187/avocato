@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User_Details extends Model
 {
+    use SoftDeletes;
     protected $primaryKey = 'id';
     protected $table = 'user_details';
     protected $fillable = ['user_id', 'country_id', 'nationality_id', 'gender_id', 'job_title',

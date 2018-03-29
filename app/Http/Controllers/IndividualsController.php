@@ -284,11 +284,6 @@ class IndividualsController extends Controller
 
         // Find this user to edit him/her
         $user = Users::find($id);
-        $user->rules->delete();
-        $user->user_detail->delete();
-        $user->client_password->delete();
-        $user->subscription->delete();
-        Installment::whereIn('subscription_id', $user->subscription->id)->delete();
         
         // upload image to storage/app/public
         if($request->personal_image) {
@@ -304,7 +299,9 @@ class IndividualsController extends Controller
         // push into users
         try {
             $user->name      = $request->name;
-            $user->password  = bcrypt($request->password);
+            if ( $request->password != null && $request->password != '' ) {
+                $user->password  = bcrypt($request->password);
+            }
             $user->full_name = $request->name;
             $user->email     = $request->email;
             $user->image     = $imgPath;
@@ -323,7 +320,7 @@ class IndividualsController extends Controller
         
         // push into users_rules
         try {
-            $user_rules = Users_Rules::where('user_id', $user->id);
+            $user_rules = Users_Rules::where('user_id', $user->id)->first();
             $user_rules->user_id   = $user->id;
             $user_rules->rule_id   = 8;
             $user_rules->save();
@@ -335,11 +332,14 @@ class IndividualsController extends Controller
 
         // push into client_passwords
         try {
-            $client_passwords = ClientsPasswords::where('user_id', $user->id);
+            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
             $client_passwords->user_id = $user->id;
-            $client_passwords->password = $request->password;
+            if($request->password != null && $request->password != '') {
+                $client_passwords->password = $request->password;
+            }
             $client_passwords->save();
         } catch(Exception $ex) {
+            dd($ex);
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -347,7 +347,7 @@ class IndividualsController extends Controller
         // TODO: national_id missing
         // push into users_details
         try {
-            $user_details = User_Details::where('user_id', $user->id);
+            $user_details = User_Details::where('user_id', $user->id)->first();
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
@@ -365,7 +365,7 @@ class IndividualsController extends Controller
 
         // push into subscriptions
         try {
-            $subscription = Subscriptions::where('user_id', $user->id);
+            $subscription = Subscriptions::where('user_id', $user->id)->first();
             $subscription->user_id    = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
             $subscription->end_date   = date('Y-m-d H:i:s', strtotime($request->end_date));
@@ -386,7 +386,7 @@ class IndividualsController extends Controller
                     $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
 
-                    $installment = Installment::where('subscription_id', $subscription->id)->where('installment_number', $i+1);
+                    $installment = Installment::where('subscription_id', $subscription->id)->where('installment_number', $i+1)->first();
                     $installment->subscription_id   = $subscription->id;
                     $installment->installment_number = $i+1;
                     $installment->value = $request->payment[$i];
@@ -407,7 +407,7 @@ class IndividualsController extends Controller
         }
 
         // redirect with success
-        Session::flash('success', 'تم إضافة العميل بنجاح');
+        Session::flash('success', 'تم تعديل العميل بنجاح');
         return redirect('/individuals');
     }
 
