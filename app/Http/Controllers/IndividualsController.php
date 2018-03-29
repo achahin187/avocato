@@ -381,12 +381,14 @@ class IndividualsController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0) {
+            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
+                Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
                     $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
 
-                    $installment = Installment::where('subscription_id', $subscription->id)->where('installment_number', $i+1)->first();
+                    
+                    $installment = new Installment;
                     $installment->subscription_id   = $subscription->id;
                     $installment->installment_number = $i+1;
                     $installment->value = $request->payment[$i];
