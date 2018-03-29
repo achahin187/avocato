@@ -376,7 +376,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: {{$this->url->to('/public/')}}"consultations_classification/destroy",
+                  url: "/public/consultations_classification/destroy",
                   type: 'POST',
                   dataType: "JSON",
                   data: {
