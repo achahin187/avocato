@@ -101,7 +101,7 @@ class IndividualsController extends Controller
         try {
             $user = new Users();
             $user->name      = $request->name;
-            $user->password  = $request->password;
+            $user->password  = bcrypt($request->password);
             $user->full_name = $request->name;
             $user->email     = $request->email;
             $user->image     = $imgPath;
@@ -254,16 +254,65 @@ class IndividualsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $individual = Users::find($id)->forcedelete();
-        Session::flash('success', 'تم حذف العميل');
-        return redirect()->back();
+        // Find and delete this record
+        Users::destroy($id);
+
+        Session::flash('success', 'تم الحذف بنجاح');
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
+    }
+
+    /**
+     * Delete selected rows
+     */
+    public function destroySelected(Request $request) 
+    {
+        // get cities IDs from AJAX
+        $ids = $request->ids;
+
+        // transform $ids into array values then search and delete
+        Users::whereIn('id', explode(",", $ids))->delete();
+        return response()->json([
+            'success' => 'Records deleted successfully!'
+        ]);
+    }
+
+    // export Excel sheets
+    public function exportXLS(Request $request)
+    {
+        $data = array(['المدينة', 'المحافظة']);
+        $ids = explode(",", $request->ids);
+        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
+
+        foreach($ids as $id) {
+            $d =  Geo_Cities::find($id);
+            array_push( $data, [$d->name, $d->governorate->name]);
+        }
+
+        $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
+            $excel->setTitle('المدن والمحافظات');
+            // Chain the setters
+            $excel->setCreator('جسر الامان')
+            ->setCompany('جسر الامان');
+            // Call them separately
+            $excel->setDescription('بيانات ما تم اختياره من جدول المحافظات والمدن');
+
+            $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
+                $sheet->setRightToLeft(true);
+                $sheet->getStyle('A1:B1')->getFont()->setBold(true);
+                $sheet->fromArray($data, null, 'A1', false, false);
+            });
+        });
+
+        $myFile = $myFile->string('xlsx');
+        $response = array(
+            'name' => 'المدن والمحافظات'.date('Y_m_d'),
+            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
+        );
+
+        return response()->json($response);
     }
 }

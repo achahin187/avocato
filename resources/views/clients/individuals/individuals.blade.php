@@ -108,7 +108,11 @@
           </div>
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-        <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a><a class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
+        <div class="bottomActions__btns">
+          <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
+          <a class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a>
+          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+          <a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
         </div>
         
         <table class="table-1">
@@ -129,8 +133,8 @@
           <tbody>
             
             @foreach ($users as $user)
-              <tr data-id="{{ $user->id }}">
-                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" user-id="{{ $user->id }}" /></span></td>
+              <tr data-user="{{ $user->id }}">
+                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $user->id }}" /></span></td>
                 <td><span class="cellcontent">{{ $user->code }}</span></td>
                 <td><span class="cellcontent">{{ $user->full_name }}</span></td>
                 <td><span class="cellcontent">{{ $user->address }}</span></td>
@@ -177,13 +181,9 @@
                     </a>
 
                     {{--  Delete  --}}
-                    <form action="{{ route('ind.delete', ['id' => $user->id]) }}" method="POST" class="form-inline">
-                      {{ csrf_field() }}
-                      {{ method_field('DELETE') }}
-                      <button type="submit" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white">
-                        <i class = "fa fa-trash-o"></i>
-                      </button>
-                    </form>
+                    <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $user->id }}">
+                      <i class="fa fa-trash-o"></i>
+                    </a>
 
                   </span>
                 </td>
@@ -354,5 +354,155 @@
     </div>
   </div>
 </div>
-            
+        
+  <script>
+
+    $(document).ready(function() {
+      // Delete selected checkboxes
+        $('#deleteSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            confirm('إختر مدينة علي الاقل لتستطيع حذفها');
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+
+            swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+                  $.ajax(
+                  {
+                      url: "{{ route('ind.destroySelected') }}",
+                      type: 'DELETE',
+                      dataType: "JSON",
+                      data: {
+                          "ids": ids,
+                          "_method": 'DELETE',
+                          "_token": token,
+                      },
+                      success: function ()
+                      {
+                          swal("تم الحذف!", "تم الحذف بنجاح", "success");
+
+                          // fade out selected checkboxes after deletion
+                          $.each(allVals, function( index, value ) {
+                            $('tr[data-user='+value+']').fadeOut();
+                          });
+                      }
+                  });
+                
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+          }
+        });
+
+        // delete a row
+        $('.deleteRecord').click(function(){
+          
+          var id = $(this).data("id");
+          var token = '{{ csrf_token() }}';
+
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+                  $.ajax(
+                  {
+                      url: "{{ url('/individuals/destroy') }}" +"/"+ id,
+                      type: 'DELETE',
+                      dataType: "JSON",
+                      data: {
+                          "id": id,
+                          "_method": 'DELETE',
+                          "_token": token,
+                      },
+                      success: function ()
+                      {
+                          swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                          $('tr[data-user='+id+']').fadeOut();
+                      }
+                  });
+              
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+        
+        // Export table as Excel file
+        $('#exportSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            // push all IDs
+            $('.checkboxes').each(function() {
+              allVals.push($(this).attr('data-id'));
+            });
+          }
+          
+          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          $.ajax(
+          {
+            cache: false,
+            url: "{{ route('governorates_cities.exportXLS') }}",
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                "ids": ids,
+                "_method": 'POST',
+                "_token": token,
+            },
+            success: function (response, textStatus, request)
+            {
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              var a = document.createElement("a");
+              a.href = response.file; 
+              a.download = response.name+".xlsx";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            },
+            error: function (ajaxContext) {
+              console.log(ajaxContext.responseText);
+            }
+          });
+
+        });
+    });
+  </script>
 @endsection

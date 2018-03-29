@@ -1,5 +1,53 @@
 @extends('layout.app')
 @section('content')
+  <script>
+  $(document).ready(function(){
+
+ $('.send_consultation_to_all_lawyers').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-lawyer-id');
+      }).get();
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "سوف يتم ارسال الاستشاره الى المحامين المحددين",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('send_consultation_to_all_lawyers')}}'+'/'+{{$consultation->id}},
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            // alert('done');
+          }
+        });
+         swal("تم الارسال!", "تم الارسال بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "لم يتم ارسال الاستشاره :)", "error");
+      }
+    });
+    });
+
+  var table = $('#example').DataTable();
+ if ( ! table.data().any() ) {
+
+    alert( 'Empty table' );
+}
+if ( table.rows( '.selected' ).any() ) {
+    alert( 'Rows are selected' );
+}
+
+  });
+
+</script>
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
@@ -100,11 +148,11 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">إرسال الإستشارة للمحامي المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#">إرسال الإستشارة للمحامي المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="example">
                         <thead>
-                          <tr class="bgcolor--gray_mm color--gray_d">
+                          <tr class="bgcolor--gray_mm color--gray_d ">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                             <th><span class="cellcontent">كود المحامي</span></th>
                             <th><span class="cellcontent">الاسم</span></th>
@@ -120,8 +168,12 @@
                         </thead>
                         <tbody>
                           @foreach($lawyers as $lawyer)
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                          <tr data-lawyer-id="{{$lawyer->id}}">
+                            @if($lawyer->assigned)
+                            <td><span class="cellcontent"><input type="checkbox" checked="yes" class="checkboxes" /></span></td>
+                            @else
+                            <td><span class="cellcontent"><input type="checkbox"  class="checkboxes" /></span></td>
+                            @endif
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>

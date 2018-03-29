@@ -193,7 +193,7 @@
                 <tr data-city="{{ $city->id }}">
                   <td>
                     <span class="cellcontent">
-                    <input type="checkbox" class="checkboxes" data-id="{{ $city->id }}" />
+                      <input type="checkbox" class="checkboxes" data-id="{{ $city->id }}" />
                     </span>
                   </td>
                   <td><span class="cellcontent">{{ $city->name }}</span></td>
@@ -377,152 +377,152 @@
 
   <script>
 
-$(document).ready(function() {
-   // Delete selected checkboxes
-    $('#deleteSelected').click(function(){
-      var allVals = [];                   // selected IDs
-      var token = '{{ csrf_token() }}';
+    $(document).ready(function() {
+      // Delete selected checkboxes
+        $('#deleteSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
 
-      // push cities IDs selected by user
-      $('.checkboxes:checked').each(function() {
-        allVals.push($(this).attr('data-id'));
-      });
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
 
-      // check if user selected nothing
-      if(allVals.length <= 0) {
-        confirm('إختر مدينة علي الاقل لتستطيع حذفها');
-      } else {
-        var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-
-        swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-              $.ajax(
-              {
-                  url: "{{ route('governorates_cities.destroySelected') }}",
-                  type: 'DELETE',
-                  dataType: "JSON",
-                  data: {
-                      "ids": ids,
-                      "_method": 'DELETE',
-                      "_token": token,
-                  },
-                  success: function ()
-                  {
-                      swal("تم الحذف!", "تم الحذف بنجاح", "success");
-
-                      // fade out selected checkboxes after deletion
-                      $.each(allVals, function( index, value ) {
-                        $('tr[data-city='+value+']').fadeOut();
-                      });
-                  }
-              });
-            
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            confirm('إختر مدينة علي الاقل لتستطيع حذفها');
           } else {
-            swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+
+            swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+                  $.ajax(
+                  {
+                      url: "{{ route('governorates_cities.destroySelected') }}",
+                      type: 'DELETE',
+                      dataType: "JSON",
+                      data: {
+                          "ids": ids,
+                          "_method": 'DELETE',
+                          "_token": token,
+                      },
+                      success: function ()
+                      {
+                          swal("تم الحذف!", "تم الحذف بنجاح", "success");
+
+                          // fade out selected checkboxes after deletion
+                          $.each(allVals, function( index, value ) {
+                            $('tr[data-city='+value+']').fadeOut();
+                          });
+                      }
+                  });
+                
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
           }
         });
-      }
-    });
 
-    // delete a row
-    $('.deleteRecord').click(function(){
-      
-      var id = $(this).data("id");
-      var token = '{{ csrf_token() }}';
-
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-              $.ajax(
-              {
-                  url: "{{ url('/governorates_cities/destroy') }}" +"/"+ id,
-                  type: 'DELETE',
-                  dataType: "JSON",
-                  data: {
-                      "id": id,
-                      "_method": 'DELETE',
-                      "_token": token,
-                  },
-                  success: function ()
-                  {
-                      swal("تم الحذف!", "تم الحذف بنجاح", "success");
-                      $('tr[data-city='+id+']').fadeOut();
-                  }
-              });
+        // delete a row
+        $('.deleteRecord').click(function(){
           
-        } else {
-          swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-        }
-      });
-    });
-    
-    // Export table as Excel file
-    $('#exportSelected').click(function(){
-      var allVals = [];                   // selected IDs
-      var token = '{{ csrf_token() }}';
+          var id = $(this).data("id");
+          var token = '{{ csrf_token() }}';
 
-      // push cities IDs selected by user
-      $('.checkboxes:checked').each(function() {
-        allVals.push($(this).attr('data-id'));
-      });
-      
-      // check if user selected nothing
-      if(allVals.length <= 0) {
-        // push all IDs
-        $('.checkboxes').each(function() {
-          allVals.push($(this).attr('data-id'));
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+                  $.ajax(
+                  {
+                      url: "{{ url('/governorates_cities/destroy') }}" +"/"+ id,
+                      type: 'DELETE',
+                      dataType: "JSON",
+                      data: {
+                          "id": id,
+                          "_method": 'DELETE',
+                          "_token": token,
+                      },
+                      success: function ()
+                      {
+                          swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                          $('tr[data-city='+id+']').fadeOut();
+                      }
+                  });
+              
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
         });
-      }
-       
-      var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-      $.ajax(
-      {
-        cache: false,
-        url: "{{ route('governorates_cities.exportXLS') }}",
-        type: 'POST',
-        dataType: "JSON",
-        data: {
-            "ids": ids,
-            "_method": 'POST',
-            "_token": token,
-        },
-        success: function (response, textStatus, request)
-        {
-          swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name+".xlsx";
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        },
-        error: function (ajaxContext) {
-          console.log(ajaxContext.responseText);
-        }
-      });
+        
+        // Export table as Excel file
+        $('#exportSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
 
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            // push all IDs
+            $('.checkboxes').each(function() {
+              allVals.push($(this).attr('data-id'));
+            });
+          }
+          
+          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          $.ajax(
+          {
+            cache: false,
+            url: "{{ route('governorates_cities.exportXLS') }}",
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+                "ids": ids,
+                "_method": 'POST',
+                "_token": token,
+            },
+            success: function (response, textStatus, request)
+            {
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              var a = document.createElement("a");
+              a.href = response.file; 
+              a.download = response.name+".xlsx";
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            },
+            error: function (ajaxContext) {
+              console.log(ajaxContext.responseText);
+            }
+          });
+
+        });
     });
-});
   </script>
 @endsection

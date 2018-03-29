@@ -11,7 +11,7 @@ use App\Consultation_Types;
 use Illuminate\Support\Facades\Input;
 use App\User_Details;
 use App\Consultation_Replies;
-
+use App\Consultation_Lawyers;
 
 class LegalConsultationsController extends Controller
 {
@@ -20,18 +20,31 @@ class LegalConsultationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function get_consultation_catgories()
+    // {
+    //     return Consultation_Types::all();
+    // }
     public function index()
     {
+        $consultation_types=Consultation_Types::all();
         $consultations=Consultation::orderBy('created_at','desc')->get();
         foreach ($consultations as $consultation) {
           
                  $consultation_type=Consultation_types::find($consultation->consultation_type_id);
                // dd($consultation);
-                 $consultation['consultation_type']=$consultation_type->name;
+                 if($consultation_type)
+                 {
+                    $consultation['consultation_type']=$consultation_type->name;
+                 }
+                 else
+                 {
+                    $consultation['consultation_type']='لا يوجد تصنيف';
+                 }
+                 
             
         }
         
-        return view('legal_consultations.legal_consultations')->with('consultations',$consultations);
+        return view('legal_consultations.legal_consultations')->with('consultations',$consultations)->with('consultation_types',$consultation_types);
     }
 
     /**
@@ -41,7 +54,8 @@ class LegalConsultationsController extends Controller
      */
     public function add()
     {
-        return view('legal_consultations.legal_consultation_add');
+        $consultation_types=Consultation_Types::all();
+        return view('legal_consultations.legal_consultation_add')->with('consultation_types',$consultation_types);
     }
 
     /**
@@ -52,6 +66,7 @@ class LegalConsultationsController extends Controller
      */
     public function store(Request $request)
     {
+        $consultation_types=Consultation_Types::all();
         $consultation=new Consultation();
         
         if(\Auth::check())
@@ -78,7 +93,7 @@ class LegalConsultationsController extends Controller
                 
             }
         
-        return  redirect()->route('legal_consultations');
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
        
     }
 
@@ -101,7 +116,9 @@ class LegalConsultationsController extends Controller
      */
     public function edit($id)
     {
-        return view('legal_consultations.legal_consultation_edit')->with('id',$id);
+        $consultation_types=Consultation_Types::all();
+        $consultation = Consultation::find($id);
+        return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
     public function assign($id)
@@ -114,6 +131,15 @@ class LegalConsultationsController extends Controller
                  $q->orderby('join_date','desc');
                  }])->get();
         foreach($lawyers as $detail){
+            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->get()))
+                {
+                    
+                    $detail['assigned']=1;
+                }
+                else
+                {
+                    $detail['assigned']=0;
+                }
                 $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
               
                 $detail['nationality']=$value;
@@ -142,10 +168,23 @@ class LegalConsultationsController extends Controller
      */
     public function destroy($id)
     {
+        $consultation_types=Consultation_Types::all();
         $consultation = Consultation::destroy( $id);
-        return  redirect()->route('legal_consultations');
+        Consultation_Replies::where('consultation_id',$id)->delete();
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 
+     public function destroy_all()
+    {
+        $consultation_types=Consultation_Types::all();
+        $ids = $_POST['ids'];
+        foreach($ids as $id)
+        {
+            Consultation::destroy($id);
+            Consultation_Replies::where('consultation_id',$id)->delete();
+        } 
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
+    }
 
     public function view( $id)
     {
@@ -153,8 +192,14 @@ class LegalConsultationsController extends Controller
         $consultation = Consultation::where('id',$id)->with('consultation_reply')->first();
         foreach($consultation->consultation_reply as $lawyer)
         {
+            // dd($lawyer->lawyer_id);
             $user=Users::find($lawyer->lawyer_id);
-            $lawyer['lawyer_name']=$user->name;
+            if($user)
+            {
+                // dd($user);
+               $lawyer['lawyer_name']=$user->name; 
+            }
+            
         }
         return view('legal_consultations.legal_consultation_view')->with('consultation',$consultation);
     }
@@ -182,6 +227,7 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request ,$id)
     {
+         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
         // dd($request->all());
         $consultation_type=Consultation_Types::where('name',$request->input('consultation_cat'))->first();
@@ -193,6 +239,86 @@ class LegalConsultationsController extends Controller
         Consultation_Replies::where('consultation_id',$id)->update([
             'reply'=>$request->input('consultation_answer')
         ]);
-        return  redirect()->route('legal_consultations');
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
+    }
+     public function send_consultation_to_all_lawyers($consultation_id)
+    {
+        // dd($consultation_id);
+         $consultation_types=Consultation_Types::all();
+        $consultation = Consultation::find($consultation_id);
+        $ids = $_POST['ids'];
+        $sync_data = [];
+         foreach($ids as $id)
+        {
+            $sync_data[$id] = ['assigned_by' => \Auth::user()->id , 'assigned_at' => Carbon::now()->format('Y-m-d H:i:s')];
+            // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
+        }
+        $consultation->lawyers()->sync($sync_data);
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
+    }
+
+
+        public function filter(Request $request){
+        /* date_to make H:i:s = 23:59:59 to avoid two problems
+            one : when select same date
+            second : when juse select date_to
+            Session::flash to send ids of filtered data and extract excel of filtered data
+            no all items in the table
+             */
+
+            dd($request->all());
+             $data['users'] = Users::where(function($q) use($request){
+            $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
+            $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+
+            if($request->has('roles'))
+            {
+               $q->whereHas('rules',function($q) use($request){
+                $q->whereIn('name',$request->roles);
+
+            });  
+           }
+           else{
+              $q->whereHas('rules', function($q){
+                $q->whereIn('name',['admin','data entry','call center']);
+            });  
+          }
+
+            if($request->filled('date_from') && $request->filled('date_to') )
+            {
+                $q->whereBetween('last_login', array($date_from, $date_to));
+            }
+            elseif($request->filled('date_from'))
+            {
+                $q->where('last_login','>=',$date_from);
+            }
+            elseif($request->filled('date_to'))
+            {
+                $q->where('last_login','<=',$date_to);
+            }
+            if($request->active == 1 || $request->active == 0 )
+            {
+                $q->where('is_active',$request->active);
+            }
+
+
+
+     })->get();
+        $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
+        foreach($data['users'] as $user)
+        {
+            $filter_ids[]=$user->id;
+        }
+        if(!empty($filter_ids))
+        {
+                    Session::flash('filter_ids',$filter_ids);
+        }
+        else{
+            $filter_ids[]=0;
+            Session::flash('filter_ids',$filter_ids);
+        }
+
+        return view('users.users_list',$data);
+        
     }
 }
