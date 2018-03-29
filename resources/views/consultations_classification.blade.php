@@ -330,7 +330,7 @@
               $.ajax(
               {
                   url: "/consultations_classification/destroySelected",
-                  type: 'DELETE',
+                  type: 'POST',
                   dataType: "JSON",
                   data: {
                       "ids": ids,
