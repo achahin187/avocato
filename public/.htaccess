@@ -1,12 +1,13 @@
+<Limit GET HEAD POST PUT DELETE OPTIONS>
+        Order Allow,Deny
+        Allow from all
+    </Limit>
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
-    <Limit GET HEAD POST PUT DELETE OPTIONS>
-        Order Allow,Deny
-        Allow from all
-    </Limit>
+    
 
     RewriteEngine On
 
