@@ -28,10 +28,10 @@ class LawyersController extends Controller
     {
         // return Users::withTrashed()->restore();
         $data['lawyers'] = Users::whereHas('rules', function($q){
-            $q->whereIn('rule_id',[11,12]);
+            $q->where('rule_id',5);
         })->get();
         $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-        $data['types']=Rules::whereBetween('id',array('11','12'))->get();
+        $data['types']=Rules::where('parent_id',5)->get();
         return view('lawyers.lawyers',$data);
     }
 
@@ -47,8 +47,8 @@ class LawyersController extends Controller
      */
     public function create()
     {
-        $data['nationalities'] = Entity_Localizations::where('field','nationality')->get();
-        $data['types']=Rules::whereIn('id',[11,12])->get();
+        $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+        $data['types']=Rules::where('parent_id',5)->get();
         return view('lawyers.lawyers_create',$data);
     }
 
@@ -204,7 +204,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
                }
                else{
                   $q->whereHas('rules', function($q){
-                    $q->whereIn('rule_id',[11,12]);
+                    $q->where('rule_id',5);
                 });  
               }
               if($request->has('nationalities') && $request->nationalities !=0)
@@ -338,7 +338,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         $lawyer->password = bcrypt($password);
         $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
         $lawyer->save();
-        $lawyer->rules()->attach($request->work_type);
+        $lawyer->rules()->attach([5,$request->work_type]);
         $lawyer_details = new User_Details;
         $lawyer_details->national_id = $request->national_id;
         $lawyer_details->nationality_id = $request->nationality;
@@ -381,7 +381,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
     {
         $data['lawyer'] = Users::find($id);
         $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-        $data['types'] = Rules::whereIn('id',[11,12])->get();
+        $data['types'] = Rules::where('parent_id',5)->get();
         return view('lawyers.lawyers_edit',$data);
     }
 
@@ -446,7 +446,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         // $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
         $lawyer->save();
         $lawyer->rules()->detach();
-        $lawyer->rules()->attach($request->work_type);
+        $lawyer->rules()->attach([5,$request->work_type]);
         $lawyer_details = User_Details::where('user_id',$id)->first();;
         $lawyer_details->national_id = $request->national_id;
         $lawyer_details->nationality_id = $request->nationality;

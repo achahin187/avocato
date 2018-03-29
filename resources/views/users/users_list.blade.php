@@ -133,7 +133,9 @@
                   <label class="master_label" for="type">نوع العضوية</label>
                   <select name="roles[]" class="master_input select2" id="type" multiple="multiple" data-placeholder="نوع العضوية" style="width:100%;" ,>
                     @foreach($roles as $role)
+                    @if($role->id!=1)
                     <option value="{{$role->name}}" >{{$role->name_ar}}</option>
+                    @endif
                     @endforeach
                   </select>
                 </div>

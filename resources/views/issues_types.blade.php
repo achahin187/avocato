@@ -83,12 +83,15 @@
            data:{ids:selectedIds},
            success:function(response){
                   swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                    var a = document.createElement("a");
-                    a.href = response.file; 
-                    a.download = response.name;
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
+                    // var a = document.createElement("a");
+                    // a.href = response.file; 
+                    // a.download = response.name;
+                    // document.body.appendChild(a);
+                    // a.click();
+                    // a.remove();
+                    // document.location = 's.rar';
+                    // location.href = 'storage/boshy.xlsx';
+
           }
             });
         });
@@ -100,7 +103,6 @@
 
 
  </script>
-
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' )no-repeat center center; background-size:cover;">

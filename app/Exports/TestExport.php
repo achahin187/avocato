@@ -9,6 +9,8 @@ class TestExport implements FromCollection
 
     public function collection()
     {
-        return Cases_Types::all();
+        // return Cases_Types::all();
+        $boshy = array('ahmed'=>'ahmed','ahmed'=>'mohamed','ahmed'=>'boshy','ahmed'=>'ay 7aga');
+        return collect($boshy);
     }
 }

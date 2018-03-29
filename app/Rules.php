@@ -13,4 +13,14 @@ class Rules extends Model
     {
         return $this->belongsToMany('App\Users','users_rules','user_id','rule_id');
     }
+
+        public function parent()
+    {
+        return $this->belongsTo('App\Rules', 'parent_id');
+    }
+
+    	public function children()
+    {
+        return $this->hasMany('App\Rules', 'parent_id');
+    }
 }

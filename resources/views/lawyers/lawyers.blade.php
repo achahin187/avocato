@@ -208,8 +208,11 @@
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                 <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
-                <td><span class="cellcontent">                              @foreach($lawyer->rules as $rule)
+                <td><span class="cellcontent">
+                  @foreach($lawyer->rules as $rule)
+                  @if($rule->id !=5)
                   {{$rule->name_ar}}
+                  @endif
                 @endforeach</span></td>
                 <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>

@@ -23,9 +23,9 @@ class UsersListController extends Controller
     {   
         // return Users::withTrashed()->restore();
         $data['users'] = Users::whereHas('rules', function($q){
-        $q->whereIn('name',['super admin','admin','data entry','call center']);
+        $q->where('parent_id',13);
     })->get();
-        $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
+        $data['roles']=Rules::where('parent_id',13)->get();
         return view('users.users_list',$data);
     }
 
@@ -36,7 +36,7 @@ class UsersListController extends Controller
      */
     public function create()
     {   
-        $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
+        $data['roles']=Rules::where('parent_id',13)->get();
         return view('users.users_list_create',$data);
     }
 
@@ -290,7 +290,7 @@ else{
     public function edit($id)
     {
         $data['user']=Users::find($id);
-        $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
+        $data['roles']=Rules::where('parent_id',13)->get();
         return view('users.users_list_edit',$data);
     }
 
