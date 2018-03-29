@@ -22,6 +22,7 @@ class CreateUserCompanyDetailsTable extends Migration
             $table->string('legal_representative_name');
             $table->string('legal_representative_mobile');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

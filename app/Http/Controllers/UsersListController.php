@@ -310,8 +310,8 @@ else{
             'email'=>'required|email|max:40',
             'phone'=>'required|digits_between:1,10',
             'mobile'=>'required|digits_between:1,12',
-            'password'=>'required|between:3,8|same:confirm_password',
-            'confirm_password'=>'required|between:3,8|same:confirm_password',
+            'password'=>'same:confirm_password',
+            'confirm_password'=>'same:confirm_password',
             'image'=>'image|mimes:jpg,jpeg,png|max:1024',
             'is_active'=>'required',
         ]);
@@ -328,7 +328,10 @@ else{
         $user->phone = $request->phone;
         $user->mobile = $request->mobile;
         $user->is_active = $request->is_active;
-        $user->password = bcrypt($request->password) ;
+        if($request->filled('password')){
+        $user->password = bcrypt($request->password) ;    
+        }
+
             $destinationPath='users_images';
         if($request->hasFile('image')){
             $fileNameToStore = $destinationPath.'/'.$request->user_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();

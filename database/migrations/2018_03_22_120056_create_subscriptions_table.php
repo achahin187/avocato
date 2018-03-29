@@ -24,6 +24,7 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('number_of_installments');
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

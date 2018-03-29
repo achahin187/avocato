@@ -104,7 +104,7 @@
             </div>
           </div>
         </div>
-        <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_create')}}">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="lawyers_follow.html">متابعة أماكن المحامين</a>
+        <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_create')}}">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_follow')}}">متابعة أماكن المحامين</a>
         </div>
       </div>
     </div>

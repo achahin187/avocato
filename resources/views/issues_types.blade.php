@@ -90,7 +90,7 @@
                     // a.click();
                     // a.remove();
                     // document.location = 's.rar';
-                    // location.href = 'storage/boshy.xlsx';
+                    location.href = response;
 
           }
             });

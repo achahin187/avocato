@@ -20,6 +20,7 @@ class CreateInstallmentsTable extends Migration
             $table->integer('value');
             $table->date('payment_date');
             $table->boolean('is_paid')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -39,6 +39,8 @@ class CreateUsersTable extends Migration
             $table->string('device_token')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('modified_by')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('longtuide')->nullable();
             $table->rememberToken();
             $table->timestamps();
       });

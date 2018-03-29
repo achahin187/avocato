@@ -37,7 +37,15 @@ class LawyersController extends Controller
 
     public function follow()
     {
-        return view('lawyers.lawyers_follow');
+        $data['lawyers'] = Users::whereHas('rules', function($q){
+            $q->where('rule_id',5);
+        })->get();
+        $data['test']=json_encode([
+            ['lat'=>30.042701,'lang'=>31.432662],
+            ['lat'=>30.036273,'lang'=>31.432447],
+
+    ]);
+        return view('lawyers.lawyers_follow',$data);
     }
 
     /**
@@ -336,7 +344,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         $lawyer=Users::find($lawyer->id);
         $password = Helper::generateRandom(Users::class, 'password', 8);
         $lawyer->password = bcrypt($password);
-        $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
+        $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
         $lawyer->save();
         $lawyer->rules()->attach([5,$request->work_type]);
         $lawyer_details = new User_Details;
@@ -354,7 +362,7 @@ $myFile= Excel::create('الساده المحامين', function($excel) use($la
         $lawyer_plaintext->password = $password;
         $lawyer->user_detail()->save($lawyer_details);
         $lawyer->client_password()->save($lawyer_plaintext);
-        return redirect()->route('lawyers_create')->with('success','تم إضافه محامي جديد بنجاح');
+        return redirect()->route('lawyers_show',$lawyer->id)->with('success','تم إضافه محامي جديد بنجاح');
 
     }
 
