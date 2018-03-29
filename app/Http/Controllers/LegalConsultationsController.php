@@ -117,7 +117,8 @@ class LegalConsultationsController extends Controller
     public function edit($id)
     {
         $consultation_types=Consultation_Types::all();
-        return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types);
+        $consultation = Consultation::find($id);
+        return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
     public function assign($id)
@@ -235,9 +236,20 @@ class LegalConsultationsController extends Controller
             'is_paid' => $request->input('consultation_type') ,
              'question' =>$request->input('consultation_question') 
             ]);
-        Consultation_Replies::where('consultation_id',$id)->update([
+        $consultation_reply=Consultation_Replies::where('consultation_id',$id)->update([
             'reply'=>$request->input('consultation_answer')
         ]);
+        if(!$consultation_reply)
+        {
+             $consultation-> consultation_reply()->create([
+            
+            'lawyer_id' => \Auth::user()->id,
+            'reply' => $request->input('consultation_answer'),
+            'is_perfect_answer' => 1
+        ]);
+             $consultation->update(['is_replied'=>1]);
+
+        }
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
      public function send_consultation_to_all_lawyers($consultation_id)
@@ -256,6 +268,23 @@ class LegalConsultationsController extends Controller
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 
+
+    public function set_perfect_response(Request $request)
+    {
+        $consultation=Consultation::where('id',$request->input('consultation_id'))->with('consultation_reply')->first();
+        // dd($consultation->toArray());
+        foreach ($consultation->consultation_reply as  $value) {
+            if($value->id == $request->input('perfect_answer'))
+            {
+                $value->update(['is_perfect_answer'=>1]);
+            }
+            else
+            {
+                $value->update(['is_perfect_answer'=>0]);
+            }
+        }
+        return response()->json($consultation);
+    }
 
         public function filter(Request $request){
         /* date_to make H:i:s = 23:59:59 to avoid two problems

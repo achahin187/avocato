@@ -51,7 +51,9 @@
                         <select name="role" class="master_input select2" id="user_position" style="width:100%;">
                           <option value="choose" selected disabled>اختر دور المستخدم</option>
                           @foreach($roles as $role)
+                          @if($role->id!=1)
                           <option value="{{$role->id}}" >{{$role->name_ar}}</option>
+                          @endif
                           @endforeach
                         </select><span class="master_message color--fadegreen">
                                     @if ($errors->has('role'))

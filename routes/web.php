@@ -159,6 +159,8 @@ Route::get('/legal_consultation_destroy/{id}', 'LegalConsultationsController@des
 Route::post('/legal_consultation_destroy_all', 'LegalConsultationsController@destroy_all')->name('legal_consultation_destroy_all');
 Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsultationsController@send_consultation_to_all_lawyers')->name('send_consultation_to_all_lawyers');
 Route::post('/legal_consultation_filter', 'LegalConsultationsController@filter')->name('legal_consultation_filter');
+Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
+
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

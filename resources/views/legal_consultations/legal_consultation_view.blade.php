@@ -55,12 +55,12 @@
                           <p><b>:الرد </b><p id="original_reply.{{$lawyer_reply->id}}">{{$lawyer_reply->reply}}</p></p>
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-12 color--fadebrown bold">
-                          <div class="radiorobo">
+                          <div class="radiorobo" id="radio_group">
                             @if($lawyer_reply->is_perfect_answer)
-                            <input type="radio"  checked name="perfect_answer" id="{{$lawyer_reply->id}}">
+                            <input type="radio"  class="perfect_answer" checked name="perfect_answer" id="{{$lawyer_reply->id}}">
                             <label for="{{$lawyer_reply->id}}">الرد الأمثل</label>
                             @else
-                            <input type="radio"   name="perfect_answer" id="{{$lawyer_reply->id}}">
+                            <input type="radio"  class="perfect_answer" name="perfect_answer" id="{{$lawyer_reply->id}}">
                             <label for="{{$lawyer_reply->id}}">الرد الأمثل</label>
                             @endif
                             
@@ -77,7 +77,7 @@
                                   <div class="col-xs-12">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="individual_reply.{{$lawyer_reply->id}}">نص الرد</label>
-                                      <textarea class="master_input" name="textarea" id="individual_reply.{{$lawyer_reply->id}}" placeholder="نص الرد"></textarea><span class="master_message color--fadegreen">message</span>
+                                      <textarea class="master_input" name="textarea" id="individual_reply.{{$lawyer_reply->id}}" placeholder="نص الرد" >{{$lawyer_reply->reply}}</textarea><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                 </div>
@@ -96,12 +96,12 @@
                       @endforeach
                       
                       <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                        <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
+                        <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="" onclick="set_perfect_answer({{$consultation->id}});"><i class="fa fa-save"></i><span>حفظ</span>
                         </button>
                       </div>
                       <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                        <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>إلغاء</span>
-                        </button>
+                       <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type=""><i class="fa fa-times"></i><span>الغاء</span>
+                      </button>
                       </div>
                     </div>
                     <div class="clearfix"></div><a class="master-btn undefined undefined undefined undefined undefined" href="#edit_reply"><span></span></a>
@@ -121,7 +121,7 @@
                         </div>
                       </div><br>
                       <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                      <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                      <button class="remodal-confirm" data-remodal-action="confirm" id="consultation_button" >حفظ</button>
                     </div>
                   </div>
                 </div>
@@ -130,6 +130,33 @@
               
            @endsection
            <script type="text/javascript">
+            function set_perfect_answer(consultation_id)
+            {
+            var selected = $("#radio_group input[type='radio']:checked");
+                if (selected.length > 0) {
+                   var perfect_answer = selected.attr('id') ;
+                    // alert(consultation_id + perfect_answer);
+                    $.ajax({
+                        
+                        url: '{{route("set_perfect_response")}}',
+                        dataType : 'json',
+                        type: 'POST',
+
+                        data: { 'consultation_id' : consultation_id,'perfect_answer' : perfect_answer , '_token':"{{ csrf_token() }}"},
+                        success: function(data)
+                        {
+                          swal("تم", "تم تسجيل الرد الامثل:)", "success");
+                          // alert(data);
+                            // alert("Settings has been updated successfully.");
+                        }
+                    });
+                }
+                else
+                {
+                  swal("خطأ", "لم يتم اختيار الرد الامثل :)", "error");
+                }
+                // alert('no item selected') ;
+            }
              function edit_reply(id)
              {
 
@@ -153,8 +180,21 @@
              }
              function delete_reply(id)
              {
-
-              var elem = document.getElementById("lawyer_div."+id);
+var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+           var elem = document.getElementById("lawyer_div."+id);
                    elem.parentNode.removeChild(elem);
               
               $.ajax({
@@ -169,6 +209,12 @@
                             // alert("Reply Deleted Successfully.");
                         }
                     });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+            
               
               }
            </script>

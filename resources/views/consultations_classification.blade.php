@@ -329,7 +329,7 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/consultations_classification/destroySelected",
+                  url: "{{ url('/consultations_classification/destroySelected') }}",
                   type: 'DELETE',
                   dataType: "JSON",
                   data: {
