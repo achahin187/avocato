@@ -376,12 +376,12 @@
         if (isConfirm){
               $.ajax(
               {
-                  url: "/public/consultations_classification/destroy",
-                  type: 'POST',
+                  url: "{{ url('/consultations_classification/destroy') }}" + "/" +id,
+                  type: 'DELETE',
                   dataType: "JSON",
                   data: {
                       "id": id,
-                      "_method": 'POST',
+                      "_method": 'DELETE',
                       "_token": token,
                   },
                   success: function ()
