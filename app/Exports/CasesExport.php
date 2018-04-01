@@ -4,7 +4,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use App\Cases_Types;
-use PhpOffice\PhpSpreadsheet\Style;
+use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class CasesExport implements FromCollection,WithColumnFormatting
 {
@@ -14,9 +14,9 @@ class CasesExport implements FromCollection,WithColumnFormatting
 
 	    public function columnFormats(): array
     {
+        $fs=new Font;
         return [
-            'A' => getFont()->setBold(true),
-            'B' => getFont()->setBold(true),
+            'A1' => 'Bold',
         ];
     }
 
