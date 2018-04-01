@@ -13,6 +13,6 @@ class Consultation_Types extends Model
     public $timestamps = true;
     public function consultation()
     {
-    	return $this->belongsTo('App\Consultation');
+    	return $this->hasMany('App\Consultation', 'consultation_type_id');
     }
 }

@@ -124,7 +124,7 @@ else
                                 <label class="master_label mandatory" for="consultation_cat">التصنيف</label>
                                 <select class="master_input select2" id="consultation_cat" name="consultation_cat[]" multiple="multiple" data-placeholder="التصنيف" style="width:100%;" ,>
                                    @foreach($consultation_types as $type)
-                                    <option value="{{$type->name}}">{{$type->name}}</option>
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
@@ -133,7 +133,7 @@ else
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_type"> النوع</label>
                                 <select class="master_input select2" id="consultation_type" name="consultation_type[]" multiple="multiple" data-placeholder="النوع" style="width:100%;" ,>
-                                  <option value="1">مدفوع</option>
+                                  <option value="1">مدفوعة</option>
                                   <option value="0">مجانية</option>
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
