@@ -1,8 +1,9 @@
 <?php
 
 namespace App;
-
+use App\Users_Rules;
 use App\Installment;
+use App\ClientsPasswords;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,12 +27,14 @@ class Users extends Authenticatable
         parent::boot();
 
         static::deleting(function($user) { // before delete() method call this
-            if ( $user->rules() ) { $user->rules()->delete(); }
-            if ( $user->user_detail() ) { $user->user_detail()->delete(); }
-            if ( Installment::whereIn('subscription_id', $user->subscription->id) ) {
-                $user->subscription()->delete();
+            if ( $user->rules ) { Users_Rules::where('user_id',$user->id)->delete(); }
+            if ( $user->client_password ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
+            if ( $user->user_detail ) { $user->user_detail()->delete(); }
+            if ( $user->subscription ) { $user->subscription()->delete(); }
+            if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
+                Installment::where('subscription_id', $user->subscription->id)->delete();
             }
-            if ( $user->user_company_detail() ) { $user->user_company_detail()->delete(); }
+            if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }    // for companies or individuals_companies
         });
     }
 

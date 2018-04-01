@@ -387,7 +387,6 @@ class IndividualsController extends Controller
                 for($i=0; $i < $request->number_of_payments; $i++) {
                     $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-
                     
                     $installment = new Installment;
                     $installment->subscription_id   = $subscription->id;
@@ -399,12 +398,6 @@ class IndividualsController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
-            $subscription->delete();
-
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -417,7 +410,7 @@ class IndividualsController extends Controller
     public function destroy($id)
     {
         // Find and delete this record
-        Users::destroy($id);
+        Users::find($id)->delete();
 
         Session::flash('success', 'تم الحذف بنجاح');
         return response()->json([

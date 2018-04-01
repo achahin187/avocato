@@ -18,6 +18,7 @@ class CreateRulesTable extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('name');
             $table->string('name_ar');
+            $table->softDeletes();
         });
         DB::table('rules')->insert(
             array(

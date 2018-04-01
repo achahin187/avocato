@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-     <script>
+  <script>
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){

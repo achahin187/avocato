@@ -99,15 +99,15 @@ Route::get('/individuals/create', 'IndividualsController@create')->name('ind.cre
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
 Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
-Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.destroy');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
+Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.edit');
 Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
-Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
+Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
 

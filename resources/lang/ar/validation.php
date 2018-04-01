@@ -180,6 +180,7 @@ return [
         'discount_percentage' => 'قيمة الخصم',
         'duration'      => 'مدة التعاقد',
         'value'         => 'القيمة',
+        'logo'          => 'شعار الشركة', 
         
 
     ],
