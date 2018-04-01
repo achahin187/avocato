@@ -40,7 +40,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="password">كلمة المرور</label>
-            <input name="password" class="master_input" type="text" placeholder="كلمة المرور الجديدة .." id="password">
+            <input name="password" value="{{ $password }}" class="master_input" type="text" placeholder="كلمة المرور الجديدة .." id="password">
 
             @if ($errors->has('password'))
               <span class="master_message color--fadegreen">{{ $errors->first('password') }}</span>
