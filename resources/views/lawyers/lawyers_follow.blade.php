@@ -1,10 +1,20 @@
 @extends('layout.app')
 @section('content')
 
-<script type="text/javascript">
-var test='{{$test}}';
-console.log(test[2]);
+<script>
+
 function initMap() {
+
+
+ @foreach($lawyers as $lawyer)
+  var geocoder = new google.maps.Geocoder;
+geocoder.geocode({'location': new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})}, function(results, status) {
+$('tr[data-lawyer-id='+{{$lawyer->id}}+'] .location').text(results[0].formatted_address);
+});
+@endforeach
+
+
+
   var uluru = [];
   @foreach($lawyers as $lawyer)
    uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
@@ -22,13 +32,13 @@ function initMap() {
   });
   i++;
   @endforeach
-
-
 }
+
+
 
 </script>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
 </script>
               <div class="row">
                 <div class="col-lg-12">
@@ -101,12 +111,12 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                           </thead>
                           <tbody>
                             @foreach($lawyers as $lawyer)
-                            <tr>
+                            <tr data-lawyer-id="{{$lawyer->id}}">
                               <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                               <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
                               <td><span class="cellcontent">{{$lawyer->phone}}</span></td>
                               <td><span class="cellcontent">@if($lawyer->is_active)<i class = "fa color--fadegreen fa-check"></i> @else <i class = "fa color--fadebrown fa-times"></i>@endif</span></td>
-                              <td><span class="cellcontent">55 شارع الثورة - مدينة نصر</span></td>
+                              <td><span class="cellcontent location">55 شارع الثورة - مدينة نصر</span></td>
                               <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a></span></td>
                             </tr>
                             @endforeach

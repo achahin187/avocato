@@ -42,7 +42,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
-                          <input name="lawyer_name" class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">
+                          <input name="lawyer_name" value="{{ old('lawyer_name') }}" class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">
                                     @if ($errors->has('lawyer_name'))
                                     {{ $errors->first('lawyer_name')}}
                                     @endif</span> </span>
@@ -51,7 +51,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_address">عنوان المحامى</label>
-                          <input name="address" class="master_input" type="text" placeholder="عنوان المحامى .." id="lawyer_address"><span class="master_message color--fadegreen"> 
+                          <input name="address" value="{{ old('address') }}" class="master_input" type="text" placeholder="عنوان المحامى .." id="lawyer_address"><span class="master_message color--fadegreen"> 
                                     @if ($errors->has('address'))
                                     {{ $errors->first('address')}}
                                     @endif </span>
@@ -60,7 +60,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_id">الرقم القومى</label>
-                          <input name="national_id" class="master_input" type="text" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">            
+                          <input name="national_id" value="{{ old('national_id') }}" class="master_input" type="text" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">            
                                     @if ($errors->has('national_id'))
                                     {{ $errors->first('national_id')}}
                                     @endif</span>
@@ -91,7 +91,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_birth">تاريخ الميلاد</label>
-                          <input name="birthdate" class="datepicker master_input" type="text" placeholder="placeholder" id="lawyer_birth"><span class="master_message color--fadegreen">
+                          <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="placeholder" id="lawyer_birth"><span class="master_message color--fadegreen">
                                     @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif </span>
@@ -100,7 +100,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_tel">رقم الهاتف</label>
-                          <input name="phone" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
+                          <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
                                    @if ($errors->has('phone'))
                                     {{ $errors->first('phone')}}
                                     @endif </span>
@@ -109,7 +109,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_mob">رقم الهاتف الجوال</label>
-                          <input name="mobile" class="master_input" type="text" placeholder="رقم الهاتف الجوال" id="lawyer_mob"><span class="master_message color--fadegreen">
+                          <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="رقم الهاتف الجوال" id="lawyer_mob"><span class="master_message color--fadegreen">
                                   @if ($errors->has('mobile'))
                                     {{ $errors->first('mobile')}}
                                     @endif</span>
@@ -118,7 +118,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="lawyer_email">البريد الالكترونى</label>
-                          <input name="email" class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">
+                          <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">
                                   @if ($errors->has('email'))
                                     {{ $errors->first('email')}}
                                     @endif</span>
@@ -161,7 +161,7 @@
 
                         <div class="master_field">
                           <label class="master_label" for="lawyer_email">التخصص</label>
-                          <input name="work_sector" class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector"><span class="master_message color--fadegreen">
+                          <input name="work_sector" value="{{ old('work_sector') }}" class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector"><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector'))
                                     {{ $errors->first('work_sector')}}
                                     @endif</span>
@@ -170,7 +170,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
-                          <input name="work_sector_type" class="master_input" type="text" placeholder="الإختصاص المكاني" id="lawyer_spec"><span class="master_message color--fadegreen">
+                          <input name="work_sector_type" value="{{ old('work_sector_type') }}" class="master_input" type="text" placeholder="الإختصاص المكاني" id="lawyer_spec"><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector_type'))
                                     {{ $errors->first('work_sector_type')}}
                                     @endif </span>
@@ -179,7 +179,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_degrees">درجة التقاضي</label>
-                          <input name="litigation_level" class="master_input" type="text" placeholder="درجة التقاضي.." id="lawyer_degrees"><span class="master_message color--fadegreen">
+                          <input name="litigation_level" value="{{ old('litigation_level') }}" class="master_input" type="text" placeholder="درجة التقاضي.." id="lawyer_degrees"><span class="master_message color--fadegreen">
                                   @if ($errors->has('litigation_level'))
                                     {{ $errors->first('litigation_level')}}
                                     @endif</span>
@@ -188,7 +188,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>
-                          <input name="join_date" class="datepicker master_input" type="text" placeholder="placeholder" id="work_start"><span class="master_message color--fadegreen">
+                          <input name="join_date" value="{{ old('join_date') }}" class="datepicker master_input" type="text" placeholder="placeholder" id="work_start"><span class="master_message color--fadegreen">
                                   @if ($errors->has('join_date'))
                                     {{ $errors->first('join_date')}}
                                     @endif </span>
@@ -197,7 +197,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_end"> تاريخ انتهاء العمل بالشركة</label>
-                          <input name="resign_date" class="datepicker master_input" type="text" placeholder="placeholder" id="work_end"><span class="master_message color--fadegreen">
+                          <input name="resign_date" value="{{ old('resign_date') }}" class="datepicker master_input" type="text" placeholder="placeholder" id="work_end"><span class="master_message color--fadegreen">
                                     @if ($errors->has('resign_date'))
                                     {{ $errors->first('resign_date')}}
                                     @endif</span>
@@ -244,7 +244,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_degree_in">درجة القيد بالنقابة </label>
-                          <input name="syndicate_level" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in"><span class="master_message color--fadegreen">
+                          <input name="syndicate_level" value="{{ old('syndicate_level') }}" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in"><span class="master_message color--fadegreen">
                                   @if ($errors->has('syndicate_level'))
                                     {{ $errors->first('syndicate_level')}}
                                     @endif</span>
