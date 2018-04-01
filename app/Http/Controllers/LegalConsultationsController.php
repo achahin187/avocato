@@ -140,7 +140,7 @@ class LegalConsultationsController extends Controller
                 {
                     $detail['assigned']=0;
                 }
-                $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
+                $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
                 $detail['nationality']=$value;
                  }
@@ -308,18 +308,18 @@ class LegalConsultationsController extends Controller
              $date_from=date('Y-m-d H:i:s',strtotime($request->consultation_date_from));
              $date_to=date('Y-m-d H:i:s',strtotime($request->consultation_date_to));
 
-            if($request->has('consultation_cat') && count($request->consultation_cat)==1)
+            if($request->filled('consultation_cat') && count($request->consultation_cat)==1)
             {
   //dd($request->consultation_cat[0]);
                $q->where('consultation_type_id',$request->consultation_cat[0]);  
            }
-           elseif ($request->has('consultation_cat') && count($request->consultation_cat)>1) {
+           elseif ($request->filled('consultation_cat') && count($request->consultation_cat)>1) {
                $q->whereIn('consultation_type_id',$request->consultation_cat);
            }
            else{
                $q->whereIn('consultation_type_id',$consultation_types_ids);  
           }
-          if($request->has('consultation_type'))
+          if($request->filled('consultation_type'))
             {
                 // dd($request->consultation_type);
                $q->whereIn('is_paid',$request->consultation_type);  
@@ -382,52 +382,51 @@ class LegalConsultationsController extends Controller
         $lawyers=Users::whereHas('rules', function ($query) {
 
         $query->where('rule_id', '5');
-        })->with(['user_detail'=>function($q) use ($request){
-                $q->where(function($query)use ($request)
-                {
-                        if($request->has('lawyer_level'))
-                        {
+        })->where(function($query)use($request){
 
-                           $query->where('litigation_level',$request->lawyer_level);  
-                        }
-                        if($request->has('lawyer_national_id'))
-                        {
-
-                           $query->where('national_id',$request->lawyer_national_id);  
-                        }
-                         if($request->has('start_date'))
-                        {
-
-                           $query->where('join_date',date('Y-m-d H:i:s',strtotime($request->start_date)));  
-                        }
-                         if($request->has('lawyer_work_sector'))
-                        {
-
-                           $query->where('work_sector',$request->lawyer_work_sector);  
-                        }
-
-                });
-                $q->orderby('join_date','desc');
-                 }])->where(function($query)use($request){
-
-            if($request->has('lawyer_code'))
+            if($request->filled('lawyer_code'))
             {
 
                $query->where('code',$request->lawyer_code);  
             }
-            if($request->has('lawyer_name'))
+            if($request->filled('lawyer_name'))
             {
 
                $query->where('name',$request->lawyer_name);  
             }
-            if($request->has('lawyer_tel'))
+            if($request->filled('lawyer_tel'))
             {
 
                $query->where('mobile',$request->lawyer_tel);  
             }
 
-        })->get();
-         // dd($lawyers);
+        })->with(['user_detail'=>function($query) use ($request){
+                
+                        if($request->filled('lawyer_level'))
+                        {
+
+                           $query->where('litigation_level',$request->lawyer_level);  
+                        }
+                        if($request->filled('lawyer_national_id'))
+                        {
+
+                           $query->where('national_id',$request->lawyer_national_id);  
+                        }
+                         if($request->filled('start_date'))
+                        {
+
+                           $query->where('join_date',date('Y-m-d H:i:s',strtotime($request->start_date)));  
+                        }
+                         if($request->filled('lawyer_work_sector'))
+                        {
+
+                           $query->where('work_sector',$request->lawyer_work_sector);  
+                        }
+
+              
+                $query->orderby('join_date','desc');
+                 }])->get();
+          // dd($lawyers);
         foreach($lawyers as $detail){
             if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->get()))
                 {
@@ -438,9 +437,18 @@ class LegalConsultationsController extends Controller
                 {
                     $detail['assigned']=0;
                 }
-                $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
-              
-                $detail['nationality']=$value;
+                if(count($detail->user_detail)!=0)
+                {
+                    // dd($detail->user_detail->nationality_id);
+                   $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+              // dd($value);
+                $detail['nationality']=$value; 
+                }
+                else
+                {
+                   $detail['nationality']='';  
+                }
+                
                  }
         
         return view('legal_consultations.legal_consultation_assign',compact('lawyers','consultation'));
