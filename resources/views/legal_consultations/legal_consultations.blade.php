@@ -124,7 +124,7 @@ else
                                 <label class="master_label mandatory" for="consultation_cat">التصنيف</label>
                                 <select class="master_input select2" id="consultation_cat" name="consultation_cat[]" multiple="multiple" data-placeholder="التصنيف" style="width:100%;" ,>
                                    @foreach($consultation_types as $type)
-                                    <option value="{{$type->name}}">{{$type->name}}</option>
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
@@ -133,7 +133,7 @@ else
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_type"> النوع</label>
                                 <select class="master_input select2" id="consultation_type" name="consultation_type[]" multiple="multiple" data-placeholder="النوع" style="width:100%;" ,>
-                                  <option value="1">مدفوع</option>
+                                  <option value="1">مدفوعة</option>
                                   <option value="0">مجانية</option>
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
@@ -389,6 +389,7 @@ else
   function exportExcel() {
         alasql('SELECT * INTO XLSX("consultations.xlsx",{headers:true}) \
                     FROM HTML("#consultation_table",{headers:true})');
+        
     }
    function fnExcelReport()
 {
@@ -405,7 +406,7 @@ else
     tab_text=tab_text+"</table>";
      tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
      tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-     tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+     // tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 

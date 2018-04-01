@@ -140,7 +140,7 @@ class LegalConsultationsController extends Controller
                 {
                     $detail['assigned']=0;
                 }
-                $value=Helper::localizations('geo_countries','nationality',$detail->user_detail->nationality_id);
+                $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
                 $detail['nationality']=$value;
                  }
@@ -286,67 +286,171 @@ class LegalConsultationsController extends Controller
         return response()->json($consultation);
     }
 
-        public function filter(Request $request){
+        public function consultations_filter(Request $request){
         /* date_to make H:i:s = 23:59:59 to avoid two problems
             one : when select same date
             second : when juse select date_to
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
              */
+            $consultation_types=Consultation_Types::all();
+            $consultation_types_ids=[];
+            $i=0;
+            foreach ($consultation_types as $key => $value) {
 
-            dd($request->all());
-             $data['users'] = Users::where(function($q) use($request){
-            $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
-            $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+                $consultation_types_ids[$i]=$value['id'];
+                $i++;
+            }
+           
+// dd($consultation_types_ids);
+             // dd($request->all());
+             $data['consultations'] = Consultation::where(function($q) use($request,$consultation_types_ids){
+             $date_from=date('Y-m-d H:i:s',strtotime($request->consultation_date_from));
+             $date_to=date('Y-m-d H:i:s',strtotime($request->consultation_date_to));
 
-            if($request->has('roles'))
+            if($request->filled('consultation_cat') && count($request->consultation_cat)==1)
             {
-               $q->whereHas('rules',function($q) use($request){
-                $q->whereIn('name',$request->roles);
-
-            });  
+  //dd($request->consultation_cat[0]);
+               $q->where('consultation_type_id',$request->consultation_cat[0]);  
+           }
+           elseif ($request->filled('consultation_cat') && count($request->consultation_cat)>1) {
+               $q->whereIn('consultation_type_id',$request->consultation_cat);
            }
            else{
-              $q->whereHas('rules', function($q){
-                $q->whereIn('name',['admin','data entry','call center']);
-            });  
+               $q->whereIn('consultation_type_id',$consultation_types_ids);  
           }
+          if($request->filled('consultation_type'))
+            {
+                // dd($request->consultation_type);
+               $q->whereIn('is_paid',$request->consultation_type);  
+           }
+           else
+             {
+               $q->whereIn('is_paid',[0,1]);  
+            }
+             if($request->is_replied == 1 || $request->is_replied == 0)
+            {
+                $q->where('is_replied',$request->is_replied);
+            }
+            else
+            {
 
-            if($request->filled('date_from') && $request->filled('date_to') )
-            {
-                $q->whereBetween('last_login', array($date_from, $date_to));
+                $q->whereIn('is_replied',[0,1]);
+                // dd($q);
             }
-            elseif($request->filled('date_from'))
+            if($request->filled('consultation_date_from') && $request->filled('consultation_date_to') )
             {
-                $q->where('last_login','>=',$date_from);
+                // dd($request);
+                $q->whereBetween('created_at', array($date_from,$date_to));
             }
-            elseif($request->filled('date_to'))
+            elseif($request->filled('consultation_date_from') && !$request->filled('consultation_date_to'))
             {
-                $q->where('last_login','<=',$date_to);
+                $q->where('created_at','>=',$date_from);
             }
-            if($request->active == 1 || $request->active == 0 )
+            elseif($request->filled('consultation_date_to') && !$request->filled('consultation_date_from'))
             {
-                $q->where('is_active',$request->active);
+                $q->where('created_at','<=',$date_to);
             }
+
+          
 
 
 
      })->get();
-        $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
-        foreach($data['users'] as $user)
-        {
-            $filter_ids[]=$user->id;
+             foreach ($data['consultations'] as $consultation) {
+          
+                 $consultation_type=Consultation_types::find($consultation->consultation_type_id);
+               // dd($consultation);
+                 if($consultation_type)
+                 {
+                    $consultation['consultation_type']=$consultation_type->name;
+                 }
+                 else
+                 {
+                    $consultation['consultation_type']='لا يوجد تصنيف';
+                 }
+                 
+            
         }
-        if(!empty($filter_ids))
-        {
-                    Session::flash('filter_ids',$filter_ids);
-        }
-        else{
-            $filter_ids[]=0;
-            Session::flash('filter_ids',$filter_ids);
-        }
-
-        return view('users.users_list',$data);
+        // dd($data);
+        return view('legal_consultations.legal_consultations')->with('consultations',$data['consultations'])->with('consultation_types',$consultation_types);
         
+    }
+    function lawyers_filter(Request $request,$id)
+    {
+        $consultation = Consultation::find($id);
+        $lawyers=Users::whereHas('rules', function ($query) {
+
+        $query->where('rule_id', '5');
+        })->where(function($query)use($request){
+
+            if($request->filled('lawyer_code'))
+            {
+
+               $query->where('code',$request->lawyer_code);  
+            }
+            if($request->filled('lawyer_name'))
+            {
+
+               $query->where('name',$request->lawyer_name);  
+            }
+            if($request->filled('lawyer_tel'))
+            {
+
+               $query->where('mobile',$request->lawyer_tel);  
+            }
+
+        })->with(['user_detail'=>function($query) use ($request){
+                
+                        if($request->filled('lawyer_level'))
+                        {
+
+                           $query->where('litigation_level',$request->lawyer_level);  
+                        }
+                        if($request->filled('lawyer_national_id'))
+                        {
+
+                           $query->where('national_id',$request->lawyer_national_id);  
+                        }
+                         if($request->filled('start_date'))
+                        {
+
+                           $query->where('join_date',date('Y-m-d H:i:s',strtotime($request->start_date)));  
+                        }
+                         if($request->filled('lawyer_work_sector'))
+                        {
+
+                           $query->where('work_sector',$request->lawyer_work_sector);  
+                        }
+
+              
+                $query->orderby('join_date','desc');
+                 }])->get();
+          // dd($lawyers);
+        foreach($lawyers as $detail){
+            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->get()))
+                {
+                    
+                    $detail['assigned']=1;
+                }
+                else
+                {
+                    $detail['assigned']=0;
+                }
+                if(count($detail->user_detail)!=0)
+                {
+                    // dd($detail->user_detail->nationality_id);
+                   $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+              // dd($value);
+                $detail['nationality']=$value; 
+                }
+                else
+                {
+                   $detail['nationality']='';  
+                }
+                
+                 }
+        
+        return view('legal_consultations.legal_consultation_assign',compact('lawyers','consultation'));
     }
 }
