@@ -145,7 +145,7 @@
                               <div class="col-sm-12">
                                 <div class="master_field">
                                   <label class="master_label" for="case_type_new">ادخال نوع جديد من انواع القضايا</label>
-                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" name="new_type"><span class="master_message color--fadegreen">
+                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" value="{{ old('new_type') }}" name="new_type"><span class="master_message color--fadegreen">
 @if(count($errors) > 0)
 @foreach($errors->all() as $error)
 

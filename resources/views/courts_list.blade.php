@@ -158,7 +158,7 @@ true).find("option[value]").remove();
                               <div class="col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label" for="ID_No">اسم المحكمة</label>
-                                  <input name="court" class="master_input" type="text" placeholder="اسم المحكمة" id="ID_No"><span class="master_message color--fadegreen">
+                                  <input name="court" value="{{ old('court') }}" class="master_input" type="text" placeholder="اسم المحكمة" id="ID_No"><span class="master_message color--fadegreen">
                                     @if ($errors->has('court'))
                                     {{ $errors->first('court')}}
                                     @endif

@@ -145,7 +145,7 @@
                                     <div class="col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="type">تصنيف الصيغة/ العقد</label>
-                                        <input name="main" class="master_input" type="text" placeholder="تصنيف الصيغة / العقد" id="type"><span class="master_message color--fadegreen">               
+                                        <input name="main" value="{{ old('main') }}" class="master_input" type="text" placeholder="تصنيف الصيغة / العقد" id="type"><span class="master_message color--fadegreen">               
                                     @if ($errors->has('main'))
                                     {{ $errors->first('main')}}
                                     @endif</span>
@@ -180,7 +180,7 @@
                                     <div class="col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="type_main">التصنيف الفرعي للصيغة / العقد</label>
-                                        <input name="sub" class="master_input" type="text" placeholder="نوع الصيغة / العقد" id="type_main"><span class="master_message color--fadegreen"> 
+                                        <input name="sub" value="{{ old('sub') }}" class="master_input" type="text" placeholder="نوع الصيغة / العقد" id="type_main"><span class="master_message color--fadegreen"> 
                                     @if ($errors->has('sub'))
                                     {{ $errors->first('sub')}}
                                     @endif</span>

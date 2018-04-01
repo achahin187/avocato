@@ -30,7 +30,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="client_name">اسم المستخدم</label>
-                        <input name="user_name" class="master_input" type="text" placeholder="اسم المستخدم" id="client_name"><span class="master_message color--fadegreen">
+                        <input name="user_name" value="{{ old('user_name') }}" class="master_input" type="text" placeholder="اسم المستخدم" id="client_name"><span class="master_message color--fadegreen">
                                   @if ($errors->has('user_name'))
                                     {{ $errors->first('user_name')}}
                                     @endif</span>
@@ -39,7 +39,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="client_full_name">الاسم بالكامل</label>
-                        <input name="full_name" class="master_input" type="text" placeholder="الاسم بالكامل" id="client_full_name"><span class="master_message color--fadegreen">
+                        <input name="full_name" value="{{ old('full_name') }}" class="master_input" type="text" placeholder="الاسم بالكامل" id="client_full_name"><span class="master_message color--fadegreen">
                                     @if ($errors->has('full_name'))
                                     {{ $errors->first('full_name')}}
                                     @endif</span>
@@ -78,7 +78,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="client_email">البريد الالكترونى</label>
-                        <input name="email" class="master_input" type="email" placeholder="مثال mail@mail.com" id="client_email"><span class="master_message color--fadegreen">
+                        <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="مثال mail@mail.com" id="client_email"><span class="master_message color--fadegreen">
                                     @if ($errors->has('email'))
                                     {{ $errors->first('email')}}
                                     @endif</span>
@@ -87,7 +87,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="phone">هاتف</label>
-                        <input name="phone" class="master_input" type="text" placeholder="مثال : 022222222" id="phone"><span class="master_message color--fadegreen">
+                        <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="مثال : 022222222" id="phone"><span class="master_message color--fadegreen">
                                     @if ($errors->has('phone'))
                                     {{ $errors->first('phone')}}
                                     @endif</span>
@@ -96,7 +96,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="mob">موبايل</label>
-                        <input name="mobile" class="master_input" type="text" placeholder="مثال : 0111111111" id="mob"><span class="master_message color--fadegreen">
+                        <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="مثال : 0111111111" id="mob"><span class="master_message color--fadegreen">
                                     @if ($errors->has('mobile'))
                                     {{ $errors->first('mobile')}}
                                     @endif</span>
