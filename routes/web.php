@@ -94,10 +94,11 @@ Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.
 Route::get('/clients', 'ClientsController@index')->name('clients');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
-Route::get('/individuals/show', 'IndividualsController@show')->name('ind.show');
+Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
 Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');
+Route::post('/individuals/ins_update/{id}', 'IndividualsController@ins_update')->name('ind.ins_update');
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.destroy');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');

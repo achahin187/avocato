@@ -171,7 +171,7 @@
                   <span class="cellcontent">
 
                     {{--  Show  --}}
-                    <a href= "{{route('ind.show')}}" ,  class= "action-btn bgcolor--main color--white ">
+                    <a href= "{{route('ind.show',$user->id)}}" ,  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
                     </a>
 
