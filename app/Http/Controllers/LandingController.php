@@ -11,6 +11,7 @@ use App\Subscriptions;
 use App\Package_Types;
 use App\Installment;
 use App\Rules;
+use App\User_Company_Details;
 use Helper;
 use Validator;
 
@@ -52,7 +53,7 @@ class LandingController extends Controller
         $client->password = bcrypt($password);
         $client->code = Helper::generateRandom(Users::class, 'code', 6);
         $client->save();
-        $client->rules()->attach(8);
+        $client->rules()->attach([6,8]);
 
         $client_sub = new Subscriptions;
         $client->subscription()->save($client_sub);
@@ -83,8 +84,8 @@ class LandingController extends Controller
 		            'nationality'=>'required',
 		            'national_id'=>'required|numeric',
 		            'birthdate'=>'required',
-		            'phone'=>'required|digits_between:1,10',
-		            'mobile'=>'required|digits_between:1,12',
+		            'phone'=>'required|numeric',
+		            'mobile'=>'required|numeric',
 		            'email'=>'required|email|max:40',
 		        ]);
 
@@ -117,5 +118,54 @@ class LandingController extends Controller
         $lawyer->user_detail()->save($lawyer_details);
         $lawyer->client_password()->save($lawyer_plaintext);
         return redirect()->route('landing')->with('success','تم إضافه محامى جديد بنجاح');
+    }
+
+
+            public function company(Request $request)
+    {
+                // Validate data
+		$validator = Validator::make($request->all(), [
+		            'company_name'=>'required',
+		            'address'=>'required',
+		            'phone'=>'required|numeric',
+		            'mobile'=>'required|numeric',
+		            'email'=>'required|email|max:40',
+		            'legal_representative_name'=>'required',
+		        ]);
+
+		        if ($validator->fails()) {
+		            return redirect('Landing#tabBody2')
+		            ->withErrors($validator)
+		            ->withInput();
+		        }
+
+        $company = new Users;
+        $company->name = $request->company_name;
+        $company->full_name = $request->company_name;
+        $company->address = $request->address;
+        $company->phone = $request->phone;
+        $company->mobile = $request->mobile;
+        $company->email = $request->email;
+        $company->is_active = 0; 
+        $password = Helper::generateRandom(Users::class, 'password', 8);
+        $company->password = bcrypt($password);
+        $company->code = Helper::generateRandom(Users::class, 'code', 6);
+        $company->save();
+        $company->rules()->attach([6,9]);
+
+        $company_sub = new Subscriptions;
+        $company->subscription()->save($company_sub);
+        $company_install = new Installment ;
+        $company_sub->installments()->save($company_install);
+
+        $company_details = new User_Details;
+        $user_company_details = new User_Company_Details;
+        $user_company_details->legal_representative_name = $request->legal_representative_name;
+        $company_plaintext = new ClientsPasswords;
+        $company_plaintext->password = $password;
+        $company->user_detail()->save($company_details);
+        $company->user_company_detail()->save($user_company_details);
+        $company->client_password()->save($company_plaintext);
+        return redirect()->route('landing')->with('success','تم إضافه مكتب جديد بنجاح');
     }
 }
