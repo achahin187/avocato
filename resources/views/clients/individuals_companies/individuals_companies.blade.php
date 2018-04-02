@@ -181,13 +181,13 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"><i class="fa {{ $ind_com->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class="fa color--fadegreen {{ $ind_com->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
                 <td>
                   <span class="cellcontent">
                     <a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
                     </a>
-                    <a href="{{ route('ind.com.edit', ['id'=>$ind_com->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
+                    <a href="{{ route('ind.com.edit', ['id' => $ind_com->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
                       <i class = "fa  fa-pencil"></i>
                     </a>
 
