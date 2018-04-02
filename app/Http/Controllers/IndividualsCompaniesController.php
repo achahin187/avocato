@@ -43,14 +43,7 @@ class IndividualsCompaniesController extends Controller
         
         $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
-
-        $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
-        // get all ids in one array
-        for($i=0; $i < count($geo); $i++) {
-            $ids[] = $geo[$i]['id'];
-        }
-        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
-        
+        $nationalities = Geo_Countries::all();        
         $companies = Users::users(9)->get();
 
         return view('clients.individuals_companies.individuals_companies_create', compact(['code', 'password', 'subscription_types', 'nationalities', 'companies']));
@@ -251,8 +244,14 @@ class IndividualsCompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
+    public function edit($id)
+    {   
+        $user = Users::find($id);
+        $password = $user->client_password->password;
+        $subscription_types = Package_Types::all();
+        $nationalities = Geo_Countries::all();  
+        $installments = Installment::where('subscription_id', $user->subscription->id)->get();
+        
         return view('clients.individuals_companies.individuals_companies_edit');
     }
 

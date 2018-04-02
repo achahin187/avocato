@@ -44,13 +44,7 @@ class IndividualsController extends Controller
         
         $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
-
-        $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
-        // get all ids in one array
-        for($i=0; $i < count($geo); $i++) {
-            $ids[] = $geo[$i]['id'];
-        }
-        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
+        $nationalities = Geo_Countries::all();  
         
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
     }
@@ -243,16 +237,12 @@ class IndividualsController extends Controller
         $user = Users::find($id);
         $password = $user->client_password->password;
         $subscription_types = Package_Types::all();
-        $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
-        // get all ids in one array
-        for($i=0; $i < count($geo); $i++) {
-            $ids[] = $geo[$i]['id'];
-        }
-        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
+        $nationalities = Geo_Countries::all();  
         $installments = Installment::where('subscription_id', $user->subscription->id)->get();
 
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
+    
     public function ins_update(Request $request, $id)
     {
         $installment = Installment::find($id);
