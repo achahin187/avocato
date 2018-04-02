@@ -251,7 +251,6 @@ class IndividualsCompaniesController extends Controller
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();  
         $installments = Installment::where('subscription_id', $user->subscription->id)->get();
-        
         return view('clients.individuals_companies.individuals_companies_edit');
     }
 

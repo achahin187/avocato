@@ -62,7 +62,7 @@
               <div class="col-md-2 col-xs-4">
                 <div class="master_field">
                   <label class="master_label" for="sitch_1">تفعيل </label>
-                <input class="" type="checkbox"  data-on-text="نعم" data-off-text="لا" value="{{ ($news->is_active) ? '0' : '1' }} " name="activate" {{ $news->is_active ? 'checked' : '' }}>
+                <input class="" type="checkbox"  data-on-text="نعم" data-off-text="لا" value="{{ ($news->is_active == 1) ? '0' : '1' }} " name="activate" {{ $news->is_active ? 'checked' : '' }}>
                     
                     @if ($errors->has('activate'))
                       <span class="master_message color--fadegreen">{{ $errors->first('activate') }}</span>
