@@ -12,6 +12,7 @@ use App\Package_Types;
 use App\Installment;
 use App\Rules;
 use Helper;
+use Validator;
 
 class LandingController extends Controller
 {
@@ -88,14 +89,14 @@ class LandingController extends Controller
 		        ]);
 
 		        if ($validator->fails()) {
-		            return redirect()->back()
+		            return redirect('Landing#tabBody1')
 		            ->withErrors($validator)
 		            ->withInput();
 		        }
 
         $lawyer = new Users;
-        $lawyer->name = $request->ind_name;
-        $lawyer->full_name = $request->ind_name;
+        $lawyer->name = $request->lawyer_name;
+        $lawyer->full_name = $request->lawyer_name;
         $lawyer->address = $request->address;
         $lawyer->phone = $request->phone;
         $lawyer->mobile = $request->mobile;
