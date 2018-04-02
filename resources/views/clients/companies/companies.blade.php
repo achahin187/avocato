@@ -165,8 +165,9 @@
                   <span class="cellcontent">
                     <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
-                    </a><a href= clients_companies_edit.html ,  class= "action-btn bgcolor--fadegreen color--white ">
-                    <i class = "fa  fa-pencil"></i>
+                    </a>
+                    <a href="{{ route('companies.edit', ['id' => $company->id]) }}" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                      <i class = "fa  fa-pencil"></i>
                     </a>
                     {{--  Delete  --}}
                     <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $company->id }}">

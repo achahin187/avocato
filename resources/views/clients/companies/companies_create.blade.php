@@ -68,8 +68,8 @@
           <div class="master_field">
             <label class="master_label mandatory" for="comp_name">اسم الشركة</label>
             <input name="name" value="{{ old('name') }}"  class="master_input" type="text" placeholder="اسم الشركة .." id="comp_name">
-            {{--  Error  --}}
-            @if ($errors->has('name'))
+              {{--  Error  --}}
+              @if ($errors->has('name'))
                 <span class="master_message color--fadegreen">{{ $errors->first('name') }}</span>
               @endif
           </div>
@@ -250,7 +250,9 @@
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">
             
-          
+            @if($errors->has('discount_percentage'))
+              <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>
+            @endif
           </div>
           
         </div>

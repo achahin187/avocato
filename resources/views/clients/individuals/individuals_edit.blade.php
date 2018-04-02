@@ -138,7 +138,7 @@
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('nationality'))
+            @if ($errors->has('nationality'))
               <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
             @endif
           </div>

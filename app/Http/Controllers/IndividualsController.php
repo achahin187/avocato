@@ -225,9 +225,11 @@ class IndividualsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('clients.individuals.individuals_show');
+        $data['user'] = Users::find($id);
+         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        return view('clients.individuals.individuals_show',$data);
     }
 
     /**
@@ -251,6 +253,15 @@ class IndividualsController extends Controller
 
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
+    public function ins_update(Request $request, $id)
+    {
+        $installment = Installment::find($id);
+        $installment->is_paid = $request->installment;
+        $installment->save();
+        
+    }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -387,7 +398,6 @@ class IndividualsController extends Controller
                 for($i=0; $i < $request->number_of_payments; $i++) {
                     $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-
                     
                     $installment = new Installment;
                     $installment->subscription_id   = $subscription->id;
@@ -399,12 +409,6 @@ class IndividualsController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
-            $subscription->delete();
-
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -417,7 +421,7 @@ class IndividualsController extends Controller
     public function destroy($id)
     {
         // Find and delete this record
-        Users::destroy($id);
+        Users::find($id)->delete();
 
         Session::flash('success', 'تم الحذف بنجاح');
         return response()->json([

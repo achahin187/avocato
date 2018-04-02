@@ -21,4 +21,8 @@ class Subscriptions extends Model
 	public function package_type() {
 		return $this->belongsTo('App\Package_Types');
 	}
+
+    public function installments() {
+        return $this->hasMany('App\Installment','subscription_id');
+    }
 }
