@@ -163,7 +163,7 @@
                 </td>
                 <td>
                   <span class="cellcontent">
-                    <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
+                    <a href= "{{route('companies.show',$company->id)}}" ,  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
                     </a>
                     <a href="{{ route('companies.edit', ['id' => $company->id]) }}" ,  class= "action-btn bgcolor--fadegreen color--white ">

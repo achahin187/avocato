@@ -254,7 +254,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
         return view('clients.companies.companies_show');
     }
