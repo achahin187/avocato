@@ -163,11 +163,11 @@ Route::post('/legal_consultation_filter', 'LegalConsultationsController@consulta
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 
-Route::get('/issues', 'IssuesController@index')->name('issues');
-Route::get('/issues_show', 'IssuesController@show')->name('issues_show');
-Route::get('/issues_archive_show', 'IssuesController@archive_show')->name('issues_archive_show');
-Route::get('/issues_create', 'IssuesController@create')->name('issues_create');
-Route::get('/issues_edit', 'IssuesController@edit')->name('issues_edit');
+Route::get('/cases', 'CasesController@index')->name('cases');
+Route::get('/case_view', 'CasesController@show')->name('case_view');
+Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_archive_view');
+Route::get('/case_add', 'CasesController@create')->name('case_add');
+Route::get('/case_edit', 'CasesController@edit')->name('case_edit');
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');

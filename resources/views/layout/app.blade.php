@@ -146,7 +146,7 @@
                   </li>
                   <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">القضايا و الخدمات</a>
                     <ul class="side__submenu">
-                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('issues')}}">القضايا</a></li>
+                      <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('cases')}}">القضايا</a></li>
                       <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('services')}}">الخدمات</a></li>
                     </ul>
                   </li>

@@ -18,4 +18,11 @@ class Case_Document extends Model
  		
  		
     ];
+
+
+     //relations
+    public function cases()
+    {
+    	return $this->belongsTo('App\Case', 'case_id');
+    }
 }

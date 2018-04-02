@@ -1,9 +1,9 @@
 @extends('layout.app')
 @section('content')
-
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('issues_create')}}">اضافة قضية جديدة </a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('case_add')}}">اضافة قضية جديدة </a>
                       </div>
                     </div>
                   </div>
@@ -100,7 +100,7 @@
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_cases"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                             </div>
                             <table class="table-1">
                               <thead>
@@ -113,7 +113,6 @@
                                   <th><span class="cellcontent">لسنة</span></th>
                                   <th><span class="cellcontent">تاريخ قيد الدعوة</span></th>
                                   <th><span class="cellcontent">رقم الملف بالمكتب</span></th>
-                                  <th><span class="cellcontent">رقم التوكيل</span></th>
                                   <th><span class="cellcontent">الإجراءات</span></th>
                                 </tr>
                               </thead>
@@ -127,8 +126,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -139,8 +137,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -151,8 +148,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -163,8 +159,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -175,8 +170,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -187,8 +181,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -199,8 +192,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -211,8 +203,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -223,8 +214,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -235,8 +225,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -247,8 +236,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -259,8 +247,7 @@
                                   <td><span class="cellcontent">2017</span></td>
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent">400910</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('issues_edit')}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -496,7 +483,7 @@
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_archive"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                             </div>
                             <table class="table-1">
                               <thead>
@@ -524,7 +511,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -536,7 +523,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -548,7 +535,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -560,7 +547,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -572,7 +559,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -584,7 +571,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -596,7 +583,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -608,7 +595,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -620,7 +607,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -632,7 +619,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -644,7 +631,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
@@ -656,7 +643,7 @@
                                   <td><span class="cellcontent">29-10-2019</span></td>
                                   <td><span class="cellcontent">100676</span></td>
                                   <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= "{{route('issues_archive_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -825,5 +812,5 @@
                   </div>
                 </div>
               </div>
-
-@endsection
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+                       @endsection

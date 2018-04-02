@@ -18,4 +18,9 @@ class Case_Record_Type extends Model
  	
  		
     ];
+
+     public function case_records()
+    {
+    	return $this->hasMany('App\Case_Record', 'record_type_id');
+    }
 }

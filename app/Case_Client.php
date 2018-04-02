@@ -18,4 +18,16 @@ class Case_Client extends Model
  		
  		
     ];
+
+
+    //relations
+    public function cases()
+    {
+    	return $this->belongsTo('App\Case', 'case_id');
+    }
+
+    public function case_client_roles()
+    {
+    	return $this->belongsTo('App\Case_Client_Role', 'case_client_role_id');
+    }
 }

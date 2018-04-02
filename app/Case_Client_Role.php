@@ -17,4 +17,9 @@ class Case_Client_Role extends Model
         
  		
     ];
+
+    public function case_clients()
+    {
+    	return $this->hasMany('App\Case_Client', 'case_client_role_id');
+    }
 }

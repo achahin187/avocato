@@ -1,9 +1,9 @@
- @extends('layout.app')             
- @section('content')
-
+@extends('layout.app')
+@section('content')
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -87,12 +87,42 @@
                             <div class="status-bar">
                               <div class="status">
                                 الحالة
-                                &nbsp;<span class="bgcolor--fadegreen color--black bradius--small importance padding--small">تم</span>
+                                &nbsp;<span class="bgcolor--fadeblack color--white bradius--small importance padding--small">مغلقة</span>
                               </div>
                             </div>
                             <div class="clearfix"></div>
                           </div>
                         </div>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-2 col-sm-6 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadered bradius--small bshadow--0 btn-block" href="#case_attachment"><i class="fa fa-file"></i><span>صور مستندات القضية</span></a>
+                      <div class="remodal-bg"></div>
+                      <div class="remodal" data-remodal-id="case_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        <div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <h3>صور مستندات القضية</h3>
+                              <ul class="mailbox-attachments clearfix right-text">
+                                <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
+                                      report.pdf<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                </li>
+                                <li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
+                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
+                                      App_Desc.docx<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                </li>
+                                <li><span class="mailbox-attachment-icon has-img"><img src="https://unsplash.it/300/300/?random" alt="Attachment"></span>
+                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-camera"></i>&nbsp;
+                                      photo1.png<br></a><span class="mailbox-attachment-size">2.67 MB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div><br>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -744,5 +774,5 @@
                   </div>
                 </div>
               </div>
-
- @endsection
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+            @endsection

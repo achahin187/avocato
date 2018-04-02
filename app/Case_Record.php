@@ -18,4 +18,19 @@ class Case_Record extends Model
  		
  		
     ];
+
+
+     //relations
+    public function cases()
+    {
+    	return $this->belongsTo('App\Case', 'case_id');
+    }
+    public function case_record_types()
+    {
+    	return $this->belongsTo('App\Case_Record_Type', 'record_type_id');
+    }
+    public function case_record_documents()
+    {
+    	return $this->hasMany('App\Case_Record', 'record_id');
+    }
 }

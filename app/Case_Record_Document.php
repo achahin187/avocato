@@ -18,4 +18,9 @@ class Case_Record_Document extends Model
  		
  		
     ];
+
+     public function case_records()
+    {
+    	return $this->belongsTo('App\Case_Record', 'record_id');
+    }
 }

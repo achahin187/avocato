@@ -18,4 +18,9 @@ class Case_Techinical_Report_Document extends Model
  		
  		
     ];
+
+    public function case_tachinical_reports()
+    {
+    	return $this->belongsTo('App\Case_Techinical_Report', 'case_techinical_report_id');
+    }
 }

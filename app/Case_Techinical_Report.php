@@ -18,4 +18,17 @@ class Case_Techinical_Report extends Model
  		
  		
     ];
+
+
+     //relations
+    public function cases()
+    {
+    	return $this->belongsTo('App\Case', 'case_id');
+    }
+
+    public function case_tachinical_report_documents()
+    {
+    	return $this->hasMany('App\Case_Techinical_Report_Document', 'case_techinical_report_id');
+    }
+
 }
