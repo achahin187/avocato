@@ -61,7 +61,8 @@
             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
               <div class="row">
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد </b>
-                  <div class="col-xs-9">{{$user->subscription->start_date->format("Y - m - d")}}</div>
+                  <div class="col-xs-9">@isset($user->subscription->start_date)
+    {{$user->subscription->start_date->format("Y - m - d")}} @endisset</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
                   <div class="col-xs-9">{{$user->subscription->duration}}</div>
@@ -70,7 +71,7 @@
                   <div class="col-xs-9">{{$user->subscription->value}}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                  <div class="col-xs-9">{{$user->subscription->end_date->format("Y - m - d ")}}</div>
+                  <div class="col-xs-9">@isset($user->subscription->end_date){{$user->subscription->end_date->format("Y - m - d ")}}@endisset</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
                   <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
