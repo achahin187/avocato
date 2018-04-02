@@ -370,7 +370,7 @@
 
           // check if user selected nothing
           if(allVals.length <= 0) {
-            confirm('إختر مدينة علي الاقل لتستطيع حذفها');
+            confirm('إختر عميل علي الاقل لتستطيع حذفها');
           } else {
             var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
 

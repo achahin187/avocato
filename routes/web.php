@@ -100,15 +100,15 @@ Route::post('/individuals/store', 'IndividualsController@store')->name('ind.stor
 Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');
 Route::post('/individuals/ins_update/{id}', 'IndividualsController@ins_update')->name('ind.ins_update');
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
-Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.destroy');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
+Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.edit');
 Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
-Route::post('/companies_store', 'CompaniesController@store')->name('companies.store');
+Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
 
@@ -161,7 +161,7 @@ Route::post('/legal_consultation_destroy_all', 'LegalConsultationsController@des
 Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsultationsController@send_consultation_to_all_lawyers')->name('send_consultation_to_all_lawyers');
 Route::post('/legal_consultation_filter', 'LegalConsultationsController@consultations_filter')->name('legal_consultation_filter');
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
-Route::post('/lawyers_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_filter');
+Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 
 Route::get('/issues', 'IssuesController@index')->name('issues');
 Route::get('/issues_show', 'IssuesController@show')->name('issues_show');

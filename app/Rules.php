@@ -3,13 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Rules extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'rules';
+    protected $dates = ['deleted_at'];
 
-        public function users()
+
+    public function users()
     {
         return $this->belongsToMany('App\Users','users_rules','user_id','rule_id');
     }
