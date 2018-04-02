@@ -136,7 +136,7 @@
                 <td>
                   <span class="cellcontent">
                     @if (isset($company->subscription->package_type->name))
-                      {{ $company->subscription->package_type->name }}
+                      {{ Helper::localizations('package_types', 'name', $company->subscription->package_type->id) }}
                     @else
                       لا يوجد
                     @endif

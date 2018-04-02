@@ -1,214 +1,152 @@
 @extends('layout.app')
 @section('content')
-  <script>
-  $(document).ready(function(){
-
- $('.send_consultation_to_all_lawyers').click(function(){
-      var selectedIds = $("input:checkbox:checked").map(function(){
-        return $(this).closest('tr').attr('data-lawyer-id');
-      }).get();
-      if(selectedIds.length == 0 )
-      {
-        swal("خطأ", "من فضلك اختر محامي :)", "error");
-      }
-      else
-      {
-        var _token = '{{csrf_token()}}';
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "سوف يتم ارسال الاستشاره الى المحامين المحددين",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-         $.ajax({
-           type:'POST',
-           url:'{{url('send_consultation_to_all_lawyers')}}'+'/'+{{$consultation->id}},
-           data:{ids:selectedIds,_token:_token},
-           success:function(data){
-            // alert('done');
-          }
-        });
-         swal("تم الارسال!", "تم الارسال بنجاح", "success");
-       } else {
-        swal("تم الإلغاء", "لم يتم ارسال الاستشاره :)", "error");
-      }
-    });
-      }
-      
-    });
-
-  var table = $('#example').DataTable();
-  var consultation_button = document.getElementById('send_consultation_button');
-  // var checkboxes = document.getElementsByClassName('checkboxes');
- if ( ! table.data().any() ) {
-
-    consultation_button.style.pointerEvents="none";
-}
-else
-{
-// var selectedClass = $('input[type=checkbox]:checked').attr('class');
-//   if(selectedClass == true) {
-//     consultation_button.style.pointerEvents="auto";
-//   }
-//   else
-//   {
-//      consultation_button.style.pointerEvents="none";
-//   }
- consultation_button.style.pointerEvents="auto";
-  
-}
-
-
-  });
-
-</script>
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-                    <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
                           <div class="text-wraper">
-                            <h4 class="cover-inside-title color--gray_d">الاستشارات القانونية</h4>
+                            <h4 class="cover-inside-title color--gray_d">البيانات الأساسية <i class="fa fa-chevron-circle-right"></i>
+                              <h4 class="cover-inside-title color--gray_d">انواع القضايا </h4>
+                            </h4>
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions">
+                      <div class="cover--actions"><span></span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                      <div class="col-md-12"><span class="pull-left"><b>نص سؤال الإستشارة المطلوب إرسالها</b>
-                          <div class="pull-right">
-                            بتاريخ
-                            {{$consultation->created_at}}
-                            &nbsp;<i class="fa fa-calendar"></i>
+                    <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-plus"></i><span>إضافة</span></a>
+                      <div class="remodal-bg"></div>
+                      <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        <div>
+                          <div class="row">
+                            <div class="col-xs-12">
+                              <h3>إضافة</h3>
+                              <div class="col-sm-12">
+                                <div class="master_field">
+                                  <label class="master_label" for="case_type_new">ادخال نوع جديد من انواع القضايا</label>
+                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new"><span class="master_message color--fadegreen">message</span>
+                                </div>
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
                           </div>
-                          <hr>
-                          <p>{{$consultation->question}}</p></span></div>
-                      <div class="clearfix"></div>
+                        </div><br>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                      </div>
                     </div>
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                          <form role="form" action="{{URL('lawyers_consultation_filter/'.$consultation->id)}}" method="post" accept-charset="utf-8">
-                          {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
                             <div class="col-md-6">
                               <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_code">كود المحامى</label>
-                                <input class="master_input" type="text" placeholder="كود المحامى" id="lawyer_code" name="lawyer_code"><span class="master_message color--fadegreen">message</span>
+                                <label class="master_label mandatory" for="case_type"> النوع</label>
+                                <select class="master_input select2" id="case_type" multiple="multiple" data-placeholder=" النوع" style="width:100%;" ,>
+                                  <option>جنايات</option>
+                                  <option>جنح</option>
+                                </select><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
-                                <input class="master_input" type="text" placeholder="اسم المحامى" id="lawyer_name" name="lawyer_name"><span class="master_message color--fadegreen">message</span>
+                                <label class="master_label mandatory" for="min_num">اقل عددالملفات </label>
+                                <input class="master_input" type="number" placeholder="اقل عدد الملفات " id="min_num"><span class="master_message color--fadegreen">message</span>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_id">الرقم القومي</label>
-                                <input class="master_input" type="number" placeholder="الرقم القومي" id="lawyer_national_id" name="lawyer_national_id"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
-                                <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality" name="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
-                                <input class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector" name="lawyer_work_sector"><span class="master_message color--fadegreen">message content</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_degree">درجة التقاضي</label>
-                                <input class="master_input" type="text" placeholder="درجه التقاضى" id="lawyer_level" name="lawyer_level"><span class="master_message color--fadegreen">message content</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_tel">الهاتف</label>
-                                <input class="master_input" type="number" placeholder="الهاتف" id="lawyer_tel" name="lawyer_tel"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="start_date">تاريخ الالتحاق</label>
-                                <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date" name="start_date">
-                                </div><span class="master_message color--fadegreen">message content</span>
+                                <label class="master_label mandatory" for="max_num">اقصى عدد ملفات</label>
+                                <input class="master_input" type="number" placeholder="اقصى عدد ملفات" id="max_num"><span class="master_message color--fadegreen">message</span>
                               </div>
                             </div>
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm"  type="submit">فلتر</button>
-                        </form>
+                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
                         </div>
                       </div>
-                      <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns" ><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#" id="send_consultation_button">إرسال الإستشارة للمحامي المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1" id="example">
+                      <table class="table-1">
                         <thead>
-                          <tr class="bgcolor--gray_mm color--gray_d selected">
+                          <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
-                            <th><span class="cellcontent">كود المحامي</span></th>
-                            <th><span class="cellcontent">الاسم</span></th>
-                            <th><span class="cellcontent">الرقم القومي</span></th>
-                            <th><span class="cellcontent">الجنسية</span></th>
-                            <th><span class="cellcontent">التخصص</span></th>
-                            <th><span class="cellcontent">درجة التقاضى</span></th>
-                            <th><span class="cellcontent">عنوان</span></th>
-                            <th><span class="cellcontent">هاتف</span></th>
-                            <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
-                            <th><span class="cellcontent">تفعيل</span></th>
+                            <th><span class="cellcontent">النوع</span></th>
+                            <th><span class="cellcontent">الاجراءات</span></th>
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($lawyers as $lawyer)
-                          <tr data-lawyer-id="{{$lawyer->id}}">
-                            @if($lawyer->assigned)
-                            <td><span class="cellcontent"><input type="checkbox" checked="yes" class="checkboxes" /></span></td>
-                            @else
-                            <td><span class="cellcontent"><input type="checkbox"  class="checkboxes" /></span></td>
-                            @endif
-                            <td><span class="cellcontent">{{$lawyer->code}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->name}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->address}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
-                            @if($lawyer->is_active)
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            @else
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
-                            @endif
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          @endforeach
-                          
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">جنايات</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          </tr>
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -368,9 +306,10 @@ else
                           </div>
                         </div>
                       </div>
+                      <div class="clearfix"></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- =============== PAGE VENDOR Triggers =================-->
+              <!-- =============== PAGE VENDOR Triggers ===============-->
          @endsection

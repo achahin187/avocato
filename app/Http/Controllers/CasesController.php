@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class IssuesController extends Controller
+class CasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class IssuesController extends Controller
      */
     public function index()
     {
-        return view('issues.issues');
+        return view('cases.cases');
     }
 
     /**
@@ -23,7 +23,7 @@ class IssuesController extends Controller
      */
     public function create()
     {
-        return view('issues.issues_create');
+        return view('cases.case_add');
     }
 
     /**
@@ -45,12 +45,12 @@ class IssuesController extends Controller
      */
     public function show()
     {
-        return view('issues.issues_show');
+        return view('cases.case_view');
     }
 
     public function archive_show()
     {
-        return view('issues.issues_archive_show');
+        return view('cases.case_archive_view');
     }
 
     /**
@@ -61,7 +61,7 @@ class IssuesController extends Controller
      */
     public function edit()
     {
-        return view('issues.issues_edit');
+        return view('cases.case_edit');
     }
 
     /**

@@ -1,10 +1,9 @@
 @extends('layout.app')
 @section('content')
-
-
+              <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-md-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -35,12 +34,20 @@
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
+                            <label class="master_label mandatory" for="client_cade">كود العميل</label>
+                            <input class="master_input" type="text" placeholder="كود العميل .." id="client_cade"><span class="master_message color--fadegreen">message</span>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                          <div class="master_field">
                             <label class="master_label mandatory" for="ID_No">اسم الموكل</label>
-                            <select class="master_input select2" id="ID_No" style="width:100%;">
-                              <option>محمد احمد</option>
-                              <option> السيد محمد</option>
-                              <option>عمرو احمد</option>
-                            </select><span class="master_message color--fadegreen">message content</span>
+                            <input class="master_input" type="text" placeholder="اسم الموكل" id="ID_No"><span class="master_message color--fadegreen">بعض النص </span>
+                          </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No">رقم الهاتف</label>
+                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="ID_No"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -54,17 +61,11 @@
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="ID_No"><span class="master_message color--fadegreen">message</span>
-                          </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
                             <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
                             <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-9 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="ID_No">عنوانه</label>
                             <input class="master_input" type="text" placeholder="عنوانه" id="ID_No"><span class="master_message color--fadegreen">بعض النص </span>
@@ -695,6 +696,5 @@
                   </form>
                 </div>
               </div>
-
-
-@endsection
+              <!-- =============== PAGE VENDOR Triggers ===============-->
+           @endsection

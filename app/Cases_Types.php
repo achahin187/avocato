@@ -9,4 +9,12 @@ class Cases_Types extends Model
     protected $primaryKey = 'id';
     protected $table = 'cases_types';
     public $timestamps = true;
+
+
+
+    //relations
+      public function cases()
+    {
+    	return $this->hasMany('App\Case', 'case_type_id');
+    }
 }

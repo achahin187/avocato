@@ -131,7 +131,7 @@ class LegalConsultationsController extends Controller
                  $q->orderby('join_date','desc');
                  }])->get();
         foreach($lawyers as $detail){
-            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->get()))
+            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->where('consultation_id',$id)->first()))
                 {
                     
                     $detail['assigned']=1;
@@ -140,10 +140,17 @@ class LegalConsultationsController extends Controller
                 {
                     $detail['assigned']=0;
                 }
-                $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+                if(count($detail->user_detail)>1)
+                {
+                    $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
                 $detail['nationality']=$value;
+                }
+                else
+                {
+                    $detail['nationality']='';
                  }
+                }
         
         return view('legal_consultations.legal_consultation_assign',compact('lawyers','consultation'));
     }
@@ -428,7 +435,7 @@ class LegalConsultationsController extends Controller
                  }])->get();
           // dd($lawyers);
         foreach($lawyers as $detail){
-            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->get()))
+            if(count(Consultation_Lawyers::where('lawyer_id',$detail->id)->where('consultation_id',$id)->first()))
                 {
                     
                     $detail['assigned']=1;
