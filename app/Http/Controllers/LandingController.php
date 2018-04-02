@@ -85,17 +85,6 @@ class LandingController extends Controller
 		            'phone'=>'required|digits_between:1,10',
 		            'mobile'=>'required|digits_between:1,12',
 		            'email'=>'required|email|max:40',
-		            'image'=>'required|image|mimes:jpg,jpeg,png|max:1024',
-		            'is_active'=>'required',
-		            'work_sector'=>'required',
-		            'work_sector_type'=>'required',
-		            'join_date'=>'required',
-		            'resign_date'=>'required',
-		            'work_type'=>'required',
-		            'litigation_level'=>'required',
-		            'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
-		            'syndicate_level'=>'required',
-		            'syndicate_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
 		        ]);
 
 		        if ($validator->fails()) {
@@ -104,35 +93,28 @@ class LandingController extends Controller
 		            ->withInput();
 		        }
 
-        $client = new Users;
-        $client->name = $request->ind_name;
-        $client->full_name = $request->ind_name;
-        $client->address = $request->address;
-        $client->phone = $request->phone;
-        $client->mobile = $request->mobile;
-        $client->email = $request->email;
-        $client->is_active = 0;
-        $client->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
+        $lawyer = new Users;
+        $lawyer->name = $request->ind_name;
+        $lawyer->full_name = $request->ind_name;
+        $lawyer->address = $request->address;
+        $lawyer->phone = $request->phone;
+        $lawyer->mobile = $request->mobile;
+        $lawyer->email = $request->email;
+        $lawyer->is_active = 0;
+        $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
         $password = Helper::generateRandom(Users::class, 'password', 8);
-        $client->password = bcrypt($password);
-        $client->code = Helper::generateRandom(Users::class, 'code', 6);
-        $client->save();
-        $client->rules()->attach(8);
+        $lawyer->password = bcrypt($password);
+        $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
+        $lawyer->save();
+        $lawyer->rules()->attach(5);
 
-        $client_sub = new Subscriptions;
-        $client->subscription()->save($client_sub);
-        $client_install = new Installment ;
-        $client_sub->installments()->save($client_install);
-
-        $client_details = new User_Details;
-        $client_details->gender_id = $request->gender;
-        $client_details->job_title = $request->job;
-        $client_details->national_id = $request->national_id;
-        $client_details->nationality_id = $request->nationality;
-        $client_plaintext = new ClientsPasswords;
-        $client_plaintext->password = $password;
-        $client->user_detail()->save($client_details);
-        $client->client_password()->save($client_plaintext);
+        $lawyer_details = new User_Details;
+        $lawyer_details->national_id = $request->national_id;
+        $lawyer_details->nationality_id = $request->nationality;
+        $lawyer_plaintext = new ClientsPasswords;
+        $lawyer_plaintext->password = $password;
+        $lawyer->user_detail()->save($lawyer_details);
+        $lawyer->client_password()->save($lawyer_plaintext);
         return redirect()->route('landing')->with('success','تم إضافه محامى جديد بنجاح');
     }
 }
