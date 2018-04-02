@@ -16,9 +16,9 @@ class CreateInstallmentsTable extends Migration
         Schema::create('installments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('subscription_id');
-            $table->integer('installment_number');
-            $table->integer('value');
-            $table->date('payment_date');
+            $table->integer('installment_number')->nullable();
+            $table->integer('value')->nullable();
+            $table->date('payment_date')->nullable();
             $table->boolean('is_paid')->default(0);
             $table->softDeletes();
             $table->timestamps();

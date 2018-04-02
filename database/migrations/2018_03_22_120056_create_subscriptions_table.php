@@ -16,12 +16,12 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('package_type_id');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('duration');
-            $table->string('value');
-            $table->integer('number_of_installments');
+            $table->integer('package_type_id')->default(5);
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('duration')->nullable();
+            $table->string('value')->nullable();
+            $table->integer('number_of_installments')->default(1);
             $table->tinyInteger('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
