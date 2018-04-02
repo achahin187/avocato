@@ -5,7 +5,7 @@
 
   {{--  Start Form  --}}
 
-  <form action="{{ route('ind.com.store') }}" method="POST">
+  <form action="{{ route('ind.com.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="col-lg-12">
