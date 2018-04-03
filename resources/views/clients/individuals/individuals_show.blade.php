@@ -7,7 +7,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
+            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avatars/male.jpg')}}">
               <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
               <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.edit',$user->id)}}">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.create')}}">التحويل لعميل أفراد-شركات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد العميل</a>
               </div>

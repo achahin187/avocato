@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset('img/avaters/male.jpg')}}"></div>
+                    <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset('img/avatars/male.jpg')}}"></div>
                     <div class="col-md-2 col-xs-3">
                       <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="lawyer_view.html">محمد احمد</a>
                     </div>

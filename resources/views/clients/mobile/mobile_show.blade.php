@@ -7,7 +7,7 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
+                          <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avatars/male.jpg')}}">
                               <h3 class="coverglobal__title color--gray_d">محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
                           <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('individuals_create')}}">التحويل لعميل أفراد</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies_create')}}">التحويل لعميل شركات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('individuals_companies_create')}}">التحويل لعميل شركات – افراد</a>
                           </div>

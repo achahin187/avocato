@@ -31,7 +31,7 @@
                     <div class="col-md-9 col-xs-6">
                       <h4 class="right-text">الدعوى رقم 13265</h4><b>لسنة 2018</b>
                     </div>
-                    <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="../img/avaters/male.jpg"></div>
+                    <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="../img/avatars/male.jpg"></div>
                     <div class="col-md-2 col-xs-3">
                       <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">محمد احمد</a>
                     </div>

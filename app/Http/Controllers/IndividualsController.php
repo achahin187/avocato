@@ -65,18 +65,16 @@ class IndividualsController extends Controller
             'national_id'   => 'required',
             'birthday'  => 'required',
             'nationality'   => 'required',
-            'phone' => 'required',
             'mobile'    => 'required',
-            'email' => 'required|email',
-            'work'  => 'required',
-            'work_type' =>'required',
+            'email' => 'email',
             'personal_image'=> 'image|mimes:jpeg,jpg,png',
-            'discount_rate' => 'required',
             'start_date'    => 'required',
             'end_date'  => 'required',
             'subscription_duration' => 'required',
             'subscription_value' => 'required',
             'number_of_payments' => 'required'
+        ],[
+            'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
         ]);
 
         // upload image to storage/app/public
@@ -86,7 +84,13 @@ class IndividualsController extends Controller
             $img->move('storage/app/public/individuals', $newImg);      // move to /storage/app/public
             $imgPath = 'storage/app/public/individuals/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
-            $imgPath = null;
+            // if user didn't pick an image and he choose male then assign male.jpg as his image.
+            if ( $request->gender == 1 ) {
+                $imgPath = 'public/img/avatars/male.jpg';
+            } else {
+                // else assign female.jpg as her image.
+                $imgPath = 'public/img/avatars/female.jpg';
+            }
         }
 
         // INSERT INDIVIDUAL DATA
@@ -107,20 +111,22 @@ class IndividualsController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            $user->delete();
+            $user->forcedelete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
         
         // push into users_rules
         try {
-            $user_rules = new Users_Rules;
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 8;
-            $user_rules->save();
-        
+            $data = array(
+                array('user_id' => $user->id, 'rule_id' => 6),
+                array('user_id' => $user->id, 'rule_id' => 8)
+            );
+
+            Users_Rules::insert($data);
         } catch(Exception $ex) {
-            $users_rules->delete();
+            $user->forcedelete();
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -133,14 +139,13 @@ class IndividualsController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
 
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
         
-        // TODO: national_id missing
         // push into users_details
         try {
             $user_details = new User_Details;
@@ -155,9 +160,9 @@ class IndividualsController extends Controller
             $user_details->discount_percentage   = $request->discount_rate;
             $user_details->save();
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -174,10 +179,10 @@ class IndividualsController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
             
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -198,11 +203,11 @@ class IndividualsController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
-            $subscription->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
+            $subscription->forcedelete();
 
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -222,7 +227,7 @@ class IndividualsController extends Controller
     public function show($id)
     {
         $data['user'] = Users::find($id);
-         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
         return view('clients.individuals.individuals_show',$data);
     }
 
@@ -251,8 +256,6 @@ class IndividualsController extends Controller
         
     }
 
-
-
     /**
      * Update the specified resource in storage.
      *
@@ -270,18 +273,16 @@ class IndividualsController extends Controller
             'national_id'   => 'required',
             'birthday'  => 'required',
             'nationality'   => 'required',
-            'phone' => 'required',
             'mobile'    => 'required',
-            'email' => 'required|email',
-            'work'  => 'required',
-            'work_type' =>'required',
+            'email' => 'email',
             'personal_image'=> 'image|mimes:jpeg,jpg,png',
-            'discount_rate' => 'required',
             'start_date'    => 'required',
             'end_date'  => 'required',
             'subscription_duration' => 'required',
             'subscription_value' => 'required',
             'number_of_payments' => 'required'
+        ],[
+            'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
         ]);
 
         // Find this user to edit him/her
@@ -319,18 +320,6 @@ class IndividualsController extends Controller
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
-        
-        // push into users_rules
-        try {
-            $user_rules = Users_Rules::where('user_id', $user->id)->first();
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 8;
-            $user_rules->save();
-        
-        } catch(Exception $ex) {
-            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
-            return redirect()->back()->withInput();
-        }
 
         // push into client_passwords
         try {
@@ -341,18 +330,17 @@ class IndividualsController extends Controller
             }
             $client_passwords->save();
         } catch(Exception $ex) {
-            dd($ex);
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
         
-        // TODO: national_id missing
         // push into users_details
         try {
             $user_details = User_Details::where('user_id', $user->id)->first();
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id= $request->nationality;
             $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
