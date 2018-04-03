@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{ asset('img/covers/dummy2.jpg') }}' ) no-repeat center center; background-size:cover;">
       <div class="add-mode">Adding mode</div>
       <div class="row">
         <div class="col-xs-12">
@@ -196,7 +196,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="works">قطاع الأعمال </label>
-            <input name="work" value="{{ old('work') }}" class="master_input" type="text" placeholder="  .." id="works">
+            <input name="work" value="{{ old('work') }}" class="master_input" type="text" placeholder="ادخل قطاع الاعمال.." id="works">
             
               @if ($errors->has('work'))
                 <span class="master_message color--fadegreen">{{ $errors->first('work') }}</span>
@@ -208,7 +208,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="works_types">نوع قطاع الأعمال </label>
-            <input name="work_type" value="{{ old('work_type') }}" class="master_input" type="text" placeholder="  .." id="works_types">
+            <input name="work_type" value="{{ old('work_type') }}" class="master_input" type="text" placeholder="ادخل نوع قطاع الاعمال" id="works_types">
 
             @if ($errors->has('work_type'))
                 <span class="master_message color--fadegreen">{{ $errors->first('work_type') }}</span>
@@ -234,7 +234,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_discount">نسبة الخصم </label>
-            <input name="discount_rate" value="{{ old('discount_rate') }}" min="0" class="master_input disScroll" type="number" placeholder="%" id="client_discount">
+            <input name="discount_rate" value="{{ old('discount_rate') }}" min="0" class="master_input disScroll" type="number" placeholder="ادخل النسبة المئوية %" id="client_discount">
             
               @if ($errors->has('discount_rate'))
                 <span class="master_message color--fadegreen">{{ $errors->first('discount_rate') }}</span>
@@ -246,9 +246,10 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <label class="master_label">تفعيل العميل</label>
           <div class="master_field">       
-            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked>
+            <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked="true">
             <label for="radbtn_2">مفعل</label>
-            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3"  {{ old('activate') == 0 ? 'checked' : ''  }} >
+
+            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3" {{ (old('activate') == 0) ? 'checked' : ''  }}>
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -316,7 +317,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="subscription_duration" value="{{ old('subscription_duration') }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
+              <input name="subscription_duration" value="{{ old('subscription_duration') ? old('subscription_duration') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
             
               @if ($errors->has('subscription_duration'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_duration') }}</span>
@@ -329,7 +330,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input name="subscription_value" value="{{ old('subscription_value') }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input name="subscription_value" value="{{ old('subscription_value') ? old('subscription_value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
               
               @if ($errors->has('subscription_value'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
@@ -342,7 +343,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input name="number_of_payments" value="" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+            <input name="number_of_payments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
 
                 @if ($errors->has('number_of_payments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
@@ -392,13 +393,13 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

@@ -77,7 +77,7 @@ class Users extends Authenticatable
    // Join between 'users' && 'users_rules'
    // get all users with user_type is 8 => individuals only
    public function scopeUsers($query, $user_rule_id) {
-       $result = $query->select('users_rules.id as ur_id', 'users.id', 'name', 'parent_id', 'full_name', 'email', 'image', 'phone', 'mobile', 'address', 'code', 'birthdate', 'creditcard_number', 'creditcard_cvv', 'creditcard_month', 'creditcard_year', 'is_active', 'verificaition_code', 'is_verification_code_expired', 'last_login', 'api_token', 'device_token', 'created_by', 'modified_by', 'remember_token')
+       $result = $query->select('users_rules.id as ur_id', 'users.*')
                            ->join('users_rules', 'users.id', '=', 'users_rules.user_id')
                            ->where('users_rules.rule_id', $user_rule_id);
    }

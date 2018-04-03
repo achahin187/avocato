@@ -3,14 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Rules extends Model
 {
-    use SoftDeletes; 
     protected $primaryKey = 'id';
     protected $table = 'rules';
-    protected $dates = ['deleted_at'];
 
 
     public function users()

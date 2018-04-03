@@ -88,7 +88,13 @@ class IndividualsCompaniesController extends Controller
             $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
             $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
-            $imgPath = null;
+            // if user didn't pick an image and he choose male then assign male.jpg as his image.
+            if ( $request->gender == 1 ) {
+                $imgPath = 'public/img/avatars/male.jpg';
+            } else {
+                // else assign female.jpg as her image.
+                $imgPath = 'public/img/avatars/female.jpg';
+            }
         }
 
         // INSERT COMPANY DATA
@@ -109,7 +115,7 @@ class IndividualsCompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            $user->delete();
+            $user->forcedelete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -119,20 +125,22 @@ class IndividualsCompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
-            $user->delete();
+            $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
         }
         
         // push into users_rules
+        // push into users_rules
         try {
-            $user_rules = new Users_Rules;
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 10;
-            $user_rules->save();
-        
+            $data = array(
+                array('user_id' => $user->id, 'rule_id' => 6),
+                array('user_id' => $user->id, 'rule_id' => 10)
+            );
+
+            Users_Rules::insert($data);
         } catch(Exception $ex) {
-            $users_rules->delete();
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -145,9 +153,8 @@ class IndividualsCompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
-            dd($ex);
-            $user->delete();
-            $user_rules->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
 
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -165,12 +172,12 @@ class IndividualsCompaniesController extends Controller
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;
             $user_details->work_sector_type      = $request->work_type;
-            $user_details->discount_percentage   = $request->discount_rate;
+            $user_details->discount_percentage   = $request->discount_percentage;
             $user_details->save();
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -187,10 +194,10 @@ class IndividualsCompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
             // dd($ex);
             
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
@@ -212,11 +219,11 @@ class IndividualsCompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            $user->delete();
-            $user_rules->delete();
-            $client_passwords->delete();
-            $user_details->delete();
-            $subscription->delete();
+            $user->forcedelete();
+            $user_rules->forcedelete();
+            $client_passwords->forcedelete();
+            $user_details->forcedelete();
+            $subscription->forcedelete();
 
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -329,18 +336,6 @@ class IndividualsCompaniesController extends Controller
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
         }
-        
-        // push into users_rules
-        try {
-            $user_rules = Users_Rules::where('user_id', $user->id)->first();
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 10;
-            $user_rules->save();
-        
-        } catch(Exception $ex) {
-            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
-            return redirect()->back()->withInput();
-        }
 
         // push into client_passwords
         try {
@@ -366,7 +361,7 @@ class IndividualsCompaniesController extends Controller
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;
             $user_details->work_sector_type      = $request->work_type;
-            $user_details->discount_percentage   = $request->discount_rate;
+            $user_details->discount_percentage   = $request->discount_percentage;
             $user_details->save();
         } catch(Exception $ex) {
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');

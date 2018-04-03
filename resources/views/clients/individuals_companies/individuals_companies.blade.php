@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="row">
         <div class="col-xs-12">
           <div class="text-xs-center">
@@ -141,6 +141,7 @@
               <tr data-indcom="{{ $ind_com->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $ind_com->id }}" /></span></td>
                 
+                {{-- Company Code --}}
                 <td>
                   <span class="cellcontent">
                     @if (isset($ind_com->companyParent->code))
@@ -150,6 +151,8 @@
                     @endif
                   </span>
                 </td>
+
+                {{-- Company Name --}}
                 <td>
                   <span class="cellcontent">
                     @if (isset($ind_com->companyParent->name))
@@ -159,10 +162,35 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent">{{ $ind_com->code }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->full_name }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->address }}</span></td>
-                <td><span class="cellcontent">{{ $ind_com->mobile }}</span></td>
+
+                {{-- Individual-Company Code --}}
+                @if ( $ind_com->code)
+                  <td><span class="cellcontent">{{ $ind_com->code }}</span></td>
+                @else
+                    لا يوجد
+                @endif
+                
+                {{-- Full Name --}}
+                @if ( $ind_com->full_name)
+                  <td><span class="cellcontent">{{ $ind_com->full_name }}</span></td>
+                @else
+                    لا يوجد
+                @endif
+
+                {{-- Address --}}
+                @if ( $ind_com->address)
+                  <td><span class="cellcontent">{{ $ind_com->address }}</span></td>
+                @else
+                    لا يوجد
+                @endif
+                
+                {{-- Mobile --}}
+                @if ( $ind_com->address)
+                  <td><span class="cellcontent">{{ $ind_com->mobile }}</span></td>
+                @else
+                    لا يوجد
+                @endif
+                
                 <td>
                   <span class="cellcontent">
                     @if (isset($ind_com->companyParent->name))
