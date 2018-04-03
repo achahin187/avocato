@@ -295,19 +295,52 @@
         headerTag: "h3",
         bodyTag: "fieldset",
         transitionEffect: "slideLeft",
+        onFinishing: function (event, currentIndex)
+        {
+           // alert("Submitted!");
+            var form = $(this);
+
+             form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            // alert("Finish button was clicked");
+            }
         });
         
         
       var form = $("#horizontal-tabs-steps").show();
-      form.steps({
+      form.children("div").steps({
         headerTag: "h3",
         bodyTag: "fieldset",
         transitionEffect: "slideLeft",
-        enableFinishButton: false,
+        // enableFinishButton: false,
         enablePagination: false,
         enableAllSteps: true,
         titleTemplate: "#title#",
-        cssClass: "tabcontrol"
+        cssClass: "tabcontrol",
+
+         onStepChanging: function (event, currentIndex, newIndex)
+            {
+if (currentIndex === 5) { //if last step
+   //remove default #finish button
+   $('#wizard').find('a[href="#finish"]').remove(); 
+   //append a submit type button
+   $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+}
+                
+            },
+        onFinishing: function (event, currentIndex)
+        {
+           alert("Submitted!");
+            // var form = $(this);
+
+            //  form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            alert("Finish button was clicked");
+            }
         });
       
     </script>

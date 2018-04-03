@@ -86,4 +86,11 @@ class CasesController extends Controller
     {
         //
     }
+
+
+    public function add(Request $request)
+    {
+        // dd("1");
+        dd($request);
+    }
 }
