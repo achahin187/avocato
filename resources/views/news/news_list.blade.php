@@ -109,7 +109,7 @@
               <tr data-news="{{ $new->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $new->id }}" /></span></td>
                 <td><span class="cellcontent">215</span></td>
-                <td><span class="cellcontent">{{ $new->name }}</span></td>
+                <td><span class="cellcontent">{{ $new->name ? $new->name : 'لا يوجد اسم' }}</span></td>
                 <td><span class="cellcontent">{{ $new->published_at ? $new->published_at : 'لم يتم النشر بعد' }}</span></td>
                 <td><span class="cellcontent"><i class = "fa {{ $new->is_active ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
                 <td>
