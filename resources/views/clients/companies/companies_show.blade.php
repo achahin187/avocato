@@ -8,9 +8,9 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="../img/avaters/male.jpg">
-                              <h3 class="coverglobal__title color--gray_d">شركة خالدة للبترول </h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="clients_companies_edit.html">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد العميل</a>
+                          <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset(''.$user->image)}}">
+                              <h3 class="coverglobal__title color--gray_d">{{$user->full_name}} </h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
+                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.edit',$user->id)}}">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.destroyShow',$user->id)}}">استبعاد العميل</a>
                           </div>
                         </div>
                       </div>
@@ -21,36 +21,36 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-md-6 col-sm-6 col-xs-6">
                       <div class="row"><b class="col-xs-4">العنوان </b>
-                        <div class="col-xs-8">24 المعادي</div>
+                        <div class="col-xs-8">{{$user->address}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">كود الشركة </b>
-                        <div class="col-xs-8">754338</div>
+                        <div class="col-xs-8">{{$user->code}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">البريد الالكترونى </b>
-                        <div class="col-xs-8">company@info.com</div>
+                        <div class="col-xs-8">{{$user->email}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">رقم السجل التجارى </b>
-                        <div class="col-xs-8">1837494</div>
+                        <div class="col-xs-8">{{$user->user_company_detail->commercial_registration_number}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">اسم الممثل القانونى </b>
-                        <div class="col-xs-8">محمد احمد السيد</div>
+                        <div class="col-xs-8">{{$user->user_company_detail->legal_representative_name}}</div>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6">
                       <div class="row"><b class="col-xs-4">الهاتف </b>
-                        <div class="col-xs-8">01234567890</div>
+                        <div class="col-xs-8">{{$user->phone}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">جوال </b>
-                        <div class="col-xs-8">01234567890</div>
+                        <div class="col-xs-8">{{$user->mobile}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">فاكس </b>
-                        <div class="col-xs-8">01234567890</div>
+                        <div class="col-xs-8">{{$user->user_company_detail->fax}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">موقع الكترونى </b>
-                        <div class="col-xs-8">www.company.com</div>
+                        <div class="col-xs-8">{{$user->user_company_detail->website}}</div>
                       </div>
                       <div class="row"><b class="col-xs-4">تليفون الممثل القانونى </b>
-                        <div class="col-xs-8">01234567890</div>
+                        <div class="col-xs-8">{{$user->user_company_detail->legal_representative_mobile}}</div>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -71,22 +71,27 @@
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="row">
                             <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد </b>
-                              <div class="col-xs-9">20-12-2019</div>
+                              <div class="col-xs-9">@isset($user->subscription->start_date)
+    {{$user->subscription->start_date->format("Y - m - d")}} @endisset</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
-                              <div class="col-xs-9">3 سنوات</div>
+                              <div class="col-xs-9">{{$user->subscription->duration}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
-                              <div class="col-xs-9">1090</div>
+                              <div class="col-xs-9">{{$user->subscription->value}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                              <div class="col-xs-9">20-12-2019</div>
+                              <div class="col-xs-9">@isset($user->subscription->end_date){{$user->subscription->end_date->format("Y - m - d ")}}@endisset</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-3">نوع الباقة  </b>
-                              <div class="col-xs-9"><span class="bgcolor--fadeorange color--white bradius--small importance padding--small">ذهبي</span></div>
+                              <div class="col-xs-9"><span class="bgcolor--fadeorange color--white bradius--small importance padding--small">@foreach($packages as $package)
+                    @if($package->item_id == $user->subscription->package_type_id)
+                    {{$package->value}}
+                    @endif
+                    @endforeach</span></div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط </b>
-                              <div class="col-xs-9">10</div>
+                              <div class="col-xs-9">{{$user->subscription->number_of_installments}}</div>
                             </div>
                           </div>
                           <div class="col-lg-12">
@@ -101,90 +106,15 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                @foreach($user->subscription->installments as $installment)
                                 <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
+                                  <td><span class="cellcontent">{{$installment->installment_number}}</span></td>
+                                  <td><span class="cellcontent"> {{$installment->value}}</span></td>
+                                  <td><span class="cellcontent">{{$installment->payment_date}} </span></td>
+                                  <td><span class="cellcontent"><i class = "fa {{$installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
+                                  <td><span class="cellcontent"><a href= "#payment_status{{$installment->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
                                 </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">القسط الاول</span></td>
-                                  <td><span class="cellcontent"> 1000</span></td>
-                                  <td><span class="cellcontent">7-10-2010 </span></td>
-                                  <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                  <td><span class="cellcontent"><a href= #payment_status ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                                </tr>
+                                @endforeach
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -345,19 +275,36 @@
                               </div>
                             </div>
                           </div>
+                      @foreach($user->subscription->installments as $installment)
                           <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
                             <div class="remodal-bg"></div>
-                            <div class="remodal" data-remodal-id="payment_status" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                            <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      <form role="form" action="{{route('ind.ins_update',$installment->id)}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>تغيير حالة القسط</h3>
-                                    <div class="master_field">       
-                                      <input class="icon" type="radio" name="icon" id="done" checked="true">
-                                      <label for="done">تم الدفع</label>
-                                      <input class="icon" type="radio" name="icon" id="not_done">
-                                      <label for="not_done">لم يتم الدفع</label>
+                                    <div class="master_field">
+
+                                @if($installment->is_paid==1)       
+                                  <input class="icon" type="radio" name="installment" id="done" value="1" checked="true">
+                                  <label for="done">تم الدفع</label>
+
+                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" >
+                                  <label for="not_done">لم يتم الدفع</label>
+
+                                   
+                                  @else
+                                   <input class="icon" type="radio" name="installment" id="done" value="1" >
+                                  <label for="done">تم الدفع</label>
+
+                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" checked="true">
+                                  <label for="not_done">لم يتم الدفع</label>
+
+                                  @endif
+                                      
                                     </div>
                                   </div>
                                 </div>
@@ -366,6 +313,7 @@
                               <button class="remodal-confirm" data-remodal-action="confirm">تغيير حالة القسط</button>
                             </div>
                           </div>
+                          @endforeach
                           <div class="clearfix"> </div>
                         </div>
                       </li>

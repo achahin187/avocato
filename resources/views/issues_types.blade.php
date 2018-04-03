@@ -205,7 +205,7 @@
                       </div>
                       <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -216,7 +216,7 @@
                         <tbody>
                           @foreach($issues as $issue)
                           <tr class="issue" data-issue-id="{{$issue->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td>{{-- <span class="cellcontent"><input type="checkbox" class="checkboxes" /></span> --}}</td>
                             <td><span class="cellcontent">{{$issue->name}}</span></td>
                             <td><span class="cellcontent"><a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>

@@ -7,9 +7,9 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset('img/avaters/male.jpg')}}">
+            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset(''.$user->image)}}">
               <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.edit',$user->id)}}">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.create')}}">التحويل لعميل أفراد-شركات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد العميل</a>
+              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.edit',$user->id)}}">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.create')}}">التحويل لعميل أفراد-شركات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.destroyShow',$user->id)}}">استبعاد العميل</a>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
                       <td><span class="cellcontent">{{$installment->installment_number}}</span></td>
                       <td><span class="cellcontent"> {{$installment->value}}</span></td>
                       <td><span class="cellcontent">{{$installment->payment_date}} </span></td>
-                      <td><span class="cellcontent"><i class = "fa color--fadegreen {{$installment->is_paid ? 'fa-check': 'fa-times'}}"></i></span></td>
+                      <td><span class="cellcontent"><i class = "fa  {{$installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
                       <td><span class="cellcontent"><a href= "#payment_status{{$installment->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
                     </tr>
                    

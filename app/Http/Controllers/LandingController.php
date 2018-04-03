@@ -11,21 +11,43 @@ use App\Subscriptions;
 use App\Package_Types;
 use App\Installment;
 use App\Rules;
+use App\Genders;
+use App\Geo_Countries;
 use App\User_Company_Details;
 use Helper;
 use Validator;
 
 class LandingController extends Controller
 {
-        public function index()
+        public function index($lang)
     {
     	$data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
     	$data['genders'] = Entity_Localizations::where('field','name')->where('entity_id',2)->get();
-        return view('landing',$data);
+        $data['genders_en'] = Genders::all();
+        $data['nationalities_en'] = Geo_Countries::all();
+        if($lang == 'ar')
+        {
+            return view('landing',$data);
+        }
+        elseif($lang == 'en')
+        {
+            return view('landing-en',$data);
+        }
+        else
+        {
+            return abort('404');
+        }
+
+        
     }
 
         public function ind(Request $request)
     {
+        $url = url()->previous();
+        $split = explode('/',$url);
+        $lang = end($split);
+        if($lang == 'en')
+            \App::setlocale('en');
                 // Validate data
         $this->validate($request, [
             'ind_name'  => 'required',
