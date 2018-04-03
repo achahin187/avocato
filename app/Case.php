@@ -36,7 +36,7 @@ class Case extends Model
     }
      public function case_types()
     {
-    	return $this->belongsTo('App\Case_Types', 'case_type_id');
+    	return $this->belongsTo('App\Cases_Types', 'case_type_id');
     }
 
 

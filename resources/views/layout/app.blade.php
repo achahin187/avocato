@@ -299,6 +299,7 @@
         onFinishing: function (event, currentIndex)
         {
            // alert("Submitted!");
+           
             var form = $(this);
 
              form.submit();
