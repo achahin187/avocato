@@ -102,6 +102,7 @@ Route::post('/individuals/ins_update/{id}', 'IndividualsController@ins_update')-
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
+Route::get('/individuals/destroyShow/{id}', 'IndividualsController@destroyShow')->name('ind.destroyShow');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show/{id}', 'CompaniesController@show')->name('companies.show');
@@ -111,6 +112,7 @@ Route::post('/companies/update/{id}', 'CompaniesController@update')->name('compa
 Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
+Route::get('/companies/destroyShow/{id}', 'CompaniesController@destroyShow')->name('companies.destroyShow');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
 Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
@@ -198,7 +200,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 });
-Route::get('/Landing', 'LandingController@index')->name('landing');
+Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
+// Route::get('/Landing-en', 'LandingController@index')->name('landing-en');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/company', 'LandingController@company')->name('landing.company');

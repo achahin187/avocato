@@ -407,6 +407,13 @@ class IndividualsController extends Controller
         ]);
     }
 
+        public function destroyShow($id)
+    {
+        // Find and delete this record
+        Users::find($id)->delete();
+        return redirect()->route('ind')->with('success','تم استبعاد العميل');
+    }
+
     /**
      * Delete selected rows
      */
