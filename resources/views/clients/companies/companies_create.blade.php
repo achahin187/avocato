@@ -84,13 +84,13 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->item_id }}">{{ $nat->value }}</option>
+                <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-            @if ($errors->has('package_type_id'))
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>
+            @if ($errors->has('nationality'))
+              <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
             @endif
           </div>
           
@@ -310,7 +310,7 @@
             <select name="package_type_id" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($subscription_types as $types)
-                <option value="{{ $types->id }}">{{ $types->name }}</option>
+                <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
               @endforeach
               
             </select>

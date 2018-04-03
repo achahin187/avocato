@@ -19,7 +19,7 @@ class Subscriptions extends Model
 	}
 
 	public function package_type() {
-		return $this->belongsTo('App\Package_Types');
+		return $this->belongsTo('App\Package_Types','package_type_id');
 	}
 
     public function installments() {

@@ -104,7 +104,7 @@ Route::delete('/individuals/destroySelected', 'IndividualsController@destroySele
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
-Route::get('/companies_show', 'CompaniesController@show')->name('companies.show');
+Route::get('/companies_show/{id}', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.edit');
 Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
@@ -189,7 +189,6 @@ Route::get('/records_create', 'RecordsController@create')->name('records_create'
 
 
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -199,3 +198,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 });
+Route::get('/Landing', 'LandingController@index')->name('landing');
+Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
+Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
+Route::post('/Landing/company', 'LandingController@company')->name('landing.company');

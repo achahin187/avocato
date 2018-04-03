@@ -133,7 +133,7 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->item_id }}" {{ ($nat->item_id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ $nat->value }}</option>
+                <option value="{{ $nat->item_id }}" {{ ($nat->id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
               @endforeach
               
             </select>
@@ -285,7 +285,7 @@
               <select name="subscription_type" class="master_input select2" id="license_type" style="width:100%;">
                 
                 @foreach ($subscription_types as $types)
-                  <option value="{{ $types->id }}" {{ ($types->id == $user->subscription->package_type_id) ? 'selected' : '' }}>{{ $types->name }}</option>
+                  <option value="{{ $types->id }}" {{ ($types->id == $user->subscription->package_type_id) ? 'selected' : '' }}>{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
                 @endforeach
                 
               </select>

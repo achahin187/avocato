@@ -33,6 +33,17 @@ class Helper {
         return $random;
     }
 
+    /** 
+     *  @param  $table_name     entities.name
+     *  @param  $field          entity_localizations.field
+     *  @param  $item_id        entity_localizations.item_id
+     * 
+     *  How to use: 
+     *  Helper::localizations('package_types', 'name', 1);
+     * 
+     *  Result: 
+     *  بلاتيني 
+     */
     public static function  localizations($table_name , $field , $item_id)
     {
       $value_localized = Entities::where('name',$table_name)->with([
@@ -44,10 +55,9 @@ class Helper {
       foreach ($value_localized as  $value) {
         
         foreach ($value->localizations as $value1) {
-                return $value1->value;       
-                 }
+            return $value1->value;       
+        }
       }
-
      
         
     }

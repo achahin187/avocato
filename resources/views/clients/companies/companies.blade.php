@@ -136,7 +136,7 @@
                 <td>
                   <span class="cellcontent">
                     @if (isset($company->subscription->package_type->name))
-                      {{ $company->subscription->package_type->name }}
+                      {{ Helper::localizations('package_types', 'name', $company->subscription->package_type->id) }}
                     @else
                       لا يوجد
                     @endif
@@ -163,7 +163,7 @@
                 </td>
                 <td>
                   <span class="cellcontent">
-                    <a href= clients_compaines_view.html ,  class= "action-btn bgcolor--main color--white ">
+                    <a href= "{{route('companies.show',$company->id)}}" ,  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
                     </a>
                     <a href="{{ route('companies.edit', ['id' => $company->id]) }}" ,  class= "action-btn bgcolor--fadegreen color--white ">
