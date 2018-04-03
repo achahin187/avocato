@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <form id="horizontal-pill-steps" action="{{ route('add_new_case') }}" method="post">
+                  <form id="horizontal-pill-steps" action="{{ route('add_new_case') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     <h3>معلومات الموكل \ الخصم</h3>
                     <fieldset>
                       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
@@ -54,28 +54,40 @@
                           <div class="actions"><a class="undefined undefined undefined undefined master-btn" type="button" href=""></a>
                           </div><span class="mainseparator bgcolor--main"></span>
                         </div>
+                        <div class="add_new_client" id="add_new_client">
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="client_code">كود العميل</label>
-                            <input class="master_input" type="text" placeholder="كود العميل .." id="client_code" name="client_code"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
+                           <select class="master_input select2"  id="client_code_0" name="client_code_0" style="width:100%;">
+                            @foreach($clients as $client)
+                              <option value="{{$client->id}}">{{$client->code}}</option>
+                            @endforeach
+                              
+                            </select><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="client_name">اسم الموكل</label>
-                            <input class="master_input" type="text" placeholder="اسم الموكل" id="client_name" name="client_name"><span class="master_message color--fadegreen">بعض النص </span>
+                            <label class="master_label mandatory" for="client_name_0">اسم الموكل</label>
+                            <select class="master_input select2"  id="client_name_0" name="client_name_0" style="width:100%;">
+                            @foreach($clients as $client)
+                              <option value="{{$client->id}}">{{$client->name}}</option>
+                            @endforeach
+                              
+                            </select>
+                            <span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="ID_No"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="client_number_0">رقم الهاتف</label>
+                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_0" name="client_number_0"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">صفته</label>
-                            <select class="master_input select2" id="ID_No" style="width:100%;">
+                            <label class="master_label mandatory" for="client_character_0">صفته</label>
+                            <select class="master_input select2" id="client_character_0" name="client_character_0" style="width:100%;">
                               <option> الجانى</option>
                               <option>المجنى عليه </option>
                             </select><span class="master_message color--fadegreen">message content</span>
@@ -83,18 +95,19 @@
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="authorization_num_0">رقم التوكيل</label>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num_0"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-9 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="ID_No"><span class="master_message color--fadegreen">بعض النص </span>
+                            <label class="master_label mandatory" for="client_address_0">عنوانه</label>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="client_address_0" name="client_address_0"><span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
+                      </div>
                         <div class="col-md-3 col-md-offset-9">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="submit"><span>اضافة المزيد</span>
+                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="button" onclick="add_more_clients();"><span>اضافة المزيد</span>
                           </button>
                         </div>
                         <div class="clearfix"></div>
@@ -715,8 +728,22 @@
                         </div>
                       </div>
                     </fieldset>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   </form>
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+
+              <script type="text/javascript">
+                var i=0;
+                function add_more_clients()
+                {
+                  i++;
+                  var div = document.getElementById('add_new_client');
+                  // alert(i);
+                  // alert("'client_code_"+i"'");
+                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code_'+i+'" style="width:100%;">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name_'+i+'" style="width:100%;">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number_'+i+'"><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character_'+i+'" style="width:100%;"> <option> الجانى</option> <option>المجنى عليه </option></select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num_'+i+'"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address_'+i+'"><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
+                  // alert(i);
+                }
+              </script>
            @endsection

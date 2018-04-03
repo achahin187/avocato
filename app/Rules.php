@@ -11,7 +11,7 @@ class Rules extends Model
     protected $primaryKey = 'id';
     protected $table = 'rules';
     protected $dates = ['deleted_at'];
-
+    protected $softDelete = false;
 
     public function users()
     {

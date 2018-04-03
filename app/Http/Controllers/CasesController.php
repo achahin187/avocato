@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Users;
+use App\User_Details;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use App\Helpers\Helper;
+
 
 class CasesController extends Controller
 {
@@ -13,6 +19,7 @@ class CasesController extends Controller
      */
     public function index()
     {
+       
         return view('cases.cases');
     }
 
@@ -23,7 +30,11 @@ class CasesController extends Controller
      */
     public function create()
     {
-        return view('cases.case_add');
+         $clients=Users::whereHas('rules', function ($query) {
+                                            $query->where('rule_id', '6');
+                                        })->get();
+        // dd($clients);
+        return view('cases.case_add')->with('clients',$clients);
     }
 
     /**
@@ -91,6 +102,6 @@ class CasesController extends Controller
     public function add(Request $request)
     {
         // dd("1");
-        dd($request);
+        dd($request->all());
     }
 }
