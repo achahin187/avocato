@@ -135,10 +135,34 @@
             @foreach ($users as $user)
               <tr data-user="{{ $user->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $user->id }}" /></span></td>
-                <td><span class="cellcontent">{{ $user->code }}</span></td>
-                <td><span class="cellcontent">{{ $user->full_name }}</span></td>
-                <td><span class="cellcontent">{{ $user->address }}</span></td>
-                <td><span class="cellcontent">{{ $user->mobile }}</span></td>
+                
+                {{-- Code --}}
+                @if ( $user->code )
+                  <td><span class="cellcontent">{{ $user->code }}</span></td>
+                @else
+                    لا يوجد
+                @endif
+                
+                {{-- Full Name --}}
+                @if ( $user->full_name )
+                  <td><span class="cellcontent">{{ $user->full_name }}</span></td>
+                @else 
+                  لا يوجد
+                @endif
+
+                {{-- Address --}}
+                @if ( $user->address )
+                  <td><span class="cellcontent">{{ $user->address }}</span></td>
+                @else
+                  لا يوجد
+                @endif
+
+                {{-- Mobile --}}
+                @if ( $user->mobile )
+                  <td><span class="cellcontent">{{ $user->mobile }}</span></td>
+                @else
+                    لا يوجد
+                @endif
                 <td>
                   <span class="cellcontent">
                     @if (isset($user->subscription->package_type->name))
@@ -166,7 +190,7 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $user->is_active ? ' fa-check' : 'fa-times'}}"></i></span></td>
                 <td>
                   <span class="cellcontent">
 

@@ -1,32 +1,32 @@
 @extends('layout.app')
 @section('content')
 
+<div class="col-lg-12">
+  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+    <div class="add-mode">Adding mode</div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-xs-center">
+          <div class="text-wraper">
+            <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
+              <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+              <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="cover--actions">
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
 
   {{--  Start Form  --}}
 
   <form action="{{ route('ind.com.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
-
-    <div class="col-lg-12">
-      <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-        <div class="add-mode">Adding mode</div>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="text-xs-center">
-              <div class="text-wraper">
-                <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
-                  <h4 class="cover-inside-title color--gray_d">محتوى </h4>
-                  <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div class="cover--actions">
-          </div>
-        </div>
-      </div>
-    </div>
 
     {{-- Start alert messages --}}
     <div class="col-lg-12">
@@ -39,6 +39,7 @@
       @endif
 
     </div>
+
     <div class="col-lg-12">
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
         
@@ -47,7 +48,10 @@
           <div class="master_field">
             <label class="master_label mandatory" for="license_type">كود الشركة</label>
             <select name="company_code" class="master_input select2" id="company_code" style="width:100%;">
-                
+              
+              {{-- Defualt useless select option --}}
+              <option value="-1" selected disabled hidden>إختر كود الشركة</option>
+
               @foreach ($companies as $company)
                 <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
               @endforeach

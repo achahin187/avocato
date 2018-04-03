@@ -129,10 +129,35 @@
             @foreach ($companies as $company)
               <tr data-company="{{ $company->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $company->id }}" /></span></td>
-                <td><span class="cellcontent">{{ $company->code }}</span></td>
-                <td><span class="cellcontent">{{ $company->full_name }}</span></td>
-                <td><span class="cellcontent">{{ $company->address }}</span></td>
-                <td><span class="cellcontent">{{ $company->phone }}</span></td>
+                {{-- Code --}}
+                @if ( $company->code)
+                  <td><span class="cellcontent">{{ $company->code }}</span></td>
+                @else
+                  لايوجد
+                @endif
+
+                {{-- Full Name --}}
+                @if ( $company->full_name)
+                  <td><span class="cellcontent">{{ $company->full_name }}</span></td>
+                @else
+                  لايوجد
+                @endif
+
+                {{-- Address --}}
+                @if ( $company->address)
+                  <td><span class="cellcontent">{{ $company->address }}</span></td>
+                @else
+                  لايوجد
+                @endif
+
+                {{-- Phone --}}
+                @if ( $company->phone)
+                  <td><span class="cellcontent">{{ $company->phone }}</span></td>
+                @else
+                  لايوجد
+                @endif
+
+                {{-- Package name --}}
                 <td>
                   <span class="cellcontent">
                     @if (isset($company->subscription->package_type->name))
@@ -142,6 +167,8 @@
                     @endif
                   </span>
                 </td>
+
+                {{-- End date --}}
                 <td>
                   <span class="cellcontent">
                     @if (isset($company->subscription->end_date))
@@ -151,7 +178,9 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"><i class = "fa {{ $company->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $company->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                
+                {{-- Legal representative name --}}
                 <td>
                   <span class="cellcontent">
                     @if ( isset($company->user_company_detail->legal_representative_name) )

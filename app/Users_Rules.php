@@ -13,4 +13,5 @@ class Users_Rules extends Model
     protected $fillable = ['user_id', 'rule_id'];
     protected $dates = ['deleted_at'];
     public $timestamps = false;
+    // protected $softDelete = false;
 }

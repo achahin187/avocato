@@ -65,8 +65,6 @@ class CompaniesController extends Controller
             'name'  => 'required',
             'nationality' => 'required',
             'commercial_registration_number' => 'required',
-            'fax'   => 'required',
-            'website'   => 'required',
             'legal_representative_name' => 'required',
             'address'   => 'required',
             'phone' => 'required',
@@ -75,7 +73,6 @@ class CompaniesController extends Controller
             'work_sector' =>'required',
             'legal_representative_mobile' => 'required',
             'logo'=> 'image|mimes:jpeg,jpg,png',
-            'discount_percentage' => 'required',
             'start_date'    => 'required',
             'end_date'  => 'required',
             'package_type_id' => 'required',
@@ -127,13 +124,14 @@ class CompaniesController extends Controller
         
         // push into users_rules
         try {
-            $user_rules = new Users_Rules;
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 9;
-            $user_rules->save();
-        
+            $data = array(
+                array('user_id' => $user->id, 'rule_id' => 6),
+                array('user_id' => $user->id, 'rule_id' => 9)
+            );
+
+            Users_Rules::insert($data);
         } catch(Exception $ex) {
-            $users_rules->forcedelete();
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -206,14 +204,7 @@ class CompaniesController extends Controller
                 'legal_representative_mobile'    => $request->legal_representative_mobile
             ]);
         } catch(Exception $ex) {
-            
-            Users::destroy($user->id);
-            Users_Rules::where('user_id', $user->id)->delete();
-            ClientsPasswords::where('user_id', $user->id)->delete();
-            User_Details::where('user_id', $user->id)->delete();
-            Subscriptions::destroy($subscription->id);
-            Installment::where('subscription_id', $subscription->id)->delete();
-
+            Users::find($user->id)->forcedelete();
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
         }
@@ -344,18 +335,6 @@ class CompaniesController extends Controller
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
-        
-        // push into users_rules
-        try {
-            $user_rules = Users_Rules::where('user_id', $user->id)->first();
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 9;
-            $user_rules->save();
-        
-        } catch(Exception $ex) {
-            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
-            return redirect()->back()->withInput();
-        }
 
         // push into client_passwords
         try {
@@ -420,7 +399,7 @@ class CompaniesController extends Controller
         // push into installments
         try {
             if($request->number_of_payments != 0 && $request->number_of_payments != '') {
-                Installment::where('subscription_id', $subscription->id)->delete();
+                Installment::where('subscription_id', $subscription->id)->forcedelete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
                     $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));

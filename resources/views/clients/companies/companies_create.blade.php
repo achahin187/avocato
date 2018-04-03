@@ -4,7 +4,7 @@
 <div class="row">
   {{--  Start cover  --}}
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="add-mode">Adding mode</div>
       <div class="row">
         <div class="col-xs-12">
@@ -191,7 +191,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="works_field">قطاع الأعمال </label>
-            <input name="work_sector" value="{{ old('work_sector') }}"  class="master_input" type="text" placeholder="  .." id="works_field">
+            <input name="work_sector" value="{{ old('work_sector') }}"  class="master_input" type="text" placeholder="ادخل قطاع الاعمال.." id="works_field">
             {{--  Error  --}}
           @if ($errors->has('work_sector'))
               <span class="master_message color--fadegreen">{{ $errors->first('work_sector') }}</span>
@@ -248,7 +248,7 @@
         <div class="col-xs-3">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="discount">
             
             @if($errors->has('discount_percentage'))
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>

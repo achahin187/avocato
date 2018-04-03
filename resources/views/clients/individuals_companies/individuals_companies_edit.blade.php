@@ -1,34 +1,30 @@
 @extends('layout.app')
 @section('content')
 
-{{-- Don't forget to add --}}
-{{-- Helper::localizations('package_types', 'name', 1) --}}
+<div class="col-lg-12">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+      <div class="edit-mode">Editing mode</div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-xs-center">
+            <div class="text-wraper">
+              <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
+                <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+                <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="cover--actions">
+        </div>
+      </div>
+    </div>
+  </div>
 
 <form action="{{ route('ind.com.update', ['id'=>$user->id]) }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="row">
-
-        {{-- Cover --}}
-        <div class="col-lg-12">
-            <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-            <div class="edit-mode">Editing mode</div>
-            <div class="row">
-                <div class="col-xs-12">
-                <div class="text-xs-center">
-                    <div class="text-wraper">
-                    <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
-                        <h4 class="cover-inside-title color--gray_d">محتوى </h4>
-                        <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
-                    </h4>
-                    </div>
-                </div>
-                </div>
-                <div class="cover--actions">
-                </div>
-            </div>
-            </div>
-        </div>
 
         {{-- Start alert messages --}}
         <div class="col-lg-12">
@@ -360,13 +356,13 @@
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                     <label class="master_label mandatory" for="premium1_amount">{{ 'رقم القسط رقم ' . $j }}</label>
-                    <input class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
+                    <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
                   </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
+                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">

@@ -55,6 +55,8 @@ class IssuesTypesController extends Controller
      */
     public function store(Request $request)
     {
+         // \App::setLocale('en');
+
         $validator = Validator::make($request->all(), [
             'new_type'=>'required|unique:cases_types,name',
         ]);
