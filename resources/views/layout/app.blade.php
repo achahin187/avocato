@@ -295,11 +295,6 @@
         headerTag: "h3",
         bodyTag: "fieldset",
         transitionEffect: "slideLeft",
-<<<<<<< HEAD
-      });
-
-
-=======
         onFinishing: function (event, currentIndex)
         {
            // alert("Submitted!");
@@ -314,8 +309,6 @@
             }
         });
         
-        
->>>>>>> 81e9d9852e1aea1316540c68804cfe39d2fa2029
       var form = $("#horizontal-tabs-steps").show();
       form.children("div").steps({
         headerTag: "h3",
@@ -325,13 +318,9 @@
         enablePagination: false,
         enableAllSteps: true,
         titleTemplate: "#title#",
-<<<<<<< HEAD
-        cssClass: "tabcontrol"
-      });
-=======
         cssClass: "tabcontrol",
-
-         onStepChanging: function (event, currentIndex, newIndex)
+ 
+  onStepChanging: function (event, currentIndex, newIndex)
             {
 if (currentIndex === 5) { //if last step
    //remove default #finish button
@@ -353,7 +342,7 @@ if (currentIndex === 5) { //if last step
             alert("Finish button was clicked");
             }
         });
->>>>>>> 81e9d9852e1aea1316540c68804cfe39d2fa2029
+
       
     </script>
     <script type="text/javascript">
