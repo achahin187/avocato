@@ -1,5 +1,27 @@
 @extends('layout.app')
 @section('content')
+{{-- <script type="text/javascript">
+      var form = $("#horizontal-pill-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        });
+        
+        
+      var form = $("#horizontal-tabs-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        enableFinishButton: true,
+        enablePagination: false,
+        enableAllSteps: true,
+        titleTemplate: "#title#",
+        cssClass: "tabcontrol",
+               });
+      
+    </script> --}}
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-md-12">
@@ -21,7 +43,7 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <form id="horizontal-pill-steps">
+                  <form id="horizontal-pill-steps" action="{{ route('add_new_case') }}" method="post">
                     <h3>معلومات الموكل \ الخصم</h3>
                     <fieldset>
                       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
@@ -34,14 +56,14 @@
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="client_cade">كود العميل</label>
-                            <input class="master_input" type="text" placeholder="كود العميل .." id="client_cade"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="client_code">كود العميل</label>
+                            <input class="master_input" type="text" placeholder="كود العميل .." id="client_code" name="client_code"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">اسم الموكل</label>
-                            <input class="master_input" type="text" placeholder="اسم الموكل" id="ID_No"><span class="master_message color--fadegreen">بعض النص </span>
+                            <label class="master_label mandatory" for="client_name">اسم الموكل</label>
+                            <input class="master_input" type="text" placeholder="اسم الموكل" id="client_name" name="client_name"><span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">

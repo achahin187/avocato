@@ -168,6 +168,7 @@ Route::get('/case_view', 'CasesController@show')->name('case_view');
 Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_archive_view');
 Route::get('/case_add', 'CasesController@create')->name('case_add');
 Route::get('/case_edit', 'CasesController@edit')->name('case_edit');
+Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');
@@ -196,7 +197,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 
+});
 Route::get('/Landing', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
-});
+Route::post('/Landing/company', 'LandingController@company')->name('landing.company');

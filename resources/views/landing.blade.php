@@ -186,7 +186,7 @@
                         <div class="col-md-3 col-sm-4 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_mob">رقم الموبايل</label>
-                            <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="number" placeholder="رقم الموبايل" id="client_mob"><span class="master_message color--fadegreen">
+                            <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="رقم الموبايل" id="client_mob"><span class="master_message color--fadegreen">
                                     @if ($errors->has('mobile'))
                                     {{ $errors->first('mobile')}}
                                     @endif</span>
@@ -210,52 +210,83 @@
                       </form>
                       </div>
                       <div class="tab-pane fade" id="tabBody1" role="tabpanel" aria-labelledby="tab1" aria-hidden="true" tabindex="0">
+                  <form role="form" action="{{route('landing.lawyer')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                      {{csrf_field()}}
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
-                            <input class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">message </span>
+                            <input name="lawyer_name" value="{{ old('lawyer_name') }}" class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('lawyer_name'))
+                                    {{ $errors->first('lawyer_name')}}
+                                        @endif     </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_address">عنوان المحامى</label>
-                            <input class="master_input" type="text" placeholder="عنوان المحامى .." id="lawyer_address"><span class="master_message color--fadegreen">message </span>
+                            <input name="address" value="{{ old('address') }}" class="master_input" type="text" placeholder="عنوان المحامى .." id="lawyer_address"><span class="master_message color--fadegreen">
+                              @if ($errors->has('address'))
+                                    {{ $errors->first('address')}}
+                                        @endif </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_id">الرقم القومى</label>
-                            <input class="master_input" type="number" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">message</span>
+                            <input name="national_id" value="{{ old('national_id') }}" class="master_input" type="text" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">
+                              @if ($errors->has('national_id'))
+                                    {{ $errors->first('national_id')}}
+                                        @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="lawyer_nationality">الجنسية </label>
-                            <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">message </span>
-                          </div>
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="work_type">الجنسيه</label>
+                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <option value="choose" selected disabled>اختر الجنسيه</option>
+                          @foreach($nationalities as $nationality)
+                            <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('nationality'))
+                                    {{ $errors->first('nationality')}}
+                                    @endif</span>
+                        </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_birth">تاريخ الميلاد</label>
-                            <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="lawyer_birth"><span class="master_message color--fadegreen">message</span>
+                            <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker-popup master_input" type="text" placeholder="placeholder" id="lawyer_birth"><span class="master_message color--fadegreen">
+                              @if ($errors->has('birthdate'))
+                                    {{ $errors->first('birthdate')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_tel">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">message</span>
+                            <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
+                                @if ($errors->has('phone'))
+                                    {{ $errors->first('phone')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_mob">رقم الموبايل</label>
-                            <input class="master_input" type="number" placeholder="رقم الموبايل" id="lawyer_mob"><span class="master_message color--fadegreen">message</span>
+                            <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="رقم الموبايل" id="lawyer_mob"><span class="master_message color--fadegreen">
+                                @if ($errors->has('mobile'))
+                                    {{ $errors->first('mobile')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="lawyer_email">البريد الالكترونى</label>
-                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">message</span>
+                            <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">
+                                @if ($errors->has('email'))
+                                    {{ $errors->first('email')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
@@ -263,42 +294,63 @@
                           </button>
                         </div>
                         <div class="clearfix"></div>
+                      </form>
                       </div>
                       <div class="tab-pane fade" id="tabBody2" role="tabpanel" aria-labelledby="tab2" aria-hidden="true" tabindex="0">
+                    <form role="form" action="{{route('landing.company')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                      {{csrf_field()}}
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="office_name">اسم المكتب</label>
-                            <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name"><span class="master_message color--fadegreen">message </span>
+                            <input name="company_name" value="{{ old('company_name') }}" class="master_input" type="text" placeholder="اسم المكتب .." id="office_name"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('company_name'))
+                                    {{ $errors->first('company_name')}}
+                                    @endif </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="office_address">عنوان المكتب</label>
-                            <input class="master_input" type="text" placeholder="عنوان المحامى .." id="office_address"><span class="master_message color--fadegreen">message </span>
+                            <input name="address" value="{{ old('address') }}" class="master_input" type="text" placeholder="عنوان المحامى .." id="office_address"><span class="master_message color--fadegreen"> 
+                              @if ($errors->has('address'))
+                                    {{ $errors->first('address')}}
+                                    @endif </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="comp_name">اسم الممثل القانوني</label>
-                            <input class="master_input" type="text" placeholder="اسم الممثل القانوني .." id="rep_name">
+                            <input name="legal_representative_name" value="{{ old('legal_representative_name') }}" class="master_input" type="text" placeholder="اسم الممثل القانوني .." id="rep_name"><span class="master_message color--fadegreen"> 
+                                  @if ($errors->has('legal_representative_name'))
+                                    {{ $errors->first('legal_representative_name')}}
+                                    @endif </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_tel">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">message</span>
+                            <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
+                              @if ($errors->has('phone'))
+                                    {{ $errors->first('phone')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_mob">رقم الموبايل</label>
-                            <input class="master_input" type="number" placeholder="رقم الموبايل" id="lawyer_mob"><span class="master_message color--fadegreen">message</span>
+                            <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="رقم الموبايل" id="lawyer_mob"><span class="master_message color--fadegreen">
+                                @if ($errors->has('mobile'))
+                                    {{ $errors->first('mobile')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="lawyer_email">البريد الالكترونى</label>
-                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">message</span>
+                            <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">
+                              @if ($errors->has('email'))
+                                    {{ $errors->first('email')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
@@ -306,6 +358,7 @@
                           </button>
                         </div>
                         <div class="clearfix"></div>
+                      </form>
                       </div>
                     </div>
                   </section>
