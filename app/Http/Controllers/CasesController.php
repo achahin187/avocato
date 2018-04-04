@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+ use App\Case_;
 use App\Users;
 use App\User_Details;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use App\Geo_Cities;
 use App\Geo_Countries;
 use App\Geo_Governorates;
 use App\Courts;
+
 
 class CasesController extends Controller
 {
@@ -138,16 +140,72 @@ class CasesController extends Controller
 
     public function add(Request $request)
     {
-        if($request->hasFile('docs_upload')){
-        foreach ($request->docs_upload as  $key => $file) {
-            
-            $destinationPath='investigation_images';
-            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-            // dd($fileNameToStore);
-            Input::file('docs_upload')[$key]->move($destinationPath,$fileNameToStore);
-        }
-        }
         
+       
+
+//         $case=Case_::Create([
+//             'office_file_number'=>$request['folder_num'],
+//             'case_type_id'=>$request['case_type'],
+//             'court_id'=>$request['court_name'],
+//             'claim_number'=>$request['claim_num'],
+//             'claim_year'=>$request['case_year'],
+//             'claim_date'=>strtotime($request['case_date']),
+//             'claim_expenses'=>$request['case_fees'],
+//             'geo_governorate_id'=>$request['governorate'],
+//             'geo_city_id'=>$request['city'],
+//             'region'=>$request['circle'],
+//             'case_startdate'=>$request[''],
+//             'case_enddate'=>$request[''],
+//             'contender_name'=>$request['enemy_name'],
+//             'contender_case_client_role_id'=>$request['enemy_type'],
+//             'contender_address'=>$request['enemy_address'],
+//             'contender_laywer'=>$request['enemy_lawyer'],
+//             'case_body'=>$request['subject'],
+//             'case_notes'=>$request['notes'],
+//             'created_by'=>\Auth::user()->id,
+//         ]);
+//         for($i=0;$i<count($request['client_code']);$i++)
+//         {
+//             Case_Client::Create([
+//                 'case_id'=>$case->id,
+//                 'client_id'=>$request['client_code'][$i],
+//                 'case_client_role_id'=>$request['client_character'][$i],
+//                 'attorney_number'=>$request['authorization_num'][$i],
+//             ]);
+//         }
+//         $case_record=Case_Record::Create([
+//             'case_id'=>$case->id,
+//             'record_number'=>$request['investigation_no'],
+//             'record_type_id'=>$request['investigation_type'],
+//             'record_date'=>$request['investigation_date'],
+//             'created_by'=>\Auth::user()->id,
+//         ]);
+// if($request->hasFile('docs_upload')){
+    
+//         foreach ($request->docs_upload as  $key => $file) {
+            
+//             $destinationPath='investigation_images';
+//             $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+//             // dd($fileNameToStore);
+//             Input::file('docs_upload')[$key]->move($destinationPath,$fileNameToStore);
+
+//             Case_Record_Document::Create([
+//                 'record_id'=>$case_record->id,
+//                 'name'=>'',
+//                 'file'=>$fileNameToStore,
+//                 ]);
+//         }
+//         }
+//          if($request->hasFile('chooseFile_case')){
+//         foreach ($request->docs_upload as  $key => $file) {
+            
+//             $destinationPath='cases_images';
+//             $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+//             // dd($fileNameToStore);
+//             Input::file('chooseFile_case')[$key]->move($destinationPath,$fileNameToStore);
+//         }
+//         }
+       
         dd($request->all());
     }
 }

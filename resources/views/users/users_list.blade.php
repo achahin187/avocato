@@ -178,7 +178,7 @@
           <button class="remodal-confirm"  type="submit">تطبيق الفلاتر</button>
         </form>
         </div>
-        <table class="table-1">
+        <table class="table-1" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
               <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -196,7 +196,7 @@
           <tbody>
             @foreach($users as $user)
             <tr data-user-id="{{$user->id}}">
-              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+              <td><span class="cellcontent"><input type="checkbox" class=" input-in-table " /></span></td>
               <td><span class="cellcontent">{{$user->id}}</span></td>
               <td><span class="cellcontent">{{$user->name}}</span></td>
               <td><span class="cellcontent">{{$user->email}}</span></td>

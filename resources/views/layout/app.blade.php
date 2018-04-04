@@ -289,7 +289,7 @@
       });
 
     </script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
       var form = $("#horizontal-pill-steps").show();
       form.steps({
         headerTag: "h3",
@@ -344,7 +344,7 @@ if (currentIndex === 5) { //if last step
         });
 
       
-    </script>
+    </script> --}}
     <script type="text/javascript">
       $(document).ready(function(){
         "use strict";
@@ -558,11 +558,9 @@ if (currentIndex === 5) { //if last step
               'targets': 0,
               'searchable':false,
               'orderable':false,
-              'className': 'this-include-check',
-              'render': function (data, type, full, meta){
-                return '<input class="input-in-table" type="checkbox" name="id[]" value="' + $('<div/>').text(data).html() + '">';
-              }
-            }],
+              'className': 'this-include-check'
+              
+            }],   
             'order': [1, 'asc'],
 
             dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
@@ -605,7 +603,16 @@ if (currentIndex === 5) { //if last step
 
 
         } else {
-          $(".table-1").DataTable({
+          var datatable_one = $("#dataTableTriggerId_001").DataTable({
+            'columnDefs': [{
+              'targets': 0,
+              'searchable':false,
+              'orderable':false,
+              'className': 'this-include-check'
+              
+            }],   
+            'order': [1, 'asc'],
+
             dom: '   <"row"    <" filterbar" f + <"quick_filter_cont"  > + lr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
             "language": {
               "search": "dd",
@@ -614,7 +621,15 @@ if (currentIndex === 5) { //if last step
               searchPlaceholder: "Search table ..."
             }
           });
+           //-trigger check all 
+        $('#dataTableTriggerId_001 #select-all').on('click', function(){
+          // Check/uncheck all checkboxes in the table
+          var rows = datatable_one.rows().nodes();
+          $('input.input-in-table' , rows).prop('checked', this.checked);
+        });
         }
+
+
         $('.table-2').DataTable({
           "paging": true,
           "lengthChange": false,
@@ -694,5 +709,6 @@ if (currentIndex === 5) { //if last step
       });
     </script>
     <script type="text/javascript"></script>
+    @yield('js')
   </body>
   </html>

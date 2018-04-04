@@ -88,8 +88,8 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_character_0">صفته</label>
                             <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;">
-                              <option> الجانى</option>
-                              <option>المجنى عليه </option>
+                              <option value="0"> الجانى</option>
+                              <option value="1">المجنى عليه </option>
                             </select><span class="master_message color--fadegreen">message content</span>
                           </div>
                         </div>
@@ -204,8 +204,8 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num" name="authorization_num"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
+                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -390,7 +390,7 @@
                           </div>
                         </div>
                         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                        <table class="table-1">
+                        <table class="table-1" id="dataTableTriggerId_001">
                           <thead>
                             <tr class="bgcolor--gray_mm color--gray_d">
                               <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -410,7 +410,7 @@
                              @foreach($lawyers as $lawyer)
                           <tr data-lawyer-id="{{$lawyer->id}}">
                            
-                            <td><span class="cellcontent"><input type="checkbox"  id="{{$lawyer->id}}" name="{{"lawyer_id[".$lawyer->id."]"}}" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input class="input-in-table" type="checkbox"  id="{{$lawyer->id}}" name="lawyer_id[{{$lawyer->id}}]" class="checkboxes" /></span></td>
                             
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
@@ -596,6 +596,10 @@
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
 
+           @endsection
+
+           @section('js')
+           
               <script type="text/javascript">
                 var i=0;
                 function add_more_clients()
@@ -644,4 +648,60 @@
                 }
                
               </script>
+              <script type="text/javascript">
+      var form = $("#horizontal-pill-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        onFinishing: function (event, currentIndex)
+        {
+           // alert("Submitted!");
+           
+            var form = $(this);
+
+             form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            // alert("Finish button was clicked");
+            }
+        });
+        
+      var form = $("#horizontal-tabs-steps").show();
+      form.children("div").steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        // enableFinishButton: false,
+        enablePagination: false,
+        enableAllSteps: true,
+        titleTemplate: "#title#",
+        cssClass: "tabcontrol",
+ 
+  onStepChanging: function (event, currentIndex, newIndex)
+            {
+if (currentIndex === 5) { //if last step
+   //remove default #finish button
+   $('#wizard').find('a[href="#finish"]').remove(); 
+   //append a submit type button
+   $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+}
+                
+            },
+        onFinishing: function (event, currentIndex)
+        {
+           alert("Submitted!");
+            // var form = $(this);
+
+            //  form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            alert("Finish button was clicked");
+            }
+        });
+
+      
+    </script>
            @endsection
