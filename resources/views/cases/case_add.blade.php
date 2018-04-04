@@ -410,7 +410,7 @@
                              @foreach($lawyers as $lawyer)
                           <tr data-lawyer-id="{{$lawyer->id}}">
                            
-                            <td><span class="cellcontent"><input type="checkbox" id="{{$lawyer->id}}" name="{{"lawyer_id[".$lawyer->id."]"}}" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox"  id="{{$lawyer->id}}" name="{{"lawyer_id[".$lawyer->id."]"}}" class="checkboxes" /></span></td>
                             
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
