@@ -252,6 +252,15 @@ class CompaniesController extends Controller
         return view('clients.companies.companies_show',$data);
     }
 
+        public function comp_update(Request $request, $id)
+    {
+        $installment = Installment::find($id);
+        $installment->is_paid = $request->installment;
+        $installment->save();
+        return redirect()->back();
+        
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

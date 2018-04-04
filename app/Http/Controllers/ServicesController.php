@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Users;
 
 class ServicesController extends Controller
 {
@@ -12,7 +13,7 @@ class ServicesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         return view('services.services');
     }
 
@@ -23,7 +24,10 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        return view('services.services_create');
+        $data['clients'] = Users::whereHas('rules',function($q){
+            $q->where('rule_id',6);
+        })->get();
+        return view('services.services_create',$data);
     }
 
     /**
@@ -34,7 +38,18 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'client_code'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+
+
     }
 
     /**

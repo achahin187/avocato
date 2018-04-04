@@ -253,6 +253,7 @@ class IndividualsController extends Controller
         $installment = Installment::find($id);
         $installment->is_paid = $request->installment;
         $installment->save();
+        return redirect()->back();
         
     }
 

@@ -125,19 +125,19 @@
                                 <h3>تغيير حالة القسط</h3>
                                 <div class="master_field">
                                 @if($installment->is_paid==1)       
-                                  <input class="icon" type="radio" name="installment" id="done" value="1" checked="true">
-                                  <label for="done">تم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" checked="true">
+                                  <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" >
-                                  <label for="not_done">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" >
+                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                    
                                   @else
-                                   <input class="icon" type="radio" name="installment" id="done" value="1" >
-                                  <label for="done">تم الدفع</label>
+                                   <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" >
+                                  <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" checked="true">
-                                  <label for="not_done">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" checked="true">
+                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                   @endif
                                   

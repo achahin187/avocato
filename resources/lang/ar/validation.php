@@ -182,7 +182,8 @@ return [
         'value'         => 'القيمة',
         'logo'          => 'شعار الشركة',
         'gender' => 'النوع',
-        'company_code' => 'كود الشركة'
+        'company_code' => 'كود الشركة',
+        'client_code'=> 'كود العميل'
 
     ],
 
