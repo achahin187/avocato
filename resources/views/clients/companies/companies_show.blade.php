@@ -279,7 +279,7 @@
                           <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                      <form role="form" action="{{route('ind.ins_update',$installment->id)}}" method="post" accept-charset="utf-8">
+                      <form role="form" action="{{route('companies.comp_update',$installment->id)}}" method="post" accept-charset="utf-8">
                           {{csrf_field()}}
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
@@ -289,19 +289,19 @@
                                     <div class="master_field">
 
                                 @if($installment->is_paid==1)       
-                                  <input class="icon" type="radio" name="installment" id="done" value="1" checked="true">
-                                  <label for="done">تم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" checked="true">
+                                  <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" >
-                                  <label for="not_done">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" >
+                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                    
                                   @else
-                                   <input class="icon" type="radio" name="installment" id="done" value="1" >
-                                  <label for="done">تم الدفع</label>
+                                   <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" >
+                                  <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done" value="0" checked="true">
-                                  <label for="not_done">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" checked="true">
+                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                   @endif
                                       
@@ -310,7 +310,8 @@
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">تغيير حالة القسط</button>
+                              <button class="remodal-confirm" type="submit">تغيير حالة القسط</button>
+                            </form>
                             </div>
                           </div>
                           @endforeach
