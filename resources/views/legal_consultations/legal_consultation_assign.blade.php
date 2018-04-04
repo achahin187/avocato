@@ -168,7 +168,7 @@ else
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns" ><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#" id="send_consultation_button">إرسال الإستشارة للمحامي المحدد</a>
                       </div>
-                      <table class="table-1" id="example">
+                      <table class="table-1" id="example" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d selected">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>

@@ -58,7 +58,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
-                           <select class="master_input select2"  id="client_code_0" name="client_code_0" style="width:100%;">
+                           <select class="master_input select2"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})">
                             @foreach($clients as $client)
                               <option value="{{$client->id}}">{{$client->code}}</option>
                             @endforeach
@@ -69,7 +69,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_name_0">اسم الموكل</label>
-                            <select class="master_input select2"  id="client_name_0" name="client_name_0" style="width:100%;">
+                            <select class="master_input select2"  id="client_name_0" name="client_name[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})">
                             @foreach($clients as $client)
                               <option value="{{$client->id}}">{{$client->name}}</option>
                             @endforeach
@@ -81,28 +81,28 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_number_0">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_0" name="client_number_0"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="text" placeholder="رقم الهاتف" id="client_number_0" name="client_number[0]" readonly><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_character_0">صفته</label>
-                            <select class="master_input select2" id="client_character_0" name="client_character_0" style="width:100%;">
-                              <option> الجانى</option>
-                              <option>المجنى عليه </option>
+                            <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;">
+                              <option value="0"> الجانى</option>
+                              <option value="1">المجنى عليه </option>
                             </select><span class="master_message color--fadegreen">message content</span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="authorization_num_0">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num_0"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-9 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_address_0">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="client_address_0" name="client_address_0"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="client_address_0" name="client_address[0]" readonly><span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
                       </div>
@@ -123,13 +123,13 @@
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_name">اسم الخصم</label>
-                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name"><span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_type">صفته</label>
-                            <select class="master_input select2" id="enemy_type" style="width:100%;">
+                            <select class="master_input select2" id="enemy_type" name="enemy_type" style="width:100%;">
                               <option> الجانى</option>
                               <option>المجنى عليه </option>
                             </select><span class="master_message color--fadegreen">message content</span>
@@ -138,13 +138,13 @@
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
-                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer"><span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_address">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address"><span class="master_message color--fadegreen" >بعض النص </span>
                           </div>
                         </div>
                         <div class="clearfix"></div>
@@ -157,15 +157,16 @@
                           <div class="col-xs-4">
                             <div class="master_field">
                               <label class="master_label" for="investigation_no">رقم المحضر</label>
-                              <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no"><span class="master_message color--fadegreen">message</span>
+                              <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
                             </div>
                           </div>
                           <div class="col-xs-4">
                             <div class="master_field">
                               <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
-                              <select class="master_input select2" id="investigation_type" style="width:100%;">
-                                <option>شرطة</option>
-                                <option>نيابة</option>
+                              <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                @foreach($cases_record_types as $type)
+                                <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                @endforeach
                               </select><span class="master_message color--fadegreen">message</span>
                             </div>
                           </div>
@@ -173,7 +174,7 @@
                             <div class="master_field">
                               <label class="master_label mandatory">تاريخ</label>
                               <div class="bootstrap-timepicker">
-                                <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة">
+                                <input class="datepicker master_input" type="text" placeholder="تاريخ المحضر" id="investigation_date" name="investigation_date">
                               </div><span class="master_message color--fadegreen">message content</span>
                             </div>
                           </div>
@@ -183,7 +184,7 @@
                               <div class="file-upload">
                                 <div class="file-select">
                                   <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                  <input class="chooseFile" type="file" name="chooseFile" id="docs_upload">
+                                  <input class="chooseFile" type="file" name="docs_upload[]" id="docs_upload"  multiple="multiple">
                                 </div>
                               </div><span class="master_message color--fadegreen">message</span>
                             </div>
@@ -198,97 +199,92 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
-                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
+                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_type">نوع القضية</label>
-                            <select class="master_input select2" id="case_type" style="width:100%;">
-                              <option>اسرة</option>
-                              <option>جنح</option>
-                              <option>جنايات</option>
+                            <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
+                              @foreach($cases_types as $type)
+                              <option value="{{$type->id}}">{{$type->name}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="court_name">المحكمة التى تنظر امامها</label>
-                            <select class="master_input select2" id="court_name" style="width:100%;">
-                              <option>محكمة جنوب القاهرة</option>
-                              <option>محكمة شمال القاهرة</option>
-                              <option>محكمة الاسرة</option>
-                              <option>محكمة الزنانيري</option>
+                            <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
+                              @foreach($courts as $court)
+                              <option value="{{$court->id}}">{{$court->name}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="governorate">المحافظة</label>
-                            <select class="master_input select2" id="governorate" style="width:100%;">
-                              <option>القاهرة</option>
-                              <option>الاسكندرية </option>
-                              <option>الغربية</option>
-                              <option>الشرقية</option>
+                            <select class="master_input select2" id="governorate" name="governorate" style="width:100%;">
+                             @foreach($governorates as $governorate)
+                              <option value="{{$governorate->id}}">{{$governorate->name}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="city">المدينة</label>
-                            <select class="master_input select2" id="city" style="width:100%;">
-                              <option>مدينة 1</option>
-                              <option>مدينة2 </option>
-                              <option>مدينة 3</option>
-                              <option>مدينة4</option>
+                            <select class="master_input select2" id="city" name="city" style="width:100%;">
+                              @foreach($cities as $city)
+                              <option value="{{$city->id}}">{{$city->name}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="circle">الدائرة</label>
-                            <select class="master_input select2" id="circle" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
-                              <option>دائرة العباسية</option>
-                              <option>دائرة الدقي</option>
-                            </select><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" ,>
+                              <span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_year">السنة</label>
-                            <input class="master_input" type="number" placeholder="السنة" id="case_year"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
                             <div class="bootstrap-timepicker">
-                              <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date">
+                              <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date">
                             </div><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
-                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang"><span class="master_message color--fadegreen">message</span>
+                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
-                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -297,7 +293,7 @@
                             <div class="file-upload">
                               <div class="file-select">
                                 <div class="file-select-name" id="noFile">صور مستندات القضية </div>
-                                <input class="chooseFile" type="file" name="chooseFile">
+                                <input class="chooseFile" type="file" name="chooseFile_case[]" multiple>
                               </div>
                             </div><span class="master_message color--fadegreen">message content</span>
                           </div>
@@ -305,13 +301,13 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="subject">الموضوع</label>
-                            <input class="master_input" type="text" placeholder="الموضوع" id="subject"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject"><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="ID_No">ملاحظات</label>
-                            <textarea class="master_input" name="textarea" id="ID_No" placeholder="ملاحظات"></textarea><span class="master_message color--fadegreen">message</span>
+                            <label class="master_label mandatory" for="notes">ملاحظات</label>
+                            <textarea class="master_input" name="notes" id="notes" placeholder="ملاحظات"></textarea><span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>
                         <div class="clearfix"></div>
@@ -394,7 +390,7 @@
                           </div>
                         </div>
                         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                        <table class="table-1">
+                        <table class="table-1" id="dataTableTriggerId_001">
                           <thead>
                             <tr class="bgcolor--gray_mm color--gray_d">
                               <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -411,162 +407,28 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
-                            <tr>
-                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                              <td><span class="cellcontent">12558</span></td>
-                              <td><span class="cellcontent">مجدي سليم</span></td>
-                              <td><span class="cellcontent">134567788899</span></td>
-                              <td><span class="cellcontent">مصري</span></td>
-                              <td><span class="cellcontent">جنايات</span></td>
-                              <td><span class="cellcontent">محامى تحت التمرين</span></td>
-                              <td><span class="cellcontent">55 شارة الثورة - ألماظة</span></td>
-                              <td><span class="cellcontent">0102345678</span></td>
-                              <td><span class="cellcontent">12-2016</span></td>
-                              <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            </tr>
+                             @foreach($lawyers as $lawyer)
+                          <tr data-lawyer-id="{{$lawyer->id}}">
+                           
+                            <td><span class="cellcontent"><input class="input-in-table" type="checkbox"  id="{{$lawyer->id}}" name="lawyer_id[{{$lawyer->id}}]" class="checkboxes" /></span></td>
+                            
+                            <td><span class="cellcontent">{{$lawyer->code}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->name}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->address}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                            @if($lawyer->is_active)
+                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                            @else
+                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
+                            @endif
+                          </tr>
+                          @endforeach
+                            
                           </tbody>
                         </table>
                         <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -734,6 +596,10 @@
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
 
+           @endsection
+
+           @section('js')
+           
               <script type="text/javascript">
                 var i=0;
                 function add_more_clients()
@@ -742,8 +608,100 @@
                   var div = document.getElementById('add_new_client');
                   // alert(i);
                   // alert("'client_code_"+i"'");
-                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code_'+i+'" style="width:100%;">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name_'+i+'" style="width:100%;">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number_'+i+'"><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character_'+i+'" style="width:100%;"> <option> الجانى</option> <option>المجنى عليه </option></select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num_'+i+'"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address_'+i+'"><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
+                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> <option> الجانى</option> <option>المجنى عليه </option></select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
                   // alert(i);
                 }
+                function set_client_data(id , i , clients)
+                {
+                  var code=document.getElementById('client_code_'+i);
+                  var name=document.getElementById('client_name_'+i);
+                  var mobile=document.getElementById('client_number_'+i);
+                  var address=document.getElementById('client_address_'+i);
+
+                  // alert(code.selectedIndex);
+                  // alert(code,name,mobile,address);
+                  code.selectedIndex=code.selectedIndex;
+                  name.selectedIndex=code.selectedIndex;
+             // alert(clients);
+                for(var client in clients)
+                {
+                  for(var item in clients[client])
+                  {
+                    if(item == 'id' && clients[client][item]==id)
+                    {
+                      // alert(clients[client]['mobile']);
+                      mobile.value=clients[client]['mobile'];
+                      address.value=clients[client]['address'];
+                    }
+                    // alert(clients[client][item]);
+                  }
+                  // if(client['id']==id)
+                  // {
+                  //   mobile.value=client['mobile'];
+
+                  // }
+                  // 
+                  // alert(clients[client]);
+                }
+                  
+                  
+                }
+               
               </script>
+              <script type="text/javascript">
+      var form = $("#horizontal-pill-steps").show();
+      form.steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        onFinishing: function (event, currentIndex)
+        {
+           // alert("Submitted!");
+           
+            var form = $(this);
+
+             form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            // alert("Finish button was clicked");
+            }
+        });
+        
+      var form = $("#horizontal-tabs-steps").show();
+      form.children("div").steps({
+        headerTag: "h3",
+        bodyTag: "fieldset",
+        transitionEffect: "slideLeft",
+        // enableFinishButton: false,
+        enablePagination: false,
+        enableAllSteps: true,
+        titleTemplate: "#title#",
+        cssClass: "tabcontrol",
+ 
+  onStepChanging: function (event, currentIndex, newIndex)
+            {
+if (currentIndex === 5) { //if last step
+   //remove default #finish button
+   $('#wizard').find('a[href="#finish"]').remove(); 
+   //append a submit type button
+   $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+}
+                
+            },
+        onFinishing: function (event, currentIndex)
+        {
+           alert("Submitted!");
+            // var form = $(this);
+
+            //  form.submit();
+        },
+        onFinished: function (event, currentIndex) {
+            // bodyTag: "fieldset"
+            alert("Finish button was clicked");
+            }
+        });
+
+      
+    </script>
            @endsection
