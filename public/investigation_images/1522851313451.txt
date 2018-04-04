@@ -1,0 +1,24 @@
+1-register
+url:http://localhost/secure_bridge_apis/public/register
+parameters:name,password,email,address,mobile,birthdate,phone,creditcard_number,creditcard_cvv,creditcard_month,
+creditcard_year
+
+
+2-login
+url:http://localhost/secure_bridge_apis/public/login
+parameters: code,password
+
+
+3-forget password
+  -check_mobile
+url:http://localhost/secure_bridge_apis/public/Check_mobile_existance
+parameters:mobile
+
+  -verify_verificition_code
+url:http://localhost/secure_bridge_apis/public/verify_verification_code
+parameters:mobile,verificition_code
+
+
+  -resest_password
+url:http://localhost/secure_bridge_apis/public/reset_password
+parameters:mobile,verification_code,password
