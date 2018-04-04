@@ -171,6 +171,7 @@ Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_arc
 Route::get('/case_add', 'CasesController@create')->name('case_add');
 Route::get('/case_edit', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
+Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');
