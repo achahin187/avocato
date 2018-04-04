@@ -40,6 +40,7 @@ class ServicesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'client_code'=>'required',
+            'service_name'=>'required',
         ]);
 
         if ($validator->fails()) {

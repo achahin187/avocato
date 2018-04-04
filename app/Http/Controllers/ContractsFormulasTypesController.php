@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Formula_Contract_Types;
+use App\Formula_Contracts;
 use Excel;
 
 class ContractsFormulasTypesController extends Controller
@@ -204,9 +205,11 @@ class ContractsFormulasTypesController extends Controller
      {
         $sub->delete();
         Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+        Formula_Contracts::where('formula_contract_types_id',$id)->delete();
     }
     else{
         $sub->delete();
+        Formula_Contracts::where('formula_contract_types_id',$id)->delete();
     }
 
     }
@@ -223,9 +226,11 @@ class ContractsFormulasTypesController extends Controller
            {
             $sub->delete();
             Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+            Formula_Contracts::where('formula_contract_types_id',$id)->delete();
         }
         else{
             $sub->delete();
+            Formula_Contracts::where('formula_contract_types_id',$id)->delete();
         }
     } 
 

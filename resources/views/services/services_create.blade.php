@@ -12,7 +12,6 @@
               $("input[name=address]").val('{{$client->address}}');
               $("input[name=national_id]").val('{{$client->user_detail->national_id}}');
               }
-
               @endforeach
 
         });
@@ -93,7 +92,10 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="service_name">اسم الخدمة</label>
-                        <input class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">message</span>
+                        <input name="service_name" class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('service_name'))
+                                    {{ $errors->first('service_name')}}
+                                    @endif</span>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">

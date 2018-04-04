@@ -183,7 +183,8 @@ return [
         'logo'          => 'شعار الشركة',
         'gender' => 'النوع',
         'company_code' => 'كود الشركة',
-        'client_code'=> 'كود العميل'
+        'client_code'=> 'كود العميل',
+        'service_name'=> 'اسم الخدمه'
 
     ],
 
