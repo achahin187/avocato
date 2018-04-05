@@ -37,80 +37,149 @@
       <div class="full-table">
         <div class="remodal-bg">
           <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-            <div>
-              <h3 id="modal1Title">فلتر</h3>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="comp_code">كود الشركة</label>
-                  <input class="master_input" type="number" placeholder="كود الشركة" id="comp_code"><span class="master_message color--fadegreen">message</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="comp_name">اسم الشركة</label>
-                  <input class="master_input" type="text" placeholder="اسم الشركة" id="comp_name"><span class="master_message color--fadegreen">message</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="start_date_from">تاريخ بداية النعاقد من</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="start_date_from">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="start_date_to">تاريخ بداية النعاقد الى</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="start_date_to">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="end_date_from">تاريخ نهاية التعاقد من</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="end_date_from">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="end_date_to">تاريخ نهاية التعاقد الى</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="end_date_to">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="comp_nationality">الجنسية</label>
-                  <input class="master_input" type="text" placeholder="الجنسية" id="comp_nationality"><span class="master_message color--fadegreen">message</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory">التفعيل</label>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_1">
-                    <label for="rad_1">الكل</label>
+            
+            {{-- Start filter form --}}
+            <form action="{{ route('ind.com.filter') }}" method="POST">
+              {{ csrf_field() }}
+
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+              <div>
+                <h3 id="modal1Title">فلتر</h3>
+
+                {{-- Company Code --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_type">كود الشركة</label>
+                    <select name="company_code" class="master_input select2" id="company_code" style="width:100%;">
+                      
+                      {{-- Defualt useless select option --}}
+                      <option value="-1" selected disabled hidden>إختر كود الشركة</option>
+        
+                      @foreach ($companies as $company)
+                        <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
+                      @endforeach
+                      
+                    </select>
+                    {{--  Error  --}}
+                  @if ($errors->has('company_code'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('company_code') }}</span>
+                    @endif
                   </div>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_2">
-                    <label for="rad_2">المفعلين</label>
-                  </div>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_3">
-                    <label for="rad_3">غير المفعلين</label>
+                  
+                </div>
+
+                {{-- Package Type --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_type"> نوع الباقة </label>
+                    <select name="package_type[]" class="master_input select2" id="license_type" multiple="multiple" data-placeholder="نوع الباقة" style="width:100%;" ,>
+                      @foreach ($packages as $pckg)
+                        <option value="{{ $pckg->id }}">{{ Helper::localizations('package_types', 'name', $pckg->id) }}</option>
+                      @endforeach
+                    </select>
+                      @if ($errors->has('package_type'))
+                        <span class="master_message color--fadegreen">{{ $errors->first('package_type') }}</span>
+                      @endif
                   </div>
                 </div>
+
+                {{-- Start Date From --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_start_from">تاريخ بداية النعاقد من</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="start_date_from" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_start_from">
+                    </div>
+                    @if ($errors->has('start_date_from'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('start_date_from') }}</span>
+                    @endif
+                  </div>
+                </div>
+
+                {{-- Start Date To --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_start_to">تاريخ بداية النعاقد الى</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="start_date_to" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_start_to">
+                    </div>
+                    @if ($errors->has('start_date_to'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('start_date_to') }}</span>
+                    @endif
+                  </div>
+                </div>
+
+                {{-- End Date From --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_end_from">تاريخ نهاية التعاقد</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="end_date_from" class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="license_end_from">
+                    </div>
+                    @if ($errors->has('end_date_from'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('end_date_from') }}</span>
+                    @endif
+                  </div>
+                </div>
+
+                {{-- End Date To --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="license_end_to">تاريخ نهاية التعاقد الى</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="end_date_to" class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="license_end_to">
+                    </div>
+                    @if ($errors->has('end_date_to'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('end_date_to') }}</span>
+                    @endif
+                  </div>
+                </div>
+
+                {{-- Nationality --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="nationality">الجنسية</label>
+
+                    <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
+                
+                      <option value="-1" selected disabled hidden>اختر جنسية الشركة</option>
+
+                      @foreach ($nationalities as $nat)
+                        <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
+                      @endforeach
+                      
+                    </select>  
+
+                  </div>
+                </div>
+
+                {{-- Activation --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory">التفعيل</label>
+                    <div class="radiorobo">
+                      <input name="activate" value="1" type="radio" id="rad_1" checked>
+                      <label for="rad_1">الكل</label>
+                    </div>
+                    <div class="radiorobo">
+                      <input name="activate" value="2" type="radio" id="rad_2">
+                      <label for="rad_2">المفعلين</label>
+                    </div>
+                    <div class="radiorobo">
+                      <input name="activate" value="3" type="radio" id="rad_3">
+                      <label for="rad_3">غير المفعلين</label>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-            </div>
-            <div class="clearfix"></div>
-            <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-            <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+              <div class="clearfix"></div>
+              <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+              <button type="submit" class="remodal-confirm" >فلتر</button>
+
+            </form>
+            {{-- End filter form --}}
+
           </div>
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
@@ -137,97 +206,191 @@
           </thead>
           <tbody>
             
-            @foreach ($ind_coms as $ind_com)
-              <tr data-indcom="{{ $ind_com->id }}">
-                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $ind_com->id }}" /></span></td>
-                
-                {{-- Company Code --}}
-                <td>
-                  <span class="cellcontent">
-                    @if (isset($ind_com->companyParent->code))
-                      {{ $ind_com->companyParent->code }}
-                    @else
+            @if (isset($filters) && !empty($filters))
+              @foreach ($filters as $filter)
+                <tr data-indcom="{{ $filter->id }}">
+                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $filter->id }}" /></span></td>
+                  
+                  {{-- Company Code --}}
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($filter->companyParent->code))
+                        {{ $filter->companyParent->code }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+
+                  {{-- Company Name --}}
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($filter->companyParent->name))
+                        {{ $filter->companyParent->name }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+
+                  {{-- Individual-Company Code --}}
+                  @if ( $filter->code)
+                    <td><span class="cellcontent">{{ $filter->code }}</span></td>
+                  @else
                       لا يوجد
-                    @endif
-                  </span>
-                </td>
-
-                {{-- Company Name --}}
-                <td>
-                  <span class="cellcontent">
-                    @if (isset($ind_com->companyParent->name))
-                      {{ $ind_com->companyParent->name }}
-                    @else
+                  @endif
+                  
+                  {{-- Full Name --}}
+                  @if ( $filter->full_name)
+                    <td><span class="cellcontent">{{ $filter->full_name }}</span></td>
+                  @else
                       لا يوجد
-                    @endif
-                  </span>
-                </td>
+                  @endif
 
-                {{-- Individual-Company Code --}}
-                @if ( $ind_com->code)
-                  <td><span class="cellcontent">{{ $ind_com->code }}</span></td>
-                @else
-                    لا يوجد
-                @endif
-                
-                {{-- Full Name --}}
-                @if ( $ind_com->full_name)
-                  <td><span class="cellcontent">{{ $ind_com->full_name }}</span></td>
-                @else
-                    لا يوجد
-                @endif
-
-                {{-- Address --}}
-                @if ( $ind_com->address)
-                  <td><span class="cellcontent">{{ $ind_com->address }}</span></td>
-                @else
-                    لا يوجد
-                @endif
-                
-                {{-- Mobile --}}
-                @if ( $ind_com->address)
-                  <td><span class="cellcontent">{{ $ind_com->mobile }}</span></td>
-                @else
-                    لا يوجد
-                @endif
-                
-                <td>
-                  <span class="cellcontent">
-                    @if (isset($ind_com->companyParent->name))
-                      {{ Helper::localizations('package_types', 'name', $ind_com->subscription->package_type->id) }}
-                    @else
+                  {{-- Address --}}
+                  @if ( $filter->address)
+                    <td><span class="cellcontent">{{ $filter->address }}</span></td>
+                  @else
                       لا يوجد
-                    @endif
-                  </span>
-                </td>
-                <td>
-                  <span class="cellcontent">
-                    @if (isset($ind_com->subscription->end_date))
-                      {{ $ind_com->subscription->end_date->format('d - m - Y') }}
-                    @else
+                  @endif
+                  
+                  {{-- Mobile --}}
+                  @if ( $filter->mobile)
+                    <td><span class="cellcontent">{{ $filter->mobile }}</span></td>
+                  @else
                       لا يوجد
-                    @endif
-                  </span>
-                </td>
-                <td><span class="cellcontent"><i class="fa color--fadegreen {{ $ind_com->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
-                <td>
-                  <span class="cellcontent">
-                    <a href= "{{ route('ind.com.show', $ind_com->id) }}" ,  class= "action-btn bgcolor--main color--white ">
-                      <i class = "fa  fa-eye"></i>
-                    </a>
-                    <a href="{{ route('ind.com.edit', ['id' => $ind_com->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
-                      <i class = "fa  fa-pencil"></i>
-                    </a>
+                  @endif
+                  
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($filter->package_type_id))
+                        {{ Helper::localizations('package_types', 'name', $filter->package_type_id) }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($filter->end_date))
+                        {{ date('Y-m-d', strtotime($filter->end_date)) }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+                  <td><span class="cellcontent"><i class="fa color--fadegreen {{ $filter->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                  <td>
+                    <span class="cellcontent">
+                      <a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white ">
+                        <i class = "fa  fa-eye"></i>
+                      </a>
+                      <a href="{{ route('ind.com.edit', ['id' => $filter->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
+                        <i class = "fa  fa-pencil"></i>
+                      </a>
 
-                    {{--  Delete  --}}
-                    <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $ind_com->id }}">
-                      <i class="fa fa-trash-o"></i>
-                    </a>
+                      {{--  Delete  --}}
+                      <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $filter->id }}">
+                        <i class="fa fa-trash-o"></i>
+                      </a>
 
-                  </span>
-                </td>
-              </tr>
-            @endforeach
+                    </span>
+                  </td>
+                </tr>
+              @endforeach
+            @else 
+              @foreach ($ind_coms as $ind_com)
+                <tr data-indcom="{{ $ind_com->id }}">
+                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $ind_com->id }}" /></span></td>
+                  
+                  {{-- Company Code --}}
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($ind_com->companyParent->code))
+                        {{ $ind_com->companyParent->code }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+
+                  {{-- Company Name --}}
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($ind_com->companyParent->name))
+                        {{ $ind_com->companyParent->name }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+
+                  {{-- Individual-Company Code --}}
+                  @if ( $ind_com->code)
+                    <td><span class="cellcontent">{{ $ind_com->code }}</span></td>
+                  @else
+                      لا يوجد
+                  @endif
+                  
+                  {{-- Full Name --}}
+                  @if ( $ind_com->full_name)
+                    <td><span class="cellcontent">{{ $ind_com->full_name }}</span></td>
+                  @else
+                      لا يوجد
+                  @endif
+
+                  {{-- Address --}}
+                  @if ( $ind_com->address)
+                    <td><span class="cellcontent">{{ $ind_com->address }}</span></td>
+                  @else
+                      لا يوجد
+                  @endif
+                  
+                  {{-- Mobile --}}
+                  @if ( $ind_com->mobile)
+                    <td><span class="cellcontent">{{ $ind_com->mobile }}</span></td>
+                  @else
+                      لا يوجد
+                  @endif
+                  
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($ind_com->companyParent->name))
+                        {{ Helper::localizations('package_types', 'name', $ind_com->subscription->package_type_id) }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+                  <td>
+                    <span class="cellcontent">
+                      @if (isset($ind_com->subscription->end_date))
+                        {{ $ind_com->subscription->end_date->format('d - m - Y') }}
+                      @else
+                        لا يوجد
+                      @endif
+                    </span>
+                  </td>
+                  <td><span class="cellcontent"><i class="fa color--fadegreen {{ $ind_com->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                  <td>
+                    <span class="cellcontent">
+                      <a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white ">
+                        <i class = "fa  fa-eye"></i>
+                      </a>
+                      <a href="{{ route('ind.com.edit', ['id' => $ind_com->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
+                        <i class = "fa  fa-pencil"></i>
+                      </a>
+
+                      {{--  Delete  --}}
+                      <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $ind_com->id }}">
+                        <i class="fa fa-trash-o"></i>
+                      </a>
+
+                    </span>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
             
           </tbody>
         </table>

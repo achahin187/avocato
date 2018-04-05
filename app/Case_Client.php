@@ -30,4 +30,6 @@ class Case_Client extends Model
     {
     	return $this->belongsTo('App\Case_Client_Role', 'case_client_role_id');
     }
+
+    
 }

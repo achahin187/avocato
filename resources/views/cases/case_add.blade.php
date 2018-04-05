@@ -1,29 +1,8 @@
 @extends('layout.app')
 @section('content')
-{{-- <script type="text/javascript">
-      var form = $("#horizontal-pill-steps").show();
-      form.steps({
-        headerTag: "h3",
-        bodyTag: "fieldset",
-        transitionEffect: "slideLeft",
-        });
-        
-        
-      var form = $("#horizontal-tabs-steps").show();
-      form.steps({
-        headerTag: "h3",
-        bodyTag: "fieldset",
-        transitionEffect: "slideLeft",
-        enableFinishButton: true,
-        enablePagination: false,
-        enableAllSteps: true,
-        titleTemplate: "#title#",
-        cssClass: "tabcontrol",
-               });
-      
-    </script> --}}
+
               <!-- =============== Custom Content ===============-->
-              <div class="row">
+              <div class="row" id="filter_">
                 <div class="col-md-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="add-mode">Adding mode</div>
@@ -89,8 +68,9 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_character_0">صفته</label>
                             <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;">
-                              <option value="0"> الجانى</option>
-                              <option value="1">المجنى عليه </option>
+                              @foreach($roles as $role)
+                              <option value="{{$role->id}}">{{$role->name_ar}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message content</span>
                           </div>
                         </div>
@@ -131,8 +111,9 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_type">صفته</label>
                             <select class="master_input select2" id="enemy_type" name="enemy_type" style="width:100%;">
-                              <option value="0"> الجانى</option>
-                              <option value="1">المجنى عليه </option>
+                              @foreach($roles as $role)
+                              <option value="{{$role->id}}">{{$role->name_ar}}</option>
+                              @endforeach
                             </select><span class="master_message color--fadegreen">message content</span>
                           </div>
                         </div>
@@ -318,10 +299,9 @@
                     <fieldset>
                       <div class="full-table">
                         <div class="remodal-bg">
-                          <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                            <form role="form" action="{{URL('lawyers_cases_filter')}}" method="post" accept-charset="utf-8">
-                          {{csrf_field()}}
-                          <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                          <div class="remodal" id="confirm" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                           
+                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
                             <div class="col-md-6">
@@ -351,7 +331,7 @@
                             <div class="col-md-6">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
-                                <input class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector" name="lawyer_work_sector"><span class="master_message color--fadegreen">message content</span>
+                                <input class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector" name="lawyer_work_sector" ><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
                             <div class="col-md-6">
@@ -377,9 +357,8 @@
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm"  type="submit">فلتر</button>
-                        </form>
-                          </div>
+                          <button class="remodal-confirm "  value="filter" onclick="filter_lawyers();">فلتر</button>
+                           </div>
                         </div>
                         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                         <table class="table-1" id="dataTableTriggerId_001">
@@ -581,7 +560,9 @@
                           </div>
                         </div>
                       </div>
+                      {{-- <input class="finish-btn sf-right sf-btn" type="submit" value="finish"/> --}}
                     </fieldset>
+
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   </form>
                 </div>
@@ -600,7 +581,7 @@
                   var div = document.getElementById('add_new_client');
                   // alert(i);
                   // alert("'client_code_"+i"'");
-                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> <option> الجانى</option> <option>المجنى عليه </option></select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
+                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> @foreach($roles as $role) <option value="{{$role->id}}">{{$role->name_ar}}</option>@endforeach</select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
                   // alert(i);
                 }
                 function set_client_data(id , i , clients)
@@ -695,6 +676,49 @@ if (currentIndex === 5) { //if last step
             }
         });
 
-      
+      function filter_lawyers()
+      {
+        var filter_data=[];
+  filter_data['lawyer_code']=$('#lawyer_code').val();
+  filter_data['lawyer_name']=$('#lawyer_name').val();
+  filter_data['lawyer_national_id']=$('#lawyer_national_id').val();
+  filter_data['lawyer_nationality']=$('#lawyer_nationality').val();
+  filter_data['lawyer_work_sector']=$('#lawyer_work_sector').val();
+  filter_data['lawyer_level']=$('#lawyer_level').val();
+  filter_data['lawyer_tel']=$('#lawyer_tel').val();
+  filter_data['start_date']=$('#start_date').val();
+// alert(data['lawyer_code']);
+$.ajax({
+           type:'POST',
+           url:'{{url('lawyers_cases_filter')}}',
+           data_type:JSON,
+           data:{"data":filter_data,"_token": "{{ csrf_token() }}"},
+           success:function(data){
+             // alert(data);
+        // $this.html(data);
+      // alert(data);
+          },
+           error: function (jqXHR, exception) {
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        $('#post').html(msg);
+    },
+        });
+
+      }
     </script>
            @endsection

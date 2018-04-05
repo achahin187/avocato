@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Helper;
 use Session;
+use Validator;
 use Exception;
 
 use App\Package_Types;
@@ -29,7 +30,11 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        return view('clients.companies.companies')->with('companies', Users::users(9)->get());
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+
+        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('companies', Users::users(9)->get());
     }
 
     /**
@@ -85,10 +90,10 @@ class CompaniesController extends Controller
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('users_images', $newImg);      // move to users_images
+            $imgPath = 'users_images/'.$newImg;       // new path: users_images/imageName
         } else {
-            $imgPath = null;
+            $imgPath = 'users_images/male.jgp';
         }
 
         // INSERT COMPANY DATA
@@ -107,6 +112,7 @@ class CompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
+            //dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
@@ -117,6 +123,7 @@ class CompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -131,6 +138,7 @@ class CompaniesController extends Controller
 
             Users_Rules::insert($data);
         } catch(Exception $ex) {
+            //////dd($ex);
             Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
@@ -144,6 +152,7 @@ class CompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -158,13 +167,14 @@ class CompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender;
+            $user_details->nationality_id   = $request->nationality;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work_sector;
             $user_details->discount_percentage   = $request->discount_percentage;
             $user_details->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -184,6 +194,7 @@ class CompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -204,6 +215,7 @@ class CompaniesController extends Controller
                 'legal_representative_mobile'    => $request->legal_representative_mobile
             ]);
         } catch(Exception $ex) {
+            //////dd($ex);
             Users::find($user->id)->forcedelete();
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
@@ -224,8 +236,9 @@ class CompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
-            $user_rules->forcedelete();
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             $client_passwords->forcedelete();
             $user_details->forcedelete();
             $subscription->forcedelete();
@@ -287,7 +300,6 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $this->validate($request, [
             'company_code'  => 'required',  // users
             'password'      => 'required',  // usres - client_password
@@ -314,20 +326,22 @@ class CompaniesController extends Controller
             'commercial_registration_number'    => 'required',  // user_company details
         ]);
 
+        $user = Users::find($id);
+
         // upload image to storage/app/public
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('users_images', $newImg);      // move to /storage/app/public
+            $imgPath = 'users_images/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
-            $imgPath = null;
+            $imgPath = $user->image;
         }
 
         // INSERT COMPANY DATA
         // push into users
         try {
-            $user = Users::find($id);
+            
             $user->name      = $request->company_name;
             $user->password  = bcrypt($request->password);
             $user->full_name = $request->company_name;
@@ -340,7 +354,7 @@ class CompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            dd($ex);
+            //////dd($ex);
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -362,7 +376,7 @@ class CompaniesController extends Controller
             $user_details = User_Details::where('user_id', $user->id)->first();
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender;
+            $user_details->nationality_id= $request->nationality;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work_sector;
@@ -385,7 +399,7 @@ class CompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            dd($ex);
+            //////dd($ex);
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -499,5 +513,80 @@ class CompaniesController extends Controller
         );
 
         return response()->json($response);
+    }
+
+    // Filter companies based on package_type, start-end dates and nationality
+    public function filter(Request $request)
+    {
+        $validator =  Validator::make($request->all(), [
+            'activate'  => 'required'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('companies#filterModal_sponsors')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        // Replace any empty time value with a default value
+        $startfrom = $endfrom = '1970-01-01 00:00:00';
+        $startto   = $endto   = '2030-01-01 00:00:00';
+     
+        if($request->start_date_from) {
+            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
+        }
+        if($request->start_date_to) {
+            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
+        }
+        if($request->end_date_from) {
+            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
+        }
+        if($request->end_date_to) {
+            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
+        }
+
+        // intial join query between `users` & `subscriptions` & `user_details`
+        $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')
+                        ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                        ->select('user_company_details.*', 'user_details.*', 'subscriptions.*', 'users.*');
+
+        // check package type
+        if( $request->package_type ) {
+            $users = $users->whereIn('package_type_id', $request->package_type);
+        }
+
+        // check on start and end dates
+        if($startfrom && $startto && $endfrom && $endto) {
+            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
+            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
+        }
+
+        // check nationality
+        if($request->nationality) {
+            $users = $users->where('user_details.nationality_id', $request->nationality);
+        }
+
+        switch($request->activate) {
+            case "1":
+                $users = $users->get();
+                break;
+            case "2":
+                $users = $users->where('users.is_active', '!=', 0)->get();
+                break;
+            case "3":
+                $users = $users->where('users.is_active', '=', 0)->get();
+                break;
+            default:
+                break;
+        }
+        
+
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+
+        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('filters', $users);
     }
 }

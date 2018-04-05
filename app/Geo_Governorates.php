@@ -15,4 +15,8 @@ class Geo_Governorates extends Model
     {
         return $this->hasMany('App\Geo_Cities','governorate_id');
     }
+    public function cases()
+    {
+        return $this->hasMany('App\Case_', 'geo_governorate_id');
+    }
 }
