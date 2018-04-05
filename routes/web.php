@@ -178,7 +178,7 @@ Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('la
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');
 Route::get('/services_create', 'ServicesController@create')->name('services_create');
-Route::get('/services_store', 'ServicesController@store')->name('services_store');
+Route::post('/services_store', 'ServicesController@store')->name('services_store');
 Route::get('/services_edit', 'ServicesController@edit')->name('services_edit');
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');

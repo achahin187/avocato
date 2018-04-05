@@ -31,15 +31,16 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="service_type"> نوع الخدمة </label>
                                 <select class="master_input select2" id="service_type" multiple="multiple" data-placeholder="نوع الخدمة" style="width:100%;" ,>
-                                  <option>مجانية</option>
-                                  <option>مدفوعة</option>
-                                </select><span class="master_message color--fadegreen">message content</span>
+                          @foreach($types as $type)
+                          <option value="{{$type->item_id}}">{{$type->value}}</option>
+                          @endforeach
+                                </select><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                          <button class="remodal-confirm" type="submit">فلتر</button>
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
@@ -58,6 +59,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach($services as $service)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">20122</span></td>
@@ -67,105 +69,7 @@
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
                             <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
-                            <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                            <td><span class="cellcontent">اسم الخدمة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">مجانية</label></span></td>
-                            <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= service_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

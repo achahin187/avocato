@@ -83,16 +83,21 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="service_type">نوع الخدمة</label>
-                        <select class="master_input select2" id="service_type" style="width:100%;">
-                          <option> مجانية</option>
-                          <option>مدفوعة</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="service_type" class="master_input select2" id="service_type" style="width:100%;">
+                          <option selected disabled> اختر نوع الخدمه</option>
+                          @foreach($types as $type)
+                          <option value="{{$type->item_id}}">{{$type->value}}</option>
+                          @endforeach
+                        </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('service_type'))
+                                    {{ $errors->first('service_type')}}
+                                    @endif</span>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="service_name">اسم الخدمة</label>
-                        <input name="service_name" class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">
+                        <input value="{{ old('service_name') }}" name="service_name" class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">
                                   @if ($errors->has('service_name'))
                                     {{ $errors->first('service_name')}}
                                     @endif</span>
@@ -101,7 +106,10 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="fees">رسوم الخدمة</label>
-                        <input class="master_input" type="number" placeholder="رسوم الخدمة" id="fees"><span class="master_message color--fadegreen">message</span>
+                        <input value="{{ old('service_expenses') }}" name="service_expenses" class="master_input" type="text" placeholder="رسوم الخدمة" id="fees"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('service_expenses'))
+                                    {{ $errors->first('service_expenses')}}
+                                    @endif</span>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -110,8 +118,8 @@
                       </button>
                     </div>
                     <div class="col-md-2 col-sm-6 col-xs-6">
-                      <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
-                      </button>
+                      <a href="{{route('services')}}" class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" ><i class="fa fa-times"></i><span>الغاء</span>
+                      </a>
                     </div>
                     <div class="clearfix"></div><br>
                   </div>
