@@ -30,13 +30,16 @@ class Users extends Authenticatable
             if ( $user->rules ) { Users_Rules::where('user_id',$user->id)->delete(); }
             if ( $user->client_password ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
             if ( $user->user_detail ) { $user->user_detail()->delete(); }
-            if ( $user->subscription ) { $user->subscription()->delete(); }
-            if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
-                Installment::where('subscription_id', $user->subscription->id)->delete();
+            if ( $user->subscription ) { 
+                if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
+                    Installment::where('subscription_id', $user->subscription->id)->delete();
+                }
+                $user->subscription()->delete(); 
             }
             if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }    // for companies or individuals_companies
         });
     }
+
 
    public function createdParent()
    {

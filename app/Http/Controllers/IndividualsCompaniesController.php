@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Helper;
 use Session;
+use Validator;
 use Exception;
 
 use App\Package_Types;
@@ -28,7 +29,11 @@ class IndividualsCompaniesController extends Controller
      */
     public function index()
     {
-        return view('clients.individuals_companies.individuals_companies')->with('ind_coms', Users::users(10)->get());
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+        $companies     = Users::users(9)->get();
+        return view('clients.individuals_companies.individuals_companies', compact(['packages', 'subscriptions', 'nationalities', 'companies']))->with('ind_coms', Users::users(10)->get());
     }
 
     /**
@@ -85,15 +90,15 @@ class IndividualsCompaniesController extends Controller
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('users_images', $newImg);      // move to users_images
+            $imgPath = 'users_images/'.$newImg;       // new path: users_images/imageName
         } else {
             // if user didn't pick an image and he choose male then assign male.jpg as his image.
             if ( $request->gender == 1 ) {
-                $imgPath = 'public/img/avatars/male.jpg';
+                $imgPath = 'users_images/male.jpg';
             } else {
                 // else assign female.jpg as her image.
-                $imgPath = 'public/img/avatars/female.jpg';
+                $imgPath = 'users_images/female.jpg';
             }
         }
 
@@ -130,7 +135,6 @@ class IndividualsCompaniesController extends Controller
             return redirect()->back()->withInput();
         }
         
-        // push into users_rules
         // push into users_rules
         try {
             $data = array(
@@ -272,7 +276,6 @@ class IndividualsCompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $this->validate($request, [
             'company_code'  => 'required',
             'company_name'  => 'required',
@@ -296,20 +299,22 @@ class IndividualsCompaniesController extends Controller
             'number_of_payments' => 'required'
         ]);
 
+        $user = Users::find($id);
+
         // upload image to storage/app/public
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('users_images', $newImg);      // move to /storage/app/public
+            $imgPath = 'users_images/'.$newImg;       // new path: /storage/app/public/imageName
         } else {
-            $imgPath = null;
+            $imgPath = $user->image;
         }
 
         // INSERT COMPANY DATA
         // push into users
         try {
-            $user = Users::find($id);
+            
             $user->parent_id = $request->company_code;
             $user->name      = $request->ind_name;
             $user->password  = bcrypt($request->password);
@@ -471,5 +476,85 @@ class IndividualsCompaniesController extends Controller
         );
 
         return response()->json($response);
+    }
+
+    // Filter individuals-companies based on package_type, start-end dates and nationality
+    public function filter(Request $request)
+    {
+        $validator =  Validator::make($request->all(), [
+            'activate'  => 'required'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('companies#filterModal_sponsors')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        // Replace any empty time value with a default value
+        $startfrom = $endfrom = '1970-01-01 00:00:00';
+        $startto   = $endto   = '2030-01-01 00:00:00';
+     
+        // date inputs not null, then cast it to dates.
+        if($request->start_date_from) {
+            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
+        }
+        if($request->start_date_to) {
+            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
+        }
+        if($request->end_date_from) {
+            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
+        }
+        if($request->end_date_to) {
+            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
+        }
+
+        // intial join query between `users` & `subscriptions` & `user_details`
+        $users = Users::users(10)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                        ->select('user_details.*', 'subscriptions.*', 'users.*');
+
+        // check company code
+        if ( $request->company_code) {
+            $users = $users->where('parent_id', $request->company_code);
+        }
+        // check package type
+        if( $request->package_type ) {
+            $users = $users->whereIn('package_type_id', $request->package_type);
+        }
+
+        // check on start and end dates
+        if($startfrom && $startto && $endfrom && $endto) {
+            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
+            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
+        }
+
+        // check nationality
+        if($request->nationality) {
+            $users = $users->where('user_details.nationality_id', $request->nationality);
+        }
+
+        // check activation 
+        switch($request->activate) {
+            case "1":
+                $users = $users->get();
+                break;
+            case "2":
+                $users = $users->where('users.is_active', '!=', 0)->get();
+                break;
+            case "3":
+                $users = $users->where('users.is_active', '=', 0)->get();
+                break;
+            default:
+                break;
+        }
+        
+
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+        $companies     = Users::users(9)->get();
+        return view('clients.individuals_companies.individuals_companies', compact(['packages', 'subscriptions', 'nationalities', 'companies']))->with('filters', $users);
     }
 }

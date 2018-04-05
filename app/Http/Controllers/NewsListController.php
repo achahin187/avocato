@@ -25,8 +25,28 @@ class NewsListController extends Controller
 
     public function filter(Request $request)
     {
-        $validator =  Validator::make($request->all(), [
-            'condition'     => 'required' 
+        // check if start date is less than end date
+        Validator::extend('before_or_equal', function($attribute, $value, $parameters, $validator) {
+            return strtotime($validator->getData()[$parameters[0]]) >= strtotime($value);
+        });
+
+        if( $request->start_date && !$request->end_date) {
+            $rules =  [
+                'condition'     => 'required' 
+            ];
+        } else if($request->start_date ) {
+            $rules =  [
+                'start_date'   => 'before_or_equal:end_date',
+                'end_date'     => '',
+                'condition'     => 'required' ];
+        } else {
+            $rules =  [
+                'condition'     => 'required' 
+            ];
+        }
+
+        $validator =  Validator::make($request->all(), $rules, [
+            'start_date.before_or_equal'    => 'حقل تاريخ البداية يجب ان يكون اصغر من او يساوي حقل تاريخ النهاية'
         ]);
 
         // Check validation
@@ -38,26 +58,23 @@ class NewsListController extends Controller
 
         $from = $to = null;
         
-        if($request->start_at) {
+        if($request->start_date) {
             $from = date("Y-m-d 00:00:00", strtotime($request->start_date) );
-            $to = null;
         }
-        if($request->end_at) {
-            $from = null;
+        if($request->end_date) {
             $to   = date("Y-m-d 23:59:59", strtotime($request->end_date) ); 
         }
 
         if($from && $to) {
-            $filter = News::whereBetween('created_at', [$from, $to]);
+            $filter = News::whereBetween('published_at', [$from, $to]);
         } else if ($from && !$to) {
-            $filter = News::where('created_at', '>=', $from);
+            $filter = News::where('published_at', '>=', $from);
         } else if (!$from && $to) {
-            $filter = News::where('created_at', '<=', $to);
+            $filter = News::where('published_at', '<=', $to);
         } else {
-            $filter = News::where('created_at', '!=', null);
+            $filter = News::where('published_at', '!=', null);
         }
 
-        // dd([$from, $to]);
 
         switch($request->condition) {
             case "1":
@@ -122,9 +139,9 @@ class NewsListController extends Controller
 
         // check is active
         if($request->activate) {
-            $activate = 0;
-        } else {
             $activate = 1;
+        } else {
+            $activate = 0;
         }
 
         $current_user = Auth::user()->id;

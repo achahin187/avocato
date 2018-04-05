@@ -263,7 +263,7 @@
           <div class="master_field">       
             <input name="activate" class="icon" type="radio" name="icon" id="radbtn_2" value="1" checked="true">
             <label for="radbtn_2">مفعل</label>
-            <input name="activate" class="icon" type="radio" name="icon" id="radbtn_3" value="0" {{ old('activate') == 0 ? 'checked' : ''  }} >
+            <input name="activate" class="icon" type="radio" name="icon" id="radbtn_3" value="0">
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -403,13 +403,13 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

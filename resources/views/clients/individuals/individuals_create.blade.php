@@ -144,7 +144,7 @@
         {{--  Nationality  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="license_type">جنسية الشركة</label>
+            <label class="master_label mandatory" for="license_type">جنسية العميل</label>
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
@@ -164,7 +164,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
-            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="number" placeholder="رقم الهاتف" id="client_tel">
+            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="text" placeholder="رقم الهاتف" id="client_tel">
             
               @if ($errors->has('phone'))
                 <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>
@@ -249,7 +249,7 @@
             <input class="icon" type="radio" name="activate" value="1" id="radbtn_2" checked="true">
             <label for="radbtn_2">مفعل</label>
 
-            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3" {{ (old('activate') == 0) ? 'checked' : ''  }}>
+            <input class="icon" type="radio" name="activate" value="0" id="radbtn_3">
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
