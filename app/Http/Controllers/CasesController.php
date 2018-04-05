@@ -119,7 +119,7 @@ class CasesController extends Controller
         $case=Case_::where('id',$id)->with('case_clients')->with('case_documents')->with('case_records')->with('case_techinical_reports')->with('lawyers')->with(['tasks'=>function($query){
             $query->where('task_type_id',2);
         }])->with('clients')->with('case_records')->first();
-            // dd($case);
+             // dd($case);
         return view('cases.case_view')->with('case',$case);
     }
 
