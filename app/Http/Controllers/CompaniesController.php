@@ -260,7 +260,18 @@ class CompaniesController extends Controller
      */
     public function show($id)
     {
-        return view('clients.companies.companies_show');
+        $data['user'] = Users::find($id);
+        $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        return view('clients.companies.companies_show',$data);
+    }
+
+        public function comp_update(Request $request, $id)
+    {
+        $installment = Installment::find($id);
+        $installment->is_paid = $request->installment;
+        $installment->save();
+        return redirect()->back();
+        
     }
 
     /**
@@ -444,6 +455,13 @@ class CompaniesController extends Controller
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
+    }
+
+        public function destroyShow($id)
+    {
+        // Find and delete this record
+        Users::find($id)->delete();
+        return redirect()->route('companies')->with('success','تم استبعاد العميل');
     }
 
     /**

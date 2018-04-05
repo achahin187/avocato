@@ -259,6 +259,7 @@ class IndividualsController extends Controller
         $installment = Installment::find($id);
         $installment->is_paid = $request->installment;
         $installment->save();
+        return redirect()->back();
         
     }
 
@@ -411,6 +412,13 @@ class IndividualsController extends Controller
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
+    }
+
+        public function destroyShow($id)
+    {
+        // Find and delete this record
+        Users::find($id)->delete();
+        return redirect()->route('ind')->with('success','تم استبعاد العميل');
     }
 
     /**

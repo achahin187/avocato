@@ -182,7 +182,11 @@ return [
         'value'         => 'القيمة',
         'logo'          => 'شعار الشركة',
         'gender' => 'النوع',
-        'company_code' => 'كود الشركة'
+        'company_code' => 'كود الشركة',
+        'client_code'=> 'كود العميل',
+        'service_name'=> 'اسم الخدمه',
+        'service_type'=>'نوع الخدمه',
+        'service_expenses'=>'رسوم الخدمه',
 
     ],
 

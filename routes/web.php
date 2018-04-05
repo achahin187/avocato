@@ -103,22 +103,26 @@ Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('i
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
 Route::post('/individuals/filter', 'IndividualsController@filter')->name('ind.filter');
+Route::get('/individuals/destroyShow/{id}', 'IndividualsController@destroyShow')->name('ind.destroyShow');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
 Route::get('/companies_show/{id}', 'CompaniesController@show')->name('companies.show');
 Route::get('/companies_create', 'CompaniesController@create')->name('companies.create');
 Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.edit');
+Route::post('/companies/comp_update/{id}', 'CompaniesController@comp_update')->name('companies.comp_update');
 Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
 Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
 Route::post('/companies/filter-companies', 'CompaniesController@filter')->name('company.filter');
+Route::get('/companies/destroyShow/{id}', 'CompaniesController@destroyShow')->name('companies.destroyShow');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
-Route::get('/individuals_companies_show', 'IndividualsCompaniesController@show')->name('ind.com.show');
+Route::get('/individuals_companies_show/{id}', 'IndividualsCompaniesController@show')->name('ind.com.show');
 Route::get('/individuals_companies_create', 'IndividualsCompaniesController@create')->name('ind.com.create');
 Route::post('/individuals_companies_store', 'IndividualsCompaniesController@store')->name('ind.com.store');
 Route::get('/individuals_companies_edit/{id}', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
+Route::post('/individuals_companies/ind_comp_update/{id}', 'IndividualsCompaniesController@ind_comp_update')->name('ind_comp_update');
 Route::post('/individuals_companies/update/{id}', 'IndividualsCompaniesController@update')->name('ind.com.update');
 Route::delete('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
 Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
@@ -172,11 +176,16 @@ Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_arc
 Route::get('/case_add', 'CasesController@create')->name('case_add');
 Route::get('/case_edit', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
+Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
 
 Route::get('/services', 'ServicesController@index')->name('services');
-Route::get('/services_show', 'ServicesController@show')->name('services_show');
+Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
 Route::get('/services_create', 'ServicesController@create')->name('services_create');
-Route::get('/services_edit', 'ServicesController@edit')->name('services_edit');
+Route::post('/services_store', 'ServicesController@store')->name('services_store');
+Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
+Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
+Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
@@ -201,7 +210,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 });
-Route::get('/Landing', 'LandingController@index')->name('landing');
+Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/company', 'LandingController@company')->name('landing.company');

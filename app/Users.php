@@ -110,4 +110,9 @@ class Users extends Authenticatable
    {
        return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
    }
+
+           public function tasks()
+    {
+        return $this->hasMany('App\Tasks','client_id');
+    }
 }

@@ -154,7 +154,7 @@
                         <div class="col-md-3 col-sm-4 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <select name="nationality" class="master_input select2" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
@@ -242,7 +242,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <select name="nationality" class="master_input select2" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>

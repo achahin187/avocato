@@ -244,9 +244,20 @@ class IndividualsCompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('clients.individuals_companies.individuals_companies_show');
+        $data['user'] = Users::find($id);
+        $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        return view('clients.individuals_companies.individuals_companies_show',$data);
+    }
+
+        public function ind_comp_update(Request $request, $id)
+    {
+        $installment = Installment::find($id);
+        $installment->is_paid = $request->installment;
+        $installment->save();
+        return redirect()->back();
+        
     }
 
     /**

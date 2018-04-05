@@ -11,21 +11,43 @@ use App\Subscriptions;
 use App\Package_Types;
 use App\Installment;
 use App\Rules;
+use App\Genders;
+use App\Geo_Countries;
 use App\User_Company_Details;
 use Helper;
 use Validator;
 
 class LandingController extends Controller
 {
-        public function index()
+        public function index($lang)
     {
     	$data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
     	$data['genders'] = Entity_Localizations::where('field','name')->where('entity_id',2)->get();
-        return view('landing',$data);
+        $data['genders_en'] = Genders::all();
+        $data['nationalities_en'] = Geo_Countries::all();
+        if($lang == 'ar')
+        {
+            return view('landing',$data);
+        }
+        elseif($lang == 'en')
+        {
+            return view('landing-en',$data);
+        }
+        else
+        {
+            return abort('404');
+        }
+
+        
     }
 
         public function ind(Request $request)
     {
+        $url = url()->previous();
+        $split = explode('/',$url);
+        $lang = end($split);
+        if($lang == 'en')
+            \App::setlocale('en');
                 // Validate data
         $this->validate($request, [
             'ind_name'  => 'required',
@@ -69,7 +91,11 @@ class LandingController extends Controller
         $client_plaintext->password = $password;
         $client->user_detail()->save($client_details);
         $client->client_password()->save($client_plaintext);
-        return redirect()->route('landing')->with('success','تم إضافه عميل جديد بنجاح');
+    if($lang == 'en')
+        return redirect()->route('landing','en')->with('success','New Client Successfully Registered ');
+    else
+        return redirect()->route('landing','ar')->with('success','تم إضافه عميل جديد بنجاح');
+            
     }
 
 
@@ -77,6 +103,11 @@ class LandingController extends Controller
 
         public function lawyer(Request $request)
     {
+        $url = url()->previous();
+        $split = explode('/',$url);
+        $lang = end($split);
+        if($lang == 'en')
+            \App::setlocale('en');
                 // Validate data
 		$validator = Validator::make($request->all(), [
 		            'lawyer_name'=>'required',
@@ -90,7 +121,7 @@ class LandingController extends Controller
 		        ]);
 
 		        if ($validator->fails()) {
-		            return redirect('Landing#tabBody1')
+		            return redirect()->back()
 		            ->withErrors($validator)
 		            ->withInput();
 		        }
@@ -117,12 +148,21 @@ class LandingController extends Controller
         $lawyer_plaintext->password = $password;
         $lawyer->user_detail()->save($lawyer_details);
         $lawyer->client_password()->save($lawyer_plaintext);
-        return redirect()->route('landing')->with('success','تم إضافه محامى جديد بنجاح');
+
+    if($lang == 'en')
+        return redirect()->route('landing','en')->with('success','New Lawyer Successfully Registered ');
+    else
+        return redirect()->route('landing','ar')->with('success','تم إضافه محامى جديد بنجاح');
     }
 
 
             public function company(Request $request)
     {
+        $url = url()->previous();
+        $split = explode('/',$url);
+        $lang = end($split);
+        if($lang == 'en')
+            \App::setlocale('en');
                 // Validate data
 		$validator = Validator::make($request->all(), [
 		            'company_name'=>'required',
@@ -134,7 +174,7 @@ class LandingController extends Controller
 		        ]);
 
 		        if ($validator->fails()) {
-		            return redirect('Landing#tabBody2')
+		            return redirect()->back()
 		            ->withErrors($validator)
 		            ->withInput();
 		        }
@@ -166,6 +206,10 @@ class LandingController extends Controller
         $company->user_detail()->save($company_details);
         $company->user_company_detail()->save($user_company_details);
         $company->client_password()->save($company_plaintext);
+
+    if($lang == 'en')
+        return redirect()->route('landing','en')->with('success','New Company Successfully Registered ');
+    else
         return redirect()->route('landing')->with('success','تم إضافه مكتب جديد بنجاح');
     }
 }
