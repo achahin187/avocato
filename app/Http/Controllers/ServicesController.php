@@ -76,9 +76,10 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('services.services_show');
+        $data['service'] = Tasks::find($id);
+        return view('services.services_show',$data);
     }
 
     /**
