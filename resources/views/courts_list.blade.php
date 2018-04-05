@@ -254,8 +254,8 @@ true).find("option[value]").remove();
                           <tr class="court" data-court-id="{{$court->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{$court->name}}</span></td>
-                            <td><span class="cellcontent">{{$court->city->name}}</span></td>
-                            <td><span class="cellcontent">{{$court->city->governorate->name}}</span></td>
+                            <td><span class="cellcontent">@isset($court->city->name){{$court->city->name}}@endisset</span></td>
+                            <td><span class="cellcontent">@isset($court->city->governorate->name){{$court->city->governorate->name}}@endisset</span></td>
                             <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach

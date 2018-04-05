@@ -30,13 +30,16 @@ class Users extends Authenticatable
             if ( $user->rules ) { Users_Rules::where('user_id',$user->id)->delete(); }
             if ( $user->client_password ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
             if ( $user->user_detail ) { $user->user_detail()->delete(); }
-            if ( $user->subscription ) { $user->subscription()->delete(); }
-            if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
-                Installment::where('subscription_id', $user->subscription->id)->delete();
+            if ( $user->subscription ) { 
+                if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
+                    Installment::where('subscription_id', $user->subscription->id)->delete();
+                }
+                $user->subscription()->delete(); 
             }
             if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }    // for companies or individuals_companies
         });
     }
+
 
    public function createdParent()
    {
@@ -107,6 +110,7 @@ class Users extends Authenticatable
    {
        return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
    }
+
    public function cases()
     {
         return $this->belongsToMany('App\Case_','case_lawyers','case_id','lawyer_id');
@@ -114,5 +118,11 @@ class Users extends Authenticatable
     public function clients()
     {
         return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
+}
+
+           public function tasks()
+    {
+        return $this->hasMany('App\Tasks','client_id');
+
     }
 }

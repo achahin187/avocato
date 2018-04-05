@@ -63,7 +63,7 @@
                 <div class="master_field">
                   <label class="master_label" for="sitch_1">تفعيل </label>
                   
-                  <input class="" type="checkbox" value="{{ ($news->is_active) ?  $news->is_active : 1 }} " name="activate" {{ $news->is_active ? 'checked' : '' }}> {{ $news->is_active }}
+                  <input class="" type="checkbox" value="{{ ($news->is_active) ?  $news->is_active : 1 }} " name="activate" {{ $news->is_active ? 'checked' : '' }}>
                     
                   @if ($errors->has('activate'))
                     <span class="master_message color--fadegreen">{{ $errors->first('activate') }}</span>

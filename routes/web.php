@@ -102,6 +102,7 @@ Route::post('/individuals/ins_update/{id}', 'IndividualsController@ins_update')-
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
 Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
 Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
+Route::post('/individuals/filter', 'IndividualsController@filter')->name('ind.filter');
 Route::get('/individuals/destroyShow/{id}', 'IndividualsController@destroyShow')->name('ind.destroyShow');
 
 Route::get('/companies', 'CompaniesController@index')->name('companies');
@@ -113,6 +114,7 @@ Route::post('/companies/update/{id}', 'CompaniesController@update')->name('compa
 Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
 Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
 Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
+Route::post('/companies/filter-companies', 'CompaniesController@filter')->name('company.filter');
 Route::get('/companies/destroyShow/{id}', 'CompaniesController@destroyShow')->name('companies.destroyShow');
 
 Route::get('/individuals_companies', 'IndividualsCompaniesController@index')->name('ind.com');
@@ -124,6 +126,7 @@ Route::post('/individuals_companies/ind_comp_update/{id}', 'IndividualsCompanies
 Route::post('/individuals_companies/update/{id}', 'IndividualsCompaniesController@update')->name('ind.com.update');
 Route::delete('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
 Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
+Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
@@ -177,10 +180,13 @@ Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('la
 Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
 
 Route::get('/services', 'ServicesController@index')->name('services');
-Route::get('/services_show', 'ServicesController@show')->name('services_show');
+Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
 Route::get('/services_create', 'ServicesController@create')->name('services_create');
-Route::get('/services_store', 'ServicesController@store')->name('services_store');
-Route::get('/services_edit', 'ServicesController@edit')->name('services_edit');
+Route::post('/services_store', 'ServicesController@store')->name('services_store');
+Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
+Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
+Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
