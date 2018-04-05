@@ -7,6 +7,7 @@ use App\Users;
 use App\Tasks;
 use App\Task_Payment_Statuses;
 use App\Entity_Localizations;
+use App\Task_Charges;
 use Validator;
 
 class ServicesController extends Controller
@@ -79,8 +80,44 @@ class ServicesController extends Controller
     public function show($id)
     {
         $data['service'] = Tasks::find($id);
+        $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+        $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
         return view('services.services_show',$data);
     }
+
+        public function status(Request $request,$id)
+    {
+        $service = Tasks::find($id);
+        $service->task_status_id = $request->service_status;
+        $service->save();
+        return redirect()->route('services_show',$id)->with('success','تم تغيير الحاله بنجاح');
+    }
+
+        public function charge(Request $request,$id)
+    {
+        $validator = Validator::make($request->all(), [
+            'amount'=>'required',
+            'service_date'=>'required',
+            'is_paid'=>'required',
+            'reason'=>'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('services_show/'.$id.'#add_fees')
+            ->withErrors($validator)
+            ->withInput();
+        }
+        $charge = new Task_Charges;
+        $charge->amount = $request->amount;
+        $charge->date = date('Y-m-d H:i:s',strtotime($request->service_date));
+        $charge->is_paid = $request->is_paid;
+        $charge->reason = $request->reason;
+        $service = Tasks::find($id);
+        $service->charges()->associate($charge);
+
+        return redirect()->route('services_show',$id)->with('success','تم إضافه رسوم للخدمه بنجاح');
+    }
+
 
     /**
      * Show the form for editing the specified resource.

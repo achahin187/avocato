@@ -140,7 +140,7 @@
                           @foreach($services as $service)
                           <tr data-service-id="{{$service->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">{{$service->client_id}}</span></td>
+                            <td><span class="cellcontent">{{$service->client->code}}</span></td>
                             <td><span class="cellcontent">{{$service->client->full_name}}</span></td>
                             <td><span class="cellcontent">{{$service->client->address}}</span></td>
                             <td><span class="cellcontent">{{$service->name}}</span></td>

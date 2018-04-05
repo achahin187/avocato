@@ -6,7 +6,7 @@
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}} ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -38,16 +38,24 @@
                                   تاريخ
                                   10/10/2018
                                   &nbsp;<i class="fa fa-calendar"></i>
-                                </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="clients_compaines_view.html">محمد احمد</a>&nbsp;<span class="color--sec">(عميل أفراد)</span></span>
+                                </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="clients_compaines_view.html">{{$service->client->full_name}}</a>&nbsp;<span class="color--sec">(عميل أفراد)</span></span>
                               <div class="clearfix"></div>
-                              <hr><span class="tiket-data col-md-12"><i class="fa fa-map-marker"></i><b>عنوان العميل: </b>4شارع التحرير الدقى القاهرة</span>
+                              <hr><span class="tiket-data col-md-12"><i class="fa fa-map-marker"></i><b>عنوان العميل: </b>{{$service->client->address}}</span>
                               <div class="clearfix"></div>
-                              <hr><span class="tiket-data light-color col-md-12"><span>نوع الخدمة</span>&nbsp;<span class="bgcolor--fadepurple color--white bradius--small importance padding--small">مجانية</span></span>
+                              <hr><span class="tiket-data light-color col-md-12"><span>نوع الخدمة</span>&nbsp;<span class="bgcolor--fadepurple color--white bradius--small importance padding--small">@foreach($types as $type)
+                              @if($service->task_payment_status_id == $type->item_id)
+                              {{$type->value}}
+                              @endif
+                            @endforeach</span></span>
                             </div>
                             <div class="status-bar">
                               <div class="status">
                                 الحالة
-                                &nbsp;<span class="bgcolor--fadegreen color--black bradius--small importance padding--small">تم</span>
+                                &nbsp;<span class="bgcolor--fadegreen color--black bradius--small importance padding--small">@foreach($statuses as $status)
+                                @if($status->item_id == $service->task_status_id)
+                                {{$status->value}}
+                              @endif
+                            @endforeach</span>
                               </div>
                             </div>
                             <div class="clearfix"></div>
@@ -56,25 +64,40 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                    {{\session('success')}}
+                  </div>
+                  @endif
                     <div class="col-md-2 col-sm-5 col-xs-12"><a class="master-btn color--black bgcolor--fadegreen bradius--rounded bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-tag"></i><span>تغيير الحالة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                  <form role="form" action="{{route('services_status',$service->id)}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
                             <div class="col-xs-12">
                               <h3>تغيير حالة الخدمة</h3>
-                              <div class="master_field">       
-                                <input class="icon" type="radio" name="icon" id="radbtn_2" checked="true">
+                              <div class="master_field">
+                              @if($service->task_status_id == 2)       
+                                <input class="icon" type="radio" name="service_status" value="2" id="radbtn_2" checked="true">
                                 <label for="radbtn_2">تمت المهمة</label>
-                                <input class="icon" type="radio" name="icon" id="radbtn_3">
+                                <input class="icon" type="radio" name="service_status" value="1" id="radbtn_3">
                                 <label for="radbtn_3">لم تتم المهمة</label>
+                                @elseif($service->task_status_id == 1) 
+                                <input class="icon" type="radio" name="service_status" value="2" id="radbtn_2" >
+                                <label for="radbtn_2">تمت المهمة</label>
+                                <input class="icon" type="radio" name="service_status" value="1" id="radbtn_3" checked="true">
+                                <label for="radbtn_3">لم تتم المهمة</label>
+                                @endif
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">تغيير حالة المهمة</button>
+                        <button class="remodal-confirm" type="submit">تغيير حالة المهمة</button>
+                      </form>
                       </div>
                     </div>
                     <div class="clearfix"></div><br>
@@ -217,6 +240,8 @@
                     <div class="col-md-2 col-sm-12 col-xs-12 pull-right"><a class="master-btn undefined undefined undefined undefined undefined" href="#add_fees"><span></span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="add_fees" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                    <form role="form" action="{{route('services_charge',$service->id)}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
@@ -225,37 +250,50 @@
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label" for="payment_amount">المبلغ</label>
-                                  <input class="master_input" type="text" placeholder="المبلغ" id="payment_amount"><span class="master_message color--fadegreen">message</span>
+                                  <input name="amount" value="{{ old('amount') }}" class="master_input" type="text" placeholder="المبلغ" id="payment_amount"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('amount'))
+                                    {{ $errors->first('amount')}}
+                                    @endif</span>
                                 </div>
                               </div>
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory">تاريخ الخدمة</label>
                                   <div class="bootstrap-timepicker">
-                                    <input class="datepicker master_input" type="text" placeholder="تاريخ">
-                                  </div><span class="master_message color--fadegreen">message content</span>
+                                    <input name="service_date" value="{{ old('service_date') }}"  class="datepicker master_input" type="text" placeholder="تاريخ">
+                                  </div><span class="master_message color--fadegreen">
+                                    @if ($errors->has('service_date'))
+                                    {{ $errors->first('service_date')}}
+                                    @endif</span>
                                 </div>
                               </div>
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="payment_status">حالة السداد</label>
-                                  <select class="master_input select2" id="payment_status" style="width:100%;">
-                                    <option>لم يتم</option>
-                                    <option>تم</option>
-                                  </select><span class="master_message color--fadegreen">message</span>
+                                  <select name="is_paid" class="master_input select2" id="payment_status" style="width:100%;">
+                                    <option value="0">لم يتم</option>
+                                    <option value="1">تم</option>
+                                  </select><span class="master_message color--fadegreen">
+                                    @if ($errors->has('is_paid'))
+                                    {{ $errors->first('is_paid')}}
+                                    @endif</span>
                                 </div>
                               </div>
                               <div class="col-md-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="payment_desc">السبب</label>
-                                  <textarea class="master_input" name="textarea" id="payment_desc" placeholder="السبب "></textarea><span class="master_message color--fadegreen">message</span>
+                                  <textarea name="reason" value="{{ old('reason') }}" class="master_input" name="textarea" id="payment_desc" placeholder="السبب "></textarea><span class="master_message color--fadegreen">
+                                    @if ($errors->has('reason'))
+                                    {{ $errors->first('reason')}}
+                                    @endif</span>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                        <button class="remodal-confirm" type="submit">إضافة</button>
+                      </form>
                       </div>
                     </div>
                     <table class="table-1">

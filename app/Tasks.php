@@ -29,4 +29,9 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Users','client_id');
     }
+
+        public function charges()
+    {
+        return $this->hasMany('App\Task_Charges','task_id');
+    }
 }
