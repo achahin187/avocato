@@ -117,138 +117,22 @@
                                 </tr>
                               </thead>
                               <tbody>
+                               
+                                @foreach($cases as $case)
+                                @if($case->archived == 0)
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
+                                  <td><span class="cellcontent">{{$case->courts->name}}</span></td>
+                                  <td><span class="cellcontent">{{$case->region}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_number}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_year}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_date}}</span></td>
+                                  <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
+                                  <td><span class="cellcontent"><a href= "{{URL('case_view/'.$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('case_edit/'.$case->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">جنايات</span></td>
-                                  <td><span class="cellcontent">اسم المحكمة</span></td>
-                                  <td><span class="cellcontent">اسم الدائرة</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2017</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100900</span></td>
-                                  <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= case_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
+                                @endif
+                                @endforeach
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -501,150 +385,22 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                @foreach($cases as $case)
+                                @if($case->archived == 1)
                                 <tr>
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
+                                  <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
+                                  <td><span class="cellcontent">{{$case->courts->name}}</span></td>
+                                  <td><span class="cellcontent">{{$case->region}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_number}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_year}}</span></td>
+                                  <td><span class="cellcontent">{{$case->claim_date}}</span></td>
+                                  <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
+                                  <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
                                   <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">إعلان ميراث</span></td>
-                                  <td><span class="cellcontent">القاهرة</span></td>
-                                  <td><span class="cellcontent">وسط البلد</span></td>
-                                  <td><span class="cellcontent">100230</span></td>
-                                  <td><span class="cellcontent">2018</span></td>
-                                  <td><span class="cellcontent">29-10-2019</span></td>
-                                  <td><span class="cellcontent">100676</span></td>
-                                  <td><span class="cellcontent">400768</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
+                                @endif
+                                @endforeach
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

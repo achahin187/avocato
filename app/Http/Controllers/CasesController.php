@@ -21,6 +21,7 @@ use App\Case_Client;
 use App\Case_Record;
 use App\Case_Record_Document;
 use App\Case_Lawyer;
+use App\Case_Client_Role;
 
 
 class CasesController extends Controller
@@ -32,8 +33,17 @@ class CasesController extends Controller
      */
     public function index()
     {
-       
-        return view('cases.cases');
+        $cases=Case_::with('case_types')->with('governorates')->with('cities')->with('courts')->get();
+        // dd($cases);
+        $roles=Case_Client_Role::all();
+
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+       // dd($roles);
+        return view('cases.cases')->with('cases',$cases)->with('roles',$roles);
     }
 
     /**
@@ -64,7 +74,7 @@ class CasesController extends Controller
                  }])->get();
         foreach($lawyers as $detail){
             
-                if(count($detail->user_detail)>1)
+                if(count($detail->user_detail)!=0)
                 {
                     $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
@@ -77,7 +87,14 @@ class CasesController extends Controller
                 }
         
           // dd($cases_record_types);
-        return view('cases.case_add')->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers]);
+      $roles=Case_Client_Role::all();
+
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+        return view('cases.case_add')->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles]);
     }
 
     /**
@@ -97,9 +114,13 @@ class CasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('cases.case_view');
+        $case=Case_::where('id',$id)->with('case_clients')->with('case_documents')->with('case_records')->with('case_techinical_reports')->with('lawyers')->with(['tasks'=>function($query){
+            $query->where('task_type_id',2);
+        }])->with('clients')->with('case_records')->first();
+            // dd($case);
+        return view('cases.case_view')->with('case',$case);
     }
 
     public function archive_show()
@@ -113,7 +134,7 @@ class CasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
         return view('cases.case_edit');
     }
@@ -144,6 +165,7 @@ class CasesController extends Controller
 
     public function add(Request $request)
     {
+        // dd($request->all());
         
        $start_time=explode('-', $request['case_dateRang'])[0];
        $end_time=explode('-', $request['case_dateRang'])[1];
@@ -221,25 +243,25 @@ if($request->hasFile('docs_upload')){
          // dd($request->all());
         return $this->create();
     }
-    function lawyers_filter(Request $request,$id)
+    function lawyers_filter(Request $request)
     {
-        $consultation = Consultation::find($id);
+        
         $lawyers=Users::whereHas('rules', function ($query) {
 
         $query->where('rule_id', '5');
         })->where(function($query)use($request){
 
-            if($request->filled('lawyer_code'))
+            if($request->has('lawyer_code') && $request['lawyer_code'] != '')
             {
 
                $query->where('code',$request->lawyer_code);  
             }
-            if($request->filled('lawyer_name'))
+            if($request->has('lawyer_name')&& $request['lawyer_name'] != '')
             {
 
                $query->where('name',$request->lawyer_name);  
             }
-            if($request->filled('lawyer_tel'))
+            if($request->has('lawyer_tel')&& $request['lawyer_tel'] != '')
             {
 
                $query->where('mobile',$request->lawyer_tel);  
@@ -247,22 +269,22 @@ if($request->hasFile('docs_upload')){
 
         })->with(['user_detail'=>function($query) use ($request){
                 
-                        if($request->filled('lawyer_level'))
+                if($request->has('lawyer_level')&& $request['lawyer_level'] != '')
                         {
 
                            $query->where('litigation_level',$request->lawyer_level);  
                         }
-                        if($request->filled('lawyer_national_id'))
+                        if($request->has('lawyer_national_id')&& $request['lawyer_national_id'] != '')
                         {
 
                            $query->where('national_id',$request->lawyer_national_id);  
                         }
-                         if($request->filled('start_date'))
+                         if($request->has('start_date')&& $request['start_date'] != '')
                         {
 
                            $query->where('join_date',date('Y-m-d H:i:s',strtotime($request->start_date)));  
                         }
-                         if($request->filled('lawyer_work_sector'))
+                         if($request->has('lawyer_work_sector')&& $request['lawyer_work_sector'] != '')
                         {
 
                            $query->where('work_sector',$request->lawyer_work_sector);  
@@ -295,7 +317,44 @@ if($request->hasFile('docs_upload')){
                 }
                 
                  }
+                
+        return $this->filter_create($lawyers);
+        // return response()->json('success');
+    }
+    public function filter_create($lawyers)
+    {
+         $clients=Users::whereHas('rules', function ($query) {
+                                            $query->where('rule_id', '6');
+                                        })->get();
+         $cases_record_types=Case_Record_Type::all();
+         // dd($cases_record_types);
+        // dd($clients);
+         foreach ($cases_record_types as  $value) {
+            $value['name_ar']= Helper::localizations('case_report_types','name',$value->id);
+         }
+         $cases_types=Cases_Types::all();
+         $courts=Courts::all();
+         $governorates=Geo_Governorates::all();
+         $countries=Geo_Countries::all();
+         $cities=Geo_Cities::all();
+         
         
-       return $this->create();
+          // dd($cases_record_types);
+         $roles=Case_Client_Role::all();
+
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+        return view('cases.case_add')->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles]);
+    }
+    public function change_case_state($id)
+    {
+        $state = $_POST['case_state'];
+        $case=Case_::find($id);
+        $case->update(['archived'=>$state]);
+        // dd($case);
+        return redirect()->route('case_view',$id);
     }
 }

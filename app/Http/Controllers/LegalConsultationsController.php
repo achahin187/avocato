@@ -140,7 +140,7 @@ class LegalConsultationsController extends Controller
                 {
                     $detail['assigned']=0;
                 }
-                if(count($detail->user_detail)>1)
+                if(count($detail->user_detail)!=0)
                 {
                     $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               

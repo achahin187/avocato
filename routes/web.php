@@ -168,12 +168,13 @@ Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_r
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 
 Route::get('/cases', 'CasesController@index')->name('cases');
-Route::get('/case_view', 'CasesController@show')->name('case_view');
+Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
 Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_archive_view');
 Route::get('/case_add', 'CasesController@create')->name('case_add');
-Route::get('/case_edit', 'CasesController@edit')->name('case_edit');
+Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
 Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
+Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');
