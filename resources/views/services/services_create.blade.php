@@ -97,7 +97,7 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="service_name">اسم الخدمة</label>
-                        <input value="{{ old('service_name') }}" name="service_name" class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">
+                        <input name="service_name" value="{{ old('service_name') }}"  class="master_input" type="text" placeholder="اسم الخدمة .." id="service_name"><span class="master_message color--fadegreen">
                                   @if ($errors->has('service_name'))
                                     {{ $errors->first('service_name')}}
                                     @endif</span>
@@ -106,7 +106,7 @@
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="fees">رسوم الخدمة</label>
-                        <input value="{{ old('service_expenses') }}" name="service_expenses" class="master_input" type="text" placeholder="رسوم الخدمة" id="fees"><span class="master_message color--fadegreen">
+                        <input name="service_expenses" value="{{ old('service_expenses') }}"  class="master_input" type="text" placeholder="رسوم الخدمة" id="fees"><span class="master_message color--fadegreen">
                                   @if ($errors->has('service_expenses'))
                                     {{ $errors->first('service_expenses')}}
                                     @endif</span>

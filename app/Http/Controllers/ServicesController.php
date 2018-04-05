@@ -87,9 +87,15 @@ class ServicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('services.services_edit');
+        $data['service'] = Tasks::find($id); 
+        $data['clients'] = Users::whereHas('rules',function($q){
+            $q->where('rule_id',6);
+        })->get();
+        $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+
+        return view('services.services_edit',$data);
     }
 
     /**
@@ -101,7 +107,28 @@ class ServicesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'client_code'=>'required',
+            'service_name'=>'required',
+            'service_type'=>'required',
+            'service_expenses'=>'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+        $service = Tasks::find($id);
+        $service->client_id = $request->client_code;
+        $service->name = $request->service_name;
+        $service->task_payment_status_id = $request->service_type;
+        $service->expenses = $request->service_expenses;
+        // $service->task_type_id = 3;
+        // $service->task_status_id = 1;
+        $service->save();
+        return redirect()->route('services')->with('success','تم تعديل بيانات الخدمه بنجاح');
     }
 
     /**
@@ -112,6 +139,16 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = Tasks::find($id);
+        $user->delete();
+    }
+
+    public function destroy_all()
+    {
+        $ids = $_POST['ids'];
+        foreach($ids as $id)
+        {
+            Tasks::find($id)->delete();
+        } 
     }
 }

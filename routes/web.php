@@ -179,7 +179,10 @@ Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show', 'ServicesController@show')->name('services_show');
 Route::get('/services_create', 'ServicesController@create')->name('services_create');
 Route::post('/services_store', 'ServicesController@store')->name('services_store');
-Route::get('/services_edit', 'ServicesController@edit')->name('services_edit');
+Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
+Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
+Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
