@@ -45,8 +45,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-
-              {{--  End date  --}}
+                {{--  End date  --}}
                 <div class="master_field">
                   <label class="master_label mandatory" for="ID_No">تاريخ النشر الى </label>
                   <div class="bootstrap-timepicker">
@@ -58,7 +57,6 @@
                   @endif
                   
                 </div>
-              {{--  End date  --}}
               
               </div>
               <div class="col-md-6">

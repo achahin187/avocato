@@ -34,46 +34,67 @@
       <div class="full-table">
         <div class="remodal-bg">
           <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-            <div>
-              <h3 id="modal1Title">فلتر</h3>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="ID_No">تاريخ التسجيل من</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="ID_No">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory" for="ID_No">تاريخ التسجيل الى</label>
-                  <div class="bootstrap-timepicker">
-                    <input class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="ID_No">
-                  </div><span class="master_message color--fadegreen">message content</span>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="master_field">
-                  <label class="master_label mandatory">التفعيل</label>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_1">
-                    <label for="rad_1">الكل</label>
-                  </div>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_2">
-                    <label for="rad_2">المفعلين</label>
-                  </div>
-                  <div class="radiorobo">
-                    <input type="radio" id="rad_3">
-                    <label for="rad_3">غير المفعلين</label>
+            
+            <form action="{{ route('mobile.filter') }}" method="POST">
+              {{ csrf_field() }}
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+              <div>
+                <h3 id="modal1Title">فلتر</h3>
+
+                {{-- Start date --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="ID_No">تاريخ التسجيل من </label>
+                    <div class="bootstrap-timepicker">
+                      <input name="start_date" class="datepicker master_input" type="text" placeholder="تاريخ بداية التعاقد" id="ID_No" value="{{ old('start_date') }}">
+                    </div>
+          
+                    @if ($errors->has('start_date'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
+                    @endif
+                  {{--  Start date  --}}
                   </div>
                 </div>
+
+                {{-- End date --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="ID_No">تاريخ التسجيل الى </label>
+                    <div class="bootstrap-timepicker">
+                      <input name="end_date" class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="ID_No" value="{{ old('end_date') }}">
+                    </div>
+                    
+                    @if ($errors->has('end_date'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
+                    @endif
+                    
+                  </div>
+                
+                </div>
+
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory">التفعيل</label>
+                    <div class="radiorobo">
+                      <input name="activate" value="1" type="radio" id="rad_1" checked>
+                      <label for="rad_1">الكل</label>
+                    </div>
+                    <div class="radiorobo">
+                      <input name="activate" value="2" type="radio" id="rad_2">
+                      <label for="rad_2">المفعلين</label>
+                    </div>
+                    <div class="radiorobo">
+                      <input name="activate" value="3" type="radio" id="rad_3">
+                      <label for="rad_3">غير المفعلين</label>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="clearfix"></div>
-            <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-            <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+              <div class="clearfix"></div>
+              <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+              <button class="remodal-confirm" type="submit">فلتر</button>
+            </form>
+
           </div>
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>

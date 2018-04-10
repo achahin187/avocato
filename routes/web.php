@@ -133,6 +133,7 @@ Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
+Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 
