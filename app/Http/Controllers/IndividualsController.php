@@ -322,6 +322,9 @@ class IndividualsController extends Controller
             $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;
+
+            $user->parent_id = NULL;    // in case of transforming individuals to individual-company clients.
+
             $user->save();
         } catch(Exception $ex) {
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
@@ -357,6 +360,16 @@ class IndividualsController extends Controller
             $user_details->save();
         } catch(Exception $ex) {
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // if user is individual-company client and we want to change him/her to individual client then change his/her rule.
+        try {
+            $user_rule = Users_Rules::where('user_id', $user->id)->where('rule_id', '!=', 6)->first();
+            $user_rule->rule_id = 8;
+            $user_rule->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
 

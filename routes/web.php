@@ -133,6 +133,7 @@ Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
+Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 
@@ -191,10 +192,13 @@ Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
 Route::post('/services_status/{id}', 'ServicesController@status')->name('services_status');
 Route::post('/services_charge/{id}', 'ServicesController@charge')->name('services_charge');
+Route::post('/charge_status/{id}', 'ServicesController@charge_status')->name('charge_status');
+Route::post('/charge_destroy/{id}', 'ServicesController@charge_destroy')->name('charge_destroy');
 Route::get('/services_create', 'ServicesController@create')->name('services_create');
 Route::post('/services_store', 'ServicesController@store')->name('services_store');
 Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 

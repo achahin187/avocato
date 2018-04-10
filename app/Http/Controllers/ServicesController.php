@@ -80,6 +80,7 @@ class ServicesController extends Controller
     public function show($id)
     {
         $data['service'] = Tasks::find($id);
+        $data['charges'] = Task_Charges::where('task_id',$id)->get();
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
         return view('services.services_show',$data);
@@ -113,9 +114,23 @@ class ServicesController extends Controller
         $charge->is_paid = $request->is_paid;
         $charge->reason = $request->reason;
         $service = Tasks::find($id);
-        $service->charges()->associate($charge);
+        $service->charges()->save($charge);
 
         return redirect()->route('services_show',$id)->with('success','تم إضافه رسوم للخدمه بنجاح');
+    }
+
+        public function charge_status(Request $request,$id)
+    {
+        $charge = Task_Charges::find($id);
+        $charge->is_paid = $request->is_paid;
+        $charge->save();
+        return redirect()->back()->with('success','تم تغيير الحاله بنجاح');
+    }
+
+        public function charge_destroy($id)
+    {
+        $charge = Task_Charges::find($id);
+        $charge->delete();
     }
 
 
@@ -167,6 +182,17 @@ class ServicesController extends Controller
         // $service->task_status_id = 1;
         $service->save();
         return redirect()->route('services')->with('success','تم تعديل بيانات الخدمه بنجاح');
+    }
+
+    public function filter(Request $request)
+    {
+        if($request->filled('payment_status'))
+        $data['services'] = Tasks::whereIn('task_payment_status_id',$request->payment_status)->get();
+    else
+        $data['services'] = Tasks::all();
+    
+        $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+        return view('services.services',$data);
     }
 
     /**

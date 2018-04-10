@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Task_Charges extends Model
 {
     protected $primaryKey = 'id';
-    protected $table = 'tasks';
+    protected $table = 'task_charges';
     public $timestamps = true;
+    protected $dates = ['date'];
    	
    		public function task()
     {

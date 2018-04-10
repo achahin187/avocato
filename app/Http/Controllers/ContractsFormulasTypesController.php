@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Formula_Contract_Types;
 use App\Formula_Contracts;
+use Illuminate\Support\Facades\File;
 use Excel;
 
 class ContractsFormulasTypesController extends Controller
@@ -205,11 +206,19 @@ class ContractsFormulasTypesController extends Controller
      {
         $sub->delete();
         Formula_Contract_Types::where('id',$sub->parent_id)->delete();
-        Formula_Contracts::where('formula_contract_types_id',$id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
     }
     else{
         $sub->delete();
-        Formula_Contracts::where('formula_contract_types_id',$id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
     }
 
     }
@@ -226,11 +235,19 @@ class ContractsFormulasTypesController extends Controller
            {
             $sub->delete();
             Formula_Contract_Types::where('id',$sub->parent_id)->delete();
-            Formula_Contracts::where('formula_contract_types_id',$id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
         }
         else{
             $sub->delete();
-            Formula_Contracts::where('formula_contract_types_id',$id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
         }
     } 
 
