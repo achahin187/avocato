@@ -36,6 +36,7 @@ class Tasks extends Model
         public function charges()
     {
         return $this->hasMany('App\Task_Charges','task_id');
+    }
     
        public function cases()
     {

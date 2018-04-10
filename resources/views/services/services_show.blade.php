@@ -1,6 +1,43 @@
 @extends('layout.app')
 @section('content')
 
+ <script >
+  $(document).ready(function(){
+
+        $('.btn-warning-cancel').click(function(){
+          var charge_id = $(this).closest('tr').attr('data-charge-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('charge_destroy')}}'+'/'+charge_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-charge-id='+charge_id+']').fadeOut();
+               }
+            });
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+      });
+
+    </script>
 
               
               <!-- =============== Custom Content ===============-->
@@ -307,90 +344,15 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                        @foreach($charges as $charge)
+                        <tr data-charge-id="{{$charge->id}}">
+                          <td><span class="cellcontent">{{$charge->date->format('d - m - Y')}}</span></td>
+                          <td><span class="cellcontent">{{$charge->reason}}</span></td>
+                          <td><span class="cellcontent">{{$charge->amount}}</span></td>
+                          <td><span class="cellcontent"><i class = "fa {{$charge->is_paid ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times' }}"></i></span></td>
+                          <td><span class="cellcontent"><a href= "#fees{{$charge->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                         </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
-                        <tr>
-                          <td><span class="cellcontent">10-10-2010</span></td>
-                          <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                          <td><span class="cellcontent">1020</span></td>
-                          <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                          <td><span class="cellcontent"><a href= #fees ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                        </tr>
+                        @endforeach
                       </tbody>
                     </table>
                     <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -552,24 +514,29 @@
                     </div>
                     <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#fees"><span></span></a>
                       <div class="remodal-bg"></div>
-                      <div class="remodal" data-remodal-id="fees" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                        @foreach($charges as $charge)
+                      <div class="remodal" data-remodal-id="fees{{$charge->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                    <form role="form" action="{{route('charge_status',$charge->id)}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
                             <div class="col-xs-12">
                               <h3>تغيير حالة سداد الرسوم</h3>
                               <div class="master_field">       
-                                <input class="icon" type="radio" name="icon" id="payment_status1" checked="true">
-                                <label for="payment_status1">تم</label>
-                                <input class="icon" type="radio" name="icon" id="payment_status2">
-                                <label for="payment_status2">لم يتم</label>
+                                <input class="icon" type="radio" name="is_paid" value="1" id="done{{$charge->id}}" {{$charge->is_paid ? 'checked':''}}>
+                                <label for="done{{$charge->id}}">تم</label>
+                                <input class="icon" type="radio" name="is_paid" value="0" id="not_done{{$charge->id}}" {{$charge->is_paid ? '':'checked'}}>
+                                <label for="not_done{{$charge->id}}">لم يتم</label>
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">تعديل</button>
+                        <button class="remodal-confirm" type="submit">تعديل</button>
+                      </form>
                       </div>
+                      @endforeach
                     </div>
                     <div class="clearfix"></div>
                   </div>
