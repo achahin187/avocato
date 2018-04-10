@@ -353,6 +353,17 @@ class IndividualsCompaniesController extends Controller
             return redirect()->back()->withInput();
         }
 
+        // push into users_rules
+        try {
+            $user_rule = Users_Rules::where('user_id', $user->id)->where('rule_id', '!=', 6)->first();
+            $user_rule->rule_id = 10;
+            $user_rule->save();
+        } catch(Exception $ex) {
+            dd($ex);
+            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
+            return redirect()->back()->withInput();
+        }
+
         // push into client_passwords
         try {
             $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
