@@ -178,6 +178,14 @@ Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
 Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
 Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
+Route::get('/case_destroy/{id}', 'CasesController@destroy')->name('case_destroy');
+Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_destroy_all');
+Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
+Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
+Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
+Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
+Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');

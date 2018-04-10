@@ -31,6 +31,6 @@ class Case_Record extends Model
     }
     public function case_record_documents()
     {
-    	return $this->hasMany('App\Case_Record', 'record_id');
+    	return $this->hasMany('App\Case_Record_Document', 'record_id');
     }
 }
