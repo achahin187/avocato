@@ -10,7 +10,10 @@
           <div class="col-xs-12">
             <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset(''.$user->image)}}">
               <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.com.edit',$user->id)}}">تعديل بيانات العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">التحويل لعميل أفراد</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد العميل</a>
+              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.com.edit',$user->id)}}">تعديل بيانات العميل</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('ind.edit', $user->id) }}">التحويل لعميل أفراد</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">كارت العميل</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد العميل</a>
               </div>
             </div>
           </div>
