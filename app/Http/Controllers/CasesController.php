@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
  use App\Case_;
 use App\Users;
 use App\User_Details;
@@ -22,6 +23,9 @@ use App\Case_Record;
 use App\Case_Record_Document;
 use App\Case_Lawyer;
 use App\Case_Client_Role;
+use App\Case_Document;
+use App\Case_Techinical_Report;
+use App\Tasks;
 
 
 class CasesController extends Controller
@@ -116,11 +120,19 @@ class CasesController extends Controller
      */
     public function show($id)
     {
+        $cases_record_types=Case_Record_Type::all();
+         // dd($cases_record_types);
+        // dd($clients);
+         foreach ($cases_record_types as  $value) {
+            $value['name_ar']= Helper::localizations('case_report_types','name',$value->id);
+         }
         $case=Case_::where('id',$id)->with('case_clients')->with('case_documents')->with('case_records')->with('case_techinical_reports')->with('lawyers')->with(['tasks'=>function($query){
-            $query->where('task_type_id',2);
-        }])->with('clients')->with('case_records')->first();
-             // dd($case);
-        return view('cases.case_view')->with('case',$case);
+            $query->where('task_type_id',2)->orderBy('id','desc');
+        }])->with('clients')->with(['case_records'=>function($q){
+            $q->with('case_record_documents');
+        }])->first();
+              // dd($case);
+        return view('cases.case_view')->with('case',$case)->with('cases_record_types',$cases_record_types);
     }
 
     public function archive_show()
@@ -157,9 +169,32 @@ class CasesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+   public function destroy($id)
     {
-        //
+        
+        Case_::destroy( $id);
+        Case_Client::where('case_id',$id)->delete();
+        Case_Document::where('case_id',$id)->delete();
+        Case_Lawyer::where('case_id',$id)->delete();
+        Case_Record::where('case_id',$id)->delete();
+        Case_techinical_Report::where('case_id',$id)->delete();
+        return  redirect()->route('cases');
+    }
+
+     public function destroy_all()
+    {
+        
+        $ids = $_POST['ids'];
+        foreach($ids as $id)
+        {
+            Case_::destroy($id);
+           Case_Client::where('case_id',$id)->delete();
+        Case_Document::where('case_id',$id)->delete();
+        Case_Lawyer::where('case_id',$id)->delete();
+        Case_Record::where('case_id',$id)->delete();
+        Case_techinical_Report::where('case_id',$id)->delete();
+        } 
+        return  redirect()->route('cases');
     }
 
 
@@ -217,7 +252,7 @@ if($request->hasFile('docs_upload')){
 
             Case_Record_Document::Create([
                 'record_id'=>$case_record->id,
-                'name'=>'',
+                'name'=>time().rand(111,999).'.'.$file->getClientOriginalExtension(),
                 'file'=>$fileNameToStore,
                 ]);
         }
@@ -356,5 +391,113 @@ if($request->hasFile('docs_upload')){
         $case->update(['archived'=>$state]);
         // dd($case);
         return redirect()->route('case_view',$id);
+    }
+
+
+    //////add sessions
+    public function add_session(Request $request , $id)
+    {
+        // dd($request->all());
+        $task=Tasks::where('case_id',$id)->orderBy('id', 'desc')->first();
+        if(count($task)!=0)
+        {
+            Tasks::create([
+            'case_id'=>$id,
+            'level'=>$request['degree'],
+            'roll'=>$request['roll'],
+            'expenses'=>$request['expenses'],
+            'start_datetime'=>$task->next_datetime,
+            'next_datetime'=>date('y-m-d h:s:i',strtotime($request['end_datetime'])),
+            'name'=>$request['name'],
+            'description'=>$request['description'],
+            'task_type_id'=>2,
+        ]);
+        }
+        else
+        {
+          Tasks::create([
+            'case_id'=>$id,
+            'level'=>$request['degree'],
+            'roll'=>$request['roll'],
+            'expenses'=>$request['expenses'],
+            'start_datetime'=>date('y-m-d h:s:i',strtotime($request['start_datetime'])),
+            'next_datetime'=>date('y-m-d h:s:i',strtotime($request['end_datetime'])),
+            'name'=>$request['name'],
+            'description'=>$request['description'],
+            'task_type_id'=>2,
+        ]);  
+        }
+        
+        // dd(Case_::find($id));
+        return redirect()->route('case_view',$id);
+    }
+
+
+    //add record
+    public function add_record(Request $request , $id)
+    {
+// dd($request->all());
+$case_record=Case_Record::Create([
+            'case_id'=>$id,
+            'record_number'=>$request['investigation_no'],
+            'record_type_id'=>$request['investigation_type'],
+            'record_date'=>date('y-m-d h:i:s',strtotime($request['record_date'])),
+            'created_by'=>\Auth::user()->id,
+        ]);
+if($request->has('record_documents')){
+    // dd($request['record_documents']);
+        foreach ($request->record_documents as  $key => $file) {
+            
+            $destinationPath='investigation_images';
+            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // dd($fileNameToStore);
+            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
+
+            Case_Record_Document::Create([
+                'record_id'=>$case_record->id,
+                'name'=>$file->getClientOriginalName(),
+                'file'=>$fileNameToStore,
+                ]);
+        }
+        }
+           return redirect()->route('case_view',$id);
+    }
+
+    ///destroy case record 
+    public function destroy_record($case_id,$id)
+    {
+        Case_Record::destroy( $id);
+        Case_Record_Document::where('record_id',$id)->delete();
+
+        return redirect()->route('case_view',$case_id);
+    }
+
+    public function download_document($id)
+    {
+        $document=Case_Record_Document::find($id);
+        $file= public_path()."/". $document->file;
+        // $split =explode('.',$document->file);
+        // $ext = end($split);
+
+    // $headers = array(
+    //           'Content-Type: application/text',
+    //         );
+
+    return response()->download($file, $document->name);
+    }
+
+    public function download_all_documents($id)
+    {
+        \File::delete(public_path().'/investigations.zip');
+        $zipper = new \Chumper\Zipper\Zipper;
+
+        $docuemnts=Case_Record::where('id',$id)->with('case_record_documents')->first();
+        foreach ($docuemnts->case_record_documents as  $document) {
+            $file=  $document->file;
+           $zipper->zip('investigations.zip')->add($file);
+           
+        }
+        $zipper->close();
+         return response()->download(public_path()."/investigations.zip");
     }
 }
