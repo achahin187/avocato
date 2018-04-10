@@ -45,9 +45,16 @@
             <div class="master_field">
                 <label class="master_label mandatory" for="license_type">كود الشركة</label>
                 <select name="company_code" class="master_input select2" id="company_code" style="width:100%;">
-                    
+                   
+                {{-- Defualt useless select option --}}
+                <option value="-1" selected disabled hidden>إختر كود الشركة</option>
+
                 @foreach ($companies as $company)
-                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}" {{ ($company->id == $user->companyParent->id) ? 'selected' : '' }}>{{ $company->code }}</option>
+                    @if ($user->companyParent)
+                        <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}" {{ ($company->id == $user->companyParent->id) ? 'selected' : '' }}>{{ $company->code }}</option>
+                    @else
+                        <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
+                    @endif
                 @endforeach
                 
                 </select>
@@ -63,7 +70,11 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="comp_name">اسم الشركة</label>
-            <input name="company_name" value="{{ $user->companyParent->name }}" class="master_input" type="text" readonly placeholder="اسم الشركة .." id="company_name">            
+                @if ($user->companyParent)
+                    <input name="company_name" value="{{ $user->companyParent->name }}" class="master_input" type="text" readonly placeholder="اسم الشركة .." id="company_name">            
+                @else
+                    <input name="company_name" value="{{ old('company_name') }}" class="master_input" type="text" readonly placeholder="اسم الشركة .." id="company_name">            
+                @endif
                 {{--  Error  --}}            
                 @if ($errors->has('company_name'))             
                     <span class="master_message color--fadegreen">{{ $errors->first('company_name') }}</span>       

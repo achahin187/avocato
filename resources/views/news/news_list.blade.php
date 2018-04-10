@@ -45,8 +45,7 @@
                 </div>
               </div>
               <div class="col-md-6">
-
-              {{--  End date  --}}
+                {{--  End date  --}}
                 <div class="master_field">
                   <label class="master_label mandatory" for="ID_No">تاريخ النشر الى </label>
                   <div class="bootstrap-timepicker">
@@ -58,7 +57,6 @@
                   @endif
                   
                 </div>
-              {{--  End date  --}}
               
               </div>
               <div class="col-md-6">
@@ -434,6 +432,14 @@
         });
 
       });
+
+      // hide alert message after 4 seconds => 4000 ms
+      window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 4000);
+
     });
   </script>
 
