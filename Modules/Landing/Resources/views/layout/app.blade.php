@@ -20,7 +20,7 @@
     <!-- =============== APP TITLE ===============-->
     <title>Avocato</title>
     <!-- =============== APP STYLES ===============-->
-    <link rel="stylesheet" href="{{asset('assets/css/style__rtl.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style__rtl.css')}}">
     <!-- =============== APP SCRIPT ===============-->
     <script src="js/modernizr.js"></script>
   </head>

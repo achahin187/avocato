@@ -40,7 +40,7 @@
               </div>
               <div class="pull-right">
                 <ul class="navbar-nav">
-                  <li><a class="bgcolor--fadeorange color--white bradius--small importance padding--small" href="index.html">العربية</a></li>
+                  <li><a class="bgcolor--fadeorange color--white bradius--small importance padding--small" href="{{route('landing','ar')}}">العربية</a></li>
                 </ul>
               </div>
             </div>
