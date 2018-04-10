@@ -14,4 +14,8 @@ class Courts extends Model
     {
         return $this->belongsTo('App\Geo_Cities','city_id');
     }
+    public function cases()
+    {
+        return $this->belongsTo('App\Case_', 'court_id');
+    }
 }

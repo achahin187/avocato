@@ -29,11 +29,15 @@
                   </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-md-9 col-md-6 col-sm-6 col-xs-12">
-                      <h4 class="right-text">الدعوى رقم 13265</h4><b>لسنة 2018</b>
+                      <h4 class="right-text">الدعوى رقم {{$case->claim_number}}</h4><b>لسنة {{$case->claim_year}}</b>
                     </div>
                     <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="../img/avatars/male.jpg"></div>
                     <div class="col-md-2 col-xs-3">
-                      <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">محمد احمد</a>
+                      <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">
+                        @foreach($case->lawyers as $lawyer)
+                        {{$lawyer->name}} &
+                        @endforeach
+                      </a>
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-lg-12"><br>
@@ -41,67 +45,65 @@
                         <div class="clearfix">
                           <div class="layer clearfix">
                             <div class="tck-info col-xs-12">
-                              <div class="col-xs-12"><span class="tiket-data light-color col-md-3 col-sm-6 col-xs-12"> محكمة شمال القاهرة</span><span class="tiket-data right light-color col-md-6 col-sm-6 col-xs-12">
+                              <div class="col-xs-12"><span class="tiket-data light-color col-md-3 col-sm-6 col-xs-12"> محكمه {{$case->courts->name}}</span><span class="tiket-data right light-color col-md-6 col-sm-6 col-xs-12">
                                   <div class="pull-right">
                                     تاريخ قيد الدعوى
-                                    10/10/2018
+                                    {{$case->claim_number}}
                                     &nbsp;<i class="fa fa-calendar"></i>
                                   </div></span></div>
                               <div class="clearfix"></div>
+                              <?php $i=1; ?>
+                              @foreach($case->clients as $client)
                               <hr>
-                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">اسم الموكل (1)</b>
-                                <div class="col-xs-9">محمد محسن عبدالشافي</div>
+                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">اسم الموكل ({{$i}})</b>
+                                <div class="col-xs-9">{{$client->name}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">صفته</b>
-                                <div class="col-xs-9">دكتور عظام بمستشفى أبو الريش</div>
+                                <div class="col-xs-9">{{Helper::localizations('case_client_roles','name',$client->pivot->case_client_role_id)}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">عنوانه</b>
-                                <div class="col-xs-9">3 شارع الثورة - القاهرة</div>
+                                <div class="col-xs-9">{{$client->address}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">هاتف</b>
-                                <div class="col-xs-9">0123456789</div>
+                                <div class="col-xs-9">{{$client->mobile}}</div>
                               </div>
                               <div class="clearfix"></div>
                               <hr>
-                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">اسم الموكل (2)</b>
-                                <div class="col-xs-9">محمد محسن عبدالشافي</div>
-                              </div>
-                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">صفته</b>
-                                <div class="col-xs-9">دكتور عظام بمستشفى أبو الريش</div>
-                              </div>
-                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">عنوانه</b>
-                                <div class="col-xs-9">3 شارع الثورة - القاهرة</div>
-                              </div>
-                              <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">هاتف</b>
-                                <div class="col-xs-9">0123456789</div>
-                              </div>
-                              <div class="clearfix"></div>
-                              <hr>
+                              {{$i++}}
+                             @endforeach
+
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">اسم الخصم</b>
-                                <div class="col-xs-9">محمد على صابر</div>
+                                <div class="col-xs-9">{{$case->contender_name}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">صفته</b>
-                                <div class="col-xs-9">دكتور عظام بمستشفى أبو الريش</div>
+                                <div class="col-xs-9">{{Helper::localizations('case_client_roles','name',$case->contender_case_client_role_id)}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">عنوانه</b>
-                                <div class="col-xs-9">3 شارع الثورة - القاهرة</div>
+                                <div class="col-xs-9">{{$case->contender_address}}</div>
                               </div>
                               <div class="tiket-data col-md-6 col-sm-6 col-xs-12"><b class="col-xs-3">محاميه</b>
-                                <div class="col-xs-9">ثابت ثروت</div>
+                                <div class="col-xs-9">{{$case->contender_laywer}}</div>
                               </div>
                               <div class="clearfix"></div>
                               <hr><span class="tiket-data col-xs-12"><b>الموضوع:</b>&nbsp;
-                                 لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبورأنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس أيا كوممودو كونسيكيوات . ديواس أيوتي أريري دولار إن ريبريهينديرأيت فوليوبتاتي فيلايت أيسسي كايلليوم دولار أيو فيجايت نيولا باراياتيور. أيكسسيبتيور ساينت أوككايكات كيوبايداتات نون بروايدينت ,سيونت ان كيولباكيو أوفيسيا ديسيريونتموليت انيم أيدي ايست لابوريوم.</span>
+                                {{$case->case_body}}
+                                 </span>
                               <div class="clearfix"></div>
                               <hr><span class="tiket-data col-md-4 col-sm-6 col-xs-12"><b>رقم الملف بالمكتب</b>&nbsp;
-                                12334</span><span class="tiket-data col-md-4 col-sm-6 col-xs-12"><b>رقم التوكيل</b>&nbsp;
+                                {{$case->office_file_number}}</span><span class="tiket-data col-md-4 col-sm-6 col-xs-12"><b>رقم التوكيل</b>&nbsp;
                                 12334</span><span class="tiket-data col-md-4 col-sm-6 col-xs-12"><b>رسوم الدعوى</b>&nbsp;
-                                12333 جنية</span>
+                                {{$case->claim_expenses}} جنية</span>
                             </div>
                             <div class="status-bar">
                               <div class="status">
                                 الحالة
-                                &nbsp;<span class="bgcolor--fadegreen color--black bradius--small importance padding--small">متداولة</span>
+                                &nbsp;<span class="bgcolor--fadegreen color--black bradius--small importance padding--small">
+                                  @if($case->archived == 0)
+                                  متداوله
+                                  @else
+                                  مغلقه
+                                  @endif
+                                </span>
                               </div>
                             </div>
                             <div class="clearfix"></div>
@@ -113,22 +115,33 @@
                     <div class="col-md-2 col-sm-6 col-xs-12"><a class="master-btn color--black bgcolor--fadegreen bradius--rounded bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-tag"></i><span>تغيير الحالة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <form role="form" action="{{URL('change_case_state/'.$case->id)}}" method="post" accept-charset="utf-8">
+                          
+                          <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
                             <div class="col-xs-12">
                               <h3>تغيير حالة القضية</h3>
-                              <div class="master_field">       
-                                <input class="icon" type="radio" name="icon" id="status1" checked="true">
+                              <div class="master_field">  
+                              @if($case->archived == 0 )     
+                                <input class="icon" type="radio" name="case_state" id="status1" checked="true" value="0">
                                 <label for="status1">متداولة </label>
-                                <input class="icon" type="radio" name="icon" id="status2">
+                                <input class="icon" type="radio" name="case_state" id="status2" value="1">
                                 <label for="status2">مغلقة</label>
+                                @else
+                                <input class="icon" type="radio" name="case_state" id="status1" value="0">
+                                <label for="status1">متداولة </label>
+                                <input class="icon" type="radio" name="case_state" id="status2" checked="true" value="1">
+                                <label for="status2">مغلقة</label>
+                                @endif
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">تغيير حالة القضية</button>
+                        <button class="remodal-confirm" type="submit">تغيير حالة القضية</button>
+                      </form>
                       </div>
                     </div>
                     <div class="col-md-2 col-sm-6 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadered bradius--small bshadow--0 btn-block" href="#case_attachment"><i class="fa fa-file"></i><span>عرض مستندات القضية</span></a>
@@ -261,7 +274,7 @@
                             </div>
                             <div class="clearfix"></div>
                           </div>
-                          <div class="col-md-2 col-sm-3 col-xs-12"><a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
+                          <div class="col-md-2 col-sm-3 col-xs-12">
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -383,114 +396,21 @@
                                 </tr>
                               </thead>
                               <tbody>
+
+                                @foreach($case->tasks as $task)
+                                
                                 <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
+                                  <td><span class="cellcontent">{{$task->level}}</span></td>
+                                  <td><span class="cellcontent"> {{$task->roll}}</span></td>
+                                  <td><span class="cellcontent">{{$task->start_datetime}}</span></td>
+                                  <td><span class="cellcontent">{{$task->name}}</span></td>
+                                  <td><span class="cellcontent">{{$task->description}} النص</span></td>
+                                  <td><span class="cellcontent">{{$task->expenses}}</span></td>
+                                  <td><span class="cellcontent">{{$task->next_datetime}}</span></td>
                                 </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">درجة اولى</span></td>
-                                  <td><span class="cellcontent"> 34</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">بعض النص بعض النص بعض النص</span></td>
-                                  <td><span class="cellcontent">10920</span></td>
-                                  <td><span class="cellcontent">12-12-2018</span></td>
-                                </tr>
+                                
+                               @endforeach
+
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -718,90 +638,15 @@
                                 </tr>
                               </thead>
                               <tbody>
+                                @foreach($case->case_records as $record)
                                 <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
+                                  <td><span class="cellcontent">{{$record->record_number}}</span></td>
+                                  <td><span class="cellcontent">{{$record->record_type_id}}</span></td>
+                                  <td><span class="cellcontent">{{$record->record_date}}</span></td>
+                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> {{$record->record_number}} &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
                                   <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent">4255</span></td>
-                                  <td><span class="cellcontent">محضر شرطة</span></td>
-                                  <td><span class="cellcontent">10-10-2010</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                                </tr>
+                                @endforeach
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

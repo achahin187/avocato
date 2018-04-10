@@ -187,6 +187,11 @@ return [
         'service_name'=> 'اسم الخدمه',
         'service_type'=>'نوع الخدمه',
         'service_expenses'=>'رسوم الخدمه',
+        'service_status'=>'حاله الخدمه',
+        'amount'=>'المبلغ',
+        'is_paid'=>'حاله السداد',
+        'reason'=>'السبب',
+        'service_date'=>'تاريخ الخدمه',
 
     ],
 

@@ -34,10 +34,32 @@ class Case_ extends Model
     {
         return $this->belongsTo('App\Cases_Types', 'case_type_id');
     }
+    public function governorates()
+    {
+        return $this->belongsTo('App\Geo_Governorates','geo_governorate_id');
+    }
+    public function cities()
+    {
+        return $this->belongsTo('App\Geo_Cities', 'geo_city_id');
+    }
+    public function courts()
+    {
+        return $this->belongsTo('App\Courts', 'court_id');
+    }
 
+    public function lawyers()
+    {
+        return $this->belongsToMany('App\Users','case_lawyers','case_id','lawyer_id');
+    }
 
+     public function tasks()
+    {
+        return $this->hasMany('App\Tasks', 'case_id');
+    }
 
-
-
+    public function clients()
+    {
+        return $this->belongsToMany('App\Users','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
+    } 
 
     }
