@@ -545,7 +545,7 @@ if($request->has('record_documents')){
 
     public function download_all_documents($id)
     {
-        \File::delete(public_path().'/investigations.zip');
+        // \File::delete(public_path().'/investigations.zip');
         $zipper = new \Chumper\Zipper\Zipper;
 
         $docuemnts=Case_Record::where('id',$id)->with('case_record_documents')->first();
@@ -555,6 +555,7 @@ if($request->has('record_documents')){
            
         }
         $zipper->close();
-         return response()->download(public_path()."/investigations.zip");
+        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true);
+         // return response()->download(public_path()."/investigations.zip");
     }
 }
