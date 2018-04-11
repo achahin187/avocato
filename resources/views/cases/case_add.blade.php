@@ -239,7 +239,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="circle">الدائرة</label>
-                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" ,>
+                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" >
                               <span class="master_message color--fadegreen">message</span>
                           </div>
                         </div>

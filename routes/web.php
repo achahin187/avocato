@@ -186,6 +186,8 @@ Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_a
 Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+
 
 
 Route::get('/services', 'ServicesController@index')->name('services');

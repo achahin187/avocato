@@ -148,8 +148,65 @@ class CasesController extends Controller
      */
     public function edit($id)
     {
-        return view('cases.case_edit');
+        $case=Case_::where('id',$id)->with(['case_records'=>function($q){
+            $q->with('case_record_documents');
+        }])->first();
+        $clients=Users::whereHas('rules', function ($query) {
+                                            $query->where('rule_id', '6');
+                                        })->get();
+         $cases_record_types=Case_Record_Type::all();
+         // dd($cases_record_types);
+        // dd($clients);
+         foreach ($cases_record_types as  $value) {
+            $value['name_ar']= Helper::localizations('case_report_types','name',$value->id);
+         }
+         $cases_types=Cases_Types::all();
+         $courts=Courts::all();
+         $governorates=Geo_Governorates::all();
+         $countries=Geo_Countries::all();
+         $cities=Geo_Cities::all();
+         $lawyers=Users::whereHas('rules', function ($query) {
+        $query->where('rule_id', '5');
+        })->with(['user_detail'=>function($q) {
+                 $q->orderby('join_date','desc');
+                 }])->get();
+        foreach($lawyers as $detail){
+            
+                if(count($detail->user_detail)!=0)
+                {
+                    $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+              
+                $detail['nationality']=$value;
+                }
+                else
+                {
+                    $detail['nationality']='';
+                 }
+                }
+        
+          // dd($cases_record_types);
+      $roles=Case_Client_Role::all();
+
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+        // dd($case->lawyers->toArray());
+        return view('cases.case_edit')->with('case',$case)->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles]);
     }
+
+
+
+   public function edit_case(Request $request , $id)
+   {
+      
+
+
+      dd($request->all());
+   }
+
+
 
     /**
      * Update the specified resource in storage.
