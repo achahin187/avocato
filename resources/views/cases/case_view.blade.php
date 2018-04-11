@@ -324,34 +324,38 @@
                             <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_3"><i class="fa fa-plus"></i><span>إضافة</span></a>
                               <div class="remodal-bg"></div>
                               <div class="remodal" data-remodal-id="popupModal_3" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <form method="post" action="{{URL('case_add_session/'.$case->id)}}" enctype="multipart/form-data" accept-charset="utf-8">
+                                        {{ csrf_field() }}
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
+
                                   <div class="row">
                                     <div class="col-xs-12">
                                       <h3>إضافة في الأجندة القضائية</h3>
+                                      
                                       <div class="col-md-4 col-sm-6 col-xs-12">
                                         <div class="master_field">
                                           <label class="master_label" for="degree">الدرجة</label>
-                                          <input class="master_input" type="text" placeholder="الدرجة" id="degree"><span class="master_message color--fadegreen">message</span>
+                                          <input class="master_input" type="text" placeholder="الدرجة" id="degree" name="degree"><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-md-4 col-sm-6 col-xs-12">
                                         <div class="master_field">
-                                          <label class="master_label" for="role">رول</label>
-                                          <input class="master_input" type="number" placeholder="رول" id="role"><span class="master_message color--fadegreen">message</span>
+                                          <label class="master_label" for="roll">رول</label>
+                                          <input class="master_input" type="number" placeholder="رول" id="roll" name="roll"><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-md-4 col-sm-6 col-xs-12">
                                         <div class="master_field">
-                                          <label class="master_label" for="fees">رسوم الدعوى</label>
-                                          <input class="master_input" type="number" placeholder="رسوم" id="fees"><span class="master_message color--fadegreen">message</span>
+                                          <label class="master_label" for="expenses">رسوم الدعوى</label>
+                                          <input class="master_input" type="number" placeholder="رسوم" id="expenses" name="expenses"><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-md-6 col-sm-6 col-xs-12">
                                         <div class="master_field">
                                           <label class="master_label mandatory">تاريخ الجلسة</label>
                                           <div class="bootstrap-timepicker">
-                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة" name="start_datetime">
                                           </div><span class="master_message color--fadegreen">message content</span>
                                         </div>
                                       </div>
@@ -359,28 +363,30 @@
                                         <div class="master_field">
                                           <label class="master_label mandatory">تاريخ الجلسة القادمة</label>
                                           <div class="bootstrap-timepicker">
-                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة لقادمة">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة لقادمة" name="end_datetime">
                                           </div><span class="master_message color--fadegreen">message content</span>
                                         </div>
                                       </div>
                                       <div class="col-xs-12">
                                         <div class="master_field">
                                           <label class="master_label" for="action_done"> ما تم فيها من دفاع و طلبات</label>
-                                          <textarea class="master_input" name="textarea" id="action_done" placeholder=" ما تم فيها من دفاع و طلبات"></textarea><span class="master_message color--fadegreen">message</span>
+                                          <textarea class="master_input" name="name" id="action_done" placeholder=" ما تم فيها من دفاع و طلبات"></textarea><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-xs-12">
                                         <div class="master_field">
                                           <label class="master_label" for="decision">القرار</label>
-                                          <textarea class="master_input" name="textarea" id="decision" placeholder=" القرار"></textarea><span class="master_message color--fadegreen">message</span>
+                                          <textarea class="master_input" name="description" id="decision" placeholder=" القرار"></textarea><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="clearfix"></div>
+                                    
                                     </div>
                                   </div>
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                                <button class="remodal-confirm" type="submit">حفظ</button>
+                                </form>
                               </div>
                             </div>
                             <table class="table-1">
@@ -580,6 +586,8 @@
                             <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#new_investigation"><i class="fa fa-plus"></i><span>إضافة</span></a>
                               <div class="remodal-bg"></div>
                               <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <form action="{{URL('case_add_record/'.$case->id)}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
                                   <div class="row">
@@ -588,15 +596,16 @@
                                       <div class="col-xs-4">
                                         <div class="master_field">
                                           <label class="master_label" for="investigation_no">رقم المحضر</label>
-                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-xs-4">
                                         <div class="master_field">
                                           <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
-                                          <select class="master_input select2" id="investigation_type" style="width:100%;">
-                                            <option>شرطة</option>
-                                            <option>نيابة</option>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
                                           </select><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
@@ -604,7 +613,7 @@
                                         <div class="master_field">
                                           <label class="master_label mandatory">تاريخ</label>
                                           <div class="bootstrap-timepicker">
-                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date">
                                           </div><span class="master_message color--fadegreen">message content</span>
                                         </div>
                                       </div>
@@ -614,7 +623,7 @@
                                           <div class="file-upload">
                                             <div class="file-select">
                                               <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                              <input class="chooseFile" type="file" name="chooseFile" id="docs_upload">
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="docs_upload" multiple>
                                             </div>
                                           </div><span class="master_message color--fadegreen">message</span>
                                         </div>
@@ -624,7 +633,8 @@
                                   </div>
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                                <button class="remodal-confirm" type="submit">حفظ</button>
+                              </form>
                               </div>
                             </div>
                             <table class="table-1">
@@ -639,12 +649,41 @@
                               </thead>
                               <tbody>
                                 @foreach($case->case_records as $record)
-                                <tr>
+                                <tr data-record-id={{$record->id}}>
                                   <td><span class="cellcontent">{{$record->record_number}}</span></td>
                                   <td><span class="cellcontent">{{$record->record_type_id}}</span></td>
                                   <td><span class="cellcontent">{{$record->record_date}}</span></td>
-                                  <td><span class="cellcontent"><a href= #investigation_attachment ,  class= "action-btn bgcolor--main color--white "> {{$record->record_number}} &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href="#investigation_attachment/{{$record->id}}"  ,  class= "action-btn bgcolor--main color--white "> &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
                                   <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment/{{$record->id}}" style="display: none;"><span></span></a>
+                            <div class="remodal-bg"></div>
+                            <div class="remodal" data-remodal-id="investigation_attachment/{{$record->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              <form action="{{URL('download_all_documents/'.$record->id)}}" method="get">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <h3>الملفات المرفقة للتحقيق بتاريخ 12/12/2018</h3>
+                                    <ul class="mailbox-attachments clearfix right-text">
+                                      @foreach($record->case_record_documents as $document)
+                                      <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($document->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
+                                            {{$document->name}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_document/'.$document->id  )}}'"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                      @endforeach
+                                      
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              <button class="remodal-confirm" >تحميل الكل</button>
+                            </form>
+                            </div>
+                          
+                          
                                 </tr>
                                 @endforeach
                               </tbody>
@@ -805,7 +844,7 @@
                                   </div>
                                 </div>
                               </div>
-                            </div><a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
+                            </div>{{-- <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="investigation_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -832,9 +871,9 @@
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
-                            </div>
+                            </div>--}}
                           </div>
-                          <div class="clearfix"></div>
+                          <div class="clearfix"></div> 
                         </div>
                       </li>
                     </ul>
@@ -843,3 +882,42 @@
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
                       @endsection
+
+
+      @section('js')
+      <script type="text/javascript">
+        $('.btn-warning-cancel').click(function(){
+      var record_id = $(this).closest('tr').attr('data-record-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        // alert();
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('case_record_destroy/$case->id')}}'+'/'+record_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-record-id='+record_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+
+      </script>
+      @endsection

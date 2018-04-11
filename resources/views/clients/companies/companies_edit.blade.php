@@ -114,7 +114,13 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_trade_num">رقم السجل التجارى</label>
-            <input name="commercial_registration_number" value="{{ $company->user_company_detail->commercial_registration_number }}" class="master_input" type="text" placeholder="رقم السجل التجارى .." id="comp_trade_num">
+            
+            @if ($company->user_company_detail)
+              <input name="commercial_registration_number" value="{{ $company->user_company_detail->commercial_registration_number }}" class="master_input" type="text" placeholder="رقم السجل التجارى .." id="comp_trade_num">
+            @else
+              <input name="commercial_registration_number" value="{{ old('commercial_registration_number') }}" class="master_input" type="text" placeholder="رقم السجل التجارى .." id="comp_trade_num">
+            @endif
+
             {{--  Error  --}}
             @if ($errors->has('commercial_registration_number'))
               <span class="master_message color--fadegreen">{{ $errors->first('commercial_registration_number') }}</span>
@@ -150,7 +156,13 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="fax_num">رقم الفاكس</label>
-            <input name="fax" value="{{ $company->user_company_detail->fax }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num">
+            
+            @if ($company->user_company_detail)
+              <input name="fax" value="{{ $company->user_company_detail->fax }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num">
+            @else
+              <input name="fax" value="{{ old('fax') }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num">
+            @endif
+            
             {{--  Error  --}}
             @if ($errors->has('fax'))
               <span class="master_message color--fadegreen">{{ $errors->first('fax') }}</span>
@@ -162,7 +174,12 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_website">موقع الشركة علي الانترنت</label>
-            <input name="website" value="{{ $company->user_company_detail->website }}" class="master_input" type="text" placeholder="موقع الشركة على الانترنت .." id="comp_website">
+            
+            @if ($company->user_company_detail)
+              <input name="website" value="{{ $company->user_company_detail->website }}" class="master_input" type="text" placeholder="موقع الشركة على الانترنت .." id="comp_website">
+            @else
+              <input name="website" value="{{ old('website') }}" class="master_input" type="text" placeholder="موقع الشركة على الانترنت .." id="comp_website">
+             @endif
             {{--  Error  --}}
             @if ($errors->has('website'))
               <span class="master_message color--fadegreen">{{ $errors->first('website') }}</span>
@@ -174,7 +191,12 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="rep_name">اسم الممثل القانونى للشركة</label>
-            <input name="legal_representative_name" value="{{ $company->user_company_detail->legal_representative_name }}" class="master_input" type="text" placeholder="اسم الممثل القانونى للشركة .." id="rep_name">
+            
+            @if ($company->user_company_detail)
+              <input name="legal_representative_name" value="{{ $company->user_company_detail->legal_representative_name }}" class="master_input" type="text" placeholder="اسم الممثل القانونى للشركة .." id="rep_name">
+            @else
+              <input name="legal_representative_name" value="{{ old('legal_representative_name') }}" class="master_input" type="text" placeholder="اسم الممثل القانونى للشركة .." id="rep_name">
+            @endif
             {{--  Error  --}}
             @if ($errors->has('legal_representative_name'))
               <span class="master_message color--fadegreen">{{ $errors->first('legal_representative_name') }}</span>
@@ -198,7 +220,12 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="rep_tel">رقم تليفون الممثل القانونى للشركة</label>
-            <input name="legal_representative_mobile" value="{{ $company->user_company_detail->legal_representative_mobile }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel">
+            @if ($company->user_company_detail)
+              <input name="legal_representative_mobile" value="{{ $company->user_company_detail->legal_representative_mobile }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel">
+            @else
+              <input name="legal_representative_mobile" value="{{ old('legal_representative_mobile') }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel">
+            @endif
+            
             {{--  Error  --}}
             @if ($errors->has('legal_representative_mobile'))
               <span class="master_message color--fadegreen">{{ $errors->first('legal_representative_mobile') }}</span>
