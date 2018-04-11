@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use Excel;
 use Session;
+use App\Exports\UsersExport;
 
 class UsersListController extends Controller
 {
@@ -43,118 +44,23 @@ class UsersListController extends Controller
 
     public function excel()
     {   
-        $usersArray[]=['رقم','اسم الموظف','البريد الإلكترونى','نوع العضويه','هاتف','فعال','تاريخ التسجيل','آخر مشاركه'];
-        if(isset($_GET['ids'])){
-           $ids = $_GET['ids'];
-           foreach($ids as $id)
-           {
-            $user = Users::find($id,['id','name','email','phone','is_active','created_at','last_login']);
-            if($user->is_active)
-            {
-                $is_active='فعال';
-            }
-            else{
-                $is_active='غير فعال';
-            }
-            foreach($user->rules as $rule){
-                if($rule->id!=13)
-                    $role=$rule->name_ar;
-            }
-            $usersArray[] = array(
-                'id' => $user->id ,
-                'name' => $user->name ,
-                'email' => $user->email,
-                'role'=>$role,
-                'phone' => $user->phone,
-                'is_active'=> $is_active,
-                'created_at' => $user->created_at,
-                'last_login'=>$user->last_login
-            );
-        }    
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'users'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new UsersExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new UsersExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
     }
-    elseif($_GET['filters']!=''){
-       $filters = json_decode($_GET['filters']);
-       foreach($filters as $filter)
-       {
-        $user = Users::find($filter,['id','name','email','phone','is_active','created_at','last_login']);
-            if($user->is_active)
-            {
-                $is_active='فعال';
-            }
-            else{
-                $is_active='غير فعال';
-            }
-            foreach($user->rules as $rule){
-                if($rule->id!=13)
-                    $role=$rule->name_ar;
-            }
-            $usersArray[] = array(
-                'id' => $user->id ,
-                'name' => $user->name ,
-                'email' => $user->email,
-                'role'=>$role,
-                'phone' => $user->phone,
-                'is_active'=> $is_active,
-                'created_at' => $user->created_at,
-                'last_login'=>$user->last_login
-            );
-    }    
-}
-else{
-    $users = Users::whereHas('rules', function($q){
-        $q->whereIn('name',['super admin','admin','data entry','call center']);
-    })->get();
-    foreach($users as $user){
-        if($user->is_active)
-            {
-                $is_active='فعال';
-            }
-            else{
-                $is_active='غير فعال';
-            }
-            foreach($user->rules as $rule){
-                if($rule->id!=13)
-                    $role=$rule->name_ar;
-            }
-            $usersArray[] = array(
-                'id' => $user->id ,
-                'name' => $user->name ,
-                'email' => $user->email,
-                'role'=>$role,
-                'phone' => $user->phone,
-                'is_active'=> $is_active,
-                'created_at' => $user->created_at,
-                'last_login'=>$user->last_login
-            );
-  }   
-}
-
-        $myFile= Excel::create('المستخدمين', function($excel) use($usersArray) {
-                            // Set the title
-            $excel->setTitle('المستخدمين');
-
-                            // Chain the setters
-            $excel->setCreator('PentaValue')
-            ->setCompany('PentaValue');
-                            // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول المستخدمين');
-
-            $excel->sheet('المستخدمين', function($sheet) use($usersArray) {
-                $sheet->setRightToLeft(true); 
-                $sheet->getStyle( "A1:H1" )->getFont()->setBold( true );
-                        // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                        // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-                        // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-                $sheet->fromArray($usersArray, null, 'A1', false, false);
-
-            });
-});
-        $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "المستخدمين".date('Y_m_d'), //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-       );
-        return response()->json($response);
+    else{
+      Excel::store((new UsersExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
     }
 
         public function filter(Request $request){

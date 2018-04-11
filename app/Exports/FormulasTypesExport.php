@@ -2,13 +2,13 @@
 
 namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Cases_Types;
+use App\Formula_Contract_Types;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 
-class CasesExport implements FromCollection,WithEvents
+class FormulasTypesExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
 	public function __construct($ids=null){
@@ -23,7 +23,7 @@ class CasesExport implements FromCollection,WithEvents
         return [
             AfterSheet::class    => function(AfterSheet $event) {
 
-                $event->sheet->Bolding('A1:B1');
+                $event->sheet->Bolding('A1:C1');
                 $event->sheet->Right();
             }
         ];
@@ -31,13 +31,13 @@ class CasesExport implements FromCollection,WithEvents
     
     public  function collection()
     {   
-        $casesArray = array(['الرقم','النوع']) ;
+        $contractsArray = array(['رقم','التصنيف الرئيسي','التصنيف الفرعي']) ;
         if(is_null($this->ids)){
 
-        $cases = Cases_Types::all('id','name');
-        foreach($cases as $case)
+        $subs = Formula_Contract_Types::whereNotNull('parent_id')->get(['id','name','parent_id']);
+        foreach($subs as $sub)
         {
-            array_push($casesArray,[$case->id,$case->name]);
+            array_push($contractsArray,[$sub->id,$sub->parent->name,$sub->name]);
         }
 
         }
@@ -46,12 +46,12 @@ class CasesExport implements FromCollection,WithEvents
         $selects = $this->ids;
          foreach($selects as $select)
            {
-            $case = Cases_Types::find($select,['id','name']);
-            array_push($casesArray,[$case->id,$case->name]);
+            $sub = Formula_Contract_Types::find($select,['id','name','parent_id']);;
+            array_push($contractsArray,[$sub->id,$sub->parent->name,$sub->name]);
             } 
         }
         
-        return collect($casesArray);
+        return collect($contractsArray);
     }
 
 }
