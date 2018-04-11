@@ -200,6 +200,7 @@ Route::get('/services_create', 'ServicesController@create')->name('services_crea
 Route::post('/services_store', 'ServicesController@store')->name('services_store');
 Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');

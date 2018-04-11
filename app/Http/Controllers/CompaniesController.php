@@ -370,7 +370,6 @@ class CompaniesController extends Controller
             return redirect()->back()->withInput();
         }
         
-        // TODO: national_id missing
         // push into users_details
         try {
             $user_details = User_Details::where('user_id', $user->id)->first();
@@ -384,6 +383,16 @@ class CompaniesController extends Controller
             $user_details->save();
         } catch(Exception $ex) {
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // convert user to individual by changing his/her user rule to 9
+        try {
+            $user_rule = Users_Rules::where('user_id', $user->id)->where('rule_id', '!=', 6)->first();
+            $user_rule->rule_id = 9;
+            $user_rule->save();
+        } catch (Exception $ex) {
+            Session::flash('warning', 'حدث خطأ عند تعديل بيانات العميل #8');
             return redirect()->back()->withInput();
         }
 
@@ -406,7 +415,13 @@ class CompaniesController extends Controller
 
         // push into user_company_detail
         try {
-            $ucd = User_Company_Details::where('user_id', $user->id)->first();
+            // check if the user already has a relation with user_company_details table.
+            if( User_Company_Details::where('user_id', $user->id)->first() ) {
+                $ucd = User_Company_Details::where('user_id', $user->id)->first();
+            } else {
+                $ucd = new User_Company_Details;
+            }
+            
             $ucd->user_id   = $user->id;
             $ucd->commercial_registration_number = $request->commercial_registration_number;
             $ucd->fax     = $request->fax;
@@ -415,6 +430,7 @@ class CompaniesController extends Controller
             $ucd->legal_representative_mobile    = $request->legal_representative_mobile;
             $ucd->save();
         } catch(Exception $ex) {
+            dd($ex);
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
         }

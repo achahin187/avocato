@@ -9,6 +9,9 @@ use App\Task_Payment_Statuses;
 use App\Entity_Localizations;
 use App\Task_Charges;
 use Validator;
+use App\Exports\ServicesExport;
+use Excel;
+use Session;
 
 class ServicesController extends Controller
 {
@@ -184,6 +187,29 @@ class ServicesController extends Controller
         return redirect()->route('services')->with('success','تم تعديل بيانات الخدمه بنجاح');
     }
 
+        public function excel()
+    { 
+
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'services'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new ServicesExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new ServicesExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+      Excel::store((new ServicesExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+
+    }
+
     public function filter(Request $request)
     {
         if($request->filled('payment_status'))
@@ -192,6 +218,20 @@ class ServicesController extends Controller
         $data['services'] = Tasks::all();
     
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+
+                    foreach($data['services'] as $service)
+            {
+                $filter_ids[]=$service->id;
+            }
+            if(!empty($filter_ids))
+            {
+                Session::flash('filter_ids',$filter_ids);
+            }
+            else{
+                $filter_ids[]=0;
+                Session::flash('filter_ids',$filter_ids);
+            }
+
         return view('services.services',$data);
     }
 
