@@ -400,15 +400,16 @@
                                       <div class="col-xs-4">
                                         <div class="master_field">
                                           <label class="master_label" for="investigation_no">رقم المحضر</label>
-                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
                                       <div class="col-xs-4">
                                         <div class="master_field">
                                           <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
-                                          <select class="master_input select2" id="investigation_type" style="width:100%;">
-                                            <option>شرطة</option>
-                                            <option>نيابة</option>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
                                           </select><span class="master_message color--fadegreen">message</span>
                                         </div>
                                       </div>
@@ -416,17 +417,17 @@
                                         <div class="master_field">
                                           <label class="master_label mandatory">تاريخ</label>
                                           <div class="bootstrap-timepicker">
-                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date" id="investigation_date">
                                           </div><span class="master_message color--fadegreen">message content</span>
                                         </div>
                                       </div>
                                       <div class="col-md-12">
                                         <div class="master_field">
-                                          <label class="master_label" for="docs_upload">إرفاق ملفات</label>
+                                          <label class="master_label" for="record_documents">إرفاق ملفات</label>
                                           <div class="file-upload">
                                             <div class="file-select">
                                               <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                              <input class="chooseFile" type="file" name="chooseFile" id="docs_upload">
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="record_documents" multiple>
                                             </div>
                                           </div><span class="master_message color--fadegreen">message</span>
                                         </div>
@@ -436,7 +437,7 @@
                                   </div>
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                                <button class="remodal-confirm" onclick="add_record({{$case->id}})">حفظ</button>
                               </div>
                             </div>
                             <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
@@ -999,5 +1000,51 @@
     });
     });
 
+
+
+
+    function add_record(case_id)
+    {
+      var record_data =[];
+      record_data['investigation_no']= $('#investigation_no').val();
+      record_data['investigation_type']= $('#investigation_type').val();
+      record_data['investigation_date']= $('#investigation_date').val();
+      
+       // record_data['record_documents']= $('#record_documents').val();
+        $('input[name="record_documents"]').each(function(){
+           record_data['record_documents'] = $(this).val();
+       });
+// alert(record_data['investigation_no']);
+      $.ajax({
+           type:'POST',
+           url:'{{url('add_record_ajax/'.$case->id)}}',
+
+           data:{'investigation_no':record_data['investigation_no'],'investigation_type':record_data['investigation_type'],'investigation_date':record_data['investigation_date'],'record_documents':record_data['record_documents'],'_token':"{{ csrf_token() }}"},
+           success:function(data){
+              alert(data);
+        // $this.html(data);
+      // alert(data);
+          },
+           error: function (jqXHR, exception) {
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        $('#post').html(msg);
+    },
+        });
+    }
     </script>
     @endsection

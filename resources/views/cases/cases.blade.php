@@ -397,7 +397,7 @@
                                   <td><span class="cellcontent">{{$case->claim_date}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
-                                  <td><span class="cellcontent"><a href="{{URL('case_view/'.$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href="{{URL('case_archive_view/'.$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 @endif
                                 @endforeach
