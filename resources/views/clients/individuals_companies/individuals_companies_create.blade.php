@@ -53,12 +53,12 @@
               <option value="-1" selected disabled hidden>إختر كود الشركة</option>
 
               @foreach ($companies as $company)
-                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
+                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->full_name .' - '. $company->code }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('company_code'))
+            @if ($errors->has('company_code'))
               <span class="master_message color--fadegreen">{{ $errors->first('company_code') }}</span>
             @endif
           </div>

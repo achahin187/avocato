@@ -3,6 +3,7 @@
 namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities;
+use App\Users;
 
 class Helper {
 
@@ -60,5 +61,40 @@ class Helper {
       }
      
         
+    }
+
+    /**
+     *  @param  $userId     user id
+     *  @return a record of a single user
+     * 
+     *  how to use: 
+     *  
+     *  use Helper;
+     * 
+     *  Helper::getUserDetails(123);    // get this user record
+     */
+    public static function getUserDetails($userId) {
+        return Users::find($userId);
+    }
+
+    /**
+     *  @param  $userRulesArray     array of users rules
+     * 
+     *  @return records of users of specific rules
+     * 
+     *  how to use: 
+     * ------------
+     *  example: in controller use the following... 
+     * 
+     *  use Helper;
+     * 
+     *  $arrayOfRules = [8, 9];
+     *  Helper::getUsersBasedOnRules($arrayOfRules);    // get all users of type individual and company clients
+     * 
+     */
+    public static function getUsersBasedOnRules($userRulesArray) {
+        return Users::whereHas('rules', function($query) use($userRulesArray) {
+            $query->whereIn('rule_id', $userRulesArray);
+        })->get();
     }
 }

@@ -2,6 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Session;
+use Helper;
+
+use App\Record;
+use App\Users;
 use Illuminate\Http\Request;
 
 class RecordsController extends Controller
@@ -13,7 +19,7 @@ class RecordsController extends Controller
      */
     public function index()
     {
-        return view('records.records');
+        return view('records.records')->with('records', Record::all());
     }
 
     /**
@@ -23,7 +29,8 @@ class RecordsController extends Controller
      */
     public function create()
     {
-        return view('records.records_create');
+        $clients = Helper::getUsersBasedOnRules([7, 8, 9, 10]);     // get users of type: mobile, individual, company and individual-company clients.
+        return view('records.records_create', compact(['clients']));
     }
 
     /**
@@ -34,7 +41,39 @@ class RecordsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+
+        $this->validate($request, [
+            'number' => 'required',
+            'pen'    => 'required',
+            'name'   => 'required',
+            'delivery_date' => 'required',
+            'delivered_at'  => 'required',
+            'session_date'  => 'required',
+            'notes'  => 'required'
+        ]);
+        
+        try {
+            $record = new Record;
+            $record->number = $request->number;
+            $record->pen    = $request->pen;
+            $record->client_id      = $request->code;
+            $record->delivery_date  = date('Y-m-d', strtotime($request->delivery_date));
+            $record->delivered_at   = date('Y-m-d', strtotime($request->delivered_at));
+            $record->session_date   = date('Y-m-d', strtotime($request->session_date));
+            $record->notes  = $request->notes;
+            $record->created_by     = Auth::user()->id;
+            $record->save();
+
+        } catch (Exception $ex) {
+            dd($ex);
+            Session::flash('warning', 'حدث خطأ ما! برجاء التحقق من البيانات والمحاولة مرة اخري');
+            return redirect()->back()->withInput();
+        }
+        
+        // redirect with success
+        Session::flash('success', 'تم الاضافة بنجاح');
+        return redirect('/records');
     }
 
     /**
