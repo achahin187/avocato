@@ -12,6 +12,8 @@ use Validator;
 use App\Exports\ServicesExport;
 use Excel;
 use Session;
+use App\Case_Techinical_Report_Document;
+use App\Case_Techinical_Report;
 
 class ServicesController extends Controller
 {
@@ -67,6 +69,8 @@ class ServicesController extends Controller
         $service->name = $request->service_name;
         $service->task_payment_status_id = $request->service_type;
         $service->expenses = $request->service_expenses;
+        $service->start_datetime = date('Y-m-d');
+        $service->end_datetime = date('Y-m-d');
         $service->task_type_id = 3;
         $service->task_status_id = 1;
         $service->save();
@@ -86,6 +90,7 @@ class ServicesController extends Controller
         $data['charges'] = Task_Charges::where('task_id',$id)->get();
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
+        $data['reports'] = Case_Techinical_Report::where('item_id',$id)->where('technical_report_type_id',2)->get();
         return view('services.services_show',$data);
     }
 
@@ -243,8 +248,9 @@ class ServicesController extends Controller
      */
     public function destroy($id)
     {
-        $user = Tasks::find($id);
-        $user->delete();
+      Tasks::find($id)->delete();
+      Task_Charges::where('task_id',$id)->delete();
+
     }
 
     public function destroy_all()
@@ -252,7 +258,38 @@ class ServicesController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
         {
-            Tasks::find($id)->delete();
+          Tasks::find($id)->delete();
+          Task_Charges::where('task_id',$id)->delete();
         } 
     }
+
+        public function download_document($id)
+    {
+        $document = Case_Techinical_Report_Document::find($id);
+        $file= public_path()."/".$document->file;
+
+    return response()->download($file, $document->name);
+    }
+
+    public function download_all_documents($id)
+    {
+        // \File::delete(public_path().'/technical_reports.zip');
+        $zipper = new \Chumper\Zipper\Zipper;
+
+        $report = Case_Techinical_Report::where('id',$id)->first();
+        foreach ($report->case_tachinical_report_documents as  $document) {
+            $file=  $document->file;
+           $zipper->zip('technical_reports.zip')->add($file);
+           
+        }
+        $zipper->close();
+         return response()->download(public_path()."/technical_reports.zip")->deleteFileAfterSend(true);
+    }
+
+        public function lawyer($id)
+    {
+      return view('services.services_lawyer');
+    }
+
+
 }

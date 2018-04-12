@@ -202,6 +202,10 @@ Route::get('/services_excel', 'ServicesController@excel')->name('services_excel'
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
+Route::get('/report_download_document/{id}', 'ServicesController@download_document')->name('report_download_document');
+Route::get('/report_download_all_documents/{id}', 'ServicesController@download_all_documents')->name('report_download_all_documents');
+Route::get('/services_lawyer/{id}', 'ServicesController@lawyer')->name('services_lawyer');
+
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
