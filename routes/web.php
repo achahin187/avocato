@@ -211,13 +211,13 @@ Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_e
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 
+
 Route::get('/records', 'RecordsController@index')->name('records');
-Route::get('/records_create', 'RecordsController@create')->name('records_create');
-
-
-
-
-
+Route::get('/records/create', 'RecordsController@create')->name('records.add');
+Route::post('/records/store', 'RecordsController@store')->name('record.store');
+Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

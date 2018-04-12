@@ -545,22 +545,10 @@ class CompaniesController extends Controller
                             ->withInput();
         }
 
-        // Replace any empty time value with a default value
-        $startfrom = $endfrom = '1970-01-01 00:00:00';
-        $startto   = $endto   = '2030-01-01 00:00:00';
-     
-        if($request->start_date_from) {
-            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
-        }
-        if($request->start_date_to) {
-            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
-        }
-        if($request->end_date_from) {
-            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
-        }
-        if($request->end_date_to) {
-            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
-        }
+        $startfrom = Helper::checkDate($request->start_date_from, 1);
+        $startto   = Helper::checkDate($request->start_date_to, 2);
+        $endfrom   = Helper::checkDate($request->end_date_from, 1);
+        $endto     = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
         $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')
