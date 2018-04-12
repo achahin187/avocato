@@ -38,81 +38,146 @@
     <div class="col-lg-12">
         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
         <div class="full-table">
-            <div class="remodal-bg">
-            <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                <div>
-                <h2 id="modal1Title">فلتر</h2>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="record_pen"> قلم المحضرين </label>
-                    <select class="master_input select2" id="record_pen" multiple="multiple" data-placeholder="قلم المحضرين " style="width:100%;" ,>
-                        <option>عابدين</option>
-                        <option>الدقى</option>
-                    </select><span class="master_message color--fadegreen">message content</span>
+
+                <div class="remodal-bg">
+                <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                    <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                    <div>
+                        {{-- Filter form --}}
+                        <form action="{{ route('records.filter') }}" method="POST">
+                            {{ csrf_field() }}
+                            
+                            <h2 id="modal1Title">فلتر</h2>
+
+                            {{-- Pen --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="record_pen"> قلم المحضرين </label>
+                                    <select name="pen[]" class="master_input select2" id="record_pen" multiple="multiple" data-placeholder="قلم المحضرين " style="width:100%;" ,>
+                                        
+                                        @if (isset($pens) && !empty($pens))
+                                            @foreach ($pens as $pen)
+                                                <option value="{{ $pen->pen }}">{{ $pen->pen }}</option>
+                                            @endforeach
+                                        @endif
+
+                                    </select>
+                                    @if ($errors->has('pen'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('pen') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Name --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="client_name">اسم الموكل</label>
+                                    <input name="name" value="{{ old('name') }}" class="master_input" type="text" placeholder="اسم الموكل" id="client_name">
+                                    
+                                    @if($errors->has('name'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('name') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Delivery date from --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="date_from">تاريخ التسليم من</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="dd_from" value="{{ old('dd_from') }}" class="datepicker master_input" type="text" placeholder="تاريخ التسليم" id="date_from">
+                                    </div>
+
+                                    @if($errors->has('dd_from'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('dd_from') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Delivery date to --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="date_to">تاريخ التسلم الى</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="dd_to" value="{{ old('dd_to') }}" class="datepicker master_input" type="text" placeholder="تاريخ التسلم" id="date_to">
+                                    </div>
+
+                                    @if($errors->has('dd_to'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('dd_to') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Session date from --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="session_date_from">تاريخ الجلسة من</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="sd_from" value="{{ old('sd_from') }}" class="datepicker master_input" type="text" placeholder="تاريخ الجلسة" id="session_date_from">
+                                    </div>
+
+                                    @if($errors->has('sd_from'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('sd_from') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Session date to --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="session_date_to">تاريخ الجلسة الى</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="sd_to" value="{{ old('sd_to') }}" class="datepicker master_input" type="text" placeholder="تاريخ الجلسة" id="session_date_to">
+                                    </div>
+
+                                    @if($errors->has('sd_to'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('sd_to') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Delivered-at from --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="delivery_date_from">تاريخ الإستلام من</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="da_from" value="{{ old('da_from') }}" class="datepicker master_input" type="text" placeholder="تاريخ التسليم" id="delivery_date_from">
+                                    </div>
+
+                                    @if($errors->has('da_from'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('da_from') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Delivered-at to --}}
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="master_field">
+                                    <label class="master_label mandatory" for="delivery_date_to">تاريخ الإستلام الى</label>
+                                    <div class="bootstrap-timepicker">
+                                        <input name="da_to" value="{{ old('da_to') }}" class="datepicker master_input" type="text" placeholder="تاريخ التسلم" id="delivery_date_to">
+                                    </div>
+
+                                    @if($errors->has('da_to'))
+                                        <span class="master_message color--fadegreen">{{ $errors->first('da_to') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                            <button type="submit" class="remodal-confirm">فلتر</button>
+                        </form>
+                        {{-- End filter form --}}
+
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="client_name">اسم الموكل</label>
-                    <input class="master_input" type="text" placeholder="اسم الموكل" id="client_name"><span class="master_message color--fadegreen">message</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="date_from">تاريخ التسليم من</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ التسليم" id="date_from">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="date_to">تاريخ التسلم الى</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ التسلم" id="date_to">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="session_date_from">تاريخ الجلسة من</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة" id="session_date_from">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="session_date_to">تاريخ الجلسة الى</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ الجلسة" id="session_date_to">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="delivery_date_from">تاريخ الإستلام من</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ التسليم" id="delivery_date_from">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="delivery_date_to">تاريخ الإستلام الى</label>
-                    <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ التسلم" id="delivery_date_to">
-                    </div><span class="master_message color--fadegreen">message content</span>
-                    </div>
-                </div>
-                </div>
-                <div class="clearfix"></div>
-                <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+            
+
+            <div class="filter__btns">
+                <a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a>
             </div>
-            </div>
-            <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
+            
+            
             <div class="bottomActions__btns">
                 <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
                 <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>

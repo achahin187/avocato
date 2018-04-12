@@ -19,9 +19,42 @@ class RecordsController extends Controller
      */
     public function index()
     {
-        return view('records.records')->with('records', Record::all());
+
+        return view('records.records')->with('records', Record::all())
+                                    ->with('pens', Record::all());
     }
 
+    public function filter(Request $request)
+    {
+        // dd($request->all());
+
+        // set timedate
+        $dd_from = Helper::checkDate($request->dd_from, 1);
+        $dd_to   = Helper::checkDate($request->dd_to, 2);
+
+        $sd_from = Helper::checkDate($request->sd_from, 1);
+        $sd_to   = Helper::checkDate($request->sd_to, 2);
+        
+        $da_from = Helper::checkDate($request->da_from, 1);
+        $da_to   = Helper::checkDate($request->da_to, 2);
+
+        $records = Record::whereBetween('delivery_date', [$dd_from, $dd_to])
+                        ->whereBetween('session_date', [$sd_from, $sd_to])
+                        ->whereBetween('delivered_at', [$da_from, $da_to]);
+
+        if($request->pen) {
+            $records->whereIn('pen', $request->pen);
+        }
+
+        if($request->name) {
+            $ids = Users::where('full_name', 'LIKE', '%'.$request->name.'%')->pluck('id');
+            $records->whereIn('client_id', $ids);
+        }
+
+        return view('records.records')->with('records', $records->get())
+                                    ->with('pens', Record::all());    
+    }
+    
     /**
      * Show the form for creating a new resource.
      *

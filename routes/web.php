@@ -216,7 +216,7 @@ Route::get('/records/create', 'RecordsController@create')->name('records.add');
 Route::post('/records/store', 'RecordsController@store')->name('record.store');
 Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
 Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
-
+Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
