@@ -110,14 +110,30 @@ class RecordsController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        // Find and delete this record
+        Record::find($id)->delete();
+
+        Session::flash('success', 'تم الحذف بنجاح');
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
+    }
+
+    /**
+     * Delete selected rows
+     */
+    public function destroySelected(Request $request) 
+    {
+        // get cities IDs from AJAX
+        $ids = $request->ids;
+
+        // transform $ids into array values then search and delete
+        Record::whereIn('id', explode(",", $ids))->delete();
+        Session::flash('success', 'تم الحذف بنجاح');
+        return response()->json([
+            'success' => 'Records deleted successfully!'
+        ]);
     }
 }

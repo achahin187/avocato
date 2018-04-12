@@ -20,6 +20,20 @@
         </div>
     </div>
 
+    <div class="col-lg-12">
+        @if (Session::has('success'))
+            <div class="alert alert-success text-center">
+                {{ Session::get('success') }}
+            </div>
+        @endif
+
+        @if (Session::has('warning'))
+            <div class="alert alert-warning text-center">
+                {{ Session::get('warning') }}
+            </div>
+        @endif
+    </div>
+
     {{-- Main content --}}
     <div class="col-lg-12">
         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
@@ -99,7 +113,9 @@
             </div>
             </div>
             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+            <div class="bottomActions__btns">
+                <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
             </div>
             <table class="table-1">
             <thead>
@@ -317,7 +333,7 @@
 
             // check if user selected nothing
             if(allVals.length <= 0) {
-            confirm('إختر عميل علي الاقل لتستطيع حذفها');
+            confirm('إختر دفتر علي الاقل لتستطيع حذفه');
             } else {
             var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
 
@@ -336,7 +352,7 @@
             if (isConfirm){
                     $.ajax(
                     {
-                        url: "{{ route('ind.destroySelected') }}",
+                        url: "{{ route('records.destroySelected') }}",
                         type: 'DELETE',
                         dataType: "JSON",
                         data: {
@@ -350,7 +366,7 @@
 
                             // fade out selected checkboxes after deletion
                             $.each(allVals, function( index, value ) {
-                            $('tr[data-user='+value+']').fadeOut();
+                            $('tr[data-record='+value+']').fadeOut();
                             });
                         }
                     });
@@ -383,7 +399,7 @@
             if (isConfirm){
                     $.ajax(
                     {
-                        url: "{{ url('/individuals/destroy') }}" +"/"+ id,
+                        url: "{{ url('/records/destroy') }}" +"/"+ id,
                         type: 'DELETE',
                         dataType: "JSON",
                         data: {
@@ -394,7 +410,7 @@
                         success: function ()
                         {
                             swal("تم الحذف!", "تم الحذف بنجاح", "success");
-                            $('tr[data-user='+id+']').fadeOut();
+                            $('tr[data-record='+id+']').fadeOut();
                         }
                     });
                 

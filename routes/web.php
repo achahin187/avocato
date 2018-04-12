@@ -214,9 +214,8 @@ Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('re
 Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
 Route::post('/records/store', 'RecordsController@store')->name('record.store');
-
-
-
+Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
 
 
 

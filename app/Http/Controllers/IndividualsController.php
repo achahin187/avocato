@@ -427,7 +427,7 @@ class IndividualsController extends Controller
         ]);
     }
 
-        public function destroyShow($id)
+    public function destroyShow($id)
     {
         // Find and delete this record
         Users::find($id)->delete();

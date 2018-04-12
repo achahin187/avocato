@@ -532,7 +532,7 @@
 
           // check if user selected nothing
           if(allVals.length <= 0) {
-            confirm('إختر عميل علي الاقل لتستطيع حذفها');
+            confirm('إختر عميل علي الاقل لتستطيع حذفه');
           } else {
             var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
 
