@@ -216,7 +216,7 @@
                         <tbody>
                           @foreach($issues as $issue)
                           <tr class="issue" data-issue-id="{{$issue->id}}">
-                            <td>{{-- <span class="cellcontent"><input type="checkbox" class="checkboxes" /></span> --}}</td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$issue->name}}</span></td>
                             <td><span class="cellcontent"><a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>

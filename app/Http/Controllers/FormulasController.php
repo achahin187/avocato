@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Excel;
 use Session;
+use App\Exports\FormulasExport;
+use Helper;
 
 
 class FormulasController extends Controller
@@ -43,75 +45,25 @@ class FormulasController extends Controller
     }    
 
     public function excel()
-    {   
-        $formulasArray[]=['رقم','اسم العقد أو الصيفه','التصنيف الرئيسي','التصنيف الفرعي','تاريخ الإنشاء'];
-        if(isset($_GET['ids'])){
-         $ids = $_GET['ids'];
-         foreach($ids as $id)
-         {
-            $formula = Formula_Contracts::find($id,['id','name','formula_contract_types_id','created_at']);
-            $formulasArray[] = array(
-                'id' => $formula->id ,
-                'name' => $formula->name ,
-                'main' => $formula->sub->parent->name,
-                'sub' => $formula->sub->name,
-                'created_at' => $formula->created_at
-            );
-        }    
+    {  
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'formulas'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new FormulasExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new FormulasExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
     }
-    elseif($_GET['filters']!=''){
-     $filters = json_decode($_GET['filters']);
-     foreach($filters as $filter)
-     {
-        $formula = Formula_Contracts::find($filter,['id','name','formula_contract_types_id','created_at']);
-        $formulasArray[] = array(
-            'id' => $formula->id ,
-            'name' => $formula->name ,
-            'main' => $formula->sub->parent->name,
-            'sub' => $formula->sub->name,
-            'created_at' => $formula->created_at
-        );
-    }    
-}
-else{
-    $formulas = Formula_Contracts::all('id','name','formula_contract_types_id','created_at');
-    foreach($formulas as $formula){
-      $formulasArray[] = array(
-        'id' => $formula->id ,
-        'name' => $formula->name ,
-        'main' => $formula->sub->parent->name,
-        'sub' => $formula->sub->name,
-        'created_at' => $formula->created_at
-    );
-  }   
-}
+    else{
+      Excel::store((new FormulasExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
 
-$myFile=Excel::create('العقود والصيغ', function($excel) use($formulasArray) {
-                    // Set the title
-    $excel->setTitle('العقود والصيغ');
-
-                    // Chain the setters
-    $excel->setCreator('PentaValue')
-    ->setCompany('PentaValue');
-                    // Call them separately
-    $excel->setDescription('بيانات ما تم اختياره من جدول العقود والصيغ');
-
-    $excel->sheet('المحاكم', function($sheet) use($formulasArray) {
-        $sheet->setRightToLeft(true); 
-        $sheet->getStyle( "A1:E1" )->getFont()->setBold( true );
-                // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-                // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-        $sheet->fromArray($formulasArray, null, 'A1', false, false);
-
-    });
-});
-        $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "العقود والصيغ".date('Y_m_d'), //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-       );
-        return response()->json($response);
     }
 
 

@@ -105,12 +105,13 @@
            data:{ids:selectedIds,filters:filter},
            success:function(response){
                     swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                    var a = document.createElement("a");
-                    a.href = response.file; 
-                    a.download = response.name+'.xlsx';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
+                    // var a = document.createElement("a");
+                    // a.href = response.file; 
+                    // a.download = response.name+'.xlsx';
+                    // document.body.appendChild(a);
+                    // a.click();
+                    // a.remove();
+                    location.href = response;
           }
             });
         });
@@ -192,7 +193,7 @@
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -207,7 +208,7 @@
                         <tbody>
                           @foreach($contracts as $contract)
                           <tr data-contract-id="{{$contract->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$contract->name}}</span></td>
                             <td><span class="cellcontent">{{$contract->sub->parent->name}}</span></td>
                             <td><span class="cellcontent">{{$contract->sub->name}}</span></td>

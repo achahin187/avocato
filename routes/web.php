@@ -186,6 +186,8 @@ Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_a
 Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+
 
 
 Route::get('/services', 'ServicesController@index')->name('services');
@@ -198,6 +200,7 @@ Route::get('/services_create', 'ServicesController@create')->name('services_crea
 Route::post('/services_store', 'ServicesController@store')->name('services_store');
 Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');

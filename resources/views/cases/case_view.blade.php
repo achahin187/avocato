@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="case_edit.html">تعديل بيانات القضية</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{URL('case_edit/'.$case->id)}}">تعديل بيانات القضية</a>
                       </div>
                     </div>
                   </div>
