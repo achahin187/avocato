@@ -63,6 +63,7 @@ class Helper {
         
     }
 
+    
     /**
      *  @param  $userId     user id
      *  @return a record of a single user
