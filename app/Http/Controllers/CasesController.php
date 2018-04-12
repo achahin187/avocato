@@ -444,11 +444,13 @@ if($request->hasFile('docs_upload')){
     }
     public function change_case_state($id)
     {
+
         $state = $_POST['case_state'];
         $case=Case_::find($id);
         $case->update(['archived'=>$state]);
         // dd($case);
         return redirect()->route('case_view',$id);
+        
     }
 
 
