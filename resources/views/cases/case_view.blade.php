@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="case_edit.html">تعديل بيانات القضية</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{URL('case_edit/'.$case->id)}}">تعديل بيانات القضية</a>
                       </div>
                     </div>
                   </div>
@@ -33,11 +33,14 @@
                     </div>
                     <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="../img/avatars/male.jpg"></div>
                     <div class="col-md-2 col-xs-3">
-                      <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">
-                        @foreach($case->lawyers as $lawyer)
+                      <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div>
+                      @foreach($case->lawyers as $lawyer)
+                      <a href="{{URL('lawyers_show/'.$lawyer->id)}}">
+                        
                         {{$lawyer->name}} &
-                        @endforeach
+                        
                       </a>
+                      @endforeach
                     </div>
                     <div class="clearfix"></div>
                     <div class="col-lg-12"><br>
@@ -48,7 +51,7 @@
                               <div class="col-xs-12"><span class="tiket-data light-color col-md-3 col-sm-6 col-xs-12"> محكمه {{$case->courts->name}}</span><span class="tiket-data right light-color col-md-6 col-sm-6 col-xs-12">
                                   <div class="pull-right">
                                     تاريخ قيد الدعوى
-                                    {{$case->claim_number}}
+                                    {{$case->claim_date}}
                                     &nbsp;<i class="fa fa-calendar"></i>
                                   </div></span></div>
                               <div class="clearfix"></div>

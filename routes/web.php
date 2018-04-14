@@ -173,7 +173,7 @@ Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@l
 
 Route::get('/cases', 'CasesController@index')->name('cases');
 Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
-Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_archive_view');
+Route::get('/case_archive_view/{id}', 'CasesController@archive_show')->name('case_archive_view');
 Route::get('/case_add', 'CasesController@create')->name('case_add');
 Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
@@ -183,9 +183,12 @@ Route::get('/case_destroy/{id}', 'CasesController@destroy')->name('case_destroy'
 Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_destroy_all');
 Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
 Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
+Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
 Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+
 
 
 Route::get('/services', 'ServicesController@index')->name('services');
@@ -215,13 +218,13 @@ Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_e
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 
+
 Route::get('/records', 'RecordsController@index')->name('records');
-Route::get('/records_create', 'RecordsController@create')->name('records_create');
-
-
-
-
-
+Route::get('/records/create', 'RecordsController@create')->name('records.add');
+Route::post('/records/store', 'RecordsController@store')->name('record.store');
+Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

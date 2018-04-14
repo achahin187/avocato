@@ -104,7 +104,7 @@
                             </div>
                             <table class="table-1" id="dataTableTriggerId_001">
                               <thead>
-                                <tr class="bgcolor--gray_mm color--gray_d">
+                                <tr class="bgcolor--gray_mm color--gray_d" >
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                                   <th><span class="cellcontent">نوع القضية</span></th>
                                   <th><span class="cellcontent">المحكمة</span></th>
@@ -397,7 +397,7 @@
                                   <td><span class="cellcontent">{{$case->claim_date}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href="{{URL('case_archive_view/'.$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 @endif
                                 @endforeach

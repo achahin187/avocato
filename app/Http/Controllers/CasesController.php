@@ -135,9 +135,10 @@ class CasesController extends Controller
         return view('cases.case_view')->with('case',$case)->with('cases_record_types',$cases_record_types);
     }
 
-    public function archive_show()
+    public function archive_show($id)
     {
-        return view('cases.case_archive_view');
+        $case=Case_::find($id);
+        return view('cases.case_archive_view')->with('case',$case);
     }
 
     /**
@@ -148,8 +149,65 @@ class CasesController extends Controller
      */
     public function edit($id)
     {
-        return view('cases.case_edit');
+        $case=Case_::where('id',$id)->with(['case_records'=>function($q){
+            $q->with('case_record_documents');
+        }])->first();
+        $clients=Users::whereHas('rules', function ($query) {
+                                            $query->where('rule_id', '6');
+                                        })->get();
+         $cases_record_types=Case_Record_Type::all();
+         // dd($cases_record_types);
+        // dd($clients);
+         foreach ($cases_record_types as  $value) {
+            $value['name_ar']= Helper::localizations('case_report_types','name',$value->id);
+         }
+         $cases_types=Cases_Types::all();
+         $courts=Courts::all();
+         $governorates=Geo_Governorates::all();
+         $countries=Geo_Countries::all();
+         $cities=Geo_Cities::all();
+         $lawyers=Users::whereHas('rules', function ($query) {
+        $query->where('rule_id', '5');
+        })->with(['user_detail'=>function($q) {
+                 $q->orderby('join_date','desc');
+                 }])->get();
+        foreach($lawyers as $detail){
+            
+                if(count($detail->user_detail)!=0)
+                {
+                    $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+              
+                $detail['nationality']=$value;
+                }
+                else
+                {
+                    $detail['nationality']='';
+                 }
+                }
+        
+          // dd($cases_record_types);
+      $roles=Case_Client_Role::all();
+
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+        // dd($case->lawyers->toArray());
+        return view('cases.case_edit')->with('case',$case)->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles]);
     }
+
+
+
+   public function edit_case(Request $request , $id)
+   {
+      
+
+
+      dd($request->all());
+   }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -280,7 +338,7 @@ if($request->hasFile('docs_upload')){
     }
     function lawyers_filter(Request $request)
     {
-        
+        // $request = (array)json_decode($request->getContent(), true);
         $lawyers=Users::whereHas('rules', function ($query) {
 
         $query->where('rule_id', '5');
@@ -386,11 +444,13 @@ if($request->hasFile('docs_upload')){
     }
     public function change_case_state($id)
     {
+
         $state = $_POST['case_state'];
         $case=Case_::find($id);
         $case->update(['archived'=>$state]);
         // dd($case);
         return redirect()->route('case_view',$id);
+        
     }
 
 
@@ -462,6 +522,37 @@ if($request->has('record_documents')){
         }
            return redirect()->route('case_view',$id);
     }
+    public function add_record_ajax(Request $request , $id)
+    {
+
+         return $request['record_documents'];
+
+
+$case_record=Case_Record::Create([
+            'case_id'=>$id,
+            'record_number'=>$request['investigation_no'],
+            'record_type_id'=>$request['investigation_type'],
+            'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+            'created_by'=>\Auth::user()->id,
+        ]);
+if($request->has('record_documents')){
+    // dd($request['record_documents']);
+        foreach ($request->record_documents as  $key => $file) {
+            
+            $destinationPath='investigation_images';
+            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // dd($fileNameToStore);
+            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
+
+            Case_Record_Document::Create([
+                'record_id'=>$case_record->id,
+                'name'=>$file->getClientOriginalName(),
+                'file'=>$fileNameToStore,
+                ]);
+        }
+        }
+           return response()->json($case_record);
+    }
 
     ///destroy case record 
     public function destroy_record($case_id,$id)
@@ -488,7 +579,7 @@ if($request->has('record_documents')){
 
     public function download_all_documents($id)
     {
-        \File::delete(public_path().'/investigations.zip');
+        // \File::delete(public_path().'/investigations.zip');
         $zipper = new \Chumper\Zipper\Zipper;
 
         $docuemnts=Case_Record::where('id',$id)->with('case_record_documents')->first();
@@ -498,6 +589,7 @@ if($request->has('record_documents')){
            
         }
         $zipper->close();
-         return response()->download(public_path()."/investigations.zip");
+        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true);
+         // return response()->download(public_path()."/investigations.zip");
     }
 }
