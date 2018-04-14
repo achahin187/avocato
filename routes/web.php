@@ -199,12 +199,15 @@ Route::post('/services_store', 'ServicesController@store')->name('services_store
 Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
 Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
+Route::get('/services_excel2', 'ServicesController@excel2')->name('services_excel2');
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 Route::get('/report_download_document/{id}', 'ServicesController@download_document')->name('report_download_document');
 Route::get('/report_download_all_documents/{id}', 'ServicesController@download_all_documents')->name('report_download_all_documents');
 Route::get('/services_lawyer/{id}', 'ServicesController@lawyer')->name('services_lawyer');
+Route::post('/services_lawyer_assign/{id}', 'ServicesController@assign')->name('services_lawyer_assign');
+Route::post('/services_lawyer_filter', 'ServicesController@filter_lawyer')->name('services_lawyer_filter');
 
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');

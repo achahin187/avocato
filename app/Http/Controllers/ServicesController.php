@@ -10,10 +10,15 @@ use App\Entity_Localizations;
 use App\Task_Charges;
 use Validator;
 use App\Exports\ServicesExport;
+use App\Exports\ServicesExport2;
 use Excel;
 use Session;
 use App\Case_Techinical_Report_Document;
 use App\Case_Techinical_Report;
+// use Jenssegers\Date\Date;
+use DB;
+use Carbon\Carbon;
+use App\Rules;
 
 class ServicesController extends Controller
 {
@@ -215,6 +220,29 @@ class ServicesController extends Controller
 
     }
 
+            public function excel2()
+    { 
+
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'services'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new ServicesExport2($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new ServicesExport2($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+      Excel::store((new ServicesExport2()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+
+    }
+
     public function filter(Request $request)
     {
         if($request->filled('payment_status'))
@@ -287,8 +315,130 @@ class ServicesController extends Controller
     }
 
         public function lawyer($id)
+    { 
+      // Date::setLocale('ar');
+      $data['months'] = Tasks::select(DB::raw('count(*) as missions,MONTH(start_datetime) as month'))->groupBy('month')->get();
+      // foreach($data['months'] as $month){
+      //   $month_en = Carbon::parse($month);
+      // }
+      // return $month_en;
+      $data['types']=Rules::where('parent_id',5)->get();
+      $data['lawyers'] = Users::whereHas('rules', function($q){
+            $q->where('rule_id',5);
+        })->where('is_active',1)->get();
+      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+      $data['service'] = Tasks::find($id);
+      return view('services.services_lawyer',$data);
+    }
+
+    public function filter_lawyer(Request $request){
+        /* date_to make H:i:s = 23:59:59 to avoid two problems
+            one : when select same date
+            second : when juse select date_to
+            Session::flash to send ids of filtered data and extract excel of filtered data
+            no all items in the table
+             */
+            $data['lawyers'] = Users::where(function($q) use($request){
+              $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
+              $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+
+              if($request->has('types') && $request->types != 0)
+              {
+               $q->whereHas('rules',function($q) use($request){
+                $q->where('rule_id',$request->types);
+
+              });  
+             }
+             else{
+              $q->whereHas('rules', function($q){
+                $q->where('rule_id',5);
+              });  
+            }
+            if($request->has('nationalities') && $request->nationalities !=0)
+            {
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('nationality_id',$request->nationalities);
+
+            });  
+           }
+
+           if($request->filled('work_sector'))
+           {
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('work_sector','like','%'.$request->work_sector.'%');
+
+            });  
+           }
+
+           if($request->filled('syndicate_level'))
+           {
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('syndicate_level','like','%'.$request->syndicate_level.'%');
+
+            });  
+           }
+
+           if($request->filled('date_from') && $request->filled('date_to') )
+           {
+            $q->whereBetween('last_login', array($date_from, $date_to));
+          }
+          elseif($request->filled('date_from'))
+          {
+            $q->where('last_login','>=',$date_from);
+          }
+          elseif($request->filled('date_to'))
+          {
+            $q->where('last_login','<=',$date_to);
+          }
+
+
+
+
+        })->get();
+            $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
+            $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+            $data['types']=Rules::whereBetween('id',array('11','12'))->get();
+            foreach($data['lawyers'] as $lawyer)
+            {
+              $filter_ids[]=$lawyer->id;
+            }
+            if(!empty($filter_ids))
+            {
+              Session::flash('filter_ids',$filter_ids);
+            }
+            else{
+              $filter_ids[]=0;
+              Session::flash('filter_ids',$filter_ids);
+            }
+
+            return view('lawyers.lawyers',$data);
+
+          }
+
+        public function assign(Request $request, $id)
     {
-      return view('services.services_lawyer');
+        $validator = Validator::make($request->all(), [
+            'lawyer'=>'required',
+        ],[
+            'lawyer.required' => 'من فضلك اختر محامى ',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+      $date = explode('-',$request->start_end);  
+      $start=date('Y-m-d',strtotime($date[0]));
+      $end = date('Y-m-d',strtotime($date[1]));
+
+      $service = Tasks::find($id);
+      $service->assigned_lawyer_id = $request->lawyer;
+      $service->who_assigned_lawyer_id = \Auth::user()->id;
+      $service->start_datetime = $start;
+      $service->end_datetime = $end;
+      $service->save();
+      return redirect()->back()->with('success','تم تعيين محامى للخدمه بنجاح');
     }
 
 

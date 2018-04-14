@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Tasks;
+use App\Entity_Localizations;
 
 class TasksController extends Controller
 {
@@ -13,7 +15,10 @@ class TasksController extends Controller
      */
     public function normal_index()
     {
-        return view('tasks.tasks_normal');
+        $data['services'] = Tasks::where('task_type_id',3)->get();
+        // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+        $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
+        return view('tasks.tasks_normal',$data);
     }
 
     public function emergency_index()
