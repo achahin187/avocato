@@ -138,7 +138,11 @@ Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 
 Route::get('/complains', 'ComplainsController@index')->name('complains');
-Route::get('/complains_edit', 'ComplainsController@edit')->name('complains_edit');
+Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
+Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
+Route::delete('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
+Route::delete('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
+Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
 
 Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
 Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');

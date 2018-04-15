@@ -26,8 +26,6 @@ class RecordsController extends Controller
 
     public function filter(Request $request)
     {
-        // dd($request->all());
-
         // set timedate
         $dd_from = Helper::checkDate($request->dd_from, 1);
         $dd_to   = Helper::checkDate($request->dd_to, 2);
@@ -99,7 +97,6 @@ class RecordsController extends Controller
             $record->save();
 
         } catch (Exception $ex) {
-            dd($ex);
             Session::flash('warning', 'حدث خطأ ما! برجاء التحقق من البيانات والمحاولة مرة اخري');
             return redirect()->back()->withInput();
         }
