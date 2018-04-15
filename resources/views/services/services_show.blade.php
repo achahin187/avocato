@@ -61,10 +61,12 @@
   </div>
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset(''.$service->client->image)}}"></div>
+      @isset($service->lawyer)
+      <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset(''.$service->lawyer->image)}}"></div>
       <div class="col-md-2 col-xs-3">
-        <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="lawyer_view.html">محمد احمد</a>
+        <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="">{{$service->lawyer->full_name}}</a>
       </div>
+      @endisset
       <div class="clearfix"></div>
       <div class="col-lg-12"><br>
         <div class="ticket-container">
