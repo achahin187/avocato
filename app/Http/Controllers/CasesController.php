@@ -135,9 +135,10 @@ class CasesController extends Controller
         return view('cases.case_view')->with('case',$case)->with('cases_record_types',$cases_record_types);
     }
 
-    public function archive_show()
+    public function archive_show($id)
     {
-        return view('cases.case_archive_view');
+        $case=Case_::find($id);
+        return view('cases.case_archive_view')->with('case',$case);
     }
 
     /**
@@ -337,7 +338,7 @@ if($request->hasFile('docs_upload')){
     }
     function lawyers_filter(Request $request)
     {
-        
+        // $request = (array)json_decode($request->getContent(), true);
         $lawyers=Users::whereHas('rules', function ($query) {
 
         $query->where('rule_id', '5');
@@ -443,11 +444,13 @@ if($request->hasFile('docs_upload')){
     }
     public function change_case_state($id)
     {
+
         $state = $_POST['case_state'];
         $case=Case_::find($id);
         $case->update(['archived'=>$state]);
         // dd($case);
         return redirect()->route('case_view',$id);
+        
     }
 
 
@@ -518,6 +521,37 @@ if($request->has('record_documents')){
         }
         }
            return redirect()->route('case_view',$id);
+    }
+    public function add_record_ajax(Request $request , $id)
+    {
+
+         return $request['record_documents'];
+
+
+$case_record=Case_Record::Create([
+            'case_id'=>$id,
+            'record_number'=>$request['investigation_no'],
+            'record_type_id'=>$request['investigation_type'],
+            'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+            'created_by'=>\Auth::user()->id,
+        ]);
+if($request->has('record_documents')){
+    // dd($request['record_documents']);
+        foreach ($request->record_documents as  $key => $file) {
+            
+            $destinationPath='investigation_images';
+            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // dd($fileNameToStore);
+            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
+
+            Case_Record_Document::Create([
+                'record_id'=>$case_record->id,
+                'name'=>$file->getClientOriginalName(),
+                'file'=>$fileNameToStore,
+                ]);
+        }
+        }
+           return response()->json($case_record);
     }
 
     ///destroy case record 

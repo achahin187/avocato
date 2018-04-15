@@ -125,4 +125,21 @@ class Users extends Authenticatable
         return $this->hasMany('App\Tasks','client_id');
 
     }
+
+           public function tasks_assigned()
+    {
+        return $this->hasMany('App\Tasks','assigned_lawyer_id');
+
+    }
+
+           public function who_assign_tasks()
+    {
+        return $this->hasMany('App\Tasks','who_assigned_lawyer_id');
+
+    }
+
+        public function case_technical_reports()
+    {
+      return $this->hasMany('App\Case_Techinical_Report', 'assigned_to');
+    }
 }
