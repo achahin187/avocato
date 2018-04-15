@@ -16,12 +16,13 @@ class CreateUserCompanyDetailsTable extends Migration
         Schema::create('user_company_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('commercial_registration_number');
+            $table->string('commercial_registration_number')->nullable();
             $table->string('fax')->nullable();
             $table->string('website')->nullable();
             $table->string('legal_representative_name');
-            $table->string('legal_representative_mobile');
+            $table->string('legal_representative_mobile')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

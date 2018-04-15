@@ -3,6 +3,7 @@
 namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities;
+use App\Users;
 
 class Helper {
 
@@ -33,6 +34,17 @@ class Helper {
         return $random;
     }
 
+    /** 
+     *  @param  $table_name     entities.name
+     *  @param  $field          entity_localizations.field
+     *  @param  $item_id        entity_localizations.item_id
+     * 
+     *  How to use: 
+     *  Helper::localizations('package_types', 'name', 1);
+     * 
+     *  Result: 
+     *  بلاتيني 
+     */
     public static function  localizations($table_name , $field , $item_id)
     {
       $value_localized = Entities::where('name',$table_name)->with([
@@ -44,11 +56,88 @@ class Helper {
       foreach ($value_localized as  $value) {
         
         foreach ($value->localizations as $value1) {
-                return $value1->value;       
-                 }
+            return $value1->value;       
+        }
       }
-
      
         
     }
+
+    
+    /**
+     *  @param  $userId     user id
+     *  @return a record of a single user
+     * 
+     *  how to use: 
+     *  
+     *  use Helper;
+     * 
+     *  Helper::getUserDetails(123);    // get this user record
+     */
+    public static function getUserDetails($userId) {
+        return Users::find($userId);
+    }
+
+    /**
+     *  @param  $userRulesArray     array of users rules
+     * 
+     *  @return records of users of specific rules
+     * 
+     *  how to use: 
+     * ------------
+     *  example: in controller use the following... 
+     * 
+     *  use Helper;
+     * 
+     *  $arrayOfRules = [8, 9];
+     *  Helper::getUsersBasedOnRules($arrayOfRules);    // get all users of type individual and company clients
+     * 
+     */
+    public static function getUsersBasedOnRules($userRulesArray) {
+        return Users::whereHas('rules', function($query) use($userRulesArray) {
+            $query->whereIn('rule_id', $userRulesArray);
+        })->get();
+    }
+
+
+    /**
+     *  Used in casting string to dates
+     * 
+     *  @param  $dateStringed       raw input string    "01/02/2013"
+     *  @param  $timeFormat         custom format       --optional value with standard value "Y-m-d 00:00:00"
+     *  @return datetime value
+     * 
+     *  How to use:
+     *  Helper::stringToDate("29/04/1994");
+     */
+    public static function stringToDate($dateStringed, $timeFormat="Y-m-d 00:00:00") {
+        if($dateStringed) {
+            return date($timeFormat, strtotime($dateStringed));
+        } 
+    }
+
+
+    /**
+     *  this helper function used in filter dates.
+     *  date != null then transform from string to datetime, if not so, then replace its value with 1970... or 2030 depends on flag
+     * 
+     *  @param  $dateStringed       raw input string    "01/02/2013"
+     *  @param  $flag               1 for 1970... and 2 for 2030...
+     *  @param  $timeFormat         custom format       --optional value with standard value "Y-m-d 00:00:00"
+     *  @return datetime value
+     * 
+     *  How to use:
+     *  Helper::stringToDate("29/04/1994");
+     */
+    public static function checkDate($dateStringed, $flag, $timeFormat="Y-m-d 00:00:00") {
+        if($dateStringed) {
+            return date($timeFormat, strtotime($dateStringed));
+        } else {
+            if($flag == 1) {
+                return  '1970-01-01 00:00:00';
+            } else if($flag == 2) {
+                return '2030-01-01 00:00:00';
+            }
+        }
+    } 
 }

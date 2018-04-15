@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Helper;
 use Session;
+use Validator;
 use Exception;
 
 use App\Package_Types;
@@ -29,7 +30,11 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        return view('clients.companies.companies')->with('companies', Users::users(9)->get());
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+
+        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('companies', Users::users(9)->get());
     }
 
     /**
@@ -44,15 +49,11 @@ class CompaniesController extends Controller
         $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
 
-        $geo = Geo_Countries::all()->toArray();    // get all countries and cast it from object to array
-        // get all ids in one array
-        for($i=0; $i < count($geo); $i++) {
-            $ids[] = $geo[$i]['id'];
-        }
-        $nationalities = Entity_Localizations::whereIn('item_id', $ids)->where('entity_id', 6)->get();  // select only arabic nationalities
+        $nationalities = Geo_Countries::all();
+        $packages = Package_Types::all();
         
 
-        return view('clients.companies.companies_create', compact(['password', 'subscription_types', 'nationalities']));
+        return view('clients.companies.companies_create', compact(['password', 'subscription_types', 'nationalities', 'packages']));
     }
 
     /**
@@ -69,8 +70,6 @@ class CompaniesController extends Controller
             'name'  => 'required',
             'nationality' => 'required',
             'commercial_registration_number' => 'required',
-            'fax'   => 'required',
-            'website'   => 'required',
             'legal_representative_name' => 'required',
             'address'   => 'required',
             'phone' => 'required',
@@ -79,7 +78,6 @@ class CompaniesController extends Controller
             'work_sector' =>'required',
             'legal_representative_mobile' => 'required',
             'logo'=> 'image|mimes:jpeg,jpg,png',
-            'discount_percentage' => 'required',
             'start_date'    => 'required',
             'end_date'  => 'required',
             'package_type_id' => 'required',
@@ -92,10 +90,10 @@ class CompaniesController extends Controller
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
-            $img->move('storage/app/public/companies', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/companies/'.$newImg;       // new path: /storage/app/public/imageName
+            $img->move('users_images', $newImg);      // move to users_images
+            $imgPath = 'users_images/'.$newImg;       // new path: users_images/imageName
         } else {
-            $imgPath = null;
+            $imgPath = 'users_images/male.jgp';
         }
 
         // INSERT COMPANY DATA
@@ -110,11 +108,11 @@ class CompaniesController extends Controller
             $user->phone     = $request->phone;
             $user->mobile    = $request->mobile;
             $user->address   = $request->address;
-            $user->birthdate  = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
+            //dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
@@ -125,6 +123,7 @@ class CompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -132,13 +131,15 @@ class CompaniesController extends Controller
         
         // push into users_rules
         try {
-            $user_rules = new Users_Rules;
-            $user_rules->user_id   = $user->id;
-            $user_rules->rule_id   = 9;
-            $user_rules->save();
-        
+            $data = array(
+                array('user_id' => $user->id, 'rule_id' => 6),
+                array('user_id' => $user->id, 'rule_id' => 9)
+            );
+
+            Users_Rules::insert($data);
         } catch(Exception $ex) {
-            $users_rules->forcedelete();
+            //////dd($ex);
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -151,6 +152,7 @@ class CompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -165,14 +167,14 @@ class CompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
-            $user_details->gender_id     = $request->gender;
+            $user_details->nationality_id   = $request->nationality;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
-            $user_details->work_sector   = $request->work;
-            $user_details->work_sector_type      = $request->work_type;
-            $user_details->discount_percentage   = $request->discount_rate;
+            $user_details->work_sector   = $request->work_sector;
+            $user_details->discount_percentage   = $request->discount_percentage;
             $user_details->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -192,6 +194,7 @@ class CompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -212,14 +215,8 @@ class CompaniesController extends Controller
                 'legal_representative_mobile'    => $request->legal_representative_mobile
             ]);
         } catch(Exception $ex) {
-            
-            Users::destroy($user->id);
-            Users_Rules::where('user_id', $user->id)->delete();
-            ClientsPasswords::where('user_id', $user->id)->delete();
-            User_Details::where('user_id', $user->id)->delete();
-            Subscriptions::destroy($subscription->id);
-            Installment::where('subscription_id', $subscription->id)->delete();
-
+            //////dd($ex);
+            Users::find($user->id)->forcedelete();
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
         }
@@ -239,8 +236,9 @@ class CompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
+            //////dd($ex);
             $user->forcedelete();
-            $user_rules->forcedelete();
+            Users_Rules::where('user_id', $user->id)->forcedelete();
             $client_passwords->forcedelete();
             $user_details->forcedelete();
             $subscription->forcedelete();
@@ -260,9 +258,20 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('clients.companies.companies_show');
+        $data['user'] = Users::find($id);
+        $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        return view('clients.companies.companies_show',$data);
+    }
+
+        public function comp_update(Request $request, $id)
+    {
+        $installment = Installment::find($id);
+        $installment->is_paid = $request->installment;
+        $installment->save();
+        return redirect()->back();
+        
     }
 
     /**
@@ -271,9 +280,15 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        return view('clients.companies.companies_edit');
+        $company = Users::find($id);
+        $password = $company->client_password->password;
+        $subscription_types = Package_Types::all();
+        $nationalities = Geo_Countries::all();
+        $installments = Installment::where('subscription_id', $company->subscription->id)->get();
+
+        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
 
     /**
@@ -285,7 +300,166 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'company_code'  => 'required',  // users
+            'password'      => 'required',  // usres - client_password
+            'company_name'  => 'required',  // users
+            'nationality'   => 'required',  // user_details
+            'address'       => 'required',  // users
+            'phone'         => 'required',  // users
+            'mobile'        => 'required',  // users
+            'fax'           => 'required',  // user_company_details
+            'website'       => 'required',  // user_company_details
+            'work_sector'   => 'required',  // user_details
+            'email'         => 'required',  // users
+            'activate'      => 'required',  // users as is_active
+            'start_date'    => 'required',  // subscription
+            'end_date'      => 'required',  // subscription
+            'logo'          => 'image|mimes:jpeg,jpg,png',  // users as image
+            'subscription_type'     => 'required',  // subscriptions as package_type_id
+            'subscription_duration' => 'required',  // subscriptions as duration
+            'subscription_value'    => 'required',  // subscriptions as value
+            'number_of_payments'    => 'required',  // subscriptions as number_of_installments
+            'discount_percentage'   => 'required',  // user_details
+            'legal_representative_name'     => 'required',  // user_company_details
+            'legal_representative_mobile'   => 'required',  // user_company_details
+            'commercial_registration_number'    => 'required',  // user_company details
+        ]);
+
+        $user = Users::find($id);
+
+        // upload image to storage/app/public
+        if($request->logo) {
+            $img = $request->logo;
+            $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
+            $img->move('users_images', $newImg);      // move to /storage/app/public
+            $imgPath = 'users_images/'.$newImg;       // new path: /storage/app/public/imageName
+        } else {
+            $imgPath = $user->image;
+        }
+
+        // INSERT COMPANY DATA
+        // push into users
+        try {
+            
+            $user->name      = $request->company_name;
+            $user->password  = bcrypt($request->password);
+            $user->full_name = $request->company_name;
+            $user->email     = $request->email;
+            $user->image     = $imgPath;
+            $user->phone     = $request->phone;
+            $user->mobile    = $request->mobile;
+            $user->address   = $request->address;
+            $user->is_active = $request->activate;
+            $user->created_by= Auth::user()->id;
+            $user->save();
+        } catch(Exception $ex) {
+            //////dd($ex);
+            Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
+            return redirect()->back()->withInput();
+        }
+
+        // push into client_passwords
+        try {
+            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            $client_passwords->user_id = $user->id;
+            $client_passwords->password = $request->password;
+            $client_passwords->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+        
+        // push into users_details
+        try {
+            $user_details = User_Details::where('user_id', $user->id)->first();
+            $user_details->user_id       = $user->id;
+            $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id= $request->nationality;
+            $user_details->job_title     = $request->job;
+            $user_details->national_id   = $request->national_id;
+            $user_details->work_sector   = $request->work_sector;
+            $user_details->discount_percentage   = $request->discount_percentage;
+            $user_details->save();
+        } catch(Exception $ex) {
+            Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // convert user to individual by changing his/her user rule to 9
+        try {
+            $user_rule = Users_Rules::where('user_id', $user->id)->where('rule_id', '!=', 6)->first();
+            $user_rule->rule_id = 9;
+            $user_rule->save();
+        } catch (Exception $ex) {
+            Session::flash('warning', 'حدث خطأ عند تعديل بيانات العميل #8');
+            return redirect()->back()->withInput();
+        }
+
+        // push into subscriptions
+        try {
+            $subscription = Subscriptions::where('user_id', $user->id)->first();
+            $subscription->user_id    = $user->id;
+            $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $subscription->end_date   = date('Y-m-d H:i:s', strtotime($request->end_date));
+            $subscription->package_type_id   = $request->subscription_type;
+            $subscription->duration = $request->subscription_duration;
+            $subscription->value     = $request->subscription_value;
+            $subscription->number_of_installments    = $request->number_of_payments;
+            $subscription->save();
+        } catch(Exception $ex) {
+            //////dd($ex);
+            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // push into user_company_detail
+        try {
+            // check if the user already has a relation with user_company_details table.
+            if( User_Company_Details::where('user_id', $user->id)->first() ) {
+                $ucd = User_Company_Details::where('user_id', $user->id)->first();
+            } else {
+                $ucd = new User_Company_Details;
+            }
+            
+            $ucd->user_id   = $user->id;
+            $ucd->commercial_registration_number = $request->commercial_registration_number;
+            $ucd->fax     = $request->fax;
+            $ucd->website = $request->website;
+            $ucd->legal_representative_name      = $request->legal_representative_name;
+            $ucd->legal_representative_mobile    = $request->legal_representative_mobile;
+            $ucd->save();
+        } catch(Exception $ex) {
+            dd($ex);
+            Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
+            return redirect()->back()->withInput();
+        }
+
+        // push into installments
+        try {
+            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
+                Installment::where('subscription_id', $subscription->id)->forcedelete();
+                for($i=0; $i < $request->number_of_payments; $i++) {
+                    $key = array_keys($request->payment_status[$i]);
+                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                    
+                    $installment = new Installment;
+                    $installment->subscription_id   = $subscription->id;
+                    $installment->installment_number = $i+1;
+                    $installment->value = $request->payment[$i];
+                    $installment->payment_date  = $pay_date;
+                    $installment->is_paid   = $key[0];
+                    $installment->save(); 
+                }
+            }
+        }catch(Exception $ex) {
+            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // redirect with success
+        Session::flash('success', 'تم إضافة العميل بنجاح');
+        return redirect('/companies');
     }
 
     public function destroy($id)
@@ -297,6 +471,13 @@ class CompaniesController extends Controller
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
+    }
+
+        public function destroyShow($id)
+    {
+        // Find and delete this record
+        Users::find($id)->delete();
+        return redirect()->route('companies')->with('success','تم استبعاد العميل');
     }
 
     /**
@@ -348,5 +529,68 @@ class CompaniesController extends Controller
         );
 
         return response()->json($response);
+    }
+
+    // Filter companies based on package_type, start-end dates and nationality
+    public function filter(Request $request)
+    {
+        $validator =  Validator::make($request->all(), [
+            'activate'  => 'required'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('companies#filterModal_sponsors')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $startfrom = Helper::checkDate($request->start_date_from, 1);
+        $startto   = Helper::checkDate($request->start_date_to, 2);
+        $endfrom   = Helper::checkDate($request->end_date_from, 1);
+        $endto     = Helper::checkDate($request->end_date_to, 2);
+
+        // intial join query between `users` & `subscriptions` & `user_details`
+        $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')
+                        ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
+                        ->select('user_company_details.*', 'user_details.*', 'subscriptions.*', 'users.*');
+
+        // check package type
+        if( $request->package_type ) {
+            $users = $users->whereIn('package_type_id', $request->package_type);
+        }
+
+        // check on start and end dates
+        if($startfrom && $startto && $endfrom && $endto) {
+            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
+            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
+        }
+
+        // check nationality
+        if($request->nationality) {
+            $users = $users->where('user_details.nationality_id', $request->nationality);
+        }
+
+        switch($request->activate) {
+            case "1":
+                $users = $users->get();
+                break;
+            case "2":
+                $users = $users->where('users.is_active', '!=', 0)->get();
+                break;
+            case "3":
+                $users = $users->where('users.is_active', '=', 0)->get();
+                break;
+            default:
+                break;
+        }
+        
+
+        $packages = Package_Types::all();
+        $subscriptions = Subscriptions::all();
+        $nationalities = Geo_Countries::all();
+
+        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('filters', $users);
     }
 }

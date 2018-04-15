@@ -1,6 +1,25 @@
 @extends('layout.app')
 @section('content')
 
+  <div class="col-lg-12">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+      <div class="edit-mode">Editing mode</div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-xs-center">
+            <div class="text-wraper">
+              <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
+                <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+              </h4>
+            </div>
+          </div>
+        </div>
+        <div class="cover--actions">
+        </div>
+      </div>
+    </div>
+  </div>
+
   {{--  Flash messages  --}}
   <div class="col-lg-12">
     {{--  Success  --}}
@@ -40,7 +59,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="password">كلمة المرور</label>
-            <input name="password" class="master_input" type="text" placeholder="كلمة المرور الجديدة .." id="password">
+            <input name="password" value="{{ $password }}" class="master_input" type="text" placeholder="كلمة المرور الجديدة .." id="password">
 
             @if ($errors->has('password'))
               <span class="master_message color--fadegreen">{{ $errors->first('password') }}</span>
@@ -133,12 +152,12 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->item_id }}" {{ ($nat->item_id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ $nat->value }}</option>
+                <option value="{{ $nat->id }}" {{ ($nat->id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('nationality'))
+            @if ($errors->has('nationality'))
               <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
             @endif
           </div>
@@ -285,7 +304,7 @@
               <select name="subscription_type" class="master_input select2" id="license_type" style="width:100%;">
                 
                 @foreach ($subscription_types as $types)
-                  <option value="{{ $types->id }}" {{ ($types->id == $user->subscription->package_type_id) ? 'selected' : '' }}>{{ $types->name }}</option>
+                  <option value="{{ $types->id }}" {{ ($types->id == $user->subscription->package_type_id) ? 'selected' : '' }}>{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
                 @endforeach
                 
               </select>
@@ -314,7 +333,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input name="subscription_value" value="{{ $user->subscription->value }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input required name="subscription_value" value="{{ $user->subscription->value }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
               
               @if ($errors->has('subscription_value'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
@@ -327,7 +346,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input name="number_of_payments" value="{{ $user->subscription->number_of_installments }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+              <input required name="number_of_payments" value="{{ $user->subscription->number_of_installments }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
 
                 @if ($errors->has('number_of_payments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
@@ -343,13 +362,13 @@
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                     <label class="master_label mandatory" for="premium1_amount">{{ 'رقم القسط رقم ' . $j }}</label>
-                    <input class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
+                    <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
                   </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
+                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
@@ -403,13 +422,13 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required="true" class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required="true" name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

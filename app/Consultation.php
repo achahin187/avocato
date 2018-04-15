@@ -10,7 +10,7 @@ class Consultation extends Model
     protected $table = 'consultations';
 
     protected $fillable = ['code','consultation_type_id','is_paid','question','created_by','created_at','is_replied'];
-    protected $date = ['id', 'created_at'];
+    protected $date = [];
     public $timestamps = false;
     public static $rules = [
         // Validation rules
@@ -20,7 +20,7 @@ class Consultation extends Model
     ];
     public function consultation_type()
     {
-    	return $this->hasMany('App\Consultation_Types', 'consultation_type_id');
+    	return $this->belongsTo('App\Consultation_Types', 'consultation_type_id');
     }
     public function consultation_reply()
     {

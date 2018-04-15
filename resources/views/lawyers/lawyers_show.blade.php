@@ -3,11 +3,13 @@
 
 
 <script type="text/javascript">
-  
+
+  var latitude ='{{$lawyer->latitude}}';
+  var longtuide  ='{{$lawyer->longtuide}}';
 function initMap() {
-  var uluru = {lat: -25.363, lng: 131.044};
+  var uluru = {lat: Number(latitude) , lng: Number(longtuide)};
   var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
+    zoom: 20,
     center: uluru
   });
   var marker = new google.maps.Marker({
@@ -18,13 +20,18 @@ function initMap() {
 
 </script>
 <script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap">
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
 </script>
 
               
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
+                @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
                   <div class="coverglobal text-center bshadow--2" style="background:#000 url({{asset('img/covers/dummy2.jpg')}}') no-repeat center center; background-size:cover;"><span></span>
                     <div class="container">
                       <div class="row">

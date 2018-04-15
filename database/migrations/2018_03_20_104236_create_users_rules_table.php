@@ -17,6 +17,7 @@ class CreateUsersRulesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('rule_id');
+            $table->softDeletes();
         });
 
                 DB::table('users_rules')->insert(

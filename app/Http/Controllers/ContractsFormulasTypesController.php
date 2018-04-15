@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Formula_Contract_Types;
+use App\Formula_Contracts;
+use Illuminate\Support\Facades\File;
 use Excel;
+use App\Exports\FormulasTypesExport;
 
 class ContractsFormulasTypesController extends Controller
 {
@@ -36,56 +39,18 @@ class ContractsFormulasTypesController extends Controller
 
     public function excel()
     {   
-        $contractsArray[]=['رقم','التصنيف الرئيسي','التصنيف الفرعي'];
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'formulasTypes'.time().'.xlsx';
         if(isset($_GET['ids'])){
-         $ids = $_GET['ids'];
-         foreach($ids as $id)
-         {
-            $sub = Formula_Contract_Types::find($id,['id','name','parent_id']);
-            $contractsArray[] = array(
-                'id' => $sub->id ,
-                'main' => $sub->parent->name,
-                'sub' => $sub->name ,
-            );
-        }    
+           $ids = $_GET['ids'];
+        Excel::store(new FormulasTypesExport($ids),$filepath.$filename);
+        return response()->json($PathForJson.$filename);
     }
-    else{
-        $subs = Formula_Contract_Types::whereNotNull('parent_id')->get(['id','name','parent_id']);
-        foreach($subs as $sub){
-          $contractsArray[] = array(
-            'id' => $sub->id ,
-            'main' => $sub->parent->name,
-            'sub' => $sub->name ,
-        );
-      }   
-  }
-
-  $myFile=Excel::create('أنواع الصيغ والعقود', function($excel) use($contractsArray) {
-                    // Set the title
-    $excel->setTitle('أنواع الصيغ والعقود');
-
-                    // Chain the setters
-    $excel->setCreator('PentaValue')
-    ->setCompany('PentaValue');
-                    // Call them separately
-    $excel->setDescription('بيانات ما تم اختياره من جدول أنواع الصيغ والعقود');
-
-    $excel->sheet('أنواع الصيغ والعقود', function($sheet) use($contractsArray) {
-        $sheet->setRightToLeft(true); 
-        $sheet->getStyle( "A1:C1" )->getFont()->setBold( true );
-                // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-                // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-        $sheet->fromArray($contractsArray, null, 'A1', false, false);
-
-    });
-});
-        $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "أنواع الصيغ والعقود".date('Y_m_d'), //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-       );
-        return response()->json($response);
+        else{
+        Excel::store((new FormulasTypesExport()),$filepath.$filename);
+        return response()->json($PathForJson.$filename); 
+      }
     }
 
     /**
@@ -204,9 +169,19 @@ class ContractsFormulasTypesController extends Controller
      {
         $sub->delete();
         Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
     }
     else{
         $sub->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
     }
 
     }
@@ -223,9 +198,19 @@ class ContractsFormulasTypesController extends Controller
            {
             $sub->delete();
             Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
         }
         else{
             $sub->delete();
+        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        foreach($formulas as $formula){
+            File::delete($formula->file);
+            $formula->delete();
+        }
         }
     } 
 

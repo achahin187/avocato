@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-     <script>
+  <script>
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){
@@ -78,7 +78,7 @@
     });
 
  
-var table = $('#consultation_table').DataTable();
+var table = $('#dataTableTriggerId_001').DataTable();
   var delete_selected_button = document.getElementById('delete_selected');
  if ( ! table.data().any() ) {
 
@@ -124,7 +124,7 @@ else
                                 <label class="master_label mandatory" for="consultation_cat">التصنيف</label>
                                 <select class="master_input select2" id="consultation_cat" name="consultation_cat[]" multiple="multiple" data-placeholder="التصنيف" style="width:100%;" ,>
                                    @foreach($consultation_types as $type)
-                                    <option value="{{$type->name}}">{{$type->name}}</option>
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
@@ -133,7 +133,7 @@ else
                               <div class="master_field">
                                 <label class="master_label mandatory" for="consultation_type"> النوع</label>
                                 <select class="master_input select2" id="consultation_type" name="consultation_type[]" multiple="multiple" data-placeholder="النوع" style="width:100%;" ,>
-                                  <option value="1">مدفوع</option>
+                                  <option value="1">مدفوعة</option>
                                   <option value="0">مجانية</option>
                                 </select><span class="master_message color--fadegreen">message content</span>
                               </div>
@@ -181,7 +181,7 @@ else
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#" id="delete_selected">حذف المحدد</a>
                       </div>
-                      <table class="table-1" id="consultation_table">
+                      <table class="table-1"  id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -197,7 +197,7 @@ else
                         <tbody>
                            @foreach($consultations as $consultation)
                           <tr  data-consultation-id="{{$consultation->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                              <td><span class="cellcontent">{{$consultation->code}}</span></td>
                             <td><span class="cellcontent">{{$consultation->consultation_type}}</span></td>
                             <td><span class="cellcontent">{{$consultation->question}}</span></td>
@@ -388,13 +388,14 @@ else
 
   function exportExcel() {
         alasql('SELECT * INTO XLSX("consultations.xlsx",{headers:true}) \
-                    FROM HTML("#consultation_table",{headers:true})');
+                    FROM HTML("#dataTableTriggerId_001",{headers:true})');
+        
     }
    function fnExcelReport()
 {
     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
     var textRange; var j=0;
-    tab = document.getElementById('consultation_table'); // id of table
+    tab = document.getElementById('dataTableTriggerId_001'); // id of table
 
     for(j = 0 ; j < tab.rows.length ; j++) 
     {     
@@ -405,7 +406,7 @@ else
     tab_text=tab_text+"</table>";
      tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
      tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-     tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+     // tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE "); 

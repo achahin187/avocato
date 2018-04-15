@@ -1,32 +1,32 @@
 @extends('layout.app')
 @section('content')
 
+<div class="col-lg-12">
+  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+    <div class="add-mode">Adding mode</div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-xs-center">
+          <div class="text-wraper">
+            <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
+              <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+              <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="cover--actions">
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
 
   {{--  Start Form  --}}
 
-  <form action="{{ route('ind.com.store') }}" method="POST">
+  <form action="{{ route('ind.com.store') }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
-
-    <div class="col-lg-12">
-      <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-        <div class="add-mode">Adding mode</div>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="text-xs-center">
-              <div class="text-wraper">
-                <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
-                  <h4 class="cover-inside-title color--gray_d">محتوى </h4>
-                  <h3 class="cover-inside-title color--gray_d">افراد - شركات </h3>
-                </h4>
-              </div>
-            </div>
-          </div>
-          <div class="cover--actions">
-          </div>
-        </div>
-      </div>
-    </div>
 
     {{-- Start alert messages --}}
     <div class="col-lg-12">
@@ -39,6 +39,7 @@
       @endif
 
     </div>
+
     <div class="col-lg-12">
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
         
@@ -47,14 +48,17 @@
           <div class="master_field">
             <label class="master_label mandatory" for="license_type">كود الشركة</label>
             <select name="company_code" class="master_input select2" id="company_code" style="width:100%;">
-                
+              
+              {{-- Defualt useless select option --}}
+              <option value="-1" selected disabled hidden>إختر كود الشركة</option>
+
               @foreach ($companies as $company)
-                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
+                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->full_name .' - '. $company->code }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('company_code'))
+            @if ($errors->has('company_code'))
               <span class="master_message color--fadegreen">{{ $errors->first('company_code') }}</span>
             @endif
           </div>
@@ -160,7 +164,7 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->item_id }}">{{ $nat->value }}</option>
+                <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
               @endforeach
               
             </select>
@@ -302,7 +306,7 @@
             <select name="package_type_id" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($subscription_types as $types)
-                <option value="{{ $types->id }}">{{ $types->name }}</option>
+                <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
               @endforeach
               
             </select>

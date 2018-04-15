@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Helper;
 use Session;
+use Validator;
 use Exception;
 
 use Excel;
@@ -23,6 +24,83 @@ class MobileController extends Controller
     public function index()
     {
         return view('clients.mobile.mobile')->with('users', Users::users(7)->get());
+    }
+
+    // Filter mobile users
+    public function filter(Request $request)
+    {
+        // check if start date is less than end date
+        Validator::extend('before_or_equal', function($attribute, $value, $parameters, $validator) {
+            return strtotime($validator->getData()[$parameters[0]]) >= strtotime($value);
+        });
+
+        if( $request->start_date && !$request->end_date) {
+            $rules =  [
+                'activate'     => 'required' 
+            ];
+        } else if($request->start_date ) {
+            $rules =  [
+                'start_date'   => 'before_or_equal:end_date',
+                'end_date'     => '',
+                'activate'     => 'required' ];
+        } else {
+            $rules =  [
+                'activate'     => 'required' 
+            ];
+        }
+
+        $validator =  Validator::make($request->all(), $rules, [
+            'start_date.before_or_equal'    => 'حقل تاريخ البداية يجب ان يكون اصغر من او يساوي حقل تاريخ النهاية'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('mobile#filterModal_sponsors')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $from = $to = null;
+        
+        if($request->start_date) {
+            $from = date("Y-m-d 00:00:00", strtotime($request->start_date) );
+        }
+        if($request->end_date) {
+            $to   = date("Y-m-d 23:59:59", strtotime($request->end_date) ); 
+        }
+
+        if($from && $to) {
+            $filter = Users::users(7)->whereHas('subscription', function($query) use($from, $to) {
+                $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
+            });
+        } else if ($from && !$to) {
+            $filter = Users::users(7)->whereHas('subscription', function($query) use($from, $to) {
+                $query->where('start_date', '>=', $from);
+            });
+        } else if (!$from && $to) {
+            $filter = Users::users(7)->whereHas('subscription', function($query) use($from, $to) {
+                $query->where('end_date', '<=', $to);
+            });
+        } else {
+            $filter = Users::users(7);
+        }
+
+
+        switch($request->activate) {
+            case "1":
+                $filter = $filter->get();
+                break;
+            case "2":
+                $filter = $filter->where('is_active', '!=', 0)->get();
+                break;
+            case "3":
+                $filter = $filter->where('is_active', 0)->get();
+                break;
+            default:
+                break;
+        }
+                    
+        return view('clients.mobile.mobile')->with('users', $filter);
     }
 
     /**

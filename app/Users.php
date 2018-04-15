@@ -1,8 +1,9 @@
 <?php
 
 namespace App;
-
+use App\Users_Rules;
 use App\Installment;
+use App\ClientsPasswords;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,14 +27,19 @@ class Users extends Authenticatable
         parent::boot();
 
         static::deleting(function($user) { // before delete() method call this
-            if ( $user->rules() ) { $user->rules()->delete(); }
-            if ( $user->user_detail() ) { $user->user_detail()->delete(); }
-            if ( Installment::whereIn('subscription_id', $user->subscription->id) ) {
-                $user->subscription()->delete();
+            if ( $user->rules ) { Users_Rules::where('user_id',$user->id)->delete(); }
+            if ( $user->client_password ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
+            if ( $user->user_detail ) { $user->user_detail()->delete(); }
+            if ( $user->subscription ) { 
+                if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
+                    Installment::where('subscription_id', $user->subscription->id)->delete();
+                }
+                $user->subscription()->delete(); 
             }
-            if ( $user->user_company_detail() ) { $user->user_company_detail()->delete(); }
+            if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }    // for companies or individuals_companies
         });
     }
+
 
    public function createdParent()
    {
@@ -74,7 +80,7 @@ class Users extends Authenticatable
    // Join between 'users' && 'users_rules'
    // get all users with user_type is 8 => individuals only
    public function scopeUsers($query, $user_rule_id) {
-       $result = $query->select('users_rules.id as ur_id', 'users.id', 'name', 'parent_id', 'full_name', 'email', 'image', 'phone', 'mobile', 'address', 'code', 'birthdate', 'creditcard_number', 'creditcard_cvv', 'creditcard_month', 'creditcard_year', 'is_active', 'verificaition_code', 'is_verification_code_expired', 'last_login', 'api_token', 'device_token', 'created_by', 'modified_by', 'remember_token')
+       $result = $query->select('users_rules.id as ur_id', 'users.*')
                            ->join('users_rules', 'users.id', '=', 'users_rules.user_id')
                            ->where('users_rules.rule_id', $user_rule_id);
    }
@@ -104,4 +110,36 @@ class Users extends Authenticatable
    {
        return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
    }
+
+   public function cases()
+    {
+        return $this->belongsToMany('App\Case_','case_lawyers','case_id','lawyer_id');
+    }
+    public function clients()
+    {
+        return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
+}
+
+           public function tasks()
+    {
+        return $this->hasMany('App\Tasks','client_id');
+
+    }
+
+           public function tasks_assigned()
+    {
+        return $this->hasMany('App\Tasks','assigned_lawyer_id');
+
+    }
+
+           public function who_assign_tasks()
+    {
+        return $this->hasMany('App\Tasks','who_assigned_lawyer_id');
+
+    }
+
+        public function case_technical_reports()
+    {
+      return $this->hasMany('App\Case_Techinical_Report', 'assigned_to');
+    }
 }

@@ -12,4 +12,10 @@ npm-debug.log
 yarn-error.log
 .env
 /nbproject/private/
+/public/cases_images
+/public/contracts
+/public/investigation_images
+/public/lawyers_files
+/public/users_images
+composer.json
 composer.lock

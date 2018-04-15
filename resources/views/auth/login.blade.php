@@ -18,7 +18,7 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#1c5ba8">
     <!-- =============== APP TITLE ===============-->
-    <title>covered</title>
+    <title>Secure Bridge</title>
     <!-- =============== APP STYLES ===============-->
     <link rel="stylesheet" href="{{asset('css/style__rtl.css')}}">
     <!-- =============== APP SCRIPT ===============-->
@@ -29,6 +29,7 @@
       <div class="wrapper">
         <!-- =============== Custom Content ===============-->
         <div class="login--page" style="background:  center center ; background-size: cover ; ;">
+        <div class="login--page" style="background: url(https://source.unsplash.com/collection/141056) center center ; background-size: cover ; ;">
           <div class="row">
             <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-10 col-sm-offset-1 col-xs-12">
               <div class="login--form">

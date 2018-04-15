@@ -4,7 +4,7 @@
 <div class="row">
   {{--  Start cover  --}}
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="add-mode">Adding mode</div>
       <div class="row">
         <div class="col-xs-12">
@@ -68,8 +68,8 @@
           <div class="master_field">
             <label class="master_label mandatory" for="comp_name">اسم الشركة</label>
             <input name="name" value="{{ old('name') }}"  class="master_input" type="text" placeholder="اسم الشركة .." id="comp_name">
-            {{--  Error  --}}
-            @if ($errors->has('name'))
+              {{--  Error  --}}
+              @if ($errors->has('name'))
                 <span class="master_message color--fadegreen">{{ $errors->first('name') }}</span>
               @endif
           </div>
@@ -84,13 +84,13 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->item_id }}">{{ $nat->value }}</option>
+                <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-            @if ($errors->has('package_type_id'))
-              <span class="master_message color--fadegreen">{{ $errors->first('package_type_id') }}</span>
+            @if ($errors->has('nationality'))
+              <span class="master_message color--fadegreen">{{ $errors->first('nationality') }}</span>
             @endif
           </div>
           
@@ -191,7 +191,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="works_field">قطاع الأعمال </label>
-            <input name="work_sector" value="{{ old('work_sector') }}"  class="master_input" type="text" placeholder="  .." id="works_field">
+            <input name="work_sector" value="{{ old('work_sector') }}"  class="master_input" type="text" placeholder="ادخل قطاع الاعمال.." id="works_field">
             {{--  Error  --}}
           @if ($errors->has('work_sector'))
               <span class="master_message color--fadegreen">{{ $errors->first('work_sector') }}</span>
@@ -248,9 +248,11 @@
         <div class="col-xs-3">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="discount">
             
-          
+            @if($errors->has('discount_percentage'))
+              <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>
+            @endif
           </div>
           
         </div>
@@ -261,7 +263,7 @@
           <div class="master_field">       
             <input name="activate" class="icon" type="radio" name="icon" id="radbtn_2" value="1" checked="true">
             <label for="radbtn_2">مفعل</label>
-            <input name="activate" class="icon" type="radio" name="icon" id="radbtn_3" value="0" {{ old('activate') == 0 ? 'checked' : ''  }} >
+            <input name="activate" class="icon" type="radio" name="icon" id="radbtn_3" value="0">
             <label for="radbtn_3">غير مفعل</label>
           </div>
         </div>
@@ -308,7 +310,7 @@
             <select name="package_type_id" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($subscription_types as $types)
-                <option value="{{ $types->id }}">{{ $types->name }}</option>
+                <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
               @endforeach
               
             </select>
@@ -401,13 +403,13 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

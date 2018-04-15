@@ -81,12 +81,13 @@
        data:{ids:selectedIds,filters:filter},
        success:function(response){
         swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-        var a = document.createElement("a");
-        a.href = response.file; 
-        a.download = response.name+'.xlsx';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+        // var a = document.createElement("a");
+        // a.href = response.file; 
+        // a.download = response.name+'.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        location.href = response;
       }
     });
    });
@@ -104,7 +105,7 @@
             </div>
           </div>
         </div>
-        <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_create')}}">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="lawyers_follow.html">متابعة أماكن المحامين</a>
+        <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_create')}}">إضافة محامي</a><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_follow')}}">متابعة أماكن المحامين</a>
         </div>
       </div>
     </div>
@@ -184,7 +185,7 @@
           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
           <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
           </div>
-          <table class="table-1">
+          <table class="table-1" id="dataTableTriggerId_001">
             <thead>
               <tr class="bgcolor--gray_mm color--gray_d">
                 <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -205,7 +206,7 @@
             <tbody>
               @foreach($lawyers as $lawyer)
               <tr data-lawyer-id="{{$lawyer->id}}">
-                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                 <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
                 <td><span class="cellcontent">

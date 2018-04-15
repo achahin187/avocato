@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Cases_Types;
 use Validator;
 use Excel;
-use App\Exports\TestExport;
+use App\Exports\CasesTypesExport;
 
 class IssuesTypesController extends Controller
 {
@@ -33,60 +33,18 @@ class IssuesTypesController extends Controller
 
     public function excel()
     {   
-    //     $typesArray[]=['رقم','نوع القضيه'];
-    //     if(isset($_GET['ids'])){
-    //        $ids = $_GET['ids'];
-    //        foreach($ids as $id)
-    //        {
-    //         $typesArray[] = collect(Cases_Types::find($id,['id','name']))->toArray();
-    //     }    
-    // }
-    //     else{
-    //         $types = Cases_Types::all('id','name');
-    //         foreach($types as $type){
-    //           $typesArray[] = collect($type)->toArray(); 
-    //       }   
-    //   }
-
-    //     $myFile=Excel::create('أنواع القضايا', function($excel) use($typesArray) {
-    //                 // Set the title
-    //         $excel->setTitle('أنواع القضايا');
-
-    //                 // Chain the setters
-    //         $excel->setCreator('PentaValue')
-    //         ->setCompany('PentaValue');
-    //                 // Call them separately
-    //         $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
-
-    //         $excel->sheet('أنواع القضايا', function($sheet) use($typesArray) {
-    //             $sheet->setRightToLeft(true); 
-    //             $sheet->getStyle( "A1:B1" )->getFont()->setBold( true );
-    //             // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-    //             // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-    //             // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-    //             $sheet->fromArray($typesArray, null, 'A1', false, false);
-
-    //         });
-    //     });
-    //     $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-    //     $response =  array(
-    //        'name' => "أنواع القضايا".date('Y_m_d'), //no extention needed
-    //        'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-    //                     );
-    //     return response()->json($response);
-
-        
-        // $myFile=Excel::export(new TestExport, 'invoices.xlsx');
-        // $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        // $response =  array(
-        //    'name' => "أنواع القضايا".date('Y_m_d'), //no extention needed
-        //    'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-        //                 );
-
-        // return response()->json($response);
-
-         Excel::store(new TestExport, 'public/boshy.xlsx');
-        return response()->json('done');
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'cases'.time().'.xlsx';
+        if(isset($_GET['ids'])){
+           $ids = $_GET['ids'];
+        Excel::store(new CasesTypesExport($ids),$filepath.$filename);
+        return response()->json($PathForJson.$filename);
+    }
+        else{
+        Excel::store((new CasesTypesExport()),$filepath.$filename);
+        return response()->json($PathForJson.$filename); 
+      }
     }
 
     /**
@@ -97,6 +55,8 @@ class IssuesTypesController extends Controller
      */
     public function store(Request $request)
     {
+         // \App::setLocale('en');
+
         $validator = Validator::make($request->all(), [
             'new_type'=>'required|unique:cases_types,name',
         ]);

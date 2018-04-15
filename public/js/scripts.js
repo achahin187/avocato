@@ -34257,35 +34257,6 @@ $('.cellcontent:has(label.data-label) , td:has(label.data-label)').css({
 })
 
 // =====================================================
-// ==================Checkboxes Data table =============
-// =====================================================
-$('#select-all').click(function(event) {
-  if (this.checked) {
-    // Iterate each checkbox
-    $('.checkboxes:checkbox').each(function() {
-      this.checked = true;
-    });
-  } else {
-    $('.checkboxes:checkbox').each(function() {
-      this.checked = false;
-    });
-  }
-});
-
-// =====================================================
-// ==================search Data table =============
-// =====================================================
-
-window.onload = function() {
-  // $(".full-table").each(function() {
-  //   $(this).find(".filter__btns").appendTo($(this).find(".filter__btns_cont"));
-  //   $(this).find(".sortingr__btns").appendTo($(this).find(".sortingr__btns_cont"));
-  //   $(this).find(".bottomActions__btns").appendTo($(this).find(".tableActions__btns_cont"));
-  //
-  //  });
-};
-
-// =====================================================
 // ==================custom type input =============
 // =====================================================
 $('.chooseFile').bind('change', function() {

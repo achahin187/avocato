@@ -19,6 +19,7 @@ class CreateClientsPasswordsTable extends Migration
             $table->integer('password');
             $table->boolean('confirmation')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

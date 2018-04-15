@@ -77,7 +77,7 @@ true).find("option[value]").remove();
                     <div class="col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="contract_name">اسم العقد / الصيغة </label>
-                        <input name="contract_name" class="master_input" type="text" placeholder="اسم العقد / الصيغة .." id="contract_name"><span class="master_message color--fadegreen">
+                        <input name="contract_name" value="{{ old('contract_name') }}" class="master_input" type="text" placeholder="اسم العقد / الصيغة .." id="contract_name"><span class="master_message color--fadegreen">
                                     @if ($errors->has('contract_name'))
                                     {{ $errors->first('contract_name')}}
                                     @endif</span>
