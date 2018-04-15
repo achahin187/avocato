@@ -21,18 +21,12 @@
                     </div>
                   </div>
                 </div>
-                          @foreach($months as $month)
-                          {{Date::parse($month->start_datetime)->format('F')}}
-                          {{-- {{$month->start_datetime}} --}}
-                          {{$month->missions}}
-                          @endforeach
                 <div class="col-lg-12">
                 @if(\session('success'))
                   <div class="alert alert-success">
                   {{\session('success')}}
                   </div>
                   @endif
-
                 @if ($errors->has('lawyer'))
                 <div class="alert alert-danger">
                 {{ $errors->first('lawyer')}}
@@ -51,66 +45,6 @@
                         </div>
                         <div class="full-table">
                           <div class="remodal-bg">
-<div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-
-              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-              <div>
-                <h2 id="modal1Title">فلتر</h2>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label" for="work_sector">التخصص</label>
-                    <input name="work_sector" class="master_input" type="text" placeholder="التخصص .." id="work_sector">
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
-                    <input name="syndicate_level" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in">
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label mandatory" for="nationality">الجنسيه</label>
-                    <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
-                      <option value="0" selected="selected">الكل</option>
-                      @foreach($nationalities as $nationality)
-                      <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
-                      @endforeach
-                    </select><span class="master_message color--fadegreen"></span>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
-                    <div class="bootstrap-timepicker">
-                      <input name="date_from" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_from">
-                    </div><span class="master_message color--fadegreen"></span>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
-                    <div class="bootstrap-timepicker">
-                      <input name="date_to" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_to">
-                    </div><span class="master_message color--fadegreen"></span>
-                  </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                  <div class="master_field">
-                    <label class="master_label mandatory" for="work_type">نوع العمل</label>
-                    <select name="types" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
-                      <option value="0" selected="selected">الكل</option>
-                      @foreach($types as $type)
-                      <option value="{{$type->id}}">{{$type->name_ar}}</option>
-                      @endforeach
-                    </select><span class="master_message color--fadegreen"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="clearfix"></div>
-              <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-              <button class="remodal-confirm"  type="submit">فلتر</button>
-                          </div>
                           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                           <table class="table-1">
                             <thead>
@@ -130,7 +64,7 @@
                             </thead>
                             <tbody>
                               @foreach($lawyers as $lawyer)
-                              <tr>
+                              <tr data-lawyer-id="{{$lawyer->id}}">
                                 <td><span class="cellcontent"><input type="radio" name="lawyer" {{$lawyer->id==$service->assigned_lawyer_id ?'checked':''}} value="{{$lawyer->id}}"></span></td>
                                 <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                                 <td><span class="cellcontent full_name">{{$lawyer->full_name}}</span></td>
@@ -330,79 +264,102 @@
                             <label class="master_label">تاريخ بداية و نهاية المهمة</label>
                             <input name="start_end" class="date_range_picker master_input" type="text" placeholder="placeholder">
                           </div>
+                          <div id="lawyer_tasks">
+{{--                           @foreach($tasks_months as $month=>$tasks)
                           <div class="col-lg-12">
                             <div class="panel panel-default">
-                              <div class="panel-heading" id="heading-1" role="tab">
-                                <h4 class="panel-title bgcolor--main_l bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-                                    <div class="col-xs-11">الاسبوع من الأحد 4-2-2018 الى الخميس 8-2-2018<span class="pull-right color--fadeorange">4 مهمات</span></div>
+                              <div class="panel-heading" id="heading-1{{$month}}" role="tab">
+                                <h4 class="panel-title bgcolor--main_l bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#collapse-1{{$month}}" aria-expanded="true" aria-controls="collapse-1">
+                                    <div class="col-xs-11">{{$month}}<span class="pull-right color--fadeorange">مهمات {{count($tasks)}}</span></div>
                                     <div class="clearfix"></div></a></h4>
                               </div>
                             </div>
 
-                            <div class="panel-collapse collapse" id="collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
+                            <div class="panel-collapse collapse" id="collapse-1{{$month}}" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
                               <div class="panel-body bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">جلسة محكمة</span> &nbsp;<a href="case_view.html">اسم القضية </a>
+                                @foreach($tasks as $task)
+                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">{{Helper::localizations('task_types','name',$task['task_type_id'])}}</span> &nbsp;<a href="case_view.html">{{$task['name']}} </a>
                                   <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">4-2-2018</label>
+                                    <label class="data-label-round bgcolor--fadegreen color--white">{{$task['start_datetime']->format('Y - m - d')}}</label>
                                   </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr>
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">خدمة</span> &nbsp;<a href="service_view.html">اسم الخدمة</a>
-                                  <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">6-2-2018</label>
-                                  </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">استشارة قانونية</span>  &nbsp;<a href="legal_consultation_view.html">عنوان الإستشارة</a>
-                                  <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">4-2-2018</label>
-                                  </div>
-                                </div>
-                                <div class="clearfix"></div>
+                                @endforeach
                               </div>
                             </div>
                           </div>
-{{--                           <div class="col-lg-12">
-                            <div class="panel panel-default">
-                              <div class="panel-heading" id="heading-2" role="tab">
-                                <h4 class="panel-title bgcolor--main_l bradius--noborder bshadow--2 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#collapse-2" aria-expanded="true" aria-controls="collapse-2">
-                                    <div class="col-xs-11">الاسبوع من الأحد 11-2-2018 الى الخميس 15-2-2018<span class="pull-right color--fadeorange">3 مهمات</span></div>
-                                    <div class="clearfix"></div></a></h4>
-                              </div>
-                            </div>
-                            <div class="panel-collapse collapse" id="collapse-2" role="tabpanel" aria-labelledby="heading-2" aria-expanded="true">
-                              <div class="panel-body bgcolor--white bradius--noborder bshadow--2 padding--small margin--small-top-bottom">
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">جلسة محكمة</span> &nbsp;<a href="case_view.html">اسم القضية </a>
-                                  <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">4-2-2018</label>
-                                  </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">خدمة</span> &nbsp;<a href="service_view.html">اسم الخدمة</a>
-                                  <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">6-2-2018</label>
-                                  </div>
-                                </div>
-                                <div class="clearfix"></div>
-                                <hr>
-                                <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">استشارة قانونية</span>  &nbsp;<a href="legal_consultation_view.html">عنوان الإستشارة</a>
-                                  <div class="pull-right">
-                                    <label class="data-label-round bgcolor--fadegreen color--white">4-2-2018</label>
-                                  </div>
-                                </div>
-                                <div class="clearfix"></div>
-                              </div>
-                            </div>
-                          </div> --}}
+                          @endforeach --}}
+                        </div>
                         </div>
                       </fieldset>
                     </form>
                   </div>
                 </div>
               </div>
+
+          <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+          <form role="form" action="{{route('services_lawyer_filter',$service->id)}}" method="POST" accept-charset="utf-8">
+            {{ csrf_field() }}
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+              <div>
+                <h2 id="modal1Title">فلتر</h2>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label" for="work_sector">التخصص</label>
+                    <input name="work_sector" class="master_input" type="text" placeholder="التخصص .." id="work_sector">
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
+                    <input name="syndicate_level" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in">
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="nationality">الجنسيه</label>
+                    <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
+                      <option value="0" selected="selected">الكل</option>
+                      @foreach($nationalities as $nationality)
+                      <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                      @endforeach
+                    </select><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="date_from" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_from">
+                    </div><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="date_to" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_to">
+                    </div><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="work_type">نوع العمل</label>
+                    <select name="types" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                      <option value="0" selected="selected">الكل</option>
+                      @foreach($types as $type)
+                      <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                      @endforeach
+                    </select><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+              <button class="remodal-confirm"  type="submit">فلتر</button>
+            </form>
+                          </div>
               <!-- =============== PAGE VENDOR Triggers =================-->
                   
 
@@ -416,12 +373,23 @@
     function(){
     var full_name = $(this).closest('tr').find('.full_name').text();
     var syndicate_level = $(this).closest('tr').find('.syndicate_level').text();
+    var id = $(this).closest('tr').attr('data-lawyer-id');
     $('.full_name2').text(full_name);
     $('.syndicate_level2').text(syndicate_level);
+
+             $.ajax({
+           type:'GET',
+           url:'{{url('services_lawyer_task')}}'+'/'+id,
+           data:{},
+           success:function(data){
+            $('#lawyer_tasks').html(data);
+          },
+      error: function(xhr, textStatus, errorThrown){
+       $('#lawyer_tasks').html(' ');
+    }
+        });
     });
     $('input:radio[name="lawyer"]:checked').trigger('change');
-
-
 
   });
 </script>
@@ -463,7 +431,7 @@ if (currentIndex === 5) { //if last step
    //remove default #finish button
    $('#wizard').find('a[href="#finish"]').remove(); 
    //append a submit type button
-   $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+   $('#wizard .actions li:last-child').append('<button type="submit" value="finish" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
 }
                 
             },

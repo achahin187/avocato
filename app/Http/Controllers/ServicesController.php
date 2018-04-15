@@ -15,9 +15,7 @@ use Excel;
 use Session;
 use App\Case_Techinical_Report_Document;
 use App\Case_Techinical_Report;
-// use Jenssegers\Date\Date;
-use DB;
-use Carbon\Carbon;
+use Jenssegers\Date\Date;
 use App\Rules;
 
 class ServicesController extends Controller
@@ -316,12 +314,7 @@ class ServicesController extends Controller
 
         public function lawyer($id)
     { 
-      // Date::setLocale('ar');
-      $data['months'] = Tasks::select(DB::raw('count(*) as missions,MONTH(start_datetime) as month'))->groupBy('month')->get();
-      // foreach($data['months'] as $month){
-      //   $month_en = Carbon::parse($month);
-      // }
-      // return $month_en;
+
       $data['types']=Rules::where('parent_id',5)->get();
       $data['lawyers'] = Users::whereHas('rules', function($q){
             $q->where('rule_id',5);
@@ -331,7 +324,25 @@ class ServicesController extends Controller
       return view('services.services_lawyer',$data);
     }
 
-    public function filter_lawyer(Request $request){
+        public function lawyer_task($id)
+    { 
+      Date::setLocale('ar');
+      $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+      foreach($tasks as $task){
+      $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
+                              'id'=>$task->id,
+                              'name'=>$task->name,
+                              'start_datetime'=>$task->start_datetime,
+                              'end_datetime'=>$task->end_datetime,
+                              'task_type_id'=>$task->task_type_id,
+                                    ];
+      }
+      $data['tasks_months'] = $tasks_months;
+      $div = view('services.services_lawyer_tasks',$data)->render();
+      return response()->json($div);
+    }
+
+    public function filter_lawyer(Request $request,$id){
         /* date_to make H:i:s = 23:59:59 to avoid two problems
             one : when select same date
             second : when juse select date_to
@@ -395,23 +406,11 @@ class ServicesController extends Controller
 
 
         })->get();
-            $data['roles']=Rules::whereBetween('id',array('2','4'))->get();
-            $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-            $data['types']=Rules::whereBetween('id',array('11','12'))->get();
-            foreach($data['lawyers'] as $lawyer)
-            {
-              $filter_ids[]=$lawyer->id;
-            }
-            if(!empty($filter_ids))
-            {
-              Session::flash('filter_ids',$filter_ids);
-            }
-            else{
-              $filter_ids[]=0;
-              Session::flash('filter_ids',$filter_ids);
-            }
+        $data['types']=Rules::where('parent_id',5)->get();
+             $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+              $data['service'] = Tasks::find($id);
 
-            return view('lawyers.lawyers',$data);
+            return view('services.services_lawyer',$data);
 
           }
 
@@ -429,7 +428,7 @@ class ServicesController extends Controller
             ->withInput();
         }
       $date = explode('-',$request->start_end);  
-      $start=date('Y-m-d',strtotime($date[0]));
+      $start = date('Y-m-d',strtotime($date[0]));
       $end = date('Y-m-d',strtotime($date[1]));
 
       $service = Tasks::find($id);
