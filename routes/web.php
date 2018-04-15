@@ -204,6 +204,7 @@ Route::post('/services_update/{id}', 'ServicesController@update')->name('service
 Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
 Route::get('/services_excel2', 'ServicesController@excel2')->name('services_excel2');
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
+Route::post('/services_filter2', 'ServicesController@filter2')->name('services_filter2');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 Route::get('/report_download_document/{id}', 'ServicesController@download_document')->name('report_download_document');

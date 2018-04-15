@@ -266,6 +266,59 @@ class ServicesController extends Controller
         return view('services.services',$data);
     }
 
+        public function filter2(Request $request)
+    {
+        // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+        $data['services'] = Tasks::where(function($q) use($request){
+              $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
+              $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+
+               $q->where('task_type_id',3);
+
+              if($request->filled('client_name'))
+              {
+               $q->whereHas('client',function($q) use($request){
+                $q->where('full_name','like','%'.$request->client_name.'%');
+
+              });  
+             }
+
+            if($request->status == 1 || $request->status == 2)
+            {
+              $q->where('task_status_id',$request->status);
+ 
+            }
+
+           if($request->lawyer == 1)
+           {
+              $q->whereNotNull('assigned_lawyer_id');
+           }
+           elseif($request->lawyer == 0)
+           {
+            $q->whereNull('assigned_lawyer_id');
+           }
+
+           if($request->filled('date_from') && $request->filled('date_to') )
+           {
+            $q->whereBetween('start_datetime', array($date_from, $date_to));
+          }
+          elseif($request->filled('date_from'))
+          {
+            $q->where('start_datetime','>=',$date_from);
+          }
+          elseif($request->filled('date_to'))
+          {
+            $q->where('start_datetime','<=',$date_to);
+          }
+
+
+
+
+        })->get();
+        $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
+        return view('tasks.tasks_normal',$data);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
