@@ -120,7 +120,7 @@ class Users extends Authenticatable
         return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
 }
 
-           public function tasks()
+    public function tasks()
     {
         return $this->hasMany('App\Tasks','client_id');
 
