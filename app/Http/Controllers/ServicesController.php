@@ -44,6 +44,7 @@ class ServicesController extends Controller
         })->get();
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         return view('services.services_create',$data);
+        
     }
 
     /**

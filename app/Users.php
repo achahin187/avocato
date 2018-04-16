@@ -4,6 +4,7 @@ namespace App;
 use App\Users_Rules;
 use App\Installment;
 use App\ClientsPasswords;
+use App\Task_Charges;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,7 +37,16 @@ class Users extends Authenticatable
                 }
                 $user->subscription()->delete(); 
             }
-            if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }    // for companies or individuals_companies
+            if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }
+            if ( $user->tasks ) { 
+              foreach($user->tasks as $task){
+                if ( Task_Charges::where('task_id', $task->id)->get() ) {
+                    Task_Charges::where('task_id', $task->id)->delete();
+                }
+              }
+              }
+            if ( $user->offices ) {$user->offices()->delete();}
+                // for companies or individuals_companies
         });
     }
 
@@ -123,6 +133,12 @@ class Users extends Authenticatable
     public function tasks()
     {
         return $this->hasMany('App\Tasks','client_id');
+
+    }
+
+        public function offices()
+    {
+        return $this->hasMany('App\User_Offices','user_id');
 
     }
 
