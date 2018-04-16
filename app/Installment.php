@@ -9,7 +9,7 @@ class Installment extends Model
 {
     use SoftDeletes;
     protected $fillable = ['subscription_id', 'installment_number', 'value', 'payment_date', 'is_paid'];
-    protected $dates = ['deleted_at'];
+    protected $dates = ['payment_date', 'deleted_at'];
 
 
 	public function subscription() {
