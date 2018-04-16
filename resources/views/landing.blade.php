@@ -297,14 +297,14 @@
                       </form>
                       </div>
                       <div class="tab-pane fade" id="tabBody2" role="tabpanel" aria-labelledby="tab2" aria-hidden="true" tabindex="0">
-                    <form role="form" action="{{route('landing.company')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                    <form role="form" action="{{route('landing.office')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                       {{csrf_field()}}
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="office_name">اسم المكتب</label>
-                            <input name="company_name" value="{{ old('company_name') }}" class="master_input" type="text" placeholder="اسم المكتب .." id="office_name"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('company_name'))
-                                    {{ $errors->first('company_name')}}
+                            <input name="office_name" value="{{ old('office_name') }}" class="master_input" type="text" placeholder="اسم المكتب .." id="office_name"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('office_name'))
+                                    {{ $errors->first('office_name')}}
                                     @endif </span>
                           </div>
                         </div>
@@ -352,6 +352,21 @@
                                     {{ $errors->first('email')}}
                                     @endif</span>
                           </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="master_field">
+                        <label class="master_label">لوجو المكتب</label>
+                        <div class="file-upload">
+                          <div class="file-select">
+                            <div class="file-select-name" id="noFile">لوجو المكتب</div>
+                            <input name="image" class="chooseFile" type="file" name="chooseFile">
+                          </div>
+                        </div><span class="master_message color--fadegreen">
+                                    @if ($errors->has('image'))
+                                    {{ $errors->first('image')}}
+                                    @endif</span>
+                      </div>
                         </div>
                         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
                           <button class="master-btn undefined btn-block color--main color--gray_d bradius--rounded bshadow--0" type="submit"><span>إرسال</span>

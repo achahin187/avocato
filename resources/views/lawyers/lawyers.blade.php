@@ -215,18 +215,20 @@
                   {{$rule->name_ar}}
                   @endif
                 @endforeach</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_level}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->address}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_level or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->address or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->mobile or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
                 <td><span class="cellcontent">
+                  @isset($lawyer->user_detail->nationality->id)
                   @foreach($nationalities as $nationality)
                   @if($lawyer->user_detail->nationality->id == $nationality->item_id)
                   {{$nationality->value}}
                   @endif
                   @endforeach
+                  @endisset
                 </span></td>
                 <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</span></td>
                   <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>

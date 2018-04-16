@@ -13,9 +13,11 @@ use App\Installment;
 use App\Rules;
 use App\Genders;
 use App\Geo_Countries;
-use App\User_Company_Details;
+use App\User_Offices;
 use Helper;
 use Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 
 class LandingController extends Controller
 {
@@ -156,7 +158,7 @@ class LandingController extends Controller
     }
 
 
-            public function company(Request $request)
+            public function office(Request $request)
     {
         $url = url()->previous();
         $split = explode('/',$url);
@@ -165,12 +167,13 @@ class LandingController extends Controller
             \App::setlocale('en');
                 // Validate data
 		$validator = Validator::make($request->all(), [
-		            'company_name'=>'required',
+		            'office_name'=>'required',
 		            'address'=>'required',
 		            'phone'=>'required|numeric',
 		            'mobile'=>'required|numeric',
 		            'email'=>'required|email|max:40',
 		            'legal_representative_name'=>'required',
+                    'image'=>'image|mimes:jpeg,jpg,png|max:1024',
 		        ]);
 
 		        if ($validator->fails()) {
@@ -179,37 +182,46 @@ class LandingController extends Controller
 		            ->withInput();
 		        }
 
-        $company = new Users;
-        $company->name = $request->company_name;
-        $company->full_name = $request->company_name;
-        $company->address = $request->address;
-        $company->phone = $request->phone;
-        $company->mobile = $request->mobile;
-        $company->email = $request->email;
-        $company->is_active = 0; 
+                if($request->hasFile('image')){
+                    $destinationPath='logos';
+                    $fileNameToStore=$destinationPath.'/'.$request->office_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
+            // dd($fileNameToStore);
+                    Input::file('image')->move($destinationPath,$fileNameToStore);
+                }
+
+        $office = new Users;
+        $office->name = $request->legal_representative_name;
+        $office->full_name = $request->legal_representative_name;
+        $office->address = $request->address;
+        $office->phone = $request->phone;
+        $office->mobile = $request->mobile;
+        $office->email = $request->email;
+        $office->is_active = 0; 
         $password = Helper::generateRandom(Users::class, 'password', 8);
-        $company->password = bcrypt($password);
-        $company->code = Helper::generateRandom(Users::class, 'code', 6);
-        $company->save();
-        $company->rules()->attach([6,9]);
+        $office->password = bcrypt($password);
+        $office->code = Helper::generateRandom(Users::class, 'code', 6);
+        $office->save();
+        $office->rules()->attach([5,14]);
 
-        $company_sub = new Subscriptions;
-        $company->subscription()->save($company_sub);
-        $company_install = new Installment ;
-        $company_sub->installments()->save($company_install);
+        $user_offices = new User_Offices;
+        $user_offices->name = $request->office_name;
+        $user_offices->logo = $fileNameToStore;
+        $office->offices()->save($user_offices);
 
-        $company_details = new User_Details;
-        $user_company_details = new User_Company_Details;
-        $user_company_details->legal_representative_name = $request->legal_representative_name;
-        $company_plaintext = new ClientsPasswords;
-        $company_plaintext->password = $password;
-        $company->user_detail()->save($company_details);
-        $company->user_company_detail()->save($user_company_details);
-        $company->client_password()->save($company_plaintext);
+        // $office_sub = new Subscriptions;
+        // $office->subscription()->save($office_sub);
+        // $office_install = new Installment ;
+        // $office_sub->installments()->save($office_install);
+
+        $office_details = new User_Details;
+        $office_plaintext = new ClientsPasswords;
+        $office_plaintext->password = $password;
+        $office->user_detail()->save($office_details);
+        $office->client_password()->save($office_plaintext);
 
     if($lang == 'en')
-        return redirect()->route('landing','en')->with('success','New Company Successfully Registered ');
-    else
-        return redirect()->route('landing')->with('success','تم إضافه مكتب جديد بنجاح');
+        return redirect()->route('landing','en')->with('success','New office Successfully Registered ');
+    elseif($lang == 'ar')
+        return redirect()->route('landing','ar')->with('success','تم إضافه مكتب جديد بنجاح');
     }
 }
