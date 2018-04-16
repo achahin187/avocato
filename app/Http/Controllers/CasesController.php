@@ -194,17 +194,61 @@ class CasesController extends Controller
 
        }
         // dd($case->lawyers->toArray());
-        return view('cases.case_edit')->with('case',$case)->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles]);
+        return view('cases.case_edit')->with('case',$case)->with('clients',$clients)->with('cases_record_types',$cases_record_types)->with('cases_types',$cases_types)->with(['courts'=>$courts,'governorates'=>$governorates,'countries'=>$countries,'cities'=>$cities,'lawyers'=>$lawyers,'roles'=>$roles])->with('client_count',count($case->clients()));
     }
 
 
 
    public function edit_case(Request $request , $id)
    {
-      
+      $case=Case_::find($id);
+      $start_time=explode('-', $request['case_dateRang'])[0];
+       $end_time=explode('-', $request['case_dateRang'])[1];
+      $case->update([
+            'office_file_number'=>$request['folder_num'],
+            'case_type_id'=>$request['case_type'],
+            'court_id'=>$request['court_name'],
+            'claim_number'=>$request['claim_num'],
+            'claim_year'=>$request['case_year'],
+            'claim_date'=>date('y-m-d h:i:s',strtotime($request['case_date'])),
+            'claim_expenses'=>$request['case_fees'],
+            'geo_governorate_id'=>$request['governorate'],
+            'geo_city_id'=>$request['city'],
+            'region'=>$request['circle'],
+            'case_startdate'=>date('y-m-d h:i:s',strtotime($start_time)),
+            'case_enddate'=>date('y-m-d h:i:s',strtotime($end_time)),
+            'contender_name'=>$request['enemy_name'],
+            'contender_case_client_role_id'=>$request['enemy_type'],
+            'contender_address'=>$request['enemy_address'],
+            'contender_laywer'=>$request['enemy_lawyer'],
+            'case_body'=>$request['subject'],
+            'case_notes'=>$request['notes'],
+            'created_by'=>\Auth::user()->id,
+        ]);
+      if($request->has('lawyer_id'))
+      {
+        Case_Lawyer::where('case_id',$id)->delete();
+        foreach ($request['lawyer_id'] as $key => $value) {
+            Case_Lawyer::create([
+                'case_id'=>$id,
+                'lawyer_id'=>$key,
+            ]);
+        }
+      }
+      Case_Client::where('case_id',$id)->delete();
+      // dd($request->all());
+      // dd($request['client_name'][1]);
+      foreach($request['client_code'] as $key => $value) {
+         Case_Client::Create([
+                'case_id'=>$case->id,
+                'client_id'=>$request['client_name'][$key],
+                'case_client_role_id'=>$request['client_character'][$key],
+                'attorney_number'=>$request['authorization_num'][$key],
+            ]);
+      }
 
-
-      dd($request->all());
+       return  redirect()->route('cases');
+      // dd($request->all());
    }
 
 

@@ -920,7 +920,7 @@
 
     @section('js')
     <script type="text/javascript">
-      var i=10;
+      var i={{$client_count}};
       function add_more_clients()
                 {
                   i++;
