@@ -18,4 +18,5 @@ yarn-error.log
 /public/investigation_images
 /public/lawyers_files
 /public/users_images
+/public/logos
 composer.lock

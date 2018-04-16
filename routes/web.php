@@ -245,4 +245,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
-Route::post('/Landing/company', 'LandingController@company')->name('landing.company');
+Route::post('/Landing/office', 'LandingController@office')->name('landing.office');

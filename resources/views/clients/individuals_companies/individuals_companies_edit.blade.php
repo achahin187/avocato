@@ -169,7 +169,7 @@
                 <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                     
                 @foreach ($nationalities as $nat)
-                    <option value="{{ $nat->id }}" {{ ($nat->id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
+                    <option value="{{ $nat->id }}" {{ ($nat->id == $user->user_detail->nationality_id) ? 'selected' : '' }}>{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option> {{ $nat->id }}
                 @endforeach
                 
                 </select>
@@ -284,7 +284,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-                <input name="start_date" value="{{ $user->subscription->start_date->format('Y/m/d') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
+                <input name="start_date" value="{{ $user->subscription->start_date->format('m/d/Y') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('start_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>             
@@ -296,7 +296,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-                <input name="end_date" value="{{ $user->subscription->end_date->format('Y/m/d') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
+                <input name="end_date" value="{{ $user->subscription->end_date->format('m/d/Y') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('end_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>             
@@ -373,19 +373,19 @@
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
+                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date->format('m/d/Y') }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label">حالة القسط رقم {{ $j }}</label>
-                  <div class="radiorobo 123">
-                    <input type="radio" name="payment_status[{{ $i }}][0]" id="rad_{{ $i }}">
-                    <label for="rad_1">نعم</label>
+                  <div class="radio-inline">
+                    <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ ($installments[$i]->is_paid == 1) ? 'checked' : '' }} >
+                    <label>نعم</label>
                   </div>
-                  <div class="radiorobo 456">
-                    <input type="radio" name="payment_status[{{ $i }}][1]" id="rad_{{ $j+1 }}"checked>
-                    <label for="rad_2">لا</label>
+                  <div class="radio-inline">
+                    <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ ($installments[$i]->is_paid == 0) ? 'checked' : '' }} >
+                    <label>لا</label>
                   </div>
                 </div>
               </div>
@@ -425,30 +425,30 @@
                 var j = i+1;
                 // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
                 $('#generated').append('<div class="col-md-4 col-xs-12">\
-                                          <div class="master_field">\
-                                            <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
-                                            <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
-                                          </div>\
-                                          </div>\
-                                          <div class="col-md-4 col-xs-12">\
-                                            <div class="master_field">\
-                                            <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                              <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
-                                            </div>\
-                                          </div>\
-                                          <div class="col-md-4 col-xs-12">\
-                                            <div class="master_field">\
-                                            <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                                          <div class="radiorobo 123">\
-                                            <input type="radio" name="payment_status['+i+'][0]" id="rad_'+i+'" >\
-                                            <label for="rad_1">نعم</label>\
-                                          </div>\
-                                          <div class="radiorobo 456">\
-                                            <input type="radio" name="payment_status['+i+'][1]" id="rad_'+j+1+'"checked>\
-                                            <label for="rad_2">لا</label>\
-                                          </div>\
+                                      <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
+                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                      </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
+                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" required>\
                                         </div>\
-                                      </div>');
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1">\
+                                        <label>نعم</label>\
+                                      </div>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
+                                      </div>\
+                                    </div>\
+                                  </div>');
               }
             } else {
               $('#generated div').remove();

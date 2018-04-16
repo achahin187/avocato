@@ -405,13 +405,13 @@
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                                      <div class="radiorobo 123">\
-                                        <input type="radio" name="payment_status['+i+'][0]" id="rad_'+i+'" >\
-                                        <label for="rad_1">نعم</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1" >\
+                                        <label>نعم</label>\
                                       </div>\
-                                      <div class="radiorobo 456">\
-                                        <input type="radio" name="payment_status['+i+'][1]" id="rad_'+j+1+'"checked>\
-                                        <label for="rad_2">لا</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
                                       </div>\
                                     </div>\
                                   </div>');

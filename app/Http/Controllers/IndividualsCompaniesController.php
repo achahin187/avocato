@@ -62,7 +62,6 @@ class IndividualsCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'company_code'  => 'required',
             'company_name'  => 'required',
@@ -171,6 +170,7 @@ class IndividualsCompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id = $request->nationality;
             $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
@@ -218,11 +218,12 @@ class IndividualsCompaniesController extends Controller
                         'installment_number'=> $i+1,
                         'value' => $request->payment[$i],
                         'payment_date'  => $pay_date,
-                        'is_paid'   => 1 //$request->payment_status[i]
+                        'is_paid'   => $request->payment_status[$i]
                     ]);
                 }
             }
         } catch(Exception $ex) {
+            dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -251,7 +252,7 @@ class IndividualsCompaniesController extends Controller
         return view('clients.individuals_companies.individuals_companies_show',$data);
     }
 
-        public function ind_comp_update(Request $request, $id)
+    public function ind_comp_update(Request $request, $id)
     {
         $installment = Installment::find($id);
         $installment->is_paid = $request->installment;
@@ -382,6 +383,7 @@ class IndividualsCompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id = $request->nationality;
             $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
@@ -412,19 +414,17 @@ class IndividualsCompaniesController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
+            if($request->number_of_payments != 0) {
                 Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
-                    $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    
-                    $installment = new Installment;
-                    $installment->subscription_id   = $subscription->id;
-                    $installment->installment_number = $i+1;
-                    $installment->value = $request->payment[$i];
-                    $installment->payment_date  = $pay_date;
-                    $installment->is_paid   = $key[0];
-                    $installment->save(); 
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => $request->payment_status[$i]
+                    ]);
                 }
             }
         } catch(Exception $ex) {

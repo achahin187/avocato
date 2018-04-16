@@ -140,4 +140,8 @@ class Helper {
             }
         }
     } 
+
+    public static function percent($part, $all) {
+        return round( ($part * 100) / $all );
+    }
 }
