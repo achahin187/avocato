@@ -3,7 +3,7 @@
 
  <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -102,7 +102,7 @@
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -119,20 +119,38 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent">محمد محمود السيد</span></td>
+
+
+
+                          @foreach($tasks as $task)
+                          <tr data-task-id={{$task->id}}>
+                            <?php
+                              $timestamp=strtotime($task->start_datetime);
+                              $date = date('d-m-Y', $timestamp);
+                            $time = date('h:i', $timestamp);
+                          ?>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                            <td><span class="cellcontent">{{$task->client->code}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->name}}</span></td>
                             <td><span class="cellcontent">افراد</span></td>
-                            <td><span class="cellcontent">0123456789</span></td>
-                            <td><span class="cellcontent">شارع ال90 التجمع الخامس</span></td>
-                            <td><span class="cellcontent">10-9-2019</span></td>
-                            <td><span class="cellcontent">10:10</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent">محروس السيد</span></td>
+                            <td><span class="cellcontent">{{$task->client->mobile}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->address}}</span></td>
+                            <td><span class="cellcontent">{{$date}}</span></td>
+                            <td><span class="cellcontent">{{$time}}</span></td>
+                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">
+                              @if($task->task_status_id == 2)
+                              تم
+                              @else
+                              لم يتم
+                              @endif
+                            </label></span></td>
+                            <td><span class="cellcontent">{{$task->lawyer->name}}</span></td>
                             <td><span class="cellcontent"><a href= emergency_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          
+                          @endforeach
+
+
+
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -354,3 +372,87 @@
               </div>
  
  @endsection
+ @section('js')
+                        <script>
+  $(document).ready(function(){
+
+    $('.btn-warning-cancel').click(function(){
+      var case_id = $(this).closest('tr').attr('data-task-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('task_destroy')}}'+'/'+task_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-task-id='+task_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+
+    $('.btn-warning-cancel-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-task-id');
+      }).get();
+      if(selectedIds.length == 0 )
+      {
+        swal("خطأ", "من فضلك اختر استشاره :)", "error");
+      }
+      else
+      {
+        // alert(selectedIds);
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('task_destroy_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-task-id='+value+']').fadeOut();
+            });
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    }
+    });
+
+ 
+
+  });
+</script>
+                       @endsection
