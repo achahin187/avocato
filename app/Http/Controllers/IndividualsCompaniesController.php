@@ -18,6 +18,9 @@ use App\ClientsPasswords;
 use App\User_Details;
 use App\Subscriptions;
 use App\Installment;
+use App\Case_Client;
+use App\Tasks;
+
 use Illuminate\Http\Request;
 
 class IndividualsCompaniesController extends Controller
@@ -249,6 +252,14 @@ class IndividualsCompaniesController extends Controller
     {
         $data['user'] = Users::find($id);
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+
         return view('clients.individuals_companies.individuals_companies_show',$data);
     }
 

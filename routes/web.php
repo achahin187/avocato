@@ -129,7 +129,7 @@ Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesCon
 Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
-Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
+Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
@@ -221,11 +221,13 @@ Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')-
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
+
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
 Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_state')->name('change_task_state');
 Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
 Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name('task_destroy');
 Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
+
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 

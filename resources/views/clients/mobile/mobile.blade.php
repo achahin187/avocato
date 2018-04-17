@@ -138,7 +138,7 @@
                 <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
                 <td>
                   <span class="cellcontent">
-                    <a href= clients_mobile_view.html ,  class= "action-btn bgcolor--main color--white ">
+                    <a href="{{ route('mobile.show', $user->id) }}"  class= "action-btn bgcolor--main color--white ">
                       <i class = "fa  fa-eye"></i>
                     </a>
 
