@@ -35,7 +35,7 @@ class ServicesExport2 implements FromCollection,WithEvents
         $servicesArray = array(['اسم الخدمه','اسم العميل','العنوان','التاريخ','الحاله']) ;
         if(is_null($this->ids)){
 
-        $services = Tasks::all();
+        $services = Tasks::where('task_type_id',3)->get();
         foreach($services as $service)
         {
             $service['status'] = Helper::localizations('task_statuses','name',$service->task_status_id);

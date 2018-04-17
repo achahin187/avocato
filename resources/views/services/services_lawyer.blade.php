@@ -10,9 +10,15 @@
                       <div class="col-xs-12">
                         <div class="text-xs-center">
                           <div class="text-wraper">
+                            @if($service->task_type_id==3)
                             <h4 class="cover-inside-title color--gray_d">الخدمات <i class="fa fa-chevron-circle-right"></i>
                               <h4 class="cover-inside-title color--gray_d">الخدمات </h4>
+                             </h4>
+                              @elseif($service->task_type_id==2)
+                            <h4 class="cover-inside-title color--gray_d">المهام <i class="fa fa-chevron-circle-right"></i>
+                              <h4 class="cover-inside-title color--gray_d">الجلسات </h4>
                             </h4>
+                            @endif
                           </div>
                         </div>
                       </div>
@@ -38,7 +44,11 @@
                       <h3>اختيار المحامي</h3>
                       <fieldset>
                         <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                          @if($service->task_type_id==3)
                           <div class="col-xs-12"><b class="col-sm-1"> الخدمه</b>
+                            @elseif($service->task_type_id==2)
+                            <div class="col-xs-12"><b class="col-sm-1"> الجلسه</b>
+                              @endif
                             <div class="col-sm-11">{{$service->name}}</div>
                           </div>
                           <div class="clearfix"> </div>
@@ -245,7 +255,11 @@
                           </div>
                         </div>
                       </fieldset>
-                      <h3>تعيين الخدمه حسب الجدول الأسبوعي للمحامي</h3>
+                      @if($service->task_type_id==3)
+                  <h3>تعيين الخدمه حسب الجدول الأسبوعي للمحامي</h3>
+                      @elseif($service->task_type_id==2)
+                    <h3>تعيين الجلسه حسب الجدول الأسبوعي للمحامي</h3>
+                      @endif
                       <fieldset>
                         <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="col-md-4"><b class="col-xs-4">اسم المحامي</b>
@@ -254,7 +268,11 @@
                           <div class="col-md-4"><b class="col-xs-4">درجة التقاضي</b>
                             <div class="col-xs-8 syndicate_level2">لا يوجد</div>
                           </div>
-                          <div class="col-md-4"><b class="col-xs-4"> الخدمه</b>
+                          @if($service->task_type_id==3)
+                    <div class="col-md-4"><b class="col-xs-4"> الخدمه</b>
+                          @elseif($service->task_type_id==2)
+                      <div class="col-md-4"><b class="col-xs-4"> الجلسه</b>
+                          @endif
                             <div class="col-xs-8">{{$service->name}}</div>
                           </div>
                           <div class="clearfix"> </div><br>
@@ -262,7 +280,7 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label">تاريخ بداية و نهاية المهمة</label>
-                            <input name="start_end" class="date_range_picker master_input" type="text" placeholder="placeholder">
+                            <input name="start_end" id="dp" class="date_range_picker master_input" type="text" placeholder="placeholder">
                           </div>
                           <div id="lawyer_tasks">
 {{--                           @foreach($tasks_months as $month=>$tasks)
@@ -368,6 +386,11 @@
 @section('js')
 <script>
   $(document).ready(function(){
+
+     $('#dp').daterangepicker({
+         startDate: new Date({{$service->start_datetime->format('Y')}},{{$service->start_datetime->format('m')-1}}, {{$service->start_datetime->format('d')}}),
+         endDate: new Date({{($service->end_datetime)?$service->end_datetime->format('Y').',':''}}{{($service->end_datetime)?($service->end_datetime->format('m')-1).',':''}} {{($service->end_datetime)?$service->end_datetime->format('d'):''}})
+     });
 
     $('input:radio[name="lawyer"]').change(
     function(){
