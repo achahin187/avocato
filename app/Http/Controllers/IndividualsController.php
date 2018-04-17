@@ -20,6 +20,9 @@ use Illuminate\DatabaseException;
 use App\Rules;
 use App\Geo_Countries;
 use App\Entity_Localizations;
+use App\Case_;
+use App\Case_Client;
+use App\Tasks;
 
 class IndividualsController extends Controller
 {
@@ -234,6 +237,14 @@ class IndividualsController extends Controller
     {
         $data['user'] = Users::find($id);
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+        
         return view('clients.individuals.individuals_show',$data);
     }
 

@@ -10,7 +10,7 @@ class Task_Types extends Model
     protected $table = 'task_types';
     public $timestamps = false;
 
-        public function tasks()
+    public function tasks()
     {
         return $this->hasMany('App\Tasks','task_type_id');
     }

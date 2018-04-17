@@ -4,6 +4,7 @@ namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use App\Entities;
 use App\Users;
+use App\Case_;
 
 class Helper {
 
@@ -143,5 +144,9 @@ class Helper {
 
     public static function percent($part, $all) {
         return round( ($part * 100) / $all );
+    }
+
+    public static function countCases($city_id, $gov_id) {
+        return Case_::where('geo_governorate_id', $gov_id)->where('geo_city_id', $city_id)->count();
     }
 }

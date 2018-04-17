@@ -100,7 +100,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
@@ -130,11 +130,11 @@
                             $time = date('h:i', $timestamp);
                           ?>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$task->client->code}}</span></td>
-                            <td><span class="cellcontent">{{$task->client->name}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->code or ''}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->name or ''}}</span></td>
                             <td><span class="cellcontent">افراد</span></td>
-                            <td><span class="cellcontent">{{$task->client->mobile}}</span></td>
-                            <td><span class="cellcontent">{{$task->client->address}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->mobile or ''}}</span></td>
+                            <td><span class="cellcontent">{{$task->client->address or ''}}</span></td>
                             <td><span class="cellcontent">{{$date}}</span></td>
                             <td><span class="cellcontent">{{$time}}</span></td>
                             <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">
@@ -144,7 +144,7 @@
                               لم يتم
                               @endif
                             </label></span></td>
-                            <td><span class="cellcontent">{{$task->lawyer->name}}</span></td>
+                            <td><span class="cellcontent">{{$task->lawyer->name or ''}}</span></td>
                             <td><span class="cellcontent"><a href="{{URL('task_emergency_view/'.$task->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
@@ -314,6 +314,8 @@
                     <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_task_service"><i class="fa fa-plus"></i><span>إضافة حالة طارئة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="add_task_service" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <form action="{{ route('add_emergency_task') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                   <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
@@ -356,14 +358,15 @@
                               <div class="col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label">تفاصيل الحالة الطارئة</label>
-                                  <textarea class="master_input" name="textarea" placeholder="تفاصيل الحالة الطارئة"></textarea>
+                                  <textarea class="master_input" name="body" placeholder="تفاصيل الحالة الطارئة"></textarea>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                        <button class="remodal-confirm" type="submit">حفظ</button>
+                      </form>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -377,7 +380,7 @@
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){
-      var case_id = $(this).closest('tr').attr('data-task-id');
+      var task_id = $(this).closest('tr').attr('data-task-id');
       var _token = '{{csrf_token()}}';
       swal({
         title: "هل أنت متأكد؟",

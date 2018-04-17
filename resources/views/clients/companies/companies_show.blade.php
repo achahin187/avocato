@@ -334,126 +334,20 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                              </tr>
+                              @if (isset($cases) && !empty($cases))
+                                  @foreach ($cases as $case)
+                                  <tr>
+                                    <td><span class="cellcontent">{{ ($case->cases->case_types) ? $case->cases->case_types->name : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->courts) ? $case->cases->courts->name : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->region) ? $case->cases->region : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($case->attorney_number) ? $case->attorney_number : 'لا يوجد' }}</span></td>
+                                  </tr>
+                                  @endforeach
+                              @endif
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -625,54 +519,14 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent">حسن احمد</span></td>
-                              </tr>
+                              @if (isset($services) && !empty($services))
+                                  @foreach ($services as $service)
+                                  <tr>
+                                    <td><span class="cellcontent">{{ ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id)->full_name : 'لا يوجد' }}</span></td>
+                                  </tr>
+                                  @endforeach
+                              @endif
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -847,90 +701,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">العنوان يوجد نص</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent">10-9-2019</span></td>
-                                <td><span class="cellcontent">10:10</span></td>
-                              </tr>
+                              @if (isset($urgents) && !empty($urgents))
+                                  @foreach ($urgents as $urgent)
+                                  <tr>
+                                    <td><span class="cellcontent">{{ ($urgent->task_address) ? $urgent->task_address : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($urgent->description)  ? $urgent->description  : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent"><i class = "fa {{ ($urgent->task_status_id == 2) ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
+                                    <td><span class="cellcontent">{{ ($urgent->start_datetime) ? $urgent->start_datetime->format('d-m-Y') : 'لا يوجد' }}</span></td>
+                                    <td><span class="cellcontent">{{ ($urgent->start_datetime) ? $urgent->start_datetime->format('h:m')   : 'لا يوجد' }}</span></td>
+                                  </tr>
+                                  @endforeach
+                              @endif
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

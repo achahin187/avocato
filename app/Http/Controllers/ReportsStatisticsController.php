@@ -40,6 +40,7 @@ class ReportsStatisticsController extends Controller
         $percentage_indcom = Helper::percent($count_indcom, $count_clients);
         
         // cases number & percentage
+        $cases = Case_::all();
         $count_case = Case_::count();
 
         // paid services
@@ -50,7 +51,8 @@ class ReportsStatisticsController extends Controller
         return view('reports_statistics', compact([
                                         'count_clients', 'count_individuals', 'percentage_individuals', 
                                         'count_companies', 'percentage_companies', 'count_indcom', 'percentage_indcom', 
-                                        'count_mobile', 'percentage_mobile', 'count_case', 'count_paid_services', 'count_free_services'
+                                        'count_mobile', 'percentage_mobile', 'count_case', 'count_paid_services', 'count_free_services',
+                                        'cases'
                                     ]));
     }
 

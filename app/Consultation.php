@@ -10,7 +10,7 @@ class Consultation extends Model
     protected $table = 'consultations';
 
     protected $fillable = ['code','consultation_type_id','is_paid','question','created_by','created_at','is_replied'];
-    protected $date = [];
+    protected $dates = ['created_at'];
     public $timestamps = false;
     public static $rules = [
         // Validation rules

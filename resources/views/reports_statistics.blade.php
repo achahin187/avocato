@@ -90,7 +90,7 @@
                       <li>المهام</li>
                     </ul>
                     <ul class="tab__content">
-                      <li class="tab__content_item active">
+                      <li class="tab__content_item active" id="tab1">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -135,78 +135,16 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                  <td><span class="cellcontent">القاهرة الكبري</span></td>
-                                  <td><span class="cellcontent">الجيزة</span></td>
-                                  <td><span class="cellcontent">99</span></td>
-                                </tr>
+                                @if (isset($cases) && !empty($cases))
+                                  @foreach ($cases as $case)
+                                    <tr data-case="{{ $case->id }}">
+                                      <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
+                                      <td><span class="cellcontent">{{ $case->cities->governorate->name }}</span></td>
+                                      <td><span class="cellcontent">{{ $case->cities->name }}</span></td>
+                                      <td><span class="cellcontent">{{ Helper::countCases($case->cities->id, $case->cities->governorate->id) }}</span></td>
+                                    </tr>
+                                  @endforeach
+                                @endif
                               </tbody>
                             </table>
                             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -369,7 +307,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab2">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -724,7 +662,7 @@
                           <div class="clearfix"></div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab3">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -1050,7 +988,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab4">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -1384,7 +1322,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab5">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -1724,7 +1662,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab6">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
@@ -2049,7 +1987,7 @@
                           </div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item" id="tab7">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="full-table">
                             <div class="remodal-bg">
