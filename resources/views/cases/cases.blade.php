@@ -122,8 +122,8 @@
                                 @if($case->archived == 0)
                                 <tr data-case-id="{{$case->id}}">
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                                  <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
-                                  <td><span class="cellcontent">{{$case->courts->name}}</span></td>
+                                  <td><span class="cellcontent">{{$case->case_types->name or ''}}</span></td>
+                                  <td><span class="cellcontent">{{$case->courts->name or ''}}</span></td>
                                   <td><span class="cellcontent">{{$case->region}}</span></td>
                                   <td><span class="cellcontent">{{$case->claim_number}}</span></td>
                                   <td><span class="cellcontent">{{$case->claim_year}}</span></td>
