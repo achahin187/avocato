@@ -36,7 +36,7 @@ class Tasks extends Model
 
         public function lawyer()
     {
-        return $this->belongsTo('App\Users','assigned_lawyer_id');
+        return $this->belongsTo('App\Users','assigned_lawyer_id')->withDefault();
     }
 
         public function who_assign_lawyer()
@@ -49,7 +49,7 @@ class Tasks extends Model
         return $this->hasMany('App\Task_Charges','task_id');
     }
     
-       public function cases()
+       public function case()
     {
         return $this->belongsTo('App\Case_', 'case_id');
     }

@@ -93,6 +93,94 @@
     });
    });
 
+        $('.btn-warning-cancel-session').click(function(){
+      var session_id = $(this).closest('tr').attr('data-session-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('session_destroy')}}'+'/'+session_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-session-id='+session_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+    $('.btn-warning-cancel-all-session').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-session-id');
+      }).get();
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{route('session_destroy_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-session-id='+value+']').fadeOut();
+            });
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+        $('.excel-session-btn').click(function(){
+     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-session-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('session_excel')}}',
+       data:{ids:selectedIds,filters:filter},
+       success:function(response){
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        // var a = document.createElement("a");
+        // a.href = response.file; 
+        // a.download = response.name+'.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        location.href = response;
+      }
+    });
+   });
+
 
   });
 </script>
@@ -213,16 +301,15 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_agenda"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+              <div class="bottomActions__btns"><a class="excel-session-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all-session" href="#">حذف المحدد</a>
               </div>
-              <table class="table-1">
+              <table class="table-1" id="dataTableTriggerId_001">
                 <thead>
-                  <tr class="bgcolor--gray_mm color--gray_d">
+                  <tr class="bgcolor--gray_mm color--gray_d" >
                     <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                     <th><span class="cellcontent">تاريخ الجلسة</span></th>
                     <th><span class="cellcontent">المحكمة/الدائرة </span></th>
                     <th><span class="cellcontent">رقم الدعوى</span></th>
-                    <th><span class="cellcontent">الموكل و صفته</span></th>
                     <th><span class="cellcontent">الخصم و صفته</span></th>
                     <th><span class="cellcontent">ما تم فيها من دفاع وقرارات</span></th>
                     <th><span class="cellcontent">القرار</span></th>
@@ -232,71 +319,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">محكمة جنايات القاهرة</span></td>
-                    <td><span class="cellcontent">234234324</span></td>
-                    <td><span class="cellcontent">محمد احمد المجنى عليه</span></td>
-                    <td><span class="cellcontent">حسن علي  الجانى</span></td>
-                    <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                    <td><span class="cellcontent">تم تاجيل النطق بالحكم </span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">ابراهيم السيد</span></td>
-                    <td><span class="cellcontent"><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                  @foreach($sessions as $session)
+                  <tr data-session-id="{{$session->id}}">
+                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                    <td><span class="cellcontent">{{$session->start_datetime}}</span></td>
+                    <td><span class="cellcontent">{{$session->case->courts->name or ''}} / {{$session->case->region}}</span></td>
+                    <td><span class="cellcontent">{{$session->case->claim_number}}</span></td>
+                    <td><span class="cellcontent">{{$session->case->contender_name}} / {{Helper::localizations('case_client_roles','name',$session->case->contender_case_client_role_id)}}</span></td>
+                    <td><span class="cellcontent">{{$session->name}}</span></td>
+                    <td><span class="cellcontent">{{$session->description}}</span></td>
+                    <td><span class="cellcontent">{{$session->next_datetime}}</span></td>
+                    <td><span class="cellcontent">{{$session->lawyer->full_name or ''}}</span></td>
+                    <td><span class="cellcontent"><a href= "{{route('services_lawyer',$session->id)}}" ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel-session action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                   </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">محكمة جنايات القاهرة</span></td>
-                    <td><span class="cellcontent">234234324</span></td>
-                    <td><span class="cellcontent">محمد احمد المجنى عليه</span></td>
-                    <td><span class="cellcontent">حسن علي  الجانى</span></td>
-                    <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                    <td><span class="cellcontent">تم تاجيل النطق بالحكم </span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">ابراهيم السيد</span></td>
-                    <td><span class="cellcontent"><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">محكمة جنايات القاهرة</span></td>
-                    <td><span class="cellcontent">234234324</span></td>
-                    <td><span class="cellcontent">محمد احمد المجنى عليه</span></td>
-                    <td><span class="cellcontent">حسن علي  الجانى</span></td>
-                    <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                    <td><span class="cellcontent">تم تاجيل النطق بالحكم </span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">ابراهيم السيد</span></td>
-                    <td><span class="cellcontent"><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">محكمة جنايات القاهرة</span></td>
-                    <td><span class="cellcontent">234234324</span></td>
-                    <td><span class="cellcontent">محمد احمد المجنى عليه</span></td>
-                    <td><span class="cellcontent">حسن علي  الجانى</span></td>
-                    <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                    <td><span class="cellcontent">تم تاجيل النطق بالحكم </span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">ابراهيم السيد</span></td>
-                    <td><span class="cellcontent"><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">محكمة جنايات القاهرة</span></td>
-                    <td><span class="cellcontent">234234324</span></td>
-                    <td><span class="cellcontent">محمد احمد المجنى عليه</span></td>
-                    <td><span class="cellcontent">حسن علي  الجانى</span></td>
-                    <td><span class="cellcontent">بعض النص بعض النص</span></td>
-                    <td><span class="cellcontent">تم تاجيل النطق بالحكم </span></td>
-                    <td><span class="cellcontent">10-9-2019</span></td>
-                    <td><span class="cellcontent">ابراهيم السيد</span></td>
-                    <td><span class="cellcontent"><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
               <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

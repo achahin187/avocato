@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Tasks;
 use App\Entity_Localizations;
+use Excel;
+use App\Exports\SessionsExport;
 
 class TasksController extends Controller
 {
@@ -15,6 +17,7 @@ class TasksController extends Controller
      */
     public function normal_index()
     {
+        $data['sessions'] = Tasks::where('task_type_id',2)->get();
         $data['services'] = Tasks::where('task_type_id',3)->get();
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
@@ -25,6 +28,29 @@ class TasksController extends Controller
     {
         $data['tasks']=Tasks::where('task_type_id',1)->get();
         return view('tasks.tasks_emergency',$data);
+    }
+
+            public function excel()
+    { 
+
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'sessions'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new SessionsExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new SessionsExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+      Excel::store((new SessionsExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+
     }
 
     /**
@@ -90,6 +116,16 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+      Tasks::find($id)->delete();
+
+    }
+
+    public function destroy_all()
+    {
+        $ids = $_POST['ids'];
+        foreach($ids as $id)
+        {
+          Tasks::find($id)->delete();
+        } 
     }
 }

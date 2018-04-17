@@ -368,7 +368,6 @@ class ServicesController extends Controller
 
         public function lawyer($id)
     { 
-
       $data['types']=Rules::where('parent_id',5)->get();
       $data['lawyers'] = Users::whereHas('rules', function($q){
             $q->where('rule_id',5);
@@ -491,7 +490,7 @@ class ServicesController extends Controller
       $service->start_datetime = $start;
       $service->end_datetime = $end;
       $service->save();
-      return redirect()->back()->with('success','تم تعيين محامى للخدمه بنجاح');
+      return redirect()->back()->with('success','تم تعيين محامى بنجاح');
     }
 
 

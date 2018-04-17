@@ -220,6 +220,10 @@ Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')-
 
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
+Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
+Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
+Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
+
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
