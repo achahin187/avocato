@@ -129,7 +129,7 @@ Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesCon
 Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
-Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
+Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
@@ -221,7 +221,6 @@ Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')-
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
-Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 

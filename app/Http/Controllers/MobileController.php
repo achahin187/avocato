@@ -11,6 +11,11 @@ use Exception;
 use Excel;
 use App\Users;
 use App\Users_Rules;
+use App\Entity_Localizations;
+use App\Case_;
+use App\Case_Client;
+use App\Tasks;
+use App\Consultation;
 
 use Illuminate\Http\Request;
 
@@ -130,9 +135,20 @@ class MobileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        return view('clients.mobile.mobile_show');
+        $data['user'] = Users::find($id);
+        $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+        $data['consultations'] = Consultation::where('created_by', $id)->get();
+
+        return view('clients.mobile.mobile_show', $data);
     }
 
     /**
