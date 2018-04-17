@@ -511,7 +511,7 @@ if($request->hasFile('docs_upload')){
             'roll'=>$request['roll'],
             'expenses'=>$request['expenses'],
             'start_datetime'=>$task->next_datetime,
-            'next_datetime'=>date('y-m-d h:s:i',strtotime($request['end_datetime'])),
+            'next_datetime'=>date('Y-m-d h:s:i',strtotime($request['end_datetime'])),
             'name'=>$request['name'],
             'description'=>$request['description'],
             'task_type_id'=>2,
@@ -524,8 +524,8 @@ if($request->hasFile('docs_upload')){
             'level'=>$request['degree'],
             'roll'=>$request['roll'],
             'expenses'=>$request['expenses'],
-            'start_datetime'=>date('y-m-d h:s:i',strtotime($request['start_datetime'])),
-            'next_datetime'=>date('y-m-d h:s:i',strtotime($request['end_datetime'])),
+            'start_datetime'=>date('Y-m-d h:s:i',strtotime($request['start_datetime'])),
+            'next_datetime'=>date('Y-m-d h:s:i',strtotime($request['end_datetime'])),
             'name'=>$request['name'],
             'description'=>$request['description'],
             'task_type_id'=>2,
@@ -566,11 +566,11 @@ if($request->has('record_documents')){
         }
            return redirect()->route('case_view',$id);
     }
-    public function add_record_ajax(Request $request , $id)
+    public function add_record_ajax(Request $request , $id )
     {
 
-         return $request['record_documents'];
-
+          // return response()->json($_GET['files']);
+// return response()->json($_GET['files']);
 
 $case_record=Case_Record::Create([
             'case_id'=>$id,
@@ -579,23 +579,38 @@ $case_record=Case_Record::Create([
             'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
             'created_by'=>\Auth::user()->id,
         ]);
-if($request->has('record_documents')){
+if(isset($_GET['files'])){
     // dd($request['record_documents']);
-        foreach ($request->record_documents as  $key => $file) {
-            
-            $destinationPath='investigation_images';
-            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-            // dd($fileNameToStore);
-            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
+   
+    // return response()->json(file_put_contents('sara',serialize($request['files'])));
+     $error = false;
+    $files = array();
 
-            Case_Record_Document::Create([
-                'record_id'=>$case_record->id,
-                'name'=>$file->getClientOriginalName(),
-                'file'=>$fileNameToStore,
-                ]);
+    $uploaddir = public_bath().'/case_documents/';
+        foreach($_GET['files']  as $file) {
+             return response()->json($file);
+            if(move_uploaded_file($file, $uploaddir .basename($file)))
+                {
+                    $files[] = $uploaddir .$file;
+                }
+                else
+                {
+                    $error = true;
+                }
+              // return response()->json($file['tmp_name']);
+            // $destinationPath='investigation_images';
+            // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // // dd($fileNameToStore);
+            // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
+
+            // Case_Record_Document::Create([
+            //     'record_id'=>$case_record->id,
+            //     'name'=>$file->getClientOriginalName(),
+            //     'file'=>$fileNameToStore,
+            //     ]);
         }
         }
-           return response()->json($case_record);
+           return response()->json($data);
     }
 
     ///destroy case record 

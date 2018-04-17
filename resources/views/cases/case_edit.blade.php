@@ -3,7 +3,7 @@
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-md-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="edit-mode">Editing mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -999,52 +999,107 @@
       }
     });
     });
+ var files;
+ function prepareUpload(event)
+        {
+          files = event.target.files;
+          // console.log(files);
+        }
+ $('input#record_documents').on('change', prepareUpload);
 
 
+        // Grab the files and set them to our variable
+       
 
-
+var record_data =[];
     function add_record(case_id)
     {
-      var record_data =[];
       record_data['investigation_no']= $('#investigation_no').val();
       record_data['investigation_type']= $('#investigation_type').val();
       record_data['investigation_date']= $('#investigation_date').val();
-      
-       // record_data['record_documents']= $('#record_documents').val();
-        $('input[name="record_documents"]').each(function(){
-           record_data['record_documents'] = $(this).val();
-       });
-// alert(record_data['investigation_no']);
-      $.ajax({
-           type:'POST',
-           url:'{{url('add_record_ajax/'.$case->id)}}',
+     
+      var data = new FormData();
+    $.each(files, function(key, value)
+    {
+    
+        data.append(key, value);
+    
+    });
+    //  var result ;
+var files_arr = [];
+    for (var key of data.entries()) {
+        // console.log(key[1])
+        files_arr.push(key[1].name);
+    }
 
-           data:{'investigation_no':record_data['investigation_no'],'investigation_type':record_data['investigation_type'],'investigation_date':record_data['investigation_date'],'record_documents':record_data['record_documents'],'_token':"{{ csrf_token() }}"},
-           success:function(data){
-              alert(data);
-        // $this.html(data);
-      // alert(data);
-          },
-           error: function (jqXHR, exception) {
-        var msg = '';
-        if (jqXHR.status === 0) {
-            msg = 'Not connect.\n Verify Network.';
-        } else if (jqXHR.status == 404) {
-            msg = 'Requested page not found. [404]';
-        } else if (jqXHR.status == 500) {
-            msg = 'Internal Server Error [500].';
-        } else if (exception === 'parsererror') {
-            msg = 'Requested JSON parse failed.';
-        } else if (exception === 'timeout') {
-            msg = 'Time out error.';
-        } else if (exception === 'abort') {
-            msg = 'Ajax request aborted.';
-        } else {
-            msg = 'Uncaught Error.\n' + jqXHR.responseText;
-        }
-        $('#post').html(msg);
-    },
-        });
+     console.log(files_arr);
+    // console.log(result);
+       // record_data['record_documents']= $('#record_documents').val();
+       //  $('input[name="record_documents"]').each(function(){
+       //     record_data['record_documents'] = $(this).val();
+       // });
+
+// alert(record_data['investigation_no']);
+    //   $.ajax({
+    //        type:'POST',
+    //        url:'{{url('add_record_ajax/'.$case->id)}}',
+    //        processData: false, // Don't process the files
+    //        contentType: false,
+    //        data:{'files':result
+    //        ,'investigation_no':record_data['investigation_no']
+    //        ,'investigation_type':record_data['investigation_type']
+    //        ,'investigation_date':record_data['investigation_date']
+    //        ,'_token':"{{ csrf_token() }}"},
+    //        success:function(data){
+    //           alert(data);
+    //     // $this.html(data);
+    //   // alert(data);
+    //       },
+    //        error: function (jqXHR, exception) {
+    //     var msg = '';
+    //     if (jqXHR.status === 0) {
+    //         msg = 'Not connect.\n Verify Network.';
+    //     } else if (jqXHR.status == 404) {
+    //         msg = 'Requested page not found. [404]';
+    //     } else if (jqXHR.status == 500) {
+    //         msg = 'Internal Server Error [500].';
+    //     } else if (exception === 'parsererror') {
+    //         msg = 'Requested JSON parse failed.';
+    //     } else if (exception === 'timeout') {
+    //         msg = 'Time out error.';
+    //     } else if (exception === 'abort') {
+    //         msg = 'Ajax request aborted.';
+    //     } else {
+    //         msg = 'Uncaught Error.\n' + jqXHR.responseText;
+    //     }
+    //     $('#post').html(msg);
+    // },
+    //     });
+
+    $.ajax({
+      type: 'post',
+      url: "{{URL('add_record_ajax/'.$case->id.'?files=')}}"+files_arr,
+      data: {
+        _token: "{{csrf_token()}}",
+        // files:files_arr,
+        investigation_no:record_data['investigation_no']
+       ,investigation_type:record_data['investigation_type']
+        ,investigation_date:record_data['investigation_date']
+      },
+      success: function(data)
+      {
+        if(typeof data.error === 'undefined')
+            {
+                // Success so call function to process the form
+                alert(data);
+            }
+            else
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + data.error);
+            }
+      }
+    });
     }
     </script>
     @endsection
