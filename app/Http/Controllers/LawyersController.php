@@ -15,6 +15,7 @@ use Excel;
 use Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use App\Exports\LawyersExport;
 
 
 class LawyersController extends Controller
@@ -62,134 +63,23 @@ class LawyersController extends Controller
 
     public function excel()
     {   
-        $lawyersArray[]=['كود المحامي','الإسم','نوع العمل','الرقم القومى','التخصص','درجه القيد بالنقابه','عنوان','رقم الموبايل','تاريخ الإلتحاق','الجنسيه','تفعيل'];
-        if(isset($_GET['ids'])){
-           $ids = $_GET['ids'];
-           foreach($ids as $id)
-           {
-            $lawyer = Users::find($id);
-            if($lawyer->is_active)
-            {
-                $is_active='فعال';
-            }
-            else{
-                $is_active='غير فعال';
-            }
-            foreach($lawyer->rules as $rule){
-                if($rule->id!=13)
-                    $role=$rule->name_ar;
-            }
-            $nationality=Helper::localizations('geo_countries','nationality',$lawyer->user_detail->nationality_id);
-            $lawyersArray[] = array(
-                'code' => $lawyer->id ,
-                'name' => $lawyer->name ,
-                'type' => $role,
-                'national_id' => $lawyer->user_detail->national_id,
-                'work_sector' => $lawyer->user_detail->work_sector,
-                'syndicate_level' => $lawyer->user_detail->syndicate_level,
-                'address' => $lawyer->address ,
-                'mobile' => $lawyer->mobile,
-                'join_date' => $lawyer->user_detail->join_date,
-                'nationality'=> $nationality,
-                'is_active'=> $is_active,
-            );
-        }    
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'lawyers'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new LawyersExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new LawyersExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
     }
-    elseif($_GET['filters']!=''){
-     $filters = json_decode($_GET['filters']);
-     foreach($filters as $filter)
-     {
-        $lawyer = Users::find($filter);
-        if($lawyer->is_active)
-        {
-            $is_active='فعال';
-        }
-        else{
-            $is_active='غير فعال';
-        }
-        foreach($lawyer->rules as $rule){
-            if($rule->id!=13)
-                $role=$rule->name_ar;
-        }
-        $nationality=Helper::localizations('geo_countries','nationality',$lawyer->user_detail->nationality_id);
-        $lawyersArray[] = array(
-            'code' => $lawyer->id ,
-            'name' => $lawyer->name ,
-            'type' => $role,
-            'national_id' => $lawyer->user_detail->national_id,
-            'work_sector' => $lawyer->user_detail->work_sector,
-            'syndicate_level' => $lawyer->user_detail->syndicate_level,
-            'address' => $lawyer->address ,
-            'mobile' => $lawyer->mobile,
-            'join_date' => $lawyer->user_detail->join_date,
-            'nationality'=> $nationality,
-            'is_active'=> $is_active,
-        );
-    }  
-}
-else{
-    $lawyers = Users::whereHas('rules', function($q){
-        $q->whereIn('rule_id',[11,12]);
-    })->get();
-    foreach($lawyers as $lawyer){
-
+    else{
+      Excel::store((new LawyersExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
     }
-    foreach($lawyers as $lawyer){
-        $value=Helper::localizations('geo_countries','nationality',$lawyer->user_detail->nationality_id);
-        $lawyer['nationality']=$value;
-        if($lawyer->is_active)
-        {
-            $is_active='فعال';
-        }
-        else{
-            $is_active='غير فعال';
-        }
-        foreach($lawyer->rules as $rule){
-            if($rule->id!=13)
-                $role=$rule->name_ar;
-        }
-        $lawyersArray[] = array(
-            'code' => $lawyer->id ,
-            'name' => $lawyer->name ,
-            'type' => $role,
-            'national_id' => $lawyer->user_detail->national_id,
-            'work_sector' => $lawyer->user_detail->work_sector,
-            'syndicate_level' => $lawyer->user_detail->syndicate_level,
-            'address' => $lawyer->address ,
-            'mobile' => $lawyer->mobile,
-            'join_date' => $lawyer->user_detail->join_date,
-            'nationality'=> $lawyer->nationality,
-            'is_active'=> $is_active,
-        );
-    }   
-}
-
-$myFile= Excel::create('الساده المحامين', function($excel) use($lawyersArray) {
-                            // Set the title
-    $excel->setTitle('الساده المحامين');
-
-                            // Chain the setters
-    $excel->setCreator('PentaValue')
-    ->setCompany('PentaValue');
-                            // Call them separately
-    $excel->setDescription('بيانات ما تم اختياره من جدول الساده المحامين');
-
-    $excel->sheet('الساده المحامين', function($sheet) use($lawyersArray) {
-        $sheet->setRightToLeft(true); 
-        $sheet->getStyle( "A1:k1" )->getFont()->setBold( true );
-                        // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                        // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-                        // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-        $sheet->fromArray($lawyersArray, null, 'A1', false, false);
-
-    });
-});
-        $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "الساده المحامين".date('Y_m_d'), //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-       );
-        return response()->json($response);
     }
 
     public function filter(Request $request){

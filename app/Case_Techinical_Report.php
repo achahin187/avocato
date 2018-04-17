@@ -31,4 +31,13 @@ class Case_Techinical_Report extends Model
     	return $this->hasMany('App\Case_Techinical_Report_Document', 'case_techinical_report_id');
     }
 
+        public function lawyer()
+    {
+        return $this->belongsTo('App\Users', 'assigned_to');
+    }
+     public function task_emergency()
+    {
+        return $this->belongsTo('App\Tasks','item_id');
+    }
+
 }

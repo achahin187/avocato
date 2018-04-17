@@ -20,6 +20,9 @@ use Illuminate\DatabaseException;
 use App\Rules;
 use App\Geo_Countries;
 use App\Entity_Localizations;
+use App\Case_;
+use App\Case_Client;
+use App\Tasks;
 
 class IndividualsController extends Controller
 {
@@ -204,7 +207,7 @@ class IndividualsController extends Controller
                         'installment_number'=> $i+1,
                         'value' => $request->payment[$i],
                         'payment_date'  => $pay_date,
-                        'is_paid'   => 1 //$request->payment_status[i]
+                        'is_paid'   => $request->payment_status[$i]
                     ]);
                 }
             }
@@ -234,6 +237,14 @@ class IndividualsController extends Controller
     {
         $data['user'] = Users::find($id);
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+        
         return view('clients.individuals.individuals_show',$data);
     }
 
@@ -391,19 +402,17 @@ class IndividualsController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
+            if($request->number_of_payments != 0) {
                 Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
-                    $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    
-                    $installment = new Installment;
-                    $installment->subscription_id   = $subscription->id;
-                    $installment->installment_number = $i+1;
-                    $installment->value = $request->payment[$i];
-                    $installment->payment_date  = $pay_date;
-                    $installment->is_paid   = $key[0];
-                    $installment->save(); 
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => $request->payment_status[$i]
+                    ]);
                 }
             }
         } catch(Exception $ex) {
@@ -427,7 +436,7 @@ class IndividualsController extends Controller
         ]);
     }
 
-        public function destroyShow($id)
+    public function destroyShow($id)
     {
         // Find and delete this record
         Users::find($id)->delete();
@@ -499,33 +508,19 @@ class IndividualsController extends Controller
                             ->withInput();
         }
 
-        // Replace any empty time value with a default value
-        $startfrom = $endfrom = '1970-01-01 00:00:00';
-        $startto   = $endto   = '2030-01-01 00:00:00';
-     
-        if($request->start_date_from) {
-            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
-        }
-        if($request->start_date_to) {
-            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
-        }
-        if($request->end_date_from) {
-            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
-        }
-        if($request->end_date_to) {
-            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
-        }
+        $startfrom = Helper::checkDate($request->start_date_from, 1);
+        $startto   = Helper::checkDate($request->start_date_to, 2);
+        $endfrom   = Helper::checkDate($request->end_date_from, 1);
+        $endto     = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
         $users = Users::users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
                         ->join('user_details', 'users.id', '=', 'user_details.user_id')
                         ->select('user_details.*', 'subscriptions.*', 'users.*');
 
-        
         // check package type
         if( $request->package_type ) {
-            $users = $users->whereIn('package_type_id', $request->package_type);
-            
+            $users = $users->whereIn('package_type_id', $request->package_type);     
         }
 
         // check on start and end dates
@@ -537,7 +532,6 @@ class IndividualsController extends Controller
         // check nationality
         if($request->nationality) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
-            
         }
 
         switch($request->activate) {

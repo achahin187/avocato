@@ -71,6 +71,28 @@
     });
     });
 
+        $('.excel-btn').click(function(){
+     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-service-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('services_excel')}}',
+       data:{ids:selectedIds,filters:filter},
+       success:function(response){
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        // var a = document.createElement("a");
+        // a.href = response.file; 
+        // a.download = response.name+'.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        location.href = response;
+      }
+    });
+   });
+
 
   });
 </script>
@@ -125,9 +147,9 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -142,7 +164,7 @@
                         <tbody>
                           @foreach($services as $service)
                           <tr data-service-id="{{$service->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$service->client->code}}</span></td>
                             <td><span class="cellcontent">{{$service->client->full_name}}</span></td>
                             <td><span class="cellcontent">{{$service->client->address}}</span></td>

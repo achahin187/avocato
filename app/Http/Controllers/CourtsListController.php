@@ -8,6 +8,7 @@ use App\Geo_Cities;
 use App\Courts;
 use Validator;
 use Excel;
+use App\Exports\CourtsExport;
 
 class CourtsListController extends Controller
 {
@@ -40,58 +41,18 @@ class CourtsListController extends Controller
 
         public function excel()
     {   
-        $courtsArray[]=['رقم','اسم المحكمه','المدينه','المحافظه'];
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'courts'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];
-           foreach($ids as $id)
-           {
-            $court = Courts::find($id,['id','name','city_id']);
-            $courtsArray[] = array(
-                'id' => $court->id ,
-                'name' => $court->name ,
-                'city' => $court->city->name,
-                'governorate' => $court->city->governorate->name
-                                        );
-        }    
+        Excel::store(new CourtsExport($ids),$filepath.$filename);
+        return response()->json($PathForJson.$filename);
     }
         else{
-            $courts = Courts::all('id','name','city_id');
-            foreach($courts as $court){
-              $courtsArray[] = array(
-                'id' => $court->id ,
-                'name' => $court->name ,
-                'city' => $court->city->name,
-                'governorate' => $court->city->governorate->name
-                                        );
-          }   
+        Excel::store((new CourtsExport()),$filepath.$filename);
+        return response()->json($PathForJson.$filename); 
       }
-
-        $myFile=Excel::create('المحاكم', function($excel) use($courtsArray) {
-                    // Set the title
-            $excel->setTitle('المحاكم');
-
-                    // Chain the setters
-            $excel->setCreator('PentaValue')
-            ->setCompany('PentaValue');
-                    // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول أنواع القضايا');
-
-            $excel->sheet('المحاكم', function($sheet) use($courtsArray) {
-                $sheet->setRightToLeft(true); 
-                $sheet->getStyle( "A1:D1" )->getFont()->setBold( true );
-                // $sheet->cell('A1', function($cell) {$cell->setValue('First Name');   });
-                // $sheet->cell('B1', function($cell) {$cell->setValue('Last ');   });
-                // $sheet->cell('C1', function($cell) {$cell->setValue('Email');   });           
-                $sheet->fromArray($courtsArray, null, 'A1', false, false);
-
-            });
-        });
-        $myFile = $myFile->string('xlsx'); ////change xlsx for the format you want, default is xls
-        $response =  array(
-           'name' => "المحاكم".date('Y_m_d'), //no extention needed
-           'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile) //mime type of used format
-                        );
-        return response()->json($response);
     }
 
     /**

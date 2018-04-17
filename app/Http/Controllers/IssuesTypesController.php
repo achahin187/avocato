@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Cases_Types;
 use Validator;
 use Excel;
-use App\Exports\CasesExport;
+use App\Exports\CasesTypesExport;
 
 class IssuesTypesController extends Controller
 {
@@ -38,11 +38,11 @@ class IssuesTypesController extends Controller
         $filename = 'cases'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];
-        Excel::store(new CasesExport($ids),$filepath.$filename);
+        Excel::store(new CasesTypesExport($ids),$filepath.$filename);
         return response()->json($PathForJson.$filename);
     }
         else{
-        Excel::store((new CasesExport()),$filepath.$filename);
+        Excel::store((new CasesTypesExport()),$filepath.$filename);
         return response()->json($PathForJson.$filename); 
       }
     }

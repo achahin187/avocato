@@ -175,7 +175,8 @@ return [
         'legal_representative_mobile' => 'اسم الممثل القانوني للشركة',
         'legal_representative_name' => 'اسم الممثل القانوني للشركة',
         'company_name'  => 'اسم الشركة',
-        'ind_name'      => 'اسم العميل',
+        'office_name'  => 'اسم المكتب',
+        'ind_name'      => 'اسم المكتب',
         'personal_image'=> 'الصورة الشخصية',
         'discount_percentage' => 'قيمة الخصم',
         'duration'      => 'مدة التعاقد',
@@ -192,7 +193,12 @@ return [
         'is_paid'=>'حاله السداد',
         'reason'=>'السبب',
         'service_date'=>'تاريخ الخدمه',
-
+        'number' => 'الرقم',
+        'pen' => 'قلم المحضرين',
+        'delivery_date' => 'تاريخ التسليم',
+        'delivered_at' => 'تاريخ التسلم',
+        'session_date' => 'تاريخ الجلسة',
+        'notes' => 'الملاحظات'
     ],
 
 ];

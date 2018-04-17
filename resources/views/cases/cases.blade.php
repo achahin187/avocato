@@ -3,7 +3,7 @@
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -100,11 +100,11 @@
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_cases"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                             </div>
-                            <table class="table-1">
+                            <table class="table-1" id="dataTableTriggerId_001">
                               <thead>
-                                <tr class="bgcolor--gray_mm color--gray_d">
+                                <tr class="bgcolor--gray_mm color--gray_d" >
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                                   <th><span class="cellcontent">نوع القضية</span></th>
                                   <th><span class="cellcontent">المحكمة</span></th>
@@ -120,8 +120,8 @@
                                
                                 @foreach($cases as $case)
                                 @if($case->archived == 0)
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                                <tr data-case-id="{{$case->id}}">
+                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                                   <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
                                   <td><span class="cellcontent">{{$case->courts->name}}</span></td>
                                   <td><span class="cellcontent">{{$case->region}}</span></td>
@@ -367,9 +367,9 @@
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_archive"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                             </div>
-                            <table class="table-1">
+                            <table class="table-1" id="dataTableTriggerId_001">
                               <thead>
                                 <tr class="bgcolor--gray_mm color--gray_d">
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -387,8 +387,8 @@
                               <tbody>
                                 @foreach($cases as $case)
                                 @if($case->archived == 1)
-                                <tr>
-                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                                <tr  data-case-id="{{$case->id}}">
+                                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                                   <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
                                   <td><span class="cellcontent">{{$case->courts->name}}</span></td>
                                   <td><span class="cellcontent">{{$case->region}}</span></td>
@@ -397,7 +397,7 @@
                                   <td><span class="cellcontent">{{$case->claim_date}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
                                   <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
-                                  <td><span class="cellcontent"><a href= case_archive_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href="{{URL('case_archive_view/'.$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                 </tr>
                                 @endif
                                 @endforeach
@@ -569,4 +569,88 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+                       @endsection
+                       @section('js')
+                        <script>
+  $(document).ready(function(){
+
+    $('.btn-warning-cancel').click(function(){
+      var case_id = $(this).closest('tr').attr('data-case-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('case_destroy')}}'+'/'+case_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-case-id='+case_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+
+    $('.btn-warning-cancel-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-case-id');
+      }).get();
+      if(selectedIds.length == 0 )
+      {
+        swal("خطأ", "من فضلك اختر استشاره :)", "error");
+      }
+      else
+      {
+        // alert(selectedIds);
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('case_destroy_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-case-id='+value+']').fadeOut();
+            });
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    }
+    });
+
+ 
+
+  });
+</script>
                        @endsection

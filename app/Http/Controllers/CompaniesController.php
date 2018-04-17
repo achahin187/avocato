@@ -18,6 +18,8 @@ use App\ClientsPasswords;
 use App\User_Details;
 use App\Subscriptions;
 use App\Installment;
+use App\Case_Client;
+use App\Tasks;
 
 use Illuminate\Http\Request;
 
@@ -231,7 +233,7 @@ class CompaniesController extends Controller
                         'installment_number'=> $i+1,
                         'value' => $request->payment[$i],
                         'payment_date'  => $pay_date,
-                        'is_paid'   => 1 //$request->payment_status[i]
+                        'is_paid'   => $request->payment_status[$i]
                     ]);
                 }
             }
@@ -262,10 +264,17 @@ class CompaniesController extends Controller
     {
         $data['user'] = Users::find($id);
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
         return view('clients.companies.companies_show',$data);
     }
 
-        public function comp_update(Request $request, $id)
+    public function comp_update(Request $request, $id)
     {
         $installment = Installment::find($id);
         $installment->is_paid = $request->installment;
@@ -370,7 +379,6 @@ class CompaniesController extends Controller
             return redirect()->back()->withInput();
         }
         
-        // TODO: national_id missing
         // push into users_details
         try {
             $user_details = User_Details::where('user_id', $user->id)->first();
@@ -384,6 +392,16 @@ class CompaniesController extends Controller
             $user_details->save();
         } catch(Exception $ex) {
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
+
+        // convert user to individual by changing his/her user rule to 9
+        try {
+            $user_rule = Users_Rules::where('user_id', $user->id)->where('rule_id', '!=', 6)->first();
+            $user_rule->rule_id = 9;
+            $user_rule->save();
+        } catch (Exception $ex) {
+            Session::flash('warning', 'حدث خطأ عند تعديل بيانات العميل #8');
             return redirect()->back()->withInput();
         }
 
@@ -406,7 +424,13 @@ class CompaniesController extends Controller
 
         // push into user_company_detail
         try {
-            $ucd = User_Company_Details::where('user_id', $user->id)->first();
+            // check if the user already has a relation with user_company_details table.
+            if( User_Company_Details::where('user_id', $user->id)->first() ) {
+                $ucd = User_Company_Details::where('user_id', $user->id)->first();
+            } else {
+                $ucd = new User_Company_Details;
+            }
+            
             $ucd->user_id   = $user->id;
             $ucd->commercial_registration_number = $request->commercial_registration_number;
             $ucd->fax     = $request->fax;
@@ -415,25 +439,24 @@ class CompaniesController extends Controller
             $ucd->legal_representative_mobile    = $request->legal_representative_mobile;
             $ucd->save();
         } catch(Exception $ex) {
+            dd($ex);
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
         }
 
         // push into installments
         try {
-            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
-                Installment::where('subscription_id', $subscription->id)->forcedelete();
+            if($request->number_of_payments != 0) {
+                Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
-                    $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    
-                    $installment = new Installment;
-                    $installment->subscription_id   = $subscription->id;
-                    $installment->installment_number = $i+1;
-                    $installment->value = $request->payment[$i];
-                    $installment->payment_date  = $pay_date;
-                    $installment->is_paid   = $key[0];
-                    $installment->save(); 
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => $request->payment_status[$i]
+                    ]);
                 }
             }
         }catch(Exception $ex) {
@@ -457,7 +480,7 @@ class CompaniesController extends Controller
         ]);
     }
 
-        public function destroyShow($id)
+    public function destroyShow($id)
     {
         // Find and delete this record
         Users::find($id)->delete();
@@ -529,22 +552,10 @@ class CompaniesController extends Controller
                             ->withInput();
         }
 
-        // Replace any empty time value with a default value
-        $startfrom = $endfrom = '1970-01-01 00:00:00';
-        $startto   = $endto   = '2030-01-01 00:00:00';
-     
-        if($request->start_date_from) {
-            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
-        }
-        if($request->start_date_to) {
-            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
-        }
-        if($request->end_date_from) {
-            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
-        }
-        if($request->end_date_to) {
-            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
-        }
+        $startfrom = Helper::checkDate($request->start_date_from, 1);
+        $startto   = Helper::checkDate($request->start_date_to, 2);
+        $endfrom   = Helper::checkDate($request->end_date_from, 1);
+        $endto     = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
         $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')

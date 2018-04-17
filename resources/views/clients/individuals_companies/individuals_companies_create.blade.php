@@ -53,12 +53,12 @@
               <option value="-1" selected disabled hidden>إختر كود الشركة</option>
 
               @foreach ($companies as $company)
-                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->code }}</option>
+                <option id="comcode" value="{{ $company->id }}" data-id="{{ $company->name }}">{{ $company->full_name .' - '. $company->code }}</option>
               @endforeach
               
             </select>
             {{--  Error  --}}
-          @if ($errors->has('company_code'))
+            @if ($errors->has('company_code'))
               <span class="master_message color--fadegreen">{{ $errors->first('company_code') }}</span>
             @endif
           </div>
@@ -402,19 +402,19 @@
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" required>\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                                      <div class="radiorobo 123">\
-                                        <input type="radio" name="payment_status['+i+'][0]" id="rad_'+i+'" >\
-                                        <label for="rad_1">نعم</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1">\
+                                        <label>نعم</label>\
                                       </div>\
-                                      <div class="radiorobo 456">\
-                                        <input type="radio" name="payment_status['+i+'][1]" id="rad_'+j+1+'"checked>\
-                                        <label for="rad_2">لا</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
                                       </div>\
                                     </div>\
                                   </div>');

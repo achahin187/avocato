@@ -577,7 +577,7 @@ if (currentIndex === 5) { //if last step
 
               "loadingRecords": "جارى التحميل...",
               "processing":     "جارى المعالجة...",
-              "zeroRecords":    "لا توجد نتائج مطابخة",
+              "zeroRecords":    "لا توجد نتائج مطابقة",
               "paginate": {
                 "first":      "الاول",
                 "last":       "الاخير",

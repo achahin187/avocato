@@ -18,6 +18,9 @@ use App\ClientsPasswords;
 use App\User_Details;
 use App\Subscriptions;
 use App\Installment;
+use App\Case_Client;
+use App\Tasks;
+
 use Illuminate\Http\Request;
 
 class IndividualsCompaniesController extends Controller
@@ -62,7 +65,6 @@ class IndividualsCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'company_code'  => 'required',
             'company_name'  => 'required',
@@ -171,6 +173,7 @@ class IndividualsCompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id = $request->nationality;
             $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
@@ -218,11 +221,12 @@ class IndividualsCompaniesController extends Controller
                         'installment_number'=> $i+1,
                         'value' => $request->payment[$i],
                         'payment_date'  => $pay_date,
-                        'is_paid'   => 1 //$request->payment_status[i]
+                        'is_paid'   => $request->payment_status[$i]
                     ]);
                 }
             }
         } catch(Exception $ex) {
+            dd($ex);
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -248,10 +252,18 @@ class IndividualsCompaniesController extends Controller
     {
         $data['user'] = Users::find($id);
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
+        $data['cases'] = Case_Client::where('client_id', $id)->get();
+
+        // get urgent
+        $data['urgents'] =  Tasks::where('client_id', $id)->where('task_type_id', 1)->get();
+
+        // get paid and free services only
+        $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+
         return view('clients.individuals_companies.individuals_companies_show',$data);
     }
 
-        public function ind_comp_update(Request $request, $id)
+    public function ind_comp_update(Request $request, $id)
     {
         $installment = Installment::find($id);
         $installment->is_paid = $request->installment;
@@ -382,6 +394,7 @@ class IndividualsCompaniesController extends Controller
             
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
+            $user_details->nationality_id = $request->nationality;
             $user_details->gender_id     = $request->gender;
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
@@ -412,19 +425,17 @@ class IndividualsCompaniesController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
+            if($request->number_of_payments != 0) {
                 Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
-                    $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    
-                    $installment = new Installment;
-                    $installment->subscription_id   = $subscription->id;
-                    $installment->installment_number = $i+1;
-                    $installment->value = $request->payment[$i];
-                    $installment->payment_date  = $pay_date;
-                    $installment->is_paid   = $key[0];
-                    $installment->save(); 
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => $request->payment_status[$i]
+                    ]);
                 }
             }
         } catch(Exception $ex) {
@@ -513,23 +524,10 @@ class IndividualsCompaniesController extends Controller
                             ->withInput();
         }
 
-        // Replace any empty time value with a default value
-        $startfrom = $endfrom = '1970-01-01 00:00:00';
-        $startto   = $endto   = '2030-01-01 00:00:00';
-     
-        // date inputs not null, then cast it to dates.
-        if($request->start_date_from) {
-            $startfrom = date("Y-m-d 00:00:00", strtotime($request->start_date_from) );
-        }
-        if($request->start_date_to) {
-            $startto = date("Y-m-d 00:00:00", strtotime($request->start_date_to) );
-        }
-        if($request->end_date_from) {
-            $endfrom   = date("Y-m-d 23:59:59", strtotime($request->end_date_from) ); 
-        }
-        if($request->end_date_to) {
-            $endto   = date("Y-m-d 23:59:59", strtotime($request->end_date_to) ); 
-        }
+        $startfrom = Helper::checkDate($request->start_date_from, 1);
+        $startto   = Helper::checkDate($request->start_date_to, 2);
+        $endfrom   = Helper::checkDate($request->end_date_from, 1);
+        $endto     = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
         $users = Users::users(10)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')

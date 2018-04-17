@@ -106,12 +106,13 @@ true).find("option[value]").remove();
            data:{ids:selectedIds},
            success:function(response){
                     swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                    var a = document.createElement("a");
-                    a.href = response.file; 
-                    a.download = response.name+'.xlsx';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
+                    // var a = document.createElement("a");
+                    // a.href = response.file; 
+                    // a.download = response.name+'.xlsx';
+                    // document.body.appendChild(a);
+                    // a.click();
+                    // a.remove();
+                    location.href = response;
           }
             });
         });
@@ -239,7 +240,7 @@ true).find("option[value]").remove();
                       </div>
                       <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -252,7 +253,7 @@ true).find("option[value]").remove();
                         <tbody>
                           @foreach($courts as $court)
                           <tr class="court" data-court-id="{{$court->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$court->name}}</span></td>
                             <td><span class="cellcontent">@isset($court->city->name){{$court->city->name}}@endisset</span></td>
                             <td><span class="cellcontent">@isset($court->city->governorate->name){{$court->city->governorate->name}}@endisset</span></td>

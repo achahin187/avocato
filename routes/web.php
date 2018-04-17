@@ -129,7 +129,7 @@ Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesCon
 Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
-Route::get('/mobile_show', 'MobileController@show')->name('mobile_show');
+Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
@@ -138,7 +138,11 @@ Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 
 Route::get('/complains', 'ComplainsController@index')->name('complains');
-Route::get('/complains_edit', 'ComplainsController@edit')->name('complains_edit');
+Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
+Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
+Route::delete('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
+Route::delete('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
+Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
 
 Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
 Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
@@ -173,12 +177,23 @@ Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@l
 
 Route::get('/cases', 'CasesController@index')->name('cases');
 Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
-Route::get('/case_archive_view', 'CasesController@archive_show')->name('case_archive_view');
+Route::get('/case_archive_view/{id}', 'CasesController@archive_show')->name('case_archive_view');
 Route::get('/case_add', 'CasesController@create')->name('case_add');
 Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
 Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
 Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
 Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
+Route::get('/case_destroy/{id}', 'CasesController@destroy')->name('case_destroy');
+Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_destroy_all');
+Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
+Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
+Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
+Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
+Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
+Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+
+
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
@@ -190,22 +205,43 @@ Route::get('/services_create', 'ServicesController@create')->name('services_crea
 Route::post('/services_store', 'ServicesController@store')->name('services_store');
 Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edit');
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
+Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
+Route::get('/services_excel2', 'ServicesController@excel2')->name('services_excel2');
 Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
+Route::post('/services_filter2', 'ServicesController@filter2')->name('services_filter2');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
+Route::get('/report_download_document/{id}', 'ServicesController@download_document')->name('report_download_document');
+Route::get('/report_download_all_documents/{id}', 'ServicesController@download_all_documents')->name('report_download_all_documents');
+Route::get('/services_lawyer/{id}', 'ServicesController@lawyer')->name('services_lawyer');
+Route::get('/services_lawyer_task/{id}', 'ServicesController@lawyer_task')->name('services_lawyer_task');
+Route::post('/services_lawyer_assign/{id}', 'ServicesController@assign')->name('services_lawyer_assign');
+Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')->name('services_lawyer_filter');
+
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
+Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
+Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
+Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
+
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
+
+Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
+Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_state')->name('change_task_state');
+Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
+Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name('task_destroy');
+Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
+
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 
+
 Route::get('/records', 'RecordsController@index')->name('records');
-Route::get('/records_create', 'RecordsController@create')->name('records_create');
-
-
-
-
-
+Route::get('/records/create', 'RecordsController@create')->name('records.add');
+Route::post('/records/store', 'RecordsController@store')->name('record.store');
+Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -220,4 +256,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
-Route::post('/Landing/company', 'LandingController@company')->name('landing.company');
+Route::post('/Landing/office', 'LandingController@office')->name('landing.office');

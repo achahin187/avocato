@@ -244,7 +244,7 @@
                       @endif
                     </span>
                   </td>
-                  <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $filter->is_active ? ' fa-check' : 'fa-times'}}"></i></span></td>
+                  <td><span class="cellcontent"><i class = "fa  {{ $filter->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
                   <td>
                     <span class="cellcontent">
 
@@ -532,7 +532,7 @@
 
           // check if user selected nothing
           if(allVals.length <= 0) {
-            confirm('إختر عميل علي الاقل لتستطيع حذفها');
+            confirm('إختر عميل علي الاقل لتستطيع حذفه');
           } else {
             var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
 
