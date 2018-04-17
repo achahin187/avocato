@@ -145,7 +145,7 @@
                               @endif
                             </label></span></td>
                             <td><span class="cellcontent">{{$task->lawyer->name}}</span></td>
-                            <td><span class="cellcontent"><a href= emergency_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href="{{URL('task_emergency_view/'.$task->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
 
