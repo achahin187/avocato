@@ -35,5 +35,9 @@ class Case_Techinical_Report extends Model
     {
         return $this->belongsTo('App\Users', 'assigned_to');
     }
+     public function task_emergency()
+    {
+        return $this->belongsTo('App\Tasks','item_id');
+    }
 
 }

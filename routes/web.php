@@ -222,6 +222,10 @@ Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')-
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
+Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_state')->name('change_task_state');
+Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
+Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name('task_destroy');
+Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 
