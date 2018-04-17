@@ -231,7 +231,7 @@ class CompaniesController extends Controller
                         'installment_number'=> $i+1,
                         'value' => $request->payment[$i],
                         'payment_date'  => $pay_date,
-                        'is_paid'   => 1 //$request->payment_status[i]
+                        'is_paid'   => $request->payment_status[$i]
                     ]);
                 }
             }
@@ -437,19 +437,17 @@ class CompaniesController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0 && $request->number_of_payments != '') {
-                Installment::where('subscription_id', $subscription->id)->forcedelete();
+            if($request->number_of_payments != 0) {
+                Installment::where('subscription_id', $subscription->id)->delete();
                 for($i=0; $i < $request->number_of_payments; $i++) {
-                    $key = array_keys($request->payment_status[$i]);
                     $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    
-                    $installment = new Installment;
-                    $installment->subscription_id   = $subscription->id;
-                    $installment->installment_number = $i+1;
-                    $installment->value = $request->payment[$i];
-                    $installment->payment_date  = $pay_date;
-                    $installment->is_paid   = $key[0];
-                    $installment->save(); 
+                    Installment::create([
+                        'subscription_id'   => $subscription->id,
+                        'installment_number'=> $i+1,
+                        'value' => $request->payment[$i],
+                        'payment_date'  => $pay_date,
+                        'is_paid'   => $request->payment_status[$i]
+                    ]);
                 }
             }
         }catch(Exception $ex) {

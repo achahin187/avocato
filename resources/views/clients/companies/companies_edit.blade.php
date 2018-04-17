@@ -295,7 +295,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="start_date">تاريخ بدء التعاقد</label>
-            <input name="start_date" value="{{ $company->subscription->start_date }}" class="datepicker master_input" type="text" placeholder="تاريخ بدء التعاقد" id="start_date">
+            <input name="start_date" value="{{ $company->subscription->start_date->format('m/d/Y') }}" class="datepicker master_input" type="text" placeholder="تاريخ بدء التعاقد" id="start_date">
             {{--  Error  --}}
             @if ($errors->has('start_date'))
               <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -307,7 +307,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="end_date">تاريخ  نهاية التعاقد</label>
-            <input name="end_date" value="{{ $company->subscription->end_date }}" class="datepicker master_input" type="text" placeholder="تاريخ  نهاية التعاقد" id="end_date">
+            <input name="end_date" value="{{ $company->subscription->end_date->format('m/d/Y') }}" class="datepicker master_input" type="text" placeholder="تاريخ  نهاية التعاقد" id="end_date">
             {{--  Error  --}}
             @if ($errors->has('end_date'))
               <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -385,19 +385,19 @@
                 <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                   <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date }}">
+                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date->format('m/d/Y') }}">
                   </div>
                 </div>
                 <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                   <label class="master_label">حالة القسط رقم {{ $j }}</label>
-                <div class="radiorobo 123">
-                  <input type="radio" name="payment_status[{{ $i }}][0]" id="rad_{{ $i }}">
-                  <label for="rad_1">نعم</label>
+                <div class="radio-inline">
+                  <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ ($installments[$i]->is_paid == 1) ? 'checked' : '' }} >
+                  <label>نعم</label>
                 </div>
-                <div class="radiorobo 456">
-                  <input type="radio" name="payment_status[{{ $i }}][1]" id="rad_{{ $j+1 }}"checked>
-                  <label for="rad_2">لا</label>
+                <div class="radio-inline">
+                  <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ ($installments[$i]->is_paid == 0) ? 'checked' : '' }} >
+                  <label>لا</label>
                 </div>
               </div>
             </div>
@@ -454,13 +454,13 @@
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                                      <div class="radiorobo 123">\
-                                        <input type="radio" name="payment_status['+i+'][0]" id="rad_'+i+'" >\
-                                        <label for="rad_1">نعم</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1" >\
+                                        <label>نعم</label>\
                                       </div>\
-                                      <div class="radiorobo 456">\
-                                        <input type="radio" name="payment_status['+i+'][1]" id="rad_'+j+1+'"checked>\
-                                        <label for="rad_2">لا</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
                                       </div>\
                                     </div>\
                                   </div>');

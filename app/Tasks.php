@@ -53,5 +53,10 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Case_', 'case_id');
     }
+
+    public function techinical_reports()
+    {
+        return $this->hasMany('App\Case_Techinical_Report','item_id');
+    }
 }
 

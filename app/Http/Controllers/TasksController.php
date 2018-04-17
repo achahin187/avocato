@@ -23,7 +23,8 @@ class TasksController extends Controller
 
     public function emergency_index()
     {
-        return view('tasks.tasks_emergency');
+        $data['tasks']=Tasks::where('task_type_id',1)->get();
+        return view('tasks.tasks_emergency',$data);
     }
 
     /**
