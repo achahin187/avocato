@@ -16,47 +16,52 @@ class Tasks extends Model
 
         public function payment_status()
     {
-        return $this->belongsTo('App\Task_Payment_Statuses','task_payment_status_id');
+        return $this->belongsTo('App\Task_Payment_Statuses','task_payment_status_id')->withDefault();
     }
 
         public function task_status()
     {
-        return $this->belongsTo('App\Task_Statuses','task_status_id');
+        return $this->belongsTo('App\Task_Statuses','task_status_id')->withDefault();
     }
 
         public function task_type()
     {
-        return $this->belongsTo('App\Task_Types','task_type_id');
+        return $this->belongsTo('App\Task_Types','task_type_id')->withDefault();
     }
 
         public function client()
     {
-        return $this->belongsTo('App\Users','client_id');
+        return $this->belongsTo('App\Users','client_id')->withDefault();
     }
 
         public function lawyer()
     {
-        return $this->belongsTo('App\Users','assigned_lawyer_id');
+        return $this->belongsTo('App\Users','assigned_lawyer_id')->withDefault();
     }
 
         public function who_assign_lawyer()
     {
-        return $this->belongsTo('App\Users','who_assigned_lawyer_id');
+        return $this->belongsTo('App\Users','who_assigned_lawyer_id')->withDefault();
     }
 
         public function charges()
     {
-        return $this->hasMany('App\Task_Charges','task_id');
+        return $this->hasMany('App\Task_Charges','task_id')->withDefault();
     }
     
-       public function cases()
+       public function case()
     {
-        return $this->belongsTo('App\Case_', 'case_id');
+        return $this->belongsTo('App\Case_', 'case_id')->withDefault();
     }
 
-    public function techinical_reports()
+    public function techinical_reports_emergency()
     {
-        return $this->hasMany('App\Case_Techinical_Report','item_id');
+        return $this->hasOne('App\Case_Techinical_Report','item_id')->withDefault();
+    }
+
+       public function task_status_history()
+    {
+        return $this->hasMany('App\Task_Status_History','task_id')->withDefault();
     }
 }
 
