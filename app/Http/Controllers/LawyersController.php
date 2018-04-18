@@ -31,25 +31,25 @@ class LawyersController extends Controller
     public function index()
     {
         // return Users::withTrashed()->restore();
-        $data['lawyers'] = Users::whereHas('rules', function($q){
-            $q->where('rule_id',5);
-        })->get();
-        $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-        $data['types']=Rules::where('parent_id',5)->get();
-        return view('lawyers.lawyers',$data);
+      $data['lawyers'] = Users::whereHas('rules', function($q){
+        $q->where('rule_id',5);
+      })->get();
+      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+      $data['types']=Rules::where('parent_id',5)->get();
+      return view('lawyers.lawyers',$data);
     }
 
     public function follow()
     {
-        $data['lawyers'] = Users::whereHas('rules', function($q){
-            $q->where('rule_id',5);
-        })->get();
-        $data['test']=json_encode([
-            ['lat'=>30.042701,'lang'=>31.432662],
-            ['lat'=>30.036273,'lang'=>31.432447],
+      $data['lawyers'] = Users::whereHas('rules', function($q){
+        $q->where('rule_id',5);
+      })->get();
+      $data['test']=json_encode([
+        ['lat'=>30.042701,'lang'=>31.432662],
+        ['lat'=>30.036273,'lang'=>31.432447],
 
-    ]);
-        return view('lawyers.lawyers_follow',$data);
+      ]);
+      return view('lawyers.lawyers_follow',$data);
     }
 
     /**
@@ -59,9 +59,9 @@ class LawyersController extends Controller
      */
     public function create()
     {
-        $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-        $data['types']=Rules::where('parent_id',5)->get();
-        return view('lawyers.lawyers_create',$data);
+      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+      $data['types']=Rules::where('parent_id',5)->get();
+      return view('lawyers.lawyers_create',$data);
     }
 
     public function excel()
@@ -83,9 +83,9 @@ class LawyersController extends Controller
       Excel::store((new LawyersExport()),$filepath.$filename);
       return response()->json($PathForJson.$filename); 
     }
-    }
+  }
 
-    public function filter(Request $request){
+  public function filter(Request $request){
         /* date_to make H:i:s = 23:59:59 to avoid two problems
             one : when select same date
             second : when juse select date_to
@@ -93,57 +93,57 @@ class LawyersController extends Controller
             no all items in the table
              */
             $data['lawyers'] = Users::where(function($q) use($request){
-                $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
-                $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+              $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
+              $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
 
-                if($request->has('types') && $request->types != 0)
-                {
-                   $q->whereHas('rules',function($q) use($request){
-                    $q->where('rule_id',$request->types);
-
-                });  
-               }
-               else{
-                  $q->whereHas('rules', function($q){
-                    $q->where('rule_id',5);
-                });  
-              }
-              if($request->has('nationalities') && $request->nationalities !=0)
+              if($request->has('types') && $request->types != 0)
               {
-                   $q->whereHas('user_detail',function($q) use($request){
-                    $q->where('nationality_id',$request->nationalities);
+               $q->whereHas('rules',function($q) use($request){
+                $q->where('rule_id',$request->types);
 
-                });  
-                }
-
-                if($request->filled('work_sector'))
-              {
-                   $q->whereHas('user_detail',function($q) use($request){
-                    $q->where('work_sector','like','%'.$request->work_sector.'%');
-
-                });  
-                }
-
-                 if($request->filled('syndicate_level'))
-              {
-                   $q->whereHas('user_detail',function($q) use($request){
-                    $q->where('syndicate_level','like','%'.$request->syndicate_level.'%');
-
-                });  
-                }
-
-              if($request->filled('date_from') && $request->filled('date_to') )
-              {
-                $q->whereBetween('last_login', array($date_from, $date_to));
-                }
-            elseif($request->filled('date_from'))
-            {
-                $q->where('last_login','>=',$date_from);
+              });  
+             }
+             else{
+              $q->whereHas('rules', function($q){
+                $q->where('rule_id',5);
+              });  
             }
-            elseif($request->filled('date_to'))
+            if($request->has('nationalities') && $request->nationalities !=0)
             {
-                $q->where('last_login','<=',$date_to);
-            }
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('nationality_id',$request->nationalities);
+
+            });  
+           }
+
+           if($request->filled('work_sector'))
+           {
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('work_sector','like','%'.$request->work_sector.'%');
+
+            });  
+           }
+
+           if($request->filled('syndicate_level'))
+           {
+             $q->whereHas('user_detail',function($q) use($request){
+              $q->where('syndicate_level','like','%'.$request->syndicate_level.'%');
+
+            });  
+           }
+
+           if($request->filled('date_from') && $request->filled('date_to') )
+           {
+            $q->whereBetween('last_login', array($date_from, $date_to));
+          }
+          elseif($request->filled('date_from'))
+          {
+            $q->where('last_login','>=',$date_from);
+          }
+          elseif($request->filled('date_to'))
+          {
+            $q->where('last_login','<=',$date_to);
+          }
 
 
 
@@ -154,20 +154,20 @@ class LawyersController extends Controller
             $data['types']=Rules::whereBetween('id',array('11','12'))->get();
             foreach($data['lawyers'] as $lawyer)
             {
-                $filter_ids[]=$lawyer->id;
+              $filter_ids[]=$lawyer->id;
             }
             if(!empty($filter_ids))
             {
-                Session::flash('filter_ids',$filter_ids);
+              Session::flash('filter_ids',$filter_ids);
             }
             else{
-                $filter_ids[]=0;
-                Session::flash('filter_ids',$filter_ids);
+              $filter_ids[]=0;
+              Session::flash('filter_ids',$filter_ids);
             }
 
             return view('lawyers.lawyers',$data);
 
-        }
+          }
 
     /**
      * Store a newly created resource in storage.
@@ -177,85 +177,85 @@ class LawyersController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'lawyer_name'=>'required',
-            'address'=>'required',
-            'nationality'=>'required',
-            'national_id'=>'required|numeric',
-            'birthdate'=>'required',
-            'phone'=>'required|digits_between:1,10',
-            'mobile'=>'required|digits_between:1,12',
-            'email'=>'required|email|max:40',
-            'image'=>'required|image|mimes:jpg,jpeg,png|max:1024',
-            'is_active'=>'required',
-            'work_sector'=>'required',
-            'work_sector_type'=>'required',
-            'join_date'=>'required',
-            'resign_date'=>'required',
-            'work_type'=>'required',
-            'litigation_level'=>'required',
-            'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
-            'syndicate_level'=>'required',
-            'syndicate_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
-        ]);
+      $validator = Validator::make($request->all(), [
+        'lawyer_name'=>'required',
+        'address'=>'required',
+        'nationality'=>'required',
+        'national_id'=>'required|numeric',
+        'birthdate'=>'required',
+        'phone'=>'required|digits_between:1,10',
+        'mobile'=>'required|digits_between:1,12',
+        'email'=>'required|email|max:40',
+        'image'=>'required|image|mimes:jpg,jpeg,png|max:1024',
+        'is_active'=>'required',
+        'work_sector'=>'required',
+        'work_sector_type'=>'required',
+        'join_date'=>'required',
+        'resign_date'=>'required',
+        'work_type'=>'required',
+        'litigation_level'=>'required',
+        'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
+        'syndicate_level'=>'required',
+        'syndicate_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
+      ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-            ->withErrors($validator)
-            ->withInput();
-        }
+      if ($validator->fails()) {
+        return redirect()->back()
+        ->withErrors($validator)
+        ->withInput();
+      }
 
-        if($request->hasFile('image')){
-            $destinationPath='users_images';
-            $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
-            Input::file('image')->move($destinationPath, $image_name);
-        }
+      if($request->hasFile('image')){
+        $destinationPath='users_images';
+        $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
+        Input::file('image')->move($destinationPath, $image_name);
+      }
 
-        if($request->hasFile('authorization_copy')){
-            $destinationPath='lawyers_files/authorization_copy';
-            $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
-            Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
-        }
+      if($request->hasFile('authorization_copy')){
+        $destinationPath='lawyers_files/authorization_copy';
+        $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
+        Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
+      }
 
-        if($request->hasFile('syndicate_copy')){
-            $destinationPath='lawyers_files/syndicate_copy';
-            $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
-            Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
-        }
+      if($request->hasFile('syndicate_copy')){
+        $destinationPath='lawyers_files/syndicate_copy';
+        $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
+        Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
+      }
 
-        $lawyer=new Users;
-        $lawyer->name = $request->lawyer_name.$lawyer->id;
-        $lawyer->full_name = $request->lawyer_name;
-        $lawyer->address = $request->address;
-        $lawyer->phone = $request->phone;
-        $lawyer->mobile = $request->mobile;
-        $lawyer->email = $request->email;
-        $lawyer->is_active = $request->is_active;
-        $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
-        $lawyer->image = $image_name;
-        $lawyer->save();
-        $lawyer=Users::find($lawyer->id);
-        $password = Helper::generateRandom(Users::class, 'password', 8);
-        $lawyer->password = bcrypt($password);
-        $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
-        $lawyer->save();
-        $lawyer->rules()->attach([5,$request->work_type]);
-        $lawyer_details = new User_Details;
-        $lawyer_details->national_id = $request->national_id;
-        $lawyer_details->nationality_id = $request->nationality;
-        $lawyer_details->work_sector = $request->work_sector;
-        $lawyer_details->work_sector_type = $request->work_sector_type;
-        $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
-        $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
-        $lawyer_details->litigation_level = $request->litigation_level ;
-        $lawyer_details->syndicate_level = $request->syndicate_level ;
-        $lawyer_details->authorization_copy = $authorization_copy ;
-        $lawyer_details->syndicate_copy = $syndicate_copy ;
-        $lawyer_plaintext = new ClientsPasswords;
-        $lawyer_plaintext->password = $password;
-        $lawyer->user_detail()->save($lawyer_details);
-        $lawyer->client_password()->save($lawyer_plaintext);
-        return redirect()->route('lawyers_show',$lawyer->id)->with('success','تم إضافه محامي جديد بنجاح');
+      $lawyer=new Users;
+      $lawyer->name = $request->lawyer_name.$lawyer->id;
+      $lawyer->full_name = $request->lawyer_name;
+      $lawyer->address = $request->address;
+      $lawyer->phone = $request->phone;
+      $lawyer->mobile = $request->mobile;
+      $lawyer->email = $request->email;
+      $lawyer->is_active = $request->is_active;
+      $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
+      $lawyer->image = $image_name;
+      $lawyer->save();
+      $lawyer=Users::find($lawyer->id);
+      $password = Helper::generateRandom(Users::class, 'password', 8);
+      $lawyer->password = bcrypt($password);
+      $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
+      $lawyer->save();
+      $lawyer->rules()->attach([5,$request->work_type]);
+      $lawyer_details = new User_Details;
+      $lawyer_details->national_id = $request->national_id;
+      $lawyer_details->nationality_id = $request->nationality;
+      $lawyer_details->work_sector = $request->work_sector;
+      $lawyer_details->work_sector_type = $request->work_sector_type;
+      $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+      $lawyer_details->litigation_level = $request->litigation_level ;
+      $lawyer_details->syndicate_level = $request->syndicate_level ;
+      $lawyer_details->authorization_copy = $authorization_copy ;
+      $lawyer_details->syndicate_copy = $syndicate_copy ;
+      $lawyer_plaintext = new ClientsPasswords;
+      $lawyer_plaintext->password = $password;
+      $lawyer->user_detail()->save($lawyer_details);
+      $lawyer->client_password()->save($lawyer_plaintext);
+      return redirect()->route('lawyers_show',$lawyer->id)->with('success','تم إضافه محامي جديد بنجاح');
 
     }
 
@@ -274,27 +274,30 @@ class LawyersController extends Controller
      if(count($tasks)){
 
       foreach($tasks as $task){
-          $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
-              'id'=>$task->id,
-              'name'=>$task->name,
-              'start_datetime'=>$task->start_datetime,
-              'end_datetime'=>$task->end_datetime,
-              'task_type_id'=>$task->task_type_id,
-          ];
+        $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
+          'id'=>$task->id,
+          'name'=>$task->name,
+          'start_datetime'=>$task->start_datetime,
+          'end_datetime'=>$task->end_datetime,
+          'task_type_id'=>$task->task_type_id,
+        ];
       }
+    }
+    else
+    {
+      $tasks_months=[];
+    }
+    $data['tasks_months'] = $tasks_months;
+    $data['cases'] = Case_::whereHas('lawyers',function($q) use($id){
+      $q->where('lawyer_id',$id);
+    })->get();
+
+    $data['services'] = Tasks::where('task_type_id',3)->where('assigned_lawyer_id',$id)->get();
+    $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
+    $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
+
+    return view('lawyers.lawyers_show',$data);
   }
-  else
-  {
-    $tasks_months=[];
-}
-$data['tasks_months'] = $tasks_months;
-      // $data['cases'] = Case_::whereHas('lawyers',function($q) use($id){
-      //               $q->where('lawyer_id',$id);
-
-      //           })->get();
-
-return view('lawyers.lawyers_show',$data);
-}
 
     /**
      * Show the form for editing the specified resource.
@@ -304,10 +307,10 @@ return view('lawyers.lawyers_show',$data);
      */
     public function edit($id)
     {
-        $data['lawyer'] = Users::find($id);
-        $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-        $data['types'] = Rules::where('parent_id',5)->get();
-        return view('lawyers.lawyers_edit',$data);
+      $data['lawyer'] = Users::find($id);
+      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+      $data['types'] = Rules::where('parent_id',5)->get();
+      return view('lawyers.lawyers_edit',$data);
     }
 
 
@@ -320,89 +323,89 @@ return view('lawyers.lawyers_show',$data);
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'lawyer_name'=>'required',
-            'address'=>'required',
-            'nationality'=>'required',
-            'national_id'=>'required|numeric',
-            'birthdate'=>'required',
-            'phone'=>'required|digits_between:1,10',
-            'mobile'=>'required|digits_between:1,12',
-            'email'=>'required|email|max:40',
-            'is_active'=>'required',
-            'work_sector'=>'required',
-            'work_sector_type'=>'required',
-            'join_date'=>'required',
-            'resign_date'=>'required',
-            'work_type'=>'required',
-            'litigation_level'=>'required',
-            'syndicate_level'=>'required',
-        ]);
+      $validator = Validator::make($request->all(), [
+        'lawyer_name'=>'required',
+        'address'=>'required',
+        'nationality'=>'required',
+        'national_id'=>'required|numeric',
+        'birthdate'=>'required',
+        'phone'=>'required|digits_between:1,10',
+        'mobile'=>'required|digits_between:1,12',
+        'email'=>'required|email|max:40',
+        'is_active'=>'required',
+        'work_sector'=>'required',
+        'work_sector_type'=>'required',
+        'join_date'=>'required',
+        'resign_date'=>'required',
+        'work_type'=>'required',
+        'litigation_level'=>'required',
+        'syndicate_level'=>'required',
+      ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-            ->withErrors($validator)
-            ->withInput();
-        }
+      if ($validator->fails()) {
+        return redirect()->back()
+        ->withErrors($validator)
+        ->withInput();
+      }
 
 
-        $lawyer= Users::find($id);
-        $lawyer->name = $request->lawyer_name.$lawyer->id;
-        $lawyer->full_name = $request->lawyer_name;
-        $lawyer->address = $request->address;
-        $lawyer->phone = $request->phone;
-        $lawyer->mobile = $request->mobile;
-        $lawyer->email = $request->email;
-        $lawyer->is_active = $request->is_active;
-        $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
-        if($request->hasFile('image')){
-            $destinationPath='users_images';
-            $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
-            Input::file('image')->move($destinationPath, $image_name);
-            File::delete($lawyer->image);
-            $lawyer->image = $image_name;
+      $lawyer= Users::find($id);
+      $lawyer->name = $request->lawyer_name.$lawyer->id;
+      $lawyer->full_name = $request->lawyer_name;
+      $lawyer->address = $request->address;
+      $lawyer->phone = $request->phone;
+      $lawyer->mobile = $request->mobile;
+      $lawyer->email = $request->email;
+      $lawyer->is_active = $request->is_active;
+      $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
+      if($request->hasFile('image')){
+        $destinationPath='users_images';
+        $image_name = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('image')->getClientOriginalExtension();
+        Input::file('image')->move($destinationPath, $image_name);
+        File::delete($lawyer->image);
+        $lawyer->image = $image_name;
 
-        }
+      }
 
-        $lawyer->save();
-        $lawyer=Users::find($id);
+      $lawyer->save();
+      $lawyer=Users::find($id);
         // $password = Helper::generateRandom(Users::class, 'password', 8);
         // $lawyer->password = bcrypt($password);
         // $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
-        $lawyer->save();
-        $lawyer->rules()->detach();
-        $lawyer->rules()->attach([5,$request->work_type]);
-        $lawyer_details = User_Details::where('user_id',$id)->first();;
-        $lawyer_details->national_id = $request->national_id;
-        $lawyer_details->nationality_id = $request->nationality;
-        $lawyer_details->work_sector = $request->work_sector;
-        $lawyer_details->work_sector_type = $request->work_sector_type;
-        $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
-        $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
-        $lawyer_details->litigation_level = $request->litigation_level ;
-        $lawyer_details->syndicate_level = $request->syndicate_level ;
-        
-        
+      $lawyer->save();
+      $lawyer->rules()->detach();
+      $lawyer->rules()->attach([5,$request->work_type]);
+      $lawyer_details = User_Details::where('user_id',$id)->first();;
+      $lawyer_details->national_id = $request->national_id;
+      $lawyer_details->nationality_id = $request->nationality;
+      $lawyer_details->work_sector = $request->work_sector;
+      $lawyer_details->work_sector_type = $request->work_sector_type;
+      $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+      $lawyer_details->litigation_level = $request->litigation_level ;
+      $lawyer_details->syndicate_level = $request->syndicate_level ;
+
+
         // $lawyer_plaintext = ClientsPasswords::where('user_id',$id)->first();
         // $lawyer_plaintext->password = $password;
-        if($request->hasFile('authorization_copy')){
-            $destinationPath='lawyers_files/authorization_copy';
-            $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
-            Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
-            File::delete($lawyer_details->authorization_copy);
-            $lawyer_details->authorization_copy = $authorization_copy ;
-        }
+      if($request->hasFile('authorization_copy')){
+        $destinationPath='lawyers_files/authorization_copy';
+        $authorization_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('authorization_copy')->getClientOriginalExtension();
+        Input::file('authorization_copy')->move($destinationPath, $authorization_copy);
+        File::delete($lawyer_details->authorization_copy);
+        $lawyer_details->authorization_copy = $authorization_copy ;
+      }
 
-        if($request->hasFile('syndicate_copy')){
-            $destinationPath='lawyers_files/syndicate_copy';
-            $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
-            Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
-            File::delete($lawyer_details->syndicate_copy);
-            $lawyer_details->syndicate_copy = $syndicate_copy ;
-        }
-        $lawyer->user_detail()->save($lawyer_details);
+      if($request->hasFile('syndicate_copy')){
+        $destinationPath='lawyers_files/syndicate_copy';
+        $syndicate_copy = $destinationPath.'/'.$request->lawyer_name.time().rand(111,999).'.'.Input::file('syndicate_copy')->getClientOriginalExtension();
+        Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
+        File::delete($lawyer_details->syndicate_copy);
+        $lawyer_details->syndicate_copy = $syndicate_copy ;
+      }
+      $lawyer->user_detail()->save($lawyer_details);
         // $lawyer->client_password()->save($lawyer_plaintext);
-        return redirect()->route('lawyers')->with('success','تم تعديل بيانات المحامى بنجاح');
+      return redirect()->route('lawyers')->with('success','تم تعديل بيانات المحامى بنجاح');
     }
 
     /**
@@ -414,23 +417,23 @@ return view('lawyers.lawyers_show',$data);
     public function destroyGet($id)
     {
         // return Users::withTrashed()->restore();
-        $user = Users::find($id);
-        $user->delete();
-        return redirect()->route('lawyers')->with('success','تم حذف عضويه المحامى بنجاح');
+      $user = Users::find($id);
+      $user->delete();
+      return redirect()->route('lawyers')->with('success','تم حذف عضويه المحامى بنجاح');
     }
 
     public function destroyPost($id)
     {
-        $user = Users::find($id);
-        $user->delete();
+      $user = Users::find($id);
+      $user->delete();
     }
 
     public function destroy_all()
     {
-        $ids = $_POST['ids'];
-        foreach($ids as $id)
-        {
-            Users::find($id)->delete();
-        } 
+      $ids = $_POST['ids'];
+      foreach($ids as $id)
+      {
+        Users::find($id)->delete();
+      } 
     }
-}
+  }

@@ -61,12 +61,12 @@
   </div>
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      @isset($service->lawyer)
+      @if(count($service->lawyer->name)>0)
       <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset(''.$service->lawyer->image)}}"></div>
       <div class="col-md-2 col-xs-3">
         <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="">{{$service->lawyer->full_name}}</a>
       </div>
-      @endisset
+      @endif
       <div class="clearfix"></div>
       <div class="col-lg-12"><br>
         <div class="ticket-container">
@@ -79,6 +79,9 @@
                 </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="">{{$service->client->full_name}}</a>&nbsp;<span class="color--sec">(
                   @foreach($service->client->rules as $rule)
                   @switch($rule->pivot->rule_id)
+                    @case(7)
+                    {{$rule->name_ar}}
+                    @break
                     @case(8)
                     {{$rule->name_ar}}
                     @break
