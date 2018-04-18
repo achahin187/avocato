@@ -48,11 +48,22 @@ class ReportsStatisticsController extends Controller
         // free services
         $count_free_services = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
 
+        // Lawyers
+        $lawyers = Helper::getUsersBasedOnRules([11, 12]);
+
+        // Companies
+
+        // Installments
+
+        // Urgents
+
+        // Locations
+
         return view('reports_statistics', compact([
                                         'count_clients', 'count_individuals', 'percentage_individuals', 
                                         'count_companies', 'percentage_companies', 'count_indcom', 'percentage_indcom', 
                                         'count_mobile', 'percentage_mobile', 'count_case', 'count_paid_services', 'count_free_services',
-                                        'cases'
+                                        'cases', 'lawyers'
                                     ]));
     }
 
