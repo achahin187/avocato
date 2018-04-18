@@ -378,7 +378,8 @@ if($request->hasFile('docs_upload')){
         }
        }
          // dd($request->all());
-        return $this->create();
+        // return $this->create();
+       return redirect()->route('case_view',$case->id);
     }
     function lawyers_filter(Request $request)
     {
