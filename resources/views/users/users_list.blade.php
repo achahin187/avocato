@@ -197,7 +197,7 @@
           <tbody>
             @foreach($users as $user)
             <tr data-user-id="{{$user->id}}">
-              <td><span class="cellcontent"><input type="checkbox" class=" input-in-table " /></span></td>
+              <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
               <td><span class="cellcontent">{{$user->id}}</span></td>
               <td><span class="cellcontent">{{$user->name}}</span></td>
               <td><span class="cellcontent">{{$user->email}}</span></td>

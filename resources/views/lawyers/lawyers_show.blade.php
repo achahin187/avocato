@@ -169,155 +169,23 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <th><span class="cellcontent">لسنة</span></th>
                                 <th><span class="cellcontent">تاريخ قيد الدعوة</span></th>
                                 <th><span class="cellcontent">رقم الملف بالمكتب</span></th>
-                                <th><span class="cellcontent">رقم التوكيل</span></th>
                                 <th><span class="cellcontent">الإجراءات</span></th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
+                              @foreach($cases as $case)
+                              <tr data-case-id="{{$case->id}}">
                                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                <td><span class="cellcontent">{{$case->case_types->name}}</span></td>
+                                <td><span class="cellcontent">{{$case->courts->name}}</span></td>
+                                <td><span class="cellcontent">{{$case->region}}</span></td>
+                                <td><span class="cellcontent">{{$case->claim_number}}</span></td>
+                                <td><span class="cellcontent">{{$case->year}}</span></td>
+                                <td><span class="cellcontent">{{$case->date}}</span></td>
+                                <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
+                                <td><span class="cellcontent"><a href= "{{route('case_view',$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('case_edit',$case->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">جنايات</span></td>
-                                <td><span class="cellcontent">اسم المحكمة</span></td>
-                                <td><span class="cellcontent">اسم الدائرة</span></td>
-                                <td><span class="cellcontent">100230</span></td>
-                                <td><span class="cellcontent">2017</span></td>
-                                <td><span class="cellcontent">29-10-2019</span></td>
-                                <td><span class="cellcontent">100900</span></td>
-                                <td><span class="cellcontent">400910</span></td>
-                                <td><span class="cellcontent"><a href= case_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -494,114 +362,26 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
+                              @foreach($services as $service)
+                              <tr data-service-id="{{$service->id}}">
                                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                <td><span class="cellcontent">{{$service->client->code}}</span></td>
+                                <td><span class="cellcontent">{{$service->client->full_name}}</span></td>
+                                <td><span class="cellcontent">{{$service->client->address}}</span></td>
+                                <td><span class="cellcontent">@foreach($types as $type)
+                              @if($service->task_payment_status_id == $type->item_id)
+                              {{$type->value}}
+                              @endif
+                            @endforeach</span></td>
+                          <td><span class="cellcontent">@foreach($statuses as $status)
+                    @if($status->item_id == $service->task_status_id)
+                    {{$status->value}}
+                    @endif
+                  @endforeach</span></td>
+{{--                                 <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td> --}}
+                                <td><span class="cellcontent"><a href= "{{route('services_show',$service->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="{{route('services_edit',$service->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel-service action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                                <td><span class="cellcontent">20122</span></td>
-                                <td><span class="cellcontent">محمد محمود السيد</span></td>
-                                <td><span class="cellcontent">24 شارع 90 - التجمع الخامس</span></td>
-                                <td><span class="cellcontent">نوع الخدمة</span></td>
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                <td><span class="cellcontent"><a href= service_view.html ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= newlink.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1519,5 +1299,73 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
             
+                        <script>
+  $(document).ready(function(){
 
+    $('.btn-warning-cancel').click(function(){
+      var case_id = $(this).closest('tr').attr('data-case-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('case_destroy')}}'+'/'+case_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-case-id='+case_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+ 
+
+     $('.btn-warning-cancel-service').click(function(){
+      var service_id = $(this).closest('tr').attr('data-service-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('services_destroy')}}'+'/'+service_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-service-id='+service_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+  });
+
+</script>
 @endsection
