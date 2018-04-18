@@ -233,6 +233,9 @@ Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_sta
 Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
 Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name('task_destroy');
 Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
+Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emergency_task')->name('assign_emergency_task');
+Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
+
 
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');

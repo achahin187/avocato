@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Tasks;
 use App\Task_Status_History;
 use Carbon\Carbon;
+use App\Users;
 class EmergencyTasksController extends Controller
 {
     public function view($id)
@@ -49,6 +50,42 @@ class EmergencyTasksController extends Controller
 
     public function add_emergency_task(Request $request)
     {
-    	
+
+    }
+
+    public function assign_emergency_task($id)
+    {
+    	$data['task']=Tasks::where('id',$id)->first();
+    	$data['lawyers']=Users::whereHas('rules', function ($query) {
+        $query->where('rule_id', '5');
+        })->with(['user_detail'=>function($q) {
+                 $q->orderby('join_date','desc');
+                 }])->get();
+        // dd($data['lawyers']);
+        foreach($data['lawyers'] as $detail){
+            
+                if(count($detail->user_detail)>1)
+                {
+                    $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+              
+                $detail['nationality']=$value;
+                }
+                else
+                {
+                    $detail['nationality']='';
+                 }
+                }
+    	return view('tasks.assign_emergency_task',$data);
+    }
+
+    public function assign_lawyer_emergency_task(Request $request , $id)
+    {
+    	// dd($request->all());
+    	$task = Tasks::find($id);
+    	$task->update([
+    		'assigned_lawyer_id'=>$request['lawyer_id'],
+    		'who_assigned_lawyer_id'=>\Auth::user()->id,
+    	]);
+    	return redirect()->route('tasks_emergency');
     }
 }

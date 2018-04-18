@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="assign_known_task.html">تعيين محامي للمهمة</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{URL('assign_emergency_task/'.$task->id)}}">تعيين محامي للمهمة</a>
                       </div>
                     </div>
                   </div>
