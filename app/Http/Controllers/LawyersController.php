@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Users;
 use App\User_Details;
+use App\Tasks;
+use App\Case_;
 use App\Rules;
 use App\Geo_Countries;
 use App\Entity_Localizations;
@@ -16,6 +18,7 @@ use Session;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Exports\LawyersExport;
+use Jenssegers\Date\Date;
 
 
 class LawyersController extends Controller
@@ -266,6 +269,19 @@ class LawyersController extends Controller
     {
        $data['lawyer'] = Users::find($id);
        $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+       $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+      foreach($tasks as $task){
+      $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
+                              'id'=>$task->id,
+                              'name'=>$task->name,
+                              'start_datetime'=>$task->start_datetime,
+                              'end_datetime'=>$task->end_datetime,
+                              'task_type_id'=>$task->task_type_id,
+                                    ];
+      }
+      $data['tasks_months'] = $tasks_months;
+      $data['cases'] = $
+
         return view('lawyers.lawyers_show',$data);
     }
 

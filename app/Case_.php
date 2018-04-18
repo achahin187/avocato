@@ -16,52 +16,52 @@ class Case_ extends Model
 // relations
     public function case_clients()
     {
-        return $this->hasMany('App\Case_Client', 'case_id');
+        return $this->hasMany('App\Case_Client', 'case_id')->withDefault();
     }
     
     public function case_documents()
     {
-        return $this->hasMany('App\Case_Document', 'case_id');
+        return $this->hasMany('App\Case_Document', 'case_id')->withDefault();
     }
 
     public function case_records()
     {
-        return $this->hasMany('App\Case_Record', 'case_id');
+        return $this->hasMany('App\Case_Record', 'case_id')->withDefault();
     }
     
     public function case_techinical_reports()
     {
-        return $this->hasMany('App\Case_Techinical_Report', 'case_id');
+        return $this->hasMany('App\Case_Techinical_Report', 'case_id')->withDefault();
     }
 
     public function case_types()
     {
-        return $this->belongsTo('App\Cases_Types', 'case_type_id');
+        return $this->belongsTo('App\Cases_Types', 'case_type_id')->withDefault();
     }
     
     public function governorates()
     {
-        return $this->belongsTo('App\Geo_Governorates','geo_governorate_id');
+        return $this->belongsTo('App\Geo_Governorates','geo_governorate_id')->withDefault();
     }
     
     public function cities()
     {
-        return $this->belongsTo('App\Geo_Cities', 'geo_city_id');
+        return $this->belongsTo('App\Geo_Cities', 'geo_city_id')->withDefault();
     }
     
     public function courts()
     {
-        return $this->belongsTo('App\Courts', 'court_id');
+        return $this->belongsTo('App\Courts', 'court_id')->withDefault();
     }
 
     public function lawyers()
     {
-        return $this->belongsToMany('App\Users','case_lawyers','case_id','lawyer_id');
+        return $this->belongsToMany('App\Users','case_lawyers','case_id','lawyer_id')->withDefault();
     }
 
     public function tasks()
     {
-        return $this->hasMany('App\Tasks', 'case_id');
+        return $this->hasMany('App\Tasks', 'case_id')->withDefault();
     }
 
     public function clients()
