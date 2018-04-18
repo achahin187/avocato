@@ -23,7 +23,7 @@ class Case_Techinical_Report extends Model
      //relations
     public function cases()
     {
-    	return $this->belongsTo('App\Case', 'case_id');
+    	return $this->belongsTo('App\Case', 'case_id')->withDefault();
     }
 
     public function case_tachinical_report_documents()
