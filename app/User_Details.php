@@ -18,10 +18,10 @@ class User_Details extends Model
 
 public function nationality()
    {
-       return $this->belongsTo('App\Geo_Countries','nationality_id')->withDefault();
+       return $this->belongsTo('App\Geo_Countries','nationality_id');
    }
 	public function user() {
-		return $this->belongsTo('App\Users','user_id')->withDefault();
+		return $this->belongsTo('App\Users','user_id');
 	}
 
 }

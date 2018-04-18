@@ -52,7 +52,8 @@ class ReportsStatisticsController extends Controller
         $lawyers = Helper::getUsersBasedOnRules([11, 12]);
 
         // Companies
-
+        $companies = Users::users(9)->get();
+        
         // Installments
 
         // Urgents

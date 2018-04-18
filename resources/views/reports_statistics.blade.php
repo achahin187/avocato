@@ -625,102 +625,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">2012</span></td>
-                    <td><span class="cellcontent">اسم الشركة</span></td>
-                    <td><span class="cellcontent">بلاتيني</span></td>
-                    <td><span class="cellcontent">342</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
+                    @if ( isset($companies) && !empty($companies) )
+                        @foreach ($companies as $company)
+                        <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">{{ ($company->code) ? $company->code : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($company->full_name) ? $company->full_name : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($company->subscription) ? Helper::localizations('package_types', 'name', $company->subscription->id) : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($company->companyChildren) ? $company->companyChildren->count() : 0 }}</span></td>
+                            <td><span class="cellcontent">{{ ($company->cases) }}</span></td>
+                          </tr>
+                        @endforeach
+                    @endif
                 </tbody>
               </table>
               <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

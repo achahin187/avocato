@@ -23,7 +23,7 @@ class Case_Record extends Model
      //relations
     public function cases()
     {
-    	return $this->belongsTo('App\Case', 'case_id')->withDefault();
+    	return $this->belongsTo('App\Case', 'case_id');
     }
     public function case_record_types()
     {
