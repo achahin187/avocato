@@ -223,6 +223,8 @@ Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal'
 Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
 Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
+Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
+
 
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 
@@ -231,6 +233,9 @@ Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_sta
 Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
 Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name('task_destroy');
 Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
+Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emergency_task')->name('assign_emergency_task');
+Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
+
 
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');

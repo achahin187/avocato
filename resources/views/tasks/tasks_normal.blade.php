@@ -216,6 +216,8 @@
             <div class="full-table">
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filterModal_agenda" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+          <form role="form" action="{{route('session_filter')}}" method="POST" accept-charset="utf-8">
+            {{ csrf_field() }}
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                   <div>
                     <h2 id="modal1Title">فلتر</h2>
@@ -223,57 +225,57 @@
                       <div class="master_field">
                         <label class="master_label mandatory" for="agenda_date_from">تاريخ الجلسة من</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="التاريخ من" id="agenda_date_from">
-                        </div><span class="master_message color--fadegreen">message</span>
+                          <input name="start_from" class="datepicker master_input" type="text" placeholder="التاريخ من" id="agenda_date_from">
+                        </div><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="agenda_date_to">تاريخ الجلسة الى</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="التاريخ الى" id="agenda_date_to">
-                        </div><span class="master_message color--fadegreen">message</span>
+                          <input name="start_to" class="datepicker master_input" type="text" placeholder="التاريخ الى" id="agenda_date_to">
+                        </div><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
+{{--                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="agenda_client">اسم العميل</label>
-                        <input class="master_input" type="text" placeholder="اسم العميل (الموكل)" id="agenda_client"><span class="master_message color--fadegreen">message</span>
+                        <input class="master_input" type="text" placeholder="اسم العميل (الموكل)" id="agenda_client"><span class="master_message color--fadegreen"></span>
                       </div>
-                    </div>
+                    </div> --}}
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="case_court2">المحكمة </label>
-                        <select class="master_input select2" id="case_court2" multiple="multiple" data-placeholder="المحكمة" style="width:100%;" ,>
-                          <option>محكمة شرق القاهرة</option>
-                          <option>محكمة غرب القاهرة</option>
-                          <option>محكمة جنوب القاهرة </option>
-                          <option>محكمة الجيزة</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="courts[]" class="master_input select2" id="case_court2" multiple="multiple" data-placeholder="المحكمة" style="width:100%;" ,>
+                          @foreach($courts as $court)
+                          <option value="{{$court->id}}">{{$court->name}}</option>
+                          @endforeach
+                        </select><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="case_type2">الدائرة</label>
-                        <select class="master_input select2" id="case_type2" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
-                          <option>دائرة العباسية</option>
-                          <option>دائرة الدقي</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="regions[]" class="master_input select2" id="case_type2" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
+                          @foreach($regions as $region)
+                          <option name="{{$region->region}}">{{$region->region}}</option>
+                          @endforeach
+                        </select><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
                     <div class="col-md-12">
                       <div class="master_field">
                         <label class="master_label mandatory">الحالة</label>
                         <div class="radiorobo">
-                          <input type="radio" id="services_rad_1">
+                          <input name="lawyer" value="2" type="radio" id="services_rad_1" checked>
                           <label for="services_rad_1">الكل</label>
                         </div>
                         <div class="radiorobo">
-                          <input type="radio" id="services_rad_2">
+                          <input name="lawyer" value="1" type="radio" id="services_rad_2">
                           <label for="services_rad_2">تم تحديد محامي</label>
                         </div>
                         <div class="radiorobo">
-                          <input type="radio" id="services_rad_3">
+                          <input name="lawyer" value="0" type="radio" id="services_rad_3">
                           <label for="services_rad_3">لم يتم تحديد محامي</label>
                         </div>
                       </div>
@@ -282,22 +284,23 @@
                       <div class="master_field">
                         <label class="master_label mandatory" for="next_date_from">تاريخ الجلسة القادمة من</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="التاريخ من" id="next_date_from">
-                        </div><span class="master_message color--fadegreen">message</span>
+                          <input name="next_from" class="datepicker master_input" type="text" placeholder="التاريخ من" id="next_date_from">
+                        </div><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="next_date_to">تاريخ الجلسة القادمة الى</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="التاريخ الى" id="next_date_to">
-                        </div><span class="master_message color--fadegreen">message</span>
+                          <input name="next_to" class="datepicker master_input" type="text" placeholder="التاريخ الى" id="next_date_to">
+                        </div><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
                   </div>
                   <div class="clearfix"></div>
                   <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                  <button class="remodal-confirm" type="submit">فلتر</button>
+                </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_agenda"><i class="fa fa-filter"></i>filters</a></div>

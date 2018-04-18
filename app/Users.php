@@ -53,22 +53,22 @@ class Users extends Authenticatable
 
    public function createdParent()
    {
-       return $this->belongsTo('App\Users', 'created_by');
+       return $this->belongsTo('App\Users', 'created_by')->withDefault();
    }
 
    public function createdChildren()
    {
-       return $this->hasMany('App\Users', 'created_by');
+       return $this->hasMany('App\Users', 'created_by')->withDefault();
    }
 
    public function modifiedParent()
    {
-       return $this->belongsTo('App\Users', 'modified_by');
+       return $this->belongsTo('App\Users', 'modified_by')->withDefault();
    }
 
    public function modifiedChildren()
    {
-       return $this->hasMany('App\Users', 'modified_by');
+       return $this->hasMany('App\Users', 'modified_by')->withDefault();
    }
 
    // Many users in 'users' table have Many rules in 'rules' table - pivot table =>  'users_rules'
@@ -79,12 +79,12 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One detail in 'user_details' table
    public function user_detail() {
-       return $this->hasOne('App\User_Details','user_id');
+       return $this->hasOne('App\User_Details','user_id')->withDefault();
    }
 
    // One user in 'users' table has One subscribtion in 'subscriptions' table
    public function subscription() {
-       return $this->hasOne('App\Subscriptions', 'user_id');
+       return $this->hasOne('App\Subscriptions', 'user_id')->withDefault();
    }
 
    // Join between 'users' && 'users_rules'
@@ -97,28 +97,28 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One record in 'clients_passwords' table
    public function client_password() {
-       return $this->hasOne('App\ClientsPasswords','user_id');
+       return $this->hasOne('App\ClientsPasswords','user_id')->withDefault();
    }
 
    public function user_company_detail() {
-       return $this->hasOne('App\User_Company_Details', 'user_id');
+       return $this->hasOne('App\User_Company_Details', 'user_id')->withDefault();
    }
 
    // Self relation between individual and company
    public function companyParent()
    {
-       return $this->belongsTo('App\Users', 'parent_id');
+       return $this->belongsTo('App\Users', 'parent_id')->withDefault();
    }
 
    // Self relation
    public function companyChildren()
    {
-       return $this->hasMany('App\Users', 'parent_id');
+       return $this->hasMany('App\Users', 'parent_id')->withDefault();
    }
 
     public function consultations()
    {
-       return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
+       return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id')->withDefault();
    }
 
    public function cases()
@@ -127,35 +127,35 @@ class Users extends Authenticatable
     }
     public function clients()
     {
-        return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
+        return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number');
 }
 
     public function tasks()
     {
-        return $this->hasMany('App\Tasks','client_id');
+        return $this->hasMany('App\Tasks','client_id')->withDefault();
 
     }
 
         public function offices()
     {
-        return $this->hasMany('App\User_Offices','user_id');
+        return $this->hasMany('App\User_Offices','user_id')->withDefault();
 
     }
 
            public function tasks_assigned()
     {
-        return $this->hasMany('App\Tasks','assigned_lawyer_id');
+        return $this->hasMany('App\Tasks','assigned_lawyer_id')->withDefault();
 
     }
 
            public function who_assign_tasks()
     {
-        return $this->hasMany('App\Tasks','who_assigned_lawyer_id');
+        return $this->hasMany('App\Tasks','who_assigned_lawyer_id')->withDefault();
 
     }
 
         public function case_technical_reports()
     {
-      return $this->hasMany('App\Case_Techinical_Report', 'assigned_to');
+      return $this->hasMany('App\Case_Techinical_Report', 'assigned_to')->withDefault();
     }
 }
