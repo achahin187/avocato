@@ -39,8 +39,10 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
                            <select class="master_input select2"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})">
+                            <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($clients as $client)
-                              <option value="{{$client->id}}">{{$client->code}}</option>
+                              {{-- <option value="{{$client->id}}">{{$client->code}}</option> --}}
+                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
                             @endforeach
                               
                             </select><span class="master_message color--fadegreen">message</span>
@@ -49,12 +51,8 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_name_0">اسم الموكل</label>
-                            <select class="master_input select2"  id="client_name_0" name="client_name[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})">
-                            @foreach($clients as $client)
-                              <option value="{{$client->id}}">{{$client->name}}</option>
-                            @endforeach
-                              
-                            </select>
+                            <input class="master_input"  id="client_name_0" name="client_name[0]"  readonly>
+                            
                             <span class="master_message color--fadegreen">بعض النص </span>
                           </div>
                         </div>
@@ -581,7 +579,7 @@
                   var div = document.getElementById('add_new_client');
                   // alert(i);
                   // alert("'client_code_"+i"'");
-                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> @foreach($roles as $role) <option value="{{$role->id}}">{{$role->name_ar}}</option>@endforeach</select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
+                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})"> <option value="-1" selected disabled hidden>إختر كود العميل</option>@foreach($clients as $client) <option  value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <input class="master_input "  id="client_name_'+i+'" name="client_name['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> @foreach($roles as $role) <option value="{{$role->id}}">{{$role->name_ar}}</option>@endforeach</select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
                   // alert(i);
                 }
                 function set_client_data(id , i , clients)
@@ -593,8 +591,8 @@
 
                   // alert(code.selectedIndex);
                   // alert(code,name,mobile,address);
-                  code.selectedIndex=code.selectedIndex;
-                  name.selectedIndex=code.selectedIndex;
+                  // code.selectedIndex=code.selectedIndex;
+                  // name.selectedIndex=code.selectedIndex;
              // alert(clients);
                 for(var client in clients)
                 {
@@ -604,6 +602,7 @@
                     if(item == 'id' && clients[client][item]==id)
                     {
                        // alert(item);
+                       name.value=clients[client]['name'];
                       mobile.value=clients[client]['mobile'];
                       address.value=clients[client]['address'];
                     }
