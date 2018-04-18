@@ -123,11 +123,11 @@ class Users extends Authenticatable
 
    public function cases()
     {
-        return $this->belongsToMany('App\Case_','case_lawyers','case_id','lawyer_id')->withDefault();
+        return $this->belongsToMany('App\Case_','case_lawyers','case_id','lawyer_id');
     }
     public function clients()
     {
-        return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number')->withDefault();
+        return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number');
 }
 
     public function tasks()

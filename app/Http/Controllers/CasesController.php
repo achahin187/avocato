@@ -126,12 +126,12 @@ class CasesController extends Controller
          foreach ($cases_record_types as  $value) {
             $value['name_ar']= Helper::localizations('case_report_types','name',$value->id);
          }
-        $case=Case_::where('id',$id)->with('case_clients')->with('case_documents')->with('case_records')->with('case_techinical_reports')->with('lawyers')->with(['tasks'=>function($query){
+        $case=Case_::where('id',$id)->with(['tasks'=>function($query){
             $query->where('task_type_id',2)->orderBy('id','desc');
-        }])->with('clients')->with(['case_records'=>function($q){
+        }])->with(['case_records'=>function($q){
             $q->with('case_record_documents');
         }])->first();
-              // dd($case);
+               // dd($case);
         return view('cases.case_view')->with('case',$case)->with('cases_record_types',$cases_record_types);
     }
 
@@ -210,13 +210,13 @@ class CasesController extends Controller
             'court_id'=>$request['court_name'],
             'claim_number'=>$request['claim_num'],
             'claim_year'=>$request['case_year'],
-            'claim_date'=>date('y-m-d h:i:s',strtotime($request['case_date'])),
+            'claim_date'=>date('Y-m-d h:i:s',strtotime($request['case_date'])),
             'claim_expenses'=>$request['case_fees'],
             'geo_governorate_id'=>$request['governorate'],
             'geo_city_id'=>$request['city'],
             'region'=>$request['circle'],
-            'case_startdate'=>date('y-m-d h:i:s',strtotime($start_time)),
-            'case_enddate'=>date('y-m-d h:i:s',strtotime($end_time)),
+            'case_startdate'=>date('Y-m-d h:i:s',strtotime($start_time)),
+            'case_enddate'=>date('Y-m-d h:i:s',strtotime($end_time)),
             'contender_name'=>$request['enemy_name'],
             'contender_case_client_role_id'=>$request['enemy_type'],
             'contender_address'=>$request['enemy_address'],
