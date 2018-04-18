@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Case_ extends Model
 {
+    
     protected $primaryKey = 'id';
     protected $table = 'cases';
 
