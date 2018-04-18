@@ -267,23 +267,34 @@ class LawyersController extends Controller
      */
     public function show($id)
     {
-       $data['lawyer'] = Users::find($id);
-       $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
-       $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
-      foreach($tasks as $task){
-      $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
-                              'id'=>$task->id,
-                              'name'=>$task->name,
-                              'start_datetime'=>$task->start_datetime,
-                              'end_datetime'=>$task->end_datetime,
-                              'task_type_id'=>$task->task_type_id,
-                                    ];
-      }
-      $data['tasks_months'] = $tasks_months;
-      $data['cases'] = $
+     $data['lawyer'] = Users::find($id);
+     $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
+     Date::setLocale('ar');
+     $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+     if(count($tasks)){
 
-        return view('lawyers.lawyers_show',$data);
-    }
+      foreach($tasks as $task){
+          $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
+              'id'=>$task->id,
+              'name'=>$task->name,
+              'start_datetime'=>$task->start_datetime,
+              'end_datetime'=>$task->end_datetime,
+              'task_type_id'=>$task->task_type_id,
+          ];
+      }
+  }
+  else
+  {
+    $tasks_months=[];
+}
+$data['tasks_months'] = $tasks_months;
+      // $data['cases'] = Case_::whereHas('lawyers',function($q) use($id){
+      //               $q->where('lawyer_id',$id);
+
+      //           })->get();
+
+return view('lawyers.lawyers_show',$data);
+}
 
     /**
      * Show the form for editing the specified resource.
