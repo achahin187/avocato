@@ -625,18 +625,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @if ( isset($companies) && !empty($companies) )
-                        @foreach ($companies as $company)
-                        <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">{{ ($company->code) ? $company->code : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($company->full_name) ? $company->full_name : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($company->subscription) ? Helper::localizations('package_types', 'name', $company->subscription->id) : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($company->companyChildren) ? $company->companyChildren->count() : 0 }}</span></td>
-                            <td><span class="cellcontent">{{ ($company->cases) }}</span></td>
-                          </tr>
-                        @endforeach
-                    @endif
+                    
+                  @foreach ($companies as $company)
+                    <tr>
+                      <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                      <td><span class="cellcontent">{{ ($company->code) ? $company->code : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">{{ ($company->full_name) ? $company->full_name : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">{{ ($company->subscription) ? Helper::localizations('package_types', 'name', $company->subscription->package_type_id) : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">{{ ($company->companyChildren) ? $company->companyChildren->count() : 0 }}</span></td>
+                      <td><span class="cellcontent">{{ ($company->clients) ? $company->clients->count() : 0 }}</span></td>
+                    </tr>
+                  @endforeach
+                 
                 </tbody>
               </table>
               <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -863,115 +863,23 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent"> 60040</span></td>
-                    <td><span class="cellcontent">برونزي</span></td>
-                    <td><span class="cellcontent">الثاني</span></td>
-                    <td><span class="cellcontent">9-10-2017</span></td>
-                    <td><span class="cellcontent">70050</span></td>
-                    <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                  </tr>
-                </tbody>
+                    @if ( isset($installments) && !empty($installments) )
+                        @foreach ($installments as $ins)
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">{{ ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->subscription) ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->installment_number) ? $ins->installment_number : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->payment_date) ? $ins->payment_date->format('d-m-Y') : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->value) ? $ins->value : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">
+                              @if ($ins->is_paid)
+                                <label class= "data-label bgcolor--fadegreen color--white  ">تم</label>
+                              @endif  
+                            </span></td>
+                          </tr>
+                        @endforeach
+                    @endif
               </table>
               <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -1173,90 +1081,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">20122</span></td>
-                    <td><span class="cellcontent">محمد محمود السيد</span></td>
-                    <td><span class="cellcontent">افراد</span></td>
-                    <td><span class="cellcontent">343</span></td>
-                  </tr>
+                    @if ( isset($urgents) && !empty($urgents) )
+                        @foreach ($urgents as $urgent)
+                          <tr>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                            <td><span class="cellcontent">{{ ($urgent->code) ? $urgent->code : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($urgent->full_name) ? $urgent->full_name : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($urgent->rules) ? $urgent->rules->last()->name_ar : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($urgent->tasks) ? $urgent->tasks->count() : 'لا يوجد' }}</span></td>
+                          </tr>
+                        @endforeach
+                    @endif
                 </tbody>
               </table>
               <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1487,102 +1322,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">اسم المدينة</span></td>
-                    <td><span class="cellcontent">اسم المحافظة</span></td>
-                    <td><span class="cellcontent">اسم المحكمة</span></td>
-                    <td><span class="cellcontent">اسم الدائرة</span></td>
-                    <td><span class="cellcontent">121</span></td>
-                  </tr>
+                  @if ( isset($courts) && !empty($courts) )
+                      @foreach ($courts as $court)
+                      <tr>
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                        <td><span class="cellcontent">{{ ($court->city->name) ? $court->city->name : 'لا يوجد'  }}</span></td>
+                        <td><span class="cellcontent">{{ ($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد'  }}</span></td>
+                        <td><span class="cellcontent">{{ ($court->name) ? $court->name : 'لا يوجد'}}</span></td>
+                        <td><span class="cellcontent">اسم الدائرة</span></td>
+                        <td><span class="cellcontent">{{ ($court->cases) ? $court->cases->count() : 0 }}</span></td>
+                      </tr>
+                      @endforeach
+                  @endif
                 </tbody>
               </table>
               <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1813,90 +1564,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">خدمة</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">332</span></td>
-                  </tr>
+                  @if ( isset($tasks) && !empty($tasks) )
+                      @foreach ($tasks as $task)
+                      <tr>
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                        <td><span class="cellcontent">{{ ($task->name) ? $task->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">القاهرة الكبري</span></td>
+                        <td><span class="cellcontent">الجيزة</span></td>
+                        <td><span class="cellcontent">{{ ($task->task_type_id) ? Helper::countTasks($task->task_type_id) : 0 }}</span></td>
+                      </tr>
+                      @endforeach
+                  @endif
                 </tbody>
               </table>
               <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -2115,90 +1793,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
-                  <tr>
-                    <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                    <td><span class="cellcontent">جنايات</span></td>
-                    <td><span class="cellcontent">القاهرة الكبري</span></td>
-                    <td><span class="cellcontent">الجيزة</span></td>
-                    <td><span class="cellcontent">99</span></td>
-                  </tr>
+                  @if (isset($cases) && !empty($cases))
+                    @foreach ($cases as $case)
+                    <tr data-case="{{ $case->id }}">
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
+                        <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ $case->cities->governorate->name }}</span></td>
+                        <td><span class="cellcontent">{{ $case->cities->name }}</span></td>
+                        <td><span class="cellcontent">{{ Helper::countCases($case->cities->id, $case->cities->governorate->id) }}</span></td>
+                    </tr>
+                    @endforeach
+                  @endif
                 </tbody>
               </table>
               <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
