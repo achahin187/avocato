@@ -139,9 +139,9 @@
                     @foreach ($cases as $case)
                     <tr data-case="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
-                        <td><span class="cellcontent">{{ $case->cities->governorate->name }}</span></td>
-                        <td><span class="cellcontent">{{ $case->cities->name }}</span></td>
-                        <td><span class="cellcontent">{{ Helper::countCases($case->cities->id, $case->cities->governorate->id) }}</span></td>
+                        <td><span class="cellcontent">{{ ($case->cities->governorate) ? $case->cities->governorate->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ ($case->cities && $case->governorate) ? Helper::countCases($case->cities->id, $case->cities->governorate->id) : 'لا يوجد'}}</span></td>
+                        <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
                     </tr>
                     @endforeach
                   @endif
