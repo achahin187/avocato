@@ -145,7 +145,8 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                   @foreach($tasks as $task)
                                   <div class="col-md-12 right-text"><span class="bgcolor--main_l color--white bradius--small importance padding--small">{{Helper::localizations('task_types','name',$task['task_type_id'])}}</span> &nbsp;<a href="case_view.html">{{$task['name']}} </a>
                                     <div class="pull-right">
-                                      <label class="data-label-round bgcolor--fadegreen color--white">{{$task['start_datetime']->format('Y - m - d')}}</label>
+                                      <label class="data-label-round bgcolor--fadegreen color--white">@isset($task['start_datetime'])
+                                        {{$task['start_datetime']->format('Y - m - d')}}@endisset</label>
                                     </div>
                                   </div>
                                   <div class="clearfix"></div>
@@ -554,66 +555,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               </tr>
                             </thead>
                             <tbody>
+                              @foreach($expenses as $expense)
                               <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
+                                <td><span class="cellcontent">{{$expense->expensed_at->format('Y - m - d')}}</span></td>
+                                <td><span class="cellcontent">{{$expense->amount}}</span></td>
+                                <td><span class="cellcontent">{{$expense->description}} </span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                                <td><span class="cellcontent">10290</span></td>
-                                <td><span class="cellcontent">بعض النص بعض النص </span></td>
-                              </tr>
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -787,78 +735,18 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               </tr>
                             </thead>
                             <tbody>
+                              @foreach($rates_user as $rate)
+                              @foreach($rate->rules as $rule)
+                              @if($rule->pivot->rule_id==6)
                               <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
+                                <td><span class="cellcontent">{{$rate->full_name}}</span></td>
+                                <td><span class="cellcontent"><span class= stars , data-rating= {{$rate->pivot->rate_type->rate}} ,  data-num-stars=5 ></span></span></td>
+                                <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
+                                <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">محمود محروس محمد</span></td>
-                                <td><span class="cellcontent"><span class= stars , data-rating= 2.5 ,  data-num-stars=5 ></span></span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
+                              @endif
+                              @endforeach
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1025,6 +913,8 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                           <div class="col-md-2 col-sm-3 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_evaluation"><i class="fa fa-plus"></i><span>إضافة تقييم</span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_evaluation" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                    <form role="form" action="{{route('lawyers_rate',$lawyer->id)}}" method="post" accept-charset="utf-8">
+                        {{csrf_field()}}
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <div class="row">
@@ -1034,32 +924,42 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="backend_evaluation_date">التاريخ</label>
                                         <div class="bootstrap-timepicker">
-                                          <input class="datepicker master_input" type="text" placeholder="التاريخ من" id="backend_evaluation_date">
-                                        </div><span class="master_message color--fadegreen">message</span>
+                                          <input name="date" class="datepicker master_input" type="text" placeholder="التاريخ" id="backend_evaluation_date">
+                                        </div><span class="master_message color--fadegreen">
+                                    @if ($errors->has('date'))
+                                    {{ $errors->first('date')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
-                                        <select class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;">
-                                          <option>ممتاز</option>
-                                          <option>جيد جدا </option>
-                                          <option>جيد </option>
-                                          <option>مقبول</option>
-                                        </select><span class="master_message color--fadegreen">message</span>
+                                        <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;">
+                                          <option selected disabled >اختر التقييم</option>
+                                          @foreach($rates as $rate)
+                                          <option value="{{$rate->item_id}}" >{{$rate->value}}</option>
+                                          @endforeach
+                                        </select><span class="master_message color--fadegreen">
+                                    @if ($errors->has('rate'))
+                                    {{ $errors->first('rate')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                     <div class="col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
-                                        <textarea class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">message</span>
+                                        <textarea name="notes" class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">
+                                    @if ($errors->has('notes'))
+                                    {{ $errors->first('notes')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                              <button class="remodal-confirm" type="submit">إضافة</button>
+                            </form>
                             </div>
                           </div>
                           <table class="table-1">
@@ -1071,66 +971,17 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               </tr>
                             </thead>
                             <tbody>
+                              @foreach($rates_user as $rate)
+                              @foreach($rate->rules as $rule)
+                              @if($rule->pivot->rule_id==13)
                               <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
+                                <td><span class="cellcontent">{{Helper::localizations('rates','name',$rate->pivot->rate_id)}}</span></td>
+                                <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
+                                <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">ممتاز</span></td>
-                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
-                                <td><span class="cellcontent">20-11-2017</span></td>
-                              </tr>
+                              @endif
+                              @endforeach
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
