@@ -28,24 +28,24 @@ class Users extends Authenticatable
         parent::boot();
 
         static::deleting(function($user) { // before delete() method call this
-            if ( $user->rules ) { Users_Rules::where('user_id',$user->id)->delete(); }
-            if ( $user->client_password ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
-            if ( $user->user_detail ) { $user->user_detail()->delete(); }
-            if ( $user->subscription ) { 
+            if ( count($user->rules)>0 ) { Users_Rules::where('user_id',$user->id)->delete(); }
+            if ( count($user->client_password->id)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
+            if ( count($user->user_detail->id)>0 ) { $user->user_detail()->delete(); }
+            if ( count($user->subscription->id)>0 ) { 
                 if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
                     Installment::where('subscription_id', $user->subscription->id)->delete();
                 }
                 $user->subscription()->delete(); 
             }
-            if ( $user->user_company_detail) { $user->user_company_detail()->delete(); }
-            if ( $user->tasks ) { 
+            if ( count($user->user_company_detail->id)>0) { $user->user_company_detail()->delete(); }
+            if ( count($user->tasks)>0) { 
               foreach($user->tasks as $task){
                 if ( Task_Charges::where('task_id', $task->id)->get() ) {
                     Task_Charges::where('task_id', $task->id)->delete();
                 }
               }
               }
-            if ( $user->offices ) {$user->offices()->delete();}
+            if ( count($user->offices)>0 ) {$user->offices()->delete();}
                 // for companies or individuals_companies
         });
     }
