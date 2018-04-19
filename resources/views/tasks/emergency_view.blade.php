@@ -51,7 +51,7 @@
                                   </div></span><span class="tiket-data light-color col-md-2"><span class="color--sec">كود ({{$task->client->code or ''}})</span></span></div>
                               <div class="clearfix"></div>
                               <hr><span class="tiket-data col-xs-12"><b class="col-md-12">تفاصيل الحالة الطارئة :</b>
-                                <div class="col-md-6"> {{$task->techinical_reports_emergency->body or ''}}</div>
+                                <div class="col-md-6"> {{$task->description or ''}}</div>
                                 <div class="col-md-6">
                                   <div id="map" style="height: 140px;width:500px;">
                                     

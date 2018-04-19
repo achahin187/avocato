@@ -9,6 +9,9 @@ use Helper;
 use App\Case_;
 use App\Users;
 use App\Tasks;
+use App\Installment;
+use App\Courts;
+use App\Cases_Types;
 
 use Illuminate\Http\Request;
 
@@ -48,11 +51,32 @@ class ReportsStatisticsController extends Controller
         // free services
         $count_free_services = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
 
+        // Lawyers
+        $lawyers = Helper::getUsersBasedOnRules([11, 12]);
+
+        // Companies
+        $companies = Users::users(9)->get();
+        
+        // Installments
+        $installments = Installment::all();
+
+        // Urgents
+        $urgents = Helper::getUsersBasedOnRules([7, 8, 9, 10]);
+
+        // Courts
+        $courts = Courts::all();
+
+        // Tasks
+        $tasks = Tasks::all();
+
+        // Case type
+        $casesTypes = Cases_Types::all();
+
         return view('reports_statistics', compact([
                                         'count_clients', 'count_individuals', 'percentage_individuals', 
                                         'count_companies', 'percentage_companies', 'count_indcom', 'percentage_indcom', 
                                         'count_mobile', 'percentage_mobile', 'count_case', 'count_paid_services', 'count_free_services',
-                                        'cases'
+                                        'cases', 'lawyers', 'companies', 'installments', 'urgents', 'courts', 'tasks','casesTypes'
                                     ]));
     }
 

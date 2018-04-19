@@ -10,12 +10,13 @@ class Courts extends Model
     protected $table = 'courts';
     public $timestamps = true;
 
-        public function city()
+    public function city()
     {
         return $this->belongsTo('App\Geo_Cities','city_id');
     }
+
     public function cases()
     {
-        return $this->belongsTo('App\Case_', 'court_id');
+        return $this->hasMany('App\Case_', 'court_id');
     }
 }
