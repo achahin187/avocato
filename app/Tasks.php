@@ -52,7 +52,7 @@ class Tasks extends Model
     
     public function case()
     {
-        return $this->belongsTo('App\Case_', 'case_id');
+        return $this->belongsTo('App\Case_', 'case_id')->withDefault();
     }
 
     public function techinical_reports_emergency()
