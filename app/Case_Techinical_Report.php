@@ -33,7 +33,7 @@ class Case_Techinical_Report extends Model
 
         public function lawyer()
     {
-        return $this->belongsTo('App\Users', 'assigned_to');
+        return $this->belongsTo('App\Users', 'assigned_to')->withDefault();
     }
      public function task_emergency()
     {

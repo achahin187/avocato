@@ -149,7 +149,7 @@
                     @foreach ($cases as $case)
                     <tr data-case="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
-                        <td><span class="cellcontent">{{ ($case->cities->governorate) ? $case->cities->governorate->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ ($case->governorates) ? $case->governorates->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities && $case->cities->governorate) ? Helper::countCases($case->cities->id, $case->cities->governorate->id) : 0 }}</span></td>
                     </tr>
@@ -323,55 +323,84 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab2" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h2 id="modal1Title">فلتر</h2>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="lawyer_spec"> تخصص المحامي</label>
-                        <select class="master_input select2" id="lawyer_spec" multiple="multiple" data-placeholder="التخصص" style="width:100%;" ,>
-                          <option>تعويضات</option>
-                          <option>تخصص اخر</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+
+                    <div> 
+                      <h2 id="modal1Title">فلتر</h2>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_spec"> تخصص المحامي</label>
+                          <select name="workSector" class="master_input select2" id="lawyer_spec" data-placeholder="التخصص" style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر التخصص</option>
+                            @if ( isset($lawyers_) && !empty($lawyers_) )
+                              @foreach ($lawyers_ as $lawyer)
+                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'غير معرف' }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_degree_in">درجة التقاضي</label>
+                          <select name="level" class="master_input select2" id="lawyer_degree_in" data-placeholder="درجة التقاضي" style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر درجة التقاضي</option>
+                            @if ( isset($lawyers_) && !empty($lawyers_) )
+                              @foreach ($lawyers_ as $lawyer)
+                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 'غير معرف' }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
+                            <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
+                
+                              <option value="-1" selected disabled hidden>اختر الجنسية</option>
+                              
+                              @foreach ($nationalities as $nat)
+                                <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
+                              @endforeach
+                              
+                            </select>  
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="work_type">نوع العمل</label>
+                          <select name="workTitle" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر نوع العمل</option>
+                            @if ( isset($lawyers_) && !empty($lawyers_) )
+                              @foreach ($lawyers_ as $lawyer)
+                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->job_title : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->job_title : 'غير معرف' }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_place">الإختصاص المكاني</label>
+                          <select name="workSectorType" class="master_input select2" id="lawyer_place"  data-placeholder="التخصص" style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر الاختصاص المكاني</option>
+                            @if ( isset($lawyers_) && !empty($lawyers_) )
+                              @foreach ($lawyers_ as $lawyer)
+                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 'غير معرف' }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="lawyer_degree_in">درجة التقاضي</label>
-                        <select class="master_input select2" id="lawyer_degree_in" multiple="multiple" data-placeholder="درجة التقاضي" style="width:100%;" ,>
-                          <option>محامى تحت التمرين</option>
-                          <option>محامي متمرس</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
-                        <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="work_type">نوع العمل</label>
-                        <select class="master_input select2" id="work_type" multiple="multiple" data-placeholder="نوع العمل " style="width:100%;" ,>
-                          <option>الكل</option>
-                          <option>معين بالمكتب</option>
-                          <option>Freelancer</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="lawyer_place">الإختصاص المكاني</label>
-                        <select class="master_input select2" id="lawyer_place" multiple="multiple" data-placeholder="التخصص" style="width:100%;" ,>
-                          <option>2</option>
-                          <option>1</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
+
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab2"><i class="fa fa-filter"></i>filters</a></div>
@@ -381,6 +410,7 @@
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
                     <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">الاسم</span></th>
                     <th><span class="cellcontent">التخصص</span></th>
                     <th><span class="cellcontent">درجة التقاضي</span></th>
                     <th><span class="cellcontent">الجنسية</span></th>
@@ -395,8 +425,9 @@
                     @foreach ($lawyers as $lawyer)
                     <tr>
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                      <td><span class="cellcontent">{{ ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? ($lawyer->user_detail->litigation_level ? $lawyer->user_detail->litigation_level :'لا يوجد') : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 'لا يوجد' }}</span></td>
