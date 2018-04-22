@@ -144,7 +144,8 @@ class Helper {
     } 
 
     public static function percent($part, $all) {
-        return round( ($part * 100) / $all );
+        // return round( ($part * 100) / $all );
+        return round(($part/$all)*100);
     }
 
     public static function countCases($city_id, $gov_id) {
