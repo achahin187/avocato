@@ -78,7 +78,7 @@ class ServicesController extends Controller
         $service->task_type_id = 3;
         $service->task_status_id = 1;
         $service->save();
-        return redirect()->route('services_create')->with('success','تم إضافه خدمه جديد بنجاح');
+        return redirect()->route('services_show',$service->id)->with('success','تم إضافه خدمه جديد بنجاح');
 
     }
 

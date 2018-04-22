@@ -15,8 +15,8 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
 
 
-
 Route::get('/', 'HomeController@index')->name('home');
+
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
@@ -156,6 +156,7 @@ Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name
 Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
 Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
+Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');

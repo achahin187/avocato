@@ -17,6 +17,7 @@
   <meta name="msapplication-TileColor" content="#22b681">
   <meta name="msapplication-TileImage" content="/mstile-144x144.png">
   <meta name="theme-color" content="#1c5ba8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- =============== APP TITLE ===============-->
   <title>{{config('app.name')}}</title>
   <!-- =============== APP STYLES ===============-->
@@ -32,12 +33,6 @@
         <!-- top navbar-->
         <header class="topnavbar-wrapper">
           <nav class="top-navbar navbar-expand-lg bgcolor--gray_m color--gray_d bradius--noborder bshadow--1 ">
-            @if(\Auth::check())
-            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-              {{ csrf_field() }}
-              <button type="submit">خروج</button>
-            </form>
-            @endif
             <div class="container-fluid"><span></span>
               <ul class="actionsbar moile-view hidden-lg hidden-md hidden-sm">
                 <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i></a>
@@ -94,6 +89,11 @@
                                           11:00:00AM</span></a></li>
                                         </ul>
                                       </li>
+                                       <li><a class="color--gray_d" href="{{route('logout')}}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a></li>
+                                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                      </form>
                                     </ul>
                                   </div>
                                 </div>
