@@ -20,7 +20,7 @@
                   </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     @if(!is_null($task->assigned_lawyer_id ))
-                    <div class="col-md-1"><img class="full-width bradius--circle" src="../img/avaters/male.jpg"></div>
+                    <div class="col-md-1"><img class="full-width bradius--circle" src=" {{asset($task->lawyer->image)}}"></div>
                     <div class="col-md-2">
                       <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">
                         
