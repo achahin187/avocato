@@ -192,7 +192,6 @@ class LawyersController extends Controller
         'work_sector'=>'required',
         'work_sector_type'=>'required',
         'join_date'=>'required',
-        'resign_date'=>'required',
         'work_type'=>'required',
         'litigation_level'=>'required',
         'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
@@ -247,7 +246,12 @@ class LawyersController extends Controller
       $lawyer_details->work_sector = $request->work_sector;
       $lawyer_details->work_sector_type = $request->work_sector_type;
       $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      
+      if($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+    else
+      $lawyer_details->resign_date = null;
+
       $lawyer_details->litigation_level = $request->litigation_level ;
       $lawyer_details->syndicate_level = $request->syndicate_level ;
       $lawyer_details->authorization_copy = $authorization_copy ;
@@ -269,6 +273,14 @@ class LawyersController extends Controller
     public function show($id)
     {
      $data['lawyer'] = Users::find($id);
+
+//      $test= Tasks::find(21);
+//      // $test->flatten();
+//      $test->flatMap(function ($values) {
+//     return array_map(function($val) { return '2'; }, $values);
+// });
+//      return $test->all();
+
      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
      Date::setLocale('ar');
      $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
@@ -360,7 +372,6 @@ class LawyersController extends Controller
         'work_sector'=>'required',
         'work_sector_type'=>'required',
         'join_date'=>'required',
-        'resign_date'=>'required',
         'work_type'=>'required',
         'litigation_level'=>'required',
         'syndicate_level'=>'required',
@@ -405,7 +416,11 @@ class LawyersController extends Controller
       $lawyer_details->work_sector = $request->work_sector;
       $lawyer_details->work_sector_type = $request->work_sector_type;
       $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      if($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+    else
+      $lawyer_details->resign_date = null;
+
       $lawyer_details->litigation_level = $request->litigation_level ;
       $lawyer_details->syndicate_level = $request->syndicate_level ;
 
