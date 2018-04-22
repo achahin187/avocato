@@ -273,11 +273,13 @@ class LawyersController extends Controller
     public function show($id)
     {
      $data['lawyer'] = Users::find($id);
-//      $data['lawyer']->map(function ($item) {
-//       $item = '2';
-//       return $item;
+
+//      $test= Tasks::find(21);
+//      $test->flatMap(function ($values) {
+//     return array_map(function($val) { return '2'; }, $values);
 // });
-//      return $data['lawyer'];
+     // return $test;
+
      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
      Date::setLocale('ar');
      $tasks = Tasks::where('assigned_lawyer_id',$id)->get();

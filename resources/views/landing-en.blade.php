@@ -54,7 +54,9 @@
                   <div class="col-xs-12">
                     <div class="text-xs-center"></div>
                     <div class="center-logo"><img class="className" id="IdName" src="{{asset('land/img/logo.png')}}" alt="Image Title"></div><br>
-                    <h4 class="color--main_d text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h4>
+                    <h4 class="color--main_d text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">Avocato app legal solutions gives people and their families confidence and protection to handle life’s legal issues. Avocato app partners with attorneys to provide essential legal services ranging from writing your will to representing you in a lawsuit. Learn more about how Avocato app can protect you and bring you wellness life.
+It's time to create variant legal World
+Avocato app The leading only society for legal services</h4>
                     <div class="clearfix"></div><br><br>
                     <div class="text-center"><span class="bgcolor--fadeblue color--white bradius--small padding--small">Hotline:	&nbsp; 19534</span></div>
                     <div class="clearfix"></div><br><br>
