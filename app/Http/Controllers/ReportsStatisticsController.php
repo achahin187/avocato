@@ -14,6 +14,7 @@ use App\Courts;
 use App\Cases_Types;
 use App\Geo_Cities;
 use App\Geo_Governorates;
+use App\Geo_Countries;
 
 use Illuminate\Http\Request;
 
@@ -102,6 +103,8 @@ class ReportsStatisticsController extends Controller
         /** Filter data */
         $data['governorates'] = Geo_Governorates::all();
         $data['cities'] = Geo_Cities::all();
+        $data['nationalities'] = Geo_Countries::all();
+        $data['lawyers_'] = Helper::getUsersBasedOnRules([11, 12]);
 
         /** Countable and percentage data */
         // list data
@@ -125,9 +128,11 @@ class ReportsStatisticsController extends Controller
         
         /** List data */
         // cases number & percentage
-        if($filters) { 
+        if(isset ( $filters['gov'] ) || isset ( $filters['city'] ) ) { 
             if(isset($filters['gov'])) { $data['cases'] = Case_::whereIn('geo_governorate_id', $filters['gov']); }
             if(isset($filters['city'])){ $data['cases'] = Case_::whereIn('geo_city_id', $filters['city']); }
+
+            $data['cases'] = $data['cases']->get();
         } else {
             $data['cases'] = Case_::all();
         }
@@ -139,8 +144,39 @@ class ReportsStatisticsController extends Controller
         $data['count_free_services'] = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
 
         // Lawyers
-        $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
+        if ( isset ( $filters['sector'] ) || isset ( $filters['level'] ) || isset ( $filters['nationality'] ) || isset ( $filters['title'] ) || isset ( $filters['type'] )  ) {
+            
+            $data['lawyers'] = Users::whereHas('rules', function($query) {
+                $query->whereIn('rule_id', [11, 12]);
+            });
 
+            $sector = $filters['sector'];
+            $level  = $filters['level'];
+            $nat    = $filters['nationality'];
+            $title  = $filters['title'];
+            $type   = $filters['type'];
+
+            if ( isset($filters['sector']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($sector) { 
+                $q->where('work_sector', $sector); }); 
+            }
+            if ( isset($filters['level']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($level) { 
+                $q->where('litigation_level',$level); }); 
+            }
+            if ( isset($filters['nationality']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($nat) { 
+                $q->where('nationality_id', $nat); }); 
+            }
+            if ( isset($filters['title']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($title) { 
+                $q->where('job_title', $title); }); 
+            }
+            if ( isset($filters['type']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($type) { 
+                $q->where('work_sector_type', $type); }); 
+            }
+
+            $data['lawyers'] = $data['lawyers']->get();
+        } else {
+            $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
+        }
+        
         // Companies
         $data['companies'] = Users::users(9)->get();
         
@@ -164,7 +200,13 @@ class ReportsStatisticsController extends Controller
 
     public function filter(Request $request) {
         if(count($request->all()) > 1) { 
-            if($request->gov || $request->city) { $data = $this->getData(['gov' => $request->gov, 'city' => $request->city]); }
+            // cases tab
+            if( $request->gov || $request->city ) { $data = $this->getData(['gov' => $request->gov, 'city' => $request->city]); }
+
+            // lawyers tab
+            if( $request->workSector || $request->level || $request->nationality || $request->workTitle || $request->workSectorType ) {
+                $data = $this->getData(['sector'=>$request->workSector, 'level'=>$request->level, 'nationality'=>$request->nationality, 'title'=>$request->workTitle, 'type'=>$request->workSectorType]);
+            }
 
         } else {
             $data = $this->getData();
