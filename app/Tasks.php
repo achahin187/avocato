@@ -36,7 +36,7 @@ class Tasks extends Model
 
     public function lawyer()
     {
-        return $this->belongsTo('App\Users','assigned_lawyer_id');
+        return $this->belongsTo('App\Users','assigned_lawyer_id')->withDefault();
     }
 
     public function who_assign_lawyer()
