@@ -38,7 +38,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                         <div class="col-xs-12">
                           <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset(''.$lawyer->image)}}">
                               <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_destroy_get',$lawyer->id)}}">استبعاد المحامي</a>
+                          <div class="coverglobal__actions">{{-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a> --}}<a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_destroy_get',$lawyer->id)}}">استبعاد المحامي</a>
                           </div>
                         </div>
                       </div>
