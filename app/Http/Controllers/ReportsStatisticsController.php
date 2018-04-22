@@ -12,6 +12,8 @@ use App\Tasks;
 use App\Installment;
 use App\Courts;
 use App\Cases_Types;
+use App\Geo_Cities;
+use App\Geo_Governorates;
 
 use Illuminate\Http\Request;
 
@@ -24,60 +26,9 @@ class ReportsStatisticsController extends Controller
      */
     public function index()
     {
-        $count_clients = Helper::getUsersBasedOnRules([7, 8, 9, 10])->count();  // count all clients
+        $data = $this->getData();
 
-        // mobile clients number and percentage
-        $count_mobile = Users::users(7)->count();
-        $percentage_mobile = Helper::percent($count_mobile, $count_clients);
-
-        // individuals number and percentage
-        $count_individuals = Users::users(8)->count();
-        $percentage_individuals = Helper::percent($count_individuals, $count_clients);
-
-        // companies number and percentage
-        $count_companies = Users::users(9)->count();
-        $percentage_companies = Helper::percent($count_companies, $count_clients);
-        
-        // individuals-companies number and percentage
-        $count_indcom = Users::users(10)->count();
-        $percentage_indcom = Helper::percent($count_indcom, $count_clients);
-        
-        // cases number & percentage
-        $cases = Case_::all();
-        $count_case = Case_::count();
-
-        // paid services
-        $count_paid_services = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 2)->count();
-        // free services
-        $count_free_services = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
-
-        // Lawyers
-        $lawyers = Helper::getUsersBasedOnRules([11, 12]);
-
-        // Companies
-        $companies = Users::users(9)->get();
-        
-        // Installments
-        $installments = Installment::all();
-
-        // Urgents
-        $urgents = Helper::getUsersBasedOnRules([7, 8, 9, 10]);
-
-        // Courts
-        $courts = Courts::all();
-
-        // Tasks
-        $tasks = Tasks::all();
-
-        // Case type
-        $casesTypes = Cases_Types::all();
-
-        return view('reports_statistics', compact([
-                                        'count_clients', 'count_individuals', 'percentage_individuals', 
-                                        'count_companies', 'percentage_companies', 'count_indcom', 'percentage_indcom', 
-                                        'count_mobile', 'percentage_mobile', 'count_case', 'count_paid_services', 'count_free_services',
-                                        'cases', 'lawyers', 'companies', 'installments', 'urgents', 'courts', 'tasks','casesTypes'
-                                    ]));
+        return view('reports_statistics', $data);
     }
 
     /**
@@ -144,5 +95,81 @@ class ReportsStatisticsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getData($filters = NULL) 
+    {
+        /** Filter data */
+        $data['governorates'] = Geo_Governorates::all();
+        $data['cities'] = Geo_Cities::all();
+
+        /** Countable and percentage data */
+        // list data
+        $data['count_clients'] = Helper::getUsersBasedOnRules([7, 8, 9, 10])->count();  // count all clients
+
+        // mobile clients number and percentage
+        $data['count_mobile'] = Users::users(7)->count();
+        $data['percentage_mobile'] = Helper::percent($data['count_mobile'], $data['count_clients']);
+
+        // individuals number and percentage
+        $data['count_individuals'] = Users::users(8)->count();
+        $data['percentage_individuals'] = Helper::percent($data['count_individuals'], $data['count_clients']);
+
+        // companies number and percentage
+        $data['count_companies'] = Users::users(9)->count();
+        $data['percentage_companies'] = Helper::percent($data['count_companies'], $data['count_clients']);
+        
+        // individuals-companies number and percentage
+        $data['count_indcom'] = Users::users(10)->count();
+        $data['percentage_indcom'] = Helper::percent($data['count_indcom'], $data['count_clients']);
+        
+        /** List data */
+        // cases number & percentage
+        if($filters) { 
+            if(isset($filters['gov'])) { $data['cases'] = Case_::whereIn('geo_governorate_id', $filters['gov']); }
+            if(isset($filters['city'])){ $data['cases'] = Case_::whereIn('geo_city_id', $filters['city']); }
+        } else {
+            $data['cases'] = Case_::all();
+        }
+        $data['count_case'] = Case_::count();
+
+        // paid services
+        $data['count_paid_services'] = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 2)->count();
+        // free services
+        $data['count_free_services'] = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
+
+        // Lawyers
+        $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
+
+        // Companies
+        $data['companies'] = Users::users(9)->get();
+        
+        // Installments
+        $data['installments'] = Installment::all();
+
+        // Urgents
+        $data['urgents'] = Helper::getUsersBasedOnRules([7, 8, 9, 10]);
+
+        // Courts
+        $data['courts'] = Courts::all();
+
+        // Tasks
+        $data['tasks'] = Tasks::all();
+
+        // Case type
+        $data['casesTypes'] = Cases_Types::all();
+
+        return $data;
+    }
+
+    public function filter(Request $request) {
+        if(count($request->all()) > 1) { 
+            if($request->gov || $request->city) { $data = $this->getData(['gov' => $request->gov, 'city' => $request->city]); }
+
+        } else {
+            $data = $this->getData();
+        }
+
+        return view('reports_statistics', $data);
     }
 }

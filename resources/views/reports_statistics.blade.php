@@ -96,30 +96,40 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h2 id="modal1Title">فلتر</h2>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="govern">المحافظة</label>
-                        <select class="master_input select2" id="govern" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
-                          <option>المحافظة 1</option>
-                          <option>المحافظة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+      
+                    <div>
+                      <h2 id="modal1Title">فلتر</h2>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="govern">المحافظة</label>
+                          <select name="gov[]" class="master_input select2" id="govern" multiple="multiple" data-placeholder="المحافظة" style="width:100%;">
+                            @if ( isset($governorates) && !empty($governorates) )
+                                @foreach ($governorates as $gov)
+                                  <option value="{{ $gov->id }}">{{ $gov->name }}</option>
+                                @endforeach
+                            @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="city">المدينة</label>
+                          <select name="city[]" class="master_input select2" id="city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
+                            @if ( isset($cities) && !empty($cities) )
+                              @foreach ($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="city">المدينة</label>
-                        <select class="master_input select2" id="city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option>مدينة 1</option>
-                          <option>مدينة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab1"><i class="fa fa-filter"></i>filters</a></div>
@@ -140,8 +150,8 @@
                     <tr data-case="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->cities->governorate) ? $case->cities->governorate->name : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ ($case->cities && $case->governorate) ? Helper::countCases($case->cities->id, $case->cities->governorate->id) : 'لا يوجد'}}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ ($case->cities && $case->cities->governorate) ? Helper::countCases($case->cities->id, $case->cities->governorate->id) : 0 }}</span></td>
                     </tr>
                     @endforeach
                   @endif
@@ -1326,8 +1336,8 @@
                       @foreach ($courts as $court)
                       <tr>
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                        <td><span class="cellcontent">{{ ($court->city->name) ? $court->city->name : 'لا يوجد'  }}</span></td>
-                        <td><span class="cellcontent">{{ ($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد'  }}</span></td>
+                        <td><span class="cellcontent">{{ ($court->city) ? $court->city->name : 'لا يوجد'  }}</span></td>
+                        <td><span class="cellcontent">{{ ($court->city) ? (($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد') : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->name) ? $court->name : 'لا يوجد'}}</span></td>
                         <td><span class="cellcontent">اسم الدائرة</span></td>
                         <td><span class="cellcontent">{{ ($court->cases) ? $court->cases->count() : 0 }}</span></td>
@@ -1558,8 +1568,6 @@
                   <tr class="bgcolor--gray_mm color--gray_d">
                     <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                     <th><span class="cellcontent">نوع المهمة</span></th>
-                    <th><span class="cellcontent">المحافظة</span></th>
-                    <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">عددالمهام</span></th>
                   </tr>
                 </thead>
@@ -1569,8 +1577,6 @@
                       <tr>
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td><span class="cellcontent">{{ ($task->name) ? $task->name : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">القاهرة الكبري</span></td>
-                        <td><span class="cellcontent">الجيزة</span></td>
                         <td><span class="cellcontent">{{ ($task->task_type_id) ? Helper::countTasks($task->task_type_id) : 0 }}</span></td>
                       </tr>
                       @endforeach
