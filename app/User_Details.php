@@ -18,7 +18,7 @@ class User_Details extends Model
 
 public function nationality()
    {
-       return $this->belongsTo('App\Geo_Countries','nationality_id')->withDefault(function($nationality){ foreach($nationality as $key=>$value){};});
+       return $this->belongsTo('App\Geo_Countries','nationality_id')->withDefault();
    }
 	public function user() {
 		return $this->belongsTo('App\Users','user_id')->withDefault();
