@@ -38,6 +38,7 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Users','assigned_lawyer_id');
     }
+    
 
     public function who_assign_lawyer()
     {
