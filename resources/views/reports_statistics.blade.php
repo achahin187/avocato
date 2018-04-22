@@ -398,7 +398,7 @@
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->tasks) ? $lawyer->tasks->count() : 0 }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->cases) ? $lawyer->cases->count() : 0 }}</span></td>
@@ -1327,7 +1327,6 @@
                     <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المحكمة</span></th>
-                    <th><span class="cellcontent">الدائرة</span></th>
                     <th><span class="cellcontent">عدد القضايا</span></th>
                   </tr>
                 </thead>
@@ -1339,7 +1338,6 @@
                         <td><span class="cellcontent">{{ ($court->city) ? $court->city->name : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->city) ? (($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد') : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->name) ? $court->name : 'لا يوجد'}}</span></td>
-                        <td><span class="cellcontent">اسم الدائرة</span></td>
                         <td><span class="cellcontent">{{ ($court->cases) ? $court->cases->count() : 0 }}</span></td>
                       </tr>
                       @endforeach
