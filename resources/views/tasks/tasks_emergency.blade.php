@@ -19,7 +19,18 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-12">
+                   @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
+                @if ($errors->has('lawyer'))
+                <div class="alert alert-danger">
+                {{ $errors->first('lawyer')}}
+                </div>
+                @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg">

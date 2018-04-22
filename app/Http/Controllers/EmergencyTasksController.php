@@ -86,6 +86,64 @@ class EmergencyTasksController extends Controller
     		'assigned_lawyer_id'=>$request['lawyer_id'],
     		'who_assigned_lawyer_id'=>\Auth::user()->id,
     	]);
-    	return redirect()->route('tasks_emergency');
+    	return redirect()->route('tasks_emergency')->with('success','تم تعيين محامى للمهمه بنجاح');
+    }
+       public function lawyer_task($id , $task_id)
+    { 
+      $data['task']=Tasks::find($task_id);
+      Date::setLocale('ar');
+      $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+      foreach($tasks as $task){
+      $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
+                              'id'=>$task->id,
+                              'name'=>$task->name,
+                              'start_datetime'=>$task->start_datetime,
+                              'end_datetime'=>$task->end_datetime,
+                              'task_type_id'=>$task->task_type_id,
+                                    ];
+      }
+      $data['tasks_months'] = $tasks_months;
+      $div = view('tasks.task_emergency_assign_lawyer',$data)->render();
+      return response()->json($div);
+    }
+
+
+    public function emergency_lawyer_assign_filter(Request $request ,$id)
+    {
+      // dd($request->all());
+      $data['task']=Tasks::where('id',$id)->first();
+      $data['lawyers'] = Tasks::where(function($q) use($request){
+
+         if($request->filled('work_sector'))
+              {
+               $q->whereHas('lawyer',function($q) use($request){
+                $q->where('work_sector','like','%'.$request->work_sector.'%');
+
+              });  
+             }
+             if($request->filled('lawyer_degree'))
+              {
+               $q->whereHas('lawyer',function($q) use($request){
+                $q->where('litigation_level','like','%'.$request->lawyer_degree.'%');
+
+              });  
+             }
+             if($request->filled('start_date_from') && $request->filled('start_date_to'))
+              {
+               $q->whereHas('lawyer',function($q) use($request){
+                $q->where('join_date','>=',date('Y-m-d H:i:s',strtotime($request->start_date_from)))->where('join_date','<=',date('Y-m-d H:i:s',strtotime($request->start_date_to)));
+
+              });  
+             }
+             if($request->filled('work_type'))
+              {
+               $q->whereHas('lawyer',function($q) use($request){
+                $q->where('work_sector_type','like','%'.$request->work_type.'%');
+
+              });  
+             }
+      });
+      return view('tasks.assign_emergency_task',$data);
+      // dd($data['lawyers']);
     }
 }
