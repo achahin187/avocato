@@ -382,7 +382,7 @@
                             </div>
                             <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#new_investigation"><i class="fa fa-plus"></i><span>إضافة</span></a>
                               <div class="remodal-bg"></div>
-                              <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              {{-- <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
                                   <div class="row">
@@ -429,7 +429,7 @@
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                                 <button class="remodal-confirm" onclick="add_record({{$case->id}})">حفظ</button>
-                              </div>
+                              </div> --}}
                             </div>
                             <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
                             <div class="remodal-bg"></div>
@@ -906,6 +906,57 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+               <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <form action="{{URL('add_record_ajax/'.$case->id)}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>إضافة محضر</h3>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label" for="investigation_no">رقم المحضر</label>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
+                                          </select><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory">تاريخ</label>
+                                          <div class="bootstrap-timepicker">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date">
+                                          </div><span class="master_message color--fadegreen">message content</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="master_field">
+                                          <label class="master_label" for="docs_upload">إرفاق ملفات</label>
+                                          <div class="file-upload">
+                                            <div class="file-select">
+                                              <div class="file-select-name" id="noFile">إرفاق ملفات</div>
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="docs_upload" multiple>
+                                            </div>
+                                          </div><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                <button class="remodal-confirm" type="submit">حفظ</button>
+                              </form>
+                              </div>
            @endsection
 
 
@@ -1003,95 +1054,95 @@
         // Grab the files and set them to our variable
        
 
-var record_data =[];
-    function add_record(case_id)
-    {
-      record_data['investigation_no']= $('#investigation_no').val();
-      record_data['investigation_type']= $('#investigation_type').val();
-      record_data['investigation_date']= $('#investigation_date').val();
+// var record_data =[];
+//     function add_record(case_id)
+//     {
+//       record_data['investigation_no']= $('#investigation_no').val();
+//       record_data['investigation_type']= $('#investigation_type').val();
+//       record_data['investigation_date']= $('#investigation_date').val();
      
-      var data = new FormData();
-    $.each(files, function(key, value)
-    {
+//       var data = new FormData();
+//     $.each(files, function(key, value)
+//     {
     
-        data.append(key, value);
+//         data.append(key, value);
     
-    });
-    //  var result ;
-var files_arr = [];
-    for (var key of data.entries()) {
-        // console.log(key[1])
-        files_arr.push(key[1].name);
-    }
+//     });
+//     //  var result ;
+// var files_arr = [];
+//     for (var key of data.entries()) {
+//         // console.log(key[1])
+//         files_arr.push(key[1].name);
+//     }
 
-     console.log(files_arr);
-    // console.log(result);
-       // record_data['record_documents']= $('#record_documents').val();
-       //  $('input[name="record_documents"]').each(function(){
-       //     record_data['record_documents'] = $(this).val();
-       // });
+//      console.log(files_arr);
+//     // console.log(result);
+//        // record_data['record_documents']= $('#record_documents').val();
+//        //  $('input[name="record_documents"]').each(function(){
+//        //     record_data['record_documents'] = $(this).val();
+//        // });
 
-// alert(record_data['investigation_no']);
-    //   $.ajax({
-    //        type:'POST',
-    //        url:'{{url('add_record_ajax/'.$case->id)}}',
-    //        processData: false, // Don't process the files
-    //        contentType: false,
-    //        data:{'files':result
-    //        ,'investigation_no':record_data['investigation_no']
-    //        ,'investigation_type':record_data['investigation_type']
-    //        ,'investigation_date':record_data['investigation_date']
-    //        ,'_token':"{{ csrf_token() }}"},
-    //        success:function(data){
-    //           alert(data);
-    //     // $this.html(data);
-    //   // alert(data);
-    //       },
-    //        error: function (jqXHR, exception) {
-    //     var msg = '';
-    //     if (jqXHR.status === 0) {
-    //         msg = 'Not connect.\n Verify Network.';
-    //     } else if (jqXHR.status == 404) {
-    //         msg = 'Requested page not found. [404]';
-    //     } else if (jqXHR.status == 500) {
-    //         msg = 'Internal Server Error [500].';
-    //     } else if (exception === 'parsererror') {
-    //         msg = 'Requested JSON parse failed.';
-    //     } else if (exception === 'timeout') {
-    //         msg = 'Time out error.';
-    //     } else if (exception === 'abort') {
-    //         msg = 'Ajax request aborted.';
-    //     } else {
-    //         msg = 'Uncaught Error.\n' + jqXHR.responseText;
-    //     }
-    //     $('#post').html(msg);
-    // },
-    //     });
+// // alert(record_data['investigation_no']);
+//     //   $.ajax({
+//     //        type:'POST',
+//     //        url:'{{url('add_record_ajax/'.$case->id)}}',
+//     //        processData: false, // Don't process the files
+//     //        contentType: false,
+//     //        data:{'files':result
+//     //        ,'investigation_no':record_data['investigation_no']
+//     //        ,'investigation_type':record_data['investigation_type']
+//     //        ,'investigation_date':record_data['investigation_date']
+//     //        ,'_token':"{{ csrf_token() }}"},
+//     //        success:function(data){
+//     //           alert(data);
+//     //     // $this.html(data);
+//     //   // alert(data);
+//     //       },
+//     //        error: function (jqXHR, exception) {
+//     //     var msg = '';
+//     //     if (jqXHR.status === 0) {
+//     //         msg = 'Not connect.\n Verify Network.';
+//     //     } else if (jqXHR.status == 404) {
+//     //         msg = 'Requested page not found. [404]';
+//     //     } else if (jqXHR.status == 500) {
+//     //         msg = 'Internal Server Error [500].';
+//     //     } else if (exception === 'parsererror') {
+//     //         msg = 'Requested JSON parse failed.';
+//     //     } else if (exception === 'timeout') {
+//     //         msg = 'Time out error.';
+//     //     } else if (exception === 'abort') {
+//     //         msg = 'Ajax request aborted.';
+//     //     } else {
+//     //         msg = 'Uncaught Error.\n' + jqXHR.responseText;
+//     //     }
+//     //     $('#post').html(msg);
+//     // },
+//     //     });
 
-    $.ajax({
-      type: 'post',
-      url: "{{URL('add_record_ajax/'.$case->id.'?files=')}}"+files_arr,
-      data: {
-        _token: "{{csrf_token()}}",
-        // files:files_arr,
-        investigation_no:record_data['investigation_no']
-       ,investigation_type:record_data['investigation_type']
-        ,investigation_date:record_data['investigation_date']
-      },
-      success: function(data)
-      {
-        if(typeof data.error === 'undefined')
-            {
-                // Success so call function to process the form
-                alert(data);
-            }
-            else
-            {
-                // Handle errors here
-                console.log('ERRORS: ' + data.error);
-            }
-      }
-    });
-    }
+//     $.ajax({
+//       type: 'post',
+//       url: "{{URL('add_record_ajax/'.$case->id.'?files=')}}"+files_arr,
+//       data: {
+//         _token: "{{csrf_token()}}",
+//         // files:files_arr,
+//         investigation_no:record_data['investigation_no']
+//        ,investigation_type:record_data['investigation_type']
+//         ,investigation_date:record_data['investigation_date']
+//       },
+//       success: function(data)
+//       {
+//         if(typeof data.error === 'undefined')
+//             {
+//                 // Success so call function to process the form
+//                 alert(data);
+//             }
+//             else
+//             {
+//                 // Handle errors here
+//                 console.log('ERRORS: ' + data.error);
+//             }
+//       }
+//     });
+//     }
     </script>
     @endsection

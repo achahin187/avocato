@@ -574,45 +574,68 @@ if($request->has('record_documents')){
           // return response()->json($_GET['files']);
 // return response()->json($_GET['files']);
 
-$case_record=Case_Record::Create([
+// $case_record=Case_Record::Create([
+//             'case_id'=>$id,
+//             'record_number'=>$request['investigation_no'],
+//             'record_type_id'=>$request['investigation_type'],
+//             'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+//             'created_by'=>\Auth::user()->id,
+//         ]);
+// if(isset($_GET['files'])){
+//     // dd($request['record_documents']);
+   
+//     // return response()->json(file_put_contents('sara',serialize($request['files'])));
+//      $error = false;
+//     $files = array();
+
+//     $uploaddir = public_bath().'/case_documents/';
+//         foreach($_GET['files']  as $file) {
+//              return response()->json($file);
+//             if(move_uploaded_file($file, $uploaddir .basename($file)))
+//                 {
+//                     $files[] = $uploaddir .$file;
+//                 }
+//                 else
+//                 {
+//                     $error = true;
+//                 }
+//               // return response()->json($file['tmp_name']);
+//             // $destinationPath='investigation_images';
+//             // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+//             // // dd($fileNameToStore);
+//             // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
+
+//             // Case_Record_Document::Create([
+//             //     'record_id'=>$case_record->id,
+//             //     'name'=>$file->getClientOriginalName(),
+//             //     'file'=>$fileNameToStore,
+//             //     ]);
+//         }
+//         }
+        $case_record=Case_Record::Create([
             'case_id'=>$id,
             'record_number'=>$request['investigation_no'],
             'record_type_id'=>$request['investigation_type'],
-            'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+            'record_date'=>date('y-m-d h:i:s',strtotime($request['record_date'])),
             'created_by'=>\Auth::user()->id,
         ]);
-if(isset($_GET['files'])){
+if($request->has('record_documents')){
     // dd($request['record_documents']);
-   
-    // return response()->json(file_put_contents('sara',serialize($request['files'])));
-     $error = false;
-    $files = array();
+        foreach ($request->record_documents as  $key => $file) {
+            
+            $destinationPath='investigation_images';
+            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // dd($fileNameToStore);
+            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
 
-    $uploaddir = public_bath().'/case_documents/';
-        foreach($_GET['files']  as $file) {
-             return response()->json($file);
-            if(move_uploaded_file($file, $uploaddir .basename($file)))
-                {
-                    $files[] = $uploaddir .$file;
-                }
-                else
-                {
-                    $error = true;
-                }
-              // return response()->json($file['tmp_name']);
-            // $destinationPath='investigation_images';
-            // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-            // // dd($fileNameToStore);
-            // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
-
-            // Case_Record_Document::Create([
-            //     'record_id'=>$case_record->id,
-            //     'name'=>$file->getClientOriginalName(),
-            //     'file'=>$fileNameToStore,
-            //     ]);
+            Case_Record_Document::Create([
+                'record_id'=>$case_record->id,
+                'name'=>$file->getClientOriginalName(),
+                'file'=>$fileNameToStore,
+                ]);
         }
         }
-           return response()->json($data);
+           return redirect()->route('case_edit',$id);
     }
 
     ///destroy case record 
