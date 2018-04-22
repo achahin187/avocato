@@ -33,8 +33,8 @@
                           <div class="clearfix"> </div>
                         </div>
                         <div class="full-table">
-                          {{-- <div class="remodal-bg">
-                            <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                           <div class="remodal-bg">
+                         {{--   <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <h2 id="modal1Title">فلتر</h2>
@@ -92,8 +92,8 @@
                               <div class="clearfix"></div>
                               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
-                            </div>
-                          </div> --}}
+                            </div>--}}
+                          </div> 
                           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                           <table class="table-1">
                             <thead>
@@ -389,11 +389,13 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers =================-->
-              <div class="remodal-bg">
+              
                             <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <form  action="{{route('emergency_lawyer_assign_filter',$task->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                      {{ csrf_field() }}
+                               <input type="hidden" name="_token" value="{{csrf_token()}}">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              
+                      
                               <div>
                                 <h2 id="modal1Title">فلتر</h2>
                                 <div class="col-md-4 col-sm-6 col-xs-12">
@@ -433,11 +435,7 @@
                                 <div class="col-md-4 col-sm-6 col-xs-12">
                                   <div class="master_field">
                                     <label class="master_label mandatory" for="work_type">نوع العمل</label>
-                                    <select class="master_input select2" id="work_type" name="work_type" multiple="multiple" data-placeholder="نوع العمل " style="width:100%;" ,>
-                                      <option>الكل</option>
-                                      <option>معين بالمكتب</option>
-                                      <option>Freelancer</option>
-                                    </select><span class="master_message color--fadegreen">message content</span>
+                                    <input class="master_input" id="work_type" name="work_type"  data-placeholder="نوع العمل " style="width:100%;"><span class="master_message color--fadegreen">message content</span>
                                   </div>
                                 </div>
                               </div>
@@ -446,7 +444,7 @@
                               <button class="remodal-confirm" type="submit">فلتر</button>
                             </form>
                             </div>
-                          </div>
+                          
          @endsection
          @section('js')
          <script type="text/javascript">

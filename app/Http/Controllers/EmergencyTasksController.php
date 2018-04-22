@@ -112,32 +112,32 @@ class EmergencyTasksController extends Controller
     {
       // dd($request->all());
       $data['task']=Tasks::where('id',$id)->first();
-      $data['lawyers'] = Tasks::where(function($q) use($request){
+      $data['lawyers'] = Users::where(function($q) use($request){
 
          if($request->filled('work_sector'))
               {
-               $q->whereHas('lawyer',function($q) use($request){
+               $q->whereHas('user_detail',function($q) use($request){
                 $q->where('work_sector','like','%'.$request->work_sector.'%');
 
               });  
              }
              if($request->filled('lawyer_degree'))
               {
-               $q->whereHas('lawyer',function($q) use($request){
+               $q->whereHas('user_detail',function($q) use($request){
                 $q->where('litigation_level','like','%'.$request->lawyer_degree.'%');
 
               });  
              }
              if($request->filled('start_date_from') && $request->filled('start_date_to'))
               {
-               $q->whereHas('lawyer',function($q) use($request){
+               $q->whereHas('user_detail',function($q) use($request){
                 $q->where('join_date','>=',date('Y-m-d H:i:s',strtotime($request->start_date_from)))->where('join_date','<=',date('Y-m-d H:i:s',strtotime($request->start_date_to)));
 
               });  
              }
              if($request->filled('work_type'))
               {
-               $q->whereHas('lawyer',function($q) use($request){
+               $q->whereHas('user_detail',function($q) use($request){
                 $q->where('work_sector_type','like','%'.$request->work_type.'%');
 
               });  
