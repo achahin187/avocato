@@ -240,7 +240,7 @@ Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assi
 
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
-
+Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')->name('report.filter');
 
 Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
