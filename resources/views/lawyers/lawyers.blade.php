@@ -220,7 +220,7 @@
                 <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_level or ''}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->address or ''}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->mobile or ''}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
+                <td><span class="cellcontent">@isset($lawyer->user_detail->join_date){{$lawyer->user_detail->join_date->format('Y - m - d')}}@endisset</span></td>
                 <td><span class="cellcontent">
                   @isset($lawyer->user_detail->nationality->id)
                   @foreach($nationalities as $nationality)
