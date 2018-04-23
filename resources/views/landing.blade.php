@@ -54,7 +54,12 @@
                   <div class="col-xs-12">
                     <div class="text-xs-center"></div>
                     <div class="center-logo"><img class="className" id="IdName" src="{{asset('land/img/logo.png')}}" alt="Image Title"></div><br>
-                    <h4 class="color--main_d text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">خلافاَ للاعتقاد السائد فإن لوريم إيبسوم ليس نصاَ عشوائياً، بل إن له جذور في الأدب اللاتيني الكلاسيكي منذ العام 45 قبل الميلاد، مما يجعله أكثر من 2000 عام في القدم.</h4>
+                    <h4 class="color--main_d text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0 rtl">
+يمنح تطبيق Avocato الحلول القانونية لخلق الثقة للناس وعائلاتهم وحمايتهم للتعامل مع القضايا القانونية في الحياة. يتعاون Avocato مع المحامين لتقديم خدمات قانونية أساسية  من كتابة إرادتك إلى تمثيلك في الدعوى القضائية. تعرف على المزيد حول كيفية قيام Avocatoapp بحمايتك وجلب حياة جيدة لك.
+<br/>
+حان الوقت لإنشاء عالم قانوني مختلف
+<br>
+Avocatoapp المجتمع الرائد الوحيد للخدمات القانونية.</h4>
                     <div class="clearfix"></div><br><br>
                     <div class="text-center"><span class="bgcolor--fadeblue color--white bradius--small padding--small">الخط الساخن:	&nbsp; 19534</span></div>
                     <div class="clearfix"></div><br><br>

@@ -13,8 +13,8 @@ class Cases_Types extends Model
 
 
     //relations
-      public function cases()
+    public function cases()
     {
-    	return $this->hasMany('App\Case', 'case_type_id');
+    	return $this->hasMany('App\Case_', 'case_type_id');
     }
 }

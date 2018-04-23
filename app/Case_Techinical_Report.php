@@ -23,7 +23,7 @@ class Case_Techinical_Report extends Model
      //relations
     public function cases()
     {
-    	return $this->belongsTo('App\Case', 'case_id')->withDefault();
+    	return $this->belongsTo('App\Case', 'case_id');
     }
 
     public function case_tachinical_report_documents()
@@ -33,7 +33,7 @@ class Case_Techinical_Report extends Model
 
         public function lawyer()
     {
-        return $this->belongsTo('App\Users', 'assigned_to');
+        return $this->belongsTo('App\Users', 'assigned_to')->withDefault();
     }
      public function task_emergency()
     {

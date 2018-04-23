@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Entities;
 use App\Users;
 use App\Case_;
+use App\Tasks;
 
 class Helper {
 
@@ -143,10 +144,20 @@ class Helper {
     } 
 
     public static function percent($part, $all) {
-        return round( ($part * 100) / $all );
+        // return round( ($part * 100) / $all );
+        return round(($part/$all)*100, 1);
     }
 
     public static function countCases($city_id, $gov_id) {
         return Case_::where('geo_governorate_id', $gov_id)->where('geo_city_id', $city_id)->count();
+    }
+
+    // TODO: add conditions about city and governorate
+    public static function countTasks($taskId) {
+        return Tasks::where('task_type_id', $taskId)->count();
+    }
+
+    public static function countCaseType($taskId) {
+        return Case_::where('case_type_id', $taskId)->count();
     }
 }

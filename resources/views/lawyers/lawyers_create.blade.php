@@ -117,7 +117,7 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label" for="lawyer_email">البريد الالكترونى</label>
+                          <label class="master_label mandatory" for="lawyer_email">البريد الالكترونى</label>
                           <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="lawyer_email"><span class="master_message color--fadegreen">
                                   @if ($errors->has('email'))
                                     {{ $errors->first('email')}}

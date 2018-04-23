@@ -8,6 +8,7 @@ use App\User_Details;
 use App\Tasks;
 use App\Case_;
 use App\Rules;
+use App\Expenses;
 use App\Geo_Countries;
 use App\Entity_Localizations;
 use App\ClientsPasswords;
@@ -191,7 +192,6 @@ class LawyersController extends Controller
         'work_sector'=>'required',
         'work_sector_type'=>'required',
         'join_date'=>'required',
-        'resign_date'=>'required',
         'work_type'=>'required',
         'litigation_level'=>'required',
         'authorization_copy'=>'required|image|mimes:jpg,jpeg,png|max:1024',
@@ -246,7 +246,12 @@ class LawyersController extends Controller
       $lawyer_details->work_sector = $request->work_sector;
       $lawyer_details->work_sector_type = $request->work_sector_type;
       $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      
+      if($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+    else
+      $lawyer_details->resign_date = null;
+
       $lawyer_details->litigation_level = $request->litigation_level ;
       $lawyer_details->syndicate_level = $request->syndicate_level ;
       $lawyer_details->authorization_copy = $authorization_copy ;
@@ -267,6 +272,7 @@ class LawyersController extends Controller
      */
     public function show($id)
     {
+
      $data['lawyer'] = Users::find($id);
      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
      Date::setLocale('ar');
@@ -295,10 +301,33 @@ class LawyersController extends Controller
     $data['services'] = Tasks::where('task_type_id',3)->where('assigned_lawyer_id',$id)->get();
     $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
     $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
-
+    $data['expenses'] = Expenses::where('lawyer_id',$id)->get();
+    $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
+    // dd($data['rates_user']);
+    $data['rates'] = Entity_Localizations::where('entity_id',10)->where('field','name')->get();
     return view('lawyers.lawyers_show',$data);
   }
 
+    public function rate(Request $request,$id)
+    {
+      $validator = Validator::make($request->all(), [
+        'date'=>'required',
+        'rate'=>'required',
+        'notes'=>'required',
+      ]);
+
+      if ($validator->fails()) {
+        return redirect('lawyers_show/'.$id.'#add_evaluation')
+        ->withErrors($validator)
+        ->withInput();
+      }
+      $date = date('Y-m-d H:i:s',strtotime($request->date));
+      $lawyer = Users::find($id);
+      $lawyer->rate()->attach(\Auth::user()->id, ['notes' => $request->notes,'created_at'=>$date,'rate_id'=>$request->rate]);
+      return route('lawyers_show',$id);
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -336,7 +365,6 @@ class LawyersController extends Controller
         'work_sector'=>'required',
         'work_sector_type'=>'required',
         'join_date'=>'required',
-        'resign_date'=>'required',
         'work_type'=>'required',
         'litigation_level'=>'required',
         'syndicate_level'=>'required',
@@ -381,7 +409,11 @@ class LawyersController extends Controller
       $lawyer_details->work_sector = $request->work_sector;
       $lawyer_details->work_sector_type = $request->work_sector_type;
       $lawyer_details->join_date = date('Y-m-d H:i:s',strtotime($request->join_date));
+      if($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s',strtotime($request->resign_date));
+    else
+      $lawyer_details->resign_date = null;
+
       $lawyer_details->litigation_level = $request->litigation_level ;
       $lawyer_details->syndicate_level = $request->syndicate_level ;
 

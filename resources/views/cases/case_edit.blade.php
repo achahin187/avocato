@@ -48,32 +48,27 @@
                           <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="client_code_{{$i}}">كود العميل</label>
-                               <select class="master_input select2"  id="client_code_{{$i}}" name="client_code[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$clients}})">
+                              <select class="master_input select2"  id="client_code_{{$i}}" name="client_code[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$clients}})">
+                              <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($clients as $client)
                              @if($client->id == $case_client->client_id)
-                              <option value="{{$client->id}}" selected>{{$client->code}}</option>
+                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}" selected>{{ $client->code .' - '. $client->name}}</option>
                               @else
-                              <option value="{{$client->id}}" >{{$client->code}}</option>
+                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
                               @endif
                             @endforeach
                               
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('client_code'))
+                                    {{ $errors->first('client_code')}}
+                                    @endif
+                                  </span>
                             </div>
                           </div>
                           <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="client_name_{{$i}}">اسم الموكل</label>
-                              <select class="master_input select2"  id="client_name_{{$i}}" name="client_name[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$clients}})">
-                            @foreach($clients as $client)
-                            @if($client->id == $case_client->client_id)
-                              <option value="{{$client->id}}" selected>{{$client->name}}</option>
-                              @else
-                              <option value="{{$client->id}}" >{{$client->name}}</option>
-                              @endif
-                              
-                            @endforeach
-                              
-                            </select><span class="master_message color--fadegreen">بعض النص </span>
+                             <input class="master_input"  id="client_name_{{$i}}" name="client_name[{{$i}}]"  readonly><span class="master_message color--fadegreen">بعض النص </span>
                             </div>
                           </div>
                           <div class="col-md-3 col-sm-6 col-xs-12">
@@ -100,7 +95,11 @@
                           <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="authorization_num_{{$i}}">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_{{$i}}" name="authorization_num[{{$i}}]" value="{{$case_client->attorney_number}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_{{$i}}" name="authorization_num[{{$i}}]" value="{{$case_client->attorney_number}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('authorization_num'))
+                                    {{ $errors->first('authorization_num')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-9 col-sm-6 col-xs-12">
@@ -131,7 +130,11 @@
                           <div class="col-md-6">
                             <div class="master_field">
                               <label class="master_label mandatory" for="enemy_name">اسم الخصم</label>
-                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name" value="{{$case->contender_name}}"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name" value="{{$case->contender_name}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_name'))
+                                    {{ $errors->first('enemy_name')}}
+                                    @endif
+                             </span>
                             </div>
                           </div>
                           <div class="col-md-6">
@@ -145,25 +148,39 @@
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endif
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message content</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('enemy_type'))
+                                    {{ $errors->first('enemy_type')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="master_field">
                                <label class="master_label mandatory" for="enemy_address">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address" value="{{$case->contender_address}}"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address" value="{{$case->contender_address}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_address'))
+                                    {{ $errors->first('enemy_address')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="master_field">
                               <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
-                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer" value="{{$case->contender_laywer}}"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer" value="{{$case->contender_laywer}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_lawyer'))
+                                    {{ $errors->first('enemy_lawyer')}}
+                                    @endif
+                             </span>
                             </div>
                           </div>
                           <div class="col-md-6">
                             <div class="master_field">
                               <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
-                              <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">message</span>
+                              <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">
+                               
+                                  </span>
                             </div>
                           </div>
                           <div class="clearfix"></div>
@@ -391,7 +408,7 @@
                             </div>
                             <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#new_investigation"><i class="fa fa-plus"></i><span>إضافة</span></a>
                               <div class="remodal-bg"></div>
-                              <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              {{-- <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
                                   <div class="row">
@@ -438,7 +455,7 @@
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                                 <button class="remodal-confirm" onclick="add_record({{$case->id}})">حفظ</button>
-                              </div>
+                              </div> --}}
                             </div>
                             <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
                             <div class="remodal-bg"></div>
@@ -477,19 +494,30 @@
                           <div class="col-md-4">
                             <div class="master_field">
                               <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
-                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num" value="{{$case->office_file_number}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num" value="{{$case->office_file_number}}"><span class="master_message color--fadegreen"> @if ($errors->has('folder_num'))
+                                    {{ $errors->first('folder_num')}}
+                                    @endif
+                                  </span>
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="master_field">
                               <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num" value="{{$case->claim_number}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num" value="{{$case->claim_number}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('claim_num'))
+                                    {{ $errors->first('claim_num')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="master_field">
                               <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees" value="{{$case->claim_expenses}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees" value="{{$case->claim_expenses}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_fees'))
+                                    {{ $errors->first('case_fees')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -504,7 +532,11 @@
                               @endif
 
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_type'))
+                                    {{ $errors->first('case_type')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -518,7 +550,11 @@
                               <option value="{{$court->id}}">{{$court->name}}</option>
                               @endif
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('court_name'))
+                                    {{ $errors->first('court_name')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -532,7 +568,11 @@
                               <option value="{{$governorate->id}}">{{$governorate->name}}</option>
                               @endif
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                                 @if ($errors->has('governorate'))
+                                    {{ $errors->first('governorate')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -546,19 +586,31 @@
                               <option value="{{$city->id}}">{{$city->name}}</option>
                               @endif
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                               @if ($errors->has('city'))
+                                    {{ $errors->first('city')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="master_field">
                                <label class="master_label mandatory" for="circle">الدائرة</label>
-                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" value="{{$case->region}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" value="{{$case->region}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('circle'))
+                                    {{ $errors->first('circle')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="case_year">السنة</label>
-                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year" value="{{$case->claim_year}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year" value="{{$case->claim_year}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('case_year'))
+                                    {{ $errors->first('case_year')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -566,19 +618,31 @@
                               <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
                             <div class="bootstrap-timepicker">
                               <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date" value="{{$case->claim_date}}">
-                            </div><span class="master_message color--fadegreen">message</span>
+                            </div><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_date'))
+                                    {{ $errors->first('case_date')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
-                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang" value="{{$case->case_startdate}}-{{$case->case_enddate}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang" value="{{$case->case_startdate}}-{{$case->case_enddate}}"><span class="master_message color--fadegreen"> 
+                              @if ($errors->has('case_dateRang'))
+                                    {{ $errors->first('case_dateRang')}}
+                                    @endif
+                                  </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
-                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees" value="$case->claim_expenses"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees" value="$case->claim_expenses"><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_fees'))
+                                    {{ $errors->first('case_fees')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -595,7 +659,11 @@
                           <div class="col-md-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="subject">الموضوع</label>
-                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject" value="{{$case->case_body}}"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject" value="{{$case->case_body}}"><span class="master_message color--fadegreen">
+                                @if ($errors->has('subject'))
+                                    {{ $errors->first('subject')}}
+                                    @endif
+                            </span>
                             </div>
                           </div>
                           <div class="col-xs-12">
@@ -722,13 +790,13 @@
                             
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->nationality or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
                             @if($lawyer->is_active)
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             @else
@@ -915,6 +983,57 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+               <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <form action="{{URL('add_record_ajax/'.$case->id)}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>إضافة محضر</h3>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label" for="investigation_no">رقم المحضر</label>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
+                                          </select><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory">تاريخ</label>
+                                          <div class="bootstrap-timepicker">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date">
+                                          </div><span class="master_message color--fadegreen">message content</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="master_field">
+                                          <label class="master_label" for="docs_upload">إرفاق ملفات</label>
+                                          <div class="file-upload">
+                                            <div class="file-select">
+                                              <div class="file-select-name" id="noFile">إرفاق ملفات</div>
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="docs_upload" multiple>
+                                            </div>
+                                          </div><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                <button class="remodal-confirm" type="submit">حفظ</button>
+                              </form>
+                              </div>
            @endsection
 
 
@@ -927,7 +1046,7 @@
                   var div = document.getElementById('add_new_client');
                   // alert(i);
                   // alert("'client_code_"+i"'");
-                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client) <option value="{{$client->id}}">{{$client->code}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <select class="master_input select2"  id="client_name_'+i+'" name="client_name['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})">@foreach($clients as $client)<option value="{{$client->id}}">{{$client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> @foreach($roles as $role) <option value="{{$role->id}}">{{$role->name_ar}}</option>@endforeach</select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
+                    div.innerHTML += '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_'+i+'">كود العميل</label><select class="master_input select2"  id="client_code_'+i+'" name="client_code['+i+']" style="width:100%;" onchange="set_client_data(this.value,'+i+',{{$clients}})"><option value="-1" selected disabled hidden>إختر كود العميل</option>@foreach($clients as $client) <option  value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>@endforeach</select><span class="master_message color--fadegreen">message</span> </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_name_'+i+'">اسم الموكل</label> <input class="master_input"  id="client_name_'+i+'" name="client_name['+i+']"  readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_number_'+i+'">رقم الهاتف</label><input class="master_input" type="number" placeholder="رقم الهاتف" id="client_number_'+i+'" name="client_number['+i+']" readonly><span class="master_message color--fadegreen">message</span></div> </div> <div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"><label class="master_label mandatory" for="client_character_'+i+'">صفته</label> <select class="master_input select2" id="client_character_'+i+'" name="client_character['+i+']" style="width:100%;"> @foreach($roles as $role) <option value="{{$role->id}}">{{$role->name_ar}}</option>@endforeach</select><span class="master_message color--fadegreen">message content</span>  </div> </div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label> <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_'+i+'" name="authorization_num['+i+']"><span class="master_message color--fadegreen">message</span> </div></div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label> <input class="master_input" type="text" placeholder="عنوانه" id="client_address_'+i+'" name="client_address['+i+']" readonly><span class="master_message color--fadegreen">بعض النص </span> </div> </div>';
                   // alert(i);
                 }
                 function set_client_data(id , i , clients)
@@ -950,6 +1069,7 @@
                     if(item == 'id' && clients[client][item]==id)
                     {
                        // alert(item);
+                       name.value=clients[client]['name'];
                       mobile.value=clients[client]['mobile'];
                       address.value=clients[client]['address'];
                     }
@@ -1011,95 +1131,95 @@
         // Grab the files and set them to our variable
        
 
-var record_data =[];
-    function add_record(case_id)
-    {
-      record_data['investigation_no']= $('#investigation_no').val();
-      record_data['investigation_type']= $('#investigation_type').val();
-      record_data['investigation_date']= $('#investigation_date').val();
+// var record_data =[];
+//     function add_record(case_id)
+//     {
+//       record_data['investigation_no']= $('#investigation_no').val();
+//       record_data['investigation_type']= $('#investigation_type').val();
+//       record_data['investigation_date']= $('#investigation_date').val();
      
-      var data = new FormData();
-    $.each(files, function(key, value)
-    {
+//       var data = new FormData();
+//     $.each(files, function(key, value)
+//     {
     
-        data.append(key, value);
+//         data.append(key, value);
     
-    });
-    //  var result ;
-var files_arr = [];
-    for (var key of data.entries()) {
-        // console.log(key[1])
-        files_arr.push(key[1].name);
-    }
+//     });
+//     //  var result ;
+// var files_arr = [];
+//     for (var key of data.entries()) {
+//         // console.log(key[1])
+//         files_arr.push(key[1].name);
+//     }
 
-     console.log(files_arr);
-    // console.log(result);
-       // record_data['record_documents']= $('#record_documents').val();
-       //  $('input[name="record_documents"]').each(function(){
-       //     record_data['record_documents'] = $(this).val();
-       // });
+//      console.log(files_arr);
+//     // console.log(result);
+//        // record_data['record_documents']= $('#record_documents').val();
+//        //  $('input[name="record_documents"]').each(function(){
+//        //     record_data['record_documents'] = $(this).val();
+//        // });
 
-// alert(record_data['investigation_no']);
-    //   $.ajax({
-    //        type:'POST',
-    //        url:'{{url('add_record_ajax/'.$case->id)}}',
-    //        processData: false, // Don't process the files
-    //        contentType: false,
-    //        data:{'files':result
-    //        ,'investigation_no':record_data['investigation_no']
-    //        ,'investigation_type':record_data['investigation_type']
-    //        ,'investigation_date':record_data['investigation_date']
-    //        ,'_token':"{{ csrf_token() }}"},
-    //        success:function(data){
-    //           alert(data);
-    //     // $this.html(data);
-    //   // alert(data);
-    //       },
-    //        error: function (jqXHR, exception) {
-    //     var msg = '';
-    //     if (jqXHR.status === 0) {
-    //         msg = 'Not connect.\n Verify Network.';
-    //     } else if (jqXHR.status == 404) {
-    //         msg = 'Requested page not found. [404]';
-    //     } else if (jqXHR.status == 500) {
-    //         msg = 'Internal Server Error [500].';
-    //     } else if (exception === 'parsererror') {
-    //         msg = 'Requested JSON parse failed.';
-    //     } else if (exception === 'timeout') {
-    //         msg = 'Time out error.';
-    //     } else if (exception === 'abort') {
-    //         msg = 'Ajax request aborted.';
-    //     } else {
-    //         msg = 'Uncaught Error.\n' + jqXHR.responseText;
-    //     }
-    //     $('#post').html(msg);
-    // },
-    //     });
+// // alert(record_data['investigation_no']);
+//     //   $.ajax({
+//     //        type:'POST',
+//     //        url:'{{url('add_record_ajax/'.$case->id)}}',
+//     //        processData: false, // Don't process the files
+//     //        contentType: false,
+//     //        data:{'files':result
+//     //        ,'investigation_no':record_data['investigation_no']
+//     //        ,'investigation_type':record_data['investigation_type']
+//     //        ,'investigation_date':record_data['investigation_date']
+//     //        ,'_token':"{{ csrf_token() }}"},
+//     //        success:function(data){
+//     //           alert(data);
+//     //     // $this.html(data);
+//     //   // alert(data);
+//     //       },
+//     //        error: function (jqXHR, exception) {
+//     //     var msg = '';
+//     //     if (jqXHR.status === 0) {
+//     //         msg = 'Not connect.\n Verify Network.';
+//     //     } else if (jqXHR.status == 404) {
+//     //         msg = 'Requested page not found. [404]';
+//     //     } else if (jqXHR.status == 500) {
+//     //         msg = 'Internal Server Error [500].';
+//     //     } else if (exception === 'parsererror') {
+//     //         msg = 'Requested JSON parse failed.';
+//     //     } else if (exception === 'timeout') {
+//     //         msg = 'Time out error.';
+//     //     } else if (exception === 'abort') {
+//     //         msg = 'Ajax request aborted.';
+//     //     } else {
+//     //         msg = 'Uncaught Error.\n' + jqXHR.responseText;
+//     //     }
+//     //     $('#post').html(msg);
+//     // },
+//     //     });
 
-    $.ajax({
-      type: 'post',
-      url: "{{URL('add_record_ajax/'.$case->id.'?files=')}}"+files_arr,
-      data: {
-        _token: "{{csrf_token()}}",
-        // files:files_arr,
-        investigation_no:record_data['investigation_no']
-       ,investigation_type:record_data['investigation_type']
-        ,investigation_date:record_data['investigation_date']
-      },
-      success: function(data)
-      {
-        if(typeof data.error === 'undefined')
-            {
-                // Success so call function to process the form
-                alert(data);
-            }
-            else
-            {
-                // Handle errors here
-                console.log('ERRORS: ' + data.error);
-            }
-      }
-    });
-    }
+//     $.ajax({
+//       type: 'post',
+//       url: "{{URL('add_record_ajax/'.$case->id.'?files=')}}"+files_arr,
+//       data: {
+//         _token: "{{csrf_token()}}",
+//         // files:files_arr,
+//         investigation_no:record_data['investigation_no']
+//        ,investigation_type:record_data['investigation_type']
+//         ,investigation_date:record_data['investigation_date']
+//       },
+//       success: function(data)
+//       {
+//         if(typeof data.error === 'undefined')
+//             {
+//                 // Success so call function to process the form
+//                 alert(data);
+//             }
+//             else
+//             {
+//                 // Handle errors here
+//                 console.log('ERRORS: ' + data.error);
+//             }
+//       }
+//     });
+//     }
     </script>
     @endsection

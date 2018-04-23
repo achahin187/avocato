@@ -15,8 +15,8 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
 
 
-
 Route::get('/', 'HomeController@index')->name('home');
+
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
@@ -156,6 +156,7 @@ Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name
 Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
 Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
+Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
 
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
@@ -235,11 +236,12 @@ Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name(
 Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
 Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emergency_task')->name('assign_emergency_task');
 Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
-
+Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
+Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
 
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
-
+Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')->name('report.filter');
 
 Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');

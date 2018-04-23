@@ -5,6 +5,7 @@ use App\Users_Rules;
 use App\Installment;
 use App\ClientsPasswords;
 use App\Task_Charges;
+use App\User_Ratings;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,15 +30,15 @@ class Users extends Authenticatable
 
         static::deleting(function($user) { // before delete() method call this
             if ( count($user->rules)>0 ) { Users_Rules::where('user_id',$user->id)->delete(); }
-            if ( count($user->client_password->id)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
-            if ( count($user->user_detail->id)>0 ) { $user->user_detail()->delete(); }
-            if ( count($user->subscription->id)>0 ) { 
+            if ( count($user->client_password)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
+            if ( count($user->user_detail)>0 ) { $user->user_detail()->delete(); }
+            if ( count($user->subscription)>0 ) { 
                 if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
                     Installment::where('subscription_id', $user->subscription->id)->delete();
                 }
                 $user->subscription()->delete(); 
             }
-            if ( count($user->user_company_detail->id)>0) { $user->user_company_detail()->delete(); }
+            if ( count($user->user_company_detail)>0) { $user->user_company_detail()->delete(); }
             if ( count($user->tasks)>0) { 
               foreach($user->tasks as $task){
                 if ( Task_Charges::where('task_id', $task->id)->get() ) {
@@ -46,6 +47,8 @@ class Users extends Authenticatable
               }
               }
             if ( count($user->offices)>0 ) {$user->offices()->delete();}
+            if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
+            if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
                 // for companies or individuals_companies
         });
     }
@@ -53,22 +56,22 @@ class Users extends Authenticatable
 
    public function createdParent()
    {
-       return $this->belongsTo('App\Users', 'created_by')->withDefault();
+       return $this->belongsTo('App\Users', 'created_by');
    }
 
    public function createdChildren()
    {
-       return $this->hasMany('App\Users', 'created_by')->withDefault();
+       return $this->hasMany('App\Users', 'created_by');
    }
 
    public function modifiedParent()
    {
-       return $this->belongsTo('App\Users', 'modified_by')->withDefault();
+       return $this->belongsTo('App\Users', 'modified_by');
    }
 
    public function modifiedChildren()
    {
-       return $this->hasMany('App\Users', 'modified_by')->withDefault();
+       return $this->hasMany('App\Users', 'modified_by');
    }
 
    // Many users in 'users' table have Many rules in 'rules' table - pivot table =>  'users_rules'
@@ -79,12 +82,12 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One detail in 'user_details' table
    public function user_detail() {
-       return $this->hasOne('App\User_Details','user_id')->withDefault();
+       return $this->hasOne('App\User_Details','user_id');
    }
 
    // One user in 'users' table has One subscribtion in 'subscriptions' table
    public function subscription() {
-       return $this->hasOne('App\Subscriptions', 'user_id')->withDefault();
+       return $this->hasOne('App\Subscriptions', 'user_id');
    }
 
    // Join between 'users' && 'users_rules'
@@ -97,28 +100,28 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One record in 'clients_passwords' table
    public function client_password() {
-       return $this->hasOne('App\ClientsPasswords','user_id')->withDefault();
+       return $this->hasOne('App\ClientsPasswords','user_id');
    }
 
    public function user_company_detail() {
-       return $this->hasOne('App\User_Company_Details', 'user_id')->withDefault();
+       return $this->hasOne('App\User_Company_Details', 'user_id');
    }
 
    // Self relation between individual and company
    public function companyParent()
    {
-       return $this->belongsTo('App\Users', 'parent_id')->withDefault();
+       return $this->belongsTo('App\Users', 'parent_id');
    }
 
    // Self relation
    public function companyChildren()
    {
-       return $this->hasMany('App\Users', 'parent_id')->withDefault();
+       return $this->hasMany('App\Users', 'parent_id');
    }
 
     public function consultations()
    {
-       return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id')->withDefault();
+       return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
    }
 
    public function cases()
@@ -136,26 +139,38 @@ class Users extends Authenticatable
 
     }
 
-        public function offices()
+    public function offices()
     {
         return $this->hasMany('App\User_Offices','user_id');
 
     }
 
-           public function tasks_assigned()
+    public function tasks_assigned()
     {
-        return $this->hasMany('App\Tasks','assigned_lawyer_id')->withDefault();
+        return $this->hasMany('App\Tasks','assigned_lawyer_id');
 
     }
 
-           public function who_assign_tasks()
+    public function who_assign_tasks()
     {
-        return $this->hasMany('App\Tasks','who_assigned_lawyer_id')->withDefault();
+        return $this->hasMany('App\Tasks','who_assigned_lawyer_id');
 
     }
 
-        public function case_technical_reports()
+    public function case_technical_reports()
     {
+
       return $this->hasMany('App\Case_Techinical_Report', 'assigned_to')->withDefault();
     }
+
+        public function expenses()
+    {
+        return $this->hasMany('App\Expenses','lawyer_id');
+    }
+
+        public function rate()
+    {
+        return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id')->using('App\User_Ratings');
+    }
+
 }
