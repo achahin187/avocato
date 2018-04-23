@@ -25,7 +25,7 @@
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
                         <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" >
-                          <option>اختر تصنيف</option>
+                          <option value="-1" selected disabled hidden>اختر تصنيف</option>
                           @foreach($consultation_types as $type)
                           @if($consultation->consultation_type_id == $type->id)
                           <option value="{{$type->name}}" selected>{{$type->name}}</option>
@@ -34,7 +34,11 @@
                           @endif
                           
                           @endforeach
-                        </select><span class="master_message color--fadegreen">message content</span>
+                        </select><span class="master_message color--fadegreen">
+                          @if ($errors->has('consultation_cat'))
+                                    {{ $errors->first('consultation_cat')}}
+                                    @endif
+                                  </span>
                       </div>
                     </div>
                     <div class="col-xs-6">
@@ -52,19 +56,31 @@
                           <input type="radio" id="rad_2" name="consultation_type" value="1" >
                           <label for="rad_2">مدفوع</label>
                           @endif
-                        </div><span class="master_message color--fadegreen">message</span>
+                        </div><span class="master_message color--fadegreen">
+                          @if ($errors->has('consultation_type'))
+                                    {{ $errors->first('consultation_type')}}
+                                    @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_question">نص السؤال</label>
-                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question" value="{{$consultation->question}}"><span class="master_message color--fadegreen">message</span>
+                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question" value="{{$consultation->question}}"><span class="master_message color--fadegreen">
+                            @if ($errors->has('consultation_question'))
+                                    {{ $errors->first('consultation_question')}}
+                                    @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_answer">نص الاجابة</label>
-                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة "></textarea><span class="master_message color--fadegreen">message</span>
+                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة "></textarea><span class="master_message color--fadegreen">
+                           @if ($errors->has('consultation_answer'))
+                                    {{ $errors->first('consultation_answer')}}
+                                    @endif
+                        </span>
                       </div>
                     </div>
                     <div class="clearfix"></div>

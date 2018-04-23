@@ -66,6 +66,20 @@ class LegalConsultationsController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'consultation_type'=>'required',
+            'consultation_question'=>'required',
+            'consultation_answer'=>'required',
+             'consultation_cat'=>'required',
+            
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
         $consultation_types=Consultation_Types::all();
         $consultation=new Consultation();
         
@@ -234,6 +248,21 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request ,$id)
     {
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'consultation_type'=>'required',
+            'consultation_question'=>'required',
+            'consultation_answer'=>'required',
+             'consultation_cat'=>'required',
+            
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
          $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
         // dd($request->all());

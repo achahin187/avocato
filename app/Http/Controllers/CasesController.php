@@ -78,8 +78,9 @@ class CasesController extends Controller
                  }])->get();
         foreach($lawyers as $detail){
             
-                if($detail->user_detail->count()!=0)
+                if($detail->user_detail()->count() != 0)
                 {
+                    // dd($detail->user_detail);
                     $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
                 $detail['nationality']=$value;
@@ -173,7 +174,7 @@ class CasesController extends Controller
                  }])->get();
         foreach($lawyers as $detail){
             
-                if(count($detail->user_detail())!=0)
+                if($detail->user_detail()->count() !=0)
                 {
                     $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
@@ -201,6 +202,34 @@ class CasesController extends Controller
 
    public function edit_case(Request $request , $id)
    {
+    $validator = Validator::make($request->all(), [
+            'folder_num'=>'required',
+            'case_dateRang'=>'required',
+            'case_type'=>'required',
+            'court_name'=>'required',
+            'claim_num'=>'required',
+            'case_year'=>'required',
+            'case_date'=>'required',
+            'case_fees'=>'required',
+
+            'governorate'=>'required',
+            'city'=>'required',
+            'enemy_name'=>'required',
+            'enemy_type'=>'required',
+            'enemy_address'=>'required',
+             'enemy_lawyer'=>'required',
+            'subject'=>'required',
+            'client_code'=>'required',
+            'authorization_num'=>'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
       $case=Case_::find($id);
       $start_time=explode('-', $request['case_dateRang'])[0];
        $end_time=explode('-', $request['case_dateRang'])[1];
@@ -303,7 +332,38 @@ class CasesController extends Controller
     public function add(Request $request)
     {
         // dd($request->all());
-        
+         $validator = Validator::make($request->all(), [
+            'folder_num'=>'required',
+            'case_dateRang'=>'required',
+            'case_type'=>'required',
+            'court_name'=>'required',
+            'claim_num'=>'required',
+            'case_year'=>'required',
+            'case_date'=>'required',
+            'case_fees'=>'required',
+
+            'governorate'=>'required',
+            'city'=>'required',
+            'enemy_name'=>'required',
+            'enemy_type'=>'required',
+            'enemy_address'=>'required',
+             'enemy_lawyer'=>'required',
+            'subject'=>'required',
+            'client_code'=>'required',
+            'authorization_num'=>'required',
+            'investigation_no'=>'required',
+            'investigation_type'=>'required',
+            'investigation_date'=>'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+
        $start_time=explode('-', $request['case_dateRang'])[0];
        $end_time=explode('-', $request['case_dateRang'])[1];
         $case=Case_::Create([
@@ -573,45 +633,68 @@ if($request->has('record_documents')){
           // return response()->json($_GET['files']);
 // return response()->json($_GET['files']);
 
-$case_record=Case_Record::Create([
+// $case_record=Case_Record::Create([
+//             'case_id'=>$id,
+//             'record_number'=>$request['investigation_no'],
+//             'record_type_id'=>$request['investigation_type'],
+//             'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+//             'created_by'=>\Auth::user()->id,
+//         ]);
+// if(isset($_GET['files'])){
+//     // dd($request['record_documents']);
+   
+//     // return response()->json(file_put_contents('sara',serialize($request['files'])));
+//      $error = false;
+//     $files = array();
+
+//     $uploaddir = public_bath().'/case_documents/';
+//         foreach($_GET['files']  as $file) {
+//              return response()->json($file);
+//             if(move_uploaded_file($file, $uploaddir .basename($file)))
+//                 {
+//                     $files[] = $uploaddir .$file;
+//                 }
+//                 else
+//                 {
+//                     $error = true;
+//                 }
+//               // return response()->json($file['tmp_name']);
+//             // $destinationPath='investigation_images';
+//             // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+//             // // dd($fileNameToStore);
+//             // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
+
+//             // Case_Record_Document::Create([
+//             //     'record_id'=>$case_record->id,
+//             //     'name'=>$file->getClientOriginalName(),
+//             //     'file'=>$fileNameToStore,
+//             //     ]);
+//         }
+//         }
+        $case_record=Case_Record::Create([
             'case_id'=>$id,
             'record_number'=>$request['investigation_no'],
             'record_type_id'=>$request['investigation_type'],
-            'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+            'record_date'=>date('y-m-d h:i:s',strtotime($request['record_date'])),
             'created_by'=>\Auth::user()->id,
         ]);
-if(isset($_GET['files'])){
+if($request->has('record_documents')){
     // dd($request['record_documents']);
-   
-    // return response()->json(file_put_contents('sara',serialize($request['files'])));
-     $error = false;
-    $files = array();
+        foreach ($request->record_documents as  $key => $file) {
+            
+            $destinationPath='investigation_images';
+            $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+            // dd($fileNameToStore);
+            Input::file('record_documents')[$key]->move($destinationPath,$fileNameToStore);
 
-    $uploaddir = public_bath().'/case_documents/';
-        foreach($_GET['files']  as $file) {
-             return response()->json($file);
-            if(move_uploaded_file($file, $uploaddir .basename($file)))
-                {
-                    $files[] = $uploaddir .$file;
-                }
-                else
-                {
-                    $error = true;
-                }
-              // return response()->json($file['tmp_name']);
-            // $destinationPath='investigation_images';
-            // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-            // // dd($fileNameToStore);
-            // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
-
-            // Case_Record_Document::Create([
-            //     'record_id'=>$case_record->id,
-            //     'name'=>$file->getClientOriginalName(),
-            //     'file'=>$fileNameToStore,
-            //     ]);
+            Case_Record_Document::Create([
+                'record_id'=>$case_record->id,
+                'name'=>$file->getClientOriginalName(),
+                'file'=>$fileNameToStore,
+                ]);
         }
         }
-           return response()->json($data);
+           return redirect()->route('case_edit',$id);
     }
 
     ///destroy case record 
