@@ -78,7 +78,7 @@ class CasesController extends Controller
                  }])->get();
         foreach($lawyers as $detail){
             
-                if($detail->user_detail->count() != 0)
+                if($detail->user_detail()->count() != 0)
                 {
                     // dd($detail->user_detail);
                     $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
@@ -202,6 +202,34 @@ class CasesController extends Controller
 
    public function edit_case(Request $request , $id)
    {
+    $validator = Validator::make($request->all(), [
+            'folder_num'=>'required',
+            'case_dateRang'=>'required',
+            'case_type'=>'required',
+            'court_name'=>'required',
+            'claim_num'=>'required',
+            'case_year'=>'required',
+            'case_date'=>'required',
+            'case_fees'=>'required',
+
+            'governorate'=>'required',
+            'city'=>'required',
+            'enemy_name'=>'required',
+            'enemy_type'=>'required',
+            'enemy_address'=>'required',
+             'enemy_lawyer'=>'required',
+            'subject'=>'required',
+            'client_code'=>'required',
+            'authorization_num'=>'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
       $case=Case_::find($id);
       $start_time=explode('-', $request['case_dateRang'])[0];
        $end_time=explode('-', $request['case_dateRang'])[1];
@@ -304,7 +332,38 @@ class CasesController extends Controller
     public function add(Request $request)
     {
         // dd($request->all());
-        
+         $validator = Validator::make($request->all(), [
+            'folder_num'=>'required',
+            'case_dateRang'=>'required',
+            'case_type'=>'required',
+            'court_name'=>'required',
+            'claim_num'=>'required',
+            'case_year'=>'required',
+            'case_date'=>'required',
+            'case_fees'=>'required',
+
+            'governorate'=>'required',
+            'city'=>'required',
+            'enemy_name'=>'required',
+            'enemy_type'=>'required',
+            'enemy_address'=>'required',
+             'enemy_lawyer'=>'required',
+            'subject'=>'required',
+            'client_code'=>'required',
+            'authorization_num'=>'required',
+            'investigation_no'=>'required',
+            'investigation_type'=>'required',
+            'investigation_date'=>'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+
+
        $start_time=explode('-', $request['case_dateRang'])[0];
        $end_time=explode('-', $request['case_dateRang'])[1];
         $case=Case_::Create([
