@@ -16,13 +16,15 @@ class User_Details extends Model
     protected $dates = ['deleted_at','join_date'];
     public $timestamps = false;
 
-public function nationality()
+  public function nationality()
    {
        return $this->belongsTo('App\Geo_Countries','nationality_id')->withDefault();
    }
-	public function user() {
+
+	public function user()
+   {
 		return $this->belongsTo('App\Users','user_id')->withDefault();
-	}
+	 }
   
 
 }
