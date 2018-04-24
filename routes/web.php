@@ -215,6 +215,7 @@ Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_r
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 });
 
+
 Route::middleware(['roles:1,2,3'])->group(function () {
 
 Route::get('/cases', 'CasesController@index')->name('cases');
@@ -234,6 +235,7 @@ Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_recor
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
 
 });
 
@@ -279,7 +281,9 @@ Route::post('/session_filter', 'TasksController@filter')->name('session_filter')
 
 
 
+
 Route::middleware(['roles:1,2,4'])->group(function () {
+
 
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');

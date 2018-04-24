@@ -382,8 +382,7 @@ else
               <!-- =============== PAGE VENDOR Triggers ===============-->
             
  @endsection
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
+  
  <script type="text/javascript">
 
   function exportExcel() {

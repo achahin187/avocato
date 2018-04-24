@@ -40,14 +40,15 @@ class CasesController extends Controller
         $cases=Case_::with('case_types')->with('governorates')->with('cities')->with('courts')->get();
         // dd($cases);
         $roles=Case_Client_Role::all();
-
+        $types = Cases_Types::all();
+        $courts=Courts::all();
        foreach($roles as $role)
        {
         $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
 
        }
        // dd($roles);
-        return view('cases.cases')->with('cases',$cases)->with('roles',$roles);
+        return view('cases.cases')->with('cases',$cases)->with('roles',$roles)->with('types',$types)->with('courts',$courts);
     }
 
     /**
@@ -734,5 +735,44 @@ if($request->has('record_documents')){
         $zipper->close();
         return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true);
          // return response()->download(public_path()."/investigations.zip");
+    }
+
+    public function filter_cases(Request $request)
+    {
+        // dd($request->all());
+        $cases=Case_::where(function($q) use($request){
+
+             if($request->filled('case_type'))
+              {
+               $q->where('case_type_id',$request->case_type);  
+             }
+             if($request->filled('court_name'))
+              {
+               $q->where('court_id',$request->court_name);  
+             }
+             if($request->filled('circle'))
+              {
+               $q->where('region',$request->circle);  
+             }
+              if($request->filled('year_from') && $request->filled('year_to'))
+              {
+               $q->where('claim_year','<=',$request->year_from)->where('claim_year','<=',$request->year_to);  
+             }
+             if($request->filled('case_date_from') && $request->filled('case_date_to'))
+              {
+               $q->where('claim_date','<=',$request->case_date_from)->where('claim_date','<=',$request->case_date_to);  
+             }
+        })->get();
+
+         $roles=Case_Client_Role::all();
+        $types = Cases_Types::all();
+        $courts=Courts::all();
+       foreach($roles as $role)
+       {
+        $role['name_ar']=Helper::localizations('case_client_roles','name',$role->id);
+
+       }
+        return view('cases.cases')->with('cases',$cases)->with('roles',$roles)->with('types',$types)->with('courts',$courts);
+       // return redirect()->back();
     }
 }

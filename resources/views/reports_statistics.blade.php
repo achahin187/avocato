@@ -151,7 +151,7 @@
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->governorates) ? $case->governorates->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ ($case->cities && $case->cities->governorate) ? Helper::countCases($case->cities->id, $case->cities->governorate->id) : 0 }}</span></td>
+                        <td><span class="cellcontent">{{ $case->total ? $case->total : 0 }}</span></td>
                     </tr>
                     @endforeach
                   @endif
@@ -605,50 +605,59 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab3" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h3 id="modal1Title">فلتر</h3>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="license_code">الكود</label>
-                        <input class="master_input" type="number" placeholder="الكود" id="license_code"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="company_name">اسم الشركة</label>
-                        <input class="master_input" type="text" placeholder="اسم الشركة" id="company_name"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="license_type"> نوع التعاقد </label>
-                        <select class="master_input select2" id="license_type" multiple="multiple" data-placeholder="نوع التعاقد" style="width:100%;" ,>
-                          <option>ذهبى</option>
-                          <option>برونزي</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory">التفعيل</label>
-                        <div class="radiorobo">
-                          <input type="radio" id="rad_1">
-                          <label for="rad_1">الكل</label>
-                        </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="rad_2">
-                          <label for="rad_2">المفعلين</label>
-                        </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="rad_3">
-                          <label for="rad_3">غير المفعلين</label>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+
+                    <div>
+                      <h3 id="modal1Title">فلتر</h3>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="license_code">الشركة</label>
+                          <select name="company" class="master_input select2" id="lawyer_spec" data-placeholder="اسم وكود الشركة" style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر الشركة</option>
+                              @if ( isset($companies_) && !empty($companies_) )
+                                @foreach ($companies_ as $com)
+                                  <option value="{{ $com->id }}">{{ $com->full_name .' - '. $com->code }}</option>
+                                @endforeach
+                              @endif
+                          </select>
                         </div>
                       </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="license_type"> نوع التعاقد </label>
+                          <select name="packages[]" class="master_input select2" id="license_type" multiple="multiple" data-placeholder="نوع التعاقد" style="width:100%;" ,>
+                              @if ( isset($packages_) && !empty($packages_) )
+                                @foreach ($packages_ as $pck)
+                                  <option value="{{ $pck->id }}">{{ Helper::localizations('package_types', 'name', $pck->id) }}</option>
+                                @endforeach
+                              @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory">التفعيل</label>
+                          <div class="radiorobo">
+                            <input name="activate" value="1" type="radio" id="rad_1" checked>
+                            <label for="rad_1">الكل</label>
+                          </div>
+                          <div class="radiorobo">
+                            <input name="activate" value="2" type="radio" id="rad_2">
+                            <label for="rad_2">المفعلين</label>
+                          </div>
+                          <div class="radiorobo">
+                            <input name="activate" value="3" type="radio" id="rad_3">
+                            <label for="rad_3">غير المفعلين</label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab3"><i class="fa fa-filter"></i>filters</a></div>
@@ -847,45 +856,57 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab4" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h2 id="modal1Title">فلتر</h2>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No">كود العميل</label>
-                        <input class="master_input" type="number" placeholder="الكود" id="ID_No"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="license_date">التاريخ</label>
-                        <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_date">
-                        </div><span class="master_message color--fadegreen">Message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory">حالة الدفع</label>
-                        <div class="radiorobo">
-                          <input type="radio" id="payment_all">
-                          <label for="payment_all">الكل</label>
-                        </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="payment_true">
-                          <label for="payment_true">تم دفعه</label>
-                        </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="payment_false">
-                          <label for="payment_false">لم يتم دفعه</label>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+
+                    <div>
+                      <h2 id="modal1Title">فلتر</h2>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="ID_No">كود العميل</label>
+                          <select name="code" class="master_input select2" id="lawyer_spec" data-placeholder="كود العميل" style="width:100%;" ,>
+                            <option value="-1" selected disabled hidden>اختر كود العميل</option>
+                            @if ( isset($installments_) && !empty($installments_) )
+                              @foreach ($installments_ as $ins)
+                                <option value="{{ $ins->subscription_id }}">{{ Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code }}</option>
+                              @endforeach
+                            @endif
+                        </select>
                         </div>
                       </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="license_date">التاريخ</label>
+                          <div class="bootstrap-timepicker">
+                            <input name="startDate" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_date">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory">حالة الدفع</label>
+                          <div class="radiorobo">
+                            <input name="activate1" value="1" type="radio" id="payment_all" checked>
+                            <label for="payment_all">الكل</label>
+                          </div>
+                          <div class="radiorobo">
+                            <input name="activate1" value="2" type="radio" id="payment_true">
+                            <label for="payment_true">تم دفعه</label>
+                          </div>
+                          <div class="radiorobo">
+                            <input name="activate1" value="3" type="radio" id="payment_false">
+                            <label for="payment_false">لم يتم دفعه</label>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab4"><i class="fa fa-filter"></i>filters</a></div>
@@ -1089,23 +1110,26 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab5" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h3 id="modal1Title">فلتر</h3>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="client_type"> نوع العميل</label>
-                        <select class="master_input select2" id="client_type" multiple="multiple" data-placeholder="نوع العميل" style="width:100%;" ,>
-                          <option>شركات</option>
-                          <option>افراد</option>
-                          <option>شركات-أفراد</option>
-                          <option>موبايل</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+                    <div>
+                      <h3 id="modal1Title">فلتر</h3>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="client_type"> نوع العميل</label>
+                            <select name="userType[]" class="master_input select2" id="client_type" multiple="multiple" data-placeholder="نوع العميل" style="width:100%;" ,>
+                              <option value="9">شركات</option>
+                              <option value="8">افراد</option>
+                              <option value="10">شركات-أفراد</option>
+                              <option value="7">موبايل</option>
+                            </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab5"><i class="fa fa-filter"></i>filters</a></div>
@@ -1302,50 +1326,53 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab6" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+
                   <div>
                     <h2 id="modal1Title">فلتر</h2>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="city">المدينة</label>
-                        <select class="master_input select2" id="city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option>مدينة 1</option>
-                          <option>مدينة 2</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
+                        <select name="cities[]" class="master_input select2" id="city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
+                            @if ( isset($cities) && !empty($cities) )
+                              @foreach ($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                              @endforeach
+                            @endif
+                        </select>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="gov"> المحافظة </label>
-                        <select class="master_input select2" id="gov" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
-                          <option>القاهرة</option>
-                          <option>الجيزة</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
+                        <select name="govs[]" class="master_input select2" id="gov" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
+                          @if ( isset($governorates) && !empty($governorates) )
+                            @foreach ($governorates as $gov)
+                              <option value="{{ $gov->id }}">{{ $gov->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="court">المحكمة </label>
-                        <select class="master_input select2" id="court" multiple="multiple" data-placeholder="المحكمة" style="width:100%;" ,>
-                          <option>محكمة شرق القاهرة</option>
-                          <option>محكمة غرب القاهرة</option>
-                          <option>محكمة جنوب القاهرة </option>
-                          <option>محكمة الجيزة</option>
-                        </select><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="circle">الدائرة</label>
-                        <select class="master_input select2" id="circle" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
-                          <option>دائرة العباسية</option>
-                          <option>دائرة الدقي</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="courts[]" class="master_input select2" id="court" multiple="multiple" data-placeholder="المحكمة" style="width:100%;" ,>
+                          @if ( isset($courts_) && !empty($courts_) )
+                            @foreach ($courts_ as $court)
+                              <option value="{{ $court->id }}">{{ $court->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="clearfix"></div>
                   <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                  <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab6"><i class="fa fa-filter"></i>filters</a></div>
@@ -1369,7 +1396,7 @@
                         <td><span class="cellcontent">{{ ($court->city) ? $court->city->name : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->city) ? (($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد') : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->name) ? $court->name : 'لا يوجد'}}</span></td>
-                        <td><span class="cellcontent">{{ ($court->cases) ? $court->cases->count() : 0 }}</span></td>
+                        <td><span class="cellcontent">{{ ($court->cases) ? $court->total : 0 }}</span></td>
                       </tr>
                       @endforeach
                   @endif
@@ -1541,52 +1568,42 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab7" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                  <div>
-                    <h2 id="modal1Title">فلتر</h2>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="task_type">نوع المهمة </label>
-                        <select class="master_input select2" id="task_type" multiple="multiple" data-placeholder="نوع المهمة " style="width:100%;" ,>
-                          <option>جلسة محكمة</option>
-                          <option>خدمة</option>
-                          <option>مهمة طارئة</option>
-                        </select><span class="master_message color--fadegreen">Message</span>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
+
+                    <div>
+                      <h2 id="modal1Title">فلتر</h2>
+                      <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="task_type">نوع المهمة </label>
+                          <select name="taskType[]" class="master_input select2" id="task_type" multiple="multiple" data-placeholder="نوع المهمة " style="width:100%;" ,>
+                            @if ( isset($tasks_) && !empty($tasks_) )
+                              @foreach ($tasks_ as $task)
+                                <option value="{{ $task->id }}">{{ Helper::localizations('task_types', 'name', $task->id) }}</option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="tasks_date_from">تاريخ من</label>
+                          <input name="dateFrom" class="datepicker master_input" type="text" placeholder="التاريخ من">
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="tasks_date_to">تاريخ الى</label>
+                          <input name="dateTo" class="datepicker master_input" type="text" placeholder="التاريخ الي">
+                        </div>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="govern">المحافظة</label>
-                        <select class="master_input select2" id="govern" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
-                          <option>المحافظة 1</option>
-                          <option>المحافظة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="city">المدينة</label>
-                        <select class="master_input select2" id="city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option>مدينة 1</option>
-                          <option>مدينة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="tasks_date_from">تاريخ من</label>
-                        <input class="master_input" type="date" placeholder="من" id="tasks_date_from"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="tasks_date_to">تاريخ الى</label>
-                        <input class="master_input" type="date" placeholder=" الى" id="tasks_date_to"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                    <div class="clearfix"></div>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
+
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab7"><i class="fa fa-filter"></i>filters</a></div>
@@ -1605,8 +1622,8 @@
                       @foreach ($tasks as $task)
                       <tr>
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                        <td><span class="cellcontent">{{ ($task->name) ? $task->name : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ ($task->task_type_id) ? Helper::countTasks($task->task_type_id) : 0 }}</span></td>
+                        <td><span class="cellcontent">{{ ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ ($task->tasks) ? $task->tasks->count() : 0 }}</span></td>
                       </tr>
                       @endforeach
                   @endif
@@ -1779,39 +1796,52 @@
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filtertab8" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+
+                  <form action="{{ route('report.filter') }}" method="POST">
+                    {{ csrf_field() }}
                   <div>
                     <h2 id="modal1Title">فلتر</h2>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="case_govern">المحافظة</label>
-                        <select class="master_input select2" id="case_govern" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
-                          <option>المحافظة 1</option>
-                          <option>المحافظة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="govs1[]" class="master_input select2" id="case_govern" multiple="multiple" data-placeholder="المحافظة" style="width:100%;" ,>
+                          @if ( isset($governorates) && !empty($governorates) )
+                            @foreach ($governorates as $gov)
+                              <option value="{{ $gov->id }}">{{ $gov->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="case_city">المدينة</label>
-                        <select class="master_input select2" id="case_city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option>مدينة 1</option>
-                          <option>مدينة 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                        <select name="cities1[]" class="master_input select2" id="case_city" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
+                          @if ( isset($cities) && !empty($cities) )
+                            @foreach ($cities as $city)
+                              <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="case_type">نوع القضية</label>
-                        <select class="master_input select2" id="case_type" multiple="multiple" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option>نوع 1</option>
-                          <option>نوع 2</option>
-                        </select><span class="master_message color--fadegreen">message</span>
+                          <select name="caseType[]" class="master_input select2" id="case_type" multiple="multiple" data-placeholder="نوع القضية" style="width:100%;" ,>
+                          @if ( isset($caseTypes) && !empty($caseTypes) )
+                            @foreach ($caseTypes as $type)
+                              <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                          @endif
+                        </select>
                       </div>
                     </div>
                   </div>
                   <div class="clearfix"></div>
                   <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                  <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                  <button type="submit" class="remodal-confirm">فلتر</button>
+                  </form>
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab8"><i class="fa fa-filter"></i>filters</a></div>
@@ -1828,14 +1858,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if (isset($cases) && !empty($cases))
-                    @foreach ($cases as $case)
+                  @if (isset($cases1) && !empty($cases1))
+                    @foreach ($cases1 as $case)
                     <tr data-case="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
-                        <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ $case->cities->governorate->name }}</span></td>
-                        <td><span class="cellcontent">{{ $case->cities->name }}</span></td>
-                        <td><span class="cellcontent">{{ Helper::countCases($case->cities->id, $case->cities->governorate->id) }}</span></td>
+                        <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name  : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ $case->governorates ? $case->governorates->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ $case->cities ? $case->cities->name : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ Helper::countCases($case->case_type_id, $case->cities->id, $case->governorates->id) }}</span></td>
                     </tr>
                     @endforeach
                   @endif

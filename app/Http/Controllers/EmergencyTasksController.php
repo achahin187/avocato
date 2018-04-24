@@ -142,7 +142,7 @@ class EmergencyTasksController extends Controller
 
               });  
              }
-      });
+      })->get();
       return view('tasks.assign_emergency_task',$data);
       // dd($data['lawyers']);
     }

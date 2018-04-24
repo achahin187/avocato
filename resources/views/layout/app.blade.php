@@ -763,6 +763,8 @@ if (currentIndex === 5) { //if last step
       });
     </script>
     <script type="text/javascript"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
     @yield('js')
   </body>
   </html>

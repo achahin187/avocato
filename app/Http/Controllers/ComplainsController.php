@@ -90,6 +90,7 @@ class ComplainsController extends Controller
 
             // feedback table
             $feedback->is_replied = 1;  // is_replied = true
+            $to = Helper::getUserDetails($feedback->user_id)->email;
             $feedback->save();
 
             // feedback_replies table
