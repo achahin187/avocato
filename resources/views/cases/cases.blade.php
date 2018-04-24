@@ -32,7 +32,7 @@
                           <div class="full-table">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_cases" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                 <form action="{{URL('filter_')}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <form action="{{route('filter_cases')}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
@@ -41,9 +41,9 @@
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_type"> نوع القضية </label>
                                       <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
-                                        <option>جنايات</option>
-                                        <option>جنح</option>
-                                        <option>رشوة</option>
+                                        @foreach($types as $type)
+                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                       </select><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
@@ -51,11 +51,11 @@
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="court_name">المحكمة </label>
                                       <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
-                                        <option>محكمة شرق القاهرة</option>
-                                        <option>محكمة غرب القاهرة</option>
-                                        <option>محكمة جنوب القاهرة </option>
-                                        <option>محكمة الجيزة</option>
-                                      </select><span class="master_message color--fadegreen">message</span>
+                                        @foreach($courts as $court)
+                                        <option value="{{$court->id}}">{{$court->name}}</option>
+                                        @endforeach
+                                      </select> 
+                                      <span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
@@ -68,20 +68,20 @@
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="year_from">من سنة</label>
-                                      <input class="master_input" type="number" placeholder="من سنة" id="year_from"><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input" type="number" placeholder="من سنة" id="year_from" name="year_from"><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="year_to">حتى سنة</label>
-                                      <input class="master_input" type="number" placeholder="حتى سنة" id="year_to"><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input" type="number" placeholder="حتى سنة" id="year_to" name="year_to"><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_date_from">تاريخ قيد الدعوى من</label>
                                       <div class="bootstrap-timepicker">
-                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى من" id="case_date_from">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى من" id="case_date_from" name="case_date_from">
                                       </div><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
@@ -89,20 +89,21 @@
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_date_to">تاريخ قيد الدعوى الى</label>
                                       <div class="bootstrap-timepicker">
-                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى الى" id="case_date_to">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى الى" id="case_date_to" name="case_date_to">
                                       </div><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                                <button class="remodal-confirm" type="submit">فلتر</button>
+                              </form>
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_cases"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel_1();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                             </div>
-                            <table class="table-1" id="dataTableTriggerId_001">
+                            <table class="table-1 cases_1" id="dataTableTriggerId_001" >
                               <thead>
                                 <tr class="bgcolor--gray_mm color--gray_d" >
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -299,56 +300,56 @@
                           <div class="full-table">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_archive" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              <form action="{{route('filter_cases')}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
                                   <h2 id="modal1Title">فلتر</h2>
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_type"> نوع القضية </label>
-                                      <select class="master_input select2" id="case_type" style="width:100%;">
-                                        <option>جنايات</option>
-                                        <option>جنح</option>
-                                        <option>رشوة</option>
+                                      <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
+                                        @foreach($types as $type)
+                                        <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                       </select><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="court_name">المحكمة </label>
-                                      <select class="master_input select2" id="court_name" style="width:100%;">
-                                        <option>محكمة شرق القاهرة</option>
-                                        <option>محكمة غرب القاهرة</option>
-                                        <option>محكمة جنوب القاهرة </option>
-                                        <option>محكمة الجيزة</option>
-                                      </select><span class="master_message color--fadegreen">message</span>
+                                      <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
+                                        @foreach($courts as $court)
+                                        <option value="{{$court->id}}">{{$court->name}}</option>
+                                        @endforeach
+                                      </select> 
+                                      <span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="circle">الدائرة</label>
-                                      <select class="master_input select2" id="circle" style="width:100%;">
-                                        <option>دائرة العباسية</option>
-                                        <option>دائرة الدقي</option>
-                                      </select><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input " id="circle" name="circle" style="width:100%;">
+                                      <span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="year_from">من سنة</label>
-                                      <input class="master_input" type="number" placeholder="من سنة" id="year_from"><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input" type="number" placeholder="من سنة" id="year_from" name="year_from"><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="year_to">حتى سنة</label>
-                                      <input class="master_input" type="number" placeholder="حتى سنة" id="year_to"><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input" type="number" placeholder="حتى سنة" id="year_to" name="year_to"><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_date_from">تاريخ قيد الدعوى من</label>
                                       <div class="bootstrap-timepicker">
-                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى من" id="case_date_from">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى من" id="case_date_from" name="case_date_from">
                                       </div><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
@@ -356,20 +357,21 @@
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_date_to">تاريخ قيد الدعوى الى</label>
                                       <div class="bootstrap-timepicker">
-                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى الى" id="case_date_to">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى الى" id="case_date_to" name="case_date_to">
                                       </div><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                                <button class="remodal-confirm" type="submit">فلتر</button>
+                              </form>
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_archive"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel_2();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                             </div>
-                            <table class="table-1" id="dataTableTriggerId_001">
+                            <table class="table-1 cases_2" id="dataTableTriggerId_001">
                               <thead>
                                 <tr class="bgcolor--gray_mm color--gray_d">
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -571,7 +573,18 @@
               <!-- =============== PAGE VENDOR Triggers ===============-->
                        @endsection
                        @section('js')
+
                         <script>
+        function exportExcel_1() {
+                              alasql('SELECT * INTO XLSX("cases.xlsx",{headers:true}) \
+                                          FROM HTML(".cases_1",{headers:true})');
+                              
+                          }
+     function exportExcel_2() {
+                              alasql('SELECT * INTO XLSX("cases.xlsx",{headers:true}) \
+                                          FROM HTML(".cases_2",{headers:true})');
+                              
+                          }
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){

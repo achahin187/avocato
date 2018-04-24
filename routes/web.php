@@ -176,7 +176,7 @@ Route::post('/legal_consultation_filter', 'LegalConsultationsController@consulta
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 
-Route::middleware(['super_admin','admin','data_entry'])->group(function () {
+// Route::middleware(['super_admin','admin','data_entry'])->group(function () {
 
 Route::get('/cases', 'CasesController@index')->name('cases');
 Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
@@ -195,8 +195,9 @@ Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_recor
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
 
-});
+// });
 
 
 Route::middleware(['super_admin','admin','data_entry'])->group(function () {
@@ -240,7 +241,7 @@ Route::post('/session_filter', 'TasksController@filter')->name('session_filter')
 
 
 
-Route::middleware(['super_admin','admin','call_center'])->group(function () {
+// Route::middleware(['super_admin','admin','call_center'])->group(function () {
 
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
@@ -253,7 +254,7 @@ Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assi
 Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
 Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
 
-});
+// });
 
 
 
