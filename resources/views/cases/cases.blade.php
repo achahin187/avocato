@@ -32,13 +32,15 @@
                           <div class="full-table">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_cases" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                 <form action="{{URL('filter_')}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
                                   <h2 id="modal1Title">فلتر</h2>
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="case_type"> نوع القضية </label>
-                                      <select class="master_input select2" id="case_type" style="width:100%;">
+                                      <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
                                         <option>جنايات</option>
                                         <option>جنح</option>
                                         <option>رشوة</option>
@@ -48,7 +50,7 @@
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="court_name">المحكمة </label>
-                                      <select class="master_input select2" id="court_name" style="width:100%;">
+                                      <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
                                         <option>محكمة شرق القاهرة</option>
                                         <option>محكمة غرب القاهرة</option>
                                         <option>محكمة جنوب القاهرة </option>
@@ -59,10 +61,8 @@
                                   <div class="col-md-4">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="circle">الدائرة</label>
-                                      <select class="master_input select2" id="circle" style="width:100%;">
-                                        <option>دائرة العباسية</option>
-                                        <option>دائرة الدقي</option>
-                                      </select><span class="master_message color--fadegreen">message</span>
+                                      <input class="master_input " id="circle" name="circle" style="width:100%;">
+                                      <span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-6">
