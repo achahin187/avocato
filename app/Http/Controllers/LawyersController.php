@@ -329,7 +329,7 @@ class LawyersController extends Controller
       $date = date('Y-m-d H:i:s',strtotime($request->date));
       $lawyer = Users::find($id);
       $lawyer->rate()->attach(\Auth::user()->id, ['notes' => $request->notes,'created_at'=>$date,'rate_id'=>$request->rate]);
-      return route('lawyers_show',$id);
+      return redirect()->route('lawyers_show',$id);
 
 
     }
