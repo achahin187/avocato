@@ -89,9 +89,9 @@
                                           11:00:00AM</span></a></li>
                                         </ul>
                                       </li>
-                                       <li><a class="color--gray_d" href="{{route('logout')}}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a></li>
-                                       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                      <li><a class="color--gray_d" href="{{route('logout')}}" onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();"><i class="fa fa-sign-out"></i></a></li>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}
                                       </form>
                                     </ul>
@@ -115,8 +115,10 @@
                                   <div class="text-center"><a href="user_profile.html"><img class="coverglobal__avatar bradius--circle" @if (\Auth::check())src="{{asset(''.\Auth::user()->image)}}" @endif>
                                     <h3 class="coverglobal__title color--gray_d">{{\Auth::user()->name}}</h3><small class="coverglobal__slogan color--gray_d"></small></a></div>
                                   </div>
+
                                   <div class="side">
                                     <ul class="side-menu">
+                        @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3)
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">البيانات الأساسية</a>
                                         <ul class="side__submenu">
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('issues_types')}}">انواع القضايا</a></li>
@@ -127,39 +129,91 @@
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('about')}}">عن جسر الأمان</a></li>
                                         </ul>
                                       </li>
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('formulas')}}">العقود و الصيغ</a>
                                       </li>
+                                      
+                                      @endif
+
+                        @if(auth()->user()->getRole()==1)
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('users_list')}}">المستخدمين</a>
                                       </li>
+                                      
+                                      @endif
+                              @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('news_list')}}">الاخبار</a>
                                       </li>
+                                      
+                                      @endif
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">العملاء</a>
                                         <ul class="side__submenu">
+                      @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('clients')}}">محتوى</a></li>
+                                      
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('notifications')}}">التنبيهات</a></li>
+                                      
+                                      @endif
+                            @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3 or auth()->user()->getRole()==4)
+                                      
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('complains')}}">الشكاوى و الاستفسارات</a></li>
+                                      
+                                      @endif
                                         </ul>
                                       </li>
+                        @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3)
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('lawyers')}}">السادة المحامين</a>
                                       </li>
+                                      
+                                      @endif
+                      @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('legal_consultations')}}">الاستشارات القانونية</a>
                                       </li>
+                                      
+                                      @endif
+                              @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3)
+                                      
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">القضايا و الخدمات</a>
                                         <ul class="side__submenu">
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('cases')}}">القضايا</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('services')}}">الخدمات</a></li>
                                         </ul>
                                       </li>
+                                      
+                                      @endif
+                          @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==4)
+                                      
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">المهام</a>
                                         <ul class="side__submenu">
+                                      
+                                      @endif
+                            @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
+                                      
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('tasks_normal')}}">المهام العادية</a></li>
+                                      
+                                      @endif
+                        @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==4)
+                                      
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('tasks_emergency')}}">الحالات الطارئة</a></li>
+                                      
+                                      @endif
                                         </ul>
                                       </li>
+                              @if(auth()->user()->getRole()==1)
+                                      
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('reports_statistics')}}">تقارير و احصائيات</a>
                                       </li>
+                                      
+                                      @endif
+                                      @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3 or auth()->user()->getRole()==4)
+
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('records')}}">دفتر المحضرين</a>
                                       </li>
+                                      
+                                      @endif
                                     </ul>
                                   </div>
                                 </nav>
@@ -344,46 +398,46 @@ if (currentIndex === 5) { //if last step
         });
 
       
-    </script> --}}
-    <script type="text/javascript">
-      $(document).ready(function(){
-        "use strict";
+      </script> --}}
+      <script type="text/javascript">
+        $(document).ready(function(){
+          "use strict";
 
-        $('.btn-message').click(function(){
-          swal("Here's a message!");
-        });
-
-        $('.btn-title-text').click(function(){
-          swal("Here's a message!", "It's pretty, isn't it?")
-        });
-
-        $('.btn-timer').click(function(){
-          swal({
-            title: "Auto close alert!",
-            text: "I will close in 2 seconds.",
-            timer: 2000,
-            showConfirmButton: false
+          $('.btn-message').click(function(){
+            swal("Here's a message!");
           });
-        });
 
-        $('.btn-success').click(function(){
-          swal("Good job!", "You clicked the button!", "success");
-        });
-
-        $('.btn-warning-confirm').click(function(){
-          swal({
-            title: "هل أنت متأكد؟",
-            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#4f5c6b',
-            confirmButtonText: 'نعم متأكد',
-            closeOnConfirm: false
-          },
-          function(){
-            swal("تم الحذف!", "تم الحذف بنجاح", "success");
+          $('.btn-title-text').click(function(){
+            swal("Here's a message!", "It's pretty, isn't it?")
           });
-        });
+
+          $('.btn-timer').click(function(){
+            swal({
+              title: "Auto close alert!",
+              text: "I will close in 2 seconds.",
+              timer: 2000,
+              showConfirmButton: false
+            });
+          });
+
+          $('.btn-success').click(function(){
+            swal("Good job!", "You clicked the button!", "success");
+          });
+
+          $('.btn-warning-confirm').click(function(){
+            swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#4f5c6b',
+              confirmButtonText: 'نعم متأكد',
+              closeOnConfirm: false
+            },
+            function(){
+              swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            });
+          });
 
         // $('.btn-warning-cancel').click(function(){
         //   swal({
@@ -471,7 +525,7 @@ if (currentIndex === 5) { //if last step
         });
 
       });
-      
+
     </script>
     <script type="text/javascript">
       $.fn.stars = function () {
@@ -595,7 +649,7 @@ if (currentIndex === 5) { //if last step
 
 
           //-trigger check all 
-        $('#dataTableTriggerId_001 #select-all').on('click', function(){
+          $('#dataTableTriggerId_001 #select-all').on('click', function(){
           // Check/uncheck all checkboxes in the table
           var rows = datatable_one.rows().nodes();
           $('input.input-in-table' , rows).prop('checked', this.checked);
@@ -622,15 +676,15 @@ if (currentIndex === 5) { //if last step
             }
           });
            //-trigger check all 
-        $('#dataTableTriggerId_001 #select-all').on('click', function(){
+           $('#dataTableTriggerId_001 #select-all').on('click', function(){
           // Check/uncheck all checkboxes in the table
           var rows = datatable_one.rows().nodes();
           $('input.input-in-table' , rows).prop('checked', this.checked);
         });
-        }
+         }
 
 
-        $('.table-2').DataTable({
+         $('.table-2').DataTable({
           "paging": true,
           "lengthChange": false,
           "searching": false,
@@ -639,7 +693,7 @@ if (currentIndex === 5) { //if last step
           "autoWidth": false
         });
 
-        $(".full-table").each(function() {
+         $(".full-table").each(function() {
           $(this).find(".filter__btns").appendTo($(this).find(".filter__btns_cont"));
           $(this).find(".sortingr__btns").appendTo($(this).find(".sortingr__btns_cont"));
           $(this).find(".bottomActions__btns").appendTo($(this).find(".tableActions__btns_cont"));
@@ -648,10 +702,10 @@ if (currentIndex === 5) { //if last step
 
         });
 
-      });
+       });
       
-    </script>
-    <script type="text/javascript">
+     </script>
+     <script type="text/javascript">
       $(function () {
         $('.date_range_picker').daterangepicker();
         $('.date_time_range_picker').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});

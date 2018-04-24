@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class call_center
+class roles
 {
     /**
      * Handle an incoming request.
@@ -13,15 +13,19 @@ class call_center
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next,...$roles)
     {
         foreach(auth()->user()->rules as $rule)
         {
-        if($rule->pivot->rule_id==4){
-        return $next($request);
+
+            foreach($roles as $role)
+            {
+                if($rule->pivot->rule_id==$role){
+                    return $next($request);
+                }
             }
+
         }
         return abort(404);
     }
-
 }
