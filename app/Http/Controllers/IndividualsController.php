@@ -257,10 +257,10 @@ class IndividualsController extends Controller
     public function edit($id)
     {   
         $user = Users::find($id);
-        $password = $user->client_password->password;
+        $password = $user->client_password ? $user->client_password->password : $user->password;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();  
-        $installments = Installment::where('subscription_id', $user->subscription->id)->get();
+        $installments = $user->subscription ? Installment::where('subscription_id', $user->subscription->id)->get() : 0;
 
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
