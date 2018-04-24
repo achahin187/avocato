@@ -869,7 +869,7 @@
                             <option value="-1" selected disabled hidden>اختر كود العميل</option>
                             @if ( isset($installments_) && !empty($installments_) )
                               @foreach ($installments_ as $ins)
-                                <option value="{{ $ins->subscription_id }}">{{ Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code }}</option>
+                                <option value="{{ $ins->subscription_id }}">{{ $ins->subscription ? Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد' }}</option>
                               @endforeach
                             @endif
                         </select>
@@ -1153,7 +1153,7 @@
                             <td><span class="cellcontent">{{ ($urgent->code) ? $urgent->code : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($urgent->full_name) ? $urgent->full_name : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($urgent->rules) ? $urgent->rules->last()->name_ar : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($urgent->tasks) ? $urgent->tasks->count() : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($urgent->tasks) ? Helper::countTasks($urgent->id, [1]) : 'لا يوجد' }}</span></td>
                           </tr>
                         @endforeach
                     @endif
