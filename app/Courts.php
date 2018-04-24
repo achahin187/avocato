@@ -12,7 +12,7 @@ class Courts extends Model
 
     public function city()
     {
-        return $this->belongsTo('App\Geo_Cities','city_id');
+        return $this->belongsTo('App\Geo_Cities','city_id')->withDefault();
     }
 
     public function cases()

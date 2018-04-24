@@ -42,7 +42,8 @@ class CourtsListController extends Controller
         public function excel()
     {   
         $filepath ='public/excel/';
-        $PathForJson='storage/excel/';
+        // $PathForJson='storage/excel/';
+        $PathForJson=storage_path('app/public/excel');
         $filename = 'courts'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];

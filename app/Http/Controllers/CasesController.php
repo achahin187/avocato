@@ -440,7 +440,7 @@ if($request->hasFile('docs_upload')){
        }
          // dd($request->all());
         // return $this->create();
-       return redirect()->route('case_view',$case->id);
+       return redirect()->route('cases')->with('success','تم إضافه قضيه جديده بنجاح');
     }
     function lawyers_filter(Request $request)
     {

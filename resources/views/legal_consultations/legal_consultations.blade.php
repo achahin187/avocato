@@ -110,6 +110,11 @@ else
                   </div>
                 </div>
                 <div class="col-lg-12">
+                   @if(\session('success'))
+                    <div class="alert alert-success">
+                      {{\session('success')}}
+                    </div>
+                    @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg">
@@ -384,6 +389,12 @@ else
  @endsection
   
  <script type="text/javascript">
+
+window.setTimeout(function() {
+           $(".alert").fadeTo(500, 0).slideUp(500, function(){
+               $(this).remove();
+           });
+       }, 4000);
 
   function exportExcel() {
         alasql('SELECT * INTO XLSX("consultations.xlsx",{headers:true}) \

@@ -20,6 +20,11 @@
                   </div>
                 </div>
                 <div class="col-lg-12">
+                      @if(\session('success'))
+                    <div class="alert alert-success">
+                      {{\session('success')}}
+                    </div>
+                    @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="tabs--wrapper">
                       <div class="clearfix"></div>
@@ -575,6 +580,11 @@
                        @section('js')
 
                         <script>
+                          window.setTimeout(function() {
+           $(".alert").fadeTo(500, 0).slideUp(500, function(){
+               $(this).remove();
+           });
+       }, 4000);
         function exportExcel_1() {
                               alasql('SELECT * INTO XLSX("cases.xlsx",{headers:true}) \
                                           FROM HTML(".cases_1",{headers:true})');

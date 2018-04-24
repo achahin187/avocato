@@ -39,7 +39,10 @@ public  function collection()
         $q->where('rule_id',[5]);
     })->get();
     foreach($lawyers as $lawyer){
+        if(isset($lawyer->user_detail))
         $lawyer['nationality'] = Helper::localizations('geo_countires','nationality',$lawyer->user_detail->nationality_id);
+    else
+        $lawyer['nationality']='';
         if($lawyer->is_active)
         {
             $is_active='فعال';
