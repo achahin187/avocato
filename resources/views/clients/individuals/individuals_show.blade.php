@@ -61,29 +61,31 @@
             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
               <div class="row">
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد </b>
-                  <div class="col-xs-9">@isset($user->subscription->start_date)
-                    {{$user->subscription->start_date->format("Y - m - d")}} @endisset</div>
+                  <div class="col-xs-9">
+                    {{ $user->subscription ? $user->subscription->start_date->format("Y - m - d")  : 'لا يوجد' }} </div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
-                  <div class="col-xs-9">{{$user->subscription->duration}}</div>
+                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->duration  : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
-                  <div class="col-xs-9">{{$user->subscription->value}}</div>
+                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                  <div class="col-xs-9">@isset($user->subscription->end_date){{$user->subscription->end_date->format("Y - m - d ")}}@endisset</div>
+                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
                   <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
                     @foreach($packages as $package)
-                    @if($package->item_id == $user->subscription->package_type_id)
-                    {{$package->value}}
-                    @endif
+                      @if($user->subscription)
+                        @if($package->item_id == $user->subscription->package_type_id)
+                          {{$package->value}}
+                        @endif
+                      @endif
                     @endforeach
                   </span></div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط </b>
-                  <div class="col-xs-9">{{$user->subscription->number_of_installments}}</div>
+                  <div class="col-xs-9">{{$user->subscription ? $user->subscription->number_of_installments : 'لا يوجد' }}</div>
                 </div>
               </div>
               <div class="col-lg-12">
@@ -98,6 +100,7 @@
                     </tr>
                   </thead>
                   <tbody>
+                    @if($user->subscription)
                     @foreach($user->subscription->installments as $installment)
                     <tr>
                       <td><span class="cellcontent">{{$installment->installment_number}}</span></td>
@@ -109,11 +112,13 @@
                    
                       <div class="clearfix"> </div>
                       @endforeach
+                      @endif
                     </tbody>
                   </table>
-                
- @foreach($user->subscription->installments as $installment)
- <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
+             
+                  @if($user->subscription)
+                  @foreach($user->subscription->installments as $installment)
+                  <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <form role="form" action="{{route('ind.ins_update',$installment->id)}}" method="post" accept-charset="utf-8">
@@ -153,6 +158,7 @@
                         </div>
                       </div>
 @endforeach
+@endif
                 </div>
               </div>
             </li>
