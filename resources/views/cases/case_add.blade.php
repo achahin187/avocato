@@ -45,7 +45,11 @@
                               <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
                             @endforeach
                               
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                               @if ($errors->has('client_code'))
+                                    {{ $errors->first('client_code')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
@@ -75,7 +79,11 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="authorization_num_0">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]"><span class="master_message color--fadegreen">
+                               @if ($errors->has('authorization_num'))
+                                    {{ $errors->first('authorization_num')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-9 col-sm-6 col-xs-12">
@@ -102,7 +110,11 @@
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_name">اسم الخصم</label>
-                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name"><span class="master_message color--fadegreen">
+                              @if ($errors->has('enemy_name'))
+                                    {{ $errors->first('enemy_name')}}
+                                    @endif
+                             </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
@@ -112,19 +124,31 @@
                               @foreach($roles as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message content</span>
+                            </select><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_type'))
+                                    {{ $errors->first('enemy_type')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
-                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer"><span class="master_message color--fadegreen">بعض النص </span>
+                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer"><span class="master_message color--fadegreen">
+                              @if ($errors->has('enemy_lawyer'))
+                                    {{ $errors->first('enemy_lawyer')}}
+                                    @endif
+                             </span>
                           </div>
                         </div>
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_address">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address"><span class="master_message color--fadegreen" >بعض النص </span>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address"><span class="master_message color--fadegreen" >
+                              @if ($errors->has('enemy_address'))
+                                    {{ $errors->first('enemy_address')}}
+                                    @endif
+                             </span>
                           </div>
                         </div>
                         <div class="clearfix"></div>
@@ -137,7 +161,11 @@
                           <div class="col-xs-4">
                             <div class="master_field">
                               <label class="master_label" for="investigation_no">رقم المحضر</label>
-                              <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
+                              <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">
+                                @if ($errors->has('investigation_no'))
+                                    {{ $errors->first('investigation_no')}}
+                                    @endif
+                              </span>
                             </div>
                           </div>
                           <div class="col-xs-4">
@@ -147,7 +175,11 @@
                                 @foreach($cases_record_types as $type)
                                 <option value="{{$type->id}}">{{$type->name_ar}}</option>
                                 @endforeach
-                              </select><span class="master_message color--fadegreen">message</span>
+                              </select><span class="master_message color--fadegreen">
+                                @if ($errors->has('investigation_type'))
+                                    {{ $errors->first('investigation_type')}}
+                                    @endif
+                              </span>
                             </div>
                           </div>
                           <div class="col-md-4 col-sm-6 col-xs-12">
@@ -155,7 +187,11 @@
                               <label class="master_label mandatory">تاريخ</label>
                               <div class="bootstrap-timepicker">
                                 <input class="datepicker master_input" type="text" placeholder="تاريخ المحضر" id="investigation_date" name="investigation_date">
-                              </div><span class="master_message color--fadegreen">message content</span>
+                              </div><span class="master_message color--fadegreen">
+                                @if ($errors->has('investigation_date'))
+                                    {{ $errors->first('investigation_date')}}
+                                    @endif
+                              </span>
                             </div>
                           </div>
                           <div class="col-md-12">
@@ -179,19 +215,31 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
-                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num"><span class="master_message color--fadegreen">
+                              @if ($errors->has('folder_num'))
+                                    {{ $errors->first('folder_num')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num"><span class="master_message color--fadegreen">
+                               @if ($errors->has('claim_num'))
+                                    {{ $errors->first('claim_num')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">
+                               @if ($errors->has('case_fees'))
+                                    {{ $errors->first('case_fees')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -201,7 +249,11 @@
                               @foreach($cases_types as $type)
                               <option value="{{$type->id}}">{{$type->name}}</option>
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                               @if ($errors->has('case_type'))
+                                    {{ $errors->first('case_type')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -211,7 +263,11 @@
                               @foreach($courts as $court)
                               <option value="{{$court->id}}">{{$court->name}}</option>
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('court_name'))
+                                    {{ $errors->first('court_name')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -221,7 +277,11 @@
                              @foreach($governorates as $governorate)
                               <option value="{{$governorate->id}}">{{$governorate->name}}</option>
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                               @if ($errors->has('governorate'))
+                                    {{ $errors->first('governorate')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -231,20 +291,32 @@
                               @foreach($cities as $city)
                               <option value="{{$city->id}}">{{$city->name}}</option>
                               @endforeach
-                            </select><span class="master_message color--fadegreen">message</span>
+                            </select><span class="master_message color--fadegreen">
+                              @if ($errors->has('city'))
+                                    {{ $errors->first('city')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="circle">الدائرة</label>
                             <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" >
-                              <span class="master_message color--fadegreen">message</span>
+                              <span class="master_message color--fadegreen">
+                                @if ($errors->has('circle'))
+                                    {{ $errors->first('circle')}}
+                                    @endif
+                              </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_year">السنة</label>
-                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year"><span class="master_message color--fadegreen">
+                               @if ($errors->has('case_year'))
+                                    {{ $errors->first('case_year')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -252,19 +324,31 @@
                             <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
                             <div class="bootstrap-timepicker">
                               <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date">
-                            </div><span class="master_message color--fadegreen">message</span>
+                            </div><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_date'))
+                                    {{ $errors->first('case_date')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
-                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang"><span class="master_message color--fadegreen">message</span>
+                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang"><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_dateRang'))
+                                    {{ $errors->first('case_dateRang')}}
+                                    @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
-                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_fees'))
+                                    {{ $errors->first('case_fees')}}
+                                    @endif
+                                  </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -281,7 +365,10 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="subject">الموضوع</label>
-                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject"><span class="master_message color--fadegreen">@if ($errors->has('subject'))
+                                    {{ $errors->first('subject')}}
+                                    @endif
+                                  </span>
                           </div>
                         </div>
                         <div class="col-xs-12">
@@ -383,13 +470,13 @@
                             
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
                             @if($lawyer->is_active)
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             @else

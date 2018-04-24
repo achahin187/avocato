@@ -12,6 +12,7 @@ use App\FeedbackReply;
 
 use Illuminate\Http\Request;
 
+
 class ComplainsController extends Controller
 {
     /**
@@ -77,6 +78,8 @@ class ComplainsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        // dd($mail);
         $this->validate($request, [
             'newReply'  => 'required'
         ]);
@@ -96,6 +99,13 @@ class ComplainsController extends Controller
             $feedbackReply->created_at = \Carbon\Carbon::now()->toDateTimeString();
             $feedbackReply->created_by = Auth::user()->id;
             $feedbackReply->save();
+            $to = Helper::getUserDetails($feedback->user_id)->email;
+        // dd($to);
+            if($to != '')
+            {
+               $mail=Helper::mail($to,$request->newReply); 
+            }
+        
 
         } catch ( Exception $ex ) {
             Session::flash('warning', 'حدث خطأ ما عند الرد علي هذاه الشكوي, برجاء المحاولة مرة اخري');

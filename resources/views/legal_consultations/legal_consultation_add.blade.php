@@ -34,7 +34,11 @@
                           @foreach($consultation_types as $type)
                           <option value="{{$type->name}}">{{$type->name}}</option>
                           @endforeach
-                        </select><span class="master_message color--fadegreen">message content</span>
+                        </select><span class="master_message color--fadegreen">
+                          @if ($errors->has('consultation_cat'))
+                                    {{ $errors->first('consultation_cat')}}
+                                    @endif
+                                  </span>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -46,19 +50,31 @@
                        
                           <input type="radio" id="rad_2" name="consultation_type" value="1">
                           <label for="rad_2">مدفوع</label>
-                        </div><span class="master_message color--fadegreen">message</span>
+                        </div><span class="master_message color--fadegreen">
+                           @if ($errors->has('consultation_type'))
+                                    {{ $errors->first('consultation_type')}}
+                                    @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_question">نص السؤال</label>
-                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question"><span class="master_message color--fadegreen">يجب ادخال  نص السؤال</span>
+                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question"><span class="master_message color--fadegreen">
+                           @if ($errors->has('consultation_question'))
+                                    {{ $errors->first('consultation_question')}}
+                                    @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_answer">نص الاجابة</label>
-                        <textarea class="master_input" name="consultation_answer" id="consultation_answer" placeholder="نص الاجابة "></textarea><span class="master_message color--fadegreen">message</span>
+                        <textarea class="master_input" name="consultation_answer" id="consultation_answer" placeholder="نص الاجابة "></textarea><span class="master_message color--fadegreen"> 
+                          @if ($errors->has('consultation_answer'))
+                                    {{ $errors->first('consultation_answer')}}
+                                    @endif
+                                  </span>
                       </div>
                     </div>
                     <div class="clearfix"></div>

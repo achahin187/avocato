@@ -19,7 +19,18 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-12">
+                   @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
+                @if ($errors->has('lawyer'))
+                <div class="alert alert-danger">
+                {{ $errors->first('lawyer')}}
+                </div>
+                @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg">
@@ -100,7 +111,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
@@ -377,6 +388,11 @@
  @endsection
  @section('js')
                         <script>
+                           function exportExcel() {
+        alasql('SELECT * INTO XLSX("emergency_tasks.xlsx",{headers:true}) \
+                    FROM HTML("#dataTableTriggerId_001",{headers:true})');
+        
+    }
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){

@@ -38,6 +38,7 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Users','assigned_lawyer_id')->withDefault();
     }
+    
 
     public function who_assign_lawyer()
     {
@@ -51,7 +52,7 @@ class Tasks extends Model
     
     public function case()
     {
-        return $this->belongsTo('App\Case_', 'case_id');
+        return $this->belongsTo('App\Case_', 'case_id')->withDefault();
     }
 
     public function techinical_reports_emergency()

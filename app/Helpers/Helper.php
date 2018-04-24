@@ -6,6 +6,7 @@ use App\Entities;
 use App\Users;
 use App\Case_;
 use App\Tasks;
+use Illuminate\Support\Facades\Mail;
 
 class Helper {
 
@@ -162,5 +163,13 @@ class Helper {
 
     public static function countCaseType($taskId) {
         return Case_::where('case_type_id', $taskId)->count();
+    }
+
+      public static function mail($email ,$body ){
+        Mail::raw('New Feedback   is ('.$body.' )', function($msg) use($email){ 
+            $msg->to([$email])->subject('SecureBridge'); 
+            $msg->from(['pentavalue.securebridge@gmail.com']); 
+
+          });
     }
 }

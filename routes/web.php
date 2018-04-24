@@ -176,6 +176,8 @@ Route::post('/legal_consultation_filter', 'LegalConsultationsController@consulta
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 
+// Route::middleware(['super_admin','admin','data_entry'])->group(function () {
+
 Route::get('/cases', 'CasesController@index')->name('cases');
 Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
 Route::get('/case_archive_view/{id}', 'CasesController@archive_show')->name('case_archive_view');
@@ -193,8 +195,12 @@ Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_recor
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
+
+// });
 
 
+Route::middleware(['super_admin','admin','data_entry'])->group(function () {
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
@@ -219,6 +225,11 @@ Route::get('/services_lawyer_task/{id}', 'ServicesController@lawyer_task')->name
 Route::post('/services_lawyer_assign/{id}', 'ServicesController@assign')->name('services_lawyer_assign');
 Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')->name('services_lawyer_filter');
 
+});
+
+
+
+Route::middleware(['super_admin','admin'])->group(function () {
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
@@ -226,9 +237,13 @@ Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('sessio
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
 Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
 
+});
+
+
+
+// Route::middleware(['super_admin','admin','call_center'])->group(function () {
 
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
-
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
 Route::post('/change_task_state/{id}', 'EmergencyTasksController@change_task_state')->name('change_task_state');
 Route::post('/task_destroy_all', 'EmergencyTasksController@task_destroy_all')->name('task_destroy_all');
@@ -236,11 +251,21 @@ Route::get('/task_destroy/{id}', 'EmergencyTasksController@task_destroy')->name(
 Route::post('/add_emergency_task', 'EmergencyTasksController@add_emergency_task')->name('add_emergency_task');
 Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emergency_task')->name('assign_emergency_task');
 Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
+Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
+Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
+
+// });
 
 
+
+Route::middleware(['super_admin'])->group(function () {
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')->name('report.filter');
+
+});
+
+Route::middleware(['super_admin','admin','data_entry','call_center'])->group(function () {
 
 Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
@@ -248,6 +273,9 @@ Route::post('/records/store', 'RecordsController@store')->name('record.store');
 Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
 Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
 Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
+
+});
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');
