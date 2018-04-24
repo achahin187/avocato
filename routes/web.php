@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::middleware(['roles:1,2,3'])->group(function () {
 
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
@@ -55,6 +56,12 @@ Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 Route::patch('/about_edit', 'AboutController@update')->name('about.update');
 
+});
+
+
+
+Route::middleware(['roles:1,2,3'])->group(function () {
+
 Route::get('/formulas', 'FormulasController@index')->name('formulas');
 Route::get('/formulas_create', 'FormulasController@create')->name('formulas_create');
 Route::get('/formulas_get_sub', 'FormulasController@getSub')->name('formulas_get_sub');
@@ -66,6 +73,11 @@ Route::post('/formulas_destroy_all', 'FormulasController@destroy_all')->name('fo
 Route::get('/formulas_excel', 'FormulasController@excel')->name('formulas_excel');
 Route::post('/formulas_filter', 'FormulasController@filter')->name('formulas_filter');
 Route::get('/formulas_get_subs', 'FormulasController@getSubs')->name('formulas_get_subs');
+
+});
+
+
+Route::middleware(['roles:1'])->group(function () {
 
 Route::get('/users_list', 'UsersListController@index')->name('users_list');
 Route::get('/user_profile/{id}', 'UsersListController@show')->name('user_profile');
@@ -79,6 +91,11 @@ Route::post('/users_list_destroy_all', 'UsersListController@destroy_all')->name(
 Route::get('/users_list_excel', 'UsersListController@excel')->name('users_list_excel');
 Route::post('/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
 
+});
+
+
+Route::middleware(['roles:1,2'])->group(function () {
+
 Route::get('/news_list', 'NewsListController@index')->name('news_list');
 Route::post('/news_list', 'NewsListController@filter')->name('news.filter');
 Route::get('/news_list_show/{id}', 'NewsListController@show')->name('news.view');
@@ -90,6 +107,10 @@ Route::delete('/news_list/destroy/{id}', 'NewsListController@destroy')->name('ne
 Route::delete('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
 Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
 
+});
+
+
+Route::middleware(['roles:1,2'])->group(function () {
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
 
@@ -135,7 +156,14 @@ Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->na
 Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
 Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
+
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
+
+});
+
+
+
+Route::middleware(['roles:1,2,3,4'])->group(function () {
 
 Route::get('/complains', 'ComplainsController@index')->name('complains');
 Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
@@ -143,6 +171,11 @@ Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('co
 Route::delete('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
 Route::delete('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
 Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
+
+});
+
+
+Route::middleware(['roles:1,2,3'])->group(function () {
 
 Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
 Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
@@ -158,12 +191,17 @@ Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
 
+});
+
+
+
+Route::middleware(['roles:1,2'])->group(function () {
+
 Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('legal_consultations');
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
 Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultation_edit/{id}', 'LegalConsultationsController@edit')->name('legal_consultation_edit');
 Route::get('/legal_consultation_assign/{id}', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
-
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
 Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 Route::post('/edit_lawyer_response', 'LegalConsultationsController@edit_lawyer_response')->name('edit_lawyer_response');
@@ -175,8 +213,10 @@ Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsult
 Route::post('/legal_consultation_filter', 'LegalConsultationsController@consultations_filter')->name('legal_consultation_filter');
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
+});
 
-// Route::middleware(['super_admin','admin','data_entry'])->group(function () {
+
+Route::middleware(['roles:1,2,3'])->group(function () {
 
 Route::get('/cases', 'CasesController@index')->name('cases');
 Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
@@ -197,10 +237,10 @@ Route::get('/download_all_documents/{id}', 'CasesController@download_all_documen
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
 Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
 
-// });
+});
 
 
-Route::middleware(['super_admin','admin','data_entry'])->group(function () {
+Route::middleware(['roles:1,2,3'])->group(function () {
 
 Route::get('/services', 'ServicesController@index')->name('services');
 Route::get('/services_show/{id}', 'ServicesController@show')->name('services_show');
@@ -229,7 +269,7 @@ Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')-
 
 
 
-Route::middleware(['super_admin','admin'])->group(function () {
+Route::middleware(['roles:1,2'])->group(function () {
 
 Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal');
 Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
@@ -241,7 +281,9 @@ Route::post('/session_filter', 'TasksController@filter')->name('session_filter')
 
 
 
-// Route::middleware(['super_admin','admin','call_center'])->group(function () {
+
+Route::middleware(['roles:1,2,4'])->group(function () {
+
 
 Route::get('/tasks_emergency', 'TasksController@emergency_index')->name('tasks_emergency');
 Route::get('/task_emergency_view/{id}', 'EmergencyTasksController@view')->name('task_emergency_view');
@@ -254,28 +296,26 @@ Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assi
 Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
 Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
 
-// });
+});
 
 
 
-Route::middleware(['super_admin'])->group(function () {
+Route::middleware(['roles:1'])->group(function () {
 
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')->name('report.filter');
 
 });
 
-Route::middleware(['super_admin','admin','data_entry','call_center'])->group(function () {
 
-Route::get('/records', 'RecordsController@index')->name('records');
+    Route::middleware(['roles:1,2,3,4'])->group(function () {
+        Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
 Route::post('/records/store', 'RecordsController@store')->name('record.store');
 Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
 Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
 Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
-
-});
-
+    });
 
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -287,6 +327,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 });
+
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
