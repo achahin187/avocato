@@ -186,7 +186,7 @@
                           <td><span class="cellcontent">{{ ($case->cases->region) ? $case->cases->region : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases ? ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد') : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ $case->cases ? ($case->cases->claim_date ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد') : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->attorney_number) ? $case->attorney_number : 'لا يوجد' }}</span></td>
                         </tr>
