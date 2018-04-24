@@ -71,7 +71,7 @@
                   <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                  <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' ) : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' ) : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
                   <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
