@@ -292,10 +292,10 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = Users::find($id);
-        $password = $company->client_password->password;
+        $password = $company->client_password ? $company->client_password->password : $company->password;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();
-        $installments = Installment::where('subscription_id', $company->subscription->id)->get();
+        $installments = $company->subscription ? Installment::where('subscription_id', $company->subscription->id)->get() : 0;
 
         return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
