@@ -272,6 +272,11 @@ class LawyersController extends Controller
      */
     public function show($id)
     {
+//       $nas = Geo_Countries::where('id',2)->get();
+//       $s=$nas->flatMap(function ($values) {
+//       return array_map(function(){return 2;}, $values->toArray());
+// });
+//       return $s;
 
      $data['lawyer'] = Users::find($id);
      $data['nationalities'] = Entity_Localizations::where('field','nationality')->where('entity_id',6)->get();
