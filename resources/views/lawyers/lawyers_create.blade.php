@@ -1,6 +1,12 @@
 @extends('layout.app')
 @section('content')
-
+<script > $(document).ready(function(){
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 4000);
+  });</script>
 
               <div class="row">
                 <div class="col-lg-12">

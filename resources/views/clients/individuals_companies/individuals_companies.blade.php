@@ -355,7 +355,7 @@
                   
                   <td>
                     <span class="cellcontent">
-                      @if (isset($ind_com->companyParent->name))
+                      @if (isset($ind_com->subscription->package_type_id))
                         {{ Helper::localizations('package_types', 'name', $ind_com->subscription->package_type_id) }}
                       @else
                         لا يوجد

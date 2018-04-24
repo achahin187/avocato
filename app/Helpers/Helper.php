@@ -149,20 +149,31 @@ class Helper {
         return round(($part/$all)*100, 1);
     }
 
-    public static function countCases($city_id, $gov_id) {
-        return Case_::where('geo_governorate_id', $gov_id)->where('geo_city_id', $city_id)->count();
+    public static function countCases($case_type_id, $city_id, $gov_id) {
+        return Case_::where('case_type_id', $case_type_id)->where('geo_governorate_id', $gov_id)->where('geo_city_id', $city_id)->count();
     }
 
+    public static function countCourts($courtId, $cityId, $govId) {
+        return Case_::where('court_id', $courtId)->where('geo_city_id', $cityId)->where('geo_governorate_id', $govId)->count();
+    }
     // TODO: add conditions about city and governorate
-    public static function countTasks($taskId) {
-        return Tasks::where('task_type_id', $taskId)->count();
+    public static function countTasks($clientId, $taskType=[1, 2, 3]) {
+        return Tasks::where('client_id', $clientId)->whereIn('task_type_id', $taskType)->count();
     }
 
     public static function countCaseType($taskId) {
         return Case_::where('case_type_id', $taskId)->count();
     }
 
-      public static function mail($email ,$body ){
+    public static function getUrgents($userRulesArray) {
+        return Users::whereHas('rules', function($query) use($userRulesArray) {
+            $query->whereIn('rule_id', $userRulesArray);
+            })->whereHas('tasks', function($m) {
+                $m->where('task_type_id', 1);
+        })->get();
+    }
+
+    public static function mail($email ,$body ){
         Mail::raw('New Feedback   is ('.$body.' )', function($msg) use($email){ 
             $msg->to([$email])->subject('SecureBridge'); 
             $msg->from(['pentavalue.securebridge@gmail.com']); 

@@ -173,4 +173,12 @@ class Users extends Authenticatable
         return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id')->using('App\User_Ratings');
     }
 
+    public function getRole(){
+      foreach($this->rules as $rule){
+        if($rule->pivot->rule_id==1 or $rule->pivot->rule_id==2 or $rule->pivot->rule_id==3 or $rule->pivot->rule_id==4 ){
+          return $rule->pivot->rule_id;
+        }
+      }
+    }
+
 }
