@@ -100,7 +100,11 @@ class ComplainsController extends Controller
             $feedbackReply->save();
             $to = Helper::getUserDetails($feedback->user_id)->email;
         // dd($to);
-        $mail=Helper::mail($to,$request->newReply);
+            if($to != '')
+            {
+               $mail=Helper::mail($to,$request->newReply); 
+            }
+        
 
         } catch ( Exception $ex ) {
             Session::flash('warning', 'حدث خطأ ما عند الرد علي هذاه الشكوي, برجاء المحاولة مرة اخري');
