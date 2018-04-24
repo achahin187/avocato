@@ -869,7 +869,7 @@
                             <option value="-1" selected disabled hidden>اختر كود العميل</option>
                             @if ( isset($installments_) && !empty($installments_) )
                               @foreach ($installments_ as $ins)
-                                <option value="{{ $ins->subscription_id }}">{{ $ins->subscription ? Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد' }}</option>
+                                <option value="{{ $ins->subscription_id }}">{{ $ins->subscription ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد' ) : 'لا يوجد' }}</option>
                               @endforeach
                             @endif
                         </select>
@@ -930,7 +930,7 @@
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{ ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($ins->subscription) ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->subscription) ? ($ins->subscription->package_type ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد') : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($ins->installment_number) ? $ins->installment_number : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($ins->payment_date) ? $ins->payment_date->format('d-m-Y') : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($ins->value) ? $ins->value : 'لا يوجد' }}</span></td>
