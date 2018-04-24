@@ -107,7 +107,7 @@ class LegalConsultationsController extends Controller
                 
             }
         
-        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
+        return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types)->with('success','تم إضافه استشاره جديده بنجاح');
        
     }
 
