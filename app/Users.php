@@ -30,15 +30,15 @@ class Users extends Authenticatable
 
         static::deleting(function($user) { // before delete() method call this
             if ( count($user->rules)>0 ) { Users_Rules::where('user_id',$user->id)->delete(); }
-            if ( count($user->client_password->id)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
-            if ( count($user->user_detail->id)>0 ) { $user->user_detail()->delete(); }
-            if ( count($user->subscription->id)>0 ) { 
+            if ( count($user->client_password)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
+            if ( count($user->user_detail)>0 ) { $user->user_detail()->delete(); }
+            if ( count($user->subscription)>0 ) { 
                 if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
                     Installment::where('subscription_id', $user->subscription->id)->delete();
                 }
                 $user->subscription()->delete(); 
             }
-            if ( count($user->user_company_detail->id)>0) { $user->user_company_detail()->delete(); }
+            if ( count($user->user_company_detail)>0) { $user->user_company_detail()->delete(); }
             if ( count($user->tasks)>0) { 
               foreach($user->tasks as $task){
                 if ( Task_Charges::where('task_id', $task->id)->get() ) {
