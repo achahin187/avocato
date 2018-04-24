@@ -62,7 +62,7 @@
               <div class="row">
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد </b>
                   <div class="col-xs-9">
-                    {{ $user->subscription ? $user->subscription->start_date->format("Y - m - d")  : 'لا يوجد' }} </div>
+                    {{ $user->subscription ? (  $user->subscription->start_date ? $user->subscription->start_date->format("Y - m - d") : 'لا يوجد' ) : 'لا يوجد' }} </div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
                   <div class="col-xs-9">{{ $user->subscription ? $user->subscription->duration  : 'لا يوجد' }}</div>
@@ -71,7 +71,7 @@
                   <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' ) : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
                   <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
@@ -186,7 +186,7 @@
                           <td><span class="cellcontent">{{ ($case->cases->region) ? $case->cases->region : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases ? ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد') : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد' }}</span></td>
                           <td><span class="cellcontent">{{ ($case->attorney_number) ? $case->attorney_number : 'لا يوجد' }}</span></td>
                         </tr>
