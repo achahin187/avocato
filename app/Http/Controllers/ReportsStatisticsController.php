@@ -250,9 +250,9 @@ class ReportsStatisticsController extends Controller
         
         // Urgents
         if ( isset( $filters['userType'] ) ) {
-            $data['urgents'] = Helper::getUsersBasedOnRules($filters['userType']);
+            $data['urgents'] = Helper::getUrgents($filters['userType']);
         } else {
-            $data['urgents'] = Helper::getUsersBasedOnRules([7, 8, 9, 10]);
+            $data['urgents'] = Helper::getUrgents([7, 8, 9, 10]);
         }
        
 

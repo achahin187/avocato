@@ -1153,7 +1153,7 @@
                             <td><span class="cellcontent">{{ ($urgent->code) ? $urgent->code : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($urgent->full_name) ? $urgent->full_name : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($urgent->rules) ? $urgent->rules->last()->name_ar : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($urgent->tasks) ? $urgent->tasks->count() : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($urgent->tasks) ? Helper::countTasks($urgent->id, [1]) : 'لا يوجد' }}</span></td>
                           </tr>
                         @endforeach
                     @endif
