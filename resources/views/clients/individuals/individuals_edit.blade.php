@@ -275,7 +275,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-              <input name="start_date" value="{{ $user->subscription->start_date->format('m/d/Y') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="license_start_date">
+              <input name="start_date" value="{{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format('m/d/Y') : 0) : 0 }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="license_start_date">
               
               @if ($errors->has('start_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -288,7 +288,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ $user->subscription->end_date->format('m/d/Y') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
+              <input name="end_date" value="{{ $user->subscription ? ($user->subscription->end_date ? $user->subscription->end_date->format('m/d/Y') : 0) : 0 }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
               
               @if ($errors->has('end_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -304,7 +304,7 @@
               <select name="subscription_type" class="master_input select2" id="license_type" style="width:100%;">
                 
                 @foreach ($subscription_types as $types)
-                  <option value="{{ $types->id }}" {{ ($types->id == $user->subscription->package_type_id) ? 'selected' : '' }}>{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+                  <option value="{{ $types->id }}" {{ ($types->id == ($user->subscription ? $user->subscription->package_type_id : 0) ) ? 'selected' : '' }}>{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
                 @endforeach
                 
               </select>
@@ -320,7 +320,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="subscription_duration" value="{{ $user->subscription->duration }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
+              <input name="subscription_duration" value="{{ $user->subscription ? $user->subscription->duration : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
             
               @if ($errors->has('subscription_duration'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_duration') }}</span>
@@ -333,7 +333,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input required name="subscription_value" value="{{ $user->subscription->value }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input required name="subscription_value" value="{{ $user->subscription ? $user->subscription->value : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
               
               @if ($errors->has('subscription_value'))
                 <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
@@ -346,7 +346,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input required name="number_of_payments" value="{{ $user->subscription->number_of_installments }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+              <input required name="number_of_payments" value="{{ $user->subscription ? $user->subscription->number_of_installments : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
 
                 @if ($errors->has('number_of_payments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
@@ -356,6 +356,7 @@
           <div class="clearfix"></div>
 
           {{--  Generated input fields  --}}
+          @if( $user->subscription )
           <div id="generated">
               @for ($i = 0; $i < $user->subscription->number_of_installments; $i++)
               <?php $j = $i+1; ?>
@@ -386,7 +387,8 @@
               </div>
               @endfor
           </div>
-          
+          @endif
+
           <div class="clearfix"></div>
           <div class="col-md-2 col-xs-6">
             <button id="submit_button" class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
