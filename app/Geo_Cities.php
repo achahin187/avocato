@@ -14,7 +14,7 @@ class Geo_Cities extends Model
 
         public function governorate()
     {
-        return $this->belongsTo('App\Geo_Governorates','governorate_id');
+        return $this->belongsTo('App\Geo_Governorates','governorate_id')->withDefault();
     }
 
         public function courts()
