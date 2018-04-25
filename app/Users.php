@@ -29,16 +29,25 @@ class Users extends Authenticatable
         parent::boot();
 
         static::deleting(function($user) { // before delete() method call this
-            if ( count($user->rules)>0 ) { Users_Rules::where('user_id',$user->id)->delete(); }
-            if ( count($user->client_password)>0 ) { ClientsPasswords::where('user_id', $user->id)->delete(); }
-            if ( count($user->user_detail)>0 ) { $user->user_detail()->delete(); }
-            if ( count($user->subscription)>0 ) { 
+            if ( $user->rules != '' && $user->rules != NULL ) { 
+                Users_Rules::where('user_id',$user->id)->delete(); 
+            }
+            if ( $user->client_password != '' && $user->rules != NULL ) { 
+                ClientsPasswords::where('user_id', $user->id)->delete(); 
+            }
+            if ( $user->user_detail != '' && $user->user_detail != NULL ) { 
+                $user->user_detail()->delete(); 
+            }
+            if ( $user->subscription != '' && $user->subscription != NULL ) { 
                 if ( Installment::where('subscription_id', $user->subscription->id)->get() ) {
                     Installment::where('subscription_id', $user->subscription->id)->delete();
                 }
                 $user->subscription()->delete(); 
             }
-            if ( count($user->user_company_detail)>0) { $user->user_company_detail()->delete(); }
+            if ( $user->user_company_detail != '' && $user->user_company_detail != NULL ) { 
+                $user->user_company_detail()->delete(); 
+            }
+            
             if ( count($user->tasks)>0) { 
               foreach($user->tasks as $task){
                 if ( Task_Charges::where('task_id', $task->id)->get() ) {
@@ -49,7 +58,7 @@ class Users extends Authenticatable
             if ( count($user->offices)>0 ) {$user->offices()->delete();}
             if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
             if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
-                // for companies or individuals_companies
+            // for companies or individuals_companies
         });
     }
 
