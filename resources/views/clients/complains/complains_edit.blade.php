@@ -28,7 +28,7 @@
                : اسم العميل 
            </div>
             <b>&nbsp;&nbsp;<a href="lawyer_view.html">
-              {{ $complain->user_id ? Helper::getUserDetails($complain->user_id)->full_name : $complain->name }}  
+              {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : 'لا يوجد') : ($complain->name ? $complain->name : 'لا يوجد') }}  
             </a></b>
           </div>
           <div class="pull-right">
@@ -41,7 +41,7 @@
         <hr>
         <div class="col-md-12"><b class="pull-left">:نص الشكوى</b>&nbsp;
           <br>
-          {{ $complain->body }}
+          {{ $complain->body ? $complain->body : 'لا يوجد' }}
         </div>
         <div class="clearfix"></div>
       </div>
@@ -60,7 +60,7 @@
                 
               </div>
                 &nbsp;<b><a href="lawyer_view.html">
-                  {{ Helper::getUserDetails($reply->created_by)->full_name }}  
+                  {{ Helper::getUserDetails($reply->created_by) ? Helper::getUserDetails($reply->created_by)->full_name : 'لا يوجد' }}  
                 </a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
   
               {{-- Reply date --}}
@@ -76,7 +76,7 @@
             {{-- Reply_body --}}
             <div class="col-md-12">
               <p>
-                {{ $reply->reply }}
+                {{ $reply->reply ? $reply->reply : 'لا يوجد رد' }}
               </p>
             </div>
             
