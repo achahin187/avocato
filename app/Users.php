@@ -55,9 +55,9 @@ class Users extends Authenticatable
                 }
               }
               }
-            if ( count($user->offices)>0 ) {$user->offices()->delete();}
-            if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
-            if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
+            // if ( count($user->offices)>0 ) {$user->offices()->delete();}
+            // if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
+            // if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
             // for companies or individuals_companies
         });
     }

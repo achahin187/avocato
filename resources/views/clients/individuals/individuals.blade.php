@@ -552,11 +552,11 @@
                   $.ajax(
                   {
                       url: "{{ route('ind.destroySelected') }}",
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "ids": ids,
-                          "_method": 'DELETE',
+                          "_method": 'GET',
                           "_token": token,
                       },
                       success: function ()
@@ -599,11 +599,11 @@
                   $.ajax(
                   {
                       url: "{{ url('/individuals/destroy') }}" +"/"+ id,
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "id": id,
-                          "_method": 'DELETE',
+                          "_method": 'GET',
                           "_token": token,
                       },
                       success: function ()

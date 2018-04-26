@@ -121,8 +121,8 @@ Route::post('/individuals/store', 'IndividualsController@store')->name('ind.stor
 Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');
 Route::post('/individuals/ins_update/{id}', 'IndividualsController@ins_update')->name('ind.ins_update');
 Route::post('/individuals/update/{id}', 'IndividualsController@update')->name('ind.update');
-Route::delete('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
-Route::delete('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
+Route::get('/individuals/destroySelected', 'IndividualsController@destroySelected')->name('ind.destroySelected');
+Route::get('/individuals/destroy/{id}', 'IndividualsController@destroy')->name('ind.deleteRecord');
 Route::post('/individuals/filter', 'IndividualsController@filter')->name('ind.filter');
 Route::get('/individuals/destroyShow/{id}', 'IndividualsController@destroyShow')->name('ind.destroyShow');
 
@@ -133,8 +133,8 @@ Route::get('/companies_edit/{id}', 'CompaniesController@edit')->name('companies.
 Route::post('/companies/comp_update/{id}', 'CompaniesController@comp_update')->name('companies.comp_update');
 Route::post('/companies/update/{id}', 'CompaniesController@update')->name('companies.update');
 Route::post('/companies/store', 'CompaniesController@store')->name('companies.store');
-Route::delete('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
-Route::delete('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
+Route::get('/companies/destroy/{id}', 'CompaniesController@destroy')->name('companies.destroy');
+Route::get('/companies/destroySelected', 'CompaniesController@destroySelected')->name('company.destroySelected');
 Route::post('/companies/filter-companies', 'CompaniesController@filter')->name('company.filter');
 Route::get('/companies/destroyShow/{id}', 'CompaniesController@destroyShow')->name('companies.destroyShow');
 
@@ -145,15 +145,15 @@ Route::post('/individuals_companies_store', 'IndividualsCompaniesController@stor
 Route::get('/individuals_companies_edit/{id}', 'IndividualsCompaniesController@edit')->name('ind.com.edit');
 Route::post('/individuals_companies/ind_comp_update/{id}', 'IndividualsCompaniesController@ind_comp_update')->name('ind_comp_update');
 Route::post('/individuals_companies/update/{id}', 'IndividualsCompaniesController@update')->name('ind.com.update');
-Route::delete('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
-Route::delete('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
+Route::get('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
+Route::get('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
 Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
-Route::delete('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
-Route::delete('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
+Route::get('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
+Route::get('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
 Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
 

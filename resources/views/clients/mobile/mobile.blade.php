@@ -352,11 +352,11 @@
                   $.ajax(
                   {
                       url: "{{ route('mobile.destroySelected') }}",
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "ids": ids,
-                          "_method": 'DELETE',
+                          "_method": 'GET',
                           "_token": token,
                       },
                       success: function (ids)
@@ -399,11 +399,11 @@
                   $.ajax(
                   {
                       url: "{{ url('/mobile/destroy') }}" +"/"+ id,
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "id": id,
-                          "_method": 'DELETE',
+                          "_method": 'GET',
                           "_token": token,
                       },
                       success: function ()
