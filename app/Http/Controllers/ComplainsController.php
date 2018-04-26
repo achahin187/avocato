@@ -78,8 +78,6 @@ class ComplainsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        // dd($mail);
         $this->validate($request, [
             'newReply'  => 'required'
         ]);
@@ -90,7 +88,6 @@ class ComplainsController extends Controller
 
             // feedback table
             $feedback->is_replied = 1;  // is_replied = true
-            $to = Helper::getUserDetails($feedback->user_id)->email;
             $feedback->save();
 
             // feedback_replies table
@@ -99,8 +96,8 @@ class ComplainsController extends Controller
             $feedbackReply->created_at = \Carbon\Carbon::now()->toDateTimeString();
             $feedbackReply->created_by = Auth::user()->id;
             $feedbackReply->save();
-            $to = Helper::getUserDetails($feedback->user_id)->email;
-        // dd($to);
+            
+            $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
             if($to != '')
             {
                $mail=Helper::mail($to,$request->newReply); 

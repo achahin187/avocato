@@ -7,8 +7,8 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset($user->image)}}">
-                <h3 class="coverglobal__title color--gray_d">{{ $user->full_name }}</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
+            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{$user->image ? asset($user->image) : ''}}">
+                <h3 class="coverglobal__title color--gray_d">{{ $user->full_name ? $user->full_name : '' }}</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
             <div class="coverglobal__actions">
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.edit', $user->id)}}">التحويل لعميل أفراد</a>
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.edit', $user->id)}}">التحويل لعميل شركات</a>
@@ -23,18 +23,18 @@
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="row"><b class="col-xs-3">كود العميل</b>
-          <div class="col-xs-9">{{ $user->code }}</div>
+          <div class="col-xs-9">{{ $user->code ? $user->code : '' }}</div>
         </div>
         <div class="row"><b class="col-xs-3">العنوان </b>
-          <div class="col-xs-9">{{ $user->address }}</div>
+          <div class="col-xs-9">{{ $user->address ? $user->address : '' }}</div>
         </div>
       </div>
       <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="row"><b class="col-xs-3">البريد الالكترونى </b>
-          <div class="col-xs-9">{{ $user->email }}</div>
+          <div class="col-xs-9">{{ $user->email ? $user->email : '' }}</div>
         </div>
         <div class="row"><b class="col-xs-3">جوال </b>
-          <div class="col-xs-9">{{ $user->mobile }}</div>
+          <div class="col-xs-9">{{ $user->mobile ? $user->mobile : '' }}</div>
         </div>
       </div>
       <div class="clearfix"></div>

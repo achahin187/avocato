@@ -28,7 +28,7 @@
                : اسم العميل 
            </div>
             <b>&nbsp;&nbsp;<a href="lawyer_view.html">
-              {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : 'لا يوجد') : ($complain->name ? $complain->name : 'لا يوجد') }}  
+              {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
             </a></b>
           </div>
           <div class="pull-right">
