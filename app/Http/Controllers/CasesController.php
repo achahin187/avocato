@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Case_;
@@ -26,6 +26,7 @@ use App\Case_Client_Role;
 use App\Case_Document;
 use App\Case_Techinical_Report;
 use App\Tasks;
+use App\Exports\CasesExport;
 
 
 class CasesController extends Controller
@@ -775,4 +776,24 @@ if($request->has('record_documents')){
         return view('cases.cases')->with('cases',$cases)->with('roles',$roles)->with('types',$types)->with('courts',$courts);
        // return redirect()->back();
     }
+     public function excel()
+    {   
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'cases'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new CasesExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new CasesExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+      Excel::store((new CasesExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+  }
 }

@@ -37,22 +37,22 @@ class Case_ extends Model
 
     public function case_types()
     {
-        return $this->belongsTo('App\Cases_Types', 'case_type_id');
+        return $this->belongsTo('App\Cases_Types', 'case_type_id')->withDefault();
     }
     
     public function governorates()
     {
-        return $this->belongsTo('App\Geo_Governorates','geo_governorate_id');
+        return $this->belongsTo('App\Geo_Governorates','geo_governorate_id')->withDefault();
     }
     
     public function cities()
     {
-        return $this->belongsTo('App\Geo_Cities', 'geo_city_id');
+        return $this->belongsTo('App\Geo_Cities', 'geo_city_id')->withDefault();
     }
     
     public function courts()
     {
-        return $this->belongsTo('App\Courts', 'court_id');
+        return $this->belongsTo('App\Courts', 'court_id')->withDefault();
     }
 
     public function lawyers()
