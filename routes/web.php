@@ -297,6 +297,7 @@ Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emerg
 Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
 Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
 Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
+Route::get('/emergencytasks_excel', 'EmergencyTasksController@excel')->name('emergencytasks_excel');
 
 });
 
