@@ -133,8 +133,8 @@ true).find("option[value]").remove();
                       </button>
                     </div>
                     <div class="col-md-2 col-xs-6">
-                      <button class="master-btn undefined btn-block color--white bgcolor--fadeorange bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
-                      </button>
+                      <a href="{{route('formulas')}}"><button type="button" class="master-btn undefined btn-block color--white bgcolor--fadeorange bradius--small bshadow--0" type="button"><i class="fa fa-times"></i><span>الغاء</span>
+                      </button></a>
                     </div>
                     <div class="clearfix"></div><br>
                   </div>
