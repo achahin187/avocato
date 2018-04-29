@@ -20,7 +20,7 @@ class Consultation extends Model
     ];
     public function consultation_type()
     {
-    	return $this->belongsTo('App\Consultation_Types', 'consultation_type_id');
+    	return $this->belongsTo('App\Consultation_Types', 'consultation_type_id')->withDefault();
     }
     public function consultation_reply()
     {

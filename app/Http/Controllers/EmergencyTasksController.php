@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Excel;
 use Illuminate\Http\Request;
 use App\Tasks;
 use App\Task_Status_History;
 use Carbon\Carbon;
 use App\Users;
+use App\Exports\EmergencyTasksExport;
 class EmergencyTasksController extends Controller
 {
     public function view($id)
@@ -146,4 +147,30 @@ class EmergencyTasksController extends Controller
       return view('tasks.assign_emergency_task',$data);
       // dd($data['lawyers']);
     }
+
+    public function excel()
+    {   
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'emergency_tasks'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       
+       Excel::store(new EmergencyTasksExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      
+      Excel::store((new EmergencyTasksExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+        
+      Excel::store((new EmergencyTasksExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+  }
+
+
 }

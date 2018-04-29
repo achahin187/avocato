@@ -214,6 +214,7 @@ Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsult
 Route::post('/legal_consultation_filter', 'LegalConsultationsController@consultations_filter')->name('legal_consultation_filter');
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
+Route::get('/consultations_excel', 'LegalConsultationsController@excel')->name('consultations_excel');
 });
 
 
@@ -237,6 +238,7 @@ Route::get('/download_document/{id}', 'CasesController@download_document')->name
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
 Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
+Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
 
 });
 
@@ -296,6 +298,7 @@ Route::get('/assign_emergency_task/{id}', 'EmergencyTasksController@assign_emerg
 Route::post('/assign_lawyer_emergency_task/{id}', 'EmergencyTasksController@assign_lawyer_emergency_task')->name('assign_lawyer_emergency_task');
 Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_task')->name('emergency_lawyer_task');
 Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
+Route::get('/emergencytasks_excel', 'EmergencyTasksController@excel')->name('emergencytasks_excel');
 
 });
 

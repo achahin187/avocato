@@ -11501,9 +11501,9 @@ button.swiper-pagination-bullet {
 }
 
 .dataTables_wrapper .dataTables_paginate ul.pagination li.paginate_button a {
-  color: #ccc;
+  color: #4f5b69;
   background-color: #fff;
-  border-color: #ccc;
+  border-color: #4f5b69;
   border-radius: 0;
   outline: none;
 }

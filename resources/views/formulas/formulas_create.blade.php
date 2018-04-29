@@ -65,21 +65,24 @@ true).find("option[value]").remove();
                   @endif
                 <form role="form" action="{{route('formulas_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                   {{csrf_field()}}
-                  <div class="container" >
-                    <label class="master_label mandatory" for="is_contract">النوع</label>
-                   <div class="radio">
-                    <label><input type="radio" value="1" name="is_contract" >عقد</label>
-                  </div>
-                  <div class="radio">
-                    <label><input type="radio" value="0" name="is_contract">صيغه</label>
-                  </div>
-                  <span class="master_message color--fadegreen">
+                  <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    <div class="col-sm-2 col-xs-12">
+                      <label class="master_label mandatory" for="is_contract">النوع</label>
+                      
+                      <input name="is_contract" value="1" class="icon" type="radio" id="is_contract1">
+                      <label  class="master_label mandatory" for="is_contract1">عقد</label>
+
+                      <input value="0" name="is_contract" class="icon"  type="radio"  id="is_contract2">
+                      <label  class="master_label mandatory" for="is_contract2">صيغه</label>
+                      
+                    </div>
+                    <span class="master_message color--fadegreen">
                                     @if ($errors->has('is_contract'))
                                     {{ $errors->first('is_contract')}}
                                     @endif</span>
-                </div>
-                  <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="col-xs-6">
+                
+                  
+                    <div class="col-sm-5 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="contract_name">اسم العقد / الصيغة </label>
                         <input name="contract_name" value="{{ old('contract_name') }}" class="master_input" type="text" placeholder="اسم العقد / الصيغة .." id="contract_name"><span class="master_message color--fadegreen">
@@ -88,7 +91,7 @@ true).find("option[value]").remove();
                                     @endif</span>
                       </div>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-sm-5 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="contract_upload">صورة العقد / الصيغة </label>
                         <div class="file-upload">
