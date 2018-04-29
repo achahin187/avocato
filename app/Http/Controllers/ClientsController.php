@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Users;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -80,5 +81,14 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function printSelected($ids) 
+    {
+        if ( isset($ids) && !empty($ids) ) {
+            return view('clients.print_card')->with('users', Users::whereIn('id', explode(",", $ids) )->get());
+        } else {
+            return redirect()->back();
+        }
     }
 }

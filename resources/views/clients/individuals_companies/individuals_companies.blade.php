@@ -185,7 +185,7 @@
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
         <div class="bottomActions__btns">
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
-          <a class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة كارت العميل</a>
+          <a id="printSelected" class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة كارت العميل</a>
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
         </div>
         <table class="table-1">
@@ -703,6 +703,27 @@
             }
           });
 
+        });
+
+        $('#printSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            confirm('إختر عميل علي الاقل لتستطيع طبعه');
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+            
+            if(ids) {
+              window.location = "{{ url('/clients/print') }}" + "/" + ids;
+            }
+          }
         });
 
         // hide alert message after 4 seconds => 4000 ms

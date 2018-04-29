@@ -64,7 +64,7 @@ class IndividualsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         // Validate data
         $this->validate($request, [
             'name'  => 'required',
@@ -120,6 +120,7 @@ class IndividualsController extends Controller
             $user->save();
         } catch(Exception $ex) {
             $user->forcedelete();
+
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -134,7 +135,7 @@ class IndividualsController extends Controller
             Users_Rules::insert($data);
         } catch(Exception $ex) {
             $user->forcedelete();
-            Users_Rules::where('user_id', $user->id)->forcedelete();
+
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -148,7 +149,6 @@ class IndividualsController extends Controller
             $client_passwords->save();
         } catch(Exception $ex) {
             $user->forcedelete();
-            $user_rules->forcedelete();
 
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -170,8 +170,7 @@ class IndividualsController extends Controller
             $user_details->save();
         } catch(Exception $ex) {
             $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
+
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -198,25 +197,29 @@ class IndividualsController extends Controller
         }
 
         // push into installments
-        try {
-            if($request->number_of_payments != 0) {
-                for($i=0; $i < $request->number_of_payments; $i++) {
-                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    Installment::create([
-                        'subscription_id'   => $subscription->id,
-                        'installment_number'=> $i+1,
-                        'value' => $request->payment[$i],
-                        'payment_date'  => $pay_date,
-                        'is_paid'   => $request->payment_status[$i]
-                    ]);
+        try { 
+            if ( isset($request->payment) && !empty($request->payment) ) {
+                if ( $request->number_of_payments != count($request->payment) ) {
+                    $user->forcedelete();
+
+                    Session::flash('warning', '  حدث خطأ عند ادخال بيانات العميل ، من فضلك تأكد من ان عدد الاقساط التي تم ادخالها مساوٍِِ لحقل عدد الاقساط');
+                    return redirect()->back()->withInput();
+                    
+                } else if($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment) ) {
+                    for($i=0; $i < $request->number_of_payments; $i++) {
+                        $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                        Installment::create([
+                            'subscription_id'   => $subscription->id,
+                            'installment_number'=> $i+1,
+                            'value' => $request->payment[$i],
+                            'payment_date'  => $pay_date,
+                            'is_paid'   => $request->payment_status[$i]
+                        ]);
+                    }
                 }
             }
         } catch(Exception $ex) {
             $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            $subscription->forcedelete();
 
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
@@ -402,17 +405,25 @@ class IndividualsController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0) {
-                Installment::where('subscription_id', $subscription->id)->delete();
-                for($i=0; $i < $request->number_of_payments; $i++) {
-                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    Installment::create([
-                        'subscription_id'   => $subscription->id,
-                        'installment_number'=> $i+1,
-                        'value' => $request->payment[$i],
-                        'payment_date'  => $pay_date,
-                        'is_paid'   => $request->payment_status[$i]
-                    ]);
+            if ( isset($request->payment) && !empty($request->payment) ) {
+                if ( $request->number_of_payments != count($request->payment) ) {
+                    $user->forcedelete();
+
+                    Session::flash('warning', '  حدث خطأ عند ادخال بيانات العميل ، من فضلك تأكد من ان عدد الاقساط التي تم ادخالها مساوٍِِ لحقل عدد الاقساط');
+                    return redirect()->back()->withInput();
+                    
+                } else if($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment)) {
+                    Installment::where('subscription_id', $subscription->id)->delete();
+                    for($i=0; $i < $request->number_of_payments; $i++) {
+                        $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                        Installment::create([
+                            'subscription_id'   => $subscription->id,
+                            'installment_number'=> $i+1,
+                            'value' => $request->payment[$i],
+                            'payment_date'  => $pay_date,
+                            'is_paid'   => $request->payment_status[$i]
+                        ]);
+                    }
                 }
             }
         } catch(Exception $ex) {

@@ -102,7 +102,9 @@
           </div>
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-        <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
+        <div class="bottomActions__btns">
+          <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+          <a class="btn-warning-cancel-all master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
         </div>
         <table class="table-1">
           <thead>
@@ -119,14 +121,19 @@
           <tbody>
               @if ( isset($consultations) && !empty($consultations) )
                   @foreach ($consultations as $consult)
-                  <tr>
+                  <tr data-consultation-id="{{ $consult->id }}">
                     <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                     <td><span class="cellcontent">{{ ($consult->code) ? $consult->code : 'لا يوجد' }}</span></td>
                     <td><span class="cellcontent">{{ ($consult->consultation_type) ? $consult->consultation_type->name : 'لا يوجد' }}</span></td>
                     <td><span class="cellcontent">{{ ($consult->question) ? $consult->question : 'لا يوجد' }}</span></td>
                     <td><span class="cellcontent">{{ ($consult->created_at) ? $consult->created_at->format('d-m-Y') : 'لا يوجد' }}</span></td>
                     <td><span class="cellcontent"><i class = "fa {{ ($consult->is_replied) ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
-                    <td><span class="cellcontent"><a href= "{{route('legal_consultations_show')}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('legal_consultation_edit', $user->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                    <td>
+                      <span class="cellcontent">
+                        <a href= "{{URL('legal_consultation_view/'.$consult->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
+                        <a href= "{{route('legal_consultation_edit', $user->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                        <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a>
+                      </span></td>
                   </tr>
                   @endforeach
               @endif
@@ -294,4 +301,82 @@
   </div>
 </div>
 
+<script>
+
+  // single delete
+  $('.btn-warning-cancel').click(function(){
+      var consultation_id = $(this).closest('tr').attr('data-consultation-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'GET',
+           url:'{{url('legal_consultation_destroy')}}'+'/'+consultation_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-consultation-id='+consultation_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+    // delete multi
+    $('.btn-warning-cancel-all').click(function(){
+     var selectedIds = $("input:checkbox:checked").map(function(){
+       return $(this).closest('tr').attr('data-consultation-id');
+     }).get();
+     if(selectedIds.length == 0 )
+     {
+       swal("خطأ", "من فضلك اختر استشاره :)", "error");
+     }
+     else
+     {
+     var _token = '{{csrf_token()}}';
+     swal({
+       title: "هل أنت متأكد؟",
+       text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+       type: "warning",
+       showCancelButton: true,
+       confirmButtonColor: '#DD6B55',
+       confirmButtonText: 'نعم متأكد!',
+       cancelButtonText: "إلغاء",
+       closeOnConfirm: false,
+       closeOnCancel: false
+     },
+     function(isConfirm){
+       if (isConfirm){
+        $.ajax({
+          type:'POST',
+          url:'{{url('legal_consultation_destroy_all')}}',
+          data:{ids:selectedIds,_token:_token},
+          success:function(data){
+           $.each( selectedIds, function( key, value ) {
+             $('tr[data-consultation-id='+value+']').fadeOut();
+           });
+         }
+       });
+        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+      } else {
+       swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+     }
+   });
+   }
+   });
+   
+</script>
 @endsection

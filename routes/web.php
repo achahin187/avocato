@@ -113,6 +113,7 @@ Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.
 Route::middleware(['roles:1,2'])->group(function () {
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
+Route::get('/clients/print/{ids}', 'ClientsController@printSelected')->name('printUsers');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
