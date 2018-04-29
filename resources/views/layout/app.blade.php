@@ -117,7 +117,7 @@
                                   </div>
 
                                   <div class="side">
-                                    <ul class="side-menu">
+                                    <ul class="side-menu" id="menu">
                         @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3)
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">البيانات الأساسية</a>
                                         <ul class="side__submenu">
@@ -240,6 +240,53 @@
                          </div>
                          <!-- =============== APP MAIN SCRIPTS ===============-->
                          <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+                         <script type="text/javascript">
+                           $(document).ready(function(){
+    var path = window.location.href;
+    // console.log(path);
+    // var base_path = window.location.pathname;
+    // console.log(path);
+    // console.log(base_path.split('/').pop());
+    // var url = main_url;
+    // console.log(url);
+      // Account for home page with empty path
+      // if ( path == '' ) {
+      //   path = 'users_application_module';
+      // }
+      // $("#users_ul").on('click',function(){
+      //   alert("a");
+
+      // })
+      var target = $('#menu li a[href="'+path+'"]');
+      
+      
+      // if((path == main_url+'cms_module/cp_users/DorraUsers') || (path == main_url+'cms_module/cp_users')){
+        
+      //       $("#users_ul ul").removeClass("collapse");
+      //       target.parent().parent().parent().addClass('active');
+
+      // }
+      // if((path == main_url+'cms_module/content/index/2') || (path == main_url+'cms_module/content/index/4') || (path == main_url+'cms_module/content/index/5') || (path == main_url+'cms_module/content/index/6')){
+       
+      //       $("#contents_ul ul").removeClass("collapse");
+      //       target.parent().parent().parent().addClass('active');
+
+
+      // }else{
+
+            target.removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
+
+      // }
+        
+       
+     
+      // Add active class to target link
+
+     
+
+
+});
+                         </script>
                          <!-- =============== PAGE VENDOR SCRIPTS ===============-->
                          <script type="text/javascript">
                           $(function() {
@@ -604,6 +651,7 @@ if (currentIndex === 5) { //if last step
       galleryThumbs.params.control = galleryTop;
       
     </script>
+
     <script type="text/javascript">
       $(document).ready(function(){
         if ( $('html').attr('lang') == 'ar' ) {

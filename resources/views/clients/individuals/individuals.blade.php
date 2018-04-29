@@ -163,7 +163,7 @@
             <i class="fa fa-filter"></i>filters</a></div>
         <div class="bottomActions__btns">
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
-          <a class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a>
+          <a id="printSelected" class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a>
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
           <a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
         </div>
@@ -666,12 +666,34 @@
 
         });
 
-        // hide alert message after 4 seconds => 4000 ms
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove(); 
-            });
-        }, 4000);
+        $('#printSelected').click(function(){
+          var allVals = [];                   // selected IDs
+          var token = '{{ csrf_token() }}';
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            confirm('إختر عميل علي الاقل لتستطيع طبعه');
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+            
+            if(ids) {
+              window.location = "{{ url('/clients/print') }}" + "/" + ids;
+            }
+          }
+        });
+
+          // hide alert message after 4 seconds => 4000 ms
+          window.setTimeout(function() {
+              $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                  $(this).remove(); 
+              });
+          }, 4000);
+        
     });
   </script>
 @endsection

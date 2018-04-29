@@ -213,16 +213,24 @@ class IndividualsCompaniesController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0) {
-                for($i=0; $i < $request->number_of_payments; $i++) {
-                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    Installment::create([
-                        'subscription_id'   => $subscription->id,
-                        'installment_number'=> $i+1,
-                        'value' => $request->payment[$i],
-                        'payment_date'  => $pay_date,
-                        'is_paid'   => $request->payment_status[$i]
-                    ]);
+            if ( isset($request->payment) && !empty($request->payment) ) {
+                if ( $request->number_of_payments != count($request->payment) ) {
+                    $user->forcedelete();
+
+                    Session::flash('warning', '  حدث خطأ عند ادخال بيانات العميل ، من فضلك تأكد من ان عدد الاقساط التي تم ادخالها مساوٍِِ لحقل عدد الاقساط');
+                    return redirect()->back()->withInput();
+                    
+                } else if($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment)) {
+                    for($i=0; $i < $request->number_of_payments; $i++) {
+                        $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                        Installment::create([
+                            'subscription_id'   => $subscription->id,
+                            'installment_number'=> $i+1,
+                            'value' => $request->payment[$i],
+                            'payment_date'  => $pay_date,
+                            'is_paid'   => $request->payment_status[$i]
+                        ]);
+                    }
                 }
             }
         } catch(Exception $ex) {
@@ -425,17 +433,25 @@ class IndividualsCompaniesController extends Controller
 
         // push into installments
         try {
-            if($request->number_of_payments != 0) {
-                Installment::where('subscription_id', $subscription->id)->delete();
-                for($i=0; $i < $request->number_of_payments; $i++) {
-                    $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                    Installment::create([
-                        'subscription_id'   => $subscription->id,
-                        'installment_number'=> $i+1,
-                        'value' => $request->payment[$i],
-                        'payment_date'  => $pay_date,
-                        'is_paid'   => $request->payment_status[$i]
-                    ]);
+            if ( isset($request->payment) && !empty($request->payment) ) {
+                if ( $request->number_of_payments != count($request->payment) ) {
+                    $user->forcedelete();
+
+                    Session::flash('warning', '  حدث خطأ عند ادخال بيانات العميل ، من فضلك تأكد من ان عدد الاقساط التي تم ادخالها مساوٍِِ لحقل عدد الاقساط');
+                    return redirect()->back()->withInput();
+                    
+                } else if($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment) ) {
+                    Installment::where('subscription_id', $subscription->id)->delete();
+                    for($i=0; $i < $request->number_of_payments; $i++) {
+                        $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                        Installment::create([
+                            'subscription_id'   => $subscription->id,
+                            'installment_number'=> $i+1,
+                            'value' => $request->payment[$i],
+                            'payment_date'  => $pay_date,
+                            'is_paid'   => $request->payment_status[$i]
+                        ]);
+                    }
                 }
             }
         } catch(Exception $ex) {

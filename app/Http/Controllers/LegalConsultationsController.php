@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Input;
 use App\User_Details;
 use App\Consultation_Replies;
 use App\Consultation_Lawyers;
+use App\Exports\ConsultationsExport;
 
 class LegalConsultationsController extends Controller
 {
@@ -489,4 +491,25 @@ class LegalConsultationsController extends Controller
         
         return view('legal_consultations.legal_consultation_assign',compact('lawyers','consultation'));
     }
+
+     public function excel()
+    {   
+      $filepath ='public/excel/';
+      $PathForJson='storage/excel/';
+      $filename = 'consultations'.time().'.xlsx';
+      if(isset($_GET['ids'])){
+       $ids = $_GET['ids'];
+       Excel::store(new ConsultationsExport($ids),$filepath.$filename);
+       return response()->json($PathForJson.$filename);
+     }
+     elseif ($_GET['filters']!='') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new ConsultationsExport($filters)),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+    else{
+      Excel::store((new ConsultationsExport()),$filepath.$filename);
+      return response()->json($PathForJson.$filename); 
+    }
+  }
 }
