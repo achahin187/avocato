@@ -374,7 +374,7 @@
                               </div>
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_archive"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" onclick="return exportExcel_2();">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                            <div class="bottomActions__btns"><a class=" excel-btn-1 master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                             </div>
                             <table class="table-1 cases_2" id="dataTableTriggerId_001">
                               <thead>
@@ -681,7 +681,30 @@
      $.ajax({
        type:'GET',
        url:'{{route('cases_excel')}}',
-       data:{ids:selectedIds,filters:filter},
+       data:{ids:selectedIds,filters:filter,type:0},
+       success:function(response){
+        // alert(2);
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        // var a = document.createElement("a");
+        // a.href = response.file; 
+        // a.download = response.name+'.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        location.href = response;
+      }
+    });
+   });
+ $('.excel-btn-1').click(function(){
+    // alert('1');
+     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-case-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('cases_excel')}}',
+       data:{ids:selectedIds,filters:filter,type:1},
        success:function(response){
         // alert(2);
         swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");

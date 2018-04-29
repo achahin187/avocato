@@ -783,16 +783,19 @@ if($request->has('record_documents')){
       $filename = 'cases'.time().'.xlsx';
       if(isset($_GET['ids'])){
        $ids = $_GET['ids'];
+       
        Excel::store(new CasesExport($ids),$filepath.$filename);
        return response()->json($PathForJson.$filename);
      }
      elseif ($_GET['filters']!='') {
       $filters = json_decode($_GET['filters']);
-      Excel::store((new CasesExport($filters)),$filepath.$filename);
+      $type=$_GET['type'];
+      Excel::store((new CasesExport($filters,$type)),$filepath.$filename);
       return response()->json($PathForJson.$filename); 
     }
     else{
-      Excel::store((new CasesExport()),$filepath.$filename);
+        $type=$_GET['type'];
+      Excel::store((new CasesExport(null,$type)),$filepath.$filename);
       return response()->json($PathForJson.$filename); 
     }
   }

@@ -11,8 +11,9 @@ use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 class CasesExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
-	public function __construct($ids=null){
+	public function __construct($ids=null,$type=null){
 		$this->ids=$ids;
+        $this->type=$type;
 	}
 
 
@@ -34,7 +35,7 @@ class CasesExport implements FromCollection,WithEvents
         $casesArray = array(['نوع القضيه','المحكمه','الدائره','رقم الدعوه','السنه','تاريخ قيد الدعوه','رقم الملف بالمكتب']) ;
         if(is_null($this->ids)){
 
-        $cases = Case_::all();
+        $cases = Case_::where('archived',$this->type)->get();
         foreach($cases as $case)
         {
             array_push($casesArray,[$case->case_types->name,$case->courts->name,$case->region,$case->claim_number,$case->claim_year,$case->claim_date,$case->office_file_number]);

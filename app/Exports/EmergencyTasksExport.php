@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 
-class CasesExport implements FromCollection,WithEvents
+class EmergencyTasksExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
 	public function __construct($ids=null){
@@ -31,13 +31,29 @@ class CasesExport implements FromCollection,WithEvents
     
     public  function collection()
     {   
-        $tasksArray = array(['نوع القضيه','المحكمه','الدائره','رقم الدعوه','السنه','تاريخ قيد الدعوه','رقم الملف بالمكتب']) ;
+        $tasksArray = array(['كود العميل','اسم العميل','نوع العميل','هاتف','عنوان','التاريخ','الوقت','الحاله','المحامي المحدد']) ;
         if(is_null($this->ids)){
 
-        $tasks = Case_::all();
+        $tasks = Tasks::where('task_type_id',1)->with(['client'=>function($q){
+            $q->with('rules');
+        }])->get();
         foreach($tasks as $task)
         {
-            array_push($tasksArray,[$case->case_types->name,$case->courts->name,$case->region,$case->claim_number,$case->claim_year,$case->claim_date,$case->office_file_number]);
+            $task_status='';
+            if($task->task_status_id == 2)
+            {
+                $task_status='تم';
+            }
+            else
+            {
+                $task_status='لم يتم';
+            }
+            $rule='';
+            foreach ($task->client->rules as  $role) {
+                if($role->id != '6' && $role->id != '5')
+                $rule=$role->name_ar;
+            }
+            array_push($tasksArray,[$task->client->code,$task->client->name,$rule,$task->client->mobile,$task->client->address,date('d-m-Y', strtotime($task->start_datetime)),date('h:i', strtotime($task->start_datetime)),$task_status,$task->lawyer->name]);
         }
 
         }
@@ -46,12 +62,26 @@ class CasesExport implements FromCollection,WithEvents
         $selects = $this->ids;
          foreach($selects as $select)
            {
-            $task = Case_::find($select);
-             array_push($tasksArray,[$case->case_types->name,$case->courts->name,$case->region,$case->claim_number,$case->claim_year,$case->claim_date,$case->office_file_number]);
+            $task = Tasks::find($select);
+              $task_status='';
+            if($task->task_status_id == 2)
+            {
+                $task_status='تم';
+            }
+            else
+            {
+                $task_status='لم يتم';
+            }
+            $rule='';
+            foreach ($task->client->rules as  $role) {
+                if($role->id != '6' && $role->id != '5')
+                $rule=$role->name_ar;
+            }
+            array_push($tasksArray,[$task->client->code,$task->client->name,$rule,$task->client->mobile,$task->client->address,date('d-m-Y', strtotime($task->start_datetime)),date('h:i', strtotime($task->start_datetime)),$task_status,$task->lawyer->name]);
             } 
         }
         
-        return collect($casesArray);
+        return collect($tasksArray);
     }
 
 }
