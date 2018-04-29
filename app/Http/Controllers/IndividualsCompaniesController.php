@@ -490,6 +490,13 @@ class IndividualsCompaniesController extends Controller
         ]);
     }
 
+    public function destroyShow($id)
+    {
+        // Find and delete this record
+        Users::find($id)->delete();
+        return redirect()->route('ind.com')->with('success','تم استبعاد العميل');
+    }
+
     // export Excel sheets
     public function exportXLS(Request $request)
     {
