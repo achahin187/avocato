@@ -159,6 +159,7 @@ Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
+Route::post('/notifications_store', 'NotificationsController@store')->name('notifications.store');
 
 });
 

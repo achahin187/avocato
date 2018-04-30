@@ -262,6 +262,8 @@
                       <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_notification"><i class="fa fa-plus"></i><span>إضافة</span></a>
                         <div class="remodal-bg"></div>
                         <div class="remodal" data-remodal-id="add_notification" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+              <form role="form" action="{{route('notifications.store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <div class="row">
@@ -270,25 +272,34 @@
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                   <div class="master_field">
                                     <label class="master_label mandatory" for="governorate">ارسال الى مشتركين الباقات</label>
-                                    <select class="master_input select2" id="governorate" multiple="multiple" data-placeholder="ارسال الى" style="width:100%;" ,>
-                                      <option>فضي</option>
-                                      <option>بلاتيني</option>
-                                      <option>ذهبي</option>
-                                    </select><span class="master_message color--fadegreen">message</span>
+                                    <select name="package_type[]" class="master_input select2" id="governorate" multiple="multiple" data-placeholder="ارسال الى" style="width:100%;" ,>
+                                      @foreach ($subscription_types as $types)
+                                      <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+                                      @endforeach
+                                    </select><span class="master_message color--fadegreen">
+                                      @if ($errors->has('package_type'))
+                                      {{ $errors->first('package_type')}}
+                                    @endif</span>
                                   </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                   <div class="master_field">
                                     <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
                                     <div class="bootstrap-timepicker">
-                                      <input class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
-                                    </div><span class="master_message color--fadegreen">message</span>
+                                      <input name="date" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
+                                    </div><span class="master_message color--fadegreen">
+                                      @if ($errors->has('date'))
+                                      {{ $errors->first('date')}}
+                                    @endif</span>
                                   </div>
                                 </div>
                                 <div class="col-xs-12">
                                   <div class="master_field">
                                     <label class="master_label">نص التنبية</label>
-                                    <textarea class="master_input" name="textarea" placeholder="نص التنبية"></textarea>
+                                    <textarea name="notification" class="master_input" name="textarea" placeholder="نص التنبية"></textarea><span class="master_message color--fadegreen">
+                                      @if ($errors->has('notification'))
+                                      {{ $errors->first('notification')}}
+                                    @endif</span>
                                   </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -296,7 +307,8 @@
                             </div>
                           </div><br>
                           <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                          <button class="remodal-confirm" type="submit">حفظ</button>
+                        </form>
                         </div>
                       </div>
                       <div class="clearfix"></div>
