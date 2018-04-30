@@ -113,6 +113,7 @@ Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.
 Route::middleware(['roles:1,2'])->group(function () {
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
+Route::get('/clients/print/{ids}', 'ClientsController@printSelected')->name('printUsers');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
@@ -148,6 +149,7 @@ Route::post('/individuals_companies/update/{id}', 'IndividualsCompaniesControlle
 Route::get('/individuals_companies/destroy/{id}', 'IndividualsCompaniesController@destroy')->name('ind.com.destroy');
 Route::get('/individuals_companies/destroySelected', 'IndividualsCompaniesController@destroySelected')->name('ind.com.destroySelected');
 Route::post('/individuals_companies/filter', 'IndividualsCompaniesController@filter')->name('ind.com.filter');
+Route::get('/individuals_companies/destroyShow/{id}', 'IndividualsCompaniesController@destroyShow')->name('ind.com.destroyShow');
 
 Route::get('/mobile', 'MobileController@index')->name('mobile');
 Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');

@@ -367,7 +367,7 @@
               <?php $j = $i+1; ?>
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="premium1_amount">{{ 'رقم القسط رقم ' . $j }}</label>
+                    <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
                     <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
                   </div>
                   </div>
@@ -427,7 +427,7 @@
                 // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
                 $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
-                                        <label class="master_label mandatory" for="premium1_amount">'+ 'رقم القسط رقم ' + j + '</label>\
+                                        <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
                                         <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
@@ -480,6 +480,13 @@
             $('.disScroll').on('blur', 'input[type=number]', function (e) {
               $(this).off('mousewheel.disableScroll')
             });    
+
+            // hide alert message after 4 seconds => 4000 ms
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 4000);
     
         });
     
