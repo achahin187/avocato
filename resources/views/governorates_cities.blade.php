@@ -480,7 +480,6 @@
         // Export table as Excel file
         $('#exportSelected').click(function(){
           var allVals = [];                   // selected IDs
-          var token = '{{ csrf_token() }}';
 
           // push cities IDs selected by user
           $('.checkboxes:checked').each(function() {
@@ -498,27 +497,15 @@
           var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           $.ajax(
           {
-            cache: false,
             url: "{{ route('governorates_cities.exportXLS') }}",
-            type: 'POST',
-            dataType: "JSON",
+            type: 'GET',
             data: {
                 "ids": ids,
-                "_method": 'POST',
-                "_token": token,
+                "_method": 'GET',
             },
-            success: function (response, textStatus, request)
-            {
+            success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-              var a = document.createElement("a");
-              a.href = response.file; 
-              a.download = response.name+".xlsx";
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-            },
-            error: function (ajaxContext) {
-              console.log(ajaxContext.responseText);
+              location.href = response;
             }
           });
 

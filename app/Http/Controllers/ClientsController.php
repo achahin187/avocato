@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Excel;
 use App\Users;
+use App\Exports\ClientsExport;
 use Illuminate\Http\Request;
 
 class ClientsController extends Controller
@@ -91,4 +93,25 @@ class ClientsController extends Controller
             return redirect()->back();
         }
     }
+
+    // export Excel sheets
+    public function exportXLS(Request $request)
+    {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = $request->userType.time().'.xlsx';
+
+        if(isset($request->ids)){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new ClientsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new ClientsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
+    }
+
 }

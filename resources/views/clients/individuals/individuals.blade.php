@@ -168,7 +168,7 @@
           <a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
         </div>
         
-        <table class="table-1">
+        <table class="table-1" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
               <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -188,7 +188,7 @@
             @if (isset($filters) && !empty($filters))
               @foreach ($filters as $filter)
                 <tr data-user="{{ $filter->id }}">
-                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $filter->id }}" /></span></td>
+                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" data-id="{{ $filter->id }}" /></span></td>
                   
                   {{-- Code --}}
                   @if ( $filter->code )
@@ -622,7 +622,6 @@
         // Export table as Excel file
         $('#exportSelected').click(function(){
           var allVals = [];                   // selected IDs
-          var token = '{{ csrf_token() }}';
 
           // push cities IDs selected by user
           $('.checkboxes:checked').each(function() {
@@ -640,27 +639,16 @@
           var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           $.ajax(
           {
-            cache: false,
-            url: "{{ route('governorates_cities.exportXLS') }}",
-            type: 'POST',
-            dataType: "JSON",
+            url: "{{ route('clients.exportXLS') }}",
+            type: 'GET',
             data: {
                 "ids": ids,
-                "_method": 'POST',
-                "_token": token,
+                "userType": 'Individuals',
+                "_method": 'GET',
             },
-            success: function (response, textStatus, request)
-            {
+            success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-              var a = document.createElement("a");
-              a.href = response.file; 
-              a.download = response.name+".xlsx";
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-            },
-            error: function (ajaxContext) {
-              console.log(ajaxContext.responseText);
+              location.href = response;
             }
           });
 

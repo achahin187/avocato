@@ -30,7 +30,7 @@ Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@
 Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
 Route::delete('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
 Route::delete('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
-Route::post('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
+Route::get('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 Route::get('/courts_get_city', 'CourtsListController@getCity')->name('courts_get_city');
@@ -50,7 +50,7 @@ Route::get('/consultations_classification', 'ConsultationsClassificationControll
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
 Route::delete('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
 Route::delete('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
-Route::post('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
+Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
 
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
@@ -103,9 +103,9 @@ Route::get('/news_list_create', 'NewsListController@create')->name('news_list_cr
 Route::post('/news_list_create', 'NewsListController@store')->name('news.store');
 Route::get('/news_list_edit/{id}', 'NewsListController@edit')->name('news.edit');
 Route::post('/news_list_update/{id}', 'NewsListController@update')->name('news.update');
-Route::delete('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_destroy');
-Route::delete('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
-Route::post('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
+Route::get('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_destroy');
+Route::get('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
+Route::get('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
 
 });
 
@@ -114,6 +114,7 @@ Route::middleware(['roles:1,2'])->group(function () {
 
 Route::get('/clients', 'ClientsController@index')->name('clients');
 Route::get('/clients/print/{ids}', 'ClientsController@printSelected')->name('printUsers');
+Route::get('/clients/export/excel', 'ClientsController@exportXLS')->name('clients.exportXLS');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');

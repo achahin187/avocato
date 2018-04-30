@@ -73,7 +73,7 @@
         <div class="col-md-2 col-xs-4">
           <div class="master_field">
             <label class="master_label" for="sitch_1">تفعيل </label>
-            <input class="" type="checkbox" checked data-on-text="نعم" data-off-text="لا" value="1" name="activate">
+            <input id="box" type="checkbox" checked data-on-text="نعم" data-off-text="لا" value="1" name="activate">
               
               @if ($errors->has('activate'))
                 <span class="master_message color--fadegreen">{{ $errors->first('activate') }}</span>
@@ -107,7 +107,7 @@
         </button>
       </div>
       <div class="col-md-2 col-xs-6">
-        <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
+        <button id="reset" class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="reset"><i class="fa fa-times"></i><span>الغاء</span>
         </button>
       </div>
       <div class="clearfix"></div><br>
@@ -119,6 +119,11 @@
   <script src="{{ url('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
   <script>
       CKEDITOR.replace( 'article-ckeditor' );
+
+      $('#reset').click(function() {
+        $('#box').attr('checked', false);
+        CKEDITOR.instances['article-ckeditor'].setData('');
+      });
   </script>
 
  @endsection

@@ -426,30 +426,18 @@
       var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
       
       $.ajax(
-      {
-        cache: false,
-        url: "{{ route('consult.exportXLS') }}",
-        type: 'POST',
-        dataType: "JSON",
-        data: {
-            "ids": ids,
-            "_method": 'POST',
-            "_token": token,
-        },
-        success: function (response, textStatus, request)
-        {
-          swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-          var a = document.createElement("a");
-          a.href = response.file; 
-          a.download = response.name+".xlsx";
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        },
-        error: function (ajaxContext) {
-          console.log(ajaxContext.responseText);
-        }
-      });
+          {
+            url: "{{ route('consult.exportXLS') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
 
     });
 
