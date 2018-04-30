@@ -3,20 +3,20 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="text-xs-center">
-            <div class="text-wraper">
-              <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
-                <h4 class="cover-inside-title color--gray_d">محتوى </h4>
-              </h4>
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="text-xs-center">
+              <div class="text-wraper">
+                <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
+                  <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+                  <h3 class="cover-inside-title color--gray_d">مشتركين بواسطة الموبايل </h3>
+                </h4>
+              </div>
             </div>
           </div>
         </div>
-        <div class="cover--actions"><span></span>
-        </div>
-      </div>
+      </div> 
     </div>
   </div>
 
@@ -28,7 +28,7 @@
     </div>
     {{-- End alert --}}
 
-  <div class="col-lg-12">
+  <div class="">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="clearfix"></div>
       <div class="full-table">
@@ -135,7 +135,7 @@
                 </span></td>
                 <td><span class="cellcontent">{{ $user->address }}</span></td>
                 <td><span class="cellcontent">{{ $user->phone }}</span></td>
-                <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times'}}"></i></span></td>
                 <td>
                   <span class="cellcontent">
                     <a href="{{ route('mobile.show', $user->id) }}"  class= "action-btn bgcolor--main color--white ">

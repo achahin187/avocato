@@ -204,7 +204,7 @@ else
                             @if($lawyer->is_active)
                             <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
                             @else
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-times"></i></span></td>
+                            <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
                             @endif
                           </tr>
                           @endforeach

@@ -235,7 +235,7 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $filter->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class = "fa {{ $filter->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times'}}"></i></span></td>
                 
                 {{-- Legal representative name --}}
                 <td>
@@ -317,7 +317,7 @@
                     @endif
                   </span>
                 </td>
-                <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $company->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                <td><span class="cellcontent"><i class = "fa {{ $company->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times'}}"></i></span></td>
                 
                 {{-- Legal representative name --}}
                 <td>
