@@ -6,6 +6,7 @@ use Session;
 use Validator;
 use Excel;
 
+use App\Exports\GovernoratesCitiesExport;
 use App\Geo_Cities;
 use App\Geo_Governorates;
 use Illuminate\Http\Request;
@@ -170,35 +171,19 @@ class GovernoratesCitiesController extends Controller
     // export Excel sheets
     public function exportXLS(Request $request)
     {
-        $data = array(['المدينة', 'المحافظة']);
-        $ids = explode(",", $request->ids);
-        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Governorates.Cities'.time().'.xlsx';
 
-        foreach($ids as $id) {
-            $d =  Geo_Cities::find($id);
-            array_push( $data, [$d->name, $d->governorate->name]);
+        if(isset($request->ids)){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new GovernoratesCitiesExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new GovernoratesCitiesExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
         }
-
-        $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
-            $excel->setTitle('المدن والمحافظات');
-            // Chain the setters
-            $excel->setCreator('جسر الامان')
-            ->setCompany('جسر الامان');
-            // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول المحافظات والمدن');
-
-            $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
-                $sheet->setRightToLeft(true);
-                $sheet->getStyle('A1:B1')->getFont()->setBold(true);
-                $sheet->fromArray($data, null, 'A1', false, false);
-            });
-        });
-
-        $myFile = $myFile->string('xlsx');
-        $response = array(
-            'name' => 'المدن والمحافظات'.date('Y_m_d'),
-            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
-        );
 
         return response()->json($response);
     }

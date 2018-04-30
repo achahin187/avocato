@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use Exception;
 use Auth;
 use Excel;
@@ -9,6 +10,7 @@ use Session;
 use App\News;
 use Validator;
 use \Carbon\Carbon;
+use App\Exports\NewsExport;
 use Illuminate\Http\Request;
 
 class NewsListController extends Controller
@@ -266,7 +268,9 @@ class NewsListController extends Controller
         $image_path = $news->photo;     // image path
 
         // check if image exists then delete it
-        unlink(public_path($image_path));
+        if ( File::exists(public_path($image_path)) ) {
+            File::delete(public_path($image_path));
+        }
         
         // delete this record
         $news->delete();
@@ -295,35 +299,19 @@ class NewsListController extends Controller
     // export Excel sheets
     public function exportXLS(Request $request)
     {
-        $data = array(['عنوان الخبر', 'مضمون الخبر', 'كتب بواسطة', 'تم تعديله بواسطة']);
-        $ids = explode(",", $request->ids);
-        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'News'.time().'.xlsx';
 
-        foreach($ids as $id) {
-            $d =  News::find($id);
-            array_push( $data, [$d->name, strip_tags($d->body), $d->created_by, $d->modified_by]);
+        if(isset($request->ids)){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new NewsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new NewsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
         }
-
-        $myFile = Excel::create('الاخبار', function($excel) use ($data) {
-            $excel->setTitle('الاخبار');
-            // Chain the setters
-            $excel->setCreator('جسر الامان')
-            ->setCompany('جسر الامان');
-            // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول الاخبار');
-
-            $excel->sheet('الاخبار', function($sheet) use ($data) {
-                $sheet->setRightToLeft(true);
-                $sheet->getStyle('A1:B1')->getFont()->setBold(true);
-                $sheet->fromArray($data, null, 'A1', false, false);
-            });
-        });
-
-        $myFile = $myFile->string('xlsx');
-        $response = array(
-            'name' => 'الاخبار'.date('Y_m_d'),
-            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
-        );
 
         return response()->json($response);
     }

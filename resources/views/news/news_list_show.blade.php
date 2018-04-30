@@ -38,7 +38,6 @@
       $('.deleteRecord').click(function(){
         
         var id = $(this).data("id");
-        var token = '{{ csrf_token() }}';
 
         swal({
           title: "هل أنت متأكد؟",
@@ -56,12 +55,11 @@
                 $.ajax(
                 {
                     url: "{{ url('/news_list/destroy') }}" +"/"+ id,
-                    type: 'DELETE',
+                    type: 'GET',
                     dataType: "JSON",
                     data: {
                         "id": id,
-                        "_method": 'DELETE',
-                        "_token": token,
+                        "_method": 'GET',
                     },
                     success: function ()
                     {

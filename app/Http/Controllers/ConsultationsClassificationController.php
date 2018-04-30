@@ -6,6 +6,7 @@ use Session;
 use Validator;
 use Excel;
 
+use App\Exports\ConsultationTypesExport;
 use App\Consultation_Types;
 use Illuminate\Http\Request;
 
@@ -130,35 +131,19 @@ class ConsultationsClassificationController extends Controller
     // export Excel sheets
     public function exportXLS(Request $request)
     {
-        $data = array(['تصنيف الاستشارات']);
-        $ids = explode(",", $request->ids);
-        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Governorates.Cities'.time().'.xlsx';
 
-        foreach($ids as $id) {
-            $d = Consultation_Types::find($id);
-            array_push( $data, [$d->name]);
+        if(isset($request->ids)){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new ConsultationTypesExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new ConsultationTypesExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
         }
-
-        $myFile = Excel::create('تصنيف الاستشارات', function($excel) use ($data) {
-            $excel->setTitle('تصنيف الاستشارات');
-            // Chain the setters
-            $excel->setCreator('جسر الامان')
-            ->setCompany('جسر الامان');
-            // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول التصنيفات الاستشارية');
-
-            $excel->sheet('تصنيف الاستشارات', function($sheet) use ($data) {
-                $sheet->setRightToLeft(true);
-                $sheet->getStyle('A1')->getFont()->setBold(true);
-                $sheet->fromArray($data, null, 'A1', false, false);
-            });
-        });
-
-        $myFile = $myFile->string('xlsx');
-        $response = array(
-            'name' => 'التصنيفات الإستشارية'.date('Y_m_d'),
-            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
-        );
 
         return response()->json($response);
     }

@@ -72,8 +72,6 @@ class RecordsController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $this->validate($request, [
             'number' => 'required',
             'pen'    => 'required',
@@ -83,7 +81,7 @@ class RecordsController extends Controller
             'session_date'  => 'required',
             'notes'  => 'required'
         ]);
-        
+
         try {
             $record = new Record;
             $record->number = $request->number;

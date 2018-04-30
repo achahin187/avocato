@@ -106,7 +106,7 @@
             @foreach ($news as $new)
               <tr data-news="{{ $new->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $new->id }}" /></span></td>
-                <td><span class="cellcontent">215</span></td>
+                <td><span class="cellcontent">{{ $new->id }}</span></td>
                 <td><span class="cellcontent">{{ $new->name ? $new->name : 'لا يوجد اسم' }}</span></td>
                 <td><span class="cellcontent">{{ $new->published_at ? $new->published_at : 'لم يتم النشر بعد' }}</span></td>
                 <td><span class="cellcontent"><i class = "fa {{ $new->is_active ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
@@ -318,11 +318,11 @@
                 $.ajax(
                 {
                     url: "{{ route('news_destroySelected') }}",
-                    type: 'DELETE',
+                    type: 'GET',
                     dataType: "JSON",
                     data: {
                         "ids": ids,
-                        "_method": 'DELETE',
+                        "_method": 'GET',
                         "_token": token,
                     },
                     success: function ()
@@ -347,7 +347,6 @@
       $('.deleteRecord').click(function(){
         
         var id = $(this).data("id");
-        var token = '{{ csrf_token() }}';
 
         swal({
           title: "هل أنت متأكد؟",
@@ -365,12 +364,11 @@
                 $.ajax(
                 {
                     url: "{{ url('/news_list/destroy') }}" +"/"+ id,
-                    type: 'DELETE',
+                    type: 'GET',
                     dataType: "JSON",
                     data: {
                         "id": id,
-                        "_method": 'DELETE',
-                        "_token": token,
+                        "_method": 'GET',
                     },
                     success: function ()
                     {
@@ -406,30 +404,18 @@
         var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
         
         $.ajax(
-        {
-          cache: false,
-          url: "{{ route('news.exportXLS') }}",
-          type: 'POST',
-          dataType: "JSON",
-          data: {
-              "ids": ids,
-              "_method": 'POST',
-              "_token": token,
-          },
-          success: function (response, textStatus, request)
           {
-            swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-            var a = document.createElement("a");
-            a.href = response.file; 
-            a.download = response.name+".xlsx";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-          },
-          error: function (ajaxContext) {
-            console.log(ajaxContext.responseText);
-          }
-        });
+            url: "{{ route('news.exportXLS') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
 
       });
 

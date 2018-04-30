@@ -182,7 +182,7 @@
                 <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
                 <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
             </div>
-            <table class="table-1">
+            <table class="table-1" id="dataTableTriggerId_001">
             <thead>
                 <tr class="bgcolor--gray_mm color--gray_d">
                 <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
@@ -201,7 +201,7 @@
                 @if (isset($records) && !empty($records))
                     @foreach ($records as $record)
                         <tr data-record="{{ $record->id }}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $record->id }}" /></span></td>
+                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" data-id="{{ $record->id }}" /></span></td>
                             <td><span class="cellcontent">{{ isset($record->number) ? $record->number : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ isset($record->pen) ? $record->pen : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ isset($record->client_id) ? Helper::getUserDetails($record->client_id)->full_name : 'لا يوجد' }}</span></td>

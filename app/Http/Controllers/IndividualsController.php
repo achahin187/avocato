@@ -469,42 +469,6 @@ class IndividualsController extends Controller
         ]);
     }
 
-    // export Excel sheets
-    public function exportXLS(Request $request)
-    {
-        $data = array(['المدينة', 'المحافظة']);
-        $ids = explode(",", $request->ids);
-        // $data = Geo_Cities::whereIn('id', explode(",", $ids))->get();
-
-        foreach($ids as $id) {
-            $d =  Geo_Cities::find($id);
-            array_push( $data, [$d->name, $d->governorate->name]);
-        }
-
-        $myFile = Excel::create('المدن والمحافظات', function($excel) use ($data) {
-            $excel->setTitle('المدن والمحافظات');
-            // Chain the setters
-            $excel->setCreator('جسر الامان')
-            ->setCompany('جسر الامان');
-            // Call them separately
-            $excel->setDescription('بيانات ما تم اختياره من جدول المحافظات والمدن');
-
-            $excel->sheet('المدن والمحافظات', function($sheet) use ($data) {
-                $sheet->setRightToLeft(true);
-                $sheet->getStyle('A1:B1')->getFont()->setBold(true);
-                $sheet->fromArray($data, null, 'A1', false, false);
-            });
-        });
-
-        $myFile = $myFile->string('xlsx');
-        $response = array(
-            'name' => 'المدن والمحافظات'.date('Y_m_d'),
-            'file' => "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,".base64_encode($myFile)
-        );
-
-        return response()->json($response);
-    }
-
     // Filter individuals based on package_type, start-end dates and nationality
     public function filter(Request $request)
     {
