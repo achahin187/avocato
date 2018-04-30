@@ -11,6 +11,7 @@
             <div class="text-wraper">
               <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
                 <h4 class="cover-inside-title color--gray_d">محتوى </h4>
+                <h3 class="cover-inside-title color--gray_d">الأفراد </h3>
               </h4>
             </div>
           </div>
@@ -327,7 +328,7 @@
                       @endif
                     </span>
                   </td>
-                  <td><span class="cellcontent"><i class = "fa color--fadegreen {{ $user->is_active ? ' fa-check' : 'fa-times'}}"></i></span></td>
+                  <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? ' color--fadegreen fa-check' : 'fa-times  color--fadebrown'}}"></i></span></td>
                   <td>
                     <span class="cellcontent">
 

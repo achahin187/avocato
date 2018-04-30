@@ -279,7 +279,7 @@
                       @endif
                     </span>
                   </td>
-                  <td><span class="cellcontent"><i class="fa color--fadegreen {{ $filter->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
+                  <td><span class="cellcontent"><i class="fa {{ $filter->is_active ? ' color--fadegreen fa-check' : ' color--fadebrown fa-times'}}"></i></span></td>
                   <td>
                     <span class="cellcontent">
                       <a href= clients_individuals_companies_view.html ,  class= "action-btn bgcolor--main color--white ">

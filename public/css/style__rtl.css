@@ -19110,7 +19110,7 @@ label.half {
   font-size: 14px;
 }
 
-.form-login a {
+.form-login a, .form-login button {
   text-transform: uppercase;
   outline: 0;
   width: 100%;

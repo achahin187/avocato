@@ -144,7 +144,7 @@
                     <td><span class="cellcontent">
                       {{ $complain->created_at ? $complain->created_at->format('d/m/Y') : 'لا يوجد' }}
                     </span></td>
-                    <td><span class="cellcontent"><i class = "fa {{ $complain->is_replied ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
+                    <td><span class="cellcontent"><i class = "fa {{ $complain->is_replied ? 'color--fadegreen fa-check' : ' color--fadebrown fa-times' }}"></i></span></td>
                     <td>
                       <span class="cellcontent">
 
