@@ -240,54 +240,24 @@
                          </div>
                          <!-- =============== APP MAIN SCRIPTS ===============-->
                          <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
-                         <script type="text/javascript">
+                 <script type="text/javascript">
                            $(document).ready(function(){
-    var path = window.location.href;
-    // console.log(path);
-    // var base_path = window.location.pathname;
-    // console.log(path);
-    // console.log(base_path.split('/').pop());
-    // var url = main_url;
-    // console.log(url);
-      // Account for home page with empty path
-      // if ( path == '' ) {
-      //   path = 'users_application_module';
-      // }
-      // $("#users_ul").on('click',function(){
-      //   alert("a");
+                            var path = window.location.href;
+                         
+                              var target = $('#menu li a[href="'+path+'"]');
+                              var sub_target = $('#menu li ul li a[href="'+path+'"]');
+                            
 
-      // })
-      var target = $('#menu li a[href="'+path+'"]');
-      var sub_target = $('#menu li ul li a[href="'+path+'"]');
-      
-      
-      // if((path == main_url+'cms_module/cp_users/DorraUsers') || (path == main_url+'cms_module/cp_users')){
-        
-      //       $("#users_ul ul").removeClass("collapse");
-      //       target.parent().parent().parent().addClass('active');
+                                    target.removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
 
-      // }
-      // if((path == main_url+'cms_module/content/index/2') || (path == main_url+'cms_module/content/index/4') || (path == main_url+'cms_module/content/index/5') || (path == main_url+'cms_module/content/index/6')){
-       
-      //       $("#contents_ul ul").removeClass("collapse");
-      //       target.parent().parent().parent().addClass('active');
+                                     sub_target.removeClass( "color--gray_d" ).addClass('color--sec');
+                                     
+                                    sub_target.parent().parent().parent().removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
+                              
+                             
 
 
-      // }else{
-
-            target.removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
-             sub_target.removeClass( "color--gray_d" ).addClass('color--sec');
-            sub_target.parent().parent().parent().removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
-      // }
-        
-       
-     
-      // Add active class to target link
-
-     
-
-
-});
+                        });
                          </script>
                          <!-- =============== PAGE VENDOR SCRIPTS ===============-->
                          <script type="text/javascript">
