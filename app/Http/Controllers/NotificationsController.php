@@ -18,6 +18,7 @@ class NotificationsController extends Controller
     public function index()
     {
         $data['subscription_types'] = Package_Types::all();
+        $data['notifications'] = Notifications::where('notification_type_id',1)->get();
         return view('clients.notifications',$data);
     }
 
@@ -54,6 +55,8 @@ class NotificationsController extends Controller
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
+      $notification->notification_type_id=1;
+      $notification->created_at=date('Y-m-d H:i:s');
       $notification->save();
       
       foreach($request->package_type as $package){
@@ -106,6 +109,8 @@ class NotificationsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $notification = Notifications::find($id);
+        $notification->noti_items()->delete();
+        $notification->delete();
     }
 }

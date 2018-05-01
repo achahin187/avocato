@@ -1,6 +1,41 @@
 @extends('layout.app')
 @section('content')
+ <script>
+  $(document).ready(function(){
 
+        $('.btn-warning-cancel').click(function(){
+      var noti_id = $(this).closest('tr').attr('data-notification-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('notifications_destroy')}}'+'/'+noti_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-notification-id='+noti_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+          });
+</script>
 
               <div class="row">
                 <div class="col-lg-12">
@@ -70,36 +105,16 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td><span class="cellcontent">يوجد نص يوجد نص !</span></td>
-                            <td><span class="cellcontent">فضي - ذهبي</span></td>
-                            <td><span class="cellcontent">21-12-2012</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                          @foreach($notifications as $notification)
+                          <tr data-notification-id={{$notification->id}}>
+                            <td><span class="cellcontent">{{$notification->msg}}</span></td>
+                            <td><span class="cellcontent">@foreach($notification->noti_items as $item)
+                              {{ Helper::localizations('package_types', 'name', $item->item_id) }} 
+                            @endforeach</span></td>
+                            <td><span class="cellcontent">{{$notification->schedule}}</span></td>
+                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent">يوجد نص يوجد نص !</span></td>
-                            <td><span class="cellcontent">فضي - ذهبي</span></td>
-                            <td><span class="cellcontent">21-12-2012</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent">يوجد نص يوجد نص !</span></td>
-                            <td><span class="cellcontent">فضي - ذهبي</span></td>
-                            <td><span class="cellcontent">21-12-2012</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent">يوجد نص يوجد نص !</span></td>
-                            <td><span class="cellcontent">فضي - ذهبي</span></td>
-                            <td><span class="cellcontent">21-12-2012</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent">يوجد نص يوجد نص !</span></td>
-                            <td><span class="cellcontent">فضي - ذهبي</span></td>
-                            <td><span class="cellcontent">21-12-2012</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-confirm action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                          @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" data-remodal-id="log_link" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
