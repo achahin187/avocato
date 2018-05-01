@@ -22,6 +22,33 @@ class NotificationsController extends Controller
     {
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where('notification_type_id',1)->get();
+        // $data['notes'] = Notifications::where('notification_type_id','!=',1)->get();
+        // foreach($data['notes'] as $note){
+        //     if($note->notification_type_id ==2){
+
+        //     $note['url']="route('task_emergency_view',$note->item_id)";
+        //     }
+        //     if($note->notification_type_id ==4){
+
+        //     $note['url']="route('complains.edit',$note->item_id)";
+        //     }
+        //     if($note->notification_type_id ==5 and $note->entity_id==11 ){
+
+        //     $note['url']="route('services_show',$note->item_id)";
+        //     }
+        //     if($note->notification_type_id ==5 and $note->entity_id==14 ){
+
+        //     $note['url']="route('case_view',$note->item_id)";
+        //     }
+        //     if($note->notification_type_id ==6){
+
+        //     $note['url']="route('lawyers_show',$note->item_id)";
+        //     }
+        //     if($note->notification_type_id ==7){
+
+        //     $note['url']="route('legal_consultation_view',$note->item_id)";
+        //     }
+        // }
         return view('clients.notifications',$data);
     }
 
@@ -141,6 +168,11 @@ class NotificationsController extends Controller
 
             }
         }
+    }
+
+        public function admin_notification()
+    {
+
     }
 
 }
