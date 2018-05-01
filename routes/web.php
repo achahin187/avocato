@@ -163,6 +163,7 @@ Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 Route::post('/notifications_store', 'NotificationsController@store')->name('notifications.store');
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
+Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
 
 });
 

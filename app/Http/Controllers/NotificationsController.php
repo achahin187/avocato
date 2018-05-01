@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Package_Types;
 use App\Notifications;
 use App\Notification_Items;
+use App\Notifications_Push;
+use App\Subscriptions;
 use Validator;
+use Carbon\Carbon;
 
 class NotificationsController extends Controller
 {
@@ -56,6 +59,7 @@ class NotificationsController extends Controller
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
+      $notification->is_sent=0;
       $notification->created_at=date('Y-m-d H:i:s');
       $notification->save();
       
@@ -113,4 +117,30 @@ class NotificationsController extends Controller
         $notification->noti_items()->delete();
         $notification->delete();
     }
+
+        public function notification_cron()
+    {
+        $notifications = Notifications::where('notification_type_id',1)->get();
+        foreach($notifications as $notification){
+            if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now())  )){
+                
+            foreach($notification->noti_items as $item){
+                $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
+                foreach($subs as $sub){
+                    $user = $sub->user;
+                    $push = new Notifications_Push;
+                    $push->notification_id=$notification->id;
+                    $push->device_token=$user->device_token;
+                    $push->mobile_os=$user->mobile_os;
+                    $push->lang_id=$user->lang_id;
+                    $push->save();
+                }
+            }
+            $notification->is_sent=1;
+            $notification->save();
+
+            }
+        }
+    }
+
 }
