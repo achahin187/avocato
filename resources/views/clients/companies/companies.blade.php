@@ -299,11 +299,7 @@
                 {{-- Package name --}}
                 <td>
                   <span class="cellcontent">
-                    @if (isset($company->subscription->package_type->name))
-                      {{ Helper::localizations('package_types', 'name', $company->subscription->package_type->id) }}
-                    @else
-                      لا يوجد
-                    @endif
+                    {{ $company->subscription ? ( $company->subscription->package_type ? ( $company->subscription->package_type->id ? Helper::localizations('package_types', 'name', $company->subscription->package_type->id) : 'لا يوجد' ) : 'لا يوجد' ) : 'لا يوجد' }}
                   </span>
                 </td>
 
