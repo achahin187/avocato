@@ -74,7 +74,7 @@
                                   <li><a href="#">
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                     <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                    11:00:00AM</span></a></li>
+                                    10:00:00AM</span></a></li>
                                     <li><a href="#">
                                       <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                       <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
@@ -82,7 +82,7 @@
                                       <li><a href="#">
                                         <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                         <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                        11:00:00AM</span></a></li>
+                                        13:00:00AM</span></a></li>
                                         <li><a href="#">
                                           <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                           <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015

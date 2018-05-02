@@ -201,7 +201,9 @@ return [
         'delivery_date' => 'تاريخ التسليم',
         'delivered_at' => 'تاريخ التسلم',
         'session_date' => 'تاريخ الجلسة',
-        'notes' => 'الملاحظات'
+        'notes' => 'الملاحظات',
+        'package_type'=>'نوع الباقه',
+        'notification'=>'نص التنبيه',
     ],
 
 ];

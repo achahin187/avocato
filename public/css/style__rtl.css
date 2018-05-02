@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*
  * Company website  :http://pentavalue.com *
  * Graphic and Web Designer : George Samuel , Amira Samy , Marian Aziz*
@@ -17731,7 +17731,7 @@ span.master_message {
   margin-left: 5px;
 }
 
-ul.dropdowny-menu > li:nth-child(even) {
+ul.dropdowny-menu > li.read {
   background-color: #ffffff;
 }
 

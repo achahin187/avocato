@@ -15,7 +15,7 @@ class Subscriptions extends Model
 	protected $dates = ['start_date', 'end_date', 'deleted_at'];
 
 	public function user() {
-		return $this->belongsTo('App\Users', 'id');
+		return $this->belongsTo('App\Users', 'user_id')->withDefault();
 	}
 
 	public function package_type() {
