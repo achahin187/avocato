@@ -84,7 +84,7 @@ return [
     ],
     'string'               => 'حقل :attribute يجب أن يكون نص .',
     'timezone'             => 'The :attribute must be a valid zone.',
-    'unique'               => 'هذا :attribute محجوز بالفعل',
+    'unique'               => ' :attribute محجوز بالفعل',
     'uploaded'             => 'حقل :attribute فشل فى التحميل.',
     'url'                  => 'The :attribute format is invalid.',
 

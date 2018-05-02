@@ -39,28 +39,28 @@
           <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
             <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
             {{--  Start Form  --}}
-            <form action="{{ route('consult.store') }}" method="POST">
+            <form action="{{ route('consult.store') }}" method="POST" class="resetForm">
               {{ csrf_field() }}
-            <div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <h3>إضافة</h3>
+              <div>
+                <div class="row">
                   <div class="col-xs-12">
-                    <div class="master_field">
-                      <label class="master_label" for="ID_No">ادخال تصنيف جديد للاستشارات القانونية</label>
-                      <input name="consult_name" class="master_input" type="text" placeholder="نصنيف جديد" id="ID_No" value="{{ old('consult_name') }}">
+                    <h3>إضافة</h3>
+                    <div class="col-xs-12">
+                      <div class="master_field">
+                        <label class="master_label" for="ID_No">ادخال تصنيف جديد للاستشارات القانونية</label>
+                        <input name="consult_name" class="master_input" type="text" placeholder="نصنيف جديد" id="ID_No" value="{{ old('consult_name') }}">
 
-                      @if ($errors->has('consult_name'))
-                        <span class="master_message color--fadegreen">{{ $errors->first('consult_name') }}</span>
-                      @endif
-                      
+                        @if ($errors->has('consult_name'))
+                          <span class="master_message color--fadegreen">{{ $errors->first('consult_name') }}</span>
+                        @endif
+                        
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
             <br>
-            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+            <button type="reset" class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
             <button type="submit" class="remodal-confirm">حفظ</button>
             </form>
           </div>
@@ -110,24 +110,26 @@
           <tbody>
             
             {{--  Start rendering data  --}}
-            @foreach ($consultations as $consult)
-              <tr data-consult="{{ $consult->id }}">
-                <td>
-                  <span class="cellcontent">
-                    <input type="checkbox" class="checkboxes" data-id="{{ $consult->id }}" />
-                  </span>
-                </td>
-                <td><span class="cellcontent">
-                  {{ $consult->name }}
-                </span></td>
-                <td>
-                  <span class="cellcontent">
-                    <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $consult->id }}">
-                    <i class = "fa  fa-trash-o"></i>
-                  </a></span>
-                </td>
-              </tr>
-            @endforeach
+            @if ( isset($consultations) && !empty($consultations) )
+              @foreach ($consultations as $consult)
+                <tr data-consult="{{ $consult->id }}">
+                  <td>
+                    <span class="cellcontent">
+                      <input type="checkbox" class="checkboxes" data-id="{{ $consult->id }}" />
+                    </span>
+                  </td>
+                  <td><span class="cellcontent">
+                    {{ $consult->name ? $consult->name : 'لا يوجد' }}
+                  </span></td>
+                  <td>
+                    <span class="cellcontent">
+                      <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $consult->id }}">
+                      <i class = "fa  fa-trash-o"></i>
+                    </a></span>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
             {{--  End rendering data  --}}
 
           </tbody>
@@ -309,7 +311,6 @@
     // Delete selected checkboxes
     $('#deleteSelected').click(function(){
       var allVals = [];                   // selected IDs
-      var token = '{{ csrf_token() }}';
 
       // push cities IDs selected by user
       $('.checkboxes:checked').each(function() {
@@ -338,12 +339,11 @@
               $.ajax(
               {
                   url: "{{ url('/consultations_classification/destroySelected') }}",
-                  type: 'DELETE',
+                  type: 'GET',
                   dataType: "JSON",
                   data: {
                       "ids": ids,
-                      "_method": 'DELETE',
-                      "_token": token,
+                      "_method": 'GET',
                   },
                   success: function ()
                   {
@@ -367,7 +367,6 @@
     $('.deleteRecord').click(function(){
       
       var id = $(this).data("id");
-      var token = '{{ csrf_token() }}';
 
       swal({
         title: "هل أنت متأكد؟",
@@ -385,12 +384,11 @@
               $.ajax(
               {
                   url: "{{ url('/consultations_classification/destroy') }}" + "/" +id,
-                  type: 'DELETE',
+                  type: 'GET',
                   dataType: "JSON",
                   data: {
                       "id": id,
-                      "_method": 'DELETE',
-                      "_token": token,
+                      "_method": 'GET',
                   },
                   success: function ()
                   {
@@ -408,7 +406,6 @@
     // Export table as Excel file
     $('#exportSelected').click(function(){
       var allVals = [];                   // selected IDs
-      var token = '{{ csrf_token() }}';
 
       // push cities IDs selected by user
       $('.checkboxes:checked').each(function() {
@@ -438,8 +435,13 @@
               location.href = response;
             }
           });
-
     });
+
+    // Reset a form inside Bootstrap3 modal...
+    $('.remodal-cancel').click(function() {
+      $('.resetForm')[0].reset();   // reset 1st form (right form)
+    });
+
 
   });
     

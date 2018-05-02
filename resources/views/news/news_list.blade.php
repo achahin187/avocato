@@ -103,23 +103,25 @@
           </thead>
           <tbody>
             
-            @foreach ($news as $new)
-              <tr data-news="{{ $new->id }}">
-                <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $new->id }}" /></span></td>
-                <td><span class="cellcontent">{{ $new->id }}</span></td>
-                <td><span class="cellcontent">{{ $new->name ? $new->name : 'لا يوجد اسم' }}</span></td>
-                <td><span class="cellcontent">{{ $new->published_at ? $new->published_at : 'لم يتم النشر بعد' }}</span></td>
-                <td><span class="cellcontent"><i class = "fa {{ $new->is_active ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
-                <td>
-                  <span class="cellcontent">
-                    <a href="{{ route('news.view', ['id' => $new->id]) }}" class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
-                    <a href="{{ route('news.edit', ['id' => $new->id]) }}" class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
-                    <a class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $new->id }}"><i class = "fa  fa-trash-o"></i></a>
-                  </span>
-                </td>
-              </tr>
-            @endforeach
-            
+            @if ( isset($news) && !empty($news) )
+              @foreach ($news as $new)
+                <tr data-news="{{ $new->id }}">
+                  <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $new->id }}" /></span></td>
+                  <td><span class="cellcontent">{{ $new->id }}</span></td>
+                  <td><span class="cellcontent">{{ $new->name ? $new->name : 'لا يوجد اسم' }}</span></td>
+                  <td><span class="cellcontent">{{ $new->published_at ? $new->published_at : 'لم يتم النشر بعد' }}</span></td>
+                  <td><span class="cellcontent"><i class = "fa {{ $new->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times' }}"></i></span></td>
+                  <td>
+                    <span class="cellcontent">
+                      <a href="{{ route('news.view', ['id' => $new->id]) }}" class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
+                      <a href="{{ route('news.edit', ['id' => $new->id]) }}" class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                      <a class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $new->id }}"><i class = "fa  fa-trash-o"></i></a>
+                    </span>
+                  </td>
+                </tr>
+              @endforeach
+            @endif
+
           </tbody>
         </table>
         <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -386,7 +388,6 @@
       // Export table as Excel file
       $('#exportSelected').click(function(){
         var allVals = [];                   // selected IDs
-        var token = '{{ csrf_token() }}';
 
         // push cities IDs selected by user
         $('.checkboxes:checked').each(function() {

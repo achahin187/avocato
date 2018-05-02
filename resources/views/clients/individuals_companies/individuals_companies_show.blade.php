@@ -4,16 +4,16 @@
 
 <div class="row">
   <div class="col-lg-12">
-    <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{asset('img/covers/dummy2.jpg')}}') no-repeat center center; background-size:cover;"><span></span>
+    <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{ asset('img/covers/dummy2.jpg') }}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset(''.$user->image)}}">
-              <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.com.edit',$user->id)}}">تعديل بيانات العميل</a>
-                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('ind.edit', $user->id) }}">التحويل لعميل أفراد</a>
-                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('printUsers', $user->id) }}">كارت العميل</a>
-                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('ind.com.destroyShow', $user->id) }}">استبعاد العميل</a>
+            <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{  $user->image ? asset($user->image) : ''  }}">
+              <h3 class="coverglobal__title color--gray_d">{{ $user->full_name ? $user->full_name : 'غير معروف' }}</h3><small class="coverglobal__slogan color--gray_d">{{ $user->is_active ? 'مفعل':'غير مفعل' }}</small></a></div>
+              <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('ind.com.edit',$user->id) }}">تعديل بيانات العميل</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('ind.edit', $user->id)  }}">التحويل لعميل أفراد</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('printUsers', $user->id)  }}">كارت العميل</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('ind.com.destroyShow', $user->id)  }}">استبعاد العميل</a>
               </div>
             </div>
           </div>
@@ -24,33 +24,33 @@
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
         <div class="col-md-6 col-sm-6 col-xs-6">
           <div class="row"><b class="col-xs-4">اسم الشركة </b>
-            <div class="col-xs-8">{{$user->companyParent->full_name}}</div>
+            <div class="col-xs-8">{{ $user->companyParent ? $user->companyParent->full_name : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">كود الشركة </b>
-            <div class="col-xs-8">{{$user->companyParent->code}}</div>
+            <div class="col-xs-8">{{ $user->companyParent ? $user->companyParent->code : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">الهاتف </b>
-            <div class="col-xs-8">{{$user->phone}}</div>
+            <div class="col-xs-8">{{ $user->phone ? $user->phone : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">جوال </b>
-            <div class="col-xs-8">{{$user->mobile}}</div>
+            <div class="col-xs-8">{{ $user->mobile ? $user->mobile : 'لا يوجد' }}</div>
           </div>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-6">
           <div class="row"><b class="col-xs-4">كود العميل</b>
-            <div class="col-xs-8">{{$user->code}}</div>
+            <div class="col-xs-8">{{ $user->code ? $user->code : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">الرقم القومى </b>
-            <div class="col-xs-8">{{$user->user_detail->national_id}}</div>
+            <div class="col-xs-8">{{ $user->user_detail ? $user->user_detail->national_id : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">عنوان العميل</b>
-            <div class="col-xs-8">{{$user->address}}</div>
+            <div class="col-xs-8">{{ $user->address ? $user->address : 'لا يوجد' }}</div>
           </div>
           <div class="row"><b class="col-xs-4">البريد الالكترونى </b>
-            <div class="col-xs-8"><span>{{$user->email}}</span></div>
+            <div class="col-xs-8"><span>{{ $user->email ? $user->email : 'لا يوجد' }}</span></div>
           </div>
           <div class="row"><b class="col-xs-4">تاريخ الميلاد </b>
-            <div class="col-xs-8">{{$user->birthdate}}</div>
+            <div class="col-xs-8">{{ $user->birthdate ? $user->birthdate : 'لا يوجد' }}</div>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -72,26 +72,36 @@
               <div class="row">
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد</b>
                   <div class="col-xs-9">@isset($user->subscription->start_date)
-                    {{$user->subscription->start_date->format("Y - m - d")}} @endisset</div>
+                    {{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format("d/m/Y") : 'لا يوجد'  ) : 'لا يوجد' }} @endisset</div>
                   </div>
                   <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
-                    <div class="col-xs-9">{{$user->subscription->duration}}</div>
+                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->duration : 'لا يوجد' }}</div>
                   </div>
                   <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
-                    <div class="col-xs-9">{{$user->subscription->value}}</div>
+                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
                   </div>
                   <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد</b>
-                    <div class="col-xs-9">@isset($user->subscription->end_date){{$user->subscription->end_date->format("Y - m - d ")}}@endisset</div>
+                    <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format("d/m/Y") : 'لا يوجد' ) : 'لا يوجد' }}</div>
                   </div>
                   <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
-                    <div class="col-xs-9"> <span class="bgcolor--main_l color--white bradius--small importance padding--small">@foreach($packages as $package)
-                      @if($package->item_id == $user->subscription->package_type_id)
-                      {{$package->value}}
+                    <div class="col-xs-9"> 
+                      <span class="bgcolor--main_l color--white bradius--small importance padding--small">
+                      
+                      @if ( isset($user->subscription) && !empty($user->subscription) )
+                        @if ( isset($packages) && !empty($packages) && isset($user->subscription->package_type_id) && !empty($user->subscription->package_type_id) )
+                          @foreach($packages as $package)
+                            @if($package->item_id == $user->subscription->package_type_id)
+                            {{ $package->value ? $package->value : 'لا يوجد' }}
+                            @endif
+                          @endforeach
+                        @endif
                       @endif
-                    @endforeach</span></div>
+
+                    </span>
+                  </div>
                   </div>
                   <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط</b>
-                    <div class="col-xs-9">{{$user->subscription->number_of_installments}}</div>
+                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->number_of_installments : 'لا يوجد' }}</div>
                   </div>
                 </div>
                 <div class="col-lg-12">
@@ -108,11 +118,11 @@
                     <tbody>
                       @foreach($user->subscription->installments as $installment)
                       <tr>
-                        <td><span class="cellcontent">ا{{$installment->installment_number}}</span></td>
-                        <td><span class="cellcontent">{{$installment->value}}</span></td>
-                        <td><span class="cellcontent">{{$installment->payment_date}}</span></td>
-                        <td><span class="cellcontent"><i class = "fa {{$installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
-                        <td><span class="cellcontent"><a href= "#payment_status{{$installment->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
+                        <td><span class="cellcontent">ا{{ $installment->installment_number ? $installment->installment_number : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ $installment->installment_number ? $installment->value : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent">{{ $installment->installment_number ? $installment->payment_date : 'لا يوجد' }}</span></td>
+                        <td><span class="cellcontent"><i class = "fa {{ $installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times' }}"></i></span></td>
+                        <td><span class="cellcontent"><a href= "#payment_status{{ $installment->id }}" ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -276,46 +286,51 @@
                   </div>
                 </div>
 
-                @foreach($user->subscription->installments as $installment)
-                <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
-                  <div class="remodal-bg"></div>
-                  <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                    <form role="form" action="{{route('ind_comp_update',$installment->id)}}" method="post" accept-charset="utf-8">
-                      {{csrf_field()}}
-                      <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                      <div>
-                        <div class="row">
-                          <div class="col-xs-12">
-                            <h3>تغيير حالة القسط</h3>
-                            <div class="master_field"> 
+                @if ( isset($user->subscription) && !empty($user->subscription) )
+                  @if ( isset($user->subscription->installments) && !empty($user->subscription->installments) )
+                    @foreach($user->subscription->installments as $installment)
+                      <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
+                        <div class="remodal-bg"></div>
+                        <div class="remodal" data-remodal-id="payment_status{{ $installment->id }}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                          <form role="form" action="{{ route('ind_comp_update',$installment->id) }}" method="post" accept-charset="utf-8">
+                            {{ csrf_field() }}
+                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                            <div>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <h3>تغيير حالة القسط</h3>
+                                  <div class="master_field"> 
 
-                                @if($installment->is_paid==1)       
-                                  <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" checked="true">
-                                  <label for="done{{$installment->id}}">تم الدفع</label>
+                                      @if($installment->is_paid==1)       
+                                        <input class="icon" type="radio" name="installment" id="done{{ $installment->id }}" value="1" checked="true">
+                                        <label for="done{{ $installment->id }}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" >
-                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="installment" id="not_done{{ $installment->id }}" value="0" >
+                                        <label for="not_done{{ $installment->id }}">لم يتم الدفع</label>
 
-                                   
-                                  @else
-                                   <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" >
-                                  <label for="done{{$installment->id}}">تم الدفع</label>
+                                        
+                                        @else
+                                        <input class="icon" type="radio" name="installment" id="done{{ $installment->id }}" value="1" >
+                                        <label for="done{{ $installment->id }}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" checked="true">
-                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="installment" id="not_done{{ $installment->id }}" value="0" checked="true">
+                                        <label for="not_done{{ $installment->id }}">لم يتم الدفع</label>
 
-                                  @endif
+                                        @endif
 
-                            </div>
-                          </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button class="remodal-confirm" type="submit">تغيير حالة القسط</button>
+                          </form>
                         </div>
-                      </div><br>
-                      <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                      <button class="remodal-confirm" type="submit">تغيير حالة القسط</button>
-                    </form>
-                  </div>
-                </div>
-                @endforeach
+                      </div>
+                    @endforeach
+                  @endif
+                @endif
+
                 <div class="clearfix"> </div>
               </div>
             </li>
@@ -338,14 +353,14 @@
                     @if (isset($cases) && !empty($cases))
                         @foreach ($cases as $case)
                         <tr>
-                          <td><span class="cellcontent">{{ ($case->cases->case_types) ? $case->cases->case_types->name : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->courts) ? $case->cases->courts->name : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->region) ? $case->cases->region : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($case->attorney_number) ? $case->attorney_number : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->case_types) ? $case->cases->case_types->name : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->courts) ? $case->cases->courts->name : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->region) ? $case->cases->region : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->claim_date) ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($case->attorney_number) ? $case->attorney_number : 'لا يوجد'  }}</span></td>
                         </tr>
                         @endforeach
                     @endif
@@ -523,8 +538,8 @@
                     @if (isset($services) && !empty($services))
                         @foreach ($services as $service)
                         <tr>
-                          <td><span class="cellcontent">{{ ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id)->full_name : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{  ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id)->full_name : 'لا يوجد'  }}</span></td>
                         </tr>
                         @endforeach
                     @endif
@@ -705,11 +720,11 @@
                     @if (isset($urgents) && !empty($urgents))
                         @foreach ($urgents as $urgent)
                         <tr>
-                          <td><span class="cellcontent">{{ ($urgent->task_address) ? $urgent->task_address : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($urgent->description)  ? $urgent->description  : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent"><i class = "fa {{ ($urgent->task_status_id == 2) ? 'color--fadegreen fa-check' : 'fa-times' }}"></i></span></td>
-                          <td><span class="cellcontent">{{ ($urgent->start_datetime) ? $urgent->start_datetime->format('d-m-Y') : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($urgent->start_datetime) ? $urgent->start_datetime->format('h:m')   : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{  ($urgent->task_address) ? $urgent->task_address : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($urgent->description)  ? $urgent->description  : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent"><i class = "fa {{  ($urgent->task_status_id == 2) ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times'  }}"></i></span></td>
+                          <td><span class="cellcontent">{{  ($urgent->start_datetime) ? $urgent->start_datetime->format('d-m-Y') : 'لا يوجد'  }}</span></td>
+                          <td><span class="cellcontent">{{  ($urgent->start_datetime) ? $urgent->start_datetime->format('h:m')   : 'لا يوجد'  }}</span></td>
                         </tr>
                         @endforeach
                     @endif

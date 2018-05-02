@@ -28,8 +28,8 @@ Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_t
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
 Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
-Route::delete('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
-Route::delete('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
+Route::get('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
+Route::get('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
 Route::get('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
@@ -48,8 +48,8 @@ Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
-Route::delete('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
-Route::delete('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
+Route::get('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
+Route::get('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
 Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
 
 Route::get('/about', 'AboutController@index')->name('about');
@@ -164,6 +164,7 @@ Route::get('/notifications', 'NotificationsController@index')->name('notificatio
 Route::post('/notifications_store', 'NotificationsController@store')->name('notifications.store');
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
 Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
+Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
 
 });
 
