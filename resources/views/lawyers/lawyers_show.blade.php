@@ -23,6 +23,45 @@ function initMap() {
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    $('.exclude').click(function(){
+      var lawyer_id = '{{$lawyer->id}}';
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
+           data:{_token:_token},
+           success:function(data){
+            // $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
+            location.href= '{{route('lawyers')}}';
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+});
+
+</script>
+
               
               <!-- =============== Custom Content ===============-->
               <div class="row">
@@ -38,7 +77,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                         <div class="col-xs-12">
                           <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset(''.$lawyer->image)}}">
                               <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-                          <div class="coverglobal__actions">{{-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a> --}}<a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_destroy_get',$lawyer->id)}}">استبعاد المحامي</a>
+                          <div class="coverglobal__actions">{{-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a> --}}<a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="exclude color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="#">استبعاد المحامي</a>
                           </div>
                         </div>
                       </div>
@@ -76,6 +115,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       </div>
                       <div class="row"><b class="col-xs-3">درجة القيد بالنقابة </b>
                         <div class="col-xs-9">{{$lawyer->user_detail->syndicate_level}}</div>
+                      </div>
+                      <div class="row"><b class="col-xs-3">درجة التقاضي </b>
+                        <div class="col-xs-9">{{$lawyer->user_detail->litigation_level}}</div>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">

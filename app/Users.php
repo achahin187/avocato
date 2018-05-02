@@ -109,7 +109,7 @@ class Users extends Authenticatable
 
    // One user in 'users' table has One record in 'clients_passwords' table
    public function client_password() {
-       return $this->hasOne('App\ClientsPasswords','user_id');
+       return $this->hasOne('App\ClientsPasswords','user_id')->withDefault();
    }
 
    public function user_company_detail() {
@@ -140,7 +140,7 @@ class Users extends Authenticatable
     public function clients()
     {
         return $this->belongsToMany('App\Case_','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number');
-}
+    }
 
     public function tasks()
     {
