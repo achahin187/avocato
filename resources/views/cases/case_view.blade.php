@@ -413,7 +413,7 @@
                                   <td><span class="cellcontent"> {{$task->roll}}</span></td>
                                   <td><span class="cellcontent">{{$task->start_datetime}}</span></td>
                                   <td><span class="cellcontent">{{$task->name}}</span></td>
-                                  <td><span class="cellcontent">{{$task->description}} النص</span></td>
+                                  <td><span class="cellcontent">{{$task->description}}</span></td>
                                   <td><span class="cellcontent">{{$task->expenses}}</span></td>
                                   <td><span class="cellcontent">{{$task->next_datetime}}</span></td>
                                 </tr>
