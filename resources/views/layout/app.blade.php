@@ -71,22 +71,11 @@
                             <ul class="actionsbar desktop-view hidden-xs">
                               <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i></a>
                                 <ul class="dropdowny-menu" role="menu">
-                                  <li><a href="#">
+                                  @foreach($notes as $note)
+                                  <li data-notification-id={{$note->id}}><a class="notification" href="{{route($note->url,$note->item_id)}}">
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                    <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                    10:00:00AM</span></a></li>
-                                    <li><a href="#">
-                                      <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                      <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                      11:00:00AM</span></a></li>
-                                      <li><a href="#">
-                                        <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                        <p>lorem ipsum dollar lorem ipsum dollarss</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                        13:00:00AM</span></a></li>
-                                        <li><a href="#">
-                                          <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                          <p>lorem ipsum dollar lorem ipsum</p><span class="notification_date"><i class="fa fa-clock-o"></i>5/11/2015
-                                          11:00:00AM</span></a></li>
+                                    <p>{{$note->msg}}</p><span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span></a></li>
+                                    @endforeach
                                         </ul>
                                       </li>
                                       <li><a class="color--gray_d" href="{{route('logout')}}" onclick="event.preventDefault();
@@ -785,6 +774,21 @@ if (currentIndex === 5) { //if last step
     <script type="text/javascript"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
+        <script type="text/javascript">
+      $('.notification').click(function(){
+          var _token = '{{csrf_token()}}';
+          var notification_id = $(this).parent().attr('data-notification-id');
+     $.ajax({
+       type:'POST',
+       url:'{{url('notifications_change')}}'+'/'+notification_id,
+       data:{_token:_token},
+       success:function(response){
+      }
+    });
+
+   });
+
+    </script>
     @yield('js')
   </body>
   </html>

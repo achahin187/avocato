@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use  Illuminate\Support\Facades\Schema;
 use App\Notifications;
 use Maatwebsite\Excel\Sheet;
+use DB;
+use App\Users;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,32 +26,50 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->setRightToLeft(true);
         });
 
-        $notes = Notifications::where('notification_type_id','!=',1)->get();
+        $notes = Notifications::where('notification_type_id','!=',1)->where(function ($query) {
+             $query->where('is_read', '=', 0)->orWhere(function ($query){
+                $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
+             });
+
+        })->get();
         foreach($notes as $note){
             if($note->notification_type_id ==2){
 
-            $note['url']="route('task_emergency_view',$note->item_id)";
+            $note['url']='task_emergency_view';
+            }
+            if($note->notification_type_id ==3){
+                $user = Users::find($note->item_id);
+                if($user->getClient()==8){
+                    $note['url']='ind.show';
+                }
+                if($user->getClient()==9){
+                    $note['url']='companies.show';
+                }
+                if($user->getClient()==10){
+                    $note['url']='ind.com.show';
+                }
             }
             if($note->notification_type_id ==4){
 
-            $note['url']="route('complains.edit',$note->item_id)";
+            $note['url']='complains.edit';
             }
             if($note->notification_type_id ==5 and $note->entity_id==11 ){
 
-            $note['url']="route('services_show',$note->item_id)";
+            $note['url']='services_show';
             }
             if($note->notification_type_id ==5 and $note->entity_id==14 ){
 
-            $note['url']="route('case_view',$note->item_id)";
+            $note['url']='case_view';
             }
             if($note->notification_type_id ==6){
 
-            $note['url']="route('lawyers_show',$note->item_id)";
+            $note['url']='lawyers_show';
             }
             if($note->notification_type_id ==7){
 
-            $note['url']="route('legal_consultation_view',$note->item_id)";
+            $note['url']='legal_consultation_view';
             }
+
         }
 
         \View::share('notes', $notes);
