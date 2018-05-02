@@ -58,7 +58,7 @@
 
                       {{-- Start Add government form --}}
                       <li class="tab__content_item {{ !$errors->has('city_name') ? 'active' : ''}}" id="right_form">
-                        <form action="{{ route('governoratesCities.addGovernment') }}" method="POST">
+                        <form action="{{ route('governoratesCities.addGovernment') }}" method="POST" class="resetForm">
                           {{-- Cross Site Request Forgery field --}}
                           {{ csrf_field() }}
                             <div class="col-xs-12">        
@@ -75,7 +75,7 @@
                             </div>
                           
                           <br>
-                          <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                          <button class="remodal-cancel" data-remodal-action="cancel" type="reset">إلغاء</button>
                           <button type="submit" class="remodal-confirm">حفظ</button>
                         </form>
                       </li>
@@ -83,7 +83,7 @@
 
                         {{-- Start Add cities "المدن" --}}
                         <li class="tab__content_item {{ ($errors->has('government_name') || $errors->has('city_name')) ? 'active' : '' }}" id="left_form">
-                          <form action="{{ route('governoratesCities.addCity') }}" method="POST">
+                          <form action="{{ route('governoratesCities.addCity') }}" method="POST" class="resetForm">
                             {{ csrf_field() }}
 
                             <div class="col-lg-12">
@@ -124,7 +124,7 @@
                               <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit" value="addMore" name="addMore"><span>حفظ واضافة المزيد</span>
                               </button>
                             </div>
-                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button class="remodal-cancel" data-remodal-action="cancel" type="reset">إلغاء</button>
                             <button type="submit" class="remodal-confirm">حفظ</button>
                           </form>
                         </li>
@@ -189,25 +189,26 @@
             </thead>
             <tbody>
               
-              @foreach ($cities as $city)
-                <tr data-city="{{ $city->id }}">
-                  <td>
-                    <span class="cellcontent">
-                      <input type="checkbox" class="checkboxes" data-id="{{ $city->id }}" />
-                    </span>
-                  </td>
-                  <td><span class="cellcontent">{{ $city->name }}</span></td>
-                  <td><span class="cellcontent">{{ $city->governorate->name }}</span></td>
-                  <td>
-                    <span class="cellcontent"> 
-                      <button class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $city->id }}">
-                        <i class="fa fa-trash-o"></i>
-                      </button>
-                    </span>
-                  </td>
-                </tr>
-              @endforeach
-              
+              @if ( isset($cities) && !empty($cities) )
+                @foreach ($cities as $city)
+                  <tr data-city="{{ $city->id }}">
+                    <td>
+                      <span class="cellcontent">
+                        <input type="checkbox" class="checkboxes" data-id="{{ $city->id }}" />
+                      </span>
+                    </td>
+                    <td><span class="cellcontent">{{ $city->name ? $city->name : 'لا يوجد' }}</span></td>
+                    <td><span class="cellcontent">{{ $city->governorate ? $city->governorate->name : 'لا يوجد' }}</span></td>
+                    <td>
+                      <span class="cellcontent"> 
+                        <button class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $city->id }}">
+                          <i class="fa fa-trash-o"></i>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                @endforeach
+              @endif
             </tbody>
           </table>
           {{-- End table --}}
@@ -381,7 +382,6 @@
       // Delete selected checkboxes
         $('#deleteSelected').click(function(){
           var allVals = [];                   // selected IDs
-          var token = '{{ csrf_token() }}';
 
           // push cities IDs selected by user
           $('.checkboxes:checked').each(function() {
@@ -410,12 +410,11 @@
                   $.ajax(
                   {
                       url: "{{ route('governorates_cities.destroySelected') }}",
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "ids": ids,
-                          "_method": 'DELETE',
-                          "_token": token,
+                          "_method": 'GET',
                       },
                       success: function ()
                       {
@@ -439,7 +438,6 @@
         $('.deleteRecord').click(function(){
           
           var id = $(this).data("id");
-          var token = '{{ csrf_token() }}';
 
           swal({
             title: "هل أنت متأكد؟",
@@ -457,12 +455,11 @@
                   $.ajax(
                   {
                       url: "{{ url('/governorates_cities/destroy') }}" +"/"+ id,
-                      type: 'DELETE',
+                      type: 'GET',
                       dataType: "JSON",
                       data: {
                           "id": id,
-                          "_method": 'DELETE',
-                          "_token": token,
+                          "_method": 'GET',
                       },
                       success: function ()
                       {
@@ -517,6 +514,14 @@
                 $(this).remove(); 
             });
         }, 4000);
+
+
+        // Reset a form inside Bootstrap3 modal...
+        // There is 2 form in the modal so index [0] for 1st form and index[1] is for 2nd form obviosuly... xD
+        $('.remodal-cancel').click(function() {
+          $('.resetForm')[0].reset();   // reset 1st form (right form)
+          $('.resetForm')[1].reset();   // reset 2nd form (left form)
+        });
     });
   </script>
 @endsection
