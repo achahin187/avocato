@@ -657,7 +657,7 @@
                                   <td><span class="cellcontent">{{$record->record_type_id}}</span></td>
                                   <td><span class="cellcontent">{{$record->record_date}}</span></td>
                                   <td><span class="cellcontent"><a href="#investigation_attachment/{{$record->id}}"  ,  class= "action-btn bgcolor--main color--white "> &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
-                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                  <td><span class="cellcontent"><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                                   <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment/{{$record->id}}" style="display: none;"><span></span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="investigation_attachment/{{$record->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -891,7 +891,7 @@
       <script type="text/javascript">
         $('.btn-warning-cancel').click(function(){
       var record_id = $(this).closest('tr').attr('data-record-id');
-      var _token = '{{csrf_token()}}';
+      // var _token = '{{csrf_token()}}';
       swal({
         title: "هل أنت متأكد؟",
         text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
@@ -908,9 +908,10 @@
         if (isConfirm){
          $.ajax({
            type:'GET',
-           url:'{{url('case_record_destroy/$case->id')}}'+'/'+record_id,
-           data:{_token:_token},
+           url:'{{URL('case_record_destroy/'.$case->id)}}'+'/'+record_id,
+           
            success:function(data){
+            // alert(1);
             $('tr[data-record-id='+record_id+']').fadeOut();
           }
         });

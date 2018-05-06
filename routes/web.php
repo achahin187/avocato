@@ -239,7 +239,7 @@ Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_dest
 Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
 Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
 Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
-Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
+Route::get('/case_record_destroy/{id}/{record_id}', 'CasesController@destroy_record')->name('case_record_destroy');
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
