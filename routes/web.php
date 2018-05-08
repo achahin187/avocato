@@ -174,8 +174,8 @@ Route::middleware(['roles:1,2,3,4'])->group(function () {
 Route::get('/complains', 'ComplainsController@index')->name('complains');
 Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
 Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
-Route::delete('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
-Route::delete('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
+Route::get('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
+Route::get('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
 Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
 
 });
@@ -321,8 +321,8 @@ Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')-
         Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
 Route::post('/records/store', 'RecordsController@store')->name('record.store');
-Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
-Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+Route::get('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::get('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
 Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
     });
 
