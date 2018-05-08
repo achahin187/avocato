@@ -153,6 +153,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                             <div class="col-xs-6"><b class="col-xs-4">تاريخ انتهاء العمل بالشركة</b>
                               <div class="col-xs-8">{{$lawyer->user_detail->resign}}</div>
                             </div>
+                             <div class="col-xs-6"><b class="col-xs-4">درجه التقاضي </b>
+                              <div class="col-xs-8">{{$lawyer->user_detail->litigation_level}}</div>
+                            </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
