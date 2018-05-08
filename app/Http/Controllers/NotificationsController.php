@@ -170,9 +170,12 @@ class NotificationsController extends Controller
         }
     }
 
-        public function admin_notification()
+        public function change($id)
     {
-
+        $notification = Notifications::find($id);
+        $notification->is_read=1;
+        $notification->save();
+        // return response()->json('done');
     }
 
 }

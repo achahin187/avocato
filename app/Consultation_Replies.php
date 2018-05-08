@@ -13,6 +13,6 @@ class Consultation_Replies extends Model
     public $timestamps = true;
     public function consultation()
     {
-    	return $this->belongsTo('App\Consultation','consultation_id');
+    	return $this->belongsTo('App\Consultation','consultation_id')->withDefault();
     }
 }

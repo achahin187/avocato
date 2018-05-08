@@ -700,12 +700,12 @@ if($request->has('record_documents')){
     }
 
     ///destroy case record 
-    public function destroy_record($case_id,$id)
+    public function destroy_record($id,$record_id)
     {
-        Case_Record::destroy( $id);
-        Case_Record_Document::where('record_id',$id)->delete();
+        Case_Record::destroy( $record_id);
+        Case_Record_Document::where('record_id',$record_id)->delete();
 
-        return redirect()->route('case_view',$case_id);
+        return redirect()->route('case_view',$id);
     }
 
     public function download_document($id)
