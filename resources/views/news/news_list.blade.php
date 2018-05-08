@@ -104,10 +104,11 @@
           <tbody>
             
             @if ( isset($news) && !empty($news) )
+              <?php $i = 0; ?>
               @foreach ($news as $new)
                 <tr data-news="{{ $new->id }}">
                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $new->id }}" /></span></td>
-                  <td><span class="cellcontent">{{ $new->id }}</span></td>
+                  <td><span class="cellcontent">{{ ++$i }}</span></td>
                   <td><span class="cellcontent">{{ $new->name ? $new->name : 'لا يوجد اسم' }}</span></td>
                   <td><span class="cellcontent">{{ $new->published_at ? $new->published_at : 'لم يتم النشر بعد' }}</span></td>
                   <td><span class="cellcontent"><i class = "fa {{ $new->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times' }}"></i></span></td>

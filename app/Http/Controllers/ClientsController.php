@@ -114,4 +114,12 @@ class ClientsController extends Controller
         return response()->json($response);
     }
 
+    public function activate($id) {
+        $user = Users::find($id);
+        ($user->is_active) ? ($user->is_active = 0) : ($user->is_active = 1);   // toggle activation.
+        $user->save();
+
+        return redirect()->back();
+    }
+
 }

@@ -115,6 +115,7 @@ Route::middleware(['roles:1,2'])->group(function () {
 Route::get('/clients', 'ClientsController@index')->name('clients');
 Route::get('/clients/print/{ids}', 'ClientsController@printSelected')->name('printUsers');
 Route::get('/clients/export/excel', 'ClientsController@exportXLS')->name('clients.exportXLS');
+Route::get('/clients/activate/{id}', 'ClientsController@activate')->name('clients.activate');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
