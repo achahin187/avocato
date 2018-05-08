@@ -100,8 +100,8 @@
                         </button>
                       </div>
                       <div class="col-lg-2 col-md-2 col-sm-6 col-xs-6">
-                       <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="button" onclick="{{route('legal_consultations')}}"><i class="fa fa-times" ></i><span>الغاء</span>
-                      </button>
+                       <a href="{{route('legal_consultations')}}"><button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="button" onclick="{{route('legal_consultations')}}"><i class="fa fa-times" ></i><span>الغاء</span>
+                      </button></a>
                       </div>
                     </div>
                     <div class="clearfix"></div><a class="master-btn undefined undefined undefined undefined undefined" href="#edit_reply"><span></span></a>
