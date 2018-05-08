@@ -30,11 +30,11 @@
                           @if ( isset($consultation_types) && !empty($consultation_types) )
                             @foreach($consultation_types as $type)
 
-                              @if( $consultation->consultation_type_id )
+                              @if( isset($consultation->consultation_type_id) && !empty($consultation->consultation_type_id) )
                                 @if($consultation->consultation_type_id == $type->id)
-                                <option value="{{$type->name}}" selected>{{$type->name}}</option>
+                                  <option value="{{$type->name}}" selected>{{$type->name}}</option>
                                 @else
-                                <option value="{{$type->name}}">{{$type->name}}</option>
+                                  <option value="{{$type->name}}">{{$type->name}}</option>
                                 @endif
                               @endif
 
