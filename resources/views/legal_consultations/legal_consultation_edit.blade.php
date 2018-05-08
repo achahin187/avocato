@@ -26,19 +26,27 @@
                         <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
                         <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" >
                           <option value="-1" selected disabled hidden>اختر تصنيف</option>
-                          @foreach($consultation_types as $type)
-                          @if($consultation->consultation_type_id == $type->id)
-                          <option value="{{$type->name}}" selected>{{$type->name}}</option>
-                          @else
-                          <option value="{{$type->name}}">{{$type->name}}</option>
+                          
+                          @if ( isset($consultation_types) && !empty($consultation_types) )
+                            @foreach($consultation_types as $type)
+
+                              @if( $consultation->consultation_type_id )
+                                @if($consultation->consultation_type_id == $type->id)
+                                <option value="{{$type->name}}" selected>{{$type->name}}</option>
+                                @else
+                                <option value="{{$type->name}}">{{$type->name}}</option>
+                                @endif
+                              @endif
+
+                            @endforeach
                           @endif
                           
-                          @endforeach
-                        </select><span class="master_message color--fadegreen">
-                          @if ($errors->has('consultation_cat'))
-                                    {{ $errors->first('consultation_cat')}}
-                                    @endif
-                                  </span>
+                        </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('consultation_cat'))
+                            {{ $errors->first('consultation_cat')}}
+                            @endif
+                          </span>
                       </div>
                     </div>
                     <div class="col-xs-6">
