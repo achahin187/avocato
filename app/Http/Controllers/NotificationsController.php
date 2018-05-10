@@ -155,10 +155,11 @@ class NotificationsController extends Controller
                     foreach($subs as $sub){
                         $user = $sub->user;
                         $push = new Notifications_Push;
-                        $push->notification_id=$notification->id;
-                        $push->device_token=$user->device_token;
-                        $push->mobile_os=$user->mobile_os;
-                        $push->lang_id=$user->lang_id;
+                        $push->notification_id =$notification->id;
+                        $push->device_token  =$user->device_token;
+                        $push->mobile_os =$user->mobile_os;
+                        $push->lang_id =$user->lang_id;
+                        $push->user_id = $user->id;
                         $push->save();
                     }
                 }
