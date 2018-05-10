@@ -19,8 +19,7 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-     dd(Carbon::now()->timestamp);   
+    {   
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where('notification_type_id',1)->get();
         // $data['notes'] = Notifications::where('notification_type_id','!=',1)->get();
@@ -89,7 +88,7 @@ class NotificationsController extends Controller
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
       $notification->is_sent=0;
-      $notification->created_at=date('Y-m-d H:i:s');
+      $notification->created_at = Carbon::now()->timestamp;
       $notification->save();
       
       foreach($request->package_type as $package){
