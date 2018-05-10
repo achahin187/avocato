@@ -22,10 +22,11 @@ class NotificationsController extends Controller
     {   
         $data['subscription_types'] = Package_Types::all();
         $notifications = Notifications::where('notification_type_id',1)->get();
-        foreach ($notifications as $index => $notification) {
-            $notifications->{$index}->schedule = date('Y-m-d H:i:s', $notification->schedule);
+        $notifications_array = $notifications->toArray();
+        foreach ($notifications_array as $index => $notification) {
+            $notifications_array[$index]['schedule']  = date('Y-m-d H:i:s', $notification['schedule']);
         }
-        dd($notifications);
+        dd($notifications_array);
         $data['notifications'] = $notifications;
         return view('clients.notifications',$data);
     }
