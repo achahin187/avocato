@@ -168,8 +168,53 @@ class NotificationsController extends Controller
             }
         }
     }
+    public function push_notification() {
+        $notifications_push = Notifications_Push::where('device_token is not null')->get();
+        dd($notifications_push);
+        foreach($notifications_push as $notification_push) { 
+            $notification = $notification_push->notification;
+            dd($notification)
+        }
+        $registrationIds = array($device_token);
+		// prep the bundle
+		$msg = array
+		(
+			'message' 	=> $message,
+			'title'		=> 'This is a title. title',
+			'subtitle'	=> 'This is a subtitle. subtitle',
+			'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+			'vibrate'	=> 1,
+			'sound'		=> 1,
+			'largeIcon'	=> 'large_icon',
+			'smallIcon'	=> 'small_icon'
+		);
+		$fields = array
+		(
+			'registration_ids' 	=> $registrationIds,
+			'data'			=> $msg
+		);
+		 
+		$headers = array
+		(
+			'Authorization: key=' . API_ACCESS_KEY,
+			'Content-Type: application/json'
+		);
+		 
+		$ch = curl_init();
+		curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+		curl_setopt( $ch,CURLOPT_POST, true );
+		curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+		curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+		curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+		curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+		$result = curl_exec($ch );
+		curl_close( $ch );
+		header('Content-type:application/json;charset=utf-8');
+		echo $result;
+        
+    }
 
-        public function change($id)
+    public function change($id)
     {
         $notification = Notifications::find($id);
         $notification->is_read=1;

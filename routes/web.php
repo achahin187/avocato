@@ -331,6 +331,8 @@ Route::post('/records/filter', 'RecordsController@filter')->name('records.filter
 Route::get('/home', 'HomeController@index')->name('home');
 });
 Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
+Route::get('/push_notification', 'NotificationsController@push_notification')->name('push.notification');
+
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
