@@ -80,8 +80,9 @@ class NotificationsController extends Controller
         return redirect('notifications#add_notification')->withErrors($validator)
         ->withInput();
       }
-
-      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+      
+//      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+      $send_date = Carbon::now()->timestamp;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
@@ -150,7 +151,7 @@ class NotificationsController extends Controller
         
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
-            dd($notification->schedule);
+//            dd($notification->schedule);
             if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now()))){
                 
             foreach($notification->noti_items as $item){
