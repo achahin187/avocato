@@ -150,6 +150,7 @@ class NotificationsController extends Controller
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
             print_r($notification->id);
+            print_r('<br/>');
             print_r($notification->schedule);
             if($notification->is_sent == 0 && ($notification->schedule  <= Carbon::now()->timestamp)) {
                 
