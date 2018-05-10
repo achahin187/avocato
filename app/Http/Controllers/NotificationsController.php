@@ -149,22 +149,21 @@ class NotificationsController extends Controller
     public function notification_cron() {
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
-        if($notification->is_sent == 0 && ($notification->schedule->lte(Carbon::now()->timestamp))) {
-            foreach($notification->noti_items as $item){
-                $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
-                foreach($subs as $sub){
-                    $user = $sub->user;
-                    $push = new Notifications_Push;
-                    $push->notification_id=$notification->id;
-                    $push->device_token=$user->device_token;
-                    $push->mobile_os=$user->mobile_os;
-                    $push->lang_id=$user->lang_id;
-                    $push->save();
+            if($notification->is_sent == 0 && ($notification->schedule->lte(Carbon::now()->timestamp))) {
+                foreach($notification->noti_items as $item){
+                    $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
+                    foreach($subs as $sub){
+                        $user = $sub->user;
+                        $push = new Notifications_Push;
+                        $push->notification_id=$notification->id;
+                        $push->device_token=$user->device_token;
+                        $push->mobile_os=$user->mobile_os;
+                        $push->lang_id=$user->lang_id;
+                        $push->save();
+                    }
                 }
-            }
-            $notification->is_sent = 1;
-            $notification->save();
-
+                $notification->is_sent = 1;
+                $notification->save();
             }
         }
     }
