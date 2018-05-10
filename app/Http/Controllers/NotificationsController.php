@@ -20,6 +20,7 @@ class NotificationsController extends Controller
      */
     public function index()
     {
+     dd(Carbon::now()->timestamp);   
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where('notification_type_id',1)->get();
         // $data['notes'] = Notifications::where('notification_type_id','!=',1)->get();
