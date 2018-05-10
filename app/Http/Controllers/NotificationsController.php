@@ -150,9 +150,9 @@ class NotificationsController extends Controller
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
             if($notification->is_sent == 0 && ($notification->schedule  <= Carbon::now()->timestamp)) {
-                dd($notification->schedule .' -- '.Carbon::now()->timestamp);
                 foreach($notification->noti_items as $item){
                     $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
+                    dd($subs);
                     foreach($subs as $sub){
                         $user = $sub->user;
                         $push = new Notifications_Push;
