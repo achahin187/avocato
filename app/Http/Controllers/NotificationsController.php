@@ -170,7 +170,7 @@ class NotificationsController extends Controller
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
-        dd($notifications_push);
+//        dd($notifications_push);
         foreach($notifications_push as $notification_push) { 
             $notification = $notification_push->notification;
             dd($notification);
