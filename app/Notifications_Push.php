@@ -14,5 +14,6 @@ class Notifications_Push extends Model
     {
         return $this->belongsTo('App\notifications','notification_id');
     }
+     
 
 }
