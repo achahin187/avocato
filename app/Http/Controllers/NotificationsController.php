@@ -21,13 +21,12 @@ class NotificationsController extends Controller
     public function index()
     {   
         $data['subscription_types'] = Package_Types::all();
-        $notifications = Notifications::where('notification_type_id',1)->get();
-        $notifications_array = $notifications->toArray();
-        foreach ($notifications_array as $index => $notification) {
-            $notifications_array[$index]['schedule']  = date('Y-m-d H:i:s', $notification['schedule']);
-        }
-        dd($notifications_array);
-        $data['notifications'] = $notifications;
+        $data['notifications'] = Notifications::where('notification_type_id',1)->get();
+//        $notifications_array = $notifications->toArray();
+//        foreach ($notifications as  $notification) {
+//            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
+//        }
+//        $data['notifications'] = $notifications_array;
         return view('clients.notifications',$data);
     }
 
