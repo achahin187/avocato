@@ -9,7 +9,7 @@ class Notifications extends Model
     protected $primaryKey = 'id';
     protected $table = 'notifications';
 	public $timestamps = true;
-	protected $dates = ['schedule'];
+//	protected $dates = ['schedule'];
 
 	    public function type()
     {
