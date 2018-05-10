@@ -147,14 +147,9 @@ class NotificationsController extends Controller
     }
 
     public function notification_cron() {
-//        print_r(Carbon::now());
-        
         $notifications = Notifications::where('notification_type_id',1)->get();
-        dd($notifications);
         foreach($notifications as $notification) {
-//            dd($notification->schedule);
-            if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now()))){
-                
+        if($notification->is_sent == 0 && ($notification->schedule->lte(Carbon::now()->timestamp))) {
             foreach($notification->noti_items as $item){
                 $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
                 foreach($subs as $sub){
@@ -167,7 +162,7 @@ class NotificationsController extends Controller
                     $push->save();
                 }
             }
-            $notification->is_sent=1;
+            $notification->is_sent = 1;
             $notification->save();
 
             }
