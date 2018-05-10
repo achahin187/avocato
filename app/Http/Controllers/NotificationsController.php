@@ -146,10 +146,12 @@ class NotificationsController extends Controller
     }
 
     public function notification_cron() {
-        dd(Carbon::now());
+//        print_r(Carbon::now());
+        
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
-            if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now())  )){
+            dd($notification->schedule);
+            if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now()))){
                 
             foreach($notification->noti_items as $item){
                 $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
