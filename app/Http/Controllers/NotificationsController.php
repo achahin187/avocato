@@ -153,9 +153,7 @@ class NotificationsController extends Controller
                 foreach($notification->noti_items as $item){
                     $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
                     foreach($subs as $sub){
-                        
                         $user = $sub->user;
-                        dump($user->id.' ===== '); 
                         $push = new Notifications_Push;
                         $push->notification_id=$notification->id;
                         $push->device_token=$user->device_token;
@@ -168,7 +166,6 @@ class NotificationsController extends Controller
                 $notification->save();
             }
         }
-        exit;
     }
 
         public function change($id)
