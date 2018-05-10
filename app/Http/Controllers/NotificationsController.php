@@ -149,9 +149,9 @@ class NotificationsController extends Controller
     public function notification_cron() {
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
-            print_r($notification->id);
-            print_r('<br/>');
-            print_r($notification->schedule);
+            dd($notification->id);
+            
+            
             if($notification->is_sent == 0 && ($notification->schedule  <= Carbon::now()->timestamp)) {
                 
                 foreach($notification->noti_items as $item){
