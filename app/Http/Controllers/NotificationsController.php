@@ -150,6 +150,7 @@ class NotificationsController extends Controller
 //        print_r(Carbon::now());
         
         $notifications = Notifications::where('notification_type_id',1)->get();
+        dd($notifications);
         foreach($notifications as $notification) {
 //            dd($notification->schedule);
             if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now()))){
