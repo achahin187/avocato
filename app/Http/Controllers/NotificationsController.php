@@ -173,7 +173,7 @@ class NotificationsController extends Controller
         dd($notifications_push);
         foreach($notifications_push as $notification_push) { 
             $notification = $notification_push->notification;
-            dd($notification)
+            dd($notification);
         }
         $registrationIds = array($device_token);
 		// prep the bundle
