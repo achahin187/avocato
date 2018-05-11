@@ -35,7 +35,19 @@ class TasksController extends Controller
         $data['tasks']=Tasks::where('task_type_id',1)->get();
         $data['clients']=Users::whereHas('rules', function ($query) {
                                             $query->where('rule_id', '6');
-                                        })->get();
+                                        })->with('rules')->get();
+        foreach ($data['clients'] as $key => $value) {
+            foreach ($value['rules'] as $key1 => $value1) {
+               if($value1['id'] != 6)
+               {
+                // dd($value1);
+                $data['client_type'][$value['id']]=$value1['name_ar'];
+
+               }
+            }
+        }
+        // $data['client_type']=(object)$data['client_type'];
+             // dd($data['clients']);
         return view('tasks.tasks_emergency',$data);
     }
 

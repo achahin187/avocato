@@ -365,11 +365,7 @@
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="client_type">نوع إشتراك العميل</label>
-                                  <select class="master_input select2" id="client_type" multiple="multiple" data-placeholder="نوع العميل" style="width:100%;" name="client_type">
-                                    <option>أفراد - شركات</option>
-                                    <option>شركات</option>
-                                    <option>أفراد</option>
-                                  </select><span class="master_message color--fadegreen">message</span>
+                                  <input class="master_input " id="client_type"  data-placeholder="نوع العميل" style="width:100%;" name="client_type" type="text" readonly><span class="master_message color--fadegreen">message</span>
                                 </div>
                               </div>
                               <div class="col-xs-12">
@@ -482,27 +478,35 @@ var client_long;
       }
     </script>
                         <script>
-                          function set_client_data(id  , clients)
+                          function set_client_data(id  , clients , client_type)
                 {
                 
                   var code=document.getElementById('client_code');
                   var name=document.getElementById('client_name');
                   var mobile=document.getElementById('client_tel');
+                  var type=document.getElementById('client_type');
                 
                 for(var client in clients)
                 {
+                  // alert(client);
                   for(var item in clients[client])
                   {
-                    // alert(item);
+                     // alert(item);
                     if(item == 'id' && clients[client][item]==id)
                     {
-                       // alert(item);
+                        // alert(item);
                        name.value=clients[client]['name'];
                       mobile.value=clients[client]['mobile'];
+                       // type.value=array[id];
                      
                     }
+
                     // alert(clients[client][item]);
                   }
+                  // for(var rule in clients[client[rules]])
+                  //   {
+                  //     alert(rule);
+                  //   }
                  
                 }
                   
