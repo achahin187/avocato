@@ -442,7 +442,7 @@ var client_long;
       {
         var id =$('#client_code').val();
         var description=$('#emergency').val();
- alert(id + description);
+ // alert(id + description);
    $.ajax({
            type:'POST',
            url:'{{url('add_emergency_task')}}',
@@ -454,7 +454,7 @@ var client_long;
            ,'_token':"{{ csrf_token() }}"
          },
            success:function(data){
-              alert(data);
+              // alert(data);
         // $this.html(data);
       // alert(data);
           },
