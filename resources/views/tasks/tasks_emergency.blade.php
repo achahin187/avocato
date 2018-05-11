@@ -322,11 +322,10 @@
                         </div>
                       </div>
                     </div>
-                   {{--  <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_task_service"><i class="fa fa-plus"></i><span>إضافة حالة طارئة</span></a>
+                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_task_service"><i class="fa fa-plus"></i><span>إضافة حالة طارئة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="add_task_service" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <form action="{{ route('add_emergency_task') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                   <input type="hidden" name="_token" value="{{csrf_token()}}">
+                    
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
@@ -335,31 +334,38 @@
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="client_code">كود العميل</label>
-                                  <input class="master_input" type="number" placeholder="كود العميل" id="client_code"><span class="master_message color--fadegreen">message</span>
+                                  <select class="master_input select2 required"  id="client_code" name="client_code" style="width:100%;" onchange="set_client_data(this.value,{{$clients}})" required>
+                            <option value="-1" selected disabled hidden>إختر كود العميل</option>
+                            @foreach($clients as $client)
+                              {{-- <option value="{{$client->id}}">{{$client->code}}</option> --}}
+                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
+                            @endforeach
+                              
+                            </select><span class="master_message color--fadegreen">message</span>
                                 </div>
                               </div>
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="client_name">اسم العميل</label>
-                                  <input class="master_input" type="text" placeholder="اسم العميل" id="client_name"><span class="master_message color--fadegreen">message</span>
+                                  <input class="master_input" type="text" placeholder="اسم العميل" id="client_name" name="client_name" readonly><span class="master_message color--fadegreen">message</span>
                                 </div>
                               </div>
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="client_tel">تليفون</label>
-                                  <input class="master_input" type="number" placeholder="تليفون العميل" id="client_tel"><span class="master_message color--fadegreen">message</span>
+                                  <input class="master_input" type="text" placeholder="تليفون العميل" id="client_tel" name="client_tel" readonly><span class="master_message color--fadegreen">message</span>
                                 </div>
                               </div>
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="client_address">عنوان العميل </label>
-                                  <input class="master_input" type="text" placeholder="عنوان العميل" id="client_address"><span class="master_message color--fadegreen">message</span>
+                                  <input class="master_input" type="text" placeholder="عنوان العميل" id="client_address" name="client_address" required><span class="master_message color--fadegreen">message</span>
                                 </div>
                               </div>
                               <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="master_field">
-                                  <label class="master_label mandatory" for="governorate">نوع إشتراك العميل</label>
-                                  <select class="master_input select2" id="governorate" multiple="multiple" data-placeholder="نوع العميل" style="width:100%;" ,>
+                                  <label class="master_label mandatory" for="client_type">نوع إشتراك العميل</label>
+                                  <select class="master_input select2" id="client_type" multiple="multiple" data-placeholder="نوع العميل" style="width:100%;" name="client_type">
                                     <option>أفراد - شركات</option>
                                     <option>شركات</option>
                                     <option>أفراد</option>
@@ -369,17 +375,17 @@
                               <div class="col-xs-12">
                                 <div class="master_field">
                                   <label class="master_label">تفاصيل الحالة الطارئة</label>
-                                  <textarea class="master_input" name="body" placeholder="تفاصيل الحالة الطارئة"></textarea>
+                                  <textarea class="master_input" id="emergency" name="emergency" placeholder="تفاصيل الحالة الطارئة" required></textarea>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" type="submit">حفظ</button>
-                      </form>
+                        <button class="remodal-confirm" type="submit" onclick="add_emergency()">حفظ</button>
+                      
                       </div>
-                    </div> --}}
+                    </div>
                     <div class="clearfix"></div>
                   </div>
                 </div>
@@ -387,12 +393,126 @@
  
  @endsection
  @section('js')
-                        <script>
-                           function exportExcel() {
-        alasql('SELECT * INTO XLSX("emergency_tasks.xlsx",{headers:true}) \
-                    FROM HTML("#dataTableTriggerId_001",{headers:true})');
+ {{-- <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
+            </script> --}}
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk9wS-7eUWZ0_EEM3DQ2FftQIU8AvpMYs&libraries=places&callback=initMap"
+        async defer></script>
         
-    }
+          <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+var client_lat;
+var client_long;
+      function initMap() {
+        
+        var input = document.getElementById('client_address');
+       
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        autocomplete.addListener('place_changed', function() {
+ 
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            // User entered the name of a Place that was not suggested and
+            // pressed the Enter key, or the Place Details request failed.
+            window.alert("No details available for input: '" + place.name + "'");
+            return;
+          }
+
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+
+           client_lat = place.geometry.location.lat();
+         client_long= place.geometry.location.lng();
+        });
+
+
+
+      }
+
+      function add_emergency()
+      {
+        var id =$('#client_code').val();
+        var description=$('#emergency').val();
+ alert(id + description);
+   $.ajax({
+           type:'POST',
+           url:'{{url('add_emergency_task')}}',
+           data:{
+            'client_id':id
+           ,'client_long':client_long
+           ,'client_lat':client_lat
+           ,'description':description
+           ,'_token':"{{ csrf_token() }}"
+         },
+           success:function(data){
+              alert(data);
+        // $this.html(data);
+      // alert(data);
+          },
+           error: function (jqXHR, exception) {
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        // $('#post').html(msg);
+    },
+        });
+
+      }
+    </script>
+                        <script>
+                          function set_client_data(id  , clients)
+                {
+                
+                  var code=document.getElementById('client_code');
+                  var name=document.getElementById('client_name');
+                  var mobile=document.getElementById('client_tel');
+                
+                for(var client in clients)
+                {
+                  for(var item in clients[client])
+                  {
+                    // alert(item);
+                    if(item == 'id' && clients[client][item]==id)
+                    {
+                       // alert(item);
+                       name.value=clients[client]['name'];
+                      mobile.value=clients[client]['mobile'];
+                     
+                    }
+                    // alert(clients[client][item]);
+                  }
+                 
+                }
+                  
+                  
+                }
+    //                        function exportExcel() {
+    //     alasql('SELECT * INTO XLSX("emergency_tasks.xlsx",{headers:true}) \
+    //                 FROM HTML("#dataTableTriggerId_001",{headers:true})');
+        
+    // }
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){
