@@ -53,20 +53,18 @@ class NotificationsController extends Controller
         'date'=>'required',
         'notification'=>'required',
       ]);
-
       if ($validator->fails()) {
         return redirect('notifications#add_notification')->withErrors($validator)
         ->withInput();
       }
-      
-//      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-      $send_date = Carbon::now()->timestamp;
+      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+//      $send_date = Carbon::now()->timestamp;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
       $notification->is_sent=0;
-      $notification->created_at = Carbon::now()->timestamp;
+//      $notification->created_at = Carbon::now()->timestamp;
       $notification->save();
       
       foreach($request->package_type as $package){
@@ -127,7 +125,7 @@ class NotificationsController extends Controller
     public function notification_cron() {
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
-            if($notification->is_sent == 0 && ($notification->schedule  <= Carbon::now()->timestamp)) {
+            if($notification->is_sent == 0 && (strtotime($notification->schedule)  <= Carbon::now()->timestamp)) {
                 foreach($notification->noti_items as $item){
                     $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
                     foreach($subs as $sub){
