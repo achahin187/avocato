@@ -59,8 +59,8 @@ class NotificationsController extends Controller
         ->withInput();
       }
       
-//      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-      $send_date = Carbon::now()->timestamp;
+      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+//      $send_date = Carbon::now()->timestamp;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
