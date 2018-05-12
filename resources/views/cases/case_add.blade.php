@@ -658,6 +658,7 @@
 
            @section('js')
               <script type="text/javascript">
+                $(function () {
                 $('#case_year').datepicker({
                 format: "yyyy",
                 weekStart: 1,
@@ -665,6 +666,7 @@
                 keyboardNavigation: false,
                 viewMode: "years",
                 minViewMode: "years"
+                });
                 });
               </script>
               <script type="text/javascript">
