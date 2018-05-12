@@ -66,7 +66,7 @@ class NotificationsController extends Controller
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
       $notification->is_sent=0;
-      $notification->created_at = Carbon::now()->timestamp;
+//      $notification->created_at = Carbon::now()->timestamp;
       $notification->save();
       
       foreach($request->package_type as $package){
