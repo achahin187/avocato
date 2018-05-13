@@ -176,7 +176,7 @@ class Helper {
     public static function mail($email ,$body ){
         Mail::raw('New Feedback   is ('.$body.' )', function($msg) use($email){ 
             $msg->to([$email])->subject('SecureBridge'); 
-            $msg->from(['pentavalue.securebridge@gmail.com']); 
+            $msg->from(['info@avocatoapp.net']); 
 
           });
     }
