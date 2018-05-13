@@ -495,18 +495,38 @@ var client_long;
                 
                 for(var client in clients)
                 {
-                  // alert(client);
+                   // alert(client);
                   for(var item in clients[client])
                   {
-                     // alert(item);
+                      // alert(clients[client][rules]);
                     if(item == 'id' && clients[client][item]==id)
                     {
                         // alert(item);
+                        // alert(clients[client]['rules']);
                        name.value=clients[client]['name'];
                       mobile.value=clients[client]['mobile'];
+                      for(var rule in clients[client]['rules'])
+                      {
+                        if(clients[client]['rules'][rule]['id'] != 6)
+                        {
+                          type.value=clients[client]['rules'][rule]['name_ar'];
+                        }
+                        
+                      }
                        // type.value=array[id];
                      
                     }
+                    // if(item == 'rules' )
+                    // {
+                    //   for(var rule in clients[client]['rules'])
+                    //   {
+                    //     if(clients[client]['rules'][rule]['id'] != 6)
+                    //     {
+                    //       alert(clients[client]['rules'][rule]['name_ar']);
+                    //     }
+                        
+                    //   }
+                    // }
 
                     // alert(clients[client][item]);
                   }
