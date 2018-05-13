@@ -156,7 +156,7 @@
                               @endif
                             </label></span></td>
                             <td><span class="cellcontent">{{$task->lawyer->name or ''}}</span></td>
-                            <td><span class="cellcontent"><a href="{{URL('task_emergency_view/'.$task->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('assign_emergency_task/'.$task->id)}}" ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href="{{URL('task_emergency_view/'.$task->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('assign_emergency_task/'.$task->id)}}" ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
 
@@ -453,7 +453,7 @@ var client_long;
            $(function () {
              $('#modal').modal('hide');
           });
-            // window.location.reload();
+             window.location.reload();
              
               // alert(data);
         // $this.html(data);
