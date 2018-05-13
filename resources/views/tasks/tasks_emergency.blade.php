@@ -326,7 +326,7 @@
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="add_task_service" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" id="modal">
                     
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        <button class="remodal-close" data-remodal-action="close" data-dismiss="modal"  aria-label="Close"></button>
                         <div>
                           <div class="row">
                             <div class="col-xs-12">
@@ -450,9 +450,11 @@ var client_long;
            ,'_token':"{{ csrf_token() }}"
          },
            success:function(data){
-           $(function () {
-             $('#modal').modal('hide');
-          });
+          //  $(function () {
+          //    $('#modal').hide();
+          //    $('.remodal-bg').hide();
+          //    // $('.modal-backdrop').remove();
+          // });
              window.location.reload();
              
               // alert(data);
