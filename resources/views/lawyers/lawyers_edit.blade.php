@@ -280,8 +280,8 @@
                         </button>
                       </div>
                       <div class="col-md-2 col-sm-6 col-xs-6">
-                        <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
-                        </button>
+                       <a href="{{route('lawyers_follow')}}"> <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="button"><i class="fa fa-times"></i><span>الغاء</span>
+                        </button></a>
                       </div>
                     </form>
                       <div class="clearfix"></div><br>
