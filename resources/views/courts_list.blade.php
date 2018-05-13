@@ -96,25 +96,38 @@ true).find("option[value]").remove();
           });
         });
 
-        $('.excel-btn').click(function(){
-          var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-court-id');
-          }).get();
-          $.ajax({
-           type:'GET',
-           url:'{{url('courts_list_excel')}}',
-           data:{ids:selectedIds},
-           success:function(response){
-                    swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                    // var a = document.createElement("a");
-                    // a.href = response.file; 
-                    // a.download = response.name+'.xlsx';
-                    // document.body.appendChild(a);
-                    // a.click();
-                    // a.remove();
-                    location.href = response;
-          }
+        // Export table as Excel file
+        $('#exportXLS').click(function(){
+          var allVals = [];                   // selected IDs
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            // push all IDs
+            $('.checkboxes').each(function() {
+              allVals.push($(this).attr('data-id'));
             });
+          }
+          
+          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          $.ajax(
+          {
+            url: "{{ route('courts_list_excel') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
         });
 
         window.setTimeout(function() {
@@ -242,7 +255,7 @@ true).find("option[value]").remove();
                           <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
                         </div>
                       </div>
-                      <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a id="exportXLS" class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
@@ -257,7 +270,7 @@ true).find("option[value]").remove();
                         <tbody>
                           @foreach($courts as $court)
                           <tr class="court" data-court-id="{{$court->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                            <td><span class="cellcontent"><input data-id="{{ $court->id }}" type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$court->name}}</span></td>
                             <td><span class="cellcontent">@isset($court->city->name){{$court->city->name}}@endisset</span></td>
                             <td><span class="cellcontent">@isset($court->city->governorate->name){{$court->city->governorate->name}}@endisset</span></td>
