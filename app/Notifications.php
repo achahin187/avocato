@@ -8,7 +8,7 @@ class Notifications extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'notifications';
-	public $timestamps = false;
+	public $timestamps = true;
 	protected $dates = ['schedule'];
 
 	    public function type()
@@ -18,7 +18,7 @@ class Notifications extends Model
 
     	public function noti_items()
     {
-        return $this->hasMany('App\notification_items','notification_id');
+        return $this->hasMany('App\Notification_Items','notification_id');
     }
 
         public function push()

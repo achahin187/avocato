@@ -105,6 +105,7 @@ class ComplainsController extends Controller
         
 
         } catch ( Exception $ex ) {
+            // dd('jpoeifj');
             Session::flash('warning', 'حدث خطأ ما عند الرد علي هذاه الشكوي, برجاء المحاولة مرة اخري');
             return redirect()->back()->withInput();
         }
