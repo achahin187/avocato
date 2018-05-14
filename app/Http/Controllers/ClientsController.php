@@ -104,14 +104,15 @@ class ClientsController extends Controller
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
         $filename = $request->userType.time().'.xlsx';
-
+        $userRule = $request->userRule;
+        
         if(isset($request->ids)){
             $ids = explode(",", $request->ids);
 
-            Excel::store(new ClientsExport($ids),$filepath.$filename);
+            Excel::store(new ClientsExport($ids, $userRule),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else{
-            Excel::store((new ClientsExport()),$filepath.$filename);
+            Excel::store((new ClientsExport(null, $userRule)),$filepath.$filename);
             return response()->json($PathForJson.$filename); 
         }
 

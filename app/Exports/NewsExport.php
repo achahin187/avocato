@@ -36,14 +36,21 @@ public  function collection()
     $usersArray = array(['رقم المسلسل', 'عنوان الخبر', 'نص الخبر', 'مفعل', 'تاريخ النشر', 'اسم الناشر']) ;
 
     if( $this->ids != NULL ){
-
         $news = News::whereIn('id', $this->ids)->get();
-        foreach($news as $n)
-        {
-            $is_active = $n->is_active ? 'نعم' : 'لا';
-            $fullname = Helper::getUserDetails($n->created_by) ? Helper::getUserDetails($n->created_by)->full_name : 'غير معروف';
-            array_push($usersArray,[ $n->id, $n->name, $n->body, $is_active, $n->published_at,  $fullname]);
-        }
+    } else {
+        $news = News::all();
+    }
+
+    foreach($news as $n) {
+        $is_active = $n->is_active ? 'نعم' : 'لا';
+        $fullname = Helper::getUserDetails($n->created_by) ? Helper::getUserDetails($n->created_by)->full_name : 'غير معروف';
+        array_push($usersArray,[ 
+            $n->id, 
+            $n->name, 
+            html_entity_decode(strip_tags($n->body)), 
+            $is_active, 
+            $n->published_at,  
+            $fullname]);
     }
 
     return collect($usersArray);

@@ -166,6 +166,8 @@ Route::get('/notifications', 'NotificationsController@index')->name('notificatio
 Route::post('/notifications_store', 'NotificationsController@store')->name('notifications.store');
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
 Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
+Route::post('/notifications_filter', 'NotificationsController@filter')->name('notifications_filter');
+
 
 });
 
@@ -173,12 +175,13 @@ Route::post('/notifications_change/{id}', 'NotificationsController@change')->nam
 
 Route::middleware(['roles:1,2,3,4'])->group(function () {
 
-Route::get('/complains', 'ComplainsController@index')->name('complains');
-Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
-Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
-Route::get('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
-Route::get('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
-Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
+    Route::get('/complains', 'ComplainsController@index')->name('complains');
+    Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
+    Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
+    Route::get('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
+    Route::get('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
+    Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
+    Route::get('/complains/export/excel', 'ComplainsController@exportXLS')->name('complains.exportXLS');
 
 });
 
@@ -320,14 +323,15 @@ Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')-
 });
 
 
-    Route::middleware(['roles:1,2,3,4'])->group(function () {
-        Route::get('/records', 'RecordsController@index')->name('records');
-Route::get('/records/create', 'RecordsController@create')->name('records.add');
-Route::post('/records/store', 'RecordsController@store')->name('record.store');
-Route::get('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
-Route::get('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
-Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
-    });
+Route::middleware(['roles:1,2,3,4'])->group(function () {
+    Route::get('/records', 'RecordsController@index')->name('records');
+    Route::get('/records/create', 'RecordsController@create')->name('records.add');
+    Route::post('/records/store', 'RecordsController@store')->name('record.store');
+    Route::get('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+    Route::get('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+    Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
+    Route::get('/records/export/excell', 'RecordsController@exportXLS')->name('records.exportXLS');
+});
 
 
 Route::get('/home', 'HomeController@index')->name('home');

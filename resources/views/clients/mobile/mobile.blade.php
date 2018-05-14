@@ -431,36 +431,24 @@
           
           // check if user selected nothing
           if(allVals.length <= 0) {
-            // push all IDs
-            $('.checkboxes').each(function() {
-              allVals.push($(this).attr('data-id'));
-            });
+            var ids = null;
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           }
           
-          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           $.ajax(
           {
-            cache: false,
-            url: "{{ route('mobile.exportXLS') }}",
-            type: 'POST',
-            dataType: "JSON",
+            url: "{{ route('clients.exportXLS') }}",
+            type: 'GET',
             data: {
                 "ids": ids,
-                "_method": 'POST',
-                "_token": token,
+                "userType": "Mobile",
+                "userRule": 7,
+                "_method": 'GET',
             },
-            success: function (response, textStatus, request)
-            {
+            success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-              var a = document.createElement("a");
-              a.href = response.file; 
-              a.download = response.name+".xlsx";
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-            },
-            error: function (ajaxContext) {
-              console.log(ajaxContext.responseText);
+              location.href = response;
             }
           });
 

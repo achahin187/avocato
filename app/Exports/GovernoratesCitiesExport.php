@@ -36,12 +36,13 @@ public  function collection()
     $usersArray = array(['المحافظة', 'المدينة']) ;
 
     if( $this->ids != NULL ){
+        $cities = Geo_Cities::whereIn('id', $this->ids)->get();   
+    } else {
+        $cities = Geo_Cities::all();  
+    }
 
-        $cities = Geo_Cities::whereIn('id', $this->ids)->get();
-        foreach($cities as $city)
-        {
-            array_push($usersArray,[ $city->governorate->name, $city->name ]);
-        }
+    foreach($cities as $city) {
+        array_push($usersArray,[ $city->governorate->name, $city->name ]);
     }
 
     return collect($usersArray);

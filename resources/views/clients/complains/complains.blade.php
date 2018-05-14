@@ -112,7 +112,7 @@
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
         <div class="bottomActions__btns">
-          <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
         </div>
         <table class="table-1">
@@ -426,47 +426,34 @@
         
         // Export table as Excel file
         $('#exportSelected').click(function(){
-            var allVals = [];                   // selected IDs
+          var allVals = [];                   // selected IDs
 
-            // push cities IDs selected by user
-            $('.checkboxes:checked').each(function() {
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
             allVals.push($(this).attr('data-id'));
-            });
-            
-            // check if user selected nothing
-            if(allVals.length <= 0) {
-            // push all IDs
-            $('.checkboxes').each(function() {
-                allVals.push($(this).attr('data-id'));
-            });
-            }
-            
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            var ids = null;
+          } else {
             var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-            $.ajax(
-            {
-            cache: false,
-            url: "{{ route('governorates_cities.exportXLS') }}",
-            type: 'POST',
-            dataType: "JSON",
+          }
+          
+          
+          $.ajax(
+          {
+            url: "{{ route('complains.exportXLS') }}",
+            type: 'GET',
             data: {
                 "ids": ids,
-                "_method": 'POST',
-                "_token": token,
+                "_method": 'GET',
             },
-            success: function (response, textStatus, request)
-            {
-                swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                var a = document.createElement("a");
-                a.href = response.file; 
-                a.download = response.name+".xlsx";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-            },
-            error: function (ajaxContext) {
-                console.log(ajaxContext.responseText);
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
             }
-            });
+          });
 
         });
 
