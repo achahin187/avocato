@@ -162,7 +162,7 @@
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
           <a id="printSelected" class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a>
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
-          <a class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
+          <a id="exportPDF" class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
         </div>
         <table class="table-1" id="dataTableTriggerId_001">
           <thead>
@@ -638,6 +638,42 @@
             data: {
                 "ids": ids,
                 "userType": 'Companies',
+                "_method": 'GET',
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
+        });
+
+        
+        // Export table as PDF
+        $('#exportPDF').click(function(){
+          var allVals = [];                   // selected IDs
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-id'));
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            // push all IDs
+            $('.checkboxes').each(function() {
+              allVals.push($(this).attr('data-id'));
+            });
+          }
+          
+          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          $.ajax(
+          {
+            url: "{{ route('clients.exportPDF') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "userType": 'Individuals',
                 "_method": 'GET',
             },
             success:function(response){

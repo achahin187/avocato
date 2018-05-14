@@ -39,18 +39,17 @@ class CourtsListController extends Controller
         
     }
 
-        public function excel()
+    public function excel(Request $request)
     {   
         $filepath ='public/excel/';
-        // $PathForJson='storage/excel/';
-        $PathForJson=storage_path('app/public/excel');
+        $PathForJson='storage/excel/';
         $filename = 'courts'.time().'.xlsx';
+        
         if(isset($_GET['ids'])){
-           $ids = $_GET['ids'];
-        Excel::store(new CourtsExport($ids),$filepath.$filename);
-        return response()->json($PathForJson.$filename);
-    }
-        else{
+            $ids = explode(",", $request->ids);
+            Excel::store(new CourtsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else { 
         Excel::store((new CourtsExport()),$filepath.$filename);
         return response()->json($PathForJson.$filename); 
       }

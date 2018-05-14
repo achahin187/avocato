@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
+use Helper;
 use Excel;
+use PDF;
 use App\Users;
 use App\Exports\ClientsExport;
 use Illuminate\Http\Request;
@@ -95,6 +98,7 @@ class ClientsController extends Controller
     }
 
     // export Excel sheets
+    // @param   $request    contains ids of records so that we could get their records
     public function exportXLS(Request $request)
     {
         $filepath ='public/excel/';
@@ -112,6 +116,39 @@ class ClientsController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    // Export records as PDF
+    // @param   $request    contains ids of records so that we could get their records
+    public function exportPDF(Request $request) {
+
+        if( isset($request->ids) && !empty($request->ids) ) {
+            $ids = explode(",", $request->ids);            
+            $users = Users::whereIn('id', $ids)->get();
+        } else {
+            $users = array();
+        }
+
+        $fileName = 'pdf/clients-'.time().'.pdf';
+        // $pdf = PDF::loadView('pdf.clients', ['users' => $users])->setPaper('a4', 'landscape')->save($fileName);
+
+        // view()->share('usersPDF', $users);
+        // $html = view('pdf.clients')->render();
+        // PDF::load($html, 'A4', 'landscape')->filename($fileName)->output();
+
+        $pdf = PDF::loadView('pdf.clients', ['usersPDF'=>$users]);
+        $pdf->save($fileName);
+
+        return response()->json($fileName);
+    }
+
+    // Activate Clients icluding individuals, companies, individuals-companies and mobile users
+    public function activate($id) {
+        $user = Users::find($id);
+        ($user->is_active) ? ($user->is_active = 0) : ($user->is_active = 1);   // toggle activation.
+        $user->save();
+
+        return redirect()->back();
     }
 
 }

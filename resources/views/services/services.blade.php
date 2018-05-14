@@ -168,19 +168,27 @@
                         </thead>
                         <tbody>
                           @foreach($services as $service)
-                          <tr data-service-id="{{$service->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$service->client->code}}</span></td>
-                            <td><span class="cellcontent">{{$service->client->full_name}}</span></td>
-                            <td><span class="cellcontent">{{$service->client->address}}</span></td>
-                            <td><span class="cellcontent">{{$service->name}}</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">@foreach($types as $type)
-                              @if($service->task_payment_status_id == $type->item_id)
-                              {{$type->value}}
-                              @endif
-                            @endforeach</label></span></td>
-                            <td><span class="cellcontent"><a href= "{{route('services_show',$service->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('services_edit',$service->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                            <tr data-service-id="{{$service->id}}">
+                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                              <td><span class="cellcontent">{{ $service->client ? $service->client->code : 'لا يوجد' }}</span></td>
+                              <td><span class="cellcontent">{{ $service->client ? $service->client->full_name : 'لا يوجد' }}</span></td>
+                              <td><span class="cellcontent">{{ $service->client ? $service->client->address : 'لا يوجد' }}</span></td>
+                              <td><span class="cellcontent">{{ $service->name   ? $service->name : 'لا يوجد' }}</span></td>
+                              <td><span class="cellcontent"><label class= "data-label bgcolor--fadepurple color--white  ">
+
+                                @if ( isset($types) && !empty($types) )
+                                  @foreach($types as $type)
+                                      @if ( isset($service->task_payment_status_id) && !empty($service->task_payment_status_id) )
+                                        @if($service->task_payment_status_id == $type->item_id)
+                                          {{$type->value ? $type->value : 'لا يوجد'}}
+                                        @endif
+                                      @endif
+                                  @endforeach
+                                @endif
+
+                              </label></span></td>
+                              <td><span class="cellcontent"><a href= "{{route('services_show',$service->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('services_edit',$service->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            </tr>
                           @endforeach
                         </tbody>
                       </table>

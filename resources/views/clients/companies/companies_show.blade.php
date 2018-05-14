@@ -12,7 +12,7 @@
             <div class="coverglobal__actions">
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('companies.edit',$user->id)  }}">تعديل بيانات العميل</a>
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('printUsers', $user->id)  }}">كارت العميل</a>
-              <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('companies.destroyShow',$user->id)  }}">استبعاد العميل</a>
+              <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="#" id="deleteRecord">استبعاد العميل</a>
             </div>
           </div>
         </div>
@@ -1206,4 +1206,51 @@
   </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+
+      // delete a row
+      $('#deleteRecord').click(function(){
+        
+        var id = $(this).data("id");
+
+        swal({
+          title: "هل أنت متأكد؟",
+          text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: '#DD6B55',
+          confirmButtonText: 'نعم متأكد!',
+          cancelButtonText: "إلغاء",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if (isConfirm){
+                $.ajax(
+                {
+                    url: "{{ url('/companies/destroy') }}" +"/"+ id,
+                    type: 'GET',
+                    dataType: "JSON",
+                    data: {
+                        "id": id,
+                        "_method": 'GET',
+                    },
+                    success: function ()
+                    {
+                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                        $('tr[data-user='+id+']').fadeOut();
+                        location.href = "{{ route('companies') }}";
+                    }
+                });
+            
+          } else {
+            swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+          }
+        });
+      });
+
+    });
+  </script>
+  
 @endsection

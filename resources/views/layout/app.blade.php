@@ -241,7 +241,7 @@
 
                                      sub_target.removeClass( "color--gray_d" ).addClass('color--sec');
                                      
-                                    sub_target.parent().parent().parent().removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec');
+                                    sub_target.parent().parent().parent().removeClass( "bgcolor--gray_m" ).addClass('bgcolor--sec').addClass('openedmenu').addClass('opened-sublist');
                               
                              
 

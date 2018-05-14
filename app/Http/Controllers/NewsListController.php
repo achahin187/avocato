@@ -165,7 +165,7 @@ class NewsListController extends Controller
             return redirect()->back()->withInput();
         }
 
-        return redirect('news_list');
+        return redirect('news_list_show' .'/'. $news->id);
     }
 
     /**
@@ -253,7 +253,7 @@ class NewsListController extends Controller
             return redirect()->back()->withInput();
         }
 
-        return redirect('news_list');
+        return redirect('news_list_show' .'/'. $news->id);
     }
 
     /**

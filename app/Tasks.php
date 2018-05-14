@@ -16,22 +16,22 @@ class Tasks extends Model
 
     public function payment_status()
     {
-        return $this->belongsTo('App\Task_Payment_Statuses','task_payment_status_id');
+        return $this->belongsTo('App\Task_Payment_Statuses','task_payment_status_id')->withDefault();
     }
 
     public function task_status()
     {
-        return $this->belongsTo('App\Task_Statuses','task_status_id');
+        return $this->belongsTo('App\Task_Statuses','task_status_id')->withDefault();
     }
 
     public function task_type()
     {
-        return $this->belongsTo('App\Task_Types','task_type_id');
+        return $this->belongsTo('App\Task_Types','task_type_id')->withDefault();
     }
 
     public function client()
     {
-        return $this->belongsTo('App\Users','client_id');
+        return $this->belongsTo('App\Users','client_id')->withDefault();
     }
 
     public function lawyer()
@@ -42,7 +42,7 @@ class Tasks extends Model
 
     public function who_assign_lawyer()
     {
-        return $this->belongsTo('App\Users','who_assigned_lawyer_id');
+        return $this->belongsTo('App\Users','who_assigned_lawyer_id')->withDefault();
     }
 
     public function charges()

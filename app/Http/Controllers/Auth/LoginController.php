@@ -55,13 +55,13 @@ class LoginController extends Controller
 
         if (Auth::attempt($userdata)) {
             foreach (Auth::user()->rules as $rule){
-                 if($rule->id==13 && Auth::user()->is_active==1)
-                 {
-                $u=Users::find(Auth::user()->id);
-                $u->last_login=date('Y-m-d H:i:s');
-                $u->save();
-                  return redirect()->route('home');  
-                 }
+                if($rule->id==13 && Auth::user()->is_active==1) {
+                    $u=Users::find(Auth::user()->id);
+                    $u->last_login=date('Y-m-d H:i:s');
+                    $u->save();
+                    
+                    return redirect()->route('home');  
+                }
             }
             Auth::logout();
             return redirect()->back()->with('error','غير مخول لك بالدخول');;

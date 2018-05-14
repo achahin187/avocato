@@ -40,26 +40,19 @@ public  function collection()
         $users = Users::whereIn('id', $this->ids)->get();
         foreach($users as $user)
         {
-            if($user->is_active)
-            {
-                $is_active='فعال';
-            }
-            else{
-                $is_active='غير فعال';
-            }
             foreach($user->rules as $rule){
                 if($rule->id == 7 || $rule->id == 8 || $rule->id == 9 || $rule->id == 10 )
                     $role=$rule->name_ar;
             }
             array_push($usersArray,[$user->code,
-                                    $user->full_name,
-                                    $user->email,
-                                    $user->address,
-                                    $user->mobile,
-                                    Helper::localizations('package_types', 'name', $user->subscription->package_type_id),
-                                    $user->subscription->start_date,
-                                    $user->subscription->end_date,
-                                    $is_active
+                                    $user->full_name ? $user->full_name : 'غير معرف',
+                                    $user->email ? $user->email : 'غير معرف',
+                                    $user->address ? $user->address : 'غير معرف',
+                                    $user->mobile ? $user->mobile : 'غير معرف',
+                                    $user->subscription ? Helper::localizations('package_types', 'name', $user->subscription->package_type_id) : 'غير معرف',
+                                    $user->subscription ? $user->subscription->start_date->format('d/m/Y') : 'غير معرف',
+                                    $user->subscription ? $user->subscription->end_date->format('d/m/Y') : 'غير معرف',
+                                    $user->is_active ? 'فعال' : 'غير فعال'
                                 ]);
         }
 

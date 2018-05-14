@@ -332,7 +332,6 @@
         // Delete selected checkboxes
         $('#deleteSelected').click(function(){
             var allVals = [];                   // selected IDs
-            var token = '{{ csrf_token() }}';
 
             // push cities IDs selected by user
             $('.checkboxes:checked').each(function() {
@@ -361,12 +360,11 @@
                     $.ajax(
                     {
                         url: "{{ route('complains.destroySelected') }}",
-                        type: 'DELETE',
+                        type: 'GET',
                         dataType: "JSON",
                         data: {
                             "ids": ids,
-                            "_method": 'DELETE',
-                            "_token": token,
+                            "_method": 'GET',
                         },
                         success: function ()
                         {
@@ -390,7 +388,6 @@
         $('.deleteRecord').click(function(){
             
             var id = $(this).data("id");
-            var token = '{{ csrf_token() }}';
 
             swal({
             title: "هل أنت متأكد؟",
@@ -408,12 +405,11 @@
                     $.ajax(
                     {
                         url: "{{ url('/complains/destroy') }}" +"/"+ id,
-                        type: 'DELETE',
+                        type: 'GET',
                         dataType: "JSON",
                         data: {
                             "id": id,
-                            "_method": 'DELETE',
-                            "_token": token,
+                            "_method": 'GET',
                         },
                         success: function ()
                         {
@@ -431,7 +427,6 @@
         // Export table as Excel file
         $('#exportSelected').click(function(){
             var allVals = [];                   // selected IDs
-            var token = '{{ csrf_token() }}';
 
             // push cities IDs selected by user
             $('.checkboxes:checked').each(function() {

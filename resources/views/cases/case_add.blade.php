@@ -38,7 +38,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
-                           <select class="master_input select2"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})">
+                           <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})" required>
                             <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($clients as $client)
                               {{-- <option value="{{$client->id}}">{{$client->code}}</option> --}}
@@ -69,7 +69,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_character_0">صفته</label>
-                            <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;">
+                            <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;" class="required">
                               @foreach($roles as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endforeach
@@ -79,7 +79,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="authorization_num_0">رقم التوكيل</label>
-                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]"><span class="master_message color--fadegreen">
+                            <input class="master_input required" type="number" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]" required><span class="master_message color--fadegreen">
                                @if ($errors->has('authorization_num'))
                                     {{ $errors->first('authorization_num')}}
                                     @endif
@@ -109,8 +109,8 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="enemy_name">اسم الخصم</label>
-                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name"><span class="master_message color--fadegreen">
+                            <label class="master_label mandatory " for="enemy_name">اسم الخصم</label>
+                            <input class="master_input required" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name" required><span class="master_message color--fadegreen">
                               @if ($errors->has('enemy_name'))
                                     {{ $errors->first('enemy_name')}}
                                     @endif
@@ -119,8 +119,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
-                            <label class="master_label mandatory" for="enemy_type">صفته</label>
-                            <select class="master_input select2" id="enemy_type" name="enemy_type" style="width:100%;">
+                            <select class="master_input select2 required" id="enemy_type" name="enemy_type" style="width:100%;" required>
                               @foreach($roles as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endforeach
@@ -134,7 +133,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
-                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer"><span class="master_message color--fadegreen">
+                            <input class="master_input required" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer" required><span class="master_message color--fadegreen" >
                               @if ($errors->has('enemy_lawyer'))
                                     {{ $errors->first('enemy_lawyer')}}
                                     @endif
@@ -144,7 +143,7 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="enemy_address">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address"><span class="master_message color--fadegreen" >
+                            <input class="master_input required" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address" required><span class="master_message color--fadegreen" >
                               @if ($errors->has('enemy_address'))
                                     {{ $errors->first('enemy_address')}}
                                     @endif
@@ -161,7 +160,7 @@
                           <div class="col-xs-4">
                             <div class="master_field">
                               <label class="master_label" for="investigation_no">رقم المحضر</label>
-                              <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">
+                              <input class="master_input required" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no" required><span class="master_message color--fadegreen">
                                 @if ($errors->has('investigation_no'))
                                     {{ $errors->first('investigation_no')}}
                                     @endif
@@ -171,7 +170,7 @@
                           <div class="col-xs-4">
                             <div class="master_field">
                               <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
-                              <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                              <select class="master_input select2 required" id="investigation_type" name="investigation_type" style="width:100%;" required>
                                 @foreach($cases_record_types as $type)
                                 <option value="{{$type->id}}">{{$type->name_ar}}</option>
                                 @endforeach
@@ -186,7 +185,7 @@
                             <div class="master_field">
                               <label class="master_label mandatory">تاريخ</label>
                               <div class="bootstrap-timepicker">
-                                <input class="datepicker master_input" type="text" placeholder="تاريخ المحضر" id="investigation_date" name="investigation_date">
+                                <input class="datepicker master_input required" type="text" placeholder="تاريخ المحضر" id="investigation_date" name="investigation_date" required>
                               </div><span class="master_message color--fadegreen">
                                 @if ($errors->has('investigation_date'))
                                     {{ $errors->first('investigation_date')}}
@@ -215,7 +214,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
-                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num"><span class="master_message color--fadegreen">
+                            <input class="master_input required" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num" required><span class="master_message color--fadegreen">
                               @if ($errors->has('folder_num'))
                                     {{ $errors->first('folder_num')}}
                                     @endif
@@ -225,7 +224,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num"><span class="master_message color--fadegreen">
+                            <input class="master_input required" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num" required><span class="master_message color--fadegreen">
                                @if ($errors->has('claim_num'))
                                     {{ $errors->first('claim_num')}}
                                     @endif
@@ -235,7 +234,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
-                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">
+                            <input class="master_input required" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees" required><span class="master_message color--fadegreen">
                                @if ($errors->has('case_fees'))
                                     {{ $errors->first('case_fees')}}
                                     @endif
@@ -245,7 +244,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_type">نوع القضية</label>
-                            <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
+                            <select class="master_input select2 required" id="case_type" name="case_type" style="width:100%;" required>
                               @foreach($cases_types as $type)
                               <option value="{{$type->id}}">{{$type->name}}</option>
                               @endforeach
@@ -259,7 +258,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="court_name">المحكمة التى تنظر امامها</label>
-                            <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
+                            <select class="master_input select2" id="court_name" name="court_name" style="width:100%;" >
                               @foreach($courts as $court)
                               <option value="{{$court->id}}">{{$court->name}}</option>
                               @endforeach
@@ -312,7 +311,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_year">السنة</label>
-                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year"><span class="master_message color--fadegreen">
+                            <input class=" master_input required case_year" type="text" placeholder="السنة" id="case_year"  name="case_year" required><span class="master_message color--fadegreen">
                                @if ($errors->has('case_year'))
                                     {{ $errors->first('case_year')}}
                                     @endif
@@ -323,7 +322,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
                             <div class="bootstrap-timepicker">
-                              <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date">
+                              <input class="datepicker master_input required" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date" required>
                             </div><span class="master_message color--fadegreen">
                               @if ($errors->has('case_date'))
                                     {{ $errors->first('case_date')}}
@@ -334,7 +333,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
-                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang"><span class="master_message color--fadegreen">
+                            <input class="date_range_picker master_input required" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang" required><span class="master_message color--fadegreen">
                               @if ($errors->has('case_dateRang'))
                                     {{ $errors->first('case_dateRang')}}
                                     @endif
@@ -365,7 +364,7 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="subject">الموضوع</label>
-                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject"><span class="master_message color--fadegreen">@if ($errors->has('subject'))
+                            <input class="master_input required" type="text" placeholder="الموضوع" id="subject" name="subject" required><span class="master_message color--fadegreen">@if ($errors->has('subject'))
                                     {{ $errors->first('subject')}}
                                     @endif
                                   </span>
@@ -646,6 +645,7 @@
                         </div>
                       </div>
                       {{-- <input class="finish-btn sf-right sf-btn" type="submit" value="finish"/> --}}
+                   {{--    <input class=" date-own form-control" style="width: 300px;" type="text"> --}}
                     </fieldset>
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -657,8 +657,22 @@
            @endsection
 
            @section('js')
-
               <script type="text/javascript">
+                $(function () {
+                $('#case_year').datepicker({
+                format: "yyyy",
+                weekStart: 1,
+                orientation: "bottom",
+                keyboardNavigation: false,
+                viewMode: "years",
+                minViewMode: "years"
+                });
+                });
+              </script>
+              <script type="text/javascript">
+                 
+                      
+                 
                 var i=0;
                 function add_more_clients()
                 {
@@ -708,12 +722,45 @@
                 }
                
               </script>
+              <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
               <script type="text/javascript">
       var form = $("#horizontal-pill-steps").show();
       form.steps({
         headerTag: "h3",
         bodyTag: "fieldset",
         transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex)
+    {
+        // Allways allow previous action even if the current form is not valid!
+        if (currentIndex > newIndex)
+        {
+            return true;
+        }
+        
+        // Needed in some cases if the user went back (clean up)
+        if (currentIndex < newIndex)
+        {
+            // To remove error styles
+            form.find(".body:eq(" + newIndex + ") span.error").remove();
+            form.find(".body:eq(" + newIndex + ") .error").removeClass("error");
+        }
+        form.validate().settings.ignore = ":disabled,:hidden";
+        return form.valid();
+    },
+     onStepChanged: function (event, currentIndex, priorIndex)
+    {
+        // // Used to skip the "Warning" step if the user is old enough.
+        // if (currentIndex === 2 && Number($("#age-2").val()) >= 18)
+        // {
+        //     form.steps("next");
+        // }
+        // Used to skip the "Warning" step if the user is old enough and wants to the previous step.
+        if (currentIndex === 2 && priorIndex === 3)
+        {
+            form.steps("previous");
+        }
+    },
         onFinishing: function (event, currentIndex)
         {
            // alert("Submitted!");
@@ -726,41 +773,48 @@
             // bodyTag: "fieldset"
             // alert("Finish button was clicked");
             }
-        });
+        }).validate({
+    errorPlacement: function errorPlacement(error, element) { element.before(error); },
+    rules: {
+        // confirm: {
+        //     equalTo: "#password-2"
+        // }
+    }
+});
         
-      var form = $("#horizontal-tabs-steps").show();
-      form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "fieldset",
-        transitionEffect: "slideLeft",
-        // enableFinishButton: false,
-        enablePagination: false,
-        enableAllSteps: true,
-        titleTemplate: "#title#",
-        cssClass: "tabcontrol",
+//       var form = $("#horizontal-tabs-steps").show();
+//       form.children("div").steps({
+//         headerTag: "h3",
+//         bodyTag: "fieldset",
+//         transitionEffect: "slideLeft",
+//         // enableFinishButton: false,
+//         enablePagination: false,
+//         enableAllSteps: true,
+//         titleTemplate: "#title#",
+//         cssClass: "tabcontrol",
  
-  onStepChanging: function (event, currentIndex, newIndex)
-            {
-if (currentIndex === 5) { //if last step
-   //remove default #finish button
-   $('#wizard').find('a[href="#finish"]').remove(); 
-   //append a submit type button
-   $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
-}
+//   onStepChanging: function (event, currentIndex, newIndex)
+//             {
+// if (currentIndex === 5) { //if last step
+//    //remove default #finish button
+//    $('#wizard').find('a[href="#finish"]').remove(); 
+//    //append a submit type button
+//    $('#wizard .actions li:last-child').append('<button type="submit" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
+// }
                 
-            },
-        onFinishing: function (event, currentIndex)
-        {
-           alert("Submitted!");
-            // var form = $(this);
+//             },
+//         onFinishing: function (event, currentIndex)
+//         {
+//            alert("Submitted!");
+//             // var form = $(this);
 
-            //  form.submit();
-        },
-        onFinished: function (event, currentIndex) {
-            // bodyTag: "fieldset"
-            alert("Finish button was clicked");
-            }
-        });
+//             //  form.submit();
+//         },
+//         onFinished: function (event, currentIndex) {
+//             // bodyTag: "fieldset"
+//             alert("Finish button was clicked");
+//             }
+//         });
 
       function filter_lawyers()
       {

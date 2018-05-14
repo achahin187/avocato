@@ -13,7 +13,7 @@
               <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{ route('ind.com.edit',$user->id) }}">تعديل بيانات العميل</a>
                 <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('ind.edit', $user->id)  }}">التحويل لعميل أفراد</a>
                 <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('printUsers', $user->id)  }}">كارت العميل</a>
-                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{  route('ind.com.destroyShow', $user->id)  }}">استبعاد العميل</a>
+                <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="#" data-id="{{ $user->id }}" id="deleteRecord">استبعاد العميل</a>
               </div>
             </div>
           </div>
@@ -1203,4 +1203,51 @@
       </div>
     </div>
 
+    <script>
+        $(document).ready(function() {
+  
+          // delete a row
+          $('#deleteRecord').click(function(){
+            
+            var id = $(this).data("id");
+  
+            swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'نعم متأكد!',
+              cancelButtonText: "إلغاء",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm){
+                    $.ajax(
+                    {
+                        url: "{{ url('/individuals_companies/destroy') }}" +"/"+ id,
+                        type: 'GET',
+                        dataType: "JSON",
+                        data: {
+                            "id": id,
+                            "_method": 'GET',
+                        },
+                        success: function ()
+                        {
+                            swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                            $('tr[data-user='+id+']').fadeOut();
+                            location.href = "{{ route('ind.com') }}";
+                        }
+                    });
+                
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+          });
+  
+        });
+      </script>
+      
     @endsection

@@ -19,36 +19,14 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where('notification_type_id',1)->get();
-        // $data['notes'] = Notifications::where('notification_type_id','!=',1)->get();
-        // foreach($data['notes'] as $note){
-        //     if($note->notification_type_id ==2){
-
-        //     $note['url']="route('task_emergency_view',$note->item_id)";
-        //     }
-        //     if($note->notification_type_id ==4){
-
-        //     $note['url']="route('complains.edit',$note->item_id)";
-        //     }
-        //     if($note->notification_type_id ==5 and $note->entity_id==11 ){
-
-        //     $note['url']="route('services_show',$note->item_id)";
-        //     }
-        //     if($note->notification_type_id ==5 and $note->entity_id==14 ){
-
-        //     $note['url']="route('case_view',$note->item_id)";
-        //     }
-        //     if($note->notification_type_id ==6){
-
-        //     $note['url']="route('lawyers_show',$note->item_id)";
-        //     }
-        //     if($note->notification_type_id ==7){
-
-        //     $note['url']="route('legal_consultation_view',$note->item_id)";
-        //     }
-        // }
+//        $notifications_array = $notifications->toArray();
+//        foreach ($notifications as  $notification) {
+//            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
+//        }
+//        $data['notifications'] = $notifications_array;
         return view('clients.notifications',$data);
     }
 
@@ -75,19 +53,18 @@ class NotificationsController extends Controller
         'date'=>'required',
         'notification'=>'required',
       ]);
-
       if ($validator->fails()) {
         return redirect('notifications#add_notification')->withErrors($validator)
         ->withInput();
       }
-
       $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+//      $send_date = Carbon::now()->timestamp;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
       $notification->is_sent=0;
-      $notification->created_at=date('Y-m-d H:i:s');
+//      $notification->created_at = Carbon::now()->timestamp;
       $notification->save();
       
       foreach($request->package_type as $package){
@@ -178,32 +155,74 @@ class NotificationsController extends Controller
         $notification->delete();
     }
 
-        public function notification_cron()
-    {
+    public function notification_cron() {
         $notifications = Notifications::where('notification_type_id',1)->get();
-        foreach($notifications as $notification){
-            if($notification->is_sent==0 and ($notification->schedule->lte(Carbon::now())  )){
-                
-            foreach($notification->noti_items as $item){
-                $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
-                foreach($subs as $sub){
-                    $user = $sub->user;
-                    $push = new Notifications_Push;
-                    $push->notification_id=$notification->id;
-                    $push->device_token=$user->device_token;
-                    $push->mobile_os=$user->mobile_os;
-                    $push->lang_id=$user->lang_id;
-                    $push->save();
+        foreach($notifications as $notification) {
+            if($notification->is_sent == 0 && (strtotime($notification->schedule)  <= Carbon::now()->timestamp)) {
+                foreach($notification->noti_items as $item){
+                    $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
+                    foreach($subs as $sub){
+                        $user = $sub->user;
+                        $push = new Notifications_Push;
+                        $push->notification_id =$notification->id;
+                        $push->device_token  =$user->device_token;
+                        $push->mobile_os =$user->mobile_os;
+                        $push->lang_id =$user->lang_id;
+                        $push->user_id = $user->id;
+                        $push->save();
+                    }
                 }
-            }
-            $notification->is_sent=1;
-            $notification->save();
-
+                $notification->is_sent = 1;
+                $notification->save();
             }
         }
     }
+    public function push_notification() {
+        $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
+        foreach($notifications_push as $notification_push) { 
+            $device_token = $notification_push->device_token;
+            $notification = $notification_push->notification;
+            $registrationIds = array($device_token);
+            $message = $notification->msg;
+            // prep the bundle
+            $msg = array
+            (
+                'message' 	=> $message,
+                'title'		=> 'This is a title. title',
+                'subtitle'	=> 'This is a subtitle. subtitle',
+                'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+                'vibrate'	=> 1,
+                'sound'		=> 1,
+                'largeIcon'	=> 'large_icon',
+                'smallIcon'	=> 'small_icon'
+            );
+            $fields = array
+            (
+                'registration_ids' 	=> $registrationIds,
+                'data'			=> $msg
+            );
+            $headers = array
+            (
+                'Authorization: key=' . ENV('ANDROID_API_KEY'),
+                'Content-Type: application/json'
+            );
+            $ch = curl_init();
+            curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+            curl_setopt( $ch,CURLOPT_POST, true );
+            curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+            curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+            curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+            curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+//            $result = curl_exec($ch );
+            curl_close( $ch );
+            header('Content-type:application/json;charset=utf-8');
+            $notification_push->delete();
+//            echo $result;
+        }
+        
+    }
 
-        public function change($id)
+    public function change($id)
     {
         $notification = Notifications::find($id);
         $notification->is_read=1;

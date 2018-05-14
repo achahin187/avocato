@@ -8,7 +8,8 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{$user->image ? asset($user->image) : ''}}">
-                <h3 class="coverglobal__title color--gray_d">{{ $user->full_name ? $user->full_name : '' }}</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
+                <h3 class="coverglobal__title color--gray_d">{{ $user->full_name ? $user->full_name : '' }}
+                </h3><small class="coverglobal__slogan color--gray_d"><a href="{{ route('clients.activate', $user->id) }}">{{ $user->is_active ? 'مفعل' : 'غير مفعل' }}</a></small></a></div>
             <div class="coverglobal__actions">
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('ind.edit', $user->id)}}">التحويل لعميل أفراد</a>
               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('companies.edit', $user->id)}}">التحويل لعميل شركات</a>
@@ -131,7 +132,7 @@
                     <td>
                       <span class="cellcontent">
                         <a href= "{{URL('legal_consultation_view/'.$consult->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
-                        <a href= "{{route('legal_consultation_edit', $user->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                        <a href= "{{route('legal_consultation_edit', $consult->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
                         <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a>
                       </span></td>
                   </tr>

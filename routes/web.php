@@ -115,6 +115,8 @@ Route::middleware(['roles:1,2'])->group(function () {
 Route::get('/clients', 'ClientsController@index')->name('clients');
 Route::get('/clients/print/{ids}', 'ClientsController@printSelected')->name('printUsers');
 Route::get('/clients/export/excel', 'ClientsController@exportXLS')->name('clients.exportXLS');
+Route::get('/clients/export/pdf', 'ClientsController@exportPDF')->name('clients.exportPDF');
+Route::get('/clients/activate/{id}', 'ClientsController@activate')->name('clients.activate');
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
@@ -163,7 +165,6 @@ Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
 Route::post('/notifications_store', 'NotificationsController@store')->name('notifications.store');
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
-Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
 Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
 Route::post('/notifications_filter', 'NotificationsController@filter')->name('notifications_filter');
 
@@ -177,8 +178,8 @@ Route::middleware(['roles:1,2,3,4'])->group(function () {
 Route::get('/complains', 'ComplainsController@index')->name('complains');
 Route::get('/complains/edit/{id}', 'ComplainsController@edit')->name('complains.edit');
 Route::post('/complains/add/reply/{id}', 'ComplainsController@update')->name('complains.addReply');
-Route::delete('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
-Route::delete('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
+Route::get('/complains/destroySelected', 'ComplainsController@destroySelected')->name('complains.destroySelected');
+Route::get('/complains/destroy/{id}', 'ComplainsController@destroy')->name('complains.destroy');
 Route::post('/complains/filter', 'ComplainsController@filter')->name('complains.filter');
 
 });
@@ -241,7 +242,7 @@ Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_dest
 Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
 Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
 Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
-Route::get('/case_record_destroy/{case_id}/{id}', 'CasesController@destroy_record')->name('case_record_destroy');
+Route::get('/case_record_destroy/{id}/{record_id}', 'CasesController@destroy_record')->name('case_record_destroy');
 Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
 Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
 Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
@@ -324,21 +325,16 @@ Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')-
         Route::get('/records', 'RecordsController@index')->name('records');
 Route::get('/records/create', 'RecordsController@create')->name('records.add');
 Route::post('/records/store', 'RecordsController@store')->name('record.store');
-Route::delete('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
-Route::delete('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
+Route::get('/records/destroySelected', 'RecordsController@destroySelected')->name('records.destroySelected');
+Route::get('/records/destroy/{id}', 'RecordsController@destroy')->name('records.deleteRecord');
 Route::post('/records/filter', 'RecordsController@filter')->name('records.filter');
     });
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-
-
-
-
-
 });
+Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
+Route::get('/push_notification', 'NotificationsController@push_notification')->name('push.notification');
 
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');

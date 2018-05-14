@@ -51,7 +51,26 @@ class EmergencyTasksController extends Controller
 
     public function add_emergency_task(Request $request)
     {
-
+                    $input=[];
+                     $input['client_id']=$request['client_id'];
+                     $input['task_type_id']=1;
+                     $input['task_status_id']=1;
+                      $input['client_longitude']=$request['client_long'];
+                      $input['client_latitude']=$request['client_lat'];
+                      $input['description']=$request['description'];
+                     $input['created_by']=\Auth::user()->id;
+                     $input['start_datetime']=Carbon::now()->format('Y-m-d H:i:s');
+                     $input['created_at']=Carbon::now()->format('Y-m-d H:i:s');
+                     
+                     $task = Tasks::create($input);
+                 
+                     $input2=[];
+                     $input2['task_id']=$task->id;
+                     $input2['task_status_id']=$task->task_status_id;
+                     $input2['user_id']=\Auth::user()->id;
+                     $input2['datetime']=Carbon::now()->format('Y-m-d H:i:s');
+                     $task_status_history=Task_Status_History::create($input2);
+return redirect()->route('tasks_emergency');
     }
 
     public function assign_emergency_task($id)
