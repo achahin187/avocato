@@ -17,6 +17,30 @@ $(document).on('confirmation', '.remodal', function () {
            data:{notific:noti,noti_date:time,_token:_token},
            success:function(data){
             alert(data);
+            location.reload();
+          }
+        });
+
+});
+          });
+
+        $('.noti-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-lawyer-id');
+      }).get();
+      var _token = '{{csrf_token()}}';
+      $('[data-remodal-id=lawyer_notification]').remodal().open();
+      // alert(lawyer_id);
+$(document).on('confirmation', '.remodal', function () {
+        var noti = $('#nots').val(); 
+        var time = $("input[name=date]").val();
+         $.ajax({
+           type:'POST',
+           url:'{{url('notification_for_lawyers')}}'+'/'+lawyer_id,
+           data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
+           success:function(data){
+            alert(data);
+            location.reload();
           }
         });
 
@@ -210,7 +234,7 @@ $(document).on('confirmation', '.remodal', function () {
             </div>
           </div>
           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-          <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+          <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
           </div>
           <table class="table-1" id="dataTableTriggerId_001">
             <thead>

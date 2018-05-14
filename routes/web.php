@@ -168,6 +168,7 @@ Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->n
 Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
 Route::post('/notifications_filter', 'NotificationsController@filter')->name('notifications_filter');
 Route::post('/notification_lawyer/{id}', 'NotificationsController@notification_lawyer')->name('notification_lawyer');
+Route::post('/notification_for_lawyers', 'NotificationsController@notification_for_lawyers')->name('notification_for_lawyers');
 
 
 });
