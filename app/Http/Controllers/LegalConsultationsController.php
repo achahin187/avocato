@@ -366,7 +366,10 @@ class LegalConsultationsController extends Controller
              {
                $q->whereIn('is_paid',[0,1]);  
             }
-             if($request->is_replied == 1 || $request->is_replied == 0)
+            if($request->filled('is_replied'))
+            {
+                if($request->is_replied == 1 || $request->is_replied == 0)
+            
             {
                 $q->where('is_replied',$request->is_replied);
             }
@@ -376,6 +379,14 @@ class LegalConsultationsController extends Controller
                 $q->whereIn('is_replied',[0,1]);
                 // dd($q);
             }
+            }
+            else
+            {
+
+                $q->whereIn('is_replied',[0,1]);
+                // dd($q);
+            }
+             
             if($request->filled('consultation_date_from') && $request->filled('consultation_date_to') )
             {
                 // dd($request);

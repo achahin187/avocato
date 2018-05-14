@@ -33,6 +33,9 @@ class TasksController extends Controller
     public function emergency_index()
     {
         $data['tasks']=Tasks::where('task_type_id',1)->get();
+
+
+        
         $data['clients']=Users::whereHas('rules', function ($query) {
                                             $query->where('rule_id', '6');
                                         })->with('rules')->get();
