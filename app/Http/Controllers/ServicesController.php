@@ -247,9 +247,9 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if($request->filled('payment_status'))
-        $data['services'] = Tasks::whereIn('task_payment_status_id',$request->payment_status)->get();
+        $data['services'] = Tasks::where('task_type_id',3)->whereIn('task_payment_status_id',$request->payment_status)->get();
     else
-        $data['services'] = Tasks::all();
+        $data['services'] = Tasks::where('task_type_id',3)->get();
     
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
 
