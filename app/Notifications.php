@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notifications extends Model
 {
+
     protected $primaryKey = 'id';
     protected $table = 'notifications';
-	public $timestamps = true;
+	public $timestamps = false;
+    protected $fillable = ['msg', 'entity_id', 'item_id', 'user_id', 'notification_type_id', 'is_read', 'is_sent','created_at','schedule'];
 	protected $dates = ['schedule'];
 
 	    public function type()

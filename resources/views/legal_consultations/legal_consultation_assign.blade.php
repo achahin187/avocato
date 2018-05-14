@@ -166,7 +166,7 @@ else
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns" ><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers" href="#" id="send_consultation_button">إرسال الإستشارة للمحامي المحدد</a>
+                      <div class="bottomActions__btns" ><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white send_consultation_to_all_lawyers"  id="send_consultation_button">إرسال الإستشارة للمحامي المحدد</a>
                       </div>
                       <table class="table-1" id="example" id="dataTableTriggerId_001">
                         <thead>
