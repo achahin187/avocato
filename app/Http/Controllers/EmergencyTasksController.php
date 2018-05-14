@@ -163,6 +163,7 @@ return redirect()->route('tasks_emergency');
               });  
              }
       })->get();
+      // dd($data);
       return view('tasks.assign_emergency_task',$data);
       // dd($data['lawyers']);
     }
@@ -189,6 +190,100 @@ return redirect()->route('tasks_emergency');
       Excel::store((new EmergencyTasksExport()),$filepath.$filename);
       return response()->json($PathForJson.$filename); 
     }
+  }
+
+  public function emergency_task_filter(Request $request)
+  {
+    // dd($request->all());
+    $data['tasks']=Tasks::where(function($q) use($request){
+
+     $q->where('task_type_id',1);
+              if($request->filled('date_from') && $request->filled('date_to'))
+              {
+                $date_from=date('Y-m-d h:i:s',strtotime($request->date_from));
+             $date_to=date('Y-m-d h:i:s',strtotime($request->date_to));
+                 $q->where('start_datetime','>=',$date_from)->where('start_datetime','<=',$date_to);
+              }
+              elseif($request->filled('date_from') && !$request->filled('date_to'))
+              {
+                $date_from=date('Y-m-d h:i:s ',strtotime($request->date_from));
+                $q->where('start_datetime','>=',$date_from);
+              }
+              elseif($request->filled('date_to') && !$request->filled('date_from'))
+              {
+                $date_from=date('Y-m-d h:i:s ',strtotime($request->date_to));
+                $q->where('start_datetime','<=',$date_to);
+              }
+             //  if($request->filled('time_from') && $request->filled('time_to'))
+             //  {
+             //    $time_from=date('h:i A',strtotime($request->time_from));
+             // $time_to=date('h:i A',strtotime($request->time_to));
+             //     $q->where('start_datetime','>=',$time_from)->where('start_datetime','<=',$time_to);
+             //  }
+             //  elseif($request->filled('time_from') && !$request->filled('time_to'))
+             //  {
+             //    $time_from=date('h:i A',strtotime($request->time_from));
+             //    $q->where('start_datetime','>=',$time_from);
+             //  }
+             //  elseif($request->filled('time_to') && !$request->filled('time_from'))
+             //  {
+             //    $time_to=date('h:i A',strtotime($request->time_to));
+             //    $q->where('start_datetime','<=',$time_to);
+             //  }
+              if($request->filled('emergency_case'))
+              {
+                    if($request->emergency_case == 1 || $request->emergency_case == 2)
+                    
+                    {
+                        $q->where('task_status_id',$request->emergency_case);
+                    }
+                    else
+                    {
+
+                        $q->whereIn('task_status_id',[1,2]);
+                        // dd($q);
+                    }
+              }
+              else
+              {
+
+                  $q->whereIn('task_status_id',[1,2]);
+                  // dd($q);
+              }
+              if($request->filled('assign_lawyer'))
+              {
+                 if($request->assign_lawyer == 1 )
+                    
+                    {
+                        $q->where('assigned_lawyer_id','!=',null);
+                    }
+                    elseif($request->assign_lawyer == 0 )
+                    {
+
+                        $q->where('assigned_lawyer_id','=',null);
+                        // dd($q);
+                    }
+              }
+
+    })->get();
+
+
+    $data['clients']=Users::whereHas('rules', function ($query) {
+                                            $query->where('rule_id', '6');
+                                        })->with('rules')->get();
+
+
+        foreach ($data['clients'] as $key => $value) {
+            foreach ($value['rules'] as $key1 => $value1) {
+               if($value1['id'] != 6)
+               {
+                // dd($value1);
+                $data['client_type'][$value['id']]=$value1['name_ar'];
+
+               }
+            }
+        }
+        return view('tasks.tasks_emergency',$data);
   }
 
 

@@ -22,6 +22,7 @@
   <title>{{config('app.name')}}</title>
   <!-- =============== APP STYLES ===============-->
   <link rel="stylesheet" href="{{asset('css/style__rtl.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.css">
   <!-- =============== APP SCRIPT ===============-->
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('js/modernizr.js')}}"></script>
