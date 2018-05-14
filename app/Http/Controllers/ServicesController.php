@@ -17,6 +17,8 @@ use App\Case_Techinical_Report_Document;
 use App\Case_Techinical_Report;
 use Jenssegers\Date\Date;
 use App\Rules;
+use App\Courts;
+use App\Case_;
 
 class ServicesController extends Controller
 {
@@ -245,9 +247,9 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if($request->filled('payment_status'))
-        $data['services'] = Tasks::whereIn('task_payment_status_id',$request->payment_status)->get();
+        $data['services'] = Tasks::where('task_type_id',3)->whereIn('task_payment_status_id',$request->payment_status)->get();
     else
-        $data['services'] = Tasks::all();
+        $data['services'] = Tasks::where('task_type_id',3)->get();
     
         $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
 
@@ -317,6 +319,9 @@ class ServicesController extends Controller
 
         })->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
+        $data['courts'] = Courts::all(); 
+        $data['regions'] = Case_::all('region');
+        $data['sessions'] = Tasks::where('task_type_id',2)->get();
         return view('tasks.tasks_normal',$data);
     }
 

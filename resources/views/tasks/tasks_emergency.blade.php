@@ -44,7 +44,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_from">التاريخ من</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_from" name="date_from">
+                                  <input class="datetimepicker master_input" type="text" placeholder="التاريخ" id="date_from" name="date_from">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -52,11 +52,11 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_to">التاريخ الى</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_to" name="date_to">
+                                  <input class="datetimepicker master_input" type="text" placeholder="التاريخ" id="date_to" name="date_to">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12">
+                           {{--  <div class="col-md-3 col-sm-6 col-xs-12">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="time_from">الوقت من</label>
                                 <div class="bootstrap-timepicker">
@@ -71,7 +71,7 @@
                                   <input class="timepicker master_input" type="text" placeholder="الوقت" id="time_to" name="time_to">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12 col-sm-12 col-xs-12">
                               <div class="master_field">
                                 <label class="master_label mandatory">الحالة</label>
@@ -395,6 +395,15 @@
  {{-- <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
             </script> --}}
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.js"></script>
+             <script type="text/javascript">
+
+              $(function () {
+                  $('.datetimepicker').datetimepicker({
+                      locale: 'ru'
+                  });
+              });
+          </script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk9wS-7eUWZ0_EEM3DQ2FftQIU8AvpMYs&libraries=places&callback=initMap"
         async defer></script>
         
