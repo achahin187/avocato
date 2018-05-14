@@ -133,7 +133,7 @@ class ConsultationsClassificationController extends Controller
     {
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
-        $filename = 'Governorates.Cities'.time().'.xlsx';
+        $filename = 'Consultation_Classifications_'.time().'.xlsx';
 
         if(isset($request->ids)){
             $ids = explode(",", $request->ids);
