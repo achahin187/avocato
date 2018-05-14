@@ -165,6 +165,8 @@ Route::post('/notifications_store', 'NotificationsController@store')->name('noti
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
 Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
 Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
+Route::post('/notifications_filter', 'NotificationsController@filter')->name('notifications_filter');
+
 
 });
 

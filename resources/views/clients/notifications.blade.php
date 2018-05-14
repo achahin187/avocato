@@ -60,6 +60,8 @@
                     <div class="full-table">
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_1"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="remodal" data-remodal-id="filterModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                <form role="form" action="{{route('notifications_filter')}}" method="post" accept-charset="utf-8">
+                    {{csrf_field()}}
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <h3 id="modal1Title">فلتر</h3>
@@ -67,18 +69,18 @@
                             <div class="col-md-4 col-sm-6 col-xs-12">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="governorate">ارسال الى مشتركين الباقات</label>
-                                <select class="master_input select2" id="governorate" style="width:100%;">
-                                  <option>فضي</option>
-                                  <option>بلاتيني</option>
-                                  <option>ذهبي</option>
-                                </select><span class="master_message color--fadegreen">message</span>
+                                <select class="master_input select2" name="package" id="governorate" style="width:100%;">
+                                      @foreach ($subscription_types as $types)
+                                      <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+                                      @endforeach
+                                </select><span class="master_message color--fadegreen"></span>
                               </div>
                             </div>
                             <div class="col-md-4 col-sm-6 col-xs-12">
                               <div class="master_field">
                                 <label class="master_label" for="start-date">تاريخ الارسال من</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ من" id="start-date">
+                                  <input name="date_from" class="datepicker master_input" type="text" placeholder="التاريخ من" id="start-date">
                                 </div>
                               </div>
                             </div>
@@ -86,14 +88,15 @@
                               <div class="master_field">
                                 <label class="master_label" for="last-date">تاريخ الارسال الى</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ الى" id="last-date">
+                                  <input name="date_to" class="datepicker master_input" type="text" placeholder="التاريخ الى" id="last-date">
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                        <button class="remodal-confirm" type="submit">فلتر</button>
+                      </form>
                       </div>
                       <table class="table-1">
                         <thead>
