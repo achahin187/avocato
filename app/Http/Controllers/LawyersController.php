@@ -135,15 +135,27 @@ class LawyersController extends Controller
 
            if($request->filled('date_from') && $request->filled('date_to') )
            {
-            $q->whereBetween('last_login', array($date_from, $date_to));
+             $q->whereHas('user_detail',function($q) use($request,$date_from,$date_to){
+
+            $q->whereBetween('join_date', array($date_from, $date_to));
+
+             }); 
           }
           elseif($request->filled('date_from'))
           {
-            $q->where('last_login','>=',$date_from);
+            $q->whereHas('user_detail',function($q) use($request,$date_from){
+
+            $q->where('join_date','>=',$date_from);
+
+          }); 
           }
           elseif($request->filled('date_to'))
           {
-            $q->where('last_login','<=',$date_to);
+           $q->whereHas('user_detail',function($q) use($request,$date_to){
+
+            $q->where('join_date','<=',$date_to);
+
+          }); 
           }
 
 
