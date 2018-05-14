@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Auth;
 use Helper;
 use Session;
+use Excel;
 
+use App\Exports\ComplainsExport;
 use App\Users;
 use App\Feedback;
 use App\FeedbackReply;
@@ -171,5 +173,27 @@ class ComplainsController extends Controller
         }
 
         return view('clients.complains.complains')->with('complains', $complains);  
+    }
+
+    /**
+     * Export excell sheets from DB records
+     * @param   $request    holds incoming request including records ids
+     */
+    public function exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Complains_'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new ComplainsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new ComplainsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
     }
 }

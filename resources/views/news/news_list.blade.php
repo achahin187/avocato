@@ -397,13 +397,11 @@
         
         // check if user selected nothing
         if(allVals.length <= 0) {
-          // push all IDs
-          $('.checkboxes').each(function() {
-            allVals.push($(this).attr('data-id'));
-          });
+          var ids = null;
+        } else {
+          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
         }
         
-        var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
         
         $.ajax(
           {

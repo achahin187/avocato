@@ -303,7 +303,7 @@ class NewsListController extends Controller
         $PathForJson='storage/excel/';
         $filename = 'News'.time().'.xlsx';
 
-        if(isset($request->ids)){
+        if(isset($request->ids) && $request->ids != null){
             $ids = explode(",", $request->ids);
 
             Excel::store(new NewsExport($ids),$filepath.$filename);

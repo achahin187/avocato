@@ -35,6 +35,8 @@
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                          <form role="form" action="{{route('emergency_task_filter')}}" method="post" accept-charset="utf-8">
+          {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
@@ -42,7 +44,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_from">التاريخ من</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_from">
+                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_from" name="date_from">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -50,7 +52,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="date_to">التاريخ الى</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_to">
+                                  <input class="datepicker master_input" type="text" placeholder="التاريخ" id="date_to" name="date_to">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -58,7 +60,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="time_from">الوقت من</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="timepicker master_input" type="text" placeholder="الوقت" id="time_from">
+                                  <input class="timepicker master_input" type="text" placeholder="الوقت" id="time_from" name="time_from">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -66,7 +68,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="time_to">الوقت الى</label>
                                 <div class="bootstrap-timepicker">
-                                  <input class="timepicker master_input" type="text" placeholder="الوقت" id="time_to">
+                                  <input class="timepicker master_input" type="text" placeholder="الوقت" id="time_to" name="time_to">
                                 </div><span class="master_message color--fadegreen">message content</span>
                               </div>
                             </div>
@@ -74,15 +76,15 @@
                               <div class="master_field">
                                 <label class="master_label mandatory">الحالة</label>
                                 <div class="radiorobo">
-                                  <input type="radio" id="status_rad_1">
+                                  <input type="radio" id="status_rad_1" name="emergency_case" value="0">
                                   <label for="status_rad_1">الكل</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="status_rad_2">
+                                  <input type="radio" id="status_rad_2" name="emergency_case" value="2">
                                   <label for="status_rad_2">تمت المهمة</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="status_rad_3">
+                                  <input type="radio" id="status_rad_3" name="emergency_case" value="1">
                                   <label for="status_rad_3">لم تتم المهمة</label>
                                 </div>
                               </div>
@@ -91,15 +93,15 @@
                               <div class="master_field">
                                 <label class="master_label mandatory">تحديد المحامي</label>
                                 <div class="radiorobo">
-                                  <input type="radio" id="lawyer_rad_1">
+                                  <input type="radio" id="lawyer_rad_1" name="assign_lawyer" value="2">
                                   <label for="lawyer_rad_1">الكل</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="lawyer_rad_2">
+                                  <input type="radio" id="lawyer_rad_2" name="assign_lawyer" value="1">
                                   <label for="lawyer_rad_2">تم تحديد محامي</label>
                                 </div>
                                 <div class="radiorobo">
-                                  <input type="radio" id="lawyer_rad_3">
+                                  <input type="radio" id="lawyer_rad_3" name="assign_lawyer" value="0">
                                   <label for="lawyer_rad_3">لم يتم تحديد محامي</label>
                                 </div>
                               </div>
@@ -107,7 +109,8 @@
                           </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                          <button class="remodal-confirm" type="submit">فلتر</button>
+                        </form>
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
@@ -138,7 +141,7 @@
                             <?php
                               $timestamp=strtotime($task->start_datetime);
                               $date = date('d-m-Y', $timestamp);
-                            $time = date('h:i', $timestamp);
+                            $time = date('h:i A', $timestamp);
                           ?>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$task->client->code or ''}}</span></td>

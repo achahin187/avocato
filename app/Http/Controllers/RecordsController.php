@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 use Helper;
+use Excel; 
 
+use App\Exports\RecordsExport;
 use App\Record;
 use App\Users;
 use Illuminate\Http\Request;
@@ -163,5 +165,27 @@ class RecordsController extends Controller
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
+    }
+
+    /**
+     * Export excell sheets from DB records
+     * @param   $request    holds incoming request including records ids
+     */
+    public function exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Records_'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new RecordsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new RecordsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
     }
 }

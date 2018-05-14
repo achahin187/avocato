@@ -670,13 +670,11 @@
           
           // check if user selected nothing
           if(allVals.length <= 0) {
-            // push all IDs
-            $('.checkboxes').each(function() {
-              allVals.push($(this).attr('data-id'));
-            });
+            var ids = null;
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           }
           
-          var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
           $.ajax(
           {
             url: "{{ route('clients.exportXLS') }}",
@@ -684,6 +682,7 @@
             data: {
                 "ids": ids,
                 "userType": 'individuals-Companies',
+                "userRule": 10,
                 "_method": 'GET',
             },
             success:function(response){
