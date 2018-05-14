@@ -3,6 +3,27 @@
 <script>
   $(document).ready(function(){
 
+    $('.noti').click(function(){
+      var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
+      var _token = '{{csrf_token()}}';
+      $('[data-remodal-id=lawyer_notification]').remodal().open();
+      // alert(lawyer_id);
+$(document).on('confirmation', '.remodal', function () {
+        var noti = $('#nots').val(); 
+        var time = $("input[name=date]").val();
+         $.ajax({
+           type:'POST',
+           url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
+           data:{notific:noti,noti_date:time,_token:_token},
+           success:function(data){
+            alert(data);
+          }
+        });
+
+});
+          });
+
+
     $('.btn-warning-cancel').click(function(){
       var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
       var _token = '{{csrf_token()}}';
@@ -237,7 +258,7 @@
                   @endisset
                 </span></td>
                 <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</span></td>
-                  <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= #lawyer_notification ,  class= "action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                  <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                 </tr>
                 @endforeach
               </tbody>
@@ -411,14 +432,14 @@
                     <div class="master_field">
                       <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
                       <div class="bootstrap-timepicker">
-                        <input class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
-                      </div><span class="master_message color--fadegreen">message</span>
+                        <input name="date" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
+                      </div><span class="master_message color--fadegreen"></span>
                     </div>
                   </div>
                   <div class="col-xs-12">
                     <div class="master_field">
                       <label class="master_label">نص التنبية</label>
-                      <textarea class="master_input" name="textarea" placeholder="نص التنبية"></textarea>
+                      <textarea id="nots" name="noti_text" class="master_input" placeholder="نص التنبية"></textarea>
                     </div>
                   </div>
                   <div class="clearfix"></div>

@@ -167,6 +167,7 @@ Route::post('/notifications_store', 'NotificationsController@store')->name('noti
 Route::post('/notifications_destroy/{id}', 'NotificationsController@destroy')->name('notifications.destroy');
 Route::post('/notifications_change/{id}', 'NotificationsController@change')->name('notifications.change');
 Route::post('/notifications_filter', 'NotificationsController@filter')->name('notifications_filter');
+Route::post('/notification_lawyer/{id}', 'NotificationsController@notification_lawyer')->name('notification_lawyer');
 
 
 });
