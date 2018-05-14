@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Helper;
 use File;
 use Exception;
 use Auth;
@@ -58,32 +59,24 @@ class NewsListController extends Controller
                             ->withInput();
         }
 
-        $from = $to = null;
-        
-        if($request->start_date) {
-            $from = date("Y-m-d 00:00:00", strtotime($request->start_date) );
-        }
-        if($request->end_date) {
-            $to   = date("Y-m-d 23:59:59", strtotime($request->end_date) ); 
-        }
+        $filter = new News;
 
-        if($from && $to) {
-            $filter = News::whereBetween('published_at', [$from, $to]);
-        } else if ($from && !$to) {
-            $filter = News::where('published_at', '>=', $from);
-        } else if (!$from && $to) {
-            $filter = News::where('published_at', '<=', $to);
-        } else {
-            $filter = News::where('published_at', '!=', null);
-        }
+        if( $request->start_date && $request->end_date ) {
+            $from = Helper::checkDate($request->start_date, 1);
+            $to   = Helper::checkDate($request->end_date, 2);
 
+            // check on start and end dates
+            if($from && $to) {
+                $filter = $filter->whereBetween('published_at', [$from, $to]);
+            }
+        }
 
         switch($request->condition) {
             case "1":
                 $filter = $filter->get();
                 break;
             case "2":
-                $filter = $filter->where('is_active', '!=', 0)->get();
+                $filter = $filter->where('is_active', 1)->get();
                 break;
             case "3":
                 $filter = $filter->where('is_active', 0)->get();
