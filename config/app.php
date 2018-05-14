@@ -180,6 +180,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        // Barryvdh\DomPDF\ServiceProvider::class,
+        // Vsmoraes\Pdf\PdfServiceProvider::class
+        // PDFAnony\TCPDF\AnonyServiceProvider::class,
+        niklasravnsborg\LaravelPdf\PdfServiceProvider::class
 
     ],
 
@@ -230,7 +234,12 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helper' => App\Helpers\Helper::class,
-        'Zipper' => Chumper\Zipper\Zipper::class
+        'Zipper' => Chumper\Zipper\Zipper::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'PDF' => Vsmoraes\Pdf\PdfFacade::class,
+        // 'PDF' =>  PDFAnony\TCPDF\Facades\AnonyPDF::class,
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
+
     ],
 
 ];

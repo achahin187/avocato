@@ -65,12 +65,14 @@
   </div>
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      @if(count($service->lawyer->name)>0)
+    @if(isset($service->lawyer) && !empty($service->lawyer))
+      @if($service->lawyer->name)
       <div class="col-md-1 col-xs-2"><img class="full-width bradius--circle" src="{{asset(''.$service->lawyer->image)}}"></div>
       <div class="col-md-2 col-xs-3">
-        <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="">{{$service->lawyer->full_name}}</a>
+        <div class="right-text margin--medium-top-bottom"><b>القائم بالإجراء</b></div><a href="">{{$service->lawyer ? $service->lawyer->full_name : 'لا يوجد'}}</a>
       </div>
       @endif
+    @endif
       <div class="clearfix"></div>
       <div class="col-lg-12"><br>
         <div class="ticket-container">
@@ -80,33 +82,40 @@
                 <div class="pull-right">         
                   {{$service->created_at->format('Y - m - d')}}
                   &nbsp;<i class="fa fa-calendar"></i>
-                </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="">{{$service->client->full_name}}</a>&nbsp;<span class="color--sec">(
-                  @foreach($service->client->rules as $rule)
-                  @switch($rule->pivot->rule_id)
-                    @case(7)
-                    {{$rule->name_ar}}
-                    @break
-                    @case(8)
-                    {{$rule->name_ar}}
-                    @break
-                    @case(9)
-                    {{$rule->name_ar}}
-                    @break
-                    @case(10)
-                    {{$rule->name_ar}}
-                    @break
-                    @endswitch
-                  @endforeach
+                </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="">{{$service->client ? $service->client->full_name : 'لا يوجد'}}</a>&nbsp;<span class="color--sec">(
+                  
+                  @if(isset($service->client) && !empty($service->client))
+                    @foreach($service->client->rules as $rule)
+                      @switch($rule->pivot->rule_id)
+                        @case(7)
+                        {{$rule->name_ar}}
+                        @break
+                        @case(8)
+                        {{$rule->name_ar}}
+                        @break
+                        @case(9)
+                        {{$rule->name_ar}}
+                        @break
+                        @case(10)
+                        {{$rule->name_ar}}
+                        @break
+                      @endswitch
+                    @endforeach
+                  @endif
 
                 )</span></span>
                 <div class="clearfix"></div>
-                <hr><span class="tiket-data col-md-12"><i class="fa fa-map-marker"></i><b>عنوان العميل: </b>{{$service->client->address}}</span>
+                <hr><span class="tiket-data col-md-12"><i class="fa fa-map-marker"></i><b>عنوان العميل: </b>{{$service->client ? $service->client->address : 'لا يوجد'}}</span>
                 <div class="clearfix"></div>
-                <hr><span class="tiket-data light-color col-md-12"><span>نوع الخدمة</span>&nbsp;<span class="bgcolor--fadepurple color--white bradius--small importance padding--small">@foreach($types as $type)
-                  @if($service->task_payment_status_id == $type->item_id)
-                  {{$type->value}}
-                  @endif
-                @endforeach</span></span>
+                <hr><span class="tiket-data light-color col-md-12"><span>نوع الخدمة</span>&nbsp;<span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
+                @if(isset($types) && !empty($types))
+                  @foreach($types as $type)
+                    @if($service->task_payment_status_id == $type->item_id)
+                    {{$type->value}}
+                    @endif
+                  @endforeach
+                @endif
+              </span></span>
               </div>
               <div class="status-bar">
                 <div class="status">

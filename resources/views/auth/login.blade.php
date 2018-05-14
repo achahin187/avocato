@@ -37,11 +37,13 @@
                   <div class="form-login bgcolor--gray_l bradius--small bshadow--2 "><img class="logo" src="img/logo/logo__dark.png" alt="جسر الأمان">
                     <form class="login-form form-horizontal" method="POST" action="{{ route('login') }}">
                        {{ csrf_field() }}
-            @if(\session('error'))
-<div class="alert alert-danger">
-{{\session('error')}}
-</div>
-@endif
+
+                        @if(\session('error'))
+                            <div class="alert alert-danger">
+                            {{\session('error')}}
+                            </div>
+                        @endif
+                        
                       <input name="user_name" class="color--black bgcolor--white bradius--small bshadow--1" type="text" placeholder="اسم المستخدم" value="{{ old('user_name') }}">
                               @if ($errors->has('user_name'))
                                     <span class="help-block">

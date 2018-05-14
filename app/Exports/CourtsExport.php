@@ -42,11 +42,10 @@ class CourtsExport implements FromCollection,WithEvents
         else {
 
     	$selects = $this->ids;
-    	 foreach($selects as $select)
-           {
-            $court = Courts::find($select,['id','name','city_id']);
-           	array_push($courtsArray,[$court->id,$court->name,$court->city->name,$court->city->governorate->name]);
-        	} 
+    	 foreach($selects as $select) {
+                $court = Courts::find($select,['id','name','city_id']);
+                array_push($courtsArray,[$court->id,$court->name,$court->city->name,$court->city->governorate->name]);
+            }    
         }
         
         return collect($courtsArray);
