@@ -200,36 +200,36 @@ return redirect()->route('tasks_emergency');
      $q->where('task_type_id',1);
               if($request->filled('date_from') && $request->filled('date_to'))
               {
-                $date_from=date('Y-m-d ',strtotime($request->date_from));
-             $date_to=date('Y-m-d ',strtotime($request->date_to));
+                $date_from=date('Y-m-d h:i:s',strtotime($request->date_from));
+             $date_to=date('Y-m-d h:i:s',strtotime($request->date_to));
                  $q->where('start_datetime','>=',$date_from)->where('start_datetime','<=',$date_to);
               }
               elseif($request->filled('date_from') && !$request->filled('date_to'))
               {
-                $date_from=date('Y-m-d ',strtotime($request->date_from));
+                $date_from=date('Y-m-d h:i:s ',strtotime($request->date_from));
                 $q->where('start_datetime','>=',$date_from);
               }
               elseif($request->filled('date_to') && !$request->filled('date_from'))
               {
-                $date_from=date('Y-m-d ',strtotime($request->date_to));
+                $date_from=date('Y-m-d h:i:s ',strtotime($request->date_to));
                 $q->where('start_datetime','<=',$date_to);
               }
-              if($request->filled('time_from') && $request->filled('time_to'))
-              {
-                $time_from=date('h:i A',strtotime($request->time_from));
-             $time_to=date('h:i A',strtotime($request->time_to));
-                 $q->where('start_datetime','>=',$time_from)->where('start_datetime','<=',$time_to);
-              }
-              elseif($request->filled('time_from') && !$request->filled('time_to'))
-              {
-                $time_from=date('h:i A',strtotime($request->time_from));
-                $q->where('start_datetime','>=',$time_from);
-              }
-              elseif($request->filled('time_to') && !$request->filled('time_from'))
-              {
-                $time_to=date('h:i A',strtotime($request->time_to));
-                $q->where('start_datetime','<=',$time_to);
-              }
+             //  if($request->filled('time_from') && $request->filled('time_to'))
+             //  {
+             //    $time_from=date('h:i A',strtotime($request->time_from));
+             // $time_to=date('h:i A',strtotime($request->time_to));
+             //     $q->where('start_datetime','>=',$time_from)->where('start_datetime','<=',$time_to);
+             //  }
+             //  elseif($request->filled('time_from') && !$request->filled('time_to'))
+             //  {
+             //    $time_from=date('h:i A',strtotime($request->time_from));
+             //    $q->where('start_datetime','>=',$time_from);
+             //  }
+             //  elseif($request->filled('time_to') && !$request->filled('time_from'))
+             //  {
+             //    $time_to=date('h:i A',strtotime($request->time_to));
+             //    $q->where('start_datetime','<=',$time_to);
+             //  }
               if($request->filled('emergency_case'))
               {
                     if($request->emergency_case == 1 || $request->emergency_case == 2)
