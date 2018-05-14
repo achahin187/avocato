@@ -35,7 +35,7 @@ class EmergencyTasksExport implements FromCollection,WithEvents
         if(is_null($this->ids)){
 
         $tasks = Tasks::where('task_type_id',1)->with(['client'=>function($q){
-            $q->with('rules');
+            $q->with('rules')->get();
         }])->get();
         foreach($tasks as $task)
         {
@@ -49,10 +49,15 @@ class EmergencyTasksExport implements FromCollection,WithEvents
                 $task_status='لم يتم';
             }
             $rule='';
-            foreach ($task->client->rules as  $role) {
+            if(!empty($task->client->rules))
+            {
+                foreach ($task->client->rules as  $role) 
+                {
                 if($role->id != '6' && $role->id != '5')
                 $rule=$role->name_ar;
+                }
             }
+            // dd($task->lawyer->name);
             array_push($tasksArray,[$task->client->code,$task->client->name,$rule,$task->client->mobile,$task->client->address,date('d-m-Y', strtotime($task->start_datetime)),date('h:i', strtotime($task->start_datetime)),$task_status,$task->lawyer->name]);
         }
 
@@ -73,9 +78,14 @@ class EmergencyTasksExport implements FromCollection,WithEvents
                 $task_status='لم يتم';
             }
             $rule='';
-            foreach ($task->client->rules as  $role) {
+            // dd()
+            if(!empty($task->client->rules))
+            {
+                foreach ($task->client->rules as  $role) 
+                {
                 if($role->id != '6' && $role->id != '5')
                 $rule=$role->name_ar;
+                }
             }
             array_push($tasksArray,[$task->client->code,$task->client->name,$rule,$task->client->mobile,$task->client->address,date('d-m-Y', strtotime($task->start_datetime)),date('h:i', strtotime($task->start_datetime)),$task_status,$task->lawyer->name]);
             } 

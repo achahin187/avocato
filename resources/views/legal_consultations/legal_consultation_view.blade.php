@@ -41,7 +41,7 @@
                         <div class="col-md-12">
                           <div class="pull-left">
                             رد المحامي
-                            &nbsp;<b><a href="lawyer_view.html">{{$lawyer_reply->lawyer_name}}</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
+                            &nbsp;<b><a href="{{route('lawyers_show',$lawyer_reply->id)}}">{{$lawyer_reply->lawyer_name}}</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
                           </div>
                           <div class="pull-right">
                             بتاريخ
