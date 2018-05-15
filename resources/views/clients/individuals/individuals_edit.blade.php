@@ -346,7 +346,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input required name="number_of_payments" value="{{ $user->subscription ? $user->subscription->number_of_installments : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+              <input required name="number_of_payments" value="{{ $user->subscription ? $user->subscription->number_of_installments : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" >
 
                 @if ($errors->has('number_of_payments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
@@ -387,6 +387,10 @@
               </div>
               @endfor
           </div>
+          @endif
+
+          @if ( !$user->subscription )
+              <div id="generated"></div>
           @endif
 
           <div class="clearfix"></div>
