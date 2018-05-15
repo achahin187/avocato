@@ -251,6 +251,9 @@ class NotificationsController extends Controller
             $result = curl_exec($ch );
             curl_close( $ch );
             header('Content-type:application/json;charset=utf-8');
+            $notification_table=find($notification_push->notification_id);
+            $notification_table->update(["is_sent"=>1]);
+            $notification_table->save();
             $notification_push->delete();
             dd($result);
         }
