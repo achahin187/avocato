@@ -28,6 +28,11 @@ $(document).on('confirmation', '.remodal', function () {
       var selectedIds = $("input:checkbox:checked").map(function(){
         return $(this).closest('tr').attr('data-lawyer-id');
       }).get();
+      if(selectedIds.length <= 0) {
+        confirm('إختر محامى على الأقل لإرسال تنبيه');
+      }
+      else{
+        
       var _token = '{{csrf_token()}}';
       $('[data-remodal-id=lawyer_notifications]').remodal().open();
 $(document).on('confirmation', '#two', function () {
@@ -45,6 +50,7 @@ $(document).on('confirmation', '#two', function () {
         });
 
 });
+      }
           });
 
 
