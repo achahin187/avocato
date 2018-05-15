@@ -14,6 +14,10 @@ use App\User_Details;
 use App\Consultation_Replies;
 use App\Consultation_Lawyers;
 use App\Exports\ConsultationsExport;
+use App\Notifications;
+use App\Notification_Types;
+use App\Notification_Items;
+use App\Notifications_Push;
 
 class LegalConsultationsController extends Controller
 {
@@ -297,12 +301,53 @@ class LegalConsultationsController extends Controller
         $consultation = Consultation::find($consultation_id);
         $ids = $_POST['ids'];
         $sync_data = [];
+        $notification_type=Notification_Types::find(9);
          foreach($ids as $id)
         {
             $sync_data[$id] = ['assigned_by' => \Auth::user()->id , 'assigned_at' => Carbon::now()->format('Y-m-d H:i:s')];
+            
+            $user=Users::find($id);
+            $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>15,
+                "item_id"=>$consultation_id,
+                "user_id"=>$id,
+                "notification_type_id"=>9,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$id
+            ]);
+
             // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
         }
         $consultation->lawyers()->sync($sync_data);
+        // foreach($ids as $id)
+        // {
+        //     $user=Users::find($id);
+        //     $notification=Notifications::create([
+        //         "msg"=>$notification_type->msg,
+        //         "entity_id"=>15,
+        //         "item_id"=>$consultation_id,
+        //         "user_id"=>$id,
+        //         "notification_type_id"=>9,
+        //         "is_read"=>0,
+        //         "is_sent"=>0,
+        //         "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+        //     ]);
+        //      $notification_push=Notification_Push::create([
+        //         "notification_id"=>$notification->id,
+        //         "device_token"=>$user->device_token,
+        //         "mobile_os"=>$user->mobile_os,
+        //         "lang_id"=>$user->lang_id
+        //     ]);
+        // }
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 

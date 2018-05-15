@@ -27,6 +27,7 @@ class TasksController extends Controller
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
         $data['courts'] = Courts::all(); 
+        // dd($data);
         return view('tasks.tasks_normal',$data);
     }
 
@@ -164,6 +165,7 @@ class TasksController extends Controller
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
         $data['courts'] = Courts::all(); 
+        // dd($data);
         return view('tasks.tasks_normal',$data);
 
     }

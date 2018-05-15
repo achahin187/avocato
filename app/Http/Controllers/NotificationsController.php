@@ -86,6 +86,41 @@ class NotificationsController extends Controller
         //
     }
 
+        public function notification_lawyer($id)
+    {
+      $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
+      $notification = new Notifications;
+      $notification->msg = $_POST['notific'];
+      $notification->schedule = $send_date;
+      $notification->notification_type_id=8;
+      $notification->is_sent=0;
+      $notification->save();
+        $item = new Notification_Items;
+        $item->item_id = $id;
+        $notification->noti_items()->save($item);
+
+        return response()->json('تمت الإضافه');
+    }
+
+        public function notification_for_lawyers()
+    {
+        $ids = $_POST['ids'];
+      $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
+      $notification = new Notifications;
+      $notification->msg = $_POST['notific'];
+      $notification->schedule = $send_date;
+      $notification->notification_type_id=8;
+      $notification->is_sent=0;
+      $notification->save();
+      foreach($ids as $id){
+        $item = new Notification_Items;
+        $item->item_id = $id;
+        $notification->noti_items()->save($item);
+      }
+
+        return response()->json('تمت الإضافه');
+    }
+
     public function filter(Request $request)
     {
         $data['subscription_types'] = Package_Types::all();
@@ -213,11 +248,14 @@ class NotificationsController extends Controller
             curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
             curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
             curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-//            $result = curl_exec($ch );
+            $result = curl_exec($ch );
             curl_close( $ch );
             header('Content-type:application/json;charset=utf-8');
+            // $notification_table=find($notification_push->notification_id);
+            $notification->update(["is_sent"=>1]);
+            $notification->save();
             $notification_push->delete();
-//            echo $result;
+            dd($result);
         }
         
     }
