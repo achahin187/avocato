@@ -321,7 +321,8 @@ class LegalConsultationsController extends Controller
                 "notification_id"=>$notification->id,
                 "device_token"=>$user->device_token,
                 "mobile_os"=>$user->mobile_os,
-                "lang_id"=>$user->lang_id
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$id
             ]);
 
             // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
