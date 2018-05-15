@@ -29,14 +29,14 @@ $(document).on('confirmation', '.remodal', function () {
         return $(this).closest('tr').attr('data-lawyer-id');
       }).get();
       var _token = '{{csrf_token()}}';
-      $('[data-remodal-id=lawyer_notification]').remodal().open();
-      // alert(lawyer_id);
-$(document).on('confirmation', '.remodal', function () {
-        var noti = $('#nots').val(); 
-        var time = $("input[name=date]").val();
+      $('[data-remodal-id=lawyer_notifications]').remodal().open();
+$(document).on('confirmation', '#two', function () {
+  alert(selectedIds);
+        var noti = $('#nots2').val(); 
+        var time = $("input[name=date2]").val();
          $.ajax({
            type:'POST',
-           url:'{{url('notification_for_lawyers')}}'+'/'+lawyer_id,
+           url:'{{url('notification_for_lawyers')}}',
            data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
            success:function(data){
             alert(data);
@@ -473,6 +473,37 @@ $(document).on('confirmation', '.remodal', function () {
               <button class="remodal-confirm" data-remodal-action="confirm">إرسال</button>
             </div>
           </div>
+
+
+          <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notifications"><span></span></a>
+            <div class="remodal-bg"></div>
+            <div class="remodal" id="two" data-remodal-id="lawyer_notifications" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+              <div>
+                <div class="row">
+                  <h3>إرسال تنبيه</h3>
+                  <div class="col-xs-12">
+                    <div class="master_field">
+                      <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
+                      <div class="bootstrap-timepicker">
+                        <input name="date2" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
+                      </div><span class="master_message color--fadegreen"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="master_field">
+                      <label class="master_label">نص التنبية</label>
+                      <textarea id="nots2" name="noti_text2" class="master_input" placeholder="نص التنبية"></textarea>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div><br>
+              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+              <button class="remodal-confirm" data-remodal-action="confirm">إرسال</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
