@@ -249,7 +249,7 @@ class NotificationsController extends Controller
             curl_close( $ch );
             header('Content-type:application/json;charset=utf-8');
             $notification_push->delete();
-//            echo $result;
+            dd($result);
         }
         
     }
