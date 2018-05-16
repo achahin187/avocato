@@ -119,6 +119,7 @@
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
                           <div class="master_field">
+                            <label class="master_label mandatory " for="enemy_type">صفته</label>
                             <select class="master_input select2 required" id="enemy_type" name="enemy_type" style="width:100%;" required>
                               @foreach($roles as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
