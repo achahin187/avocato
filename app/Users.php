@@ -198,4 +198,9 @@ class Users extends Authenticatable
       }
     }
 
+          public function notifications()
+    {
+        return $this->hasMany('App\Notifications','user_id');
+    }
+
 }

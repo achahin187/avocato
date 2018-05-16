@@ -29,4 +29,9 @@ class Notifications extends Model
         return $this->hasMany('App\notifications_push','notification_id');
     }
 
+
+        public function user()
+    {
+        return $this->belongsTo('App\Users','user_id');
+    }
 }
