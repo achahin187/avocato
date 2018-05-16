@@ -134,7 +134,7 @@
                   @endif
                 </span></td>
                 <td><span class="cellcontent">{{ $user->address }}</span></td>
-                <td><span class="cellcontent">{{ $user->phone }}</span></td>
+                <td><span class="cellcontent">{{ $user->mobile }}</span></td>
                 <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? 'color--fadegreen fa-check' : 'color--fadebrown fa-times'}}"></i></span></td>
                 <td>
                   <span class="cellcontent">
