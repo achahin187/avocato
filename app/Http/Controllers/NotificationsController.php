@@ -194,7 +194,7 @@ class NotificationsController extends Controller
     }
 
     public function notification_cron() {
-        $notifications = Notifications::where(function ($query) use ($activated) {
+        $notifications = Notifications::where(function ($query){
     $query->whereIn('notification_type_id',[1,8]);
     $query->where('is_sent',0);
     $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
