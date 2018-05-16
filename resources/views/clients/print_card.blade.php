@@ -24,7 +24,6 @@
         .page {
             width: 21cm;
             min-height: 29.7cm;
-            padding: 2cm;
             margin: 1cm auto;
             border-radius: 5px;
             background: white;
@@ -34,7 +33,6 @@
 /*                        padding: 1cm;*/
 /*                        border: 5px red solid;*/
             height: 256mm;
-            outline: 2cm #eee solid;
         }
           .card{
               border: 1px #eee dashed;
