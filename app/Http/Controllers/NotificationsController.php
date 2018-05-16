@@ -194,10 +194,12 @@ class NotificationsController extends Controller
     }
 
     public function notification_cron() {
-        $notifications = Notifications::where('notification_type_id',1)->get();
+        $notifications = Notifications::where(function ($query) use ($activated) {
+    $query->where('notification_type_id',[1,8]);
+    $query->where('is_sent',0);
+    $query->whereDate('schedule', '=', date('Y-m-d H:i:s'));
+})->get();
         foreach($notifications as $notification) {
-            if($notification->is_sent == 0 && (strtotime($notification->schedule)  <= Carbon::now()->timestamp)) {
-              
                         $user = $notification->user;
                         $push = new Notifications_Push;
                         $push->notification_id =$notification->id;
@@ -209,7 +211,6 @@ class NotificationsController extends Controller
 
                 $notification->is_sent = 1;
                 $notification->save();
-            }
         }
     }
     public function push_notification() {
