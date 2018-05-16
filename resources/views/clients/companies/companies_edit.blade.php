@@ -407,6 +407,10 @@
         </div>
         @endif
 
+        @if ( !$company->subscription )
+          <div id="generated"></div>
+        @endif
+
         <div class="clearfix"></div>
         <div class="col-md-2 col-md-3 col-sm-4 col-xs-12">
           <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit">

@@ -146,7 +146,7 @@
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$task->client->code or ''}}</span></td>
                             <td><span class="cellcontent">{{$task->client->name or ''}}</span></td>
-                            <td><span class="cellcontent">افراد</span></td>
+                            <td><span class="cellcontent">{{$client_type[$task->client->id] or ''}}</span></td>
                             <td><span class="cellcontent">{{$task->client->mobile or ''}}</span></td>
                             <td><span class="cellcontent">{{$task->client->address or ''}}</span></td>
                             <td><span class="cellcontent">{{$date}}</span></td>

@@ -48,6 +48,9 @@ class NotificationsController extends Controller
      */
     public function store(Request $request)
     {
+      //      $send_date = Carbon::now()->timestamp;
+      //      $notification->created_at = Carbon::now()->timestamp;
+      
     $validator = Validator::make($request->all(), [
         'package_type'=>'required',
         'date'=>'required',
@@ -58,19 +61,19 @@ class NotificationsController extends Controller
         ->withInput();
       }
       $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-//      $send_date = Carbon::now()->timestamp;
+
+      foreach($request->package_type as $package){
+        $subs = Subscriptions::where('package_type_id',$package)->get();
+        foreach($subs as $sub){
+          $user = $sub->user;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
       $notification->notification_type_id=1;
       $notification->is_sent=0;
-//      $notification->created_at = Carbon::now()->timestamp;
+      $notification->user_id = $user->id;
       $notification->save();
-      
-      foreach($request->package_type as $package){
-        $item = new Notification_Items;
-        $item->item_id = $package;
-        $notification->noti_items()->save($item);
+        }
       }
         return redirect()->route('notifications')->with('success','تم إضافه تنبيه');
     }
@@ -194,10 +197,8 @@ class NotificationsController extends Controller
         $notifications = Notifications::where('notification_type_id',1)->get();
         foreach($notifications as $notification) {
             if($notification->is_sent == 0 && (strtotime($notification->schedule)  <= Carbon::now()->timestamp)) {
-                foreach($notification->noti_items as $item){
-                    $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
-                    foreach($subs as $sub){
-                        $user = $sub->user;
+              
+                        $user = $notification->user;
                         $push = new Notifications_Push;
                         $push->notification_id =$notification->id;
                         $push->device_token  =$user->device_token;
@@ -205,8 +206,7 @@ class NotificationsController extends Controller
                         $push->lang_id =$user->lang_id;
                         $push->user_id = $user->id;
                         $push->save();
-                    }
-                }
+
                 $notification->is_sent = 1;
                 $notification->save();
             }
@@ -251,6 +251,9 @@ class NotificationsController extends Controller
             $result = curl_exec($ch );
             curl_close( $ch );
             header('Content-type:application/json;charset=utf-8');
+            // $notification_table=find($notification_push->notification_id);
+            $notification->update(["is_sent"=>1]);
+            $notification->save();
             $notification_push->delete();
             dd($result);
         }
