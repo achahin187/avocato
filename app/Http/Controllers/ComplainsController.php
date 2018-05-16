@@ -13,6 +13,11 @@ use App\Feedback;
 use App\FeedbackReply;
 
 use Illuminate\Http\Request;
+use App\Notifications;
+use App\Notification_Types;
+use App\Notification_Items;
+use App\Notifications_Push;
+use Carbon\Carbon;
 
 
 class ComplainsController extends Controller
@@ -104,6 +109,25 @@ class ComplainsController extends Controller
             {
                $mail=Helper::mail($to,$request->newReply); 
             }
+            $notification_type=Notification_Types::find(10);
+            $user=Users::find($feedback->user_id);
+            $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>15,
+                "item_id"=>$id,
+                "user_id"=>$feedback->user_id,
+                "notification_type_id"=>9,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$id
+            ]);
         
 
         } catch ( Exception $ex ) {
