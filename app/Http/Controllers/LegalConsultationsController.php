@@ -138,6 +138,7 @@ class LegalConsultationsController extends Controller
     {
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
+        // dd($consultation->consultation_reply);
         return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
