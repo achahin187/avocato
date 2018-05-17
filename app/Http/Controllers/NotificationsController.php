@@ -10,6 +10,7 @@ use App\Notifications_Push;
 use App\Subscriptions;
 use Validator;
 use Carbon\Carbon;
+use DB;
 
 class NotificationsController extends Controller
 {
@@ -21,7 +22,7 @@ class NotificationsController extends Controller
     public function index()
     {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::where('notification_type_id',1)->get();
+        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->distinct()->get(['schedule']);
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
