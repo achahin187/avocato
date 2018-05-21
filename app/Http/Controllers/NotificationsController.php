@@ -245,7 +245,7 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $this->pushAndroid($device_token, $registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIOSP12($device_token,$message);
+//                $this->pushIOSP12($device_token,$message);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent"=>1]);
