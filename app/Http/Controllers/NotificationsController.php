@@ -22,7 +22,7 @@ class NotificationsController extends Controller
     public function index()
     {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->distinct()->get(['schedule']);
+        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->distinct()->get();
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
@@ -66,7 +66,7 @@ class NotificationsController extends Controller
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
         foreach($subs as $sub){
-          $user = $sub->user;
+      $user = $sub->user;
       $notification = new Notifications;
       $notification->msg = $request->notification;
       $notification->schedule = $send_date;
@@ -75,6 +75,9 @@ class NotificationsController extends Controller
       $notification->user_id = $user->id;
       $notification->save();
         }
+        $item = new Notification_Items;
+        $item->item_id = $package;
+        $notification->noti_items()->save($item);
       }
         return redirect()->route('notifications')->with('success','تم إضافه تنبيه');
     }
