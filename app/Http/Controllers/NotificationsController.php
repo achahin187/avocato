@@ -220,47 +220,146 @@ class NotificationsController extends Controller
             $notification = $notification_push->notification;
             $registrationIds = array($device_token);
             $message = $notification->msg;
-            // prep the bundle
-            $msg = array
-            (
-                'message' 	=> $message,
-                'title'		=> 'This is a title. title',
-                'subtitle'	=> 'This is a subtitle. subtitle',
-                'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
-                'vibrate'	=> 1,
-                'sound'		=> 1,
-                'largeIcon'	=> 'large_icon',
-                'smallIcon'	=> 'small_icon'
-            );
-            $fields = array
-            (
-                'registration_ids' 	=> $registrationIds,
-                'data'			=> $msg
-            );
-            $headers = array
-            (
-                'Authorization: key=' . ENV('ANDROID_API_KEY'),
-                'Content-Type: application/json'
-            );
-            $ch = curl_init();
-            curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-            curl_setopt( $ch,CURLOPT_POST, true );
-            curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-            curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-            curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-            curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-            $result = curl_exec($ch );
-            curl_close( $ch );
-            header('Content-type:application/json;charset=utf-8');
+            if($notification_push->mobile_os == 'android') {
+                $this->pushAndroid($device_token, $registrationIds, $message);
+            } else if($notification_push->mobile_os == 'ios') {
+                $this->pushIos($message, $device_token);
+            }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent"=>1]);
             $notification->save();
             $notification_push->delete();
-            dd($result);
         }
         
     }
 
+    public function pushAndroid($registrationIds,$message) {
+        // prep the bundle
+        $msg = array (
+              'message' 	=> $message,
+              'title'		=> 'This is a title. title',
+              'subtitle'	=> 'This is a subtitle. subtitle',
+              'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+              'vibrate'	=> 1,
+              'sound'		=> 1,
+              'largeIcon'	=> 'large_icon',
+              'smallIcon'	=> 'small_icon'
+          );
+          $fields = array
+          (
+              'registration_ids' 	=> $registrationIds,
+              'data'			=> $msg
+          );
+          $headers = array
+          (
+              'Authorization: key=' . ENV('ANDROID_API_KEY'),
+              'Content-Type: application/json'
+          );
+          $ch = curl_init();
+          curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+          curl_setopt( $ch,CURLOPT_POST, true );
+          curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+          curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+          curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+          curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+          $result = curl_exec($ch );
+          curl_close( $ch );
+          header('Content-type:application/json;charset=utf-8');
+          dd($result);
+    }
+    public function pushIOSP12($deviceToken) {
+        //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
+        $passphrase = '';
+        $message = 'Hello Push Notification';
+        $ctx = stream_context_create();
+        stream_context_set_option($ctx, 'ssl', 'local_cert', BASE_PATH . "/public/medawy/Dawa2y.pem"); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+        $fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
+        // $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
+          echo "<p>Connection Open</p>";
+            if(!$fp){
+                echo "<p>Failed to connect!<br />Error Number: " . $err . " <br />Code: " . $errstrn . "</p>";
+                return;
+            } else {
+                echo "<p>Sending notification!</p>";    
+            }
+        $body['aps'] = array('alert' => $message,'sound' => 'default','extra1'=>'10','extra2'=>'value');
+        $payload = json_encode($body);
+        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+        //var_dump($msg)
+        $result = fwrite($fp, $msg, strlen($msg));
+          if (!$result)
+                    echo '<p>Message not delivered ' . PHP_EOL . '!</p>';
+                else
+                    echo '<p>Message successfully delivered ' . PHP_EOL . '!</p>';
+        fclose($fp);
+    }
+
+    public function pushIos_pem($message, $token) {
+        $deviceToken = $token;
+        // Put your private key's passphrase here:
+        $passphrase = 'Dawa2y';
+        // Put your alert message here:
+        $message = $message; 
+        $url = "penta-test.com";
+
+        if (!$message || !$url)
+            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
+
+            ////////////////////////////////////////////////////////////////////////////////
+
+            $ctx = stream_context_create();
+            stream_context_set_option($ctx, 'ssl', 'local_cert',  BASE_PATH . "/public/medawy/Dawa2y.pem");
+            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+            // Open a connection to the APNS server
+            if($production){
+                    $gateway = 'ssl://gateway.push.apple.com:2195';
+            }else{
+                    $gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
+            }
+            $fp = stream_socket_client(
+              $gateway, $err,
+              $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            //'ssl://gateway.push.apple.com:2195'
+                //'ssl://gateway.sandbox.push.apple.com:2195'
+            if (!$fp)
+              exit("Failed to connect: $err $errstr" . PHP_EOL);
+
+            echo 'Connected to APNS' . PHP_EOL;
+
+            if($lang == 1){
+                $message_body = $message->translations->message;
+            } else {
+                $message_body = $message->message;
+            }
+            // Create the payload body
+            $body['aps'] = array(
+                'alert' => $message_body,
+                'notification_type' => $message->type,
+                'item_id' => $message->item_id,
+                'sound' => 'default',
+                'badge' => '1'
+            );
+
+            // Encode the payload as JSON
+            $payload = json_encode($body);
+
+            // Build the binary notification
+            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+
+            // Send it to the server
+            $result = fwrite($fp, $msg, strlen($msg));
+
+            if (!$result)
+              echo 'Message not delivered' . PHP_EOL;
+            else
+              echo 'Message successfully delivered' . PHP_EOL;
+
+            // Close the connection to the server
+            fclose($fp);
+
+	}
     public function change($id)
     {
         $notification = Notifications::find($id);
