@@ -231,7 +231,7 @@ class NotificationsController extends Controller
             $notification->save();
             $notification_push->delete();
         }
-        
+        dd('Done');
     }
 
     public function pushAndroid($registrationIds,$message) {
@@ -266,7 +266,7 @@ class NotificationsController extends Controller
           $result = curl_exec($ch );
           curl_close( $ch );
           header('Content-type:application/json;charset=utf-8');
-          dd($result);
+//          dd($result);
     }
     public function pushIOSP12($deviceToken) {
         //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
