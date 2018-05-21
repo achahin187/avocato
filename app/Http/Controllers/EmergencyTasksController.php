@@ -9,6 +9,10 @@ use Carbon\Carbon;
 use App\Users;
 use App\Exports\EmergencyTasksExport;
 use Jenssegers\Date\Date;
+use App\Notifications;
+use App\Notification_Types;
+use App\Notification_Items;
+use App\Notifications_Push;
 
 class EmergencyTasksController extends Controller
 {
@@ -103,11 +107,32 @@ return redirect()->route('tasks_emergency');
     public function assign_lawyer_emergency_task(Request $request , $id)
     {
     	// dd($request->all());
+      
+
     	$task = Tasks::find($id);
     	$task->update([
     		'assigned_lawyer_id'=>$request['lawyer_id'],
     		'who_assigned_lawyer_id'=>\Auth::user()->id,
     	]);
+      $user=Users::find($request['lawyer_id']);
+      $notification_type=Notification_Types::find(11);
+      $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>11,
+                "item_id"=>$id,
+                "user_id"=>$request['lawyer_id'],
+                "notification_type_id"=>11,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$request['lawyer_id']
+            ]);
     	return redirect()->route('tasks_emergency')->with('success','تم تعيين محامى للمهمه بنجاح');
     }
        public function lawyer_task($id , $task_id)
