@@ -501,6 +501,25 @@ class ServicesController extends Controller
       $service->start_datetime = $start;
       $service->end_datetime = $end;
       $service->save();
+      $user=Users::find($request['lawyer']);
+      $notification_type=Notification_Types::find(12);
+      $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>11,
+                "item_id"=>$id,
+                "user_id"=>$request['lawyer'],
+                "notification_type_id"=>12,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$request['lawyer']
+            ]);
       return redirect()->back()->with('success','تم تعيين محامى بنجاح');
     }
 
