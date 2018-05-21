@@ -22,7 +22,8 @@ class NotificationsController extends Controller
     public function index()
     {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->distinct()->get();
+        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->distinct()->toSql();
+        dd($data['notifications']);
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
