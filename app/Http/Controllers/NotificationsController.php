@@ -65,6 +65,16 @@ class NotificationsController extends Controller
       }
       $send_date = date('Y-m-d H:i:s',strtotime($request->date));
       $packages = implode(',', $request->package_type);
+      
+        $notification = new Notification_Schedules;
+        $notification->msg = $request->notification;
+        $notification->schedule = $send_date;
+        $notification->notification_type_id=1;
+        $notification->created_at = date('Y-m-d H:i:s');
+        $notification->packages = $packages;
+        $notification->save();
+      
+      
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
         foreach($subs as $sub){
