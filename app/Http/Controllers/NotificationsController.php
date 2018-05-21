@@ -23,7 +23,7 @@ class NotificationsController extends Controller
     {   
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->groupBy('created_at')->get();
-        
+        dd($data['notifications']);
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
