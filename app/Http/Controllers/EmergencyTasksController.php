@@ -133,6 +133,25 @@ return redirect()->route('tasks_emergency');
                 "lang_id"=>$user->lang_id,
                 "user_id"=>$request['lawyer_id']
             ]);
+              $client=Users::find($task->client_id);
+      $notification_type_client=Notification_Types::find(13);
+      $notification_client=Notifications::create([
+                "msg"=>$notification_type_client->msg,
+                "entity_id"=>11,
+                "item_id"=>$id,
+                "user_id"=>$task->client_id,
+                "notification_type_id"=>13,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification_client->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$task->client_id
+            ]);
     	return redirect()->route('tasks_emergency')->with('success','تم تعيين محامى للمهمه بنجاح');
     }
        public function lawyer_task($id , $task_id)
