@@ -8,6 +8,8 @@ use App\Task_Status_History;
 use Carbon\Carbon;
 use App\Users;
 use App\Exports\EmergencyTasksExport;
+use Jenssegers\Date\Date;
+
 class EmergencyTasksController extends Controller
 {
     public function view($id)
