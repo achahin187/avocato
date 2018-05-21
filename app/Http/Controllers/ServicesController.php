@@ -386,6 +386,7 @@ class ServicesController extends Controller
     { 
       Date::setLocale('ar');
       $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+           if(count($tasks)){
       foreach($tasks as $task){
       $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
                               'id'=>$task->id,
@@ -395,6 +396,11 @@ class ServicesController extends Controller
                               'task_type_id'=>$task->task_type_id,
                                     ];
       }
+    }
+        else
+    {
+      $tasks_months=[];
+    }
       $data['tasks_months'] = $tasks_months;
       $div = view('services.services_lawyer_tasks',$data)->render();
       return response()->json($div);
