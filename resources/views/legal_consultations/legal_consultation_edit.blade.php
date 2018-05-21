@@ -84,7 +84,13 @@
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_answer">نص الاجابة</label>
-                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة "></textarea><span class="master_message color--fadegreen">
+                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة ">
+                          @foreach($consultation->consultation_reply as $reply)
+                          @if($reply->is_perfect_answer == 1)
+                          {{$reply->reply}}
+                          @endif
+                          @endforeach
+                        </textarea><span class="master_message color--fadegreen">
                            @if ($errors->has('consultation_answer'))
                                     {{ $errors->first('consultation_answer')}}
                                     @endif
