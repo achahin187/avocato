@@ -224,7 +224,7 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $this->pushAndroid($device_token, $registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIos($message, $device_token);
+                $this->pushIOSP12($device_token,$message);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent"=>1]);
@@ -273,7 +273,7 @@ class NotificationsController extends Controller
         $passphrase = '';
         $message = 'Hello Push Notification';
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', BASE_PATH . "/public/medawy/Dawa2y.pem"); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
+        stream_context_set_option($ctx, 'ssl', 'local_cert', BASE_PATH . "/public/PushDev.p12"); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
         $fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
         // $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
