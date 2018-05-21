@@ -7,6 +7,7 @@ use App\Package_Types;
 use App\Notifications;
 use App\Notification_Items;
 use App\Notifications_Push;
+use App\Notification_Schedules;
 use App\Subscriptions;
 use Validator;
 use Carbon\Carbon;
@@ -19,11 +20,11 @@ class NotificationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   
+    public function index() {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->get();
-        
+        $data['notifications'] = Notification_Schedules::all();
+       
+//        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->get();
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
@@ -64,6 +65,16 @@ class NotificationsController extends Controller
       }
       $send_date = date('Y-m-d H:i:s',strtotime($request->date));
       $packages = implode(',', $request->package_type);
+      
+        $notification = new Notification_Schedules;
+        $notification->msg = $request->notification;
+        $notification->schedule = $send_date;
+        $notification->notification_type_id=1;
+        $notification->created_at = date('Y-m-d H:i:s');
+        $notification->packages = $packages;
+        $notification->save();
+      
+      
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
         foreach($subs as $sub){
@@ -204,22 +215,24 @@ class NotificationsController extends Controller
 
     public function notification_cron() {
         $notifications = Notifications::where(function ($query){
-    $query->whereIn('notification_type_id',[1,8]);
-    $query->where('is_sent',0);
-    $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
-})->get();
+            $query->whereIn('notification_type_id',[1,8]);
+            $query->where('is_sent',0);
+            $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
+        })->get();
         foreach($notifications as $notification) {
-                        $user = $notification->user;
-                        $push = new Notifications_Push;
-                        $push->notification_id =$notification->id;
-                        $push->device_token  =$user->device_token;
-                        $push->mobile_os =$user->mobile_os;
-                        $push->lang_id =$user->lang_id;
-                        $push->user_id = $user->id;
-                        $push->save();
+           if(!empty($user->device_token)) {
+                $user = $notification->user;
+                $push = new Notifications_Push;
+                $push->notification_id =$notification->id;
+                $push->device_token  = $user->device_token;
+                $push->mobile_os =$user->mobile_os;
+                $push->lang_id =$user->lang_id;
+                $push->user_id = $user->id;
+                $push->save();
 
                 $notification->is_sent = 1;
-                $notification->save();
+                $notification->save();   
+           }
         }
     }
     public function push_notification() {
@@ -232,7 +245,7 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $this->pushAndroid($device_token, $registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIOSP12($device_token,$message);
+//                $this->pushIOSP12($device_token,$message);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent"=>1]);
