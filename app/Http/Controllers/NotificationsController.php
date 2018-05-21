@@ -22,7 +22,7 @@ class NotificationsController extends Controller
     public function index()
     {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->groupBy('created_at')->get();
+        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->groupBy('created_at')->toSql();
         dd($data['notifications']);
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
