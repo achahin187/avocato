@@ -319,14 +319,9 @@ class LawyersController extends Controller
     $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
     $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
     $data['expenses'] = Expenses::where('lawyer_id',$id)->get();
-    if($data['lawyer']['rate'] != null)
-    {
+    
       $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    }
-    else
-    {
-      $data['rates_user'] = null;
-    }
+    
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id',10)->where('field','name')->get();
