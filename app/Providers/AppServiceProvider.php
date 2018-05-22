@@ -71,7 +71,13 @@ class AppServiceProvider extends ServiceProvider
             }
 
         }
+        $counter = 0;
+        foreach($notes as $note){
+            if($note->is_read==0)
+                $counter++;
+        }
 
+        \View::share('counter', $counter);
         \View::share('notes', $notes);
     }
 

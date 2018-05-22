@@ -138,6 +138,7 @@ class LegalConsultationsController extends Controller
     {
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
+        // dd($consultation->consultation_reply);
         return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
@@ -360,6 +361,25 @@ class LegalConsultationsController extends Controller
             if($value->id == $request->input('perfect_answer'))
             {
                 $value->update(['is_perfect_answer'=>1]);
+                $user=Users::find($consultation->created_by);
+      $notification_type=Notification_Types::find(14);
+      $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>15,
+                "item_id"=>$consultation->id,
+                "user_id"=>$consultation->created_by,
+                "notification_type_id"=>14,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$consultation->created_by
+            ]);
             }
             else
             {

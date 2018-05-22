@@ -44,14 +44,14 @@ class TasksController extends Controller
             foreach ($value['rules'] as $key1 => $value1) {
                if($value1['id'] != 6)
                {
-                // dd($value1);
+                 // dd($value);
                 $data['client_type'][$value['id']]=$value1['name_ar'];
 
                }
             }
         }
         // $data['client_type']=(object)$data['client_type'];
-             // dd($data['clients']);
+              // dd($data['client_type']);
         return view('tasks.tasks_emergency',$data);
     }
 
