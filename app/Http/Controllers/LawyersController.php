@@ -323,7 +323,11 @@ class LawyersController extends Controller
     {
       $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
     }
-    $data['rates_user'] = null;
+    else
+    {
+      $data['rates_user'] = null;
+    }
+    
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id',10)->where('field','name')->get();
     return view('lawyers.lawyers_show',$data);
