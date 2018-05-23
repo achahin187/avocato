@@ -220,13 +220,13 @@ class NotificationsController extends Controller
             $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
         })->get();
         foreach($notifications as $notification) {
-           if(!empty($user->device_token)) {
-                $user = $notification->user;
+            $user = $notification->user;
+            if(!empty($user->device_token)) {    
                 $push = new Notifications_Push;
-                $push->notification_id =$notification->id;
+                $push->notification_id = $notification->id;
                 $push->device_token  = $user->device_token;
-                $push->mobile_os =$user->mobile_os;
-                $push->lang_id =$user->lang_id;
+                $push->mobile_os = $user->mobile_os;
+                $push->lang_id = $user->lang_id;
                 $push->user_id = $user->id;
                 $push->save();
 
@@ -243,12 +243,12 @@ class NotificationsController extends Controller
             $registrationIds = array($device_token);
             $message = $notification->msg;
             if($notification_push->mobile_os == 'android') {
-                $this->pushAndroid($device_token, $registrationIds, $message);
+                $this->pushAndroid($registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-//                $this->pushIOSP12($device_token,$message);
+                $this->pushIos_pem($device_token,$message);
             }
             // $notification_table=find($notification_push->notification_id);
-            $notification->update(["is_sent"=>1]);
+            $notification->update(["is_sent" => 1]);
             $notification->save();
             $notification_push->delete();
         }
@@ -289,6 +289,58 @@ class NotificationsController extends Controller
           header('Content-type:application/json;charset=utf-8');
 //          dd($result);
     }
+    public function pushIos_pem($token,$message) {
+        $deviceToken = $token;
+        // Put your private key's passphrase here:
+        $passphrase = '12345';
+        // Put your alert message here:
+        $message = $message; 
+        $url = "avocatoapp.com";
+
+        if (!$message || !$url)
+            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
+            ////////////////////////////////////////////////////////////////////////////////
+            $ctx = stream_context_create();
+            stream_context_set_option($ctx, 'ssl', 'local_cert',  public_path('PushDev.pem'));
+            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+            // Open a connection to the APNS server
+            if($production){
+                $gateway = 'ssl://gateway.push.apple.com:2195';
+            } else {
+                $gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
+            }
+            $fp = stream_socket_client($gateway, $err,$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            //'ssl://gateway.push.apple.com:2195'
+            //'ssl://gateway.sandbox.push.apple.com:2195'
+            if (!$fp)
+                exit("Failed to connect: $err $errstr" . PHP_EOL);
+            echo 'Connected to APNS' . PHP_EOL;
+            if($lang == 1){
+                $message_body = $message->translations->message;
+            } else {
+                $message_body = $message->message;
+            }
+            // Create the payload body
+            $body['aps'] = array(
+                'alert' => $message_body,
+                'notification_type' => $message->type,
+                'item_id' => $message->item_id,
+                'sound' => 'default',
+                'badge' => '1'
+            );
+            // Encode the payload as JSON
+            $payload = json_encode($body);
+            // Build the binary notification
+            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+            // Send it to the server
+            $result = fwrite($fp, $msg, strlen($msg));
+            if (!$result)
+              echo 'Message not delivered' . PHP_EOL;
+            else
+              echo 'Message successfully delivered' . PHP_EOL;
+            // Close the connection to the server
+            fclose($fp);
+	}
     public function pushIOSP12($deviceToken) {
         //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
         $passphrase = '';
@@ -317,71 +369,7 @@ class NotificationsController extends Controller
         fclose($fp);
     }
 
-    public function pushIos_pem($message, $token) {
-        $deviceToken = $token;
-        // Put your private key's passphrase here:
-        $passphrase = 'Dawa2y';
-        // Put your alert message here:
-        $message = $message; 
-        $url = "penta-test.com";
-
-        if (!$message || !$url)
-            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
-
-            ////////////////////////////////////////////////////////////////////////////////
-
-            $ctx = stream_context_create();
-            stream_context_set_option($ctx, 'ssl', 'local_cert',  BASE_PATH . "/public/medawy/Dawa2y.pem");
-            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-
-            // Open a connection to the APNS server
-            if($production){
-                    $gateway = 'ssl://gateway.push.apple.com:2195';
-            }else{
-                    $gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
-            }
-            $fp = stream_socket_client(
-              $gateway, $err,
-              $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            //'ssl://gateway.push.apple.com:2195'
-                //'ssl://gateway.sandbox.push.apple.com:2195'
-            if (!$fp)
-              exit("Failed to connect: $err $errstr" . PHP_EOL);
-
-            echo 'Connected to APNS' . PHP_EOL;
-
-            if($lang == 1){
-                $message_body = $message->translations->message;
-            } else {
-                $message_body = $message->message;
-            }
-            // Create the payload body
-            $body['aps'] = array(
-                'alert' => $message_body,
-                'notification_type' => $message->type,
-                'item_id' => $message->item_id,
-                'sound' => 'default',
-                'badge' => '1'
-            );
-
-            // Encode the payload as JSON
-            $payload = json_encode($body);
-
-            // Build the binary notification
-            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-
-            // Send it to the server
-            $result = fwrite($fp, $msg, strlen($msg));
-
-            if (!$result)
-              echo 'Message not delivered' . PHP_EOL;
-            else
-              echo 'Message successfully delivered' . PHP_EOL;
-
-            // Close the connection to the server
-            fclose($fp);
-
-	}
+    
     public function change($id)
     {
         $notification = Notifications::find($id);
