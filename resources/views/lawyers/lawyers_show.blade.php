@@ -4,8 +4,8 @@
 
 <script type="text/javascript">
 
-  var latitude ='{{$lawyer->latitude}}';
-  var longtuide  ='{{$lawyer->longtuide}}';
+  var latitude ='{{$lawyer->latitude or ''}}';
+  var longtuide  ='{{$lawyer->longtuide or ''}}';
 function initMap() {
   var uluru = {lat: Number(latitude) , lng: Number(longtuide)};
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -27,7 +27,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
     $(document).ready(function(){
 
     $('.exclude').click(function(){
-      var lawyer_id = '{{$lawyer->id}}';
+      var lawyer_id = '{{$lawyer->id or ''}}';
       var _token = '{{csrf_token()}}';
       swal({
         title: "هل أنت متأكد؟",
@@ -76,7 +76,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       <div class="row">
                         <div class="col-xs-12">
                           <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{asset(''.$lawyer->image)}}">
-                              <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
+                              <h3 class="coverglobal__title color--gray_d">{{$lawyer->full_name or ''}}</h3><small class="coverglobal__slogan color--gray_d">{{$lawyer->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
                           <div class="coverglobal__actions">{{-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمحامي</a> --}}<a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('lawyers_edit',$lawyer->id)}}">تعديل البيانات</a><a class="exclude color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="#">استبعاد المحامي</a>
                           </div>
                         </div>
