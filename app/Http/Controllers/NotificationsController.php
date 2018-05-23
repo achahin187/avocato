@@ -237,13 +237,14 @@ class NotificationsController extends Controller
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
+        $results = array();
         foreach($notifications_push as $notification_push) { 
             $device_token = $notification_push->device_token;
             $notification = $notification_push->notification;
             $registrationIds = array($device_token);
             $message = $notification->msg;
             if($notification_push->mobile_os == 'android') {
-                $this->pushAndroid($registrationIds, $message);
+                $results [] = $this->pushAndroid($registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
                 $this->pushIos_pem($device_token,$message);
             }
@@ -252,7 +253,7 @@ class NotificationsController extends Controller
             $notification->save();
             $notification_push->delete();
         }
-        dd('Done');
+        dd($results);
     }
 
     public function pushAndroid($registrationIds,$message) {
@@ -287,7 +288,7 @@ class NotificationsController extends Controller
           $result = curl_exec($ch );
           curl_close( $ch );
           header('Content-type:application/json;charset=utf-8');
-//          dd($result);
+        return $result;
     }
     public function pushIos_pem($token,$message) {
         $deviceToken = $token;
