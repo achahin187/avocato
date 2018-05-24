@@ -245,7 +245,7 @@ class NotificationsController extends Controller
             $registrationIds = array($device_token);
             $message = $notification->msg;
             if($notification_push->mobile_os == 'android') {
-                $results [] = $this->pushAndroid($registrationIds, $message);
+                $results [] = $this->pushAndroid($registrationIds, $message,$notification->notification_type_id, $notification->item_id);
             } else if($notification_push->mobile_os == 'ios') {
                 $this->pushIos_pem($device_token,$message);
             }
@@ -291,7 +291,7 @@ class NotificationsController extends Controller
           header('Content-type:application/json;charset=utf-8');
         return $result;
     }
-    public function pushIos_pem($token,$message) {
+    public function pushIos_pem($token, $message, $notification_type_id, $item_id) {
         $deviceToken = $token;
         // Put your private key's passphrase here:
         $passphrase = '12345';
@@ -316,16 +316,11 @@ class NotificationsController extends Controller
             if (!$fp)
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
             echo 'Connected to APNS' . PHP_EOL;
-            if($lang == 1){
-                $message_body = $message->translations->message;
-            } else {
-                $message_body = $message->message;
-            }
             // Create the payload body
             $body['aps'] = array(
-                'alert' => $message_body,
-                'notification_type' => $message->type,
-                'item_id' => $message->item_id,
+                'alert' => $message,
+                'notification_type' => $notification_type_id,
+                'item_id' => $item_id,
                 'sound' => 'default',
                 'badge' => '1'
             );
