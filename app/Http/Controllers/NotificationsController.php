@@ -234,6 +234,7 @@ class NotificationsController extends Controller
                 $notification->save();   
            }
         }
+        dd($notifications);
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
@@ -294,8 +295,7 @@ class NotificationsController extends Controller
         $deviceToken = $token;
         // Put your private key's passphrase here:
         $passphrase = '12345';
-        // Put your alert message here:
-        $message = $message; 
+        $production = 1;
         $url = "avocatoapp.com";
 
         if (!$message || !$url)
