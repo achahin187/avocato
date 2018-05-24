@@ -137,8 +137,8 @@ return redirect()->route('tasks_emergency');
       $notification_type_client=Notification_Types::find(13);
       $notification_client=Notifications::create([
                 "msg"=>$notification_type_client->msg,
-                "entity_id"=>11,
-                "item_id"=>$id,
+                "entity_id"=>12,
+                "item_id"=>$request['lawyer_id'],
                 "user_id"=>$task->client_id,
                 "notification_type_id"=>13,
                 "is_read"=>0,
