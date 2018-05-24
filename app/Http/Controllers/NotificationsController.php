@@ -291,8 +291,8 @@ class NotificationsController extends Controller
           header('Content-type:application/json;charset=utf-8');
         return $result;
     }
-    public function pushIos_pem($token, $message, $notification_type_id, $item_id) {
-        $deviceToken = $token;
+    public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
+        dd($deviceToken);
         // Put your private key's passphrase here:
         $passphrase = '12345';
         $production = 1;
