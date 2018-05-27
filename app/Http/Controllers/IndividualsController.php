@@ -263,7 +263,7 @@ class IndividualsController extends Controller
         $password = $user->client_password ? $user->client_password->password : $user->password;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();  
-        $installments = $user->subscription ? Installment::where('subscription_id', $user->subscription->id)->get() : 0;
+        $installments = $user->subscription ? 0 : 0;
 
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
