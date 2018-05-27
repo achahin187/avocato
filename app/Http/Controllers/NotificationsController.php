@@ -292,7 +292,6 @@ class NotificationsController extends Controller
         return $result;
     }
     public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
-        dd($deviceToken);
         // Put your private key's passphrase here:
         $passphrase = '12345';
         $production = 1;
