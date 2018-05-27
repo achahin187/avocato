@@ -234,6 +234,7 @@ class NotificationsController extends Controller
                 $notification->save();   
            }
         }
+        dd($notifications);
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
@@ -246,7 +247,7 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $results [] = $this->pushAndroid($registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIos_pem($device_token,$message);
+                $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent" => 1]);
@@ -290,12 +291,10 @@ class NotificationsController extends Controller
           header('Content-type:application/json;charset=utf-8');
         return $result;
     }
-    public function pushIos_pem($token,$message) {
-        $deviceToken = $token;
+    public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
         // Put your private key's passphrase here:
         $passphrase = '12345';
-        // Put your alert message here:
-        $message = $message; 
+        $production = 1;
         $url = "avocatoapp.com";
 
         if (!$message || !$url)
@@ -316,16 +315,11 @@ class NotificationsController extends Controller
             if (!$fp)
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
             echo 'Connected to APNS' . PHP_EOL;
-            if($lang == 1){
-                $message_body = $message->translations->message;
-            } else {
-                $message_body = $message->message;
-            }
             // Create the payload body
             $body['aps'] = array(
-                'alert' => $message_body,
-                'notification_type' => $message->type,
-                'item_id' => $message->item_id,
+                'alert' => $message,
+                'notification_type' => $notification_type_id,
+                'item_id' => $item_id,
                 'sound' => 'default',
                 'badge' => '1'
             );
