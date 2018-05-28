@@ -386,6 +386,7 @@ class ServicesController extends Controller
     { 
       Date::setLocale('ar');
       $tasks = Tasks::where('assigned_lawyer_id',$id)->get();
+           if(count($tasks)){
       foreach($tasks as $task){
       $tasks_months[Date::parse($task->start_datetime)->format('F')][] = [
                               'id'=>$task->id,
@@ -395,6 +396,11 @@ class ServicesController extends Controller
                               'task_type_id'=>$task->task_type_id,
                                     ];
       }
+    }
+        else
+    {
+      $tasks_months=[];
+    }
       $data['tasks_months'] = $tasks_months;
       $div = view('services.services_lawyer_tasks',$data)->render();
       return response()->json($div);
@@ -495,6 +501,25 @@ class ServicesController extends Controller
       $service->start_datetime = $start;
       $service->end_datetime = $end;
       $service->save();
+      $user=Users::find($request['lawyer']);
+      $notification_type=Notification_Types::find(12);
+      $notification=Notifications::create([
+                "msg"=>$notification_type->msg,
+                "entity_id"=>11,
+                "item_id"=>$id,
+                "user_id"=>$request['lawyer'],
+                "notification_type_id"=>12,
+                "is_read"=>0,
+                "is_sent"=>0,
+                "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+             $notification_push=Notifications_Push::create([
+                "notification_id"=>$notification->id,
+                "device_token"=>$user->device_token,
+                "mobile_os"=>$user->mobile_os,
+                "lang_id"=>$user->lang_id,
+                "user_id"=>$request['lawyer']
+            ]);
       return redirect()->back()->with('success','تم تعيين محامى بنجاح');
     }
 

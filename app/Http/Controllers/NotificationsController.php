@@ -7,9 +7,11 @@ use App\Package_Types;
 use App\Notifications;
 use App\Notification_Items;
 use App\Notifications_Push;
+use App\Notification_Schedules;
 use App\Subscriptions;
 use Validator;
 use Carbon\Carbon;
+use DB;
 
 class NotificationsController extends Controller
 {
@@ -18,10 +20,11 @@ class NotificationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {   
+    public function index() {   
         $data['subscription_types'] = Package_Types::all();
-        $data['notifications'] = Notifications::where('notification_type_id',1)->get();
+        $data['notifications'] = Notification_Schedules::all();
+       
+//        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->get();
 //        $notifications_array = $notifications->toArray();
 //        foreach ($notifications as  $notification) {
 //            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
@@ -48,6 +51,9 @@ class NotificationsController extends Controller
      */
     public function store(Request $request)
     {
+      //      $send_date = Carbon::now()->timestamp;
+      //      $notification->created_at = Carbon::now()->timestamp;
+      
     $validator = Validator::make($request->all(), [
         'package_type'=>'required',
         'date'=>'required',
@@ -58,16 +64,33 @@ class NotificationsController extends Controller
         ->withInput();
       }
       $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-//      $send_date = Carbon::now()->timestamp;
-      $notification = new Notifications;
-      $notification->msg = $request->notification;
-      $notification->schedule = $send_date;
-      $notification->notification_type_id=1;
-      $notification->is_sent=0;
-//      $notification->created_at = Carbon::now()->timestamp;
-      $notification->save();
+      $packages = implode(',', $request->package_type);
+      
+        $notification = new Notification_Schedules;
+        $notification->msg = $request->notification;
+        $notification->schedule = $send_date;
+        $notification->notification_type_id=1;
+        $notification->created_at = date('Y-m-d H:i:s');
+        $notification->packages = $packages;
+        $notification->save();
+      
       
       foreach($request->package_type as $package){
+        $subs = Subscriptions::where('package_type_id',$package)->get();
+        foreach($subs as $sub){
+            $user = $sub->user;
+            if(!empty($user->id)) {
+                $notification = new Notifications;
+                $notification->msg = $request->notification;
+                $notification->schedule = $send_date;
+                $notification->notification_type_id=1;
+                $notification->is_sent=0;
+                $notification->user_id = $user->id;
+                $notification->created_at = date('Y-m-d H:i:s');
+                $notification->packages = $packages;
+                $notification->save();
+            }
+        }
         $item = new Notification_Items;
         $item->item_id = $package;
         $notification->noti_items()->save($item);
@@ -191,75 +214,163 @@ class NotificationsController extends Controller
     }
 
     public function notification_cron() {
-        $notifications = Notifications::where('notification_type_id',1)->get();
+        $notifications = Notifications::where(function ($query){
+            $query->whereIn('notification_type_id',[1,8]);
+            $query->where('is_sent',0);
+            $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
+        })->get();
         foreach($notifications as $notification) {
-            if($notification->is_sent == 0 && (strtotime($notification->schedule)  <= Carbon::now()->timestamp)) {
-                foreach($notification->noti_items as $item){
-                    $subs = Subscriptions::where('package_type_id',$item->item_id)->get();
-                    foreach($subs as $sub){
-                        $user = $sub->user;
-                        $push = new Notifications_Push;
-                        $push->notification_id =$notification->id;
-                        $push->device_token  =$user->device_token;
-                        $push->mobile_os =$user->mobile_os;
-                        $push->lang_id =$user->lang_id;
-                        $push->user_id = $user->id;
-                        $push->save();
-                    }
-                }
+            $user = $notification->user;
+            if(!empty($notification->user_id)) {    
+                $push = new Notifications_Push;
+                $push->notification_id = $notification->id;
+                $push->device_token  = $user->device_token;
+                $push->mobile_os = $user->mobile_os;
+                $push->lang_id = $user->lang_id;
+                $push->user_id = $user->id;
+                $push->save();
+
                 $notification->is_sent = 1;
-                $notification->save();
-            }
+                $notification->save();   
+           }
         }
+        dd($notifications);
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
+        $results = array();
         foreach($notifications_push as $notification_push) { 
             $device_token = $notification_push->device_token;
             $notification = $notification_push->notification;
             $registrationIds = array($device_token);
             $message = $notification->msg;
-            // prep the bundle
-            $msg = array
-            (
-                'message' 	=> $message,
-                'title'		=> 'This is a title. title',
-                'subtitle'	=> 'This is a subtitle. subtitle',
-                'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
-                'vibrate'	=> 1,
-                'sound'		=> 1,
-                'largeIcon'	=> 'large_icon',
-                'smallIcon'	=> 'small_icon'
-            );
-            $fields = array
-            (
-                'registration_ids' 	=> $registrationIds,
-                'data'			=> $msg
-            );
-            $headers = array
-            (
-                'Authorization: key=' . ENV('ANDROID_API_KEY'),
-                'Content-Type: application/json'
-            );
-            $ch = curl_init();
-            curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
-            curl_setopt( $ch,CURLOPT_POST, true );
-            curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-            curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-            curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-            curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-            $result = curl_exec($ch );
-            curl_close( $ch );
-            header('Content-type:application/json;charset=utf-8');
+            if($notification_push->mobile_os == 'android') {
+                $results [] = $this->pushAndroid($registrationIds, $message);
+            } else if($notification_push->mobile_os == 'ios') {
+                $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
+            }
             // $notification_table=find($notification_push->notification_id);
-            $notification->update(["is_sent"=>1]);
+            $notification->update(["is_sent" => 1]);
             $notification->save();
             $notification_push->delete();
-            dd($result);
         }
-        
+        dd($results);
     }
 
+    public function pushAndroid($registrationIds,$message) {
+        // prep the bundle
+        $msg = array (
+              'message' 	=> $message,
+              'title'		=> 'This is a title. title',
+              'subtitle'	=> 'This is a subtitle. subtitle',
+              'tickerText'	=> 'Ticker text here...Ticker text here...Ticker text here',
+              'vibrate'	=> 1,
+              'sound'		=> 1,
+              'largeIcon'	=> 'large_icon',
+              'smallIcon'	=> 'small_icon'
+          );
+          $fields = array
+          (
+              'registration_ids' 	=> $registrationIds,
+              'data'			=> $msg
+          );
+          $headers = array
+          (
+              'Authorization: key=' . ENV('ANDROID_API_KEY'),
+              'Content-Type: application/json'
+          );
+          $ch = curl_init();
+          curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+          curl_setopt( $ch,CURLOPT_POST, true );
+          curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+          curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+          curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+          curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+          $result = curl_exec($ch );
+          curl_close( $ch );
+          header('Content-type:application/json;charset=utf-8');
+        return $result;
+    }
+    public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
+        // Put your private key's passphrase here:
+        $passphrase = '12345';
+        $production = 0;
+        $url = "avocatoapp.com";
+
+        if (!$message || !$url)
+            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
+            ////////////////////////////////////////////////////////////////////////////////
+            $ctx = stream_context_create();
+            stream_context_set_option($ctx, 'ssl', 'local_cert',  public_path('PushDev.pem'));
+            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+            // Open a connection to the APNS server
+            if($production){
+                $gateway = 'ssl://gateway.push.apple.com:2195';
+            } else {
+                $gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
+            }
+            $fp = stream_socket_client($gateway, $err,$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+            //'ssl://gateway.push.apple.com:2195'
+            //'ssl://gateway.sandbox.push.apple.com:2195'
+            if (!$fp)
+                exit("Failed to connect: $err $errstr" . PHP_EOL);
+            echo 'Connected to APNS' . PHP_EOL;
+            // Create the payload body
+            $body['aps'] = array(
+                'alert' => $message,
+                'notification_type' => $notification_type_id,
+                'item_id' => $item_id,
+                'sound' => 'default',
+                'badge' => '1'
+            );
+            // Encode the payload as JSON
+            $payload = json_encode($body);
+            // Build the binary notification
+//            dd($deviceToken);
+            $msg = chr(0) .
+                    pack('n', 32) .
+                    pack('H*', $deviceToken) . 
+                    pack('n', strlen($payload)) . 
+                    $payload;
+//            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+            // Send it to the server
+            $result = fwrite($fp, $msg, strlen($msg));
+            if (!$result)
+              echo 'Message not delivered' . PHP_EOL;
+            else
+              echo 'Message successfully delivered' . PHP_EOL;
+            // Close the connection to the server
+            fclose($fp);
+	}
+    public function pushIOSP12($deviceToken) {
+        //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
+        $passphrase = '';
+        $message = 'Hello Push Notification';
+        $ctx = stream_context_create();
+        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('PushDev.p12') ); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+        $fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
+        // $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
+          echo "<p>Connection Open</p>";
+            if(!$fp){
+                echo "<p>Failed to connect!<br />Error Number: " . $err . " <br />Code: " . $errstrn . "</p>";
+                return;
+            } else {
+                echo "<p>Sending notification!</p>";    
+            }
+        $body['aps'] = array('alert' => $message,'sound' => 'default','extra1'=>'10','extra2'=>'value');
+        $payload = json_encode($body);
+        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+        //var_dump($msg)
+        $result = fwrite($fp, $msg, strlen($msg));
+          if (!$result)
+                    echo '<p>Message not delivered ' . PHP_EOL . '!</p>';
+                else
+                    echo '<p>Message successfully delivered ' . PHP_EOL . '!</p>';
+        fclose($fp);
+    }
+
+    
     public function change($id)
     {
         $notification = Notifications::find($id);

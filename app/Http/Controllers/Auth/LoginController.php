@@ -60,11 +60,11 @@ class LoginController extends Controller
                     $u->last_login=date('Y-m-d H:i:s');
                     $u->save();
                     
-                    return redirect()->route('home');  
+                    return redirect('/');  
                 }
             }
             Auth::logout();
-            return redirect()->back()->with('error','غير مخول لك بالدخول');;
+            return redirect()->back()->with('error','غير مسموح لك بالدخول');;
 
         }
         else{

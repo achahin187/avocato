@@ -284,7 +284,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-                <input name="start_date" value="{{ $user->subscription ? $user->subscription->start_date->format('m/d/Y') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
+                <input name="start_date" value="{{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('start_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>             
@@ -296,7 +296,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-                <input name="end_date" value="{{ $user->subscription ? $user->subscription->end_date->format('m/d/Y') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
+                <input name="end_date" value="{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('end_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>             
@@ -363,35 +363,35 @@
           {{--  Generated input fields  --}}
           @if($user->subscription)
           <div id="generated">
-              @for ($i = 0; $i < $user->subscription->number_of_installments; $i++)
-              <?php $j = $i+1; ?>
-              <div class="col-md-4 col-xs-12">
+            @for ($i = 0; $i < $user->subscription->number_of_installments; $i++)
+            <?php $j = $i+1; ?>
+            <div class="col-md-4 col-xs-12">
+                <div class="master_field">
+                  <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
+                  <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $user->subscription->package_type_id != 7 ?  $installments[$i]->value : '' }}">
+                </div>
+                </div>
+                <div class="col-md-4 col-xs-12">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
-                    <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $installments[$i]->value }}">
-                  </div>
-                  </div>
-                  <div class="col-md-4 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $installments[$i]->payment_date->format('m/d/Y') }}">
-                    </div>
-                  </div>
-                  <div class="col-md-4 col-xs-12">
-                    <div class="master_field">
-                    <label class="master_label">حالة القسط رقم {{ $j }}</label>
-                  <div class="radio-inline">
-                    <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ ($installments[$i]->is_paid == 1) ? 'checked' : '' }} >
-                    <label>نعم</label>
-                  </div>
-                  <div class="radio-inline">
-                    <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ ($installments[$i]->is_paid == 0) ? 'checked' : '' }} >
-                    <label>لا</label>
+                  <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
+                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->subscription->package_type_id != 7 ? $installments[$i]->payment_date->format('m/d/Y') : '' }}">
                   </div>
                 </div>
+                <div class="col-md-4 col-xs-12">
+                  <div class="master_field">
+                  <label class="master_label">حالة القسط رقم {{ $j }}</label>
+                <div class="radio-inline">
+                  <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 1 ? 'checked' : '') : '' }} >
+                  <label>نعم</label>
+                </div>
+                <div class="radio-inline">
+                  <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 0 ? 'checked' : '') : 'checked' }} >
+                  <label>لا</label>
+                </div>
               </div>
-              @endfor
-          </div>
+            </div>
+            @endfor
+        </div>
           @endif
 
             @if ( !$user->subscription )
