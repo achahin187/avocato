@@ -92,7 +92,7 @@
 
                   @if( isset($packages) && !empty($packages) )
                     @foreach($packages as $package)
-                      @if($package->item_id == $user->subscription->package_type_id)
+                      @if(isset($package->item_id) && isset($user->subscription->package_type_id) && $package->item_id == $user->subscription->package_type_id)
                         {{ $package->value ? $package->value : 'لا يوجد' }}
                       @endif
                     @endforeach
