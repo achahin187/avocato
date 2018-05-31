@@ -22,7 +22,7 @@ use App\Case_;
 use App\Notification_Types;
 use App\Notifications;
 use App\Notifications_Push;
-use App\Carbon;
+use Carbon\Carbon;
 
 class ServicesController extends Controller
 {
