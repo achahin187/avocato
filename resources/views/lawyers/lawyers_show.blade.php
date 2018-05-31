@@ -602,7 +602,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                             <tbody>
                               @foreach($expenses as $expense)
                               <tr>
-                                <td><span class="cellcontent">{{$expense->expensed_at->format('Y - m - d')}}</span></td>
+                                <td><span class="cellcontent">@if(!empty($expense->expensed_at)){{$expense->expensed_at->format('Y - m - d')}} @endif</span></td>
                                 <td><span class="cellcontent">{{$expense->amount}}</span></td>
                                 <td><span class="cellcontent">{{$expense->description}} </span></td>
                               </tr>
