@@ -199,6 +199,7 @@ class LegalConsultationsController extends Controller
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::destroy( $id);
         Consultation_Replies::where('consultation_id',$id)->delete();
+        Consultation_Lawyers::where('consultation_id',$id)->delete();
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 
@@ -210,6 +211,7 @@ class LegalConsultationsController extends Controller
         {
             Consultation::destroy($id);
             Consultation_Replies::where('consultation_id',$id)->delete();
+            Consultation_Lawyers::where('consultation_id',$id)->delete();
         } 
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
