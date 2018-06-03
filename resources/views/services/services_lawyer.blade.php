@@ -261,15 +261,7 @@
     form.steps({
         headerTag: "h3",
         bodyTag: "fieldset",
-        transitionEffect: "slideLeft",
-        onFinishing: function (event, currentIndex) {   
-            var form = $(this);
-            form.submit();
-        },
-        onFinished: function (event, currentIndex) {
-            // bodyTag: "fieldset"
-            // alert("Finish button was clicked");
-        }
+        transitionEffect: "slideLeft"
     });
         
     var form = $("#horizontal-tabs-steps").show();
