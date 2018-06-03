@@ -204,6 +204,7 @@ class CasesController extends Controller
 
    public function edit_case(Request $request , $id)
    {
+    // dd($request->all());
     $validator = Validator::make($request->all(), [
             'folder_num'=>'required',
             'case_dateRang'=>'required',
@@ -256,6 +257,7 @@ class CasesController extends Controller
             'case_notes'=>$request['notes'],
             'created_by'=>\Auth::user()->id,
         ]);
+      $case->save();
       if($request->has('lawyer_id'))
       {
         Case_Lawyer::where('case_id',$id)->delete();
@@ -272,7 +274,7 @@ class CasesController extends Controller
       foreach($request['client_code'] as $key => $value) {
          Case_Client::Create([
                 'case_id'=>$case->id,
-                'client_id'=>$request['client_name'][$key],
+                'client_id'=>$request['client_code'][$key],
                 'case_client_role_id'=>$request['client_character'][$key],
                 'attorney_number'=>$request['authorization_num'][$key],
             ]);

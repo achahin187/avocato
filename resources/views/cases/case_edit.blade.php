@@ -638,10 +638,8 @@
                           <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
-                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees" value="$case->claim_expenses"><span class="master_message color--fadegreen">
-                              @if ($errors->has('case_fees'))
-                                    {{ $errors->first('case_fees')}}
-                                    @endif
+                            <input class="master_input" type="number" placeholder="مصروفات القضية" ><span class="master_message color--fadegreen">
+                              
                             </span>
                             </div>
                           </div>
