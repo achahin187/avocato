@@ -86,21 +86,21 @@
               <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
                 <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' ) : 'لا يوجد' }}</div>
               </div>
+                
               <div class="col-xs-6"><b class="col-xs-3">نوع الباقة  </b>
                 <div class="col-xs-9">
                   <span class="bgcolor--fadeorange color--white bradius--small importance padding--small">
-
-                  @if( isset($packages) && !empty($packages) )
+                @if( isset($packages) && !empty($packages) )
                     @foreach($packages as $package)
-                      @if($package->item_id == $user->subscription->package_type_id)
+                      @if(isset($package->item_id) && isset($user->subscription->package_type_id) && $package->item_id == $user->subscription->package_type_id)
                         {{ $package->value ? $package->value : 'لا يوجد' }}
                       @endif
                     @endforeach
-                  @endif
-
+                @endif
                 </span>
                 </div>
               </div>
+              
               <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط </b>
                 <div class="col-xs-9">{{ $user->subscription ? $user->subscription->number_of_installments : 'لا يوجد' }}</div>
               </div>

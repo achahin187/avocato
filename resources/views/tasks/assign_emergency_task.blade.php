@@ -34,7 +34,7 @@
                         </div>
                         <div class="full-table">
                            <div class="remodal-bg">
-                         {{--   <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                            <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <h2 id="modal1Title">فلتر</h2>
@@ -92,7 +92,7 @@
                               <div class="clearfix"></div>
                               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
-                            </div>--}}
+                            </div>
                           </div> 
                           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                           <table class="table-1">

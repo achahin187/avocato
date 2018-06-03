@@ -204,6 +204,7 @@ class CasesController extends Controller
 
    public function edit_case(Request $request , $id)
    {
+    // dd($request->all());
     $validator = Validator::make($request->all(), [
             'folder_num'=>'required',
             'case_dateRang'=>'required',
@@ -256,6 +257,7 @@ class CasesController extends Controller
             'case_notes'=>$request['notes'],
             'created_by'=>\Auth::user()->id,
         ]);
+      $case->save();
       if($request->has('lawyer_id'))
       {
         Case_Lawyer::where('case_id',$id)->delete();
@@ -272,7 +274,7 @@ class CasesController extends Controller
       foreach($request['client_code'] as $key => $value) {
          Case_Client::Create([
                 'case_id'=>$case->id,
-                'client_id'=>$request['client_name'][$key],
+                'client_id'=>$request['client_code'][$key],
                 'case_client_role_id'=>$request['client_character'][$key],
                 'attorney_number'=>$request['authorization_num'][$key],
             ]);
@@ -728,13 +730,17 @@ if($request->has('record_documents')){
         $zipper = new \Chumper\Zipper\Zipper;
 
         $docuemnts=Case_Record::where('id',$id)->with('case_record_documents')->first();
-        foreach ($docuemnts->case_record_documents as  $document) {
+        if(count($docuemnts->case_record_documents) > 0 )
+        {
+           foreach ($docuemnts->case_record_documents as  $document) {
             $file=  $document->file;
            $zipper->zip('investigations.zip')->add($file);
            
         }
         $zipper->close();
-        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true);
+        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true); 
+        }
+        return redirect()->back();
          // return response()->download(public_path()."/investigations.zip");
     }
 

@@ -682,7 +682,9 @@
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              @if(count($record->case_record_documents)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
+                              @endif
                             </form>
                             </div>
                           

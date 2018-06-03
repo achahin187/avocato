@@ -326,8 +326,12 @@ class NotificationsController extends Controller
             // Encode the payload as JSON
             $payload = json_encode($body);
             // Build the binary notification
-            
-            $msg = chr(0) . pack('n', 32) . pack('H*', str_replace(' ', '', $deviceToken)) . pack('n', strlen($payload)) . $payload;
+//            dd($deviceToken);
+            $msg = chr(0) .
+                    pack('n', 32) .
+                    pack('H*', $deviceToken) . 
+                    pack('n', strlen($payload)) . 
+                    $payload;
 //            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));

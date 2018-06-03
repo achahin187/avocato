@@ -240,7 +240,7 @@ $(document).on('confirmation', '#two', function () {
             </div>
           </div>
           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-          <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+          <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" >ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" >حذف المحدد</a>
           </div>
           <table class="table-1" id="dataTableTriggerId_001">
             <thead>
@@ -288,7 +288,7 @@ $(document).on('confirmation', '#two', function () {
                   @endisset
                 </span></td>
                 <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</span></td>
-                  <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                  <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                 </tr>
                 @endforeach
               </tbody>
