@@ -21,7 +21,7 @@ $('tr[data-lawyer-id='+{{$lawyer->id}}+'] .location').text(results[0].formatted_
    @endforeach
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
-    center: new google.maps.LatLng(30.042701,31.432662)
+    center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
   });
   var i =0;
 
