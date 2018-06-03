@@ -260,10 +260,10 @@ class IndividualsController extends Controller
     public function edit($id)
     {   
         $user = Users::find($id);
-        $password = $user->client_password ? $user->client_password->password : $user->password;
+        $password = $user->client_password ? ($user->client_password->password ? : 12345678) : 12345678;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();  
-        $installments = $user->subscription ? 0 : 0;
+        $installments = $user->subscription ? $user->subscription->installments : 0;
 
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
@@ -347,7 +347,12 @@ class IndividualsController extends Controller
 
         // push into client_passwords
         try {
-            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            if(ClientsPasswords::where('user_id', $user->id)->first() != NULL) {
+                $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            } else {
+                $client_passwords = new ClientsPasswords;
+            }
+            
             $client_passwords->user_id = $user->id;
             if($request->password != null && $request->password != '') {
                 $client_passwords->password = $request->password;
@@ -360,8 +365,12 @@ class IndividualsController extends Controller
         
         // push into users_details
         try {
-            $user_details = User_Details::where('user_id', $user->id)->first();
-            
+            if(User_Details::where('user_id', $user->id)->first() != NULL) {
+                $user_details = User_Details::where('user_id', $user->id)->first();
+            } else {
+                $user_details = new User_Details;
+            }
+  
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
             $user_details->nationality_id= $request->nationality;
@@ -373,6 +382,7 @@ class IndividualsController extends Controller
             $user_details->discount_percentage   = $request->discount_rate;
             $user_details->save();
         } catch(Exception $ex) {
+            dd($ex);
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }

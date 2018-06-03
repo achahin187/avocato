@@ -279,7 +279,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-            <input name="start_date" value="{{ old('start_date') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
+            <input name="start_date" value="{{ old('start_date') }}"  class="datepicker master_input" type="text" placeholder="اكتب تاريخ بدأ التعاقد هنا" id="license_start_date">             
             {{--  Error  --}}             
             @if ($errors->has('start_date'))               
               <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>             
@@ -291,7 +291,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-            <input name="end_date" value="{{ old('end_date') }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
+            <input name="end_date" value="{{ old('end_date') }}"  class="datepicker master_input" type="text" placeholder="اكتب تاريخ نهاية التعاقد هنا" id="license_end_date">             
             {{--  Error  --}}             
             @if ($errors->has('end_date'))               
               <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>             

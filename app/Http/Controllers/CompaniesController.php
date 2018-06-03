@@ -300,10 +300,10 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = Users::find($id);
-        $password = $company->client_password ? $company->client_password->password : $company->password;
+        $password = $company->client_password ? ($company->client_password->password ? : 12345678) : 12345678;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();
-        $installments = $company->subscription ? Installment::where('subscription_id', $company->subscription->id)->get() : 0;
+        $installments = $company->subscription ? $company->subscription->installments : 0;
 
         return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments']));
     }
@@ -378,7 +378,12 @@ class CompaniesController extends Controller
 
         // push into client_passwords
         try {
-            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            if(ClientsPasswords::where('user_id', $user->id)->first() != NULL) {
+                $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            } else {
+                $client_passwords = new ClientsPasswords;
+            }            
+            
             $client_passwords->user_id = $user->id;
             $client_passwords->password = $request->password;
             $client_passwords->save();
@@ -389,7 +394,12 @@ class CompaniesController extends Controller
         
         // push into users_details
         try {
-            $user_details = User_Details::where('user_id', $user->id)->first();
+            if(User_Details::where('user_id', $user->id)->first() != NULL) {
+                $user_details = User_Details::where('user_id', $user->id)->first();
+            } else {
+                $user_details = new User_Details;
+            }
+
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
             $user_details->nationality_id= $request->nationality;
@@ -481,7 +491,7 @@ class CompaniesController extends Controller
         }
 
         // redirect with success
-        Session::flash('success', 'تم إضافة العميل بنجاح');
+        Session::flash('success', 'تم تعديل العميل بنجاح');
         return redirect('/companies');
     }
 

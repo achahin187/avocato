@@ -97,7 +97,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_birth">تاريخ الميلاد</label>
-                          <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="placeholder" id="lawyer_birth"><span class="master_message color--fadegreen">
+                          <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="lawyer_birth"><span class="master_message color--fadegreen">
                                     @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif </span>
@@ -194,7 +194,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>
-                          <input name="join_date" value="{{ old('join_date') }}" class="datepicker master_input" readonly type="text" placeholder="placeholder" id="work_start"><span class="master_message color--fadegreen">
+                          <input name="join_date" value="{{ old('join_date') }}" class="datepicker master_input" readonly type="text" placeholder="اكتب تاريخ الالتحاق بالعمل هنا" id="work_start"><span class="master_message color--fadegreen">
                                   @if ($errors->has('join_date'))
                                     {{ $errors->first('join_date')}}
                                     @endif </span>
@@ -203,7 +203,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="work_end"> تاريخ انتهاء العمل بالشركة</label>
-                          <input name="resign_date" value="{{ old('resign_date') }}" class="datepicker master_input" readonly type="text" placeholder="placeholder" id="work_end"><span class="master_message color--fadegreen">
+                          <input name="resign_date" value="{{ old('resign_date') }}" class="datepicker master_input" readonly type="text" placeholder="اكتب تاريخ انتهاء العمل بالشركة هنا" id="work_end"><span class="master_message color--fadegreen">
                                     @if ($errors->has('resign_date'))
                                     {{ $errors->first('resign_date')}}
                                     @endif</span>
