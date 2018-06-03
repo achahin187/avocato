@@ -393,10 +393,10 @@
 <script>
   $(document).ready(function(){
 
-     $('#dp').daterangepicker({
-         startDate: new Date({{$service->start_datetime->format('Y')}},{{$service->start_datetime->format('m')-1}}, {{$service->start_datetime->format('d')}}),
-         endDate: new Date({{($service->end_datetime)?$service->end_datetime->format('Y').',':''}}{{($service->end_datetime)?($service->end_datetime->format('m')-1).',':''}} {{($service->end_datetime)?$service->end_datetime->format('d'):''}})
-     });
+     // $('#dp').daterangepicker({
+     //     startDate: new Date({{$service->start_datetime->format('Y')}},{{$service->start_datetime->format('m')-1}}, {{$service->start_datetime->format('d')}}),
+     //     endDate: new Date({{($service->end_datetime)?$service->end_datetime->format('Y').',':''}}{{($service->end_datetime)?($service->end_datetime->format('m')-1).',':''}} {{($service->end_datetime)?$service->end_datetime->format('d'):''}})
+     // });
 
     $('input:radio[name="lawyer"]').change(
     function(){
