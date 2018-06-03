@@ -730,13 +730,17 @@ if($request->has('record_documents')){
         $zipper = new \Chumper\Zipper\Zipper;
 
         $docuemnts=Case_Record::where('id',$id)->with('case_record_documents')->first();
-        foreach ($docuemnts->case_record_documents as  $document) {
+        if(count($docuemnts->case_record_documents) > 0 )
+        {
+           foreach ($docuemnts->case_record_documents as  $document) {
             $file=  $document->file;
            $zipper->zip('investigations.zip')->add($file);
            
         }
         $zipper->close();
-        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true);
+        return response()->download(public_path()."/investigations.zip")->deleteFileAfterSend(true); 
+        }
+        return redirect()->back();
          // return response()->download(public_path()."/investigations.zip");
     }
 
