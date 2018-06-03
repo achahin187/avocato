@@ -230,3 +230,29 @@
     <!-- =============== PAGE VENDOR Triggers =================-->
 @endsection
 
+@section('js')
+<script>
+    $(document).ready(function(){
+        $('input:radio[name="lawyer"]').change(
+            function(){
+                var full_name = $(this).closest('tr').find('.full_name').text();
+                var syndicate_level = $(this).closest('tr').find('.syndicate_level').text();
+                var id = $(this).closest('tr').attr('data-lawyer-id');
+                $('.full_name2').text(full_name);
+                $('.syndicate_level2').text(syndicate_level);
+                $.ajax({
+                    type:'GET',
+                    url:'{{url('services_lawyer_task')}}'+'/'+id,
+                    data:{},
+                    success:function(data){
+                        $('#lawyer_tasks').html(data);
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        $('#lawyer_tasks').html(' ');
+                    }
+                });
+            });
+        $('input:radio[name="lawyer"]:checked').trigger('change');
+    });
+</script>
+@endsection
