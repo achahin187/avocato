@@ -281,22 +281,7 @@
             enablePagination: false,
             enableAllSteps: true,
             titleTemplate: "#title#",
-            cssClass: "tabcontrol",
-            onStepChanging: function (event, currentIndex, newIndex)    {
-                if (currentIndex === 5) { //if last step
-                    //remove default #finish button
-                    $('#wizard').find('a[href="#finish"]').remove(); 
-                    //append a submit type button
-                    $('#wizard .actions li:last-child').append('<button type="submit" value="finish" id="submit" class="btn-large"><span class="fa fa-chevron-right"></span></button>');
-                 }  
-            },
-            onFinishing: function (event, currentIndex) {
-               alert("Submitted!");
-            },
-            onFinished: function (event, currentIndex) {
-                // bodyTag: "fieldset"
-                alert("Finish button was clicked");
-            }
+            cssClass: "tabcontrol"
         });
     </script>
 @endsection
