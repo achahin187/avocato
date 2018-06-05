@@ -9591,6 +9591,9 @@ button.close {
   border-radius: 5px;
   border: 1px solid #eee;
   padding: 10px;
+  overflow-y: scroll;
+overflow-x: hidden;
+
 }
 
 .wizard > .content > .body {
