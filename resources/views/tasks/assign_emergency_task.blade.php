@@ -312,7 +312,7 @@
                         <div class="col-md-12">
                           <div class="master_field">
                             <label class="master_label">تاريخ بداية و نهاية المهمة</label>
-                             <input name="start_end" id="dp" class="date_range_picker master_input" type="text" placeholder="placeholder">
+                             <input name="start_end" id="dp" class="date_range_picker master_input" type="text" placeholder="اكتب تاريخ بداية و نهاية المهمة هنا">
                           </div>
                           <div id="lawyer_tasks">
                         {{--   <div class="col-lg-12">

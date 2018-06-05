@@ -284,7 +284,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-                <input name="start_date" value="{{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_start_date">             
+                <input name="start_date" value="{{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="اكتب تاريخ بداية التعاقد هنا" id="license_start_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('start_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>             
@@ -296,7 +296,7 @@
             <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
                 <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-                <input name="end_date" value="{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="placeholder" id="license_end_date">             
+                <input name="end_date" value="{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format('m/d/Y') : '') : '' }}"  class="datepicker master_input" type="text" placeholder="اكتب تاريخ نهاية التعاقد هنا" id="license_end_date">             
                 {{--  Error  --}}             
                 @if ($errors->has('end_date'))               
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>             

@@ -289,10 +289,10 @@ class IndividualsCompaniesController extends Controller
     public function edit($id)
     {   
         $user = Users::find($id);
-        $password = $user->client_password ? $user->client_password->password : $user->password;
+        $password = $user->client_password ? ($user->client_password->password ? : 12345678) : 12345678;
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();  
-        $installments = $user->subscription ? Installment::where('subscription_id', $user->subscription->id)->get() : 0;
+        $installments = $user->subscription ? $user->subscription->installments : 0;
         $companies = Users::users(9)->get();
 
         return view('clients.individuals_companies.individuals_companies_edit', compact(['user', 'password', 'subscription_types', 'nationalities', 'installments', 'companies']) );
@@ -385,7 +385,12 @@ class IndividualsCompaniesController extends Controller
 
         // push into client_passwords
         try {
-            $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            if(ClientsPasswords::where('user_id', $user->id)->first() != NULL) {
+                $client_passwords = ClientsPasswords::where('user_id', $user->id)->first();
+            } else {
+                $client_passwords = new ClientsPasswords;
+            }
+
             $client_passwords->user_id = $user->id;
             $client_passwords->password = $request->password;
             $client_passwords->confirmation = 0;
@@ -398,8 +403,11 @@ class IndividualsCompaniesController extends Controller
         // TODO: national_id missing
         // push into users_details
         try {
-            $user_details = User_Details::where('user_id', $user->id)->first();
-            
+            if(User_Details::where('user_id', $user->id)->first() != NULL) {
+                $user_details = User_Details::where('user_id', $user->id)->first();
+            } else {
+                $user_details = new User_Details;
+            }            
             $user_details->user_id       = $user->id;
             $user_details->country_id    = $request->nationality;
             $user_details->nationality_id = $request->nationality;

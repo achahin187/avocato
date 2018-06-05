@@ -25,6 +25,7 @@
                     <h4 class="cover-inside-title color--gray_d">الجلسات </h4>
                   </h4>
                   @endif
+
                 </div>
               </div>
             </div>
