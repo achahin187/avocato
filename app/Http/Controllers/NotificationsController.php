@@ -221,7 +221,7 @@ class NotificationsController extends Controller
         })->get();
         foreach($notifications as $notification) {
             $user = $notification->user;
-            if(!empty($notification->user_id)) {    
+            if(!empty($notification->user_id) && !empty($user->device_token)) {    
                 $push = new Notifications_Push;
                 $push->notification_id = $notification->id;
                 $push->device_token  = $user->device_token;
