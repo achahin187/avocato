@@ -49,22 +49,18 @@ class NotificationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-      //      $send_date = Carbon::now()->timestamp;
-      //      $notification->created_at = Carbon::now()->timestamp;
-      
-    $validator = Validator::make($request->all(), [
-        'package_type'=>'required',
-        'date'=>'required',
-        'notification'=>'required',
-      ]);
-      if ($validator->fails()) {
-        return redirect('notifications#add_notification')->withErrors($validator)
-        ->withInput();
-      }
-      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-      $packages = implode(',', $request->package_type);
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'package_type'=>'required',
+            'date'=>'required',
+            'notification'=>'required',
+        ]);
+        if ($validator->fails()) {
+          return redirect('notifications#add_notification')->withErrors($validator)
+          ->withInput();
+        }
+        $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+        $packages = implode(',', $request->package_type);
       
         $notification = new Notification_Schedules;
         $notification->msg = $request->notification;
@@ -77,14 +73,14 @@ class NotificationsController extends Controller
       
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
-        foreach($subs as $sub){
+        foreach($subs as $sub) {
             $user = $sub->user;
-            if(!empty($user->id)) {
+            if(!empty($user->id) && !empty($user->device_token)) {
                 $notification = new Notifications;
                 $notification->msg = $request->notification;
                 $notification->schedule = $send_date;
                 $notification->notification_type_id=1;
-                $notification->is_sent=0;
+                $notification->is_sent = 0;
                 $notification->user_id = $user->id;
                 $notification->created_at = date('Y-m-d H:i:s');
                 $notification->packages = $packages;
