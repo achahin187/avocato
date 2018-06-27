@@ -203,4 +203,9 @@ class Users extends Authenticatable
         return $this->hasMany('App\Notifications','user_id');
     }
 
+    public function logs()
+    {
+        return $this->hasMany('App\Log','created_by');
+    }
+
 }

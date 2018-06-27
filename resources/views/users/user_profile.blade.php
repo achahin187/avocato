@@ -401,16 +401,24 @@
                     </div>
                     <div class="clearfix"></div>
                     <ul class="log padding--nopadding">
+                    @foreach($logs as $log)
                       <li><i class="fa fa-user bgcolor--fadeblue color--white bradius--circle"></i>
-                        <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>&nbsp;
-                            منذ 5 دقائق</span>
+                        <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>
+                        {{$log->created_at}}</span>
                           <h3 class="log-header no-border margin--nomargin color--main_l padding--medium">
-                            اضاف
-                            &nbsp;<a href="#">عميل جديد</a>
+                            قام المستخدم 
+                            {{$log['user']['name']}}
+                            @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
+                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            @else
+                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            @endif
+                            
                           </h3>
                         </div>
                       </li>
-                      <li><i class="fa fa-shopping-cart bgcolor--sec color--white bradius--circle"></i>
+                      @endforeach
+                      <!-- <li><i class="fa fa-shopping-cart bgcolor--sec color--white bradius--circle"></i>
                         <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>&nbsp;
                             20-10-2010</span>
                           <h3 class="log-header no-border margin--nomargin color--main_l padding--medium">
@@ -436,7 +444,7 @@
                             &nbsp;<a href="#">مصطفى محمود</a>
                           </h3>
                         </div>
-                      </li>
+                      </li> -->
                       <li><i class="fa fa-clock-o bgcolor--fadebrown color--white bradius--circle"></i></li>
                     </ul>
                   </div>

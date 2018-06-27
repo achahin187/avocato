@@ -195,24 +195,26 @@ class Helper {
         ]);
     }
 
-    public static function dataentry_customer($id)
+    public static function is_dataentry_customer($id)
     {
        $user=Users::find($id);
        foreach($user->rules as $rule)
        {
-           if($rule->rule_id == 3 || $rule->rule_id == 4)
+        // dd($rule->id);
+           if($rule->id == 3 || $rule->id == 4)
            {
+               
                return true;
            }
        }
        return false;
     }
-    public static function admin_superadmin($id)
+    public static function is_admin_superadmin($id)
     {
        $user=Users::find($id);
        foreach($user->rules as $rule)
        {
-           if($rule->rule_id == 1 || $rule->rule_id == 2)
+           if($rule->id == 1 || $rule->id == 2)
            {
                return true;
            }

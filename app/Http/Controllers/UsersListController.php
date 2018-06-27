@@ -14,6 +14,7 @@ use Session;
 use App\Exports\UsersExport;
 use App\Helpers\Helper;
 use App\Log;
+use Carbon\Carbon;
 
 class UsersListController extends Controller
 {
@@ -186,15 +187,29 @@ class UsersListController extends Controller
     public function show($id)
     {
         $data['user']=Users::find($id);
-        $logs=Log::all();
+        $logs=Log::with('user')->with('actions')->get();
         if(Helper::is_dataentry_customer($id))
         {
-
+            foreach($logs as $key => $log)
+            {
+                if($log['created_by'] != $id)
+                {
+                    
+                    unset($logs[$key]);
+                }
+            }
         }
-        else if(Helper::is_admin_superadmin($id))
-        {
+        // dd(Helper::is_dataentry_customer($id));
+        // else if(Helper::is_admin_superadmin($id))
+        // {
             
+        // }
+        foreach($logs as $log)
+        {
+            $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
         }
+        $data['logs']=$logs;
+        // dd($data['logs']);
         return view('users.user_profile',$data);
     }
 

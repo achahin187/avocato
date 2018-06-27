@@ -18,4 +18,9 @@ class Log extends Model
     {
         return $this->belongsTo('App\Action','action_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Users','created_by');
+    }
 }
