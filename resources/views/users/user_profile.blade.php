@@ -406,8 +406,9 @@
                         <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>
                         {{$log->created_at}}</span>
                           <h3 class="log-header no-border margin--nomargin color--main_l padding--medium">
-                            قام المستخدم 
+                            قام المستخدم   
                             {{$log['user']['name']}}
+                            بعمل
                             @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             @else
