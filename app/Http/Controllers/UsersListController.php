@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\File;
 use Excel;
 use Session;
 use App\Exports\UsersExport;
+use App\Helpers\Helper;
+use App\Log;
 
 class UsersListController extends Controller
 {
@@ -184,6 +186,15 @@ class UsersListController extends Controller
     public function show($id)
     {
         $data['user']=Users::find($id);
+        $logs=Log::all();
+        if(Helper::is_dataentry_customer($id))
+        {
+
+        }
+        else if(Helper::is_admin_superadmin($id))
+        {
+            
+        }
         return view('users.user_profile',$data);
     }
 

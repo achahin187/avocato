@@ -6,7 +6,10 @@ use App\Entities;
 use App\Users;
 use App\Case_;
 use App\Tasks;
+use App\Log;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
 
 class Helper {
 
@@ -179,5 +182,41 @@ class Helper {
             $msg->from(['info@avocatoapp.net']); 
 
           });
+    }
+
+    public static function add_log($action_id , $entity_id , $item_id)
+    {
+        Log::create([
+            'action_id'=>$action_id,
+            'entity_id'=>$entity_id,
+            'item_id'=>$item_id,
+            'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
+        	'created_by'=>\Auth::user()->id
+        ]);
+    }
+
+    public static function dataentry_customer($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->rule_id == 3 || $rule->rule_id == 4)
+           {
+               return true;
+           }
+       }
+       return false;
+    }
+    public static function admin_superadmin($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->rule_id == 1 || $rule->rule_id == 2)
+           {
+               return true;
+           }
+       }
+       return false;
     }
 }
