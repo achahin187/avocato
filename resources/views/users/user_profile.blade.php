@@ -411,6 +411,7 @@
                             بعمل
                             @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            {{$log['entity']['display_name_ar']}}
                             @else
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             @endif

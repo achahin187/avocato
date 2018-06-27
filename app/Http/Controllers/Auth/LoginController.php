@@ -66,7 +66,7 @@ class LoginController extends Controller
             }
             // Helper::add_log(2,12,Auth::user()->id);
             Auth::logout();
-            return redirect()->back()->with('error','غير مسموح لك بالدخول');;
+            return redirect()->back()->with('error','غير مسموح لك بالدخول');
 
         }
         else{

@@ -187,7 +187,7 @@ class UsersListController extends Controller
     public function show($id)
     {
         $data['user']=Users::find($id);
-        $logs=Log::with('user')->with('actions')->get();
+        $logs=Log::with('user')->with('actions')->with('entity')->get();
         if(Helper::is_dataentry_customer($id))
         {
             foreach($logs as $key => $log)

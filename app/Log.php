@@ -23,4 +23,9 @@ class Log extends Model
     {
         return $this->belongsTo('App\Users','created_by');
     }
+
+    public function entity()
+    {
+        return $this->belongsTo('App\Entities','entity_id');
+    }
 }

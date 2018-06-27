@@ -112,7 +112,7 @@ class LegalConsultationsController extends Controller
         ]);
                 
             }
-            Helper::add_log(3,15,$consultation->id);
+            Helper::add_log(3,13,$consultation->id);
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types)->with('success','تم إضافه استشاره جديده بنجاح');
        
     }
@@ -139,7 +139,7 @@ class LegalConsultationsController extends Controller
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
         // dd($consultation->consultation_reply);
-        Helper::add_log(4,15,$consultation->id);
+        Helper::add_log(4,13,$consultation->id);
         return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
@@ -201,7 +201,7 @@ class LegalConsultationsController extends Controller
         $consultation = Consultation::destroy( $id);
         Consultation_Replies::where('consultation_id',$id)->delete();
         Consultation_Lawyers::where('consultation_id',$id)->delete();
-        Helper::add_log(5,15,$id);
+        Helper::add_log(5,13,$id);
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 
@@ -214,7 +214,7 @@ class LegalConsultationsController extends Controller
             Consultation::destroy($id);
             Consultation_Replies::where('consultation_id',$id)->delete();
             Consultation_Lawyers::where('consultation_id',$id)->delete();
-            Helper::add_log(5,15,$id);
+            Helper::add_log(5,13,$id);
         } 
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
@@ -315,7 +315,7 @@ class LegalConsultationsController extends Controller
             $user=Users::find($id);
             $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
-                "entity_id"=>15,
+                "entity_id"=>13,
                 "item_id"=>$consultation_id,
                 "user_id"=>$id,
                 "notification_type_id"=>9,
@@ -370,7 +370,7 @@ class LegalConsultationsController extends Controller
       $notification_type=Notification_Types::find(14);
       $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
-                "entity_id"=>15,
+                "entity_id"=>13,
                 "item_id"=>$consultation->id,
                 "user_id"=>$consultation->created_by,
                 "notification_type_id"=>14,
