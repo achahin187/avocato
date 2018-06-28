@@ -400,6 +400,7 @@
                           <input class="datepicker master_input" type="text" placeholder="الى" id="to" name='to' required>
                         </div><span class="master_message color--fadegreen">message</span>
                       </div>
+                      </div>
                       <div class="col-md-2 col-sm-2 col-xs-2">
                       <div class="master_field">
                         
