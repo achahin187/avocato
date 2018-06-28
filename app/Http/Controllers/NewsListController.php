@@ -29,49 +29,50 @@ class NewsListController extends Controller
     public function filter(Request $request)
     {
         // check if start date is less than end date
-        Validator::extend('before_or_equal', function($attribute, $value, $parameters, $validator) {
+        Validator::extend('before_or_equal', function ($attribute, $value, $parameters, $validator) {
             return strtotime($validator->getData()[$parameters[0]]) >= strtotime($value);
         });
 
-        if( $request->start_date && !$request->end_date) {
-            $rules =  [
-                'condition'     => 'required' 
+        if ($request->start_date && !$request->end_date) {
+            $rules = [
+                'condition' => 'required'
             ];
-        } else if($request->start_date ) {
-            $rules =  [
-                'start_date'   => 'before_or_equal:end_date',
-                'end_date'     => '',
-                'condition'     => 'required' ];
+        } else if ($request->start_date) {
+            $rules = [
+                'start_date' => 'before_or_equal:end_date',
+                'end_date' => '',
+                'condition' => 'required'
+            ];
         } else {
-            $rules =  [
-                'condition'     => 'required' 
+            $rules = [
+                'condition' => 'required'
             ];
         }
 
-        $validator =  Validator::make($request->all(), $rules, [
-            'start_date.before_or_equal'    => 'حقل تاريخ البداية يجب ان يكون اصغر من او يساوي حقل تاريخ النهاية'
+        $validator = Validator::make($request->all(), $rules, [
+            'start_date.before_or_equal' => 'حقل تاريخ البداية يجب ان يكون اصغر من او يساوي حقل تاريخ النهاية'
         ]);
 
         // Check validation
         if ($validator->fails()) {
             return redirect('news_list#filterModal_sponsors')
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $filter = new News;
 
-        if( $request->start_date && $request->end_date ) {
+        if ($request->start_date && $request->end_date) {
             $from = Helper::checkDate($request->start_date, 1);
-            $to   = Helper::checkDate($request->end_date, 2);
+            $to = Helper::checkDate($request->end_date, 2);
 
             // check on start and end dates
-            if($from && $to) {
+            if ($from && $to) {
                 $filter = $filter->whereBetween('published_at', [$from, $to]);
             }
         }
 
-        switch($request->condition) {
+        switch ($request->condition) {
             case "1":
                 $filter = $filter->get();
                 break;
@@ -84,7 +85,7 @@ class NewsListController extends Controller
             default:
                 break;
         }
-                    
+
         return view('news.news_list')->with('news', $filter);
     }
 
@@ -108,14 +109,14 @@ class NewsListController extends Controller
     {
         // dd($request->newsImg);
         $this->validate($request, [
-            'newsName'  => 'required',
-            'newsImg'  => 'image|mimes:jpeg,jpg,png',
-            'newsContent'   => 'required'
+            'newsName' => 'required',
+            'newsImg' => 'image|mimes:jpeg,jpg,png',
+            'newsContent' => 'required'
         ]);
         
 
         // if news is activated then set published_at to current date time
-        if($request->activate != 0) {  
+        if ($request->activate != 0) {
             $published_at = Carbon::now();
             $published_at->toDateTimeString();
         } else {
@@ -123,17 +124,17 @@ class NewsListController extends Controller
         }
 
         // upload image to storage/app/public
-        if($request->newsImg) {
+        if ($request->newsImg) {
             $img = $request->newsImg;
-            $newImg = time().$img->getClientOriginalName(); // current time + original image name
+            $newImg = time() . $img->getClientOriginalName(); // current time + original image name
             $img->move('storage/app/public/news', $newImg);      // move to /storage/app/public
-            $imgPath = 'storage/app/public/news/'.$newImg;       // new path: /storage/app/public/imageName
+            $imgPath = 'storage/app/public/news/' . $newImg;       // new path: /storage/app/public/imageName
         } else {
             $imgPath = null;
         }
 
         // check is active
-        if($request->activate) {
+        if ($request->activate) {
             $activate = 1;
         } else {
             $activate = 0;
@@ -143,22 +144,23 @@ class NewsListController extends Controller
 
         try {
             $news = new News;
-            $news->name  = $request->newsName;
-            $news->body  = $request->newsContent;
+            $news->name = $request->newsName;
+            $news->body = $request->newsContent;
             $news->photo = $imgPath;
             $news->is_active = $activate;
             $news->published_at = $published_at;
-            $news->created_by   = $current_user;
-            $news->updated_by  = $current_user;
+            $news->created_by = $current_user;
+            $news->updated_by = $current_user;
             $news->save();
-        } catch(Exception $ex) {
+        } catch (Exception $ex) {
             $news->forcedelete();
             dd($ex);
             Session::flash('warning', 'حدث خطأ ما عند ادخال الخبر');
             return redirect()->back()->withInput();
         }
 
-        return redirect('news_list_show' .'/'. $news->id);
+        Helper::add_log(3, 18, $news->id);
+        return redirect('news_list_show' . '/' . $news->id);
     }
 
     /**
@@ -193,16 +195,16 @@ class NewsListController extends Controller
     public function update(Request $request, $id)
     {
          // dd($request->newsImg);
-         $this->validate($request, [
-            'newsName'  => 'required',
-            'newsImg'  => 'image|mimes:jpeg,jpg,png',
-            'newsContent'   => 'required'
+        $this->validate($request, [
+            'newsName' => 'required',
+            'newsImg' => 'image|mimes:jpeg,jpg,png',
+            'newsContent' => 'required'
         ]);
-        
+
         $news = News::find($id);
 
         // if news is activated then set published_at to current date time
-        if($request->activate != 0) {  
+        if ($request->activate != 0) {
             $published_at = Carbon::now();
             $published_at->toDateTimeString();
         } else {
@@ -210,13 +212,13 @@ class NewsListController extends Controller
         }
 
         // upload image to storage/app/public
-        if($request->newsImg) {
+        if ($request->newsImg) {
             $img = $request->newsImg;
-            $newImg = time().$img->getClientOriginalName();
+            $newImg = time() . $img->getClientOriginalName();
             $img->move('storage/app/public', $newImg);
-            $imgPath = 'storage/app/public/'.$newImg;
+            $imgPath = 'storage/app/public/' . $newImg;
         } else {
-            if($news->photo) {
+            if ($news->photo) {
                 $imgPath = $news->photo;
             } else {
                 $imgPath = null;
@@ -224,7 +226,7 @@ class NewsListController extends Controller
         }
 
         // check is active
-        if($request->activate == 1) {
+        if ($request->activate == 1) {
             $activate = 1;
         } else {
             $activate = 0;
@@ -233,20 +235,21 @@ class NewsListController extends Controller
         $current_user = Auth::user()->id;
 
         try {
-        $news->name  = $request->newsName;
-        $news->body  = $request->newsContent;
-        $news->photo = $imgPath;
-        $news->is_active = $activate;
-        $news->published_at = $published_at;
-        $news->created_by   = $current_user;
-        $news->updated_by  = $current_user;
-        $news->save();
-        } catch(Exception $ex) {
+            $news->name = $request->newsName;
+            $news->body = $request->newsContent;
+            $news->photo = $imgPath;
+            $news->is_active = $activate;
+            $news->published_at = $published_at;
+            $news->created_by = $current_user;
+            $news->updated_by = $current_user;
+            $news->save();
+        } catch (Exception $ex) {
             Session::flash('warning', 'حدث خطأ ما عند تعديل الخبر');
             return redirect()->back()->withInput();
         }
 
-        return redirect('news_list_show' .'/'. $news->id);
+        Helper::add_log(4, 18, $news->id);
+        return redirect('news_list_show' . '/' . $news->id);
     }
 
     /**
@@ -256,15 +259,19 @@ class NewsListController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    { 
+    {
         $news = News::find($id);        // find this news
-        $image_path = $news->photo;     // image path
+        if($news->photo) {
+            $image_path = $news->photo;     // image path
+        }
 
         // check if image exists then delete it
-        if ( File::exists(public_path($image_path)) ) {
+        if (File::exists(public_path($image_path))) {
             File::delete(public_path($image_path));
         }
-        
+
+        Helper::add_log(5, 18, $news->id);
+
         // delete this record
         $news->delete();
 
@@ -277,13 +284,16 @@ class NewsListController extends Controller
     /**
      * Delete selected rows
      */
-    public function destroySelected(Request $request) 
+    public function destroySelected(Request $request)
     {
         // get cities IDs from AJAX
-        $ids = $request->ids;
+        $ids = explode(",", $request->ids);
 
+        foreach($ids as $id) {
+            Helper::add_log(5, 18, $id);
+        }
         // transform $ids into array values then search and delete
-        News::whereIn('id', explode(",", $ids))->delete();
+        News::whereIn('id', $ids)->delete();
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
@@ -292,18 +302,18 @@ class NewsListController extends Controller
     // export Excel sheets
     public function exportXLS(Request $request)
     {
-        $filepath ='public/excel/';
-        $PathForJson='storage/excel/';
-        $filename = 'News'.time().'.xlsx';
+        $filepath = 'public/excel/';
+        $PathForJson = 'storage/excel/';
+        $filename = 'News' . time() . '.xlsx';
 
-        if(isset($request->ids) && $request->ids != null){
+        if (isset($request->ids) && $request->ids != null) {
             $ids = explode(",", $request->ids);
 
-            Excel::store(new NewsExport($ids),$filepath.$filename);
-            return response()->json($PathForJson.$filename);
-        } else{
-            Excel::store((new NewsExport()),$filepath.$filename);
-            return response()->json($PathForJson.$filename); 
+            Excel::store(new NewsExport($ids), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } else {
+            Excel::store((new NewsExport()), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
         }
 
         return response()->json($response);
