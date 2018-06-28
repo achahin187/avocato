@@ -139,7 +139,7 @@ class LegalConsultationsController extends Controller
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::find($id);
         // dd($consultation->consultation_reply);
-        Helper::add_log(4,13,$consultation->id);
+        
         return view('legal_consultations.legal_consultation_edit')->with('id',$id)->with('consultation_types',$consultation_types)->with('consultation',$consultation);
     }
 
@@ -197,11 +197,12 @@ class LegalConsultationsController extends Controller
      */
     public function destroy($id)
     {
+        Helper::add_log(5,13,$id);
         $consultation_types=Consultation_Types::all();
         $consultation = Consultation::destroy( $id);
         Consultation_Replies::where('consultation_id',$id)->delete();
         Consultation_Lawyers::where('consultation_id',$id)->delete();
-        Helper::add_log(5,13,$id);
+        
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
 
@@ -211,10 +212,11 @@ class LegalConsultationsController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
         {
+            Helper::add_log(5,13,$id);
             Consultation::destroy($id);
             Consultation_Replies::where('consultation_id',$id)->delete();
             Consultation_Lawyers::where('consultation_id',$id)->delete();
-            Helper::add_log(5,13,$id);
+           
         } 
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
@@ -298,6 +300,7 @@ class LegalConsultationsController extends Controller
              $consultation->update(['is_replied'=>1]);
 
         }
+        Helper::add_log(4,13,$consultation->id);
         return  redirect()->route('legal_consultations')->with('consultation_types',$consultation_types);
     }
      public function send_consultation_to_all_lawyers($consultation_id)

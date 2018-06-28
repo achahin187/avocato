@@ -9,7 +9,7 @@ class Log extends Model
     protected $primaryKey = 'id';
     protected $table = 'logs';
 
-    protected $fillable = ['action_id','entity_id','item_id','created_at','created_by'];
+    protected $fillable = ['action_id','name','entity_id','item_id','created_at','created_by'];
     protected $dates = [];
     public $timestamps = false;
 

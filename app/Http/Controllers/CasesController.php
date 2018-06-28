@@ -279,7 +279,7 @@ class CasesController extends Controller
                 'attorney_number'=>$request['authorization_num'][$key],
             ]);
       }
-      Helper::add_log(4,14,$id);
+      Helper::add_log(4,11,$id);
        return  redirect()->route('cases');
       // dd($request->all());
    }
@@ -306,14 +306,14 @@ class CasesController extends Controller
      */
    public function destroy($id)
     {
-        
+        Helper::add_log(5,11,$id);
         Case_::destroy( $id);
         Case_Client::where('case_id',$id)->delete();
         Case_Document::where('case_id',$id)->delete();
         Case_Lawyer::where('case_id',$id)->delete();
         Case_Record::where('case_id',$id)->delete();
         Case_techinical_Report::where('case_id',$id)->delete();
-        Helper::add_log(5,14,$id);
+        
         return  redirect()->route('cases');
     }
 
@@ -323,13 +323,14 @@ class CasesController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
         {
+            Helper::add_log(5,11,$id);
             Case_::destroy($id);
            Case_Client::where('case_id',$id)->delete();
         Case_Document::where('case_id',$id)->delete();
         Case_Lawyer::where('case_id',$id)->delete();
         Case_Record::where('case_id',$id)->delete();
         Case_techinical_Report::where('case_id',$id)->delete();
-        Helper::add_log(5,14,$id);
+        
         } 
         return  redirect()->route('cases');
     }
@@ -445,7 +446,7 @@ if($request->hasFile('docs_upload')){
        }
          // dd($request->all());
         // return $this->create();
-        Helper::add_log(3,14,$case->id);
+        Helper::add_log(3,11,$case->id);
        return redirect()->route('cases')->with('success','تم إضافه قضيه جديده بنجاح');
     }
     function lawyers_filter(Request $request)
