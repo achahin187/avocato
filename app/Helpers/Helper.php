@@ -186,6 +186,7 @@ class Helper {
 
     public static function add_log($action_id , $entity_id , $item_id)
     {
+        
         if($action_id == 1 || $action_id == 2)
         {
             $name='';
@@ -202,7 +203,11 @@ class Helper {
             else
             $name=$item->name;
         }
-        
+        if($action_id == 5)
+        {
+            Log::where('item_id',$item_id)->delete();
+            $item_id=null;
+        }
         Log::create([
             'action_id'=>$action_id,
             'name'=>$name,
