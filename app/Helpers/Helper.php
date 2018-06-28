@@ -186,8 +186,18 @@ class Helper {
 
     public static function add_log($action_id , $entity_id , $item_id)
     {
+        $entity= Entities::find($entity_id);
+        $model=$entity->model_name;
+        // dd($model);
+       
+        $item=($model)::find($item_id);
+        if($entity_id == 13)
+        $name=$item->code;
+        else
+        $name=$item->name;
         Log::create([
             'action_id'=>$action_id,
+            'name'=>$name,
             'entity_id'=>$entity_id,
             'item_id'=>$item_id,
             'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),

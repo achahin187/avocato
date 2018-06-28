@@ -207,9 +207,13 @@ class UsersListController extends Controller
         foreach($logs as $log)
         {
             $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
+            if(substr($log['entity']['base_url'], -1) == '/')
+            $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+            else
+            $log['entity']['base_url']=url('/').$log['entity']['base_url'];
         }
         $data['logs']=$logs;
-        // dd($data['logs']);
+        //  dd($data['logs']);
         return view('users.user_profile',$data);
     }
 

@@ -412,6 +412,7 @@
                             @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             {{$log['entity']['display_name_ar']}}
+                            &nbsp;<a href="{{$log['entity']['base_url']}}">{{$log['name']}}</a>
                             @else
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             @endif
