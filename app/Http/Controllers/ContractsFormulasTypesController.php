@@ -44,9 +44,9 @@ class ContractsFormulasTypesController extends Controller
         $filename = 'formulasTypes'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];
-        Excel::store(new FormulasTypesExport($ids),$filepath.$filename);
-        return response()->json($PathForJson.$filename);
-    }
+            Excel::store(new FormulasTypesExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        }
         else{
         Excel::store((new FormulasTypesExport()),$filepath.$filename);
         return response()->json($PathForJson.$filename); 
@@ -73,10 +73,11 @@ class ContractsFormulasTypesController extends Controller
         $main = new Formula_Contract_Types;
         $main->name= $request->main;
         $main->save();
+
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
     }
 
-        public function store_sub(Request $request)
+    public function store_sub(Request $request)
     {
         $tab="tab";
         switch ($request->input('action')) {
