@@ -60,7 +60,7 @@ class LoginController extends Controller
                     $u=Users::find(Auth::user()->id);
                     $u->last_login=date('Y-m-d H:i:s');
                     $u->save();
-                    Helper::add_log(1,12,Auth::user()->id);
+                    Helper::add_log(1,16,Auth::user()->id);
                     return redirect('/');  
                 }
             }
