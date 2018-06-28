@@ -423,6 +423,15 @@
                             @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             {{$log['entity']['display_name_ar']}}
+                            @if($log['item_id'] == NUll)
+                            &nbsp;<a href="#">
+                            @if($log['name'] == '' || $log['name'] == NULL )
+                            اضغط هنا 
+                            @else
+                            {{$log['name']}}
+                            @endif
+                            </a>
+                            @else
                             &nbsp;<a href="{{$log['entity']['base_url']}}">
                             @if($log['name'] == '' || $log['name'] == NULL )
                             اضغط هنا 
@@ -430,6 +439,7 @@
                             {{$log['name']}}
                             @endif
                             </a>
+                            @endif
                             @else
                             &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
                             @endif
