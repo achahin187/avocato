@@ -189,8 +189,10 @@ class Helper {
         $entity= Entities::find($entity_id);
         $model=$entity->model_name;
         // dd($model);
-       
-        $item=($model)::find($item_id);
+
+        $item=$model::find($item_id);
+        dd($item);
+        
         if($entity_id == 13)
         $name=$item->code;
         else
