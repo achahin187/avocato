@@ -76,6 +76,12 @@ class LoginController extends Controller
         // Redirect home page
     }
 
+    public function logout(Request $request) {
+        Helper::add_log(2,16,Auth::user()->id);
+        Auth::logout();
+        return redirect('/'); 
+    }
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
