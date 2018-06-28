@@ -187,7 +187,42 @@ class UsersListController extends Controller
     public function show($id)
     {
         $data['user']=Users::find($id);
-        $logs=Log::with('user')->with('actions')->with('entity')->get();
+        $logs=Log::with('user')->with('actions')->with('entity')->orderBy('created_at','desc')->get();
+        if(Helper::is_dataentry_customer($id))
+        {
+            foreach($logs as $key => $log)
+            {
+                if($log['created_by'] != $id)
+                {
+                    
+                    unset($logs[$key]);
+                }
+            }
+        }
+        // dd(Helper::is_dataentry_customer($id));
+        // else if(Helper::is_admin_superadmin($id))
+        // {
+            
+        // }
+        foreach($logs as $log)
+        {
+            $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
+            if(substr($log['entity']['base_url'], -1) == '/')
+            $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+            else
+            $log['entity']['base_url']=url('/').$log['entity']['base_url'];
+        }
+        $data['logs']=$logs;
+        //  dd($data['logs']);
+        return view('users.user_profile',$data);
+    }
+    public function filter_logs(Request $request , $id)
+    {
+        $data['user']=Users::find($id);
+        $logs=Log::where(function($q)use($request){
+            $q->where('created_at','>=',date('Y-m-d h:s:i',strtotime($request['from'])))
+              ->where('created_at','<=',date('Y-m-d h:s:i',strtotime($request['to'])));
+        })->with('user')->with('actions')->with('entity')->orderBy('created_at','desc')->get();
         if(Helper::is_dataentry_customer($id))
         {
             foreach($logs as $key => $log)
