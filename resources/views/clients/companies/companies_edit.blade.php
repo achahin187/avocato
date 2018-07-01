@@ -60,7 +60,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label" for="password">كلمة المرور</label>
-            <input name="password" value="{{ $company->client_password ? $company->client_password->password : $company->password }}" class="master_input" type="text" placeholder="كلمة المرور .." id="password">
+            <input name="password" value="{{ $password }}" class="master_input" type="text" placeholder="كلمة المرور .." id="password">
               {{--  Error  --}}
               @if ($errors->has('password'))
                 <span class="master_message color--fadegreen">{{ $errors->first('password') }}</span>
@@ -132,7 +132,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_tel">رقم الهاتف</label>
-            <input name="phone" value="{{ $company->phone }}" class="master_input" type="number" placeholder="رقم الهاتف" id="comp_tel">
+            <input name="phone" value="{{ $company->phone }}" class="master_input" type="number" placeholder="رقم الهاتف" id="comp_tel" min="0">
             {{--  Error  --}}
             @if ($errors->has('phone'))
             <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>
@@ -144,7 +144,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_mob">رقم الهاتف الجوال</label>
-            <input name="mobile" value="{{ $company->mobile }}" class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="comp_mob">
+            <input name="mobile" value="{{ $company->mobile }}" class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="comp_mob" min="0">
             {{--  Error  --}}
             @if ($errors->has('mobile'))
               <span class="master_message color--fadegreen">{{ $errors->first('mobile') }}</span>
@@ -158,9 +158,9 @@
             <label class="master_label mandatory" for="fax_num">رقم الفاكس</label>
             
             @if ($company->user_company_detail)
-              <input name="fax" value="{{ $company->user_company_detail->fax }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num">
+              <input name="fax" value="{{ $company->user_company_detail->fax }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num" min="0">
             @else
-              <input name="fax" value="{{ old('fax') }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num">
+              <input name="fax" value="{{ old('fax') }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num" min="0">
             @endif
             
             {{--  Error  --}}
@@ -221,9 +221,9 @@
           <div class="master_field">
             <label class="master_label mandatory" for="rep_tel">رقم تليفون الممثل القانونى للشركة</label>
             @if ($company->user_company_detail)
-              <input name="legal_representative_mobile" value="{{ $company->user_company_detail->legal_representative_mobile }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel">
+              <input name="legal_representative_mobile" value="{{ $company->user_company_detail->legal_representative_mobile }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel" min="0">
             @else
-              <input name="legal_representative_mobile" value="{{ old('legal_representative_mobile') }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel">
+              <input name="legal_representative_mobile" value="{{ old('legal_representative_mobile') }}" class="master_input" type="number" placeholder="رقم تليفون الممثل القانونى للشركة" id="rep_tel" min="0">
             @endif
             
             {{--  Error  --}}
@@ -261,7 +261,7 @@
         <div class="col-xs-3">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ $company->user_detail->discount_percentage }}" class="master_input" type="number" placeholder="%" id="discount">
+            <input name="discount_percentage" value="{{ $company->user_detail->discount_percentage }}" class="master_input" type="number" placeholder="%" id="discount" min="0">
             {{--  Error  --}}
             @if ($errors->has('discount_percentage'))
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>
@@ -349,7 +349,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-            <input name="subscription_value" value="{{ $company->subscription ? $company->subscription->value : 0 }}" class="master_input" type="number" placeholder="قيمة التعاقد" id="license_fees">
+            <input name="subscription_value" value="{{ $company->subscription ? $company->subscription->value : 0 }}" class="master_input" type="number" min="0" placeholder="قيمة التعاقد" id="license_fees" min="0">
             {{--  Error  --}}
             @if ($errors->has('subscription_value'))
               <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>

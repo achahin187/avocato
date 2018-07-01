@@ -383,11 +383,13 @@
                     </div><span class="mainseparator bgcolor--main"></span>
                   </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                   <form action="{{ route('filter_logs',$user->id) }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                   {{ csrf_field() }}
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label" for="from">من</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="من" id="from">
+                          <input class="datepicker master_input" type="text" placeholder="من" id="from" name='from' required>
                         </div><span class="master_message color--fadegreen">message</span>
                       </div>
                     </div>
@@ -395,22 +397,58 @@
                       <div class="master_field">
                         <label class="master_label" for="to">الى</label>
                         <div class="bootstrap-timepicker">
-                          <input class="datepicker master_input" type="text" placeholder="الى" id="to">
+                          <input class="datepicker master_input" type="text" placeholder="الى" id="to" name='to' required>
                         </div><span class="master_message color--fadegreen">message</span>
                       </div>
+                      </div>
+                      <div class="col-md-2 col-sm-2 col-xs-2">
+                      <div class="master_field">
+                        
+                        <div class="bootstrap">
+                          <input class="button" type="submit" value="filter">
+                        </div>
+                      </div>
                     </div>
+                    </form>
                     <div class="clearfix"></div>
                     <ul class="log padding--nopadding">
+                    @foreach($logs as $log)
                       <li><i class="fa fa-user bgcolor--fadeblue color--white bradius--circle"></i>
-                        <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>&nbsp;
-                            منذ 5 دقائق</span>
+                        <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>
+                        {{$log->created_at}}</span>
                           <h3 class="log-header no-border margin--nomargin color--main_l padding--medium">
-                            اضاف
-                            &nbsp;<a href="#">عميل جديد</a>
+                            قام المستخدم   
+                            {{$log['user']['name']}}
+                            بعمل
+                            @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
+                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            {{$log['entity']['display_name_ar']}}
+                            @if($log['item_id'] == NUll)
+                            &nbsp;<a href="#">
+                            @if($log['name'] == '' || $log['name'] == NULL )
+                            اضغط هنا 
+                            @else
+                            {{$log['name']}}
+                            @endif
+                            </a>
+                            @else
+                            &nbsp;<a href="{{$log['entity']['base_url']}}">
+                            @if($log['name'] == '' || $log['name'] == NULL )
+                            اضغط هنا 
+                            @else
+                            {{$log['name']}}
+                            @endif
+                            </a>
+                            @endif
+                            @else
+                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            @endif
+                            
                           </h3>
                         </div>
                       </li>
-                      <li><i class="fa fa-shopping-cart bgcolor--sec color--white bradius--circle"></i>
+                      @endforeach
+                      <!-- <li><i class="fa fa-shopping-cart bgcolor--sec color--white bradius--circle"></i>
                         <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>&nbsp;
                             20-10-2010</span>
                           <h3 class="log-header no-border margin--nomargin color--main_l padding--medium">
@@ -436,7 +474,7 @@
                             &nbsp;<a href="#">مصطفى محمود</a>
                           </h3>
                         </div>
-                      </li>
+                      </li> -->
                       <li><i class="fa fa-clock-o bgcolor--fadebrown color--white bradius--circle"></i></li>
                     </ul>
                   </div>

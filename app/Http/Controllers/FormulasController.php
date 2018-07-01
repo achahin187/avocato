@@ -13,6 +13,7 @@ use Excel;
 use Session;
 use App\Exports\FormulasExport;
 use Helper;
+use Auth;
 
 
 class FormulasController extends Controller
@@ -24,111 +25,101 @@ class FormulasController extends Controller
      */
     public function index()
     {
-        $data['contracts']=Formula_Contracts::all();
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
-        return view('formulas.formulas',$data);
+        $data['contracts'] = Formula_Contracts::all();
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        return view('formulas.formulas', $data);
     }
 
     public function create()
-    {   
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
-        return view('formulas.formulas_create',$data);
+    {
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        return view('formulas.formulas_create', $data);
     }
 
-    public function getSub(Request $request){
-        $subs= Formula_Contract_Types::where('parent_id', $request->id)->pluck('name', 'id');
+    public function getSub(Request $request)
+    {
+        $subs = Formula_Contract_Types::where('parent_id', $request->id)->pluck('name', 'id');
         return $subs;
-    } 
-    public function getSubs(Request $request){
-        $subs= Formula_Contract_Types::whereIn('parent_id',  $request->ids)->pluck('name', 'id');
+    }
+    public function getSubs(Request $request)
+    {
+        $subs = Formula_Contract_Types::whereIn('parent_id', $request->ids)->pluck('name', 'id');
         return $subs;
-    }    
+    }
 
     public function excel()
-    {  
-      $filepath ='public/excel/';
-      $PathForJson='storage/excel/';
-      $filename = 'formulas'.time().'.xlsx';
-      if(isset($_GET['ids'])){
-       $ids = $_GET['ids'];
-       Excel::store(new FormulasExport($ids),$filepath.$filename);
-       return response()->json($PathForJson.$filename);
-     }
-     elseif ($_GET['filters']!='') {
-      $filters = json_decode($_GET['filters']);
-      Excel::store((new FormulasExport($filters)),$filepath.$filename);
-      return response()->json($PathForJson.$filename); 
-    }
-    else{
-      Excel::store((new FormulasExport()),$filepath.$filename);
-      return response()->json($PathForJson.$filename); 
-    }
+    {
+        $filepath = 'public/excel/';
+        $PathForJson = 'storage/excel/';
+        $filename = 'formulas' . time() . '.xlsx';
+        if (isset($_GET['ids'])) {
+            $ids = $_GET['ids'];
+            Excel::store(new FormulasExport($ids), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } elseif ($_GET['filters'] != '') {
+            $filters = json_decode($_GET['filters']);
+            Excel::store((new FormulasExport($filters)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } else {
+            Excel::store((new FormulasExport()), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        }
 
     }
 
 
 
-    public function filter(Request $request){
+    public function filter(Request $request)
+    {
         /* date_to make H:i:s = 23:59:59 to avoid two problems
             one : when select same date
             second : when juse select date_to
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
-             */
-        $data['contracts'] = Formula_Contracts::where(function($q) use($request){
-            $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
-            $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
-            if($request->filled('date_from') && $request->filled('date_to') )
-            {
+         */
+        $data['contracts'] = Formula_Contracts::where(function ($q) use ($request) {
+            $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
+            $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
+            if ($request->filled('date_from') && $request->filled('date_to')) {
                 $q->whereBetween('created_at', array($date_from, $date_to));
-            }
-            elseif($request->filled('date_from'))
-            {
-                $q->where('created_at','>=',$date_from);
-            }
-            elseif($request->filled('date_to'))
-            {
-                $q->where('created_at','<=',$date_to);
+            } elseif ($request->filled('date_from')) {
+                $q->where('created_at', '>=', $date_from);
+            } elseif ($request->filled('date_to')) {
+                $q->where('created_at', '<=', $date_to);
             }
 
-            if($request->has('subs'))
-            {
-             $q->whereHas('sub',function($q) use($request){
-                $q->whereIn('id',$request->subs);
+            if ($request->has('subs')) {
+                $q->whereHas('sub', function ($q) use ($request) {
+                    $q->whereIn('id', $request->subs);
 
-                $q->whereHas('parent',function($q)use($request){
-                    $q->whereIn('id',$request->mains);
+                    $q->whereHas('parent', function ($q) use ($request) {
+                        $q->whereIn('id', $request->mains);
+                    });
+
                 });
+            } elseif ($request->has('mains')) {
+                $q->whereHas('sub', function ($q) use ($request) {
+                    $q->whereHas('parent', function ($q) use ($request) {
+                        $q->whereIn('id', $request->mains);
+                    });
 
-            });  
-         }
-         elseif($request->has('mains'))
-         {
-             $q->whereHas('sub',function($q) use($request){       
-                 $q->whereHas('parent',function($q)use($request){
-                    $q->whereIn('id',$request->mains);
                 });
-
-             });  
-         }
+            }
 
 
-     })->get();
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
-        foreach($data['contracts'] as $contract)
-        {
-            $filter_ids[]=$contract->id;
+        })->get();
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        foreach ($data['contracts'] as $contract) {
+            $filter_ids[] = $contract->id;
         }
-                if(!empty($filter_ids))
-        {
-                Session::flash('filter_ids',$filter_ids);
+        if (!empty($filter_ids)) {
+            Session::flash('filter_ids', $filter_ids);
+        } else {
+            $filter_ids[] = 0;
+            Session::flash('filter_ids', $filter_ids);
         }
-        else{
-            $filter_ids[]=0;
-            Session::flash('filter_ids',$filter_ids);
-        }
-        return view('formulas.formulas',$data);
-        
+        return view('formulas.formulas', $data);
+
     }
 
 
@@ -148,31 +139,32 @@ class FormulasController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'contract_name'=>'required',
-            'mains'=>'required',
-            'subs'=>'required',
-            'is_contract'=>'required',
-            'file'=>'required|mimes:pdf',
+            'contract_name' => 'required',
+            'mains' => 'required',
+            'subs' => 'required',
+            'is_contract' => 'required',
+            'file' => 'required|mimes:pdf',
         ]);
 
         if ($validator->fails()) {
             return redirect('formulas_create')
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         $formula = new Formula_Contracts;
-        $formula->name= $request->contract_name;
+        $formula->name = $request->contract_name;
         $formula->formula_contract_types_id = $request->subs;
-        $formula->is_contract=$request->is_contract;
-        if($request->hasFile('file')){
-            $destinationPath='contracts';
-            $fileNameToStore=$destinationPath.'/'.$request->contract_name.time().rand(111,999).'.'.Input::file('file')->getClientOriginalExtension();
+        $formula->is_contract = $request->is_contract;
+        if ($request->hasFile('file')) {
+            $destinationPath = 'contracts';
+            $fileNameToStore = $destinationPath . '/' . $request->contract_name . time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
             // dd($fileNameToStore);
-            Input::file('file')->move($destinationPath,$fileNameToStore);
+            Input::file('file')->move($destinationPath, $fileNameToStore);
         }
-        $formula->file= $fileNameToStore;
+        $formula->file = $fileNameToStore;
         $formula->save();
-        return redirect()->route('formulas_create')->with('success','تمت الإضافه');
+        Helper::add_log(3, 17, $formula->id);
+        return redirect()->route('formulas_create')->with('success', 'تمت الإضافه');
 
     }
 
@@ -194,10 +186,10 @@ class FormulasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
-        $data['contract']=Formula_Contracts::find($id);
-        return view('formulas.formulas_edit',$data);
+    {
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['contract'] = Formula_Contracts::find($id);
+        return view('formulas.formulas_edit', $data);
     }
 
     /**
@@ -210,37 +202,37 @@ class FormulasController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'contract_name'=>'required',
-            'mains'=>'required',
-            'subs'=>'required',
-            'is_contract'=>'required',
-            'file'=>'mimes:pdf',
+            'contract_name' => 'required',
+            'mains' => 'required',
+            'subs' => 'required',
+            'is_contract' => 'required',
+            'file' => 'mimes:pdf',
         ]);
 
         if ($validator->fails()) {
             return redirect('formulas_create')
-            ->withErrors($validator)
-            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
         $formula = Formula_Contracts::find($id);
-        $formula->name= $request->contract_name;
+        $formula->name = $request->contract_name;
         $formula->formula_contract_types_id = $request->subs;
-        $formula->is_contract=$request->is_contract;
-        if($request->hasFile('file')){
-            $destinationPath='contracts';
+        $formula->is_contract = $request->is_contract;
+        if ($request->hasFile('file')) {
+            $destinationPath = 'contracts';
             File::delete($formula->file);
-            $fileNameToStore = $destinationPath.'/'.$request->contract_name.time().rand(111,999).'.'.Input::file('file')->getClientOriginalExtension();
-            $destinationPath='contracts';
-            Input::file('file')->move($destinationPath,$fileNameToStore);
-        }
-        else{
-            $destinationPath='contracts';
-            $fileNameToStore = $destinationPath.'/'.$request->contract_name.time().rand(111,999).'.'.substr($formula->file, strrpos($formula->file, '.')+1);
+            $fileNameToStore = $destinationPath . '/' . $request->contract_name . time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
+            $destinationPath = 'contracts';
+            Input::file('file')->move($destinationPath, $fileNameToStore);
+        } else {
+            $destinationPath = 'contracts';
+            $fileNameToStore = $destinationPath . '/' . $request->contract_name . time() . rand(111, 999) . '.' . substr($formula->file, strrpos($formula->file, '.') + 1);
             rename(public_path($formula->file), public_path($fileNameToStore));
         }
-        $formula->file= $fileNameToStore;
+        $formula->file = $fileNameToStore;
         $formula->save();
-        return redirect()->route('formulas')->with('success','تم تعديل البيانات بنجاح');
+        Helper::add_log(4, 17, $formula->id);
+        return redirect()->route('formulas')->with('success', 'تم تعديل البيانات بنجاح');
 
     }
 
@@ -253,6 +245,7 @@ class FormulasController extends Controller
     public function destroy($id)
     {
         $formula = Formula_Contracts::find($id);
+        Helper::add_log(5, 17, $formula->id);
         File::delete($formula->file);
         $formula->delete();
     }
@@ -260,11 +253,11 @@ class FormulasController extends Controller
     public function destroy_all()
     {
         $ids = $_POST['ids'];
-        foreach($ids as $id)
-        {
+        foreach ($ids as $id) {
             $formula = Formula_Contracts::find($id);
+            Helper::add_log(5, 17, $formula->id);
             File::delete($formula->file);
             $formula->delete();
-        } 
+        }
     }
 }

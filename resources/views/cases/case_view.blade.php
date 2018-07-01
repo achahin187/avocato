@@ -583,7 +583,7 @@
                           <div class="clearfix"></div>
                         </div>
                       </li>
-                      <li class="tab__content_item">
+                      <li class="tab__content_item"> 
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="col-lg-12">
                             <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#new_investigation"><i class="fa fa-plus"></i><span>إضافة</span></a>
@@ -876,11 +876,11 @@
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
-                            </div>--}}
+                            </div>
                           </div>
                           <div class="clearfix"></div> 
                         </div>
-                      </li>
+                       --}}</li>
                     </ul>
                   </div>
                 </div>

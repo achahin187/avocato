@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
+Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::get('/', 'HomeController@index')->name('home');
 
@@ -90,6 +91,7 @@ Route::post('/users_list_destroy_post/{id}', 'UsersListController@destroyPost')-
 Route::post('/users_list_destroy_all', 'UsersListController@destroy_all')->name('users_list_destroy_all');
 Route::get('/users_list_excel', 'UsersListController@excel')->name('users_list_excel');
 Route::post('/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
+Route::post('/filter_logs/{id}', 'UsersListController@filter_logs')->name('filter_logs');
 
 });
 

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Users;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 
 class LoginController extends Controller
 {
@@ -59,12 +60,13 @@ class LoginController extends Controller
                     $u=Users::find(Auth::user()->id);
                     $u->last_login=date('Y-m-d H:i:s');
                     $u->save();
-                    
+                    Helper::add_log(1,16,Auth::user()->id);
                     return redirect('/');  
                 }
             }
+            // Helper::add_log(2,12,Auth::user()->id);
             Auth::logout();
-            return redirect()->back()->with('error','غير مسموح لك بالدخول');;
+            return redirect()->back()->with('error','غير مسموح لك بالدخول');
 
         }
         else{
@@ -72,6 +74,12 @@ class LoginController extends Controller
         }
         
         // Redirect home page
+    }
+
+    public function logout(Request $request) {
+        Helper::add_log(2,16,Auth::user()->id);
+        Auth::logout();
+        return redirect('/'); 
     }
 
     public function __construct()

@@ -15,4 +15,9 @@ class Entities extends Model
     {
         return $this->hasMany('App\Entity_Localizations','entity_id');
     }
+
+    public function entity()
+    {
+        return $this->hasMany('App\Log','entity_id');
+    }
 }

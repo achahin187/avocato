@@ -49,22 +49,18 @@ class NotificationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-      //      $send_date = Carbon::now()->timestamp;
-      //      $notification->created_at = Carbon::now()->timestamp;
-      
-    $validator = Validator::make($request->all(), [
-        'package_type'=>'required',
-        'date'=>'required',
-        'notification'=>'required',
-      ]);
-      if ($validator->fails()) {
-        return redirect('notifications#add_notification')->withErrors($validator)
-        ->withInput();
-      }
-      $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-      $packages = implode(',', $request->package_type);
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'package_type'=>'required',
+            'date'=>'required',
+            'notification'=>'required',
+        ]);
+        if ($validator->fails()) {
+          return redirect('notifications#add_notification')->withErrors($validator)
+          ->withInput();
+        }
+        $send_date = date('Y-m-d H:i:s',strtotime($request->date));
+        $packages = implode(',', $request->package_type);
       
         $notification = new Notification_Schedules;
         $notification->msg = $request->notification;
@@ -77,14 +73,14 @@ class NotificationsController extends Controller
       
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
-        foreach($subs as $sub){
+        foreach($subs as $sub) {
             $user = $sub->user;
-            if(!empty($user->id)) {
+            if(!empty($user->id) && !empty($user->device_token)) {
                 $notification = new Notifications;
                 $notification->msg = $request->notification;
                 $notification->schedule = $send_date;
                 $notification->notification_type_id=1;
-                $notification->is_sent=0;
+                $notification->is_sent = 0;
                 $notification->user_id = $user->id;
                 $notification->created_at = date('Y-m-d H:i:s');
                 $notification->packages = $packages;
@@ -221,7 +217,7 @@ class NotificationsController extends Controller
         })->get();
         foreach($notifications as $notification) {
             $user = $notification->user;
-            if(!empty($notification->user_id)) {    
+            if(!empty($notification->user_id) && !empty($user->device_token)) {    
                 $push = new Notifications_Push;
                 $push->notification_id = $notification->id;
                 $push->device_token  = $user->device_token;
@@ -292,56 +288,40 @@ class NotificationsController extends Controller
         return $result;
     }
     public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
-        // Put your private key's passphrase here:
-        $passphrase = '12345';
-        $production = 0;
-        $url = "avocatoapp.com";
+        $body['aps'] = array(
+            'alert' => $message,
+            'badge' => 18,
+            'category' => 'profile',
+            'sender' => 'Avocatoapp',
+            'notification_type' => $notification_type_id,
+            'item_id' => $item_id,
+            'sound' => 'default'
+        );
 
-        if (!$message || !$url)
-            exit('Example Usage: $php newspush.php \'Breaking News!\' \'https://raywenderlich.com\'' . "\n");
-            ////////////////////////////////////////////////////////////////////////////////
-            $ctx = stream_context_create();
-            stream_context_set_option($ctx, 'ssl', 'local_cert',  public_path('PushDev.pem'));
-            stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-            // Open a connection to the APNS server
-            if($production){
-                $gateway = 'ssl://gateway.push.apple.com:2195';
-            } else {
-                $gateway = 'ssl://gateway.sandbox.push.apple.com:2195';
-            }
-            $fp = stream_socket_client($gateway, $err,$errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
-            //'ssl://gateway.push.apple.com:2195'
-            //'ssl://gateway.sandbox.push.apple.com:2195'
-            if (!$fp)
+        //Server stuff
+        $passphrase = 'ss';
+        $ctx = stream_context_create();
+        stream_context_set_option($ctx, 'ssl', 'local_cert', 'SecurePush.pem');
+        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
+
+        $fp = stream_socket_client(
+                'ssl://gateway.push.apple.com:2195', $err,
+                $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+        if (!$fp)
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
-            echo 'Connected to APNS' . PHP_EOL;
-            // Create the payload body
-            $body['aps'] = array(
-                'alert' => $message,
-                'notification_type' => $notification_type_id,
-                'item_id' => $item_id,
-                'sound' => 'default',
-                'badge' => '1'
-            );
-            // Encode the payload as JSON
-            $payload = json_encode($body);
-            // Build the binary notification
-//            dd($deviceToken);
-            $msg = chr(0) .
-                    pack('n', 32) .
-                    pack('H*', $deviceToken) . 
-                    pack('n', strlen($payload)) . 
-                    $payload;
-//            $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-            // Send it to the server
-            $result = fwrite($fp, $msg, strlen($msg));
-            if (!$result)
-              echo 'Message not delivered' . PHP_EOL;
-            else
-              echo 'Message successfully delivered' . PHP_EOL;
-            // Close the connection to the server
-            fclose($fp);
-	}
+        echo 'Connected to APNS' . PHP_EOL;
+        $payload = json_encode($body);
+        // Build the binary notification
+        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
+        // Send it to the server
+        $result = fwrite($fp, $msg, strlen($msg));
+        if (!$result)
+                echo 'Message not delivered' . PHP_EOL;
+        else
+                echo 'Message successfully delivered' . PHP_EOL;
+
+        fclose($fp);
+    }
     public function pushIOSP12($deviceToken) {
         //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
         $passphrase = '';

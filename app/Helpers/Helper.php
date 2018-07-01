@@ -6,7 +6,10 @@ use App\Entities;
 use App\Users;
 use App\Case_;
 use App\Tasks;
+use App\Log;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
 
 class Helper {
 
@@ -179,5 +182,66 @@ class Helper {
             $msg->from(['info@avocatoapp.net']); 
 
           });
+    }
+
+    public static function add_log($action_id , $entity_id , $item_id)
+    {
+        
+        if($action_id == 1 || $action_id == 2)
+        {
+            $name='';
+        }
+        else
+        {
+            $entity= Entities::find($entity_id);
+            $model=$entity->model_name;
+            // dd($model);
+           
+            $item=($model)::find($item_id);
+            if($entity_id == 13)
+            $name=$item->code;
+            else
+            $name=$item->name;
+        }
+        if($action_id == 5)
+        {
+            Log::where('item_id',$item_id)->delete();
+            $item_id=null;
+        }
+        Log::create([
+            'action_id'=>$action_id,
+            'name'=>$name,
+            'entity_id'=>$entity_id,
+            'item_id'=>$item_id,
+            'created_at'=>Carbon::now()->format('Y-m-d H:i:s'),
+        	'created_by'=>\Auth::user()->id
+        ]);
+    }
+
+    public static function is_dataentry_customer($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+        // dd($rule->id);
+           if($rule->id == 3 || $rule->id == 4)
+           {
+               
+               return true;
+           }
+       }
+       return false;
+    }
+    public static function is_admin_superadmin($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 1 || $rule->id == 2)
+           {
+               return true;
+           }
+       }
+       return false;
     }
 }
