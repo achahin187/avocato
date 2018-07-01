@@ -129,7 +129,7 @@ return redirect()->route('tasks_emergency');
             ]);
              $notification_push=Notifications_Push::create([
                 "notification_id"=>$notification->id,
-                "device_token"=>$user->device_token,
+                "device_token"=>$user->device_token ,
                 "mobile_os"=>$user->mobile_os,
                 "lang_id"=>$user->lang_id,
                 "user_id"=>$request['lawyer_id']
@@ -148,7 +148,7 @@ return redirect()->route('tasks_emergency');
             ]);
              $notification_push=Notifications_Push::create([
                 "notification_id"=>$notification_client->id,
-                "device_token"=>$client->device_token,
+                "device_token"=>$client->device_token ,
                 "mobile_os"=>$client->mobile_os,
                 "lang_id"=>$client->lang_id,
                 "user_id"=>$task->client_id

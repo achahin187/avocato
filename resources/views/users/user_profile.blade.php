@@ -413,6 +413,7 @@
                     <div class="clearfix"></div>
                     <ul class="log padding--nopadding">
                     @foreach($logs as $log)
+                    
                       <li><i class="fa fa-user bgcolor--fadeblue color--white bradius--circle"></i>
                         <div class="log-item padding--nopadding color--gary_d"><span class="time padding--medium"><i class="fa fa-clock-o"></i>
                         {{$log->created_at}}</span>

@@ -200,7 +200,7 @@ class UsersListController extends Controller
         //  dd($data['logs']);
         return view('users.user_profile', $data);
     }
-    
+
     public function filter_logs(Request $request, $id)
     {
         $data['user'] = Users::find($id);
