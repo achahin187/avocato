@@ -421,14 +421,14 @@
                             {{$log['user']['name']}}
                             بعمل
                             @if($log['action_id'] == 3 || $log['action_id'] == 4 || $log['action_id'] == 5)
-                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
-                            {{$log['entity']['display_name_ar']}}
+                            &nbsp;<a href="#">{{ str_limit($log['actions']['name_ar'], 100) }}</a>
+                            {{ str_limit($log['entity']['display_name_ar'],  100) }}
                             @if($log['item_id'] == NUll)
                             &nbsp;<a href="#">
                             @if($log['name'] == '' || $log['name'] == NULL )
                             اضغط هنا 
                             @else
-                            {{$log['name']}}
+                            {{ str_limit($log['name'],  100) }}
                             @endif
                             </a>
                             @else
@@ -436,12 +436,12 @@
                             @if($log['name'] == '' || $log['name'] == NULL )
                             اضغط هنا 
                             @else
-                            {{$log['name']}}
+                            {{ str_limit($log['name'],  100) }}
                             @endif
                             </a>
                             @endif
                             @else
-                            &nbsp;<a href="#">{{$log['actions']['name_ar']}}</a>
+                            &nbsp;<a href="#">{{ str_limit($log['actions']['name_ar'],  100) }}</a>
                             @endif
                             
                           </h3>

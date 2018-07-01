@@ -263,12 +263,12 @@ class NewsListController extends Controller
         $news = News::find($id);        // find this news
         if($news->photo) {
             $image_path = $news->photo;     // image path
+            // check if image exists then delete it
+            if (File::exists(public_path($image_path)) && $image_path != NULL) {
+                File::delete(public_path($image_path));
+            }
         }
 
-        // check if image exists then delete it
-        if (File::exists(public_path($image_path))) {
-            File::delete(public_path($image_path));
-        }
 
         Helper::add_log(5, 18, $news->id);
 
@@ -286,14 +286,25 @@ class NewsListController extends Controller
      */
     public function destroySelected(Request $request)
     {
-        // get cities IDs from AJAX
         $ids = explode(",", $request->ids);
 
         foreach($ids as $id) {
             Helper::add_log(5, 18, $id);
+
+            $news = News::find($id);        // find this news
+            if($news->photo) {
+                $image_path = $news->photo;     // image path
+
+                // check if image exists then delete it
+                if (File::exists(public_path($image_path)) && $image_path != NULL) {
+                    File::delete(public_path($image_path));
+                }
+            }
+
+            // delete this record
+            $news->delete();
         }
-        // transform $ids into array values then search and delete
-        News::whereIn('id', $ids)->delete();
+
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
