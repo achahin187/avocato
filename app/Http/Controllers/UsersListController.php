@@ -197,6 +197,7 @@ class UsersListController extends Controller
                 if($log['created_by'] != $id)
                 {
                     
+
                     unset($logs[$key]);
                 }
                
@@ -207,30 +208,23 @@ class UsersListController extends Controller
         // {
             
         // }
-        // foreach($logs as $log)
-        // {
-        //     // echo '2';
-        //     $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
-        //     $last=substr($log['entity']['base_url'], -1);
-        //     if( $last == '/')
-        //     {
-        //         //  echo($log['item_id']);
-        //         //  echo url('/');
-        //         $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
-        //         // dd($log['entity']['base_url']);
-        //     }
-        //     else
-        //     {
-        //         // echo '1';
-        //         $log['entity']['base_url']=url('/').$log['entity']['base_url'];
-        //     }
-        //     //  dd($log['entity']);
-        // }
+
         $data['logs']=$logs;
+
+        // foreach ($logs as $log) {
+        //     $log['created_at'] = Carbon::parse($log->created_at)->diffForHumans();
+        //     if (substr($log['entity']['base_url'], -1) == '/')
+        //         $log['entity']['base_url'] = $log['entity']['base_url'] . $log['item_id'];
+        //     else
+        //         $log['entity']['base_url'] = $log['entity']['base_url'];
+        // }
+        // $data['logs'] = $logs;
+
         //  dd($data['logs']);
-        return view('users.user_profile',$data);
+        return view('users.user_profile', $data);
     }
-    public function filter_logs(Request $request , $id)
+
+    public function filter_logs(Request $request, $id)
     {
         $data['user']=Users::find($id);
         $logs=Log::where(function($q)use($request){
@@ -256,6 +250,7 @@ class UsersListController extends Controller
                 if($log['created_by'] != $id)
                 {
                     
+
                     unset($logs[$key]);
                 }
                
