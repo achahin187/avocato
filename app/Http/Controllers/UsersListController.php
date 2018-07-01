@@ -176,7 +176,7 @@ class UsersListController extends Controller
     {
         $data['user']=Users::find($id);
         $logs=Log::with('user')->with('actions')->with('entity')->orderBy('created_at','desc')->get();
-        if(Helper::is_dataentry_customer($id))
+        // if(Helper::is_dataentry_customer($id))
         {
             foreach($logs as $key => $log)
             {
@@ -194,11 +194,21 @@ class UsersListController extends Controller
         // }
         foreach($logs as $log)
         {
+            // echo '2';
             $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
+           
             if(substr($log['entity']['base_url'], -1) == '/')
-            $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+            {
+                //  echo url('/');
+                $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+                // dd($log['entity']['base_url']);
+            }
             else
-            $log['entity']['base_url']=url('/').$log['entity']['base_url'];
+            {
+                // echo '1';
+                $log['entity']['base_url']=url('/').$log['entity']['base_url'];
+            }
+            // dd($log['entity']);
         }
         $data['logs']=$logs;
         //  dd($data['logs']);
