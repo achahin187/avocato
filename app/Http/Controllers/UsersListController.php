@@ -176,8 +176,7 @@ class UsersListController extends Controller
     {
         $data['user']=Users::find($id);
         $logs=Log::with('user')->with('actions')->with('entity')->orderBy('created_at','desc')->get();
-        //  if(Helper::is_dataentry_customer($id))
-        {
+        
             foreach($logs as $key => $log)
             {
                 $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
@@ -202,25 +201,10 @@ class UsersListController extends Controller
                 }
                
             }
-        }
-        // dd(Helper::is_dataentry_customer($id));
-        // else if(Helper::is_admin_superadmin($id))
-        // {
-            
-        // }
+        
 
         $data['logs']=$logs;
 
-        // foreach ($logs as $log) {
-        //     $log['created_at'] = Carbon::parse($log->created_at)->diffForHumans();
-        //     if (substr($log['entity']['base_url'], -1) == '/')
-        //         $log['entity']['base_url'] = $log['entity']['base_url'] . $log['item_id'];
-        //     else
-        //         $log['entity']['base_url'] = $log['entity']['base_url'];
-        // }
-        // $data['logs'] = $logs;
-
-        //  dd($data['logs']);
         return view('users.user_profile', $data);
     }
 
