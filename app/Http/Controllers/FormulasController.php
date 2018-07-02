@@ -189,6 +189,12 @@ class FormulasController extends Controller
     {
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         $data['contract'] = Formula_Contracts::find($id);
+
+        if( $data['contract'] == NULL ) {
+            Session::flash('warning', 'العقد او الصيغة غير موجود');
+            return redirect('/formulas');
+        } 
+
         return view('formulas.formulas_edit', $data);
     }
 

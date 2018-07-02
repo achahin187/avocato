@@ -175,6 +175,12 @@ class UsersListController extends Controller
     public function show($id)
     {
         $data['user'] = Users::find($id);
+
+        if( $data['user'] == NULL ) {
+            Session::flash('warning', 'المستخدم غير موجود');
+            return redirect('/users_list');
+        } 
+
         $logs = Log::with('user')->with('actions')->with('entity')->orderBy('created_at', 'desc')->get();
         if (Helper::is_dataentry_customer($id)) {
             foreach ($logs as $key => $log) {
@@ -242,6 +248,12 @@ class UsersListController extends Controller
     public function edit($id)
     {
         $data['user'] = Users::find($id);
+
+        if( $data['user'] == NULL ) {
+            Session::flash('warning', 'المستخدم غير موجود');
+            return redirect('/users_list');
+        } 
+
         $data['roles'] = Rules::where('parent_id', 13)->get();
         return view('users.users_list_edit', $data);
     }

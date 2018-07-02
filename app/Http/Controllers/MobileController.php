@@ -138,6 +138,13 @@ class MobileController extends Controller
     public function show($id)
     {
         $data['user'] = Users::find($id);
+
+        // redirect to home page if user is not found
+        if( $data['user'] == NULL ) {
+            Session::flash('warning', 'المستخدم غير موجود');
+            return redirect('/mobile');
+        }
+
         $data['packages'] = Entity_Localizations::where('field','name')->where('entity_id',1)->get();
         $data['cases'] = Case_Client::where('client_id', $id)->get();
 

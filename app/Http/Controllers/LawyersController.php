@@ -280,6 +280,12 @@ class LawyersController extends Controller
     //       return $s;
 
     $data['lawyer'] = Users::find($id);
+
+    if( $data['lawyer'] == NULL ) {
+      Session::flash('warning', 'العقد او الصيغة غير موجود');
+      return redirect('/lawyers');
+    } 
+
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     Date::setLocale('ar');
     $tasks = Tasks::where('assigned_lawyer_id', $id)->get();
@@ -344,6 +350,12 @@ class LawyersController extends Controller
   public function edit($id)
   {
     $data['lawyer'] = Users::find($id);
+
+    if( $data['lawyer'] == NULL ) {
+      Session::flash('warning', 'العقد او الصيغة غير موجود');
+      return redirect('/lawyers');
+    } 
+    
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     return view('lawyers.lawyers_edit', $data);

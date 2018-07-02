@@ -28,6 +28,12 @@
       <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
     @endif
   </div>
+
+  <div class="col-lg-12">
+    @if (Session::has('warning'))
+      <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+    @endif
+  </div>
   {{-- End alert --}}
 
   <div class="col-lg-12">

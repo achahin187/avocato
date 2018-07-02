@@ -72,8 +72,16 @@ class ComplainsController extends Controller
      */
     public function edit($id)
     {
+        $feedback = Feedback::find($id);
+
+        // redirect to home page if user is not found
+        if( $feedback == NULL ) {
+            Session::flash('warning', 'الخبر غير موجود');
+            return redirect('/complains');
+        }
+
         \Carbon\Carbon::setLocale('ar');
-        return view('clients.complains.complains_edit')->with('complain', Feedback::find($id));
+        return view('clients.complains.complains_edit')->with('complain', $feedback);
     }
 
     /**
