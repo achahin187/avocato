@@ -119,6 +119,7 @@ class ComplainsController extends Controller
             }
             $notification_type=Notification_Types::find(10);
             $user=Users::find($feedback->user_id);
+            dd($user);
             $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
                 "entity_id"=>15,
