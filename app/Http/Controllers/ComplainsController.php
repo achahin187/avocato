@@ -118,7 +118,10 @@ class ComplainsController extends Controller
                $mail=Helper::mail($to,$request->newReply); 
             }
             $notification_type=Notification_Types::find(10);
-            $user=Users::find($feedback->user_id);
+            if($feedback->user_id != 0 && $feedback->user_id != NULL )
+            {
+                 $user=Users::find($feedback->user_id);
+            // dd($user);
             $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
                 "entity_id"=>15,
@@ -136,6 +139,8 @@ class ComplainsController extends Controller
                 "lang_id"=>$user->lang_id,
                 "user_id"=>$id
             ]);
+            }
+           
         
 
         } catch ( Exception $ex ) {
