@@ -26,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->setRightToLeft(true);
         });
 
+        Sheet::macro('Center', function (Sheet $sheet) {
+            $sheet->getDelegate()->getPageSetup()->setHorizontalCentered(true);
+            $sheet->getDelegate()->getPageSetup()->setVerticalCentered(false);
+        });
+
         $notes = Notifications::whereIn('notification_type_id',[2,3,4,5,6,7])->where(function ($query) {
              $query->where('is_read', '=', 0)->orWhere(function ($query){
                 $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));

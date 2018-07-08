@@ -9,8 +9,10 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ClientsExport implements FromCollection,WithEvents
+
+class ClientsExport implements FromCollection,WithEvents,ShouldAutoSize
 {
     use Exportable, RegistersEventListeners;
     public function __construct($ids=null, $rule=8){
@@ -54,8 +56,8 @@ public  function collection()
                                 $user->address ? $user->address : 'غير معرف',
                                 $user->mobile ? $user->mobile : 'غير معرف',
                                 $user->subscription ? Helper::localizations('package_types', 'name', $user->subscription->package_type_id) : 'غير معرف',
-                                $user->subscription ? $user->subscription->start_date->format('d/m/Y') : 'غير معرف',
-                                $user->subscription ? $user->subscription->end_date->format('d/m/Y') : 'غير معرف',
+                                $user->subscription ? ( $user->subscription->start_date ? $user->subscription->start_date->format('d/m/Y') : '') : '',
+                                $user->subscription ? ( $user->subscription->end_date   ? $user->subscription->end_date->format('d/m/Y') : '') : '',
                                 $user->is_active ? 'فعال' : 'غير فعال'
                             ]);
     }

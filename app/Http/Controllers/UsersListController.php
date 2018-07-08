@@ -128,13 +128,13 @@ class UsersListController extends Controller
         $validator = Validator::make($request->all(), [
             'user_name' => 'required|between:3,20|unique:users,name',
             'full_name' => 'required|between:3,100',
-            'role' => 'required',
-            'email' => 'required|email|max:40',
-            'phone' => 'required|digits_between:1,10',
-            'mobile' => 'required|digits_between:1,12',
-            'password' => 'required|between:3,8|same:confirm_password',
-            'confirm_password' => 'required|between:3,8|same:confirm_password',
-            'image' => 'image|mimes:jpg,jpeg,png|max:1024',
+            'role'      => 'required',
+            'email'     => 'required|email|max:40',
+            'phone'     => 'required|digits_between:1,10',
+            'mobile'    => 'required|digits_between:1,12',
+            'password'  => 'required|between:3,8|same:confirm_password',
+            'confirm_password'      => 'required|between:3,8|same:confirm_password',
+            'image'     => 'image|mimes:jpg,jpeg,png|max:1024',
         ]);
 
         if ($validator->fails()) {
@@ -176,75 +176,65 @@ class UsersListController extends Controller
     {
         $data['user'] = Users::find($id);
 
-        if( $data['user'] == NULL ) {
+        if ($data['user'] == null) {
             Session::flash('warning', 'المستخدم غير موجود');
             return redirect('/users_list');
-        } 
+        }
 
         $logs = Log::with('user')->with('actions')->with('entity')->orderBy('created_at', 'desc')->get();
-        
-        foreach($logs as $key => $log)
-        {
-            $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
-            $last=substr($log['entity']['base_url'], -1);
-            if( $last == '/')
-            {
+
+        foreach ($logs as $key => $log) {
+            $log['created_at'] = Carbon::parse($log->created_at)->diffForHumans();
+            $last = substr($log['entity']['base_url'], -1);
+            if ($last == '/') {
                 //  echo($log['item_id']);
                 //  echo url('/');
-                $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+                $log['entity']['base_url'] = url('/') . $log['entity']['base_url'] . $log['item_id'];
                 // dd($log['entity']['base_url']);
-            }
-            else
-            {
+            } else {
                 // echo '1';
-                $log['entity']['base_url']=url('/').$log['entity']['base_url'];
+                $log['entity']['base_url'] = url('/') . $log['entity']['base_url'];
             }
-            if($log['created_by'] != $id)
-            {
-                
+            if ($log['created_by'] != $id) {
+
 
                 unset($logs[$key]);
             }
-            
-        }
-        
 
-        $data['logs']=$logs;
+        }
+
+
+        $data['logs'] = $logs;
 
         return view('users.user_profile', $data);
     }
 
     public function filter_logs(Request $request, $id)
     {
-        $data['user']=Users::find($id);
-        $logs=Log::where(function($q)use($request){
-            $q->where('created_at','>=',date('Y-m-d h:s:i',strtotime($request['from'])))
-              ->where('created_at','<=',date('Y-m-d h:s:i',strtotime($request['to'])));
-        })->with('user')->with('actions')->with('entity')->orderBy('created_at','desc')->get();
-        foreach($logs as $key => $log)
-            {
-                $log['created_at']=Carbon::parse($log->created_at)->diffForHumans();
-                $last=substr($log['entity']['base_url'], -1);
-                if( $last == '/')
-                {
+        $data['user'] = Users::find($id);
+        $logs = Log::where(function ($q) use ($request) {
+            $q->where('created_at', '>=', date('Y-m-d h:s:i', strtotime($request['from'])))
+                ->where('created_at', '<=', date('Y-m-d h:s:i', strtotime($request['to'])));
+        })->with('user')->with('actions')->with('entity')->orderBy('created_at', 'desc')->get();
+        foreach ($logs as $key => $log) {
+            $log['created_at'] = Carbon::parse($log->created_at)->diffForHumans();
+            $last = substr($log['entity']['base_url'], -1);
+            if ($last == '/') {
                     //  echo($log['item_id']);
                     //  echo url('/');
-                    $log['entity']['base_url']=url('/').$log['entity']['base_url'].$log['item_id'];
+                $log['entity']['base_url'] = url('/') . $log['entity']['base_url'] . $log['item_id'];
                     // dd($log['entity']['base_url']);
-                }
-                else
-                {
+            } else {
                     // echo '1';
-                    $log['entity']['base_url']=url('/').$log['entity']['base_url'];
-                }
-                if($log['created_by'] != $id)
-                {
-                    
-
-                    unset($logs[$key]);
-                }
-               
+                $log['entity']['base_url'] = url('/') . $log['entity']['base_url'];
             }
+            if ($log['created_by'] != $id) {
+
+
+                unset($logs[$key]);
+            }
+
+        }
         $data['logs'] = $logs;
         //  dd($data['logs']);
         return view('users.user_profile', $data);
@@ -260,10 +250,10 @@ class UsersListController extends Controller
     {
         $data['user'] = Users::find($id);
 
-        if( $data['user'] == NULL ) {
+        if ($data['user'] == null) {
             Session::flash('warning', 'المستخدم غير موجود');
             return redirect('/users_list');
-        } 
+        }
 
         $data['roles'] = Rules::where('parent_id', 13)->get();
         return view('users.users_list_edit', $data);
