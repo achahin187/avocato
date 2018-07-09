@@ -102,8 +102,7 @@ class ComplainsController extends Controller
             $feedbackReply  = new FeedbackReply;
 
             // feedback table
-            $feedback->is_replied = 1;  // is_replied = true
-            $feedback->save();
+            
 
             // feedback_replies table
             $feedbackReply->feedback_id = $id;
@@ -123,6 +122,8 @@ class ComplainsController extends Controller
     return redirect()->back()->with('message', 'email cannot be send '); 
 }
             }
+            $feedback->is_replied = 1;  // is_replied = true
+            $feedback->save();
             $notification_type=Notification_Types::find(10);
             if($feedback->user_id != 0 && $feedback->user_id != NULL )
             {
