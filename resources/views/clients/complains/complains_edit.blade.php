@@ -19,6 +19,11 @@
       </div>
     </div>
   </div>
+   <div class="col-lg-12">
+      @if(Session::has('message'))
+      <div class="alert alert-warning text-center">{{ Session::get('message') }}</div>
+      @endif
+    </div>
   <div class="col-md-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
