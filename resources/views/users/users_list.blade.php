@@ -116,10 +116,12 @@
     </div>
   </div>
   <div class="col-lg-12">
-    @if(\session('success'))
-    <div class="alert alert-success">
-      {{\session('success')}}
-    </div>
+    @if ( Session::has('success') )
+        <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+    @endif
+
+    @if ( Session::has('warning') )
+        <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
     @endif
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="full-table">

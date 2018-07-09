@@ -171,7 +171,15 @@ class NewsListController extends Controller
      */
     public function show($id)
     {
-        return view('news.news_list_show')->with('news', News::find($id));
+        $news = News::find($id);
+
+        // redirect to home page if user is not found
+        if( $news == NULL ) {
+            Session::flash('warning', 'الخبر غير موجود');
+            return redirect('/news_list');
+        }
+
+        return view('news.news_list_show')->with('news', $news);
     }
 
     /**
@@ -182,7 +190,15 @@ class NewsListController extends Controller
      */
     public function edit($id)
     {
-        return view('news.news_list_edit')->with('news', News::find($id));
+        $news = News::find($id);
+
+        // redirect to home page if user is not found
+        if( $news == NULL ) {
+            Session::flash('warning', 'الخبر غير موجود');
+            return redirect('/news_list');
+        }
+
+        return view('news.news_list_edit')->with('news', $news);
     }
 
     /**

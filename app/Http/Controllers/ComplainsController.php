@@ -72,8 +72,16 @@ class ComplainsController extends Controller
      */
     public function edit($id)
     {
+        $feedback = Feedback::find($id);
+
+        // redirect to home page if user is not found
+        if( $feedback == NULL ) {
+            Session::flash('warning', 'الخبر غير موجود');
+            return redirect('/complains');
+        }
+
         \Carbon\Carbon::setLocale('ar');
-        return view('clients.complains.complains_edit')->with('complain', Feedback::find($id));
+        return view('clients.complains.complains_edit')->with('complain', $feedback);
     }
 
     /**
@@ -115,7 +123,10 @@ class ComplainsController extends Controller
 }
             }
             $notification_type=Notification_Types::find(10);
-            $user=Users::find($feedback->user_id);
+            if($feedback->user_id != 0 && $feedback->user_id != NULL )
+            {
+                 $user=Users::find($feedback->user_id);
+            // dd($user);
             $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
                 "entity_id"=>15,
@@ -133,6 +144,8 @@ class ComplainsController extends Controller
                 "lang_id"=>$user->lang_id,
                 "user_id"=>$id
             ]);
+            }
+           
         
 
         } catch ( Exception $ex ) {

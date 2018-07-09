@@ -22,6 +22,14 @@
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="full-table">
 
+        @if (Session::has('success'))
+            <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
+        @endif
+
+        @if (Session::has('warning'))
+            <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+        @endif
+
         <div class="remodal-bg">
           <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
           <form action="{{ route('news.filter') }}" method="POST">
