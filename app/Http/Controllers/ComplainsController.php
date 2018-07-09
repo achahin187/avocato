@@ -107,7 +107,12 @@ class ComplainsController extends Controller
             $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
             if($to != '')
             {
+                try {
                $mail=Helper::mail($to,$request->newReply); 
+                    }
+                    catch (\Exception $e) {
+    return $e->getMessage();
+}
             }
             $notification_type=Notification_Types::find(10);
             $user=Users::find($feedback->user_id);
