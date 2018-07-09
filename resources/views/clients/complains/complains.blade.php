@@ -22,6 +22,9 @@
 
     {{-- Start alert messages --}}
     <div class="col-lg-12">
+      @if(Session::has('message'))
+      <div class="alert alert-warning text-center">{{ Session::get('message') }}</div>
+      @endif
       @if (Session::has('success'))
         <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
       @endif

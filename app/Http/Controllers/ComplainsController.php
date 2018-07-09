@@ -119,7 +119,7 @@ class ComplainsController extends Controller
                $mail=Helper::mail($to,$request->newReply); 
                     }
                     catch (\Exception $e) {
-    return $e->getMessage();
+     Session::flash('message', 'email cannot be send '); 
 }
             }
             $notification_type=Notification_Types::find(10);
