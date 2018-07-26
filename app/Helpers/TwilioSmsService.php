@@ -2,7 +2,7 @@
 
 //created_by: Ash
 
-namespace App\Libraries;
+namespace App\Helpers;
 
 use Twilio\Rest\Client;
 
