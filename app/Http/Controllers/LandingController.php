@@ -126,8 +126,8 @@ class LandingController extends Controller
 		            'national_id'=>'required|numeric',
 		            'birthdate'=>'required',
 		            'phone'=>'required|numeric',
-		            'mobile'=>'required|numeric',
-		            'email'=>'required|email|max:40',
+		            'mobile'=>"required|unique:users|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+		            'email'=>"required|bail|email",
 		        ]);
 
 		        if ($validator->fails()) {
@@ -163,7 +163,7 @@ class LandingController extends Controller
          $status =$twilio->send($lawyer->mobile,$lawyer->verificaition_code);
          
           $mail=Helper::mail_register($lawyer->email,$lawyer->code,$lawyer->verificaition_code);
-
+dd($status);
     if($lang == 'en')
         return redirect()->route('landing','en')->with('success','New Lawyer Successfully Registered ');
     else
