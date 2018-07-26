@@ -127,7 +127,7 @@ class LandingController extends Controller
 		            'national_id'=>'required|numeric',
 		            'birthdate'=>'required',
 		            'phone'=>'required|numeric',
-		            'mobile'=>"required|unique:users|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+		            'mobile'=>"required|unique:users|regex:/^\+?[^a-zA-Z]{5,}$/|min:11|max:11",
 		            'email'=>"required|bail|email",
 		        ]);
 
@@ -142,7 +142,7 @@ class LandingController extends Controller
         $lawyer->full_name = $request->lawyer_name;
         $lawyer->address = $request->address;
         $lawyer->phone = $request->phone;
-        $lawyer->mobile = $request->mobile;
+        $lawyer->mobile = '+2'.$request->mobile;
         $lawyer->email = $request->email;
         $lawyer->is_active = 0;
         $lawyer->birthdate =date('Y-m-d H:i:s',strtotime($request->birthdate)); 
