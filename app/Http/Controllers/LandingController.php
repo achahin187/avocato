@@ -18,6 +18,7 @@ use Helper;
 use Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use App\Helpers\TwilioSmsService;
 
 class LandingController extends Controller
 {
@@ -105,6 +106,13 @@ class LandingController extends Controller
 
         public function lawyer(Request $request)
     {
+        $twilio_config = [
+            'app_id' => 'AC2305889581179ad67b9d34540be8ecc1',
+            'token'  => '2021c86af33bd8f3b69394a5059c34f0',
+            'from'   => '+13238701693'
+         ];
+
+         $twilio = new TwilioSmsService($twilio_config);
         $url = url()->previous();
         $split = explode('/',$url);
         $lang = end($split);
@@ -140,8 +148,10 @@ class LandingController extends Controller
         $password = Helper::generateRandom(Users::class, 'password', 8);
         $lawyer->password = bcrypt($password);
         $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
+        $lawyer->verificaition_code = str_random(4);
+         $lawyer->is_verification_code_expired=0;
         $lawyer->save();
-        $lawyer->rules()->attach(5);
+        $lawyer->rules()->attach([5,14]);
 
         $lawyer_details = new User_Details;
         $lawyer_details->national_id = $request->national_id;
@@ -150,6 +160,9 @@ class LandingController extends Controller
         $lawyer_plaintext->password = $password;
         $lawyer->user_detail()->save($lawyer_details);
         $lawyer->client_password()->save($lawyer_plaintext);
+         $status =$twilio->send($lawyer->mobile,$lawyer->verificaition_code);
+         
+          $mail=Helper::mail_register($lawyer->email,$lawyer->code,$lawyer->verificaition_code);
 
     if($lang == 'en')
         return redirect()->route('landing','en')->with('success','New Lawyer Successfully Registered ');

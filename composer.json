@@ -15,7 +15,8 @@
         "maatwebsite/excel": "^3.0",
         "niklasravnsborg/laravel-pdf": "^2.0",
         "nwidart/laravel-modules": "^3.1",
-        "unisharp/laravel-ckeditor": "^4.7"
+        "unisharp/laravel-ckeditor": "^4.7",
+        "twilio/sdk": "^5.16"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
