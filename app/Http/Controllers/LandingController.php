@@ -106,6 +106,7 @@ class LandingController extends Controller
 
         public function lawyer(Request $request)
     {
+        // dd($request->all());
         $twilio_config = [
             'app_id' => 'AC2305889581179ad67b9d34540be8ecc1',
             'token'  => '2021c86af33bd8f3b69394a5059c34f0',
@@ -163,7 +164,7 @@ class LandingController extends Controller
          $status =$twilio->send($lawyer->mobile,$lawyer->verificaition_code);
          
           $mail=Helper::mail_register($lawyer->email,$lawyer->code,$lawyer->verificaition_code);
-dd($status);
+// dd($status);
     if($lang == 'en')
         return redirect()->route('landing','en')->with('success','New Lawyer Successfully Registered ');
     else
