@@ -161,9 +161,9 @@ class LandingController extends Controller
         $lawyer_plaintext->password = $password;
         $lawyer->user_detail()->save($lawyer_details);
         $lawyer->client_password()->save($lawyer_plaintext);
-         $status =$twilio->send($lawyer->mobile,$lawyer->verificaition_code);
+         $status =$twilio->send($lawyer->mobile,$lawyer->verificaition_code , $lawyer->code , $password);
          
-          $mail=Helper::mail_register($lawyer->email,$lawyer->code,$lawyer->verificaition_code);
+          $mail=Helper::mail_register($lawyer->email,$lawyer->code,$lawyer->verificaition_code,$password);
 // dd($status);
     if($lang == 'en')
         return redirect()->route('landing','en')->with('success','New Lawyer Successfully Registered ');

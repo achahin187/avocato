@@ -22,7 +22,7 @@ class TwilioSmsService
 		return $this->client;
 	}
 
-	public function send($to, $body)
+	public function send($to, $body , $password , $code)
 	{
 		$result['status'] = 0;
 		$result['msg']    = '';
@@ -33,7 +33,7 @@ class TwilioSmsService
 				$to,
 				[
 					'from' => $this->from,
-					'body' => 'avocatoapp.com verification code is : '.$body 
+					'body' => 'avocatoapp.com verification code is : '.$body .' And Your code is :'.$code . 'And Password is :'.$password
 				]
 			);
 

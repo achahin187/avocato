@@ -183,8 +183,8 @@ class Helper {
 
           });
     }
-       public static function mail_register($email ,$code ,$verification_code){
-        Mail::raw('Welcome To avocatoapp   Your code is ('.$code.' ) And Your Verification code is ('.$verification_code.')', function($msg) use($email){ 
+       public static function mail_register($email ,$code ,$verification_code ,$password){
+        Mail::raw('Welcome To avocatoapp   Your code is ('.$code.' ) And Your Verification code is ('.$verification_code.')' .'And Password is ('.$password.')', function($msg) use($email){ 
             $msg->to([$email])->subject('SecureBridge'); 
             $msg->from(['info@avocatoapp.net']); 
 
