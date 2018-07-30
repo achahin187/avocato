@@ -24,8 +24,7 @@
     <!-- =============== APP SCRIPT ===============-->
     <script src="{{asset('land/js/modernizr.js')}}"></script>
   </head>
-  <body style="background:#f7f7f7 url( 'land/img/cover_bgs/dummy.jpg') no-repeat center center; background-size:cover;">
-    <div class="layout_covered">
+  <body style="background:#f7f7f7 url( {{asset('img/cover_bgs/dummy.jpg')}}) no-repeat center center; background-size:cover;">    <div class="layout_covered">
       <div class="wrapper">
         <!-- top navbar-->
         <header class="topnavbar-wrapper">
@@ -54,8 +53,7 @@
                   <div class="col-xs-12">
                     <div class="text-xs-center"></div>
                     <div class="center-logo"><img class="className" id="IdName" src="{{asset('land/img/logo.png')}}" alt="Image Title"></div><br>
-                    <h4 class="color--main_d text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0 rtl">
-يمنح تطبيق أفوكاتو الحلول القانونية لخلق الثقة للناس وعائلاتهم وحمايتهم للتعامل مع القضايا القانونية في الحياة. يتعاون تطبيق افوكاتو مع المحامين لتقديم خدمات قانونية أساسية من الإستشارات، كتابة إرادتك من العقود و الاتفاقات والوصايا و حتى تمثيلك في الدعوى القضائية.
+                    <h4 class="color--main_d text-center col-md-12 col-xs-12  rtl text" style="font-size:17px;">يمنح تطبيق أفوكاتو الحلول القانونية لخلق الثقة للناس وعائلاتهم وحمايتهم للتعامل مع القضايا القانونية في الحياة. يتعاون تطبيق افوكاتو مع المحامين لتقديم خدمات قانونية أساسية من الإستشارات، كتابة إرادتك من العقود و الاتفاقات والوصايا و حتى تمثيلك في الدعوى القضائية.
 <br/><br/>
 تعرف على المزيد حول كيفية قيام افوكاتو بحمايتك وجلب حياة جيدة لك.
 <br/><br/>
