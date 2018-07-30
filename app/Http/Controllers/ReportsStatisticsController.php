@@ -106,7 +106,7 @@ class ReportsStatisticsController extends Controller
         $data['governorates']  = Geo_Governorates::all();
         $data['cities'] = Geo_Cities::all();
         $data['nationalities'] = Geo_Countries::all();
-        $data['lawyers_'] = Helper::getUsersBasedOnRules([11, 12]);
+        $data['lawyers_'] = Helper::getUsersBasedOnRules([5])->where('is_active', 1);
         $data['companies_'] = Users::users(9)->get();
         $data['packages_']  = Package_Types::all();
         $data['installments_'] = Installment::select('subscription_id')->distinct()->get();
