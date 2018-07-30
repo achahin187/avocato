@@ -59,7 +59,14 @@ It's time to create variant legal World
 Avocato app The leading only society for legal services</h4>
                     <div class="clearfix"></div><br><br>
                     <div class="text-center"><span class="bgcolor--fadeblue color--white bradius--small padding--small">Hotline:	&nbsp; 19534</span></div>
-                    <div class="clearfix"></div><br><br>
+                    <div class="clearfix"></div><br>
+                    <div class="text-center col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+                      <ul class="list-inline">
+                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="#"><img class="img-responsive" src="{{asset('img/btn-ios.png')}}"></a></li>
+                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="#"><img class="img-responsive" src="{{asset('img/btn-android.png')}}"></a></li>
+                      </ul>
+                    </div>
+                    <div class="clearfix"></div><br>
                     <div class="text-center col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
                       <div class="chevron"></div>
                       <div class="chevron"></div>
