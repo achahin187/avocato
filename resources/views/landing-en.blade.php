@@ -61,8 +61,8 @@ Avocato app The leading only society for legal services</h4>
                     <div class="clearfix"></div><br>
                     <div class="text-center col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
                       <ul class="list-inline">
-                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="#"><img class="img-responsive" src="{{asset('img/btn-ios.png')}}"></a></li>
-                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="#"><img class="img-responsive" src="{{asset('img/btn-android.png')}}"></a></li>
+                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="https://itunes.apple.com/us/app/avocato/id1381221725?ls=1&mt=8 "><img class="img-responsive" src="{{asset('img/btn-ios.png')}}"></a></li>
+                        <li class="item-list col-md-6 col-sm-6 col-xs-6"><a class="store-btn" href="https://play.google.com/store/apps/details?id=com.pentavalue.secure_bridge"><img class="img-responsive" src="{{asset('img/btn-android.png')}}"></a></li>
                       </ul>
                     </div>
                     <div class="clearfix"></div><br>
