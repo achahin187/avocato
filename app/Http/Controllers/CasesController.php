@@ -29,6 +29,7 @@ use App\Case_Document;
 use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
+// use Session;
 
 
 class CasesController extends Controller
@@ -40,7 +41,7 @@ class CasesController extends Controller
      */
     public function index()
     {
-        $cases = Case_::with('case_types')->with('governorates')->with('cities')->with('courts')->get();
+        $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->get();
         // dd($cases);
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();
@@ -60,7 +61,7 @@ class CasesController extends Controller
      */
     public function create()
     {
-        $clients = Users::whereHas('rules', function ($query) {
+        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
@@ -69,12 +70,12 @@ class CasesController extends Controller
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
-        $cases_types = Cases_Types::all();
-        $courts = Courts::all();
-        $governorates = Geo_Governorates::all();
-        $countries = Geo_Countries::all();
-        $cities = Geo_Cities::all();
-        $lawyers = Users::whereHas('rules', function ($query) {
+        $cases_types = Cases_Types::where('country_id',session('country'))->get();
+        $courts = Courts::where('country_id',session('country'))->get();
+        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
+        $countries = Geo_Countries::where('country_id',session('country'))->get();
+        $cities = Geo_Cities::where('country_id',session('country'))->get();
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
@@ -271,6 +272,7 @@ class CasesController extends Controller
             'case_body' => $request['subject'],
             'case_notes' => $request['notes'],
             'created_by' => \Auth::user()->id,
+            'country_id'=>session('country')
         ]);
         $case->save();
         if ($request->has('lawyer_id')) {
@@ -406,6 +408,7 @@ class CasesController extends Controller
             'case_body' => $request['subject'],
             'case_notes' => $request['notes'],
             'created_by' => \Auth::user()->id,
+            'country_id'=>session('country')
         ]);
         for ($i = 0; $i < count($request['client_code']); $i++) {
             Case_Client::Create([
@@ -463,7 +466,7 @@ class CasesController extends Controller
     function lawyers_filter(Request $request)
     {
         // $request = (array)json_decode($request->getContent(), true);
-        $lawyers = Users::whereHas('rules', function ($query) {
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
 
             $query->where('rule_id', '5');
         })->where(function ($query) use ($request) {
@@ -527,7 +530,7 @@ class CasesController extends Controller
     }
     public function filter_create($lawyers)
     {
-        $clients = Users::whereHas('rules', function ($query) {
+        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
@@ -536,11 +539,11 @@ class CasesController extends Controller
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
-        $cases_types = Cases_Types::all();
-        $courts = Courts::all();
-        $governorates = Geo_Governorates::all();
-        $countries = Geo_Countries::all();
-        $cities = Geo_Cities::all();
+        $cases_types = Cases_Types::where('country_id',session('country'))->get();
+        $courts = Courts::where('country_id',session('country'))->get();
+        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
+        $countries = Geo_Countries::where('country_id',session('country'))->get();
+        $cities = Geo_Cities::where('country_id',session('country'))->get();
          
         
           // dd($cases_record_types);
@@ -580,6 +583,7 @@ class CasesController extends Controller
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'task_type_id' => 2,
+                'country_id' => session('country')
             ]);
         } else {
             Tasks::create([
@@ -592,6 +596,7 @@ class CasesController extends Controller
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'task_type_id' => 2,
+                'country_id'=>session('country')
             ]);
         }
         
@@ -744,7 +749,7 @@ class CasesController extends Controller
     public function filter_cases(Request $request)
     {
         // dd($request->all());
-        $cases = Case_::where(function ($q) use ($request) {
+        $cases = Case_::where('country_id',session('country'))->where(function ($q) use ($request) {
 
             if ($request->filled('case_type')) {
                 $q->where('case_type_id', $request->case_type);

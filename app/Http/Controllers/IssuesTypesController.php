@@ -7,6 +7,7 @@ use App\Cases_Types;
 use Validator;
 use Excel;
 use App\Exports\CasesTypesExport;
+use Session;
 
 class IssuesTypesController extends Controller
 {
@@ -17,7 +18,7 @@ class IssuesTypesController extends Controller
      */
     public function index()
     {
-        $data['issues'] = Cases_Types::all();
+        $data['issues'] = Cases_Types::where('country_id',session('country'))->get();
         return view('issues_types',$data);
     }
 
@@ -69,6 +70,7 @@ class IssuesTypesController extends Controller
 
         $issue = new Cases_Types;
         $issue->name = $request->new_type;
+        $issue->country_id=session('country');
         $issue->save();
         return redirect()->route('issues_types')->with('success','تم إضافه نوع جديد بنجاح');
     }

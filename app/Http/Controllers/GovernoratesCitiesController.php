@@ -21,8 +21,8 @@ class GovernoratesCitiesController extends Controller
     public function index()
     {
         // return all cities and governments
-        return view('governorates_cities')->with('cities', Geo_Cities::all())
-                                        ->with('governments', Geo_Governorates::all());
+        return view('governorates_cities')->with('cities', Geo_Cities::where('country_id',session('country'))->get())
+                                        ->with('governments', Geo_Governorates::where('country_id',session('country'))->get());
     }
 
     /**
@@ -57,7 +57,8 @@ class GovernoratesCitiesController extends Controller
 
         // Add values
         Geo_Governorates::create([
-            'name' => $request->gov_name
+            'name' => $request->gov_name,
+            'country_id'=>session('country')
         ]);
 
         // redirect back with flash message
@@ -89,7 +90,8 @@ class GovernoratesCitiesController extends Controller
         // Add values
         Geo_Cities::create([
             'governorate_id' => $request->government_id,
-            'name'           => $request->city_name
+            'name'           => $request->city_name,
+            'country_id'=>session('country')
         ]);
 
         // redirect back with flash message

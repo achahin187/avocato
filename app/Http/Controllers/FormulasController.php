@@ -16,6 +16,7 @@ use Helper;
 use Auth;
 
 
+
 class FormulasController extends Controller
 {
     /**
@@ -25,25 +26,25 @@ class FormulasController extends Controller
      */
     public function index()
     {
-        $data['contracts'] = Formula_Contracts::all();
-        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->get();
+        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
         return view('formulas.formulas', $data);
     }
 
     public function create()
     {
-        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
         return view('formulas.formulas_create', $data);
     }
 
     public function getSub(Request $request)
     {
-        $subs = Formula_Contract_Types::where('parent_id', $request->id)->pluck('name', 'id');
+        $subs = Formula_Contract_Types::where('country_id',session('country'))->where('parent_id', $request->id)->pluck('name', 'id');
         return $subs;
     }
     public function getSubs(Request $request)
     {
-        $subs = Formula_Contract_Types::whereIn('parent_id', $request->ids)->pluck('name', 'id');
+        $subs = Formula_Contract_Types::where('country_id',session('country'))->whereIn('parent_id', $request->ids)->pluck('name', 'id');
         return $subs;
     }
 
@@ -77,7 +78,7 @@ class FormulasController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
-        $data['contracts'] = Formula_Contracts::where(function ($q) use ($request) {
+        $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->where(function ($q) use ($request) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
             $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
             if ($request->filled('date_from') && $request->filled('date_to')) {
@@ -162,6 +163,7 @@ class FormulasController extends Controller
             Input::file('file')->move($destinationPath, $fileNameToStore);
         }
         $formula->file = $fileNameToStore;
+        $formula->country_id=session('country');
         $formula->save();
         Helper::add_log(3, 17, $formula->id);
         return redirect()->route('formulas_create')->with('success', 'تمت الإضافه');
@@ -187,7 +189,7 @@ class FormulasController extends Controller
      */
     public function edit($id)
     {
-        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
         $data['contract'] = Formula_Contracts::find($id);
 
         if( $data['contract'] == NULL ) {
@@ -236,6 +238,7 @@ class FormulasController extends Controller
             rename(public_path($formula->file), public_path($fileNameToStore));
         }
         $formula->file = $fileNameToStore;
+        $formula->country_id=session('country');
         $formula->save();
         Helper::add_log(4, 17, $formula->id);
         return redirect()->route('formulas')->with('success', 'تم تعديل البيانات بنجاح');

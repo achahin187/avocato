@@ -34,7 +34,7 @@ class IndividualsCompaniesController extends Controller
     {
         $packages = Package_Types::all();
         $subscriptions = Subscriptions::all();
-        $nationalities = Geo_Countries::all();
+        $nationalities = Geo_Countries::where('country_id',session('country'))->get();
         $companies     = Users::users(9)->get();
         return view('clients.individuals_companies.individuals_companies', compact(['packages', 'subscriptions', 'nationalities', 'companies']))->with('ind_coms', Users::users(10)->get());
     }
@@ -120,6 +120,7 @@ class IndividualsCompaniesController extends Controller
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;
+            $user->country_id=session('country');
             $user->save();
         } catch(Exception $ex) {
             $user->forcedelete();
@@ -372,6 +373,7 @@ class IndividualsCompaniesController extends Controller
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;
+            $user->country_id=session('country');
             $user->save();
         } catch(Exception $ex) {
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
