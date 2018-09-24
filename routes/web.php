@@ -11,7 +11,8 @@
 |
 */
 Auth::routes();
-
+Route::get('/login', '\App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
+Route::post('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('auth.login');
 Route::group(['middleware' => ['auth']], function () {
 
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
@@ -347,3 +348,6 @@ Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
+
+Route::get('/choose_country', 'GeoCountryController@index')->name('choose.country');
+Route::post('/choose_country_info', 'GeoCountryController@choose')->name('choose.country.info');

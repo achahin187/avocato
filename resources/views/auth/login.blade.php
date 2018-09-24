@@ -27,6 +27,12 @@
   <body>
     <div class="layout_page">
       <div class="wrapper">
+      @if (Session::has('error'))
+          <div class="alert alert-warning text-center">{{ Session::get('error') }}</div>
+          @endif
+          @if (Session::has('success'))
+          <div class="success success-info text-center">{{ Session::get('success') }}</div>
+          @endif
         <!-- =============== Custom Content ===============-->
         <div class="login--page" style="background:  center center ; background-size: cover ; ;">
         <div class="login--page" style="background: url(https://source.unsplash.com/collection/141056) center center ; background-size: cover ; ;">
@@ -35,7 +41,7 @@
               <div class="login--form">
                 <div class="login-page">
                   <div class="form-login bgcolor--gray_l bradius--small bshadow--2 "><img class="logo" src="img/logo/logo__dark.png" alt="جسر الأمان">
-                    <form class="login-form form-horizontal" method="POST" action="{{ route('login') }}">
+                    <form class="login-form form-horizontal" method="POST" action="{{ route('auth.login') }}">
                        {{ csrf_field() }}
 
                         @if(\session('error'))

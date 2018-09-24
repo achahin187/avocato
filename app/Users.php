@@ -20,7 +20,7 @@ class Users extends Authenticatable
                            'creditcard_number', 'creditcard_cvv', 'creditcard_month',
                            'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code',
                            'is_verification_code_expired', 'last_login', 'api_token', 'device_token',
-                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at'];
+                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at','country_id'];
    protected $dates = ['deleted_at'];
    public $timestamps = true;
 
