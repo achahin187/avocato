@@ -10,6 +10,10 @@ class GeoCountryController extends Controller
 {
     public function index()
     {
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         $data['countries']=Geo_Countries::all();
         return view('choose_country',$data);
     }

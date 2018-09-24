@@ -20,6 +20,10 @@ class CourtsListController extends Controller
      */
     public function index()
     {   
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         $data['courts'] = Courts::where('country_id',session('country'))->get();
         $data['govs'] = Geo_Governorates::where('country_id',session('country'))->get();
         return view('courts_list',$data);

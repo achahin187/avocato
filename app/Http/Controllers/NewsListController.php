@@ -23,6 +23,10 @@ class NewsListController extends Controller
      */
     public function index()
     {
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         return view('news.news_list')->with('news', News::where('country_id',session('country'))->get());
     }
 

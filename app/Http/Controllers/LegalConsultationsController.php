@@ -34,6 +34,10 @@ class LegalConsultationsController extends Controller
     // }
     public function index()
     {
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
         $consultations = Consultation::where('country_id',session('country'))->orderBy('created_at', 'desc')->get();
         foreach ($consultations as $consultation) {
