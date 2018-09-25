@@ -26,6 +26,13 @@ Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
 Route::post('/issues_types_destroy_all', 'IssuesTypesController@destroy_all')->name('issues_types_destroy_all');
 Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_types_excel');
+//
+Route::get('/specializations', 'SpecializationsController@index')->name('specializations');
+Route::post('/specializations_store', 'SpecializationsController@store')->name('specializations_store');
+Route::post('/specializations_destroy/{id}', 'SpecializationsController@destroy')->name('specializations_destroy');
+Route::post('/specializations_destroy_all', 'SpecializationsController@destroy_all')->name('specializations_destroy_all');
+Route::get('/specializations_excel', 'SpecializationsController@excel')->name('specializations_excel');
+
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');

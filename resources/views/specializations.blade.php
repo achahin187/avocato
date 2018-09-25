@@ -4,11 +4,11 @@
  <script >
   $(document).ready(function(){
     // $('.issue').click(function(){
-    //   alert($(this).attr('data-issue-id'));
+    //   alert($(this).attr('data-specialization-id'));
     // });
 
         $('.btn-warning-cancel').click(function(){
-          var issue_id = $(this).closest('tr').attr('data-issue-id');
+          var specialization_id = $(this).closest('tr').attr('data-specialization-id');
           var _token = '{{csrf_token()}}';
           swal({
             title: "هل أنت متأكد؟",
@@ -25,10 +25,10 @@
             if (isConfirm){
              $.ajax({
                type:'POST',
-               url:'{{url('issues_types_destroy')}}'+'/'+issue_id,
+               url:'{{url('specializations_destroy')}}'+'/'+specialization_id,
                data:{_token:_token},
                success:function(data){
-                $('tr[data-issue-id='+issue_id+']').fadeOut();
+                $('tr[data-specialization-id='+specialization_id+']').fadeOut();
                }
             });
               swal("تم الحذف!", "تم الحذف بنجاح", "success");
@@ -40,7 +40,7 @@
 
         $('.btn-warning-cancel-all').click(function(){
           var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-issue-id');
+            return $(this).closest('tr').attr('data-specialization-id');
           }).get();
           var _token = '{{csrf_token()}}';
           swal({
@@ -62,7 +62,7 @@
                data:{ids:selectedIds,_token:_token},
                success:function(data){
                 $.each( selectedIds, function( key, value ) {
-                  $('tr[data-issue-id='+value+']').fadeOut();
+                  $('tr[data-specialization-id='+value+']').fadeOut();
                 });
                }
             });
@@ -75,7 +75,7 @@
 
         $('.excel-btn').click(function(){
           var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-issue-id');
+            return $(this).closest('tr').attr('data-specialization-id');
           }).get();
           $.ajax({
            type:'GET',
@@ -220,10 +220,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($issues as $issue)
-                          <tr class="issue" data-issue-id="{{$issue->id}}">
+                          @foreach($specializations as $specialization)
+                          <tr class="issue" data-specialization-id="{{$specialization->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$issue->name}}</span></td>
+                            <td><span class="cellcontent">{{$specialization->name}}</span></td>
                             <td><span class="cellcontent"><a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
