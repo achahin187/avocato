@@ -87,6 +87,7 @@ class LoginController extends Controller
                     }
                     else
                     {
+                        $request->session()->flush();
                         Session('error','country id doesnot exist , البلد ليست محدده');
                         return redirect()->route('choose.country');
                     }
