@@ -138,7 +138,7 @@
                   <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-plus"></i><span>إضافة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                     <form role="form" action="{{route('issues_types_store')}}" method="post">
+                     <form role="form" action="{{route('specializations_store')}}" method="post">
                       {{ csrf_field() }}
 
 
@@ -150,8 +150,8 @@
                               <h3>إضافة</h3>
                               <div class="col-sm-12">
                                 <div class="master_field">
-                                  <label class="master_label" for="case_type_new">ادخال نوع جديد من انواع القضايا</label>
-                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" value="{{ old('new_type') }}" name="new_type"><span class="master_message color--fadegreen">
+                                  <label class="master_label" for="specialization_new">خصص جديد</label>
+                                  <input class="master_input" type="text" placeholder="تخصص جديد" id="specialization_new" value="{{ old('new_specialization') }}" name="new_specialization"><span class="master_message color--fadegreen">
 @if(count($errors) > 0)
 @foreach($errors->all() as $error)
 

@@ -63,20 +63,20 @@ class SpecializationsController extends Controller
          // \App::setLocale('en');
 
         $validator = Validator::make($request->all(), [
-            'new_type'=>'required|unique:cases_types,name',
+            'new_specialization'=>'required|unique:specializations,name',
         ]);
 
         if ($validator->fails()) {
-            return redirect('issues_types#popupModal_1')
+            return redirect('specializations#popupModal_1')
                         ->withErrors($validator)
                         ->withInput();
         }
 
-        $issue = new Cases_Types;
-        $issue->name = $request->new_type;
-        $issue->country_id=session('country');
-        $issue->save();
-        return redirect()->route('issues_types')->with('success','تم إضافه نوع جديد بنجاح');
+        $specialization = new Specializations;
+        $specialization->name = $request->new_specialization;
+        //$specialization->country_id=session('country');
+        $specialization->save();
+        return redirect()->route('specializations')->with('success','تم إضافة تخصص جديد بنجاح');
     }
 
     /**
