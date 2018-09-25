@@ -112,6 +112,7 @@
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">البيانات الأساسية</a>
                                         <ul class="side__submenu" id="sub_menu">
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('issues_types')}}">انواع القضايا</a></li>
+                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('specializations')}}">التخصصات</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('governorates_cities')}}">المدن و المحافظات</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('courts_list')}}">اسماء المحاكم</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contracts_formulas_types')}}">انواع الصيغ و العقود</a></li>
