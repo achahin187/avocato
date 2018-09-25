@@ -13,6 +13,7 @@ use App\Notifications;
 use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
+use Session;
 
 class EmergencyTasksController extends Controller
 {
@@ -67,6 +68,7 @@ class EmergencyTasksController extends Controller
                      $input['created_by']=\Auth::user()->id;
                      $input['start_datetime']=Carbon::now()->format('Y-m-d H:i:s');
                      $input['created_at']=Carbon::now()->format('Y-m-d H:i:s');
+                     $input['country_id']=session('country');
                      
                      $task = Tasks::create($input);
                  
@@ -179,7 +181,7 @@ return redirect()->route('tasks_emergency');
     {
       // dd($request->all());
       $data['task']=Tasks::where('id',$id)->first();
-      $data['lawyers'] = Users::where(function($q) use($request){
+      $data['lawyers'] = Users::where('country_id',session('country'))->where(function($q) use($request){
 
          if($request->filled('work_sector'))
               {
@@ -242,7 +244,7 @@ return redirect()->route('tasks_emergency');
   public function emergency_task_filter(Request $request)
   {
     // dd($request->all());
-    $data['tasks']=Tasks::where(function($q) use($request){
+    $data['tasks']=Tasks::where('country_id',session('country'))->where(function($q) use($request){
 
      $q->where('task_type_id',1);
               if($request->filled('date_from') && $request->filled('date_to'))
@@ -315,7 +317,7 @@ return redirect()->route('tasks_emergency');
     })->get();
 
 
-    $data['clients']=Users::whereHas('rules', function ($query) {
+    $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
                                             $query->where('rule_id', '6');
                                         })->with('rules')->get();
 

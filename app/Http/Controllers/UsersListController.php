@@ -26,8 +26,12 @@ class UsersListController extends Controller
      */
     public function index()
     {   
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         // return Users::withTrashed()->restore();
-        $data['users'] = Users::whereHas('rules', function ($q) {
+        $data['users'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('parent_id', 13);
         })->get();
         $data['roles'] = Rules::where('parent_id', 13)->get();
@@ -73,7 +77,7 @@ class UsersListController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
-        $data['users'] = Users::where(function ($q) use ($request) {
+        $data['users'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
             $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -150,6 +154,7 @@ class UsersListController extends Controller
         $user->mobile = $request->mobile;
         $user->is_active = '1';
         $user->password = bcrypt($request->password);
+        $user->country_id=session('country');
         if ($request->hasFile('image')) {
             $destinationPath = 'users_images';
             $fileNameToStore = $destinationPath . '/' . $request->user_name . time() . rand(111, 999) . '.' . Input::file('image')->getClientOriginalExtension();

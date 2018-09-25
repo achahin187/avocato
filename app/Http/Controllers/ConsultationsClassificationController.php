@@ -19,7 +19,7 @@ class ConsultationsClassificationController extends Controller
      */
     public function index()
     {
-        return view('consultations_classification')->with('consultations', Consultation_Types::all());
+        return view('consultations_classification')->with('consultations', Consultation_Types::where('country_id',session('country'))->get());
     }
 
     /**
@@ -54,7 +54,8 @@ class ConsultationsClassificationController extends Controller
 
         // Add values
         Consultation_Types::create([
-            'name' => $request->consult_name
+            'name' => $request->consult_name,
+            'country_id'=>session('country')
         ]);
 
         // redirect back with flash message

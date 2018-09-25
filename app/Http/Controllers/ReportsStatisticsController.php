@@ -29,6 +29,10 @@ class ReportsStatisticsController extends Controller
      */
     public function index()
     {
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         $data = $this->getData();
 
         return view('reports_statistics', $data);
@@ -103,16 +107,16 @@ class ReportsStatisticsController extends Controller
     public function getData($filters = NULL) 
     {
         /** Filter data */
-        $data['governorates']  = Geo_Governorates::all();
-        $data['cities'] = Geo_Cities::all();
+        $data['governorates']  = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
         $data['nationalities'] = Geo_Countries::all();
         $data['lawyers_'] = Helper::getUsersBasedOnRules([5])->where('is_active', 1);
-        $data['companies_'] = Users::users(9)->get();
+        $data['companies_'] = Users::users(9)->where('country_id',session('country'))->get();
         $data['packages_']  = Package_Types::all();
         $data['installments_'] = Installment::select('subscription_id')->distinct()->get();
-        $data['courts_']    = Courts::all();
+        $data['courts_']    = Courts::where('country_id',session('country'))->get();
         $data['tasks_']     = Task_Types::all();
-        $data['caseTypes']  = Cases_Types::all();
+        $data['caseTypes']  = Cases_Types::where('country_id',session('country'))->get();
 
         /** Countable and percentage data */
         // list data

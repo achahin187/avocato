@@ -33,6 +33,10 @@ class IndividualsController extends Controller
      */
     public function index()
     {
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         $packages = Package_Types::all();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
@@ -117,6 +121,7 @@ class IndividualsController extends Controller
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by = Auth::user()->id;
+            $user->country_id=session('country');
             $user->save();
         } catch (Exception $ex) {
             $user->forcedelete();
@@ -352,7 +357,7 @@ class IndividualsController extends Controller
             $user->created_by = Auth::user()->id;
 
             $user->parent_id = null;    // in case of transforming individuals to individual-company clients.
-
+            $user->country_id=session('country');
             $user->save();
         } catch (Exception $ex) {
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
@@ -513,7 +518,7 @@ class IndividualsController extends Controller
         $endto = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
-        $users = Users::users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+        $users = Users::where('country_id',session('country'))->users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->join('user_details', 'users.id', '=', 'user_details.user_id')
             ->select('user_details.*', 'subscriptions.*', 'users.*');
 

@@ -9,6 +9,7 @@ use App\Formula_Contracts;
 use Illuminate\Support\Facades\File;
 use Excel;
 use App\Exports\FormulasTypesExport;
+use Session;
 
 class ContractsFormulasTypesController extends Controller
 {
@@ -21,8 +22,8 @@ class ContractsFormulasTypesController extends Controller
     {
         // $mains=Formula_Contract_Types::where('id',2)->first();
         // return $mains->child;
-        $data['subs'] = Formula_Contract_Types::whereNotNull('parent_id')->get();
-        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['subs'] = Formula_Contract_Types::where('country_id',session('country'))->whereNotNull('parent_id')->get();
+        $data['main_contracts']=Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
         return view('contracts_formulas_types',$data);
     }
 
@@ -72,6 +73,7 @@ class ContractsFormulasTypesController extends Controller
         }
         $main = new Formula_Contract_Types;
         $main->name= $request->main;
+        $main->country_id=session('country');
         $main->save();
 
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
@@ -96,6 +98,7 @@ class ContractsFormulasTypesController extends Controller
         $sub = new Formula_Contract_Types;
         $sub->name = $request->sub;
         $sub->parent_id = $request->mains;
+        $sub->country_id=session('country');
         $sub->save();
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف فرعي جديد');
 
@@ -116,6 +119,7 @@ class ContractsFormulasTypesController extends Controller
         $sub = new Formula_Contract_Types;
         $sub->name = $request->sub;
         $sub->parent_id = $request->mains;
+        $sub->country_id=session('country');
         $sub->save();
         return redirect('contracts_formulas_types#popupModal_1')->with( ['tab'=> $tab,'success_more' =>'تم إضافه تصنيف فرعي جديد'] );
             break;

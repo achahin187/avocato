@@ -23,7 +23,11 @@ class NewsListController extends Controller
      */
     public function index()
     {
-        return view('news.news_list')->with('news', News::all());
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        return view('news.news_list')->with('news', News::where('country_id',session('country'))->get());
     }
 
     public function filter(Request $request)
@@ -151,6 +155,7 @@ class NewsListController extends Controller
             $news->published_at = $published_at;
             $news->created_by = $current_user;
             $news->updated_by = $current_user;
+            $news->country_id=session('country');
             $news->save();
         } catch (Exception $ex) {
             $news->forcedelete();

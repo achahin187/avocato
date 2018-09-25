@@ -31,8 +31,12 @@ class LawyersController extends Controller
    */
   public function index()
   {
+    if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
         // return Users::withTrashed()->restore();
-    $data['lawyers'] = Users::whereHas('rules', function ($q) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
@@ -42,7 +46,7 @@ class LawyersController extends Controller
 
   public function follow()
   {
-    $data['lawyers'] = Users::whereHas('rules', function ($q) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
     $data['test'] = json_encode([
@@ -92,7 +96,7 @@ class LawyersController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
      */
-    $data['lawyers'] = Users::where(function ($q) use ($request) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -231,6 +235,7 @@ class LawyersController extends Controller
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $lawyer->image = $image_name;
+    $lawyer->country_id=session('country');
     $lawyer->save();
     $lawyer = Users::find($lawyer->id);
     $password = Helper::generateRandom(Users::class, 'password', 8);
@@ -244,7 +249,7 @@ class LawyersController extends Controller
     $lawyer_details->work_sector = $request->work_sector;
     $lawyer_details->work_sector_type = $request->work_sector_type;
     $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
-
+    
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
     else
