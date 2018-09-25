@@ -4,11 +4,11 @@
  <script >
   $(document).ready(function(){
     // $('.issue').click(function(){
-    //   alert($(this).attr('data-issue-id'));
+    //   alert($(this).attr('data-specialization-id'));
     // });
 
         $('.btn-warning-cancel').click(function(){
-          var issue_id = $(this).closest('tr').attr('data-issue-id');
+          var specialization_id = $(this).closest('tr').attr('data-specialization-id');
           var _token = '{{csrf_token()}}';
           swal({
             title: "هل أنت متأكد؟",
@@ -25,10 +25,10 @@
             if (isConfirm){
              $.ajax({
                type:'POST',
-               url:'{{url('issues_types_destroy')}}'+'/'+issue_id,
+               url:'{{url('specializations_destroy')}}'+'/'+specialization_id,
                data:{_token:_token},
                success:function(data){
-                $('tr[data-issue-id='+issue_id+']').fadeOut();
+                $('tr[data-specialization-id='+specialization_id+']').fadeOut();
                }
             });
               swal("تم الحذف!", "تم الحذف بنجاح", "success");
@@ -40,7 +40,7 @@
 
         $('.btn-warning-cancel-all').click(function(){
           var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-issue-id');
+            return $(this).closest('tr').attr('data-specialization-id');
           }).get();
           var _token = '{{csrf_token()}}';
           swal({
@@ -58,11 +58,11 @@
             if (isConfirm){
              $.ajax({
                type:'POST',
-               url:'{{url('issues_types_destroy_all')}}',
+               url:'{{url('specializations_destroy_all')}}',
                data:{ids:selectedIds,_token:_token},
                success:function(data){
                 $.each( selectedIds, function( key, value ) {
-                  $('tr[data-issue-id='+value+']').fadeOut();
+                  $('tr[data-specialization-id='+value+']').fadeOut();
                 });
                }
             });
@@ -75,7 +75,7 @@
 
         $('.excel-btn').click(function(){
           var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-issue-id');
+            return $(this).closest('tr').attr('data-specialization-id');
           }).get();
           $.ajax({
            type:'GET',
@@ -138,7 +138,7 @@
                   <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-plus"></i><span>إضافة</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                     <form role="form" action="{{route('issues_types_store')}}" method="post">
+                     <form role="form" action="{{route('specializations_store')}}" method="post">
                       {{ csrf_field() }}
 
 
@@ -150,8 +150,8 @@
                               <h3>إضافة</h3>
                               <div class="col-sm-12">
                                 <div class="master_field">
-                                  <label class="master_label" for="case_type_new">ادخال نوع جديد من انواع القضايا</label>
-                                  <input class="master_input" type="text" placeholder="نوع جديد" id="case_type_new" value="{{ old('new_type') }}" name="new_type"><span class="master_message color--fadegreen">
+                                  <label class="master_label" for="specialization_new">خصص جديد</label>
+                                  <input class="master_input" type="text" placeholder="تخصص جديد" id="specialization_new" value="{{ old('new_specialization') }}" name="new_specialization"><span class="master_message color--fadegreen">
 @if(count($errors) > 0)
 @foreach($errors->all() as $error)
 
@@ -220,10 +220,10 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($issues as $issue)
-                          <tr class="issue" data-issue-id="{{$issue->id}}">
+                          @foreach($specializations as $specialization)
+                          <tr class="issue" data-specialization-id="{{$specialization->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$issue->name}}</span></td>
+                            <td><span class="cellcontent">{{$specialization->name}}</span></td>
                             <td><span class="cellcontent"><a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
