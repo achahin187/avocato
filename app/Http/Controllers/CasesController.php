@@ -41,10 +41,7 @@ class CasesController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        
         $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->get();
         // dd($cases);
         $roles = Case_Client_Role::all();

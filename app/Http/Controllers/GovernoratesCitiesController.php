@@ -20,10 +20,10 @@ class GovernoratesCitiesController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         // return all cities and governments
         return view('governorates_cities')->with('cities', Geo_Cities::where('country_id',session('country'))->get())
                                         ->with('governments', Geo_Governorates::where('country_id',session('country'))->get());

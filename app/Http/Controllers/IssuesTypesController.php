@@ -18,10 +18,10 @@ class IssuesTypesController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data['issues'] = Cases_Types::where('country_id',session('country'))->get();
         return view('issues_types',$data);
     }

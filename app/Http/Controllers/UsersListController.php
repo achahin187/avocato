@@ -26,10 +26,10 @@ class UsersListController extends Controller
      */
     public function index()
     {   
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         // return Users::withTrashed()->restore();
         $data['users'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('parent_id', 13);

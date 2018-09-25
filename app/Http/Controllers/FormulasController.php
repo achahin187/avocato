@@ -26,10 +26,10 @@ class FormulasController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->get();
         $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
         return view('formulas.formulas', $data);
