@@ -58,7 +58,7 @@
             if (isConfirm){
              $.ajax({
                type:'POST',
-               url:'{{url('issues_types_destroy_all')}}',
+               url:'{{url('specializations_destroy_all')}}',
                data:{ids:selectedIds,_token:_token},
                success:function(data){
                 $.each( selectedIds, function( key, value ) {
