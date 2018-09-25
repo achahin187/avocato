@@ -79,7 +79,7 @@
           }).get();
           $.ajax({
            type:'GET',
-           url:'{{url('issues_types_excel')}}',
+           url:'{{url('specializations_excel')}}',
            data:{ids:selectedIds},
            success:function(response){
                   swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");

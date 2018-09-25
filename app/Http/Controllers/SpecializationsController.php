@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Specializations;
 use Validator;
 use Excel;
-use App\Exports\CasesTypesExport;
+use App\Exports\SpecializationsExport;
 use Session;
 
 class SpecializationsController extends Controller
@@ -40,14 +40,14 @@ class SpecializationsController extends Controller
     {   
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
-        $filename = 'cases'.time().'.xlsx';
+        $filename = 'specializations'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];
-        Excel::store(new CasesTypesExport($ids),$filepath.$filename);
+        Excel::store(new SpecializationsExport($ids),$filepath.$filename);
         return response()->json($PathForJson.$filename);
     }
         else{
-        Excel::store((new CasesTypesExport()),$filepath.$filename);
+        Excel::store((new SpecializationsExport()),$filepath.$filename);
         return response()->json($PathForJson.$filename); 
       }
     }
