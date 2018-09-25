@@ -33,10 +33,10 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data['services'] = Tasks::where('task_type_id', 3)->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
         return view('services.services', $data);

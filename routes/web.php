@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+// Auth::routes();
+Route::get('/choose_country', 'GeoCountryController@index')->name('choose.country');
+Route::post('/choose_country_info', 'GeoCountryController@choose')->name('choose.country.info');
+Route::group(['middleware' => ['country']], function () {
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
 Route::post('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('auth.login');
 Route::group(['middleware' => ['auth']], function () {
@@ -349,5 +352,6 @@ Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
 
-Route::get('/choose_country', 'GeoCountryController@index')->name('choose.country');
-Route::post('/choose_country_info', 'GeoCountryController@choose')->name('choose.country.info');
+
+
+});

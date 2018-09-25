@@ -33,10 +33,10 @@ class IndividualsController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $packages = Package_Types::all();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();

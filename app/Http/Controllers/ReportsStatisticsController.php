@@ -29,10 +29,10 @@ class ReportsStatisticsController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data = $this->getData();
 
         return view('reports_statistics', $data);

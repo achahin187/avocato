@@ -21,10 +21,10 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {   
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notification_Schedules::all();
        

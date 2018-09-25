@@ -14,10 +14,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        if(session('country')== null)
-        {
-            return redirect()->route('choose.country');
-        }
+        // if(session('country')== null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $this->middleware('auth');
     }
 
