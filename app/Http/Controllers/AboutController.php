@@ -115,23 +115,65 @@ class AboutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {
+    {  //dd($request);
         // validate
-        $this->validate($request, [
-            'about' => 'required'
-        ]);
+      // $validator =   $this->validate($request, [
+      //       'about' => 'required',
+      //       'vision' => 'required',
+      //       'mission' => 'required'
+      //   ]);
+
+        //  if ($validator->fails()) {
+        //     dd('validator errrOrrr');
+        //     return redirect('about')
+        //         ->withErrors($validator)
+        //         ->withInput();
+        // }
 
         // edit info
-        $edit = Fixed_Pages::where('id', 1)->first();
-
-        if($edit == null) {
+        if(isset($request->about)){
+        $about_edit = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
+           //  dd($about_edit);
+        if($about_edit == null) {
             Fixed_Pages::create([
-                'name' => 'من نحن',
+                'name' => 'About us',
                 'content' => $request->about
             ]);
         } else {
-            $edit->update(['name' => 'من نحن', 'content' => $request->about]);
+            $about_edit->update(['name' => 'About us', 'content' => $request->about]);
         }
+       }
+
+       //vision
+
+        if(isset($request->vision)){
+        $vision_edit = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
+           //  dd($about_edit);
+        if($vision_edit == null) {
+            Fixed_Pages::create([
+                'name' => 'vision',
+                'content' => $request->vision
+            ]);
+        } else {
+            $vision_edit->update(['name' => 'vision', 'content' => $request->vision]);
+        }
+       }
+
+
+        //mission
+
+        if(isset($request->mission)){
+        $mission_edit = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
+           //  dd($about_edit);
+        if($mission_edit == null) {
+            Fixed_Pages::create([
+                'name' => 'Mission',
+                'content' => $request->mission
+            ]);
+        } else {
+            $mission_edit->update(['name' => 'mission', 'content' => $request->mission]);
+        }
+       }
         // redirect back
         return redirect('about');
     }
