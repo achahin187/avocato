@@ -208,4 +208,14 @@ class Users extends Authenticatable
         return $this->hasMany('App\Log','created_by');
     }
 
+        public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+        public function specializations()
+    {
+        return $this->belongsToMany('App\Specializations','user_specializations','user_id','specialization_id');
+    }
+
 }
