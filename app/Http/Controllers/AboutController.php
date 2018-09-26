@@ -239,6 +239,43 @@ class AboutController extends Controller
          return redirect('terms_conditions');
     }
 
+   
+     public function privacy_update(Request $request)
+    { 
+
+        if(isset($request->privacy)){
+        $privacy_edit = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+           //  dd($about_edit);
+         
+        if($privacy_edit == null) {
+             if ($request->lang_privacy == 1) {
+        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->privacy, 1);
+        }else{
+            Fixed_Pages::create([
+                'name' => 'privacy',
+                'content' => $request->privacy
+            ]);
+
+            }
+
+        } else {
+         if ($request->lang_privacy == 1) {
+
+              try {
+            Helper::edit_entity_localization('fixed_pages', 'content',$privacy_edit->id, $request->privacy,1);
+        } catch (\Exception $ex) {
+             Helper::remove_localization('fixed_pages', 'content', $privacy_edit->id, 1);
+             Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, 1);
+
+        }
+         }else{
+            $privacy_edit->update(['name' => 'privacy', 'content' => $request->privacy]);
+        }
+
+        }
+       }
+         return redirect('privacy');
+    }
 
 
     /**

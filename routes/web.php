@@ -75,6 +75,8 @@ Route::patch('/terms_edit', 'AboutController@terms_update')->name('terms.update'
 
 //privacy
 Route::get('/privacy', 'AboutController@privacy')->name('privacy');
+Route::get('/privacy_edit', 'AboutController@privacy_edit')->name('privacy_edit');
+Route::patch('/privacy_edit', 'AboutController@privacy_update')->name('privacy.update');
 
 });
 
