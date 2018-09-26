@@ -108,6 +108,21 @@ class AboutController extends Controller
         return view('about_edit',$data);
     }
 
+    public function terms_edit()
+    {
+        $data['terms']= Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+        $data['languages']= Languages::all();
+        return view('terms_edit',$data);
+    }
+
+
+        public function privacy_edit()
+    {
+        $data['privacy']= Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+        $data['languages']= Languages::all();
+        return view('privacy_edit',$data);
+    }
+
     /**
      * Update the specified resource in storage.
      *

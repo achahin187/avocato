@@ -70,6 +70,7 @@ Route::patch('/about_edit', 'AboutController@update')->name('about.update');
 
 //terms and conditions
 Route::get('/terms_conditions', 'AboutController@terms_conditions')->name('terms_conditions');
+Route::get('/terms_edit', 'AboutController@terms_edit')->name('terms_edit');
 
 //privacy
 Route::get('/privacy', 'AboutController@privacy')->name('privacy');
