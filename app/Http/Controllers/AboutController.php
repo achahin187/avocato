@@ -16,8 +16,39 @@ class AboutController extends Controller
      */
     public function index()
     {
-        return view('about')->with('about', Fixed_Pages::where('id', 1)->first());
+          if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+
+
+         $clients =  Fixed_Pages::where('country_id',session('country'));
+
+         $clients = $clients->where(function($query)  {
+          $query->where('page_name','aboutus')
+         ->orWhere('page_name','vision')
+         ->orWhere('page_name','mission');
+          });
+
+   
+         $data['about'] = $clients->get();
+         return view('about',$data);
+
+        // return view('about')->with('about', Fixed_Pages::where('page_name','aboutus')->orWhere('page_name','vision')
+        //     ->orWhere('page_name','mission')->where('country_id',session('country'))->get());
     }
+
+
+
+     public function terms_conditions()
+    {
+          if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        return view('about')->with('terms', Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->get());
+    }
+
 
     /**
      * Show the form for creating a new resource.
