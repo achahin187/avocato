@@ -20,36 +20,8 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-12">
-      <form action="{{ route('about.update') }}" method="POST">
-        {{ csrf_field() }}
-        {{ method_field('PATCH') }}
-        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-          <div class="col-lg-12">
-            <div class="main-title-conts">
-              <div class="caption">
-                <h3>تعريف عن جسر الأمان</h3>
-              </div>
-              <div class="actions">
-              </div><span class="mainseparator bgcolor--main"></span>
-
-              <textarea name="about"  cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
-
-          </div>
-          <hr>
-          <div class="col-md-2 col-xs-6">
-            <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
-            </button>
-          </div>
-          <div class="col-md-2 col-xs-6">
-            <a class="master-btn undefined btn-block color--white bgcolor--fadeorange bradius--small bshadow--0" href="{{ route('about') }}"><i class="fa fa-times"></i><span>الغاء</span>
-            </a>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </form>
-    </div>
-  </div>
+   
+  
 
   <!--  -->
 
@@ -170,7 +142,7 @@
                 </div>
            
 
-
+</div>
 
   <!--  -->
 
