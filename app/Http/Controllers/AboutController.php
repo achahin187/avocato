@@ -100,7 +100,9 @@ class AboutController extends Controller
      */
     public function edit()
     {
-        $data['about']= Fixed_Pages::where('id', 1)->first();
+        $data['about']= Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
+        $data['vision']= Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
+        $data['mission']= Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
         $data['languages']= Languages::all();
         return view('about_edit',$data);
     }

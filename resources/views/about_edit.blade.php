@@ -92,7 +92,7 @@
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="vision" id="article-ckeditor-vision" cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
+              <textarea name="vision" id="article-ckeditor-vision" cols="30" rows="10">@if(isset($vision->content)){!! $vision->content !!}@endif</textarea>
 
          
           <hr>
@@ -119,7 +119,7 @@
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="mission" id="article-ckeditor-mission" cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
+              <textarea name="mission" id="article-ckeditor-mission" cols="30" rows="10">@if(isset($mission->content)){!! $mission->content !!}@endif</textarea>
      
          
           <hr>
