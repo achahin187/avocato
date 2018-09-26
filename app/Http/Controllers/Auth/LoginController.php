@@ -83,7 +83,7 @@ class LoginController extends Controller
                         $u->last_login=date('Y-m-d H:i:s');
                         $u->save();
                         Helper::add_log(1,16,Auth::user()->id);
-                        return redirect('/'); 
+                        return redirect('reports_statistics'); 
                     }
                     else
                     {
