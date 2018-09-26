@@ -46,7 +46,17 @@ class AboutController extends Controller
         {
             return redirect()->route('choose.country');
         }
-        return view('about')->with('terms', Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->get());
+        return view('terms')->with('terms', Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first());
+    }
+
+
+    public function privacy()
+    {
+          if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        return view('privacy')->with('terms', Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first());
     }
 
 
