@@ -18,11 +18,11 @@ class SpecializationsController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
-        $data['specializations'] = Specializations::all();
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        $data['specializations'] = Specializations::where('country_id', session('country'))->get();
         return view('specializations',$data);
     }
 

@@ -68,6 +68,12 @@ Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 Route::patch('/about_edit', 'AboutController@update')->name('about.update');
 
+//terms and conditions
+Route::get('/terms_conditions', 'AboutController@terms_conditions')->name('terms_conditions');
+
+//privacy
+Route::get('/privacy', 'AboutController@privacy')->name('privacy');
+
 });
 
 

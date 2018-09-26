@@ -22,18 +22,44 @@
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="col-lg-12">
-        <h2>{{ $about->name }}</h2>
-        @if (isset($about->content) && $about->content != null)
-          {!! $about->content !!}
-        @else
-          لا يوجد معلومات كافية!
-        @endif
-        
-      </div>
+     
       <div class="clearfix"></div>
     </div>
   </div>
 </div>
+
+<!--  -->
+            <div class="row">
+     
+                <div class="col-lg-12">
+                  <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    <div class="tabs--wrapper">
+                      <div class="clearfix"></div>
+                      <ul class="tabs">
+                        @foreach($about as $tab)
+                        <li>{{$tab->name}}</li>
+                       @endforeach
+                      </ul>
+                      <ul class="tab__content">
+                         @foreach($about as $tabContent)
+                        <li class="tab__content_item active">
+                          <!--.col-xs-12h4  عنا
+                          -->
+                          <div class="col-lg-12">
+                            <p>
+                           {!!$tabContent->content!!}
+                            </p>
+                          </div>
+                          <div class="clearfix"></div>
+                        </li>
+                          @endforeach
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<!--  -->
 
   <script src="{{ url('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
   <script>
