@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Session;
-
 use App\Fixed_Pages;
+use App\Languages;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -100,7 +100,9 @@ class AboutController extends Controller
      */
     public function edit()
     {
-        return view('about_edit')->with('about', Fixed_Pages::where('id', 1)->first());
+        $data['about']= Fixed_Pages::where('id', 1)->first();
+        $data['languages']= Languages::all();
+        return view('about_edit',$data);
     }
 
     /**
