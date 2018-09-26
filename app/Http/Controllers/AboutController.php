@@ -201,6 +201,46 @@ class AboutController extends Controller
         return redirect('about');
     }
 
+
+      public function terms_update(Request $request)
+    { 
+
+        if(isset($request->terms)){
+        $terms_edit = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+           //  dd($about_edit);
+         
+        if($terms_edit == null) {
+             if ($request->lang_terms == 1) {
+        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->terms, 1);
+        }else{
+            Fixed_Pages::create([
+                'name' => 'terms',
+                'content' => $request->terms
+            ]);
+
+            }
+
+        } else {
+         if ($request->lang_terms == 1) {
+
+              try {
+            Helper::edit_entity_localization('fixed_pages', 'content',$terms_edit->id, $request->terms,1);
+        } catch (\Exception $ex) {
+             Helper::remove_localization('fixed_pages', 'content', $terms_edit->id, 1);
+             Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, 1);
+
+        }
+         }else{
+            $terms_edit->update(['name' => 'terms', 'content' => $request->terms]);
+        }
+
+        }
+       }
+         return redirect('terms_conditions');
+    }
+
+
+
     /**
      * Remove the specified resource from storage.
      *

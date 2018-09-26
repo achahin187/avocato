@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                      <form action="{{ route('about.update') }}" method="POST">
+                      <form action="{{ route('terms.update') }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('PATCH') }}
 
@@ -29,7 +29,7 @@
           <div class="col-lg-12">
             <div class="main-title-conts">
                               <div class="caption">
-                                <h3>تعريف عن جسر الأمان</h3>
+                                <h3>لشروط و الأحكام</h3>
                               </div>
                               <div class="actions">
                               </div><span class="mainseparator bgcolor--main"></span>
