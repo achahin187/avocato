@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Fixed_Pages;
 use App\Languages;
+use App\Helpers\Helper;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -115,32 +116,39 @@ class AboutController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {  //dd($request);
-        // validate
-      // $validator =   $this->validate($request, [
-      //       'about' => 'required',
-      //       'vision' => 'required',
-      //       'mission' => 'required'
-      //   ]);
+    { 
 
-        //  if ($validator->fails()) {
-        //     dd('validator errrOrrr');
-        //     return redirect('about')
-        //         ->withErrors($validator)
-        //         ->withInput();
-        // }
-
+    //**** Note still need to add localization (arabic or french) to mission and vission
         // edit info
         if(isset($request->about)){
         $about_edit = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
            //  dd($about_edit);
+         
         if($about_edit == null) {
+             if ($request->lang_about == 1) {
+        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, 1);
+        }else{
             Fixed_Pages::create([
                 'name' => 'About us',
                 'content' => $request->about
             ]);
+
+            }
+
         } else {
+         if ($request->lang_about == 1) {
+
+              try {
+            Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->about,1);
+        } catch (\Exception $ex) {
+             Helper::remove_localization('fixed_pages', 'content', $about_edit->id, 1);
+             Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, 1);
+
+        }
+         }else{
             $about_edit->update(['name' => 'About us', 'content' => $request->about]);
+        }
+
         }
        }
 
