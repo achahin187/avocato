@@ -113,11 +113,20 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       <div class="row"><b class="col-xs-3">البريد الالكترونى </b>
                         <div class="col-xs-9">{{$lawyer->email}}</div>
                       </div>
-                      <div class="row"><b class="col-xs-3">درجة القيد بالنقابة </b>
-                        <div class="col-xs-9">{{$lawyer->user_detail->syndicate_level}}</div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">المحامي لديه مكتب</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">
+                          {!!$lawyer->user_detail->has_office ? '<i class="fa fa color--fadegreen fa-check"></i>' : '<i class="fa fa color--black fa-times"></i>'!!}
+                          
+                          </div>
                       </div>
-                      <div class="row"><b class="col-xs-3">درجة التقاضي </b>
-                        <div class="col-xs-9">{{$lawyer->user_detail->litigation_level}}</div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">سنوات الخبرة</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->user_detail->experience}} سنوات</div>
+                      </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">سعر الإستشارة</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->user_detail->consultation_price}} مصرى</div>
+                      </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">نبذة عن المحامي</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->note}} </div>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -140,7 +149,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                     <ul class="tab__content">
                       <li class="tab__content_item active">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                          <div class="row">
+{{--                           <div class="row">
                             <div class="col-xs-6"><b class="col-xs-4">التخصص </b>
                               <div class="col-xs-8"> {{$lawyer->user_detail->work_sector}}</div>
                             </div>
@@ -156,7 +165,40 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                              <div class="col-xs-6"><b class="col-xs-4">درجه التقاضي </b>
                               <div class="col-xs-8">{{$lawyer->user_detail->litigation_level}}</div>
                             </div>
+                          </div> --}}
+                          <div class="row">
+                            <div class="col-xs-6"><b class="col-xs-4">الاختصاص المكاني</b>
+                              <div class="col-xs-8">{{$lawyer->user_detail->city->name ?? ''}} </div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-xs-4">التخصص</b>
+                              <div class="col-xs-8"> 
+                                @foreach($lawyer->specializations as $spec)
+                                - {{$spec->name}}  
+                                @endforeach
+                              </div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-md-4 col-sm-5 col-xs-12">درجة القيد بالنقابة</b>
+                              <div class="col-md-8 col-sm-7 col-xs-12">{{$lawyer->user_detail->syndicate_levela->name}}</div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-md-4 col-sm-5 col-xs-12">درجة التقاضي</b>
+                              <div class="col-md-8 col-sm-7 col-xs-12">{{$lawyer->user_detail->litigation_level}}</div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-md-4 col-sm-5 col-xs-12">مدرج بجدول محكمي وزارة العدل</b>
+                              <div class="col-md-8 col-sm-7 col-xs-12">
+                                @if($lawyer->user_detail->is_international_arbitrator)<i class="fa fa color--fadegreen fa-check"></i>@else<i class="fa fa color--black fa-times"></i>@endif
+                              </div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-md-4 col-sm-5 col-xs-12">التخصص كمحكم في وزارة العدل</b>
+                              <div class="col-md-8 col-sm-7 col-xs-12">{{$lawyer->user_detail->international_arbitrator_specialization}}</div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-xs-4">تاريخ الإتحاق بالعمل بالشركة</b>
+                              <div class="col-xs-8">{{$lawyer->user_detail->join_date}}</div>
+                            </div>
+                            <div class="col-xs-6"><b class="col-xs-4">تاريخ انتهاء العمل بالشركة</b>
+                              <div class="col-xs-8">{{$lawyer->user_detail->resign_date}}</div>
+                            </div>
                           </div>
+
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                               <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$lawyer->user_detail->syndicate_copy)}}">

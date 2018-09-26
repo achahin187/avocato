@@ -21,8 +21,13 @@ class Geo_Cities extends Model
     {
         return $this->hasMany('App\Courts','city_id');
     }
-    public function cases()
+        public function cases()
     {
         return $this->hasMany('App\Case_', 'geo_city_id');
+    }
+
+        public function users_details()
+    {
+        return $this->hasMany('App\User_Details','work_sector_area_id');
     }
 }

@@ -275,8 +275,8 @@ $(document).on('confirmation', '#two', function () {
                   @endif
                 @endforeach</span></td>
                 <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_level or ''}}</span></td>
+                <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
+                <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->address or ''}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->mobile or ''}}</span></td>
                 <td><span class="cellcontent">@isset($lawyer->user_detail->join_date){{$lawyer->user_detail->join_date->format('Y - m - d')}}@endisset</span></td>

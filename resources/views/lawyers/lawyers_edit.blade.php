@@ -153,6 +153,17 @@
                           <label for="radbtn_3">غير مفعل</label>
                         </div>
                       </div>
+
+                      <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_info">نبذة عن المحامي</label>
+                          <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea><span class="master_message color--fadegreen">
+                                  @if ($errors->has('note'))
+                                    {{ $errors->first('note')}}
+                                    @endif</span>
+                        </div>
+                      </div>
+
                       <div class="clearfix"></div>
                     </div>
                     <div class="main-title-conts">
@@ -163,17 +174,29 @@
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                      
                       <div class="col-md-4 col-sm-6 col-xs-12">
-
                         <div class="master_field">
-                          <label class="master_label" for="lawyer_email">التخصص</label>
-                          <input value="{{$lawyer->user_detail->work_sector}}" name="work_sector" class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector"><span class="master_message color--fadegreen">
+                          <label class="master_label mandatory" for="lawyer_type"> التخصص</label>
+                          <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                            @foreach($work_sectors as $work_sector)
+                            <option  
+                            @foreach($lawyer->specializations as $spec)
+                            @if($spec->id == $work_sector->id)
+                            {!!'selected'!!}
+                            @endif
+                            @endforeach
+                            value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector'))
                                     {{ $errors->first('work_sector')}}
                                     @endif</span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+
+                      </div>
+{{--                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
                           <input value="{{$lawyer->user_detail->work_sector_type}}" name="work_sector_type" class="master_input" type="text" placeholder="الإختصاص المكاني" id="lawyer_spec"><span class="master_message color--fadegreen">
@@ -181,7 +204,27 @@
                                     {{ $errors->first('work_sector_type')}}
                                     @endif </span>
                         </div>
+                      </div> --}}
+
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
+                         <select name="work_sector_area" class="master_input" id="currency">
+                          <option value="choose" selected disabled>اختر التخصص المكانى</option>
+                          @foreach($work_sector_areas as $area)
+                          <option 
+                          @if($lawyer->user_detail->work_sector_area_id == $area->id)
+                          {!!'selected'!!}
+                          @endif
+                           value="{{$area->id}}">{{$area->name}}</option>
+                          @endforeach
+                          </select><span class="master_message color--fadegreen">                                        
+                                  @if ($errors->has('work_sector_area'))
+                                    {{ $errors->first('work_sector_area')}}
+                                    @endif</span>
+                        </div>
                       </div>
+
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_degrees">درجة التقاضي</label>
@@ -227,7 +270,54 @@
                                     @endif</span>
                         </div>
                       </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label" for="year_experience">سنوات الخبرة</label>
+                          <input value="{{$lawyer->user_detail->experience}}" name="experience" class="master_input" type="number" placeholder="سنوات الخبرة" id="year_experience">
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-6 col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="consultation_cost">سعر الإستشارة</label>
+                          <input value="{{$lawyer->user_detail->consultation_price}}" name="consultation_price" class="master_input" type="number" placeholder="سعر الإستشارة" id="consultation_cost"><span class="master_message color--fadegreen">
+                                @if ($errors->has('consultation_price'))
+                                    {{ $errors->first('consultation_price')}}
+                                    @endif</span>
+                        </div>
+                      </div>
+                      <div class="col-md-2 col-sm-6 col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="currency">العملة</label>
+                          <select name="currency_id" class="master_input" id="currency">
+                            @foreach($currencies as $currency)
+                            <option @if($currency->id == session('country'))'selected'@endif value="{{$currency->id}}">{{$currency->currency}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('currency_id'))
+                                    {{ $errors->first('currency_id')}}
+                                    @endif</span>
+                        </div>
+                      </div>
+
                       <div class="clearfix"></div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label">مدرج بجدول محكمي وزارة العدل؟</label>
+                          <div class="funkyradio">
+                            <input {{$lawyer->user_detail->is_international_arbitrator ? 'checked' : ''}} value="1" name="is_international_arbitrator" type="checkbox" name="radio" id="is_judge">
+                            <label for="is_judge">مدرج</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="judge_res">التخصص كمحكم في وزارة العدل</label>
+                          <input value="{{$lawyer->user_detail->international_arbitrator_specialization}}" name="international_arbitrator_specialization" class="master_input" type="text" placeholder="التخصص كمحكم في وزارة العدل " id="judge_res"><span class="master_message color--fadegreen"> </span>
+                        </div>
+                      </div>
+
                     </div>
                     <div class="main-title-conts">
                       <div class="caption">
@@ -254,12 +344,19 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_degree_in">درجة القيد بالنقابة </label>
-                          <input value="{{$lawyer->user_detail->syndicate_level}}" name="syndicate_level" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('syndicate_level'))
-                                    {{ $errors->first('syndicate_level')}}
+                         <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
+                          <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
+                          @foreach($syndicate_levels as $syndicate)
+                          <option @if($lawyer->user_detail->syndicate_level_id == $syndicate->id)
+                          selected @endif value="{{$syndicate->id}}">{{$syndicate->name}}</option>
+                          @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('syndicate_level_id'))
+                                    {{ $errors->first('syndicate_level_id')}}
                                     @endif</span>
                         </div>
                       </div>
+
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_card">صورة كارنيه النقابة</label>

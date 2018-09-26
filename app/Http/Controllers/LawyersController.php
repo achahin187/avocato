@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Exports\LawyersExport;
 use Jenssegers\Date\Date;
+use App\Specializations;
+use App\Geo_Cities;
+use App\SyndicateLevels;
 
 
 class LawyersController extends Controller
@@ -66,6 +69,10 @@ class LawyersController extends Controller
   {
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['currencies'] = Geo_Countries::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers_create', $data);
   }
 
@@ -182,9 +189,12 @@ class LawyersController extends Controller
   {
     $validator = Validator::make($request->all(), [
       'lawyer_name' => 'required',
+      'note' => 'required',
       'address' => 'required',
       'nationality' => 'required',
       'national_id' => 'required|numeric',
+      'consultation_price' => 'required|numeric',
+      'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
       'mobile' => 'required|digits_between:1,12',
@@ -192,12 +202,12 @@ class LawyersController extends Controller
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
       'work_sector' => 'required',
-      'work_sector_type' => 'required',
+      'work_sector_area' => 'required',
       'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
       'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
-      'syndicate_level' => 'required',
+      'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
     ]);
 
@@ -236,6 +246,7 @@ class LawyersController extends Controller
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $lawyer->image = $image_name;
     $lawyer->country_id=session('country');
+    $lawyer->note = $request->note;
     $lawyer->save();
     $lawyer = Users::find($lawyer->id);
     $password = Helper::generateRandom(Users::class, 'password', 8);
@@ -243,11 +254,20 @@ class LawyersController extends Controller
     $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
     $lawyer->save();
     $lawyer->rules()->attach([5, $request->work_type]);
+        foreach($request->work_sector as $work_sector)
+    {
+      $lawyer->specializations()->attach($work_sector);
+    }
     $lawyer_details = new User_Details;
     $lawyer_details->national_id = $request->national_id;
     $lawyer_details->nationality_id = $request->nationality;
-    $lawyer_details->work_sector = $request->work_sector;
-    $lawyer_details->work_sector_type = $request->work_sector_type;
+    // $lawyer_details->work_sector = $request->work_sector;
+    $lawyer_details->work_sector_area_id = $request->work_sector_area;
+    $lawyer_details->experience = $request->experience;
+    $lawyer_details->consultation_price = $request->consultation_price;
+    $lawyer_details->currency_id = $request->currency_id;
+    $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
+    $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
     $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
     
     if ($request->filled('resign_date'))
@@ -256,7 +276,7 @@ class LawyersController extends Controller
       $lawyer_details->resign_date = null;
 
     $lawyer_details->litigation_level = $request->litigation_level;
-    $lawyer_details->syndicate_level = $request->syndicate_level;
+    $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
     $lawyer_details->authorization_copy = $authorization_copy;
     $lawyer_details->syndicate_copy = $syndicate_copy;
     $lawyer_plaintext = new ClientsPasswords;
@@ -363,6 +383,10 @@ class LawyersController extends Controller
     
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['currencies'] = Geo_Countries::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers_edit', $data);
   }
 
@@ -380,6 +404,12 @@ class LawyersController extends Controller
       'lawyer_name' => 'required',
       'address' => 'required',
       'nationality' => 'required',
+      'note' => 'required',
+      'consultation_price' => 'required|numeric',
+      'currency_id'=>'required',
+      'syndicate_level_id'=>'required',
+      'work_sector_area' => 'required',
+      'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
@@ -387,11 +417,9 @@ class LawyersController extends Controller
       'email' => 'required|email|max:40',
       'is_active' => 'required',
       'work_sector' => 'required',
-      'work_sector_type' => 'required',
       'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
-      'syndicate_level' => 'required',
     ]);
 
     if ($validator->fails()) {
@@ -408,6 +436,7 @@ class LawyersController extends Controller
     $lawyer->phone = $request->phone;
     $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
+    $lawyer->note = $request->note;
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     if ($request->hasFile('image')) {
@@ -427,11 +456,23 @@ class LawyersController extends Controller
     $lawyer->save();
     $lawyer->rules()->detach();
     $lawyer->rules()->attach([5, $request->work_type]);
+    $lawyer->specializations()->detach();
+          foreach($request->work_sector as $work_sector)
+    {
+      $lawyer->specializations()->attach($work_sector);
+    }
     $lawyer_details = User_Details::where('user_id', $id)->first();;
     $lawyer_details->national_id = $request->national_id;
     $lawyer_details->nationality_id = $request->nationality;
-    $lawyer_details->work_sector = $request->work_sector;
-    $lawyer_details->work_sector_type = $request->work_sector_type;
+    // $lawyer_details->work_sector = $request->work_sector;
+    $lawyer_details->work_sector_area_id = $request->work_sector_area;
+    $lawyer_details->experience = $request->experience;
+    $lawyer_details->consultation_price = $request->consultation_price;
+    $lawyer_details->currency_id = $request->currency_id;
+    $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
+    $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
+    $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
+
     $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));

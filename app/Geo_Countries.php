@@ -15,6 +15,11 @@ class Geo_Countries extends Model
        return $this->hasMany('App\User_Details','nationality_id');
    }
 
+       public function user_details_currency()
+   {
+       return $this->hasMany('App\User_Details','currency_id');
+   }
+
 	//there is no any relation so don't use it (the fk id is different)
         public function localizations()
     {

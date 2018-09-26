@@ -10,4 +10,11 @@ class Specializations extends Model
     protected $table = 'specializations';
     public $timestamps = true;
 
+        public function users()
+    {
+        return $this->belongsToMany('App\Users','user_specializations','user_id','specialization_id');
+    }
+
+
+
 }
