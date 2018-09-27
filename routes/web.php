@@ -369,6 +369,13 @@ Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
 
+//offices
+
+Route::get('/offices', 'OfficesController@index')->name('offices');
+//Route::get('/offices_follow', 'OfficesController@follow')->name('offices_follow');
+Route::get('/offices_show/{id}', 'OfficesController@show')->name('offices_show');
+Route::get('/offices_create', 'OfficesController@create')->name('offices_create');
+Route::post('/offices_store', 'OfficesController@store')->name('offices_store');
 
 
 });

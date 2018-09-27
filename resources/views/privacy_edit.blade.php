@@ -29,7 +29,7 @@
           <div class="col-lg-12">
             <div class="main-title-conts">
                               <div class="caption">
-                                <h3>لشروط و الأحكام</h3>
+                                <h3>سياسة الخصوصية</h3>
                               </div>
                               <div class="actions">
                               </div><span class="mainseparator bgcolor--main"></span>
