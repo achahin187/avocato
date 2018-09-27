@@ -233,10 +233,10 @@ class OfficesController extends Controller
     $lawyer = new Users;
     $lawyer->name = $request->office_name . $lawyer->id;
     $lawyer->full_name = $request->office_name;
-    $lawyer->address = $request->address;
-    $lawyer->phone = $request->phone;
+    $lawyer->address = $request->office_address;
+    $lawyer->phone = $request->office_phone;
     $lawyer->mobile = $request->mobile;
-    $lawyer->email = $request->email;
+    $lawyer->email = $request->office_email;
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $lawyer->image = ($request->hasFile('office_image'))?$office_image_name:'';
@@ -257,7 +257,7 @@ class OfficesController extends Controller
     $lawyer_details->national_id = $request->national_id;
     $lawyer_details->nationality_id = $request->nationality;
     // $lawyer_details->work_sector = $request->work_sector;
-    $lawyer_details->work_sector_area_id = $request->work_sector_area;
+    $lawyer_details->work_sector_area_id = $request->office_city;
     $lawyer_details->experience = $request->experience;
     $lawyer_details->consultation_price = $request->consultation_price;
     $lawyer_details->currency_id = $request->currency_id;
@@ -272,7 +272,7 @@ class OfficesController extends Controller
 
     $lawyer_details->litigation_level = $request->litigation_level;
     $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
-    $lawyer_details->authorization_copy = $attorney_form;
+    $lawyer_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
     //$lawyer_details->syndicate_copy = $syndicate_copy;
     $lawyer_plaintext = new ClientsPasswords;
     $lawyer_plaintext->password = $password;

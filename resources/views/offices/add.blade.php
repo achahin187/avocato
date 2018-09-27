@@ -48,25 +48,39 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_address">عنوان المكتب</label>
-                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
-                          <input class="master_input" type="text" placeholder="المدينة .." id="office_city"><span class="master_message color--fadegreen">message </span>
+                          <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('nationality'))
+                                    {{ $errors->first('nationality')}}
+                                    @endif</span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
-                          <input class="master_input" type="number" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen">message</span>
+                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen">
+                                   @if ($errors->has('office_phone'))
+                                    {{ $errors->first('office_phone')}}
+                                    @endif </span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label" for="office_email">البريد الالكترونى</label>
-                          <input class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen">message</span>
+                          <label class="master_label mandatory" for="office_email">البريد الالكترونى</label>
+                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('office_email'))
+                                    {{ $errors->first('office_email')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -96,19 +110,22 @@
                                     @endif</span>
                         </div>
                       </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label" for="office_info">نبذة عن المكتب</label>
-                          <textarea class="master_input" name="textarea" id="office_info" placeholder="نبذة"></textarea><span class="master_message color--fadegreen">message</span>
+                          <label class="master_label mandatory" for="office_info">نبذة عن المكتب</label>
+                          <textarea value="{{ old('note') }}" class="master_input" name="note" id="office_info" placeholder="نبذة"></textarea><span class="master_message color--fadegreen">
+                                  @if ($errors->has('note'))
+                                    {{ $errors->first('note')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory">تفعيل المكتب</label>
-                          <input class="icon" type="radio" name="icon" id="active_1" checked="true">
-                          <label for="active_1">مفعل</label>
-                          <input class="icon" type="radio" name="icon" id="active_2">
-                          <label for="active_2">غير مفعل</label>
+                          <input name="is_active" value="1" class="icon" type="radio" name="icon" id="radbtn_2" checked="true">
+                          <label for="radbtn_2">مفعل</label>
+                          <input name="is_active" value="0" class="icon" type="radio" name="icon" id="radbtn_3">
+                          <label for="radbtn_3">غير مفعل</label>
                         </div>
                       </div>
                       <div class="clearfix"></div>
@@ -142,7 +159,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <select name="nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
