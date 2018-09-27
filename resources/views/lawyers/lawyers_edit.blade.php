@@ -156,7 +156,7 @@
 
                       <div class="col-md-8 col-sm-12 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_info">نبذة عن المحامي</label>
+                          <label class="master_label" for="lawyer_info">نبذة عن المحامي</label>
                           <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea><span class="master_message color--fadegreen">
                                   @if ($errors->has('note'))
                                     {{ $errors->first('note')}}
@@ -173,7 +173,7 @@
                       <div class="actions">
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
-                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    {{-- <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> --}}
                       
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
@@ -195,7 +195,7 @@
                         </div>
                       </div>
 
-                      </div>
+                      {{-- </div> --}}
 {{--                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
@@ -209,7 +209,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
-                         <select name="work_sector_area" class="master_input" id="currency">
+                         <select name="work_sector_area" class="master_input select2" id="currency">
                           <option value="choose" selected disabled>اختر التخصص المكانى</option>
                           @foreach($work_sector_areas as $area)
                           <option 
@@ -313,7 +313,7 @@
                       </div>
                       <div class="col-md-8 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="judge_res">التخصص كمحكم في وزارة العدل</label>
+                          <label class="master_label" for="judge_res">التخصص كمحكم في وزارة العدل</label>
                           <input value="{{$lawyer->user_detail->international_arbitrator_specialization}}" name="international_arbitrator_specialization" class="master_input" type="text" placeholder="التخصص كمحكم في وزارة العدل " id="judge_res"><span class="master_message color--fadegreen"> </span>
                         </div>
                       </div>

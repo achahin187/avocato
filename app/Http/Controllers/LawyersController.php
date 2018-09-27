@@ -193,7 +193,6 @@ class LawyersController extends Controller
   {
     $validator = Validator::make($request->all(), [
       'lawyer_name' => 'required',
-      'note' => 'required',
       'address' => 'required',
       'nationality' => 'required',
       'national_id' => 'required|numeric',
@@ -408,7 +407,6 @@ class LawyersController extends Controller
       'lawyer_name' => 'required',
       'address' => 'required',
       'nationality' => 'required',
-      'note' => 'required',
       'consultation_price' => 'required|numeric',
       'currency_id'=>'required',
       'syndicate_level_id'=>'required',
