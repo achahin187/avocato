@@ -57,7 +57,7 @@
                               <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                               <select class="master_input" id="lang_about" name="lang_about">
                                 @foreach($languages as $lang)
-                                <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                <option value="{{$lang->id}}" {{($lang->id==2)?'selected':''}}>{{$lang->name}}</option>
                                 @endforeach
                               </select>
                             </div>
