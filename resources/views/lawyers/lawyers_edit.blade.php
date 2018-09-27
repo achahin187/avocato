@@ -173,7 +173,7 @@
                       <div class="actions">
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
-                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    {{-- <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> --}}
                       
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
@@ -195,7 +195,7 @@
                         </div>
                       </div>
 
-                      </div>
+                      {{-- </div> --}}
 {{--                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
