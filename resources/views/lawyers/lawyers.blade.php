@@ -187,13 +187,22 @@ $(document).on('confirmation', '#two', function () {
                 <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="master_field">
                     <label class="master_label" for="work_sector">التخصص</label>
-                    <input name="work_sector" class="master_input" type="text" placeholder="التخصص .." id="work_sector">
+                  <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                            @foreach($work_sectors as $work_sector)
+                            <option value="{{$work_sector->name}}">{{$work_sector->name}}</option>
+                            @endforeach
+                          </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="master_field">
                     <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
-                    <input name="syndicate_level" class="master_input" type="text" placeholder="درجة القيد بالنقابة .." id="lawyer_degree_in">
+                 <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
+                          <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
+                          @foreach($syndicate_levels as $syndicate)
+                          <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
+                          @endforeach
+                          </select>
                   </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
