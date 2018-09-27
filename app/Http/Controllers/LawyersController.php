@@ -44,6 +44,8 @@ class LawyersController extends Controller
     })->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers', $data);
   }
 
@@ -125,15 +127,15 @@ class LawyersController extends Controller
       }
 
       if ($request->filled('work_sector')) {
-        $q->whereHas('user_detail', function ($q) use ($request) {
-          $q->where('work_sector', 'like', '%' . $request->work_sector . '%');
+        $q->whereHas('specializations', function ($q) use ($request) {
+          $q->whereIn('name',$request->work_sector);
 
         });
       }
 
-      if ($request->filled('syndicate_level')) {
+      if ($request->filled('syndicate_level_id')) {
         $q->whereHas('user_detail', function ($q) use ($request) {
-          $q->where('syndicate_level', 'like', '%' . $request->syndicate_level . '%');
+          $q->where('syndicate_level_id',$request->syndicate_level_id);
 
         });
       }
@@ -165,6 +167,8 @@ class LawyersController extends Controller
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     foreach ($data['lawyers'] as $lawyer) {
       $filter_ids[] = $lawyer->id;
     }
