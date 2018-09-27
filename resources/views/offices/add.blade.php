@@ -3,7 +3,7 @@
 
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg ' )}}') no-repeat center center; background-size:cover">
                     <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -18,6 +18,13 @@
                     </div>
                   </div>
                   <div class="col-lg-12">
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
+              <form role="form" action="{{route('offices_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                {{csrf_field()}}
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
@@ -34,8 +41,8 @@
                       <div class="clearfix"></div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="office_name">اسم المكنب</label>
-                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name"><span class="master_message color--fadegreen">message </span>
+                          <label class="master_label mandatory" for="office_name">اسم المكتب</label>
+                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -68,9 +75,12 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للمكتب</div>
-                              <input class="chooseFile" type="file" name="chooseFile" id="office_img">
+                             <input name="office_image" class="chooseFile" type="file" name="chooseFile" id="office_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div><span class="master_message color--fadegreen">
+                                  @if ($errors->has('image'))
+                                    {{ $errors->first('image')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -78,10 +88,12 @@
                           <label class="master_label mandatory" for="cer_img">صورة التوكيل</label>
                           <div class="file-upload">
                             <div class="file-select">
-                              <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة التوكيل</div>
-                              <input class="chooseFile" type="file" name="chooseFile" id="cer_img">
+                              <input name="attorney_form" class="chooseFile" type="file" name="chooseFile" id="lawyer_authorization">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div><span class="master_message color--fadegreen">
+                                    @if ($errors->has('attorney_form'))
+                                    {{ $errors->first('attorney_form')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -129,8 +141,16 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="rep_nationality">الجنسية </label>
-                          <input class="master_input" type="text" placeholder="الجنسية" id="rep_nationality"><span class="master_message color--fadegreen">message </span>
+                          <label class="master_label mandatory" for="work_type">الجنسيه</label>
+                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <option value="choose" selected disabled>اختر الجنسيه</option>
+                          @foreach($nationalities as $nationality)
+                            <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('nationality'))
+                                    {{ $errors->first('nationality')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -237,9 +257,10 @@
                         </button>
                       </div>
                       <div class="col-md-2 col-sm-6 col-xs-6">
-                        <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
-                        </button>
+                        <a href="{{route('offices')}}"><button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
+                        </button></a>
                       </div>
+                         </form>
                       <div class="clearfix"></div><br>
                     </div>
                   </div>
