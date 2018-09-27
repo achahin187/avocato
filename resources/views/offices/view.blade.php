@@ -7,8 +7,8 @@
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="../img/avaters/male.jpg">
-                              <h3 class="coverglobal__title color--gray_d">مكتب محمد احمد</h3><small class="coverglobal__slogan color--gray_d">مفعل</small></a></div>
+                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="{{asset(''.$office->image)}}">
+                              <h3 class="coverglobal__title color--gray_d">{{$office->name}}</h3><small class="coverglobal__slogan color--gray_d">{{$office->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
                           <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمكتب</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="users_list_edit.html">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="">استبعاد المكتب</a>
                           </div>
                         </div>
@@ -19,23 +19,23 @@
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">عنوان المكتب</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12"> شارع 90 - التجمع الخامس</div>
-                      </div>
-                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">رقم الهاتف</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">9123489</div>
+                      <!-- <div class="row"><b class="col-md-3 col-sm-5 col-xs-12"></b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->address}}</div>
+                      </div> -->
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">تليفون</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->phone}}</div>
                       </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">البريد الالكترونى</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">mohamed@gmail.com</div>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->email}}</div>
                       </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">العنوان</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">55 شارع 99 المعادي</div>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->address}}</div>
                       </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">المدينة</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">القاهرة</div>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{($office->user_detail->city)?$office->user_detail->city->name:''}}</div>
                       </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">نبذة عن المكتب</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">بعض النص</div>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->note}}</div>
                       </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12"><img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"></div>
@@ -57,44 +57,46 @@
                       <li class="tab__content_item active">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="row">
-                            <div class="col-md-2 col-sm-3 text-center"><img class="coverglobal__avatar img-responsive" src="../img/avaters/male.jpg"></div>
+                            <div class="col-md-2 col-sm-3 text-center"><img class="coverglobal__avatar img-responsive" src="{{asset(''.$representative->image)}}"></div>
                             <div class="col-md-10 col-sm-9">
                               <div class="col-xs-6"><b class="col-xs-4">اسم الممثل القانوني</b>
-                                <div class="col-xs-8"> محمد أحمد</div>
+                                <div class="col-xs-8"> {{$representative->name}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4"> تاريخ الميلاد</b>
-                                <div class="col-xs-8">12/12/1950</div>
+                                <div class="col-xs-8">{{$representative->birthdate}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">الرقم القومي</b>
-                                <div class="col-xs-8">4849494665456465</div>
+                                <div class="col-xs-8">{{$representative->user_detail->national_id}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">الجنسية</b>
-                                <div class="col-xs-8">مصري</div>
+                                <div class="col-xs-8">{{$representative->user_detail->nationality->name}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4"> العنوان</b>
-                                <div class="col-xs-8">55 شارع 9 - المقطم - القاهرة</div>
+                                <div class="col-xs-8">{{$representative->address}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">الاختصاص المكاني</b>
-                                <div class="col-xs-8">القاهرة</div>
+                                <div class="col-xs-8">{{($representative->user_detail->city)?$representative->user_detail->city->name:''}}</div>
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">التخصص</b>
-                                <div class="col-xs-8">عام</div>
+                              	@foreach($representative->specializations as $spec)
+                                <div class="col-xs-8">{{$spec->name}}</div>
+                                @endforeach
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">درجة القيد بالنقابة</b>
-                                <div class="col-xs-8">درجة</div>
+                                <div class="col-xs-8">{{$representative->user_detail->litigation_level}}</div>
                               </div>
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="../imghttps://printifycards.com/assets/templates/40000_legal/100_legal/legal_015_1_f_black_large.jpg">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$representative->user_detail->syndicate_copy)}}">
                                   <h4 class="text-center">كارنيه النقابة</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="../imghttps://printifycards.com/assets/templates/40000_legal/100_legal/legal_003_1_f_white_large.jpg">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$representative->user_detail->authorization_copy)}}">
                                   <h4 class="text-center">صورة التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
