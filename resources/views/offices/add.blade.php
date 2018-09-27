@@ -141,25 +141,28 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_name">اسم الممثل القانوني</label>
-                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_birth">تاريخ الميلاد</label>
-                          <input class="datepicker-popup master_input" type="text" placeholder="placeholder" id="rep_birth"><span class="master_message color--fadegreen">message</span>
+                          <input name="rep_birthdate" value="{{ old('rep_birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('rep_birthdate'))
+                                    {{ $errors->first('rep_birthdate')}}
+                                    @endif </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_id">رقم البطاقة</label>
-                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <select name="rep_nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
@@ -187,19 +190,25 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="rep_degrees">درجة التقاضي</label>
-                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_degrees"><span class="master_message color--fadegreen">message</span>
+                          <label class="master_label mandatory" for="rep_litigation_level">درجة التقاضي</label>
+                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_litigation_level" name="rep_litigation_level" value="{{ old('rep_litigation_level') }}"><span class="master_message color--fadegreen">
+                                  @if ($errors->has('rep_litigation_level'))
+                                    {{ $errors->first('rep_litigation_level')}}
+                                    @endif</span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="office_card">صورة كارنيه النقابة</label>
+                          <label class="master_label mandatory" for="lawyer_card">صورة كارنيه النقابة</label>
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة كارنية النقابة</div>
-                              <input class="chooseFile" type="file" name="chooseFile" id="office_card">
+                              <input name="syndicate_copy" class="chooseFile" type="file" name="chooseFile" id="lawyer_card">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div><span class="master_message color--fadegreen">
+                                  @if ($errors->has('syndicate_copy'))
+                                    {{ $errors->first('syndicate_copy')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -208,9 +217,12 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للممثل القانوني</div>
-                              <input class="chooseFile" type="file" name="chooseFile" id="rep_img">
+                              <input class="chooseFile" type="file" name="rep_img" id="rep_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div><span class="master_message color--fadegreen">
+                                  @if ($errors->has('rep_img'))
+                                    {{ $errors->first('rep_img')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="clearfix"></div>
