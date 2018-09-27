@@ -209,7 +209,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
-                         <select name="work_sector_area" class="master_input" id="currency">
+                         <select name="work_sector_area" class="master_input select2" id="currency">
                           <option value="choose" selected disabled>اختر التخصص المكانى</option>
                           @foreach($work_sector_areas as $area)
                           <option 
@@ -313,7 +313,7 @@
                       </div>
                       <div class="col-md-8 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="judge_res">التخصص كمحكم في وزارة العدل</label>
+                          <label class="master_label" for="judge_res">التخصص كمحكم في وزارة العدل</label>
                           <input value="{{$lawyer->user_detail->international_arbitrator_specialization}}" name="international_arbitrator_specialization" class="master_input" type="text" placeholder="التخصص كمحكم في وزارة العدل " id="judge_res"><span class="master_message color--fadegreen"> </span>
                         </div>
                       </div>
