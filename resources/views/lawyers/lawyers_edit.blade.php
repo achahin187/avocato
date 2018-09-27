@@ -156,7 +156,7 @@
 
                       <div class="col-md-8 col-sm-12 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_info">نبذة عن المحامي</label>
+                          <label class="master_label" for="lawyer_info">نبذة عن المحامي</label>
                           <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea><span class="master_message color--fadegreen">
                                   @if ($errors->has('note'))
                                     {{ $errors->first('note')}}
