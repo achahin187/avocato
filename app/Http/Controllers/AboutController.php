@@ -151,17 +151,19 @@ class AboutController extends Controller
             }
 
         } else {
-         if ($request->lang_about == 1) {
+         if ($request->lang_about == 2) {
 
-              try {
+               $about_edit->update(['name' => 'About us', 'content' => $request->about]);
+         }else{
+    
+
+                try {
             Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->about,1);
         } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $about_edit->id, 1);
-             Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, 1);
+             Helper::remove_localization('fixed_pages', 'content', $about_edit->id, $request->lang_about);
+             Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, $request->lang_about);
 
         }
-         }else{
-            $about_edit->update(['name' => 'About us', 'content' => $request->about]);
         }
 
         }

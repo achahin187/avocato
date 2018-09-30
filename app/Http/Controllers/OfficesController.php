@@ -262,11 +262,8 @@ class OfficesController extends Controller
     $office->password = bcrypt($password);
     $office->code = Helper::generateRandom(Users::class, 'code', 6);
     $office->save();
-    // $lawyer->rules()->attach([5, $request->work_type]);  //needed later
-    //     foreach($request->work_sector as $work_sector)
-    // {
-    //   $lawyer->specializations()->attach($work_sector);
-    // }
+    $office->rules()->attach([15, $office->id]);  //needed later
+    
     $office_details = new User_Details;
     $office_details->national_id = $request->national_id;
     $office_details->nationality_id = $request->nationality;
