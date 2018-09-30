@@ -137,17 +137,16 @@ class AboutController extends Controller
         // edit info
         if(isset($request->about)){
         $about_edit = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
-           //  dd($about_edit);
-         
+           //  dd($about_edit);    
         if($about_edit == null) {
-             if ($request->lang_about == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, 1);
-        }else{
+             if ($request->lang_about == 2) {
+       
             Fixed_Pages::create([
                 'name' => 'About us',
                 'content' => $request->about
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, $request->lang_about);
             }
 
         } else {
@@ -156,50 +155,70 @@ class AboutController extends Controller
                $about_edit->update(['name' => 'About us', 'content' => $request->about]);
          }else{
     
+            Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->lang_about,$request->about);
 
-                try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->about,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $about_edit->id, $request->lang_about);
-             Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, $request->lang_about);
-
-        }
         }
 
         }
        }
 
        //vision
-
         if(isset($request->vision)){
         $vision_edit = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
            //  dd($about_edit);
         if($vision_edit == null) {
+             if ($request->lang_vision == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'vision',
+                'name' => 'Vision',
                 'content' => $request->vision
             ]);
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $vision_edit->id, $request->vision, $request->lang_vision);
+            }
+
         } else {
-            $vision_edit->update(['name' => 'vision', 'content' => $request->vision]);
+         if ($request->lang_vision == 2) {
+
+               $vision_edit->update(['name' => 'Vision', 'content' => $request->vision]);
+         }else{
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision);
+            Helper::add_localization('fixed_pages', 'content', $vision_edit->id, $request->vision, $request->lang_vision);
+
+        }
+
         }
        }
-
-
-        //mission
 
         if(isset($request->mission)){
         $mission_edit = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
            //  dd($about_edit);
         if($mission_edit == null) {
+             if ($request->lang_mission == 2) {
+       
             Fixed_Pages::create([
                 'name' => 'Mission',
                 'content' => $request->mission
             ]);
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $mission_edit->id, $request->mission, $request->lang_mission);
+            }
+
         } else {
-            $mission_edit->update(['name' => 'mission', 'content' => $request->mission]);
+         if ($request->lang_mission == 2) {
+
+               $mission_edit->update(['name' => 'Mission', 'content' => $request->mission]);
+         }else{
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$mission_edit->id, $request->lang_mission);
+            Helper::add_localization('fixed_pages', 'content', $mission_edit->id, $request->mission, $request->lang_mission);
+
+        }
+
         }
        }
-        // redirect back
+
         return redirect('about');
     }
 
@@ -207,75 +226,68 @@ class AboutController extends Controller
       public function terms_update(Request $request)
     { 
 
-        if(isset($request->terms)){
+                if(isset($request->terms)){
         $terms_edit = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
            //  dd($about_edit);
-         
         if($terms_edit == null) {
-             if ($request->lang_terms == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->terms, 1);
-        }else{
+             if ($request->lang_terms == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'terms',
+                'name' => 'Terms and Conditions',
                 'content' => $request->terms
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, $request->lang_terms);
             }
 
         } else {
-         if ($request->lang_terms == 1) {
+         if ($request->lang_terms == 2) {
 
-              try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$terms_edit->id, $request->terms,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $terms_edit->id, 1);
-             Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, 1);
-
-        }
+               $terms_edit->update(['name' => 'Terms and Conditions', 'content' => $request->terms]);
          }else{
-            $terms_edit->update(['name' => 'terms', 'content' => $request->terms]);
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$terms_edit->id, $request->lang_terms);
+            Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, $request->lang_terms);
+
         }
 
         }
        }
+
          return redirect('terms_conditions');
     }
 
    
      public function privacy_update(Request $request)
     { 
-
-        if(isset($request->privacy)){
+           if(isset($request->privacy)){
         $privacy_edit = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
            //  dd($about_edit);
-         
         if($privacy_edit == null) {
-             if ($request->lang_privacy == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->privacy, 1);
-        }else{
+             if ($request->lang_privacy == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'privacy',
+                'name' => 'Privacy And Policy',
                 'content' => $request->privacy
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, $request->lang_privacy);
             }
 
         } else {
-         if ($request->lang_privacy == 1) {
+         if ($request->lang_privacy == 2) {
 
-              try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$privacy_edit->id, $request->privacy,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $privacy_edit->id, 1);
-             Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, 1);
-
-        }
+               $privacy_edit->update(['name' => 'Privacy And Policy', 'content' => $request->privacy]);
          }else{
-            $privacy_edit->update(['name' => 'privacy', 'content' => $request->privacy]);
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$privacy_edit->id, $request->lang_privacy);
+            Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, $request->lang_privacy);
+
         }
 
         }
        }
+       
          return redirect('privacy');
     }
 
