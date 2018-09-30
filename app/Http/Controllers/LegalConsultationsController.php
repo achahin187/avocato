@@ -20,6 +20,7 @@ use App\Notifications;
 use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
+use App\Languages;
 
 class LegalConsultationsController extends Controller
 {
@@ -63,8 +64,9 @@ class LegalConsultationsController extends Controller
      */
     public function add()
     {
+        $data['languages'] = Languages::all();
         $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
-        return view('legal_consultations.legal_consultation_add')->with('consultation_types', $consultation_types);
+        return view('legal_consultations.legal_consultation_add',$data)->with('consultation_types', $consultation_types);
     }
 
     /**
@@ -80,7 +82,7 @@ class LegalConsultationsController extends Controller
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
             'consultation_cat' => 'required',
-
+            'language' => 'required',
 
         ]);
 
@@ -104,6 +106,7 @@ class LegalConsultationsController extends Controller
             $input['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['is_replied'] = 1;
             $input['country_id']=session('country');
+            $input['lang_id'] = $request->language;
             $consultation = Consultation::Create($input);
 
             $consultation->consultation_reply()->create([
@@ -138,6 +141,7 @@ class LegalConsultationsController extends Controller
      */
     public function edit($id)
     {
+        $data['languages'] = Languages::all();
         $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
         $consultation = Consultation::find($id);
 
@@ -146,7 +150,7 @@ class LegalConsultationsController extends Controller
             return redirect('/legal_consultations');
         } 
 
-        return view('legal_consultations.legal_consultation_edit')->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
+        return view('legal_consultations.legal_consultation_edit',$data)->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
     }
 
     public function assign($id)
@@ -270,7 +274,7 @@ class LegalConsultationsController extends Controller
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
             'consultation_cat' => 'required',
-
+            'language' => 'required',
 
         ]);
 
@@ -286,7 +290,8 @@ class LegalConsultationsController extends Controller
         $consultation->Update([
             'consultation_type_id' => $consultation_type->id,
             'is_paid' => $request->input('consultation_type'),
-            'question' => $request->input('consultation_question')
+            'question' => $request->input('consultation_question'),
+            'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->update([
             'reply' => $request->input('consultation_answer')

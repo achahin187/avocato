@@ -206,6 +206,7 @@ return [
         'notes' => 'الملاحظات',
         'package_type'=>'نوع الباقه',
         'notification'=>'نص التنبيه',
+        'language'=>'اللغه',
     ],
 
 ];

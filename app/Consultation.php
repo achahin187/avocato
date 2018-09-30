@@ -9,7 +9,7 @@ class Consultation extends Model
     protected $primaryKey = 'id';
     protected $table = 'consultations';
 
-    protected $fillable = ['country_id','code','consultation_type_id','is_paid','question','created_by','created_at','is_replied'];
+    protected $fillable = ['country_id','lang_id','code','consultation_type_id','is_paid','question','created_by','created_at','is_replied'];
     protected $dates = ['created_at'];
     public $timestamps = false;
     public static $rules = [
