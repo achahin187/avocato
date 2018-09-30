@@ -1824,13 +1824,13 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branch_address"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address_edit" name="branch_address"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
-                                        <select class="master_input" id="lawyer_type" name="branch_country">
+                                        <select class="master_input" id="branch_country_edit" name="branch_country">
                            @foreach($countries as $nationality)
                             <option value="{{$nationality->id}}">{{$nationality->name}}</option>
                             @endforeach
@@ -1840,7 +1840,7 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_city">المدينة </label>
-                                    <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                           <select name="branch_city_edit"  class="master_input select2" id="branch_city_edit" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
@@ -1854,7 +1854,7 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branch_phone"><span class="master_message color--fadegreen"> 
+                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_phone_edit" name="branch_phone_edit"><span class="master_message color--fadegreen"> 
                                           @if ($errors->has('branch_phone'))
                                           {{ $errors->first('branch_phone')}}
                                           @endif</span>
@@ -1863,7 +1863,7 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branch_email"><span class="master_message color--fadegreen">
+                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email_edit" name="branch_email_edit"><span class="master_message color--fadegreen">
                                           @if ($errors->has('branch_email'))
                                           {{ $errors->first('branch_email')}}
                                           @endif</span>
@@ -1882,8 +1882,6 @@
   <script type="text/javascript">
   $(document).ready(function(){
     $(".editBranchBtn").click(function(){
-          console.log('66666666666666666666666666666666666666666666666666666666666666666666666');
-
       var branchId      = $(this).data("branch-id");
       var branchName     = $(this).data("branch-name");
       var branchAddress = $(this).data("branch-address");
@@ -1891,14 +1889,13 @@
       var branchCity      = $(this).data("branch-city");
       var branchPhone     = $(this).data("branch-phone");
       var branchEmail     = $(this).data("branch-email");
-
-
       $("#branch_id_edit").val(branchId);
       $("#branch_name_edit").val(branchName);
-      $('#msg_type2 option[value='+typeId+']').attr('selected', 'selected');
-      $('#relative_relation_select2 option[value='+relativeId+']').attr('selected', 'selected');
-      $("#msg_content_en").val(msgEn);
-      $("#msg_content_ar").val(msgAr);
+      $("#branch_address_edit").val(branchAddress);
+      $('#branch_country_edit option[value='+branchCountry+']').attr('selected', 'selected');
+      $('#branch_city_edit option[value='+branchCity+']').attr('selected', 'selected');
+      $("#branch_phone_edit").val(branchPhone);
+      $("#branch_email_edit").val(branchEmail);
     });
   });
 </script>
