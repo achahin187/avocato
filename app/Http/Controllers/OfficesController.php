@@ -43,9 +43,13 @@ class OfficesController extends Controller
     // $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
     //   $q->where('rule_id', 5);
     // })->get();
-    $data['offices'] = Users::orderBy('id','DESC')->get();
+    $q = Users::orderBy('id','DESC');
+    $q->whereHas('rules', function ($q) {
+          $q->where('rule_id', 15);
+        });
+    $data['offices'] = $q->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-    $data['types'] = Rules::where('parent_id', 5)->get();
+   // $data['types'] = Rules::where('parent_id', 5)->get();
     return view('offices.list', $data);
   }
 
