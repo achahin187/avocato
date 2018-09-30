@@ -201,7 +201,15 @@
                                 <td><span class="cellcontent">{{$branch->address}}</span></td>
                                 <td><span class="cellcontent">{{$branch->country->name}}</span></td>
                                 <td><span class="cellcontent">{{$branch->city->name}}</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#edit_branch"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                <td><span class="cellcontent"><a href= #edit_branch ,  class= "action-btn bgcolor--fadegreen color--white editBranchBtn "
+                                   data-branch-id="{{$branch->id}}"
+                                  data-branch-name="{{$branch->name}}"
+                                  data-branch-phone="{{$branch->phone}}"
+                                  data-branch-email="{{$branch->email}}"
+                                  data-branch-address="{{$branch->address}}"
+                                  data-branch-country="{{$branch->country->id}}"
+                                  data-branch-city="{{$branch->city->id}}"><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white"
+                                 ><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -1810,7 +1818,7 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name" name="branch_name"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name_edit" name="branch_name"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -1870,21 +1878,23 @@
                             </div>
                             </form>
                           </div>
- @endsection
 
- <script type="text/javascript">
+  <script type="text/javascript">
   $(document).ready(function(){
-    $(".editMsgBtn").click(function(){
+    $(".editBranchBtn").click(function(){
+          console.log('66666666666666666666666666666666666666666666666666666666666666666666666');
+
       var branchId      = $(this).data("branch-id");
-      var branchName     = $(this).data("type-id");
-      var branchAddress = $(this).data("relative-id");
-      var branchCountry      = $(this).data("msg-en");
-      var branchCity      = $(this).data("msg-ar");
-      var branchPhone     = $(this).data("msg-ar");
-      var branchEmail     = $(this).data("msg-ar");
+      var branchName     = $(this).data("branch-name");
+      var branchAddress = $(this).data("branch-address");
+      var branchCountry  = $(this).data("branch-country");
+      var branchCity      = $(this).data("branch-city");
+      var branchPhone     = $(this).data("branch-phone");
+      var branchEmail     = $(this).data("branch-email");
 
 
-      $("#msg_id").val(msgId);
+      $("#branch_id_edit").val(branchId);
+      $("#branch_name_edit").val(branchName);
       $('#msg_type2 option[value='+typeId+']').attr('selected', 'selected');
       $('#relative_relation_select2 option[value='+relativeId+']').attr('selected', 'selected');
       $("#msg_content_en").val(msgEn);
@@ -1892,3 +1902,7 @@
     });
   });
 </script>
+
+ @endsection
+
+ 
