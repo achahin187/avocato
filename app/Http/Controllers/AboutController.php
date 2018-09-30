@@ -226,75 +226,68 @@ class AboutController extends Controller
       public function terms_update(Request $request)
     { 
 
-        if(isset($request->terms)){
+                if(isset($request->terms)){
         $terms_edit = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
            //  dd($about_edit);
-         
         if($terms_edit == null) {
-             if ($request->lang_terms == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->terms, 1);
-        }else{
+             if ($request->lang_terms == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'terms',
+                'name' => 'Terms and Conditions',
                 'content' => $request->terms
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, $request->lang_terms);
             }
 
         } else {
-         if ($request->lang_terms == 1) {
+         if ($request->lang_terms == 2) {
 
-              try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$terms_edit->id, $request->terms,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $terms_edit->id, 1);
-             Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, 1);
-
-        }
+               $terms_edit->update(['name' => 'Terms and Conditions', 'content' => $request->terms]);
          }else{
-            $terms_edit->update(['name' => 'terms', 'content' => $request->terms]);
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$terms_edit->id, $request->lang_terms);
+            Helper::add_localization('fixed_pages', 'content', $terms_edit->id, $request->terms, $request->lang_terms);
+
         }
 
         }
        }
+
          return redirect('terms_conditions');
     }
 
    
      public function privacy_update(Request $request)
     { 
-
-        if(isset($request->privacy)){
+           if(isset($request->privacy)){
         $privacy_edit = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
            //  dd($about_edit);
-         
         if($privacy_edit == null) {
-             if ($request->lang_privacy == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->privacy, 1);
-        }else{
+             if ($request->lang_privacy == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'privacy',
+                'name' => 'Privacy And Policy',
                 'content' => $request->privacy
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, $request->lang_privacy);
             }
 
         } else {
-         if ($request->lang_privacy == 1) {
+         if ($request->lang_privacy == 2) {
 
-              try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$privacy_edit->id, $request->privacy,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $privacy_edit->id, 1);
-             Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, 1);
-
-        }
+               $privacy_edit->update(['name' => 'Privacy And Policy', 'content' => $request->privacy]);
          }else{
-            $privacy_edit->update(['name' => 'privacy', 'content' => $request->privacy]);
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$privacy_edit->id, $request->lang_privacy);
+            Helper::add_localization('fixed_pages', 'content', $privacy_edit->id, $request->privacy, $request->lang_privacy);
+
         }
 
         }
        }
+       
          return redirect('privacy');
     }
 
