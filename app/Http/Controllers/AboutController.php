@@ -137,17 +137,16 @@ class AboutController extends Controller
         // edit info
         if(isset($request->about)){
         $about_edit = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
-           //  dd($about_edit);
-         
+           //  dd($about_edit);    
         if($about_edit == null) {
-             if ($request->lang_about == 1) {
-        Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, 1);
-        }else{
+             if ($request->lang_about == 2) {
+       
             Fixed_Pages::create([
                 'name' => 'About us',
                 'content' => $request->about
             ]);
-
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, $request->lang_about);
             }
 
         } else {
@@ -156,50 +155,70 @@ class AboutController extends Controller
                $about_edit->update(['name' => 'About us', 'content' => $request->about]);
          }else{
     
+            Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->lang_about,$request->about);
 
-                try {
-            Helper::edit_entity_localization('fixed_pages', 'content',$about_edit->id, $request->about,1);
-        } catch (\Exception $ex) {
-             Helper::remove_localization('fixed_pages', 'content', $about_edit->id, $request->lang_about);
-             Helper::add_localization('fixed_pages', 'content', $about_edit->id, $request->about, $request->lang_about);
-
-        }
         }
 
         }
        }
 
        //vision
-
         if(isset($request->vision)){
         $vision_edit = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
            //  dd($about_edit);
         if($vision_edit == null) {
+             if ($request->lang_vision == 2) {
+       
             Fixed_Pages::create([
-                'name' => 'vision',
+                'name' => 'Vision',
                 'content' => $request->vision
             ]);
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $vision_edit->id, $request->vision, $request->lang_vision);
+            }
+
         } else {
-            $vision_edit->update(['name' => 'vision', 'content' => $request->vision]);
+         if ($request->lang_vision == 2) {
+
+               $vision_edit->update(['name' => 'Vision', 'content' => $request->vision]);
+         }else{
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision);
+            Helper::add_localization('fixed_pages', 'content', $vision_edit->id, $request->vision, $request->lang_vision);
+
+        }
+
         }
        }
-
-
-        //mission
 
         if(isset($request->mission)){
         $mission_edit = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
            //  dd($about_edit);
         if($mission_edit == null) {
+             if ($request->lang_mission == 2) {
+       
             Fixed_Pages::create([
                 'name' => 'Mission',
                 'content' => $request->mission
             ]);
+        }else{
+    Helper::add_localization('fixed_pages', 'content', $mission_edit->id, $request->mission, $request->lang_mission);
+            }
+
         } else {
-            $mission_edit->update(['name' => 'mission', 'content' => $request->mission]);
+         if ($request->lang_mission == 2) {
+
+               $mission_edit->update(['name' => 'Mission', 'content' => $request->mission]);
+         }else{
+            // Helper::edit_entity_localization('fixed_pages', 'content',$vision_edit->id, $request->lang_vision,$request->vision);
+            Helper::remove_localization('fixed_pages', 'content',$mission_edit->id, $request->lang_mission);
+            Helper::add_localization('fixed_pages', 'content', $mission_edit->id, $request->mission, $request->lang_mission);
+
+        }
+
         }
        }
-        // redirect back
+
         return redirect('about');
     }
 
