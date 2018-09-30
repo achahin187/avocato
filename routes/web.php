@@ -379,6 +379,7 @@ Route::post('/offices_store', 'OfficesController@store')->name('offices_store');
 
 //offices Branches
 Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
+Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
 
 
 

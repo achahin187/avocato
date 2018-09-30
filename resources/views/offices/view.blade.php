@@ -115,7 +115,7 @@
                                   <div class="col-xs-12">
                               <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                                    {{csrf_field()}}<form >
-                    <input type="hidden" id="branch_name" name="office_id" value="{{$office->id}}">                
+                    <input type="hidden"  name="office_id" value="{{$office->id}}">                
                                     <h3>اضافة / تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
@@ -199,16 +199,16 @@
                                 <td><span class="cellcontent"> {{$branch->phone}} </span></td>
                                 <td><span class="cellcontent">{{$branch->email}}</span></td>
                                 <td><span class="cellcontent">{{$branch->address}}</span></td>
-                                <td><span class="cellcontent">{{$branch->country->name}}</span></td>
-                                <td><span class="cellcontent">{{$branch->city->name}}</span></td>
+                                <td><span class="cellcontent">{{($branch->country)?$branch->country->name:''}}</span></td>
+                                <td><span class="cellcontent">{{($branch->city)?$branch->city->name:''}}</span></td>
                                 <td><span class="cellcontent"><a href= #edit_branch ,  class= "action-btn bgcolor--fadegreen color--white editBranchBtn "
                                    data-branch-id="{{$branch->id}}"
                                   data-branch-name="{{$branch->name}}"
                                   data-branch-phone="{{$branch->phone}}"
                                   data-branch-email="{{$branch->email}}"
                                   data-branch-address="{{$branch->address}}"
-                                  data-branch-country="{{$branch->country->id}}"
-                                  data-branch-city="{{$branch->city->id}}"><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white"
+                                  data-branch-country="{{($branch->country)?$branch->country->id:0}}"
+                                  data-branch-city="{{($branch->city)?$branch->city->id:0}}"><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white"
                                  ><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endforeach
@@ -1811,26 +1811,27 @@
                               <div>
                                 <div class="row">
                                   <div class="col-xs-12">
-                              <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                              <form role="form" action="{{route('branches_edit')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                                    {{csrf_field()}}<form >
-                    <input type="hidden" id="branch_name" name="office_id" value="{{$office->id}}">                
+                    <input type="hidden" id="branch_id_edit" name="branch_id_edit">
+                    <input type="hidden"  name="office_id" value="{{$office->id}}">               
                                     <h3>اضافة / تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name_edit" name="branch_name"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name_edit" name="branch_name_edit"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address_edit" name="branch_address"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address_edit" name="branch_address_edit"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
-                                        <select class="master_input" id="branch_country_edit" name="branch_country">
+                                        <select class="master_input" id="branch_country_edit" name="branch_country_edit">
                            @foreach($countries as $nationality)
                             <option value="{{$nationality->id}}">{{$nationality->name}}</option>
                             @endforeach

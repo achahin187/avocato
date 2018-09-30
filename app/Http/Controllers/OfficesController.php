@@ -605,7 +605,7 @@ class OfficesController extends Controller
   //create branch
  public function branch_create(Request $request)
   {
-
+     
      $branch = new OfficeBranches;
      $branch->office_id = $request->office_id;
      $branch->name = $request->branch_name;
@@ -614,6 +614,22 @@ class OfficesController extends Controller
      $branch->email = $request->branch_email;
      $branch->country_id = $request->branch_country;
      $branch->city_id = $request->branch_city;
+     $branch->save();    
+    return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
+
+}
+
+public function branch_edit(Request $request)
+  { //dd($request->input());
+     $id = $request->branch_id_edit;
+     $branch = OfficeBranches::find($id);
+     $branch->office_id = $request->office_id;
+     $branch->name = $request->branch_name_edit;
+     $branch->address = $request->branch_address_edit;
+     $branch->phone = $request->branch_phone_edit;
+     $branch->email = $request->branch_email_edit;
+     $branch->country_id = $request->branch_country_edit;
+     $branch->city_id = $request->branch_city_edit;
      $branch->save();    
     return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
 
