@@ -201,7 +201,7 @@
                                 <td><span class="cellcontent">{{$branch->address}}</span></td>
                                 <td><span class="cellcontent">{{$branch->country->name}}</span></td>
                                 <td><span class="cellcontent">{{$branch->city->name}}</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#edit_branch"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -1796,4 +1796,99 @@
                 </div>
               </div>
 
+              <!-- Edit Modal  -->
+
+     <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                              <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                                   {{csrf_field()}}<form >
+                    <input type="hidden" id="branch_name" name="office_id" value="{{$office->id}}">                
+                                    <h3>اضافة / تعديل فرع</h3>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name" name="branch_name"><span class="master_message color--fadegreen">message </span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branch_address"><span class="master_message color--fadegreen">message </span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="lawyer_type">الدولة</label>
+                                        <select class="master_input" id="lawyer_type" name="branch_country">
+                           @foreach($countries as $nationality)
+                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            @endforeach
+                                        </select><span class="master_message color--fadegreen">message</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="branch_city">المدينة </label>
+                                    <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('branch_city'))
+                                    {{ $errors->first('branch_city')}}
+                                    @endif</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
+                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branch_phone"><span class="master_message color--fadegreen"> 
+                                          @if ($errors->has('branch_phone'))
+                                          {{ $errors->first('branch_phone')}}
+                                          @endif</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label" for="branch_email">البريد الالكترونى</label>
+                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branch_email"><span class="master_message color--fadegreen">
+                                          @if ($errors->has('branch_email'))
+                                          {{ $errors->first('branch_email')}}
+                                          @endif</span>
+                                      </div>
+                                    </div>
+                                    
+                                  </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel"  data-remodal-action="cancel">إغلاق</button>
+                              <button class="remodal-confirm" type="submit" >إضافة</button>
+                            </div>
+                            </form>
+                          </div>
  @endsection
+
+ <script type="text/javascript">
+  $(document).ready(function(){
+    $(".editMsgBtn").click(function(){
+      var branchId      = $(this).data("branch-id");
+      var branchName     = $(this).data("type-id");
+      var branchAddress = $(this).data("relative-id");
+      var branchCountry      = $(this).data("msg-en");
+      var branchCity      = $(this).data("msg-ar");
+      var branchPhone     = $(this).data("msg-ar");
+      var branchEmail     = $(this).data("msg-ar");
+
+
+      $("#msg_id").val(msgId);
+      $('#msg_type2 option[value='+typeId+']').attr('selected', 'selected');
+      $('#relative_relation_select2 option[value='+relativeId+']').attr('selected', 'selected');
+      $("#msg_content_en").val(msgEn);
+      $("#msg_content_ar").val(msgAr);
+    });
+  });
+</script>
