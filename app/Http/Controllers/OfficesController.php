@@ -23,6 +23,7 @@ use Jenssegers\Date\Date;
 use App\Specializations;
 use App\Geo_Cities;
 use App\SyndicateLevels;
+use App\OfficeBranches;
 
 
 class OfficesController extends Controller
@@ -77,7 +78,7 @@ class OfficesController extends Controller
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
     $data['work_sector_areas'] = Geo_Cities::all();
-    $data['currencies'] = Geo_Countries::all();
+    $data['countries'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
     return view('offices.add', $data);
   }
@@ -192,7 +193,11 @@ class OfficesController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(Request $request)
-  { //dd($request);
+  { //dd($request->branches[]);
+  	 // foreach ($request->branches as $key => $branch) {
+  	 // 	print_r($branch);
+  	 // }
+  	 // die;
     $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       // 'note' => 'required',
@@ -322,6 +327,23 @@ class OfficesController extends Controller
       $representative->specializations()->attach($request->specializations);
    
      }
+     //process office Branches
+
+     // id	office_id	name	address	phone	email	country_id	city_id	created_at	updated_at	created_by	updated_by
+     // foreach ($request->branches as $key => $branch) { // that will be for loop we will return number of js appends
+     	# code...
+    
+     $branch = new OfficeBranches;
+     $branch->office_id = $office->id;
+     $branch->name = $request->branches['branch_name'][0];
+     $branch->address = $request->branches['branch_address'][0];
+     $branch->phone = $request->branches['branch_phone'][0];
+     $branch->email = $request->branches['branch_email'][0];
+     $branch->country_id = $request->branches['branch_country'][0];
+     $branch->city_id = $request->branches['branch_city'][0];
+     $branch->save();
+
+    
      
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
 
@@ -343,7 +365,7 @@ class OfficesController extends Controller
 
     $data['office'] = Users::find($id);
     $data['representative'] = Users::where('parent_id',$id )->first();
-
+    $data['branches'] = OfficeBranches::where('office_id',$id)->get();
 
     if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
       Session::flash('warning', 'المكنب غير  موجود');
@@ -382,6 +404,8 @@ class OfficesController extends Controller
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
+    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['countries'] = Geo_Countries::all();
     return view('offices.view', $data);
   }
 
@@ -576,4 +600,23 @@ class OfficesController extends Controller
       $user->delete();
     }
   }
+
+
+  //create branch
+ public function branch_create(Request $request)
+  {
+
+     $branch = new OfficeBranches;
+     $branch->office_id = $request->office_id;
+     $branch->name = $request->branch_name;
+     $branch->address = $request->branch_address;
+     $branch->phone = $request->branch_phone;
+     $branch->email = $request->branch_email;
+     $branch->country_id = $request->branch_country;
+     $branch->city_id = $request->branch_city;
+     $branch->save();    
+    return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
+
+}
+
 }

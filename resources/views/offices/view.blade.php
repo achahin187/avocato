@@ -113,52 +113,72 @@
                               <div>
                                 <div class="row">
                                   <div class="col-xs-12">
+                              <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                                   {{csrf_field()}}<form >
+                    <input type="hidden" id="branch_name" name="office_id" value="{{$office->id}}">                
                                     <h3>اضافة / تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name" name="branch_name"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branch_address"><span class="master_message color--fadegreen">message </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
-                                        <select class="master_input" id="lawyer_type">
-                                          <option>القاهرة</option>
-                                          <option>الأسكندرية</option>
+                                        <select class="master_input" id="lawyer_type" name="branch_country">
+                           @foreach($countries as $nationality)
+                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            @endforeach
                                         </select><span class="master_message color--fadegreen">message</span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_city">المدينة </label>
-                                        <input class="master_input" type="text" placeholder="المدينة .." id="branch_city"><span class="master_message color--fadegreen">message </span>
+                                    <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('branch_city'))
+                                    {{ $errors->first('branch_city')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel"><span class="master_message color--fadegreen">message</span>
+                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branch_phone"><span class="master_message color--fadegreen"> 
+                                          @if ($errors->has('branch_phone'))
+                                          {{ $errors->first('branch_phone')}}
+                                          @endif</span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email"><span class="master_message color--fadegreen">message</span>
+                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branch_email"><span class="master_message color--fadegreen">
+                                          @if ($errors->has('branch_email'))
+                                          {{ $errors->first('branch_email')}}
+                                          @endif</span>
                                       </div>
                                     </div>
+                                    
                                   </div>
                                 </div>
                               </div><br>
-                              <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                              <button class="remodal-cancel"  data-remodal-action="cancel">إغلاق</button>
+                              <button class="remodal-confirm" type="submit" >إضافة</button>
                             </div>
+                            </form>
                           </div>
                           <table class="table-1">
                             <thead>
@@ -173,114 +193,17 @@
                               </tr>
                             </thead>
                             <tbody>
+                           @foreach($branches as $branch)
                               <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
+                                <td><span class="cellcontent">{{$branch->name}}</span></td>
+                                <td><span class="cellcontent"> {{$branch->phone}} </span></td>
+                                <td><span class="cellcontent">{{$branch->email}}</span></td>
+                                <td><span class="cellcontent">{{$branch->address}}</span></td>
+                                <td><span class="cellcontent">{{$branch->country->name}}</span></td>
+                                <td><span class="cellcontent">{{$branch->city->name}}</span></td>
                                 <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
-                              <tr>
-                                <td><span class="cellcontent">فرع وسط البلد</span></td>
-                                <td><span class="cellcontent"> 12312323 </span></td>
-                                <td><span class="cellcontent">example@example.com</span></td>
-                                <td><span class="cellcontent">55 شارع 9 المعادي</span></td>
-                                <td><span class="cellcontent">مصر</span></td>
-                                <td><span class="cellcontent">القاهرة</span></td>
-                                <td><span class="cellcontent"><a href= #add_branch ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
+                              @endforeach
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

@@ -377,5 +377,9 @@ Route::get('/offices_show/{id}', 'OfficesController@show')->name('offices_show')
 Route::get('/offices_create', 'OfficesController@create')->name('offices_create');
 Route::post('/offices_store', 'OfficesController@store')->name('offices_store');
 
+//offices Branches
+Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
+
+
 
 });

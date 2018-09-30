@@ -243,40 +243,62 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"><span class="master_message color--fadegreen">message </span>
+                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_name'))
+                                    {{ $errors->first('branch_name')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address"><span class="master_message color--fadegreen">message </span>
+                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]"><span class="master_message color--fadegreen">
+                            	   @if ($errors->has('branch_address'))
+                                    {{ $errors->first('branch_address')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_type">الدولة</label>
-                            <select class="master_input" id="lawyer_type">
-                              <option>القاهرة</option>
-                              <option>الأسكندرية</option>
-                            </select><span class="master_message color--fadegreen">message</span>
+                             <select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <option value="choose" selected disabled>اختر الدولة</option>
+                          @foreach($countries as $nationality)
+                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">@if ($errors->has('branches[branch_country][]'))
+                                    {{ $errors->first('branches[branch_country][]')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
-                            <input class="master_input" type="text" placeholder="المدينة .." id="branch_city"><span class="master_message color--fadegreen">message </span>
+                             <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('branches[branch_city][]'))
+                                    {{ $errors->first('branches[branch_city][]')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_phone'))
+                                    {{ $errors->first('branch_phone')}}
+                                    @endif</span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email"><span class="master_message color--fadegreen">message</span>
+                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]"><span class="master_message color--fadegreen">
+                            	  @if($errors->has('branch_email'))
+                                    {{ $errors->first('branch_email')}}
+                                    @endif</span>
                           </div>
                         </div>
                       </div>
