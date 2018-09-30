@@ -102,7 +102,7 @@
                           <label class="master_label mandatory" for="cer_img">صورة التوكيل</label>
                           <div class="file-upload">
                             <div class="file-select">
-                              <input name="attorney_form" class="chooseFile" type="file" name="chooseFile" id="lawyer_authorization">
+                              <input name="attorney_form" class="chooseFile" type="file" id="attorney_form">
                             </div>
                           </div><span class="master_message color--fadegreen">
                                     @if ($errors->has('attorney_form'))
@@ -173,13 +173,17 @@
                                     @endif</span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="rep_type"> التخصص</label>
-                          <select class="master_input select2" id="rep_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
-                            <option>تعويضات</option>
-                            <option>تخصص اخر</option>
-                          </select><span class="master_message color--fadegreen">message</span>
+                          <label class="master_label mandatory" for="lawyer_type"> التخصص</label>
+                          <select name="specializations[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                            @foreach($work_sectors as $work_sector)
+                            <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('work_sector'))
+                                    {{ $errors->first('work_sector')}}
+                                    @endif</span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">

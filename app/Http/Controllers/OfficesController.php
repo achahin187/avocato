@@ -39,9 +39,11 @@ class OfficesController extends Controller
     //         return redirect()->route('choose.country');
     //     }
         // return Users::withTrashed()->restore();
-    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
-      $q->where('rule_id', 5);
-    })->get();
+  	/********/
+    // $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
+    //   $q->where('rule_id', 5);
+    // })->get();
+    $data['offices'] = Users::orderBy('id','DESC')->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     return view('offices.list', $data);
@@ -302,6 +304,11 @@ class OfficesController extends Controller
     $representative->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
     $representative->image = ($request->hasFile('rep_img'))?$rep_img:'';
     $representative->save();
+    $representative = Users::find($representative->id);
+    $password = Helper::generateRandom(Users::class, 'password', 8);
+    $representative->password = bcrypt($password);
+    $representative->code = Helper::generateRandom(Users::class, 'code', 6);
+    $representative->save();
     // representative details
      $rep_details = new User_Details;
      $rep_details->user_id = $representative->id;
@@ -309,8 +316,13 @@ class OfficesController extends Controller
      $rep_details->nationality_id = $request->rep_nationality;
      $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:'';
      $rep_details->litigation_level = $request->rep_litigation_level;
-     $rep_details->save();
-    return redirect()->route('lawyers_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
+     if($rep_details->save()){
+      //representative specializations 
+      $representative->specializations()->attach($request->specializations);
+   
+     }
+     
+    return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
 
   }
 
@@ -328,11 +340,13 @@ class OfficesController extends Controller
     // });
     //       return $s;
 
-    $data['lawyer'] = Users::find($id);
+    $data['office'] = Users::find($id);
+    $data['representative'] = Users::where('parent_id',$id )->first();
 
-    if( $data['lawyer'] == NULL ) {
-      Session::flash('warning', 'العقد او الصيغة غير موجود');
-      return redirect('/lawyers');
+
+    if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
+      Session::flash('warning', 'المكنب غير  موجود');
+      return redirect('/offices');
     } 
 
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
@@ -362,12 +376,12 @@ class OfficesController extends Controller
     $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
 
-    $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
+    $data['rates_user'] = $data['office']->rate()->with('rules')->get();
     
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
-    return view('lawyers.lawyers_show', $data);
+    return view('offices.view', $data);
   }
 
   public function rate(Request $request, $id)
@@ -384,8 +398,8 @@ class OfficesController extends Controller
         ->withInput();
     }
     $date = date('Y-m-d H:i:s', strtotime($request->date));
-    $lawyer = Users::find($id);
-    $lawyer->rate()->attach(\Auth::user()->id, ['notes' => $request->notes, 'created_at' => $date, 'rate_id' => $request->rate]);
+    $office = Users::find($id);
+    $office->rate()->attach(\Auth::user()->id, ['notes' => $request->notes, 'created_at' => $date, 'rate_id' => $request->rate]);
     return redirect()->route('lawyers_show', $id);
 
 
