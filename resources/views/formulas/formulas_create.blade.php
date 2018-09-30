@@ -130,6 +130,23 @@ true).find("option[value]").remove();
                                     @endif</span>
                       </div>
                     </div>
+
+                 <div class="col-md-2 col-xs-4">
+                      <div class="master_field">
+                        <label class="master_label" for="sitch_1">اللغه</label>
+                              <select name="language" class="master_input select2" id="type" data-placeholder="اللغع" style="width:100%;" ,>
+                                @foreach($languages as $language)
+                                <option value="{{$language->id}}" >{{$language->name}}</option>
+                                @endforeach
+                              </select>
+                          
+                          @if ($errors->has('language'))
+                            <span class="master_message color--fadegreen">{{ $errors->first('language') }}</span>
+                          @endif
+                          
+                      </div>
+                    </div>
+
                     <div class="clearfix"></div>
                     <div class="col-md-2 col-xs-6">
                       <button class="master-btn undefined btn-block color--white bgcolor--fadeblue bradius--small bshadow--0" type="submit"><i class="fa fa-file"></i><span>حفظ</span>
