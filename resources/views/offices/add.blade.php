@@ -187,9 +187,14 @@
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="master_field">
+                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_spec">الإختصاص المكاني </label>
-                          <input class="master_input" type="text" placeholder="الإختصاص المكاني" id="rep_spec"><span class="master_message color--fadegreen">message </span>
+                         <select name="rep_spec"  class="master_input select2" id="rep_spec" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}" >{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">

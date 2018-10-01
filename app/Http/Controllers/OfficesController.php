@@ -193,7 +193,10 @@ class OfficesController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function store(Request $request)
-  { //dd($request->branches[]);
+   {
+   	var_dump(count( $request->branches['branch_name']));die;
+   
+   //dd($request->branches[]);
   	 // foreach ($request->branches as $key => $branch) {
   	 // 	print_r($branch);
   	 // }
@@ -320,6 +323,7 @@ class OfficesController extends Controller
      $rep_details->user_id = $representative->id;
      $rep_details->national_id = $request->rep_nid;
      $rep_details->nationality_id = $request->rep_nationality;
+     $rep_details->work_sector_area_id = $request->rep_spec;
      $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:'';
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){
@@ -438,6 +442,8 @@ class OfficesController extends Controller
   public function edit($id)
   {
   	$data['office'] = Users::find($id);
+  	 $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
+    $data['branch'] = OfficeBranches::where('office_id',$id)->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
@@ -548,6 +554,7 @@ class OfficesController extends Controller
      $rep_details->user_id = $representative->id;
      $rep_details->national_id = $request->rep_nid;
      $rep_details->nationality_id = $request->rep_nationality;
+     $rep_details->work_sector_area_id = $request->rep_spec;
      $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:'';
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){

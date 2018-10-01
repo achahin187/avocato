@@ -58,7 +58,7 @@
                           <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" >ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" {{($office->city_id == $city->id  )?selected:''}}>{{$city->name}}</option>
+                            <option value="{{$city->id}}" @if($office->city_id == $city->id) selected @endif>{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('nationality'))
@@ -69,7 +69,7 @@
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
-                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen" value="{{$office->phone}}">
+                          <input name="office_phone" value="{{$office->phone}}"  class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen" >
                                    @if ($errors->has('office_phone'))
                                     {{ $errors->first('office_phone')}}
                                     @endif </span>
@@ -78,7 +78,7 @@
                        <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_email">البريد الالكترونى</label>
-                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen" value="{{$office->email}}">
+                          <input name="office_email" value="{{$office->email}}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen" >
                                   @if ($errors->has('office_email'))
                                     {{ $errors->first('office_email')}}
                                     @endif</span>
@@ -123,9 +123,9 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory">تفعيل المكتب</label>
-                          <input name="is_active" value="1" class="icon" type="radio" name="icon" id="radbtn_2" checked="true">
+                          <input name="is_active" value="1" class="icon" type="radio" name="icon" id="radbtn_2" @if($office->is_active == 1)checked="true" @endif>
                           <label for="radbtn_2">مفعل</label>
-                          <input name="is_active" value="0" class="icon" type="radio" name="icon" id="radbtn_3">
+                          <input name="is_active" value="0" class="icon" type="radio" name="icon" id="radbtn_3" @if($office->is_active == 0)checked="true" @endif>
                           <label for="radbtn_3">غير مفعل</label>
                         </div>
                       </div>
@@ -142,13 +142,13 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_name">اسم الممثل القانوني</label>
-                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name" value="{{$representative->name}}"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_birth">تاريخ الميلاد</label>
-                          <input name="rep_birthdate" value="{{ old('rep_birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth"><span class="master_message color--fadegreen">
+                          <input name="rep_birthdate" value="{{$representative->birthdate}}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth"><span class="master_message color--fadegreen">
                                     @if ($errors->has('rep_birthdate'))
                                     {{ $errors->first('rep_birthdate')}}
                                     @endif </span>
@@ -157,7 +157,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_id">رقم البطاقة</label>
-                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid" value="{{$representative->user_detail->national_id}}"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -166,7 +166,7 @@
                           <select name="rep_nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
-                            <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                            <option value="{{$nationality->item_id}}" @if($representative->user_detail->nationality_id == $nationality->item_id ) selected @endif>{{$nationality->value}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('nationality'))
@@ -179,7 +179,10 @@
                           <label class="master_label mandatory" for="lawyer_type"> التخصص</label>
                           <select name="specializations[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
                             @foreach($work_sectors as $work_sector)
-                            <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                            <option value="{{$work_sector->id}}" >{{$work_sector->name}}</option>
+                            @endforeach
+                             @foreach($representative->specializations as $work_sector)
+                            <option value="{{$work_sector->id}}" selected >{{$work_sector->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector'))
@@ -190,13 +193,18 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_spec">الإختصاص المكاني </label>
-                          <input class="master_input" type="text" placeholder="الإختصاص المكاني" id="rep_spec"><span class="master_message color--fadegreen">message </span>
+                         <select name="rep_spec"  class="master_input select2" id="rep_spec" data-placeholder="المدينة" style="width:100%;" ,>
+                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          @foreach($work_sector_areas as $city)
+                            <option value="{{$city->id}}" >{{$city->name}}</option>
+                            @endforeach
+                          </select><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_litigation_level">درجة التقاضي</label>
-                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_litigation_level" name="rep_litigation_level" value="{{ old('rep_litigation_level') }}"><span class="master_message color--fadegreen">
+                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_litigation_level" name="rep_litigation_level" value="{{$representative->user_detail->litigation_level}}"><span class="master_message color--fadegreen">
                                   @if ($errors->has('rep_litigation_level'))
                                     {{ $errors->first('rep_litigation_level')}}
                                     @endif</span>
@@ -277,7 +285,7 @@
                              <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            <option value="{{$city->id}}" >{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('branches[branch_city][]'))
