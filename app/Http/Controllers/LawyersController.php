@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\File;
 use App\Exports\LawyersExport;
 use Jenssegers\Date\Date;
 use App\Specializations;
-use App\Geo_Cities;
 use App\SyndicateLevels;
 
 

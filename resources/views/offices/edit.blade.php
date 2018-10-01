@@ -4,7 +4,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg ' )}}') no-repeat center center; background-size:cover">
-                    <div class="add-mode">Adding mode</div>
+                    <div class="add-mode">Editing mode</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -23,8 +23,9 @@
                   {{\session('success')}}
                   </div>
                   @endif
-              <form role="form" action="{{route('offices_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+              <form role="form" action="{{route('offices_update',$office->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                 {{csrf_field()}}
+                <input type="hidden" id="office_id" name="office_id" value="{{$office->id}}">
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
@@ -42,22 +43,22 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_name">اسم المكتب</label>
-                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name" value="{{$office->name}}"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_address">عنوان المكتب</label>
-                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address" value="{{$office->address}}"><span class="master_message color--fadegreen">message </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
                           <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          <option value="choose" >ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            <option value="{{$city->id}}" {{($office->city_id == $city->id  )?selected:''}}>{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('nationality'))
