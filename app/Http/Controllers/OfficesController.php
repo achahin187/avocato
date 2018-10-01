@@ -194,7 +194,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
-   	var_dump(count( $request->branches['branch_name']));die;
+   	// var_dump(count( $request->branches['branch_name']));die;
    
    //dd($request->branches[]);
   	 // foreach ($request->branches as $key => $branch) {
@@ -443,7 +443,7 @@ class OfficesController extends Controller
   {
   	$data['office'] = Users::find($id);
   	 $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
-    $data['branch'] = OfficeBranches::where('office_id',$id)->get();
+    $data['branches'] = OfficeBranches::where('office_id',$id)->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
@@ -563,10 +563,13 @@ class OfficesController extends Controller
    
      }
      //process office Branches
-
+     //delete old branches update with new
+      OfficeBranches::where('office_id',$id )->delete();
+   // $old_branches->delete();
+    // $office->offices_branches()->delete();
      if(isset($request->branchNo)){
     $branchNo = $request->branchNo-1;
-      }else{$branchNo=0;}
+      }else{$branchNo= OfficeBranches::where('office_id',$id )->count();}
     for($i=0 ; $i<=$branchNo ;$i++){
      $branch = new OfficeBranches;
      $branch->office_id = $office->id;
