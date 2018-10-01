@@ -179,11 +179,15 @@
                           <label class="master_label mandatory" for="lawyer_type"> التخصص</label>
                           <select name="specializations[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
                             @foreach($work_sectors as $work_sector)
-                            <option value="{{$work_sector->id}}" >{{$work_sector->name}}</option>
+                            <option 
+                            @foreach($representative->specializations as $spec)
+                            @if($spec->id == $work_sector->id)
+                            {!!'selected'!!}
+                            @endif
                             @endforeach
-                             @foreach($representative->specializations as $work_sector)
-                            <option value="{{$work_sector->id}}" selected >{{$work_sector->name}}</option>
+                            value="{{$work_sector->id}}" >{{$work_sector->name}}</option>
                             @endforeach
+                            
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector'))
                                     {{ $errors->first('work_sector')}}

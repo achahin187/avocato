@@ -194,7 +194,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
-   	var_dump(count( $request->branches['branch_name']));die;
+   	// var_dump(count( $request->branches['branch_name']));die;
    
    //dd($request->branches[]);
   	 // foreach ($request->branches as $key => $branch) {
