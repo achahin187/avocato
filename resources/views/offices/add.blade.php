@@ -323,4 +323,69 @@
               </div>
 
 
+<script>
+var i=0;
+      $('#add_more_btn').click(function(){
+       
+//  $("#branches").append('<input type="text" name="questions['+i+']" >'
+//    + ' <select name="charactersy'+i+'">'
+//   @foreach($countries as $country)
+// +'<option value="{{$country->id}}">{{$country->name}}</option>'
+// @endforeach +'</select>'
+// + ' <select name="charactersy'+i+'">'
+//   @foreach($work_sector_areas as $key => $city)
+//   +'<option value="{{$city->id}}">{{$city->name}}</option>'
+//     @endforeach+'</select>'
+
+//             );
+        i++;
+        var branchNo = i+1;
+
+$("#branches").append('<div class="more-branches">'
+	                +'<h3> فرع رقم '+branchNo+'</h3>'
+	                +'<div class="col-md-4 col-sm-6 col-xs-12">'
+                    +' <div class="master_field">'
+                    +'<label class="master_label mandatory" for="branch_name">اسم الفرع</label>'
+      +'<input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]"><span class="master_message color--fadegreen">'
+                                         +'</div></div>'
+
+        +'<div class="col-md-4 col-sm-6 col-xs-12">'
+         +'<div class="master_field">'
+          +'<label class="master_label mandatory" for="branch_address">عنوان الفرع</label>'
+     +'<input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]">'
+                          +'</div> </div> '  
+                            +'</div> ' 
+           +'<div class="col-md-4 col-sm-6 col-xs-12">'
+                          +'<div class="master_field">'
+                            +'<label class="master_label mandatory" for="lawyer_type">الدولة</label>'
+                    +'<select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>'
+                         +' <option value="choose" selected disabled>اختر الدولة</option>'
+                          @foreach($countries as $nationality)
+                           +' <option value="{{$nationality->id}}">{{$nationality->name}}</option>'
+                            @endforeach
+                           + ' </select></div></div>  ' 
+                          +' <div class="col-md-4 col-sm-6 col-xs-12">'
+                          +'<div class="master_field">'
+                          +'<label class="master_label mandatory" for="branch_city">المدينة </label>'
+                      +' <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>'
+                         +' <option value="choose" selected disabled>ختيار المدينة</option>'
+                          @foreach($work_sector_areas as $city)
+                          +'  <option value="{{$city->id}}">{{$city->name}}</option>'
+                            @endforeach
+                          +'</select></div></div> '
+                          +'<div class="col-md-4 col-sm-6 col-xs-12">'
+                         +'<div class="master_field">'
+                         +'<label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>'
+                         +' <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]">'
+                          +'</div></div>'
+                       +' <div class="col-md-4 col-sm-6 col-xs-12">'
+                       +'<div class="master_field">'
+                       +' <label class="master_label" for="branch_email">البريد الالكترونى</label>'
+                       +' <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]">'
+                       +'</div></div>'                                           
+                                           );
+ 
+      });
+    </script>
+
  @endsection

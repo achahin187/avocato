@@ -271,7 +271,7 @@ class OfficesController extends Controller
     $office->password = bcrypt($password);
     $office->code = Helper::generateRandom(Users::class, 'code', 6);
     $office->save();
-    $office->rules()->attach([15, $office->id]);  //needed later
+    $office->rules()->attach([15]);  //needed later
     
     $office_details = new User_Details;
     $office_details->national_id = $request->national_id;
