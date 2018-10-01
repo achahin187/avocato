@@ -303,6 +303,7 @@
                         </div>
                       </div>
                       <div id="branches"></div>
+                     <!--  <input type="hidden" id="branchNo" name="branchNo" value="0"> -->
                       <div class="col-md-12">
                         <button class="btn" id="add_more_btn" type="button">إضافة فرع<i class="fa fa-plus">&nbsp;</i></button>
                       </div>
@@ -325,6 +326,9 @@
 
 <script>
 var i=0;
+var branchNo = 0;
+
+ $("#branches").append('<input type="hidden" id="branchNo" name="branchNo" >');
       $('#add_more_btn').click(function(){
        
 //  $("#branches").append('<input type="text" name="questions['+i+']" >'
@@ -384,8 +388,11 @@ $("#branches").append('<div class="more-branches">'
                        +' <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]">'
                        +'</div></div>'                                           
                                            );
+
+       $("#branchNo").val(branchNo);
  
       });
+     
     </script>
 
  @endsection

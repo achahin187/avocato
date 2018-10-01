@@ -332,18 +332,21 @@ class OfficesController extends Controller
      // id	office_id	name	address	phone	email	country_id	city_id	created_at	updated_at	created_by	updated_by
      // foreach ($request->branches as $key => $branch) { // that will be for loop we will return number of js appends
      	# code...
-    
+     if(isset($request->branchNo)){
+    $branchNo = $request->branchNo-1;
+      }else{$branchNo=0;}
+    for($i=0 ; $i<=$branchNo ;$i++){
      $branch = new OfficeBranches;
      $branch->office_id = $office->id;
-     $branch->name = $request->branches['branch_name'][0];
-     $branch->address = $request->branches['branch_address'][0];
-     $branch->phone = $request->branches['branch_phone'][0];
-     $branch->email = $request->branches['branch_email'][0];
-     $branch->country_id = $request->branches['branch_country'][0];
-     $branch->city_id = $request->branches['branch_city'][0];
+     $branch->name = $request->branches['branch_name'][$i];
+     $branch->address = $request->branches['branch_address'][$i];
+     $branch->phone = $request->branches['branch_phone'][$i];
+     $branch->email = $request->branches['branch_email'][$i];
+     $branch->country_id = $request->branches['branch_country'][$i];
+     $branch->city_id = $request->branches['branch_city'][$i];
      $branch->save();
 
-    
+     }
      
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
 
