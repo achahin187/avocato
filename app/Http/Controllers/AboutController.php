@@ -260,6 +260,7 @@ class AboutController extends Controller
    
      public function privacy_update(Request $request)
     { 
+        //privacy update
            if(isset($request->privacy)){
         $privacy_edit = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
            //  dd($about_edit);
