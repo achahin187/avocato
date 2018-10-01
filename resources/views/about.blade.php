@@ -37,7 +37,7 @@
                       <div class="clearfix"></div>
                       <ul class="tabs">
                         @foreach($about as $tab)
-                        <li>{{$tab->name}}</li>
+                        <li {!!$tab->id==1 ? 'class="test"':''!!} >{{$tab->name}}</li>
                        @endforeach
                       </ul>
                       <ul class="tab__content">
@@ -64,6 +64,18 @@
   <script src="{{ url('/vendor/unisharp/laravel-ckeditor/ckeditor.js') }}"></script>
   <script>
       CKEDITOR.replace( 'article-ckeditor' );
+  </script>
+
+  <script type="text/javascript">
+  $(document).ready(function(){
+      
+$( ".test" ).on( "click", function() {
+  
+});
+$( ".test" ).trigger( "click" );
+
+});
+
   </script>
     
 @endsection
