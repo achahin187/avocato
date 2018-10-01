@@ -67,6 +67,11 @@ Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificati
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 Route::patch('/about_edit', 'AboutController@update')->name('about.update');
+Route::get('/aboutUsAjax/{lang_id}', 'AboutController@aboutUsAjax')->name('aboutUsAjax');
+Route::get('/missionAjax/{lang_id}', 'AboutController@missionAjax')->name('missionAjax');
+Route::get('/visionAjax/{lang_id}', 'AboutController@visionAjax')->name('visionAjax');
+Route::get('/termsAjax/{lang_id}', 'AboutController@termsAjax')->name('termsAjax');
+Route::get('/privacyAjax/{lang_id}', 'AboutController@privacyAjax')->name('privacyAjax');
 
 //terms and conditions
 Route::get('/terms_conditions', 'AboutController@terms_conditions')->name('terms_conditions');

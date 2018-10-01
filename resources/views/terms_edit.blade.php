@@ -46,7 +46,7 @@
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="terms" id="article-ckeditor-terms" cols="30" rows="10">@if(isset($terms->content)){!! $terms->content !!}@endif</textarea>
+              <textarea name="terms" id="editor1" cols="30" rows="10">@if(isset($terms->content)){!! $terms->content !!}@endif</textarea>
                <hr>
           <div class="clearfix"></div>
                      <div class="col-md-2 col-xs-6">
@@ -66,8 +66,29 @@
               <script src="{{url('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
   <script>
      $(document).ready(function(){
-      CKEDITOR.replace( 'article-ckeditor-terms' );
+      CKEDITOR.replace( 'editor1' );
             });
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+$('#lang_terms').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+        $.ajax({
+    type:'GET',
+    url:'{{url('termsAjax')}}'+'/'+valueSelected,
+    data:{},
+    success:function(data){
+    CKEDITOR.instances.editor1.setData(data); 
+    },
+    error: function(xhr, textStatus, errorThrown){
+    alert('error');
+    }
+    });
+  });
+});
+
   </script>
 
               @endsection
