@@ -271,7 +271,7 @@ class OfficesController extends Controller
     $office->password = bcrypt($password);
     $office->code = Helper::generateRandom(Users::class, 'code', 6);
     $office->save();
-    $office->rules()->attach([15]);  //needed later
+    $office->rules()->attach([15,5]);  //needed later
     
     $office_details = new User_Details;
     $office_details->national_id = $request->national_id;
@@ -528,8 +528,7 @@ class OfficesController extends Controller
     $office_details->syndicate_level_id = $request->syndicate_level_id;
     $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
 
-    
-
+  
     // process legal representative
 
     $representative =Users::where('parent_id',$office->id)->first();

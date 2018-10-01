@@ -69,7 +69,7 @@
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
-                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen">
+                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen" value="{{$office->phone}}">
                                    @if ($errors->has('office_phone'))
                                     {{ $errors->first('office_phone')}}
                                     @endif </span>
@@ -78,7 +78,7 @@
                        <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_email">البريد الالكترونى</label>
-                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen">
+                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen" value="{{$office->email}}">
                                   @if ($errors->has('office_email'))
                                     {{ $errors->first('office_email')}}
                                     @endif</span>
@@ -103,7 +103,7 @@
                           <label class="master_label mandatory" for="cer_img">صورة التوكيل</label>
                           <div class="file-upload">
                             <div class="file-select">
-                              <input name="attorney_form" class="chooseFile" type="file" id="attorney_form">
+                              <input name="attorney_form" class="chooseFile" type="file" id="attorney_form" >
                             </div>
                           </div><span class="master_message color--fadegreen">
                                     @if ($errors->has('attorney_form'))
@@ -114,7 +114,7 @@
                           <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_info">نبذة عن المكتب</label>
-                          <textarea value="{{ old('note') }}" class="master_input" name="note" id="office_info" placeholder="نبذة"></textarea><span class="master_message color--fadegreen">
+                          <textarea value="{{ old('note') }}" class="master_input" name="note" id="office_info" placeholder="نبذة">{{$office->note}}</textarea><span class="master_message color--fadegreen">
                                   @if ($errors->has('note'))
                                     {{ $errors->first('note')}}
                                     @endif</span>
