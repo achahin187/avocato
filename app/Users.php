@@ -218,4 +218,9 @@ class Users extends Authenticatable
         return $this->belongsToMany('App\Specializations','user_specializations','user_id','specialization_id');
     }
 
+     public function offices_branches()
+    {
+        return $this->belongsToMany('App\OfficeBranches');
+    }
+
 }

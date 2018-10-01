@@ -58,7 +58,7 @@
                           <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" >ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" @if($office->city_id == $city->id) selected @endif>{{$city->name}}</option>
+                            <option value="{{$city->id}}" @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('nationality'))
@@ -196,7 +196,11 @@
                          <select name="rep_spec"  class="master_input select2" id="rep_spec" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" >{{$city->name}}</option>
+                            <option  @if($representative->user_detail->work_sector_area_id == $city->id)
+                          {!!'selected'!!}
+                          @endif
+                           value="{{$city->id}}"
+                             value="{{$city->id}}" >{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">message </span>
                         </div>
@@ -249,10 +253,11 @@
                     </div>
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                       <div class="more-branches">
+                        @foreach($branches as $branch)
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_name'))
+                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]" value="{{$branch->name}}"><span class="master_message color--fadegreen">@if ($errors->has('branch_name'))
                                     {{ $errors->first('branch_name')}}
                                     @endif</span>
                           </div>
@@ -260,7 +265,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]"><span class="master_message color--fadegreen">
+                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]"  value="{{$branch->address}}""><span class="master_message color--fadegreen">
                             	   @if ($errors->has('branch_address'))
                                     {{ $errors->first('branch_address')}}
                                     @endif</span>
@@ -272,7 +277,11 @@
                              <select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الدولة</option>
                           @foreach($countries as $nationality)
-                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            <option
+                             @if($branch->country_id == $nationality->id)
+                          {!!'selected'!!}
+                          @endif
+                             value="{{$nationality->id}}">{{$nationality->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">@if ($errors->has('branches[branch_country][]'))
                                     {{ $errors->first('branches[branch_country][]')}}
@@ -285,7 +294,9 @@
                              <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" >{{$city->name}}</option>
+                            <option value="{{$city->id}}" @if($branch->city_id == $city->id)
+                          {!!'selected'!!}
+                          @endif >{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('branches[branch_city][]'))
@@ -296,7 +307,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_phone'))
+                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]" value="{{$branch->phone}}"><span class="master_message color--fadegreen">@if ($errors->has('branch_phone'))
                                     {{ $errors->first('branch_phone')}}
                                     @endif</span>
                           </div>
@@ -304,13 +315,14 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]"><span class="master_message color--fadegreen">
+                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]" value="{{$branch->email}}"><span class="master_message color--fadegreen">
                             	  @if($errors->has('branch_email'))
                                     {{ $errors->first('branch_email')}}
                                     @endif</span>
                           </div>
                         </div>
                       </div>
+                      @endforeach
                       <div id="branches"></div>
                      <!--  <input type="hidden" id="branchNo" name="branchNo" value="0"> -->
                       <div class="col-md-12">
