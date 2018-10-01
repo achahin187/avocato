@@ -108,6 +108,77 @@ class AboutController extends Controller
         return view('about_edit',$data);
     }
 
+    public function aboutUsAjax($lang_id)
+    {
+        if($lang_id==2)
+        {
+            
+        $en = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
+        return $en;
+        }
+        else{
+        $other_lang = Helper::localizations('fixed_pages','content',1,$lang_id);  
+        return $other_lang;  
+        }
+    }
+
+        public function visionAjax($lang_id)
+    {
+        if($lang_id==2)
+        {
+            
+        $en = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
+        return $en;
+        }
+        else{
+        $other_lang = Helper::localizations('fixed_pages','content',3,$lang_id);  
+        return $other_lang;  
+        }
+    }
+
+        public function missionAjax($lang_id)
+    {
+        if($lang_id==2)
+        {
+            
+        $en = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
+        return $en;
+        }
+        else{
+        $other_lang = Helper::localizations('fixed_pages','content',2,$lang_id);  
+        return $other_lang;  
+        }
+    }
+
+        public function termsAjax($lang_id)
+    {
+        if($lang_id==2)
+        {
+            
+        $en = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+        return $en;
+        }
+        else{
+        $other_lang = Helper::localizations('fixed_pages','content',4,$lang_id);  
+        return $other_lang;  
+        }
+    }
+
+        public function privacyAjax($lang_id)
+    {
+        if($lang_id==2)
+        {
+            
+        $en = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+        return $en;
+        }
+        else{
+        $other_lang = Helper::localizations('fixed_pages','content',5,$lang_id);  
+        return $other_lang;  
+        }
+    }
+
+
     public function terms_edit()
     {
         $data['terms']= Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();

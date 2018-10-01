@@ -64,7 +64,7 @@
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="about" id="article-ckeditor-about" cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
+              <textarea name="about" id="editor1" cols="30" rows="10">@if(isset($about->content)){!! $about->content !!}@endif</textarea>
 
          
           <hr>
@@ -85,14 +85,14 @@
                               <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                               <select class="master_input" id="lang_vision" name="lang_vision">
                                 @foreach($languages as $lang)
-                                <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                <option value="{{$lang->id}}" {{($lang->id==2)?'selected':''}}>{{$lang->name}}</option>
                                 @endforeach
                               </select>
                             </div>
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="vision" id="article-ckeditor-vision" cols="30" rows="10">@if(isset($vision->content)){!! $vision->content !!}@endif</textarea>
+              <textarea name="vision" id="editor2" cols="30" rows="10">@if(isset($vision->content)){!! $vision->content !!}@endif</textarea>
 
          
           <hr>
@@ -112,14 +112,14 @@
                               <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                               <select class="master_input" id="lang_mission" name="lang_mission">
                                 @foreach($languages as $lang)
-                                <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                <option value="{{$lang->id}}" {{($lang->id==2)?'selected':''}}>{{$lang->name}}</option>
                                 @endforeach
                               </select>
                             </div>
               <div class="actions">
               </div><span class="mainseparator bgcolor--main"></span>
 
-              <textarea name="mission" id="article-ckeditor-mission" cols="30" rows="10">@if(isset($mission->content)){!! $mission->content !!}@endif</textarea>
+              <textarea name="mission" id="editor3" cols="30" rows="10">@if(isset($mission->content)){!! $mission->content !!}@endif</textarea>
      
          
           <hr>
@@ -147,11 +147,71 @@
   <!--  -->
 
   <script src="{{url('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+
   <script>
      $(document).ready(function(){
-      CKEDITOR.replace( 'article-ckeditor-about' );
-      CKEDITOR.replace( 'article-ckeditor-vision' );
-      CKEDITOR.replace( 'article-ckeditor-mission' );
+
+$('#lang_about').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+        $.ajax({
+    type:'GET',
+    url:'{{url('aboutUsAjax')}}'+'/'+valueSelected,
+    data:{},
+    success:function(data){
+    CKEDITOR.instances.editor1.setData(data); 
+    },
+    error: function(xhr, textStatus, errorThrown){
+    alert('error');
+    }
+    });
+
+});
+
+$('#lang_vision').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+        $.ajax({
+    type:'GET',
+    url:'{{url('visionAjax')}}'+'/'+valueSelected,
+    data:{},
+    success:function(data){
+    CKEDITOR.instances.editor2.setData(data); 
+    },
+    error: function(xhr, textStatus, errorThrown){
+    alert('error');
+    }
+    });
+
+});
+
+$('#lang_mission').on('change', function (e) {
+    var optionSelected = $("option:selected", this);
+    var valueSelected = this.value;
+        $.ajax({
+    type:'GET',
+    url:'{{url('missionAjax')}}'+'/'+valueSelected,
+    data:{},
+    success:function(data){
+    CKEDITOR.instances.editor3.setData(data); 
+    },
+    error: function(xhr, textStatus, errorThrown){
+    alert('error');
+    }
+    });
+
+});
+
             });
   </script>
+
+  <script>
+     $(document).ready(function(){
+      CKEDITOR.replace( 'editor1' );
+      CKEDITOR.replace( 'editor2' );
+      CKEDITOR.replace( 'editor3' );
+            });
+  </script>
+
+
 @endsection
