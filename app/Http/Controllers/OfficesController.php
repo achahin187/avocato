@@ -519,7 +519,7 @@ class OfficesController extends Controller
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
-    $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
+    $office->image = ($request->hasFile('office_image'))?$office_image_name:$office->image;
     $office->country_id=session('country');
     $office->note = $request->note;
     $office->save();
@@ -543,17 +543,17 @@ class OfficesController extends Controller
 
     $office_details->litigation_level = $request->litigation_level;
     $office_details->syndicate_level_id = $request->syndicate_level_id;
-    $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
-
+    $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:$office_details->authorization_copy;
+   $office_details->save();
   
     // process legal representative
 
     $representative =Users::where('parent_id',$office->id)->first();
     $representative->parent_id = $office->id;
-    $representative->name = $request->rep_name . $representative->id;
+    $representative->name = $request->rep_name;
     $representative->full_name = $request->rep_name;
     $representative->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
-    $representative->image = ($request->hasFile('rep_img'))?$rep_img:'';
+    $representative->image = ($request->hasFile('rep_img'))?$rep_img:$representative->image;
     $representative->save();
     $representative = Users::find($representative->id);
     $password = Helper::generateRandom(Users::class, 'password', 8);
@@ -566,10 +566,13 @@ class OfficesController extends Controller
      $rep_details->national_id = $request->rep_nid;
      $rep_details->nationality_id = $request->rep_nationality;
      $rep_details->work_sector_area_id = $request->rep_spec;
-     $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:'';
+     $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:$rep_details->syndicate_copy;
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){
       //representative specializations 
+     	//remove old first
+      $representative->specializations()->detach();
+      //then add new
       $representative->specializations()->attach($request->specializations);
    
      }
@@ -578,9 +581,10 @@ class OfficesController extends Controller
       OfficeBranches::where('office_id',$id )->delete();
    // $old_branches->delete();
     // $office->offices_branches()->delete();
-     if(isset($request->branchNo)){
+     if(count($request->branches['branch_name']) != 0){ 
+     	if(isset($request->branchNo)){
     $branchNo = $request->branchNo-1;
-      }else{$branchNo= OfficeBranches::where('office_id',$id )->count();}
+      }else{$branchNo=0;}
     for($i=0 ; $i<=$branchNo ;$i++){
      $branch = new OfficeBranches;
      $branch->office_id = $office->id;
@@ -593,7 +597,8 @@ class OfficesController extends Controller
      $branch->save();
 
      }
-     
+     }
+
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
   }
 
