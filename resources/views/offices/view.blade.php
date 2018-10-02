@@ -96,7 +96,7 @@
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$representative->user_detail->authorization_copy)}}">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$office->user_detail->authorization_copy)}}">
                                   <h4 class="text-center">صورة التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
@@ -193,8 +193,9 @@
                               </tr>
                             </thead>
                             <tbody>
+                              @if(!empty($branches))
                            @foreach($branches as $branch)
-                              <tr>
+                              <tr data-branch-id="{{$branch->id}}">
                                 <td><span class="cellcontent">{{$branch->name}}</span></td>
                                 <td><span class="cellcontent"> {{$branch->phone}} </span></td>
                                 <td><span class="cellcontent">{{$branch->email}}</span></td>
@@ -212,6 +213,8 @@
                                  ><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endforeach
+
+                              @endif
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1805,7 +1808,7 @@
               </div>
 
               <!-- Edit Modal  -->
-
+@if(!empty($branches))
      <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
@@ -1833,7 +1836,9 @@
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
                                         <select class="master_input" id="branch_country_edit" name="branch_country_edit">
                            @foreach($countries as $nationality)
-                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            <option value="{{$nationality->id}}" @if($branch->country_id == $nationality->id){!!'selected'!!}
+                             @endif
+                              >{{$nationality->name}}</option>
                             @endforeach
                                         </select><span class="master_message color--fadegreen">message</span>
                                       </div>
@@ -1844,7 +1849,9 @@
                            <select name="branch_city_edit"  class="master_input select2" id="branch_city_edit" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            <option value="{{$city->id}}"
+                             @if($branch->city_id == $city->id){!!'selected'!!} @endif
+                              >{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('branch_city'))
@@ -1879,6 +1886,7 @@
                             </div>
                             </form>
                           </div>
+                          @endif
 
   <script type="text/javascript">
   $(document).ready(function(){
@@ -1900,6 +1908,39 @@
     });
   });
 </script>
+
+       <script type="text/javascript">
+      $('.btn-warning-cancel').click(function(){
+      var branch_id = $(this).closest('tr').attr('data-branch-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('branches_delete')}}'+'/'+branch_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-branch-id='+branch_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+  </script>
 
  @endsection
 

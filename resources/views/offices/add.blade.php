@@ -89,7 +89,7 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للمكتب</div>
-                             <input name="office_image" class="chooseFile" type="file" name="chooseFile" id="office_img">
+                             <input name="office_image" class="chooseFile" type="file" id="office_img">
                             </div>
                           </div><span class="master_message color--fadegreen">
                                   @if ($errors->has('image'))
@@ -102,14 +102,13 @@
                           <label class="master_label mandatory" for="cer_img">صورة التوكيل</label>
                           <div class="file-upload">
                             <div class="file-select">
-                              <input name="attorney_form" class="chooseFile" type="file" id="attorney_form">
+                              <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة التوكيل</div>
+                              <input class="chooseFile" type="file" name="attorney_form" id="cer_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">
-                                    @if ($errors->has('attorney_form'))
-                                    {{ $errors->first('attorney_form')}}
-                                    @endif</span>
+                          </div><span class="master_message color--fadegreen">message</span>
                         </div>
                       </div>
+                     <!--  </div> -->
                           <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_info">نبذة عن المكتب</label>

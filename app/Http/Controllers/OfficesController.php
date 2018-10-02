@@ -194,6 +194,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
+   	//dd($request);
    	// var_dump(count( $request->branches['branch_name']));die;
    
    //dd($request->branches[]);
@@ -242,6 +243,8 @@ class OfficesController extends Controller
       $attorney_form = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('attorney_form')->getClientOriginalExtension();
       Input::file('attorney_form')->move($destinationPath, $attorney_form);
     }
+     //dd($attorney_form);
+
 
      if ($request->hasFile('rep_img')) {
       $destinationPath = 'users_images';
@@ -296,7 +299,8 @@ class OfficesController extends Controller
     $office_details->litigation_level = $request->litigation_level;
     $office_details->syndicate_level_id = $request->syndicate_level_id;
     $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
-    //$lawyer_details->syndicate_copy = $syndicate_copy;
+    $office_details->save();
+    //dd($office_details->authorization_copy);
     $office_plaintext = new ClientsPasswords;
     $office_plaintext->password = $password;
     $office->user_detail()->save($office_details);
@@ -333,7 +337,9 @@ class OfficesController extends Controller
      }
      //process office Branches
 
-     if(isset($request->branchNo)){
+     
+     if(count($request->branches['branch_name']) != 0){ 
+     	if(isset($request->branchNo)){
     $branchNo = $request->branchNo-1;
       }else{$branchNo=0;}
     for($i=0 ; $i<=$branchNo ;$i++){
@@ -343,10 +349,14 @@ class OfficesController extends Controller
      $branch->address = $request->branches['branch_address'][$i];
      $branch->phone = $request->branches['branch_phone'][$i];
      $branch->email = $request->branches['branch_email'][$i];
-     $branch->country_id = $request->branches['branch_country'][$i];
-     $branch->city_id = $request->branches['branch_city'][$i];
+     if(isset($request->branches['branch_country'][$i])){
+     $branch->country_id = $request->branches['branch_country'][$i];}
+      if(isset($request->branches['branch_city'][$i])){
+     $branch->city_id = $request->branches['branch_city'][$i];}
+     if(isset($request->branches['branch_name'][$i])){
      $branch->save();
-
+     }
+     }
      }
      
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
@@ -370,6 +380,8 @@ class OfficesController extends Controller
     $data['office'] = Users::find($id);
     $data['representative'] = Users::where('parent_id',$id )->first();
     $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+    if(OfficeBranches::where('office_id',$id)->count() == 0)
+    	{$data['branches']=[];}
 
     if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
       Session::flash('warning', 'المكنب غير  موجود');
@@ -485,7 +497,6 @@ class OfficesController extends Controller
       $attorney_form = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('attorney_form')->getClientOriginalExtension();
       Input::file('attorney_form')->move($destinationPath, $attorney_form);
     }
-
      if ($request->hasFile('rep_img')) {
       $destinationPath = 'users_images';
       $rep_img = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('rep_img')->getClientOriginalExtension();
@@ -650,5 +661,12 @@ public function branch_edit(Request $request)
     return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
 
 }
+
+public function branch_destroy($id)
+  {
+    // Helper::add_log(5, 19, $id);
+    $user = OfficeBranches::find($id);
+    $user->delete();
+  }
 
 }

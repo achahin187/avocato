@@ -387,6 +387,8 @@ Route::post('/offices_update/{id}', 'OfficesController@update')->name('offices_u
 //offices Branches
 Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
 Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
+Route::post('/branches_delete/{id}', 'OfficesController@branch_destroy')->name('branches_delete');
+
 
 
 

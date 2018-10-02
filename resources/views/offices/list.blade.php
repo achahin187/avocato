@@ -37,7 +37,7 @@
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -53,7 +53,7 @@
                         </thead>
                         <tbody>
                         	   @foreach($offices as $office)
-                          <tr>
+                          <tr data-office-id="{{$office->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{$office->code}}</span></td>
                             <td><span class="cellcontent">{{$office->name}}</span></td>
@@ -257,5 +257,79 @@
                   </div>
                 </div>
               </div>
+
+       <script type="text/javascript">
+      $('.btn-warning-cancel').click(function(){
+      var lawyer_id = $(this).closest('tr').attr('data-office-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-office-id='+lawyer_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+
+    $('.btn-warning-cancel-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-office-id');
+      }).get();
+      var _token = '{{csrf_token()}}';
+       if (selectedIds === undefined || selectedIds.length == 0) {
+    // array empty or does not exist
+    swal("@lang('رجاء قم بتحديد البيانات المراد حذفها')");
+          } else{
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{route('lawyers_destroy_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-office-id='+value+']').fadeOut();
+            });
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    }
+      });
+     </script>
 
 @endsection
