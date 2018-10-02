@@ -337,7 +337,9 @@ class OfficesController extends Controller
      }
      //process office Branches
 
-     if(isset($request->branchNo)){
+     
+     if(count($request->branches['branch_name']) != 0){ 
+     	if(isset($request->branchNo)){
     $branchNo = $request->branchNo-1;
       }else{$branchNo=0;}
     for($i=0 ; $i<=$branchNo ;$i++){
@@ -347,10 +349,14 @@ class OfficesController extends Controller
      $branch->address = $request->branches['branch_address'][$i];
      $branch->phone = $request->branches['branch_phone'][$i];
      $branch->email = $request->branches['branch_email'][$i];
-     $branch->country_id = $request->branches['branch_country'][$i];
-     $branch->city_id = $request->branches['branch_city'][$i];
+     if(isset($request->branches['branch_country'][$i])){
+     $branch->country_id = $request->branches['branch_country'][$i];}
+      if(isset($request->branches['branch_city'][$i])){
+     $branch->city_id = $request->branches['branch_city'][$i];}
+     if(isset($request->branches['branch_name'][$i])){
      $branch->save();
-
+     }
+     }
      }
      
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
@@ -375,7 +381,7 @@ class OfficesController extends Controller
     $data['representative'] = Users::where('parent_id',$id )->first();
     $data['branches'] = OfficeBranches::where('office_id',$id)->get();
     if(OfficeBranches::where('office_id',$id)->count() == 0)
-    	{$data['branches']=0;}
+    	{$data['branches']=[];}
 
     if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
       Session::flash('warning', 'المكنب غير  موجود');

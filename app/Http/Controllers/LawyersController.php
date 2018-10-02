@@ -39,8 +39,8 @@ class LawyersController extends Controller
     //     }
         // return Users::withTrashed()->restore();
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
-      $q->where('rule_id', 5)->where('rule_id','!=',15);
-    })->with('rules')->get();
+      $q->where('rule_id', 5);
+    })->get();
     foreach($data['lawyers'] as $key=>$lawyer)
     {
       if($lawyer->IsOffice())
@@ -49,6 +49,7 @@ class LawyersController extends Controller
       }
 
     }
+      
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();

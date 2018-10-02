@@ -193,7 +193,7 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @if($branches != 0)
+                              @if(!empty($branches))
                            @foreach($branches as $branch)
                               <tr data-branch-id="{{$branch->id}}">
                                 <td><span class="cellcontent">{{$branch->name}}</span></td>
@@ -1808,7 +1808,7 @@
               </div>
 
               <!-- Edit Modal  -->
-@if($branches != 0)
+@if(!empty($branches))
      <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
