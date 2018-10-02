@@ -603,30 +603,30 @@ class OfficesController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function destroyGet($id)
-  {
-    Helper::add_log(5, 19, $id);
-    $user = Users::find($id);
-    $user->delete();
-    return redirect()->route('lawyers')->with('success', 'تم حذف عضويه المحامى بنجاح');
-  }
+  // public function destroyGet($id)
+  // {
+  //   Helper::add_log(5, 19, $id);
+  //   $user = Users::find($id);
+  //   $user->delete();
+  //   return redirect()->route('lawyers')->with('success', 'تم حذف عضويه المحامى بنجاح');
+  // }
 
-  public function destroyPost($id)
-  {
-    Helper::add_log(5, 19, $id);
-    $user = Users::find($id);
-    $user->delete();
-  }
+  // public function destroyPost($id)
+  // {
+  //   Helper::add_log(5, 19, $id);
+  //   $user = Users::find($id);
+  //   $user->delete();
+  // }
 
-  public function destroy_all()
-  {
-    $ids = $_POST['ids'];
-    foreach ($ids as $id) {
-      Helper::add_log(5, 19, $id);
-      $user = Users::find($id);
-      $user->delete();
-    }
-  }
+  // public function destroy_all()
+  // {
+  //   $ids = $_POST['ids'];
+  //   foreach ($ids as $id) {
+  //     Helper::add_log(5, 19, $id);
+  //     $user = Users::find($id);
+  //     $user->delete();
+  //   }
+  // }
 
 
   //create branch
@@ -666,6 +666,13 @@ public function branch_destroy($id)
   {
     // Helper::add_log(5, 19, $id);
     $user = OfficeBranches::find($id);
+    $user->delete();
+  }
+
+    public function destroyPost($id)
+  {
+    Helper::add_log(5, 21, $id);
+    $user = Users::find($id);
     $user->delete();
   }
 
