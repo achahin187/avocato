@@ -12,6 +12,7 @@ use App\Expenses;
 use App\Geo_Countries;
 use App\Entity_Localizations;
 use App\ClientsPasswords;
+use App\OfficeBranches;
 use Validator;
 use Helper;
 use Excel;
@@ -537,6 +538,9 @@ class LawyersController extends Controller
     Helper::add_log(5, 19, $id);
     $user = Users::find($id);
     $user->delete();
+    //for offices (if office has branches)
+    if ( OfficeBranches::where('office_id',$id)->count() >0 ){
+      OfficeBranches::where('office_id',$id)->delete();}
   }
 
   public function destroy_all()
@@ -546,6 +550,9 @@ class LawyersController extends Controller
       Helper::add_log(5, 19, $id);
       $user = Users::find($id);
       $user->delete();
+       //for offices (if office has branches)
+    if ( OfficeBranches::where('office_id',$id)->count() >0 ){
+      OfficeBranches::where('office_id',$id)->delete();}
     }
   }
 }
