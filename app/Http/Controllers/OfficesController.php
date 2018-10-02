@@ -570,6 +570,9 @@ class OfficesController extends Controller
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){
       //representative specializations 
+     	//remove old first
+      $representative->specializations()->detach();
+      //then add new
       $representative->specializations()->attach($request->specializations);
    
      }
