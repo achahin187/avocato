@@ -193,8 +193,9 @@
                               </tr>
                             </thead>
                             <tbody>
+                              @if($branches != 0)
                            @foreach($branches as $branch)
-                              <tr>
+                              <tr data-branch-id="{{$branch->id}}">
                                 <td><span class="cellcontent">{{$branch->name}}</span></td>
                                 <td><span class="cellcontent"> {{$branch->phone}} </span></td>
                                 <td><span class="cellcontent">{{$branch->email}}</span></td>
@@ -212,6 +213,8 @@
                                  ><i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endforeach
+
+                              @endif
                             </tbody>
                           </table>
                           <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1805,7 +1808,7 @@
               </div>
 
               <!-- Edit Modal  -->
-
+@if($branches != 0)
      <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
@@ -1883,6 +1886,7 @@
                             </div>
                             </form>
                           </div>
+                          @endif
 
   <script type="text/javascript">
   $(document).ready(function(){
@@ -1904,6 +1908,39 @@
     });
   });
 </script>
+
+       <script type="text/javascript">
+      $('.btn-warning-cancel').click(function(){
+      var branch_id = $(this).closest('tr').attr('data-branch-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('branches_delete')}}'+'/'+branch_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-branch-id='+branch_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+  </script>
 
  @endsection
 

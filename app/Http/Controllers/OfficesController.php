@@ -374,6 +374,8 @@ class OfficesController extends Controller
     $data['office'] = Users::find($id);
     $data['representative'] = Users::where('parent_id',$id )->first();
     $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+    if(OfficeBranches::where('office_id',$id)->count() == 0)
+    	{$data['branches']=0;}
 
     if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
       Session::flash('warning', 'المكنب غير  موجود');
@@ -653,5 +655,12 @@ public function branch_edit(Request $request)
     return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
 
 }
+
+public function branch_destroy($id)
+  {
+    // Helper::add_log(5, 19, $id);
+    $user = OfficeBranches::find($id);
+    $user->delete();
+  }
 
 }
