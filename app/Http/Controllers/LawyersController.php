@@ -41,6 +41,15 @@ class LawyersController extends Controller
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
+    foreach($data['lawyers'] as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($data['lawyers'][$key]);
+      }
+
+    }
+      
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
