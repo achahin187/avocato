@@ -6,6 +6,7 @@ use App\Installment;
 use App\ClientsPasswords;
 use App\Task_Charges;
 use App\User_Ratings;
+use App\OfficeBranches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -55,6 +56,8 @@ class Users extends Authenticatable
                 }
               }
               }
+
+            if ( OfficeBranches::where('office_id',$user->id)->count() ) {OfficeBranches::where('office_id',$user->id)->delete();}
             // if ( count($user->offices)>0 ) {$user->offices()->delete();}
             // if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
             // if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
