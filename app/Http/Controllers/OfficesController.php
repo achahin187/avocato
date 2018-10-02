@@ -550,7 +550,7 @@ class OfficesController extends Controller
 
     $representative =Users::where('parent_id',$office->id)->first();
     $representative->parent_id = $office->id;
-    $representative->name = $request->rep_name . $representative->id;
+    $representative->name = $request->rep_name;
     $representative->full_name = $request->rep_name;
     $representative->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
     $representative->image = ($request->hasFile('rep_img'))?$rep_img:$representative->image;
