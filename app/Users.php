@@ -197,6 +197,14 @@ class Users extends Authenticatable
         }
       }
     }
+    public function IsOffice(){
+        foreach($this->rules as $rule){
+          if($rule->pivot->rule_id==15){
+            return true;
+          }
+        }
+        return false;
+      }
 
           public function notifications()
     {
