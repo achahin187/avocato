@@ -96,7 +96,7 @@
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$representative->user_detail->authorization_copy)}}">
+                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$office->user_detail->authorization_copy)}}">
                                   <h4 class="text-center">صورة التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
@@ -1833,7 +1833,9 @@
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
                                         <select class="master_input" id="branch_country_edit" name="branch_country_edit">
                            @foreach($countries as $nationality)
-                            <option value="{{$nationality->id}}">{{$nationality->name}}</option>
+                            <option value="{{$nationality->id}}" @if($branch->country_id == $nationality->id){!!'selected'!!}
+                             @endif
+                              >{{$nationality->name}}</option>
                             @endforeach
                                         </select><span class="master_message color--fadegreen">message</span>
                                       </div>
@@ -1844,7 +1846,9 @@
                            <select name="branch_city_edit"  class="master_input select2" id="branch_city_edit" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                            <option value="{{$city->id}}"
+                             @if($branch->city_id == $city->id){!!'selected'!!} @endif
+                              >{{$city->name}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('branch_city'))

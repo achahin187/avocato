@@ -194,6 +194,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
+   	//dd($request);
    	// var_dump(count( $request->branches['branch_name']));die;
    
    //dd($request->branches[]);
@@ -242,6 +243,8 @@ class OfficesController extends Controller
       $attorney_form = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('attorney_form')->getClientOriginalExtension();
       Input::file('attorney_form')->move($destinationPath, $attorney_form);
     }
+     //dd($attorney_form);
+
 
      if ($request->hasFile('rep_img')) {
       $destinationPath = 'users_images';
@@ -296,7 +299,8 @@ class OfficesController extends Controller
     $office_details->litigation_level = $request->litigation_level;
     $office_details->syndicate_level_id = $request->syndicate_level_id;
     $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
-    //$lawyer_details->syndicate_copy = $syndicate_copy;
+    $office_details->save();
+    //dd($office_details->authorization_copy);
     $office_plaintext = new ClientsPasswords;
     $office_plaintext->password = $password;
     $office->user_detail()->save($office_details);
@@ -485,7 +489,6 @@ class OfficesController extends Controller
       $attorney_form = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('attorney_form')->getClientOriginalExtension();
       Input::file('attorney_form')->move($destinationPath, $attorney_form);
     }
-
      if ($request->hasFile('rep_img')) {
       $destinationPath = 'users_images';
       $rep_img = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('rep_img')->getClientOriginalExtension();
