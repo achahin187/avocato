@@ -39,7 +39,7 @@ class LawyersController extends Controller
     //     }
         // return Users::withTrashed()->restore();
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
-      $q->where('rule_id', 5)->where('rule_id','!=',15);
+      $q->where('rule_id', 5);
     })->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
