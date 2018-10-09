@@ -232,7 +232,8 @@ Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawy
 Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
-
+Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
+Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
 });
 
 

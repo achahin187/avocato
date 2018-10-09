@@ -819,6 +819,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <th><span class="cellcontent">التقييم</span></th>
                                 <th><span class="cellcontent">ملاحظات العميل</span></th>
                                 <th><span class="cellcontent">التاريخ</span></th>
+                                <th><span class="cellcontent">الاجراءات</span></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -830,6 +831,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <td><span class="cellcontent"><span class= stars , data-rating= {{$rate->pivot->rate_type->rate}} ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
+                                <td><span class="cellcontent">
+                                
+                                <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                                <i class = "fa  fa-pencil"></i></a>
+                                <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
+                                <i class = "fa  fa-trash-o"></i></a></span></td>
+
                               </tr>
                               @endif
                               @endforeach
@@ -1055,6 +1063,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <th><span class="cellcontent">التقييم</span></th>
                                 <th><span class="cellcontent">ملاحظات الإدارة</span></th>
                                 <th><span class="cellcontent">التاريخ</span></th>
+                                <th><span class="cellcontent">الاجراءات</span></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1065,6 +1074,12 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <td><span class="cellcontent">{{Helper::localizations('rates','name',$rate->pivot->rate_id)}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
+                                <td><span class="cellcontent">
+                                
+                                <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                                <i class = "fa  fa-pencil"></i></a>
+                                <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
+                                <i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endif
                               @endforeach
