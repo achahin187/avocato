@@ -23,6 +23,7 @@ use App\Exports\LawyersExport;
 use Jenssegers\Date\Date;
 use App\Specializations;
 use App\SyndicateLevels;
+use App\User_Ratings;
 
 
 class LawyersController extends Controller
@@ -351,7 +352,7 @@ class LawyersController extends Controller
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
 
     $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    
+    //  dd($data['rates_user']);
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
@@ -554,5 +555,22 @@ class LawyersController extends Controller
     if ( OfficeBranches::where('office_id',$id)->count() >0 ){
       OfficeBranches::where('office_id',$id)->delete();}
     }
+  }
+
+  public function rate_edit($id)
+  {
+    // dd($id);
+    $rate=User_Ratings::where('id',$id)->update([
+      "abbroved"=>1
+    ]);
+    // dd($rate);
+    return redirect()->back();
+  }
+  public function rate_delete($id)
+  {
+    // dd($id);
+    $rate=User_Ratings::where('id',$id)->delete();
+    // dd($rate);
+    return redirect()->back();
   }
 }
