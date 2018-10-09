@@ -118,6 +118,7 @@
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contracts_formulas_types')}}">انواع الصيغ و العقود</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('consultations_classification')}}">تصنيف الاستشارات</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('about')}}">عن جسر الأمان</a></li>
+                                          <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contact_us')}}">اتصل بنا</a></li>
 
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('terms_conditions')}}">الشروط و الأحكام</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('privacy')}}">سياسة الخصوصية</a></li>
