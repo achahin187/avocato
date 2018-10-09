@@ -73,7 +73,7 @@ class ContractsFormulasTypesController extends Controller
         }
         $main = new Formula_Contract_Types;
         $main->name= $request->main;
-        $main->country_id=session('country');
+//        $main->country_id=session('country');
         $main->save();
 
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
