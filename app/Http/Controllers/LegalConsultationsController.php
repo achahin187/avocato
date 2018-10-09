@@ -35,25 +35,16 @@ class LegalConsultationsController extends Controller
     // }
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
-        $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
+        $consultation_types = Consultation_Types::all();
         $consultations = Consultation::where('country_id',session('country'))->orderBy('created_at', 'desc')->get();
         foreach ($consultations as $consultation) {
-
             $consultation_type = Consultation_types::find($consultation->consultation_type_id);
-               // dd($consultation);
             if ($consultation_type) {
                 $consultation['consultation_type'] = $consultation_type->name;
             } else {
                 $consultation['consultation_type'] = 'لا يوجد تصنيف';
             }
-
-
         }
-
         return view('legal_consultations.legal_consultations')->with('consultations', $consultations)->with('consultation_types', $consultation_types);
     }
 
@@ -65,7 +56,7 @@ class LegalConsultationsController extends Controller
     public function add()
     {
         $data['languages'] = Languages::all();
-        $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
+        $consultation_types = Consultation_Types::all();
         return view('legal_consultations.legal_consultation_add',$data)->with('consultation_types', $consultation_types);
     }
 
@@ -91,7 +82,7 @@ class LegalConsultationsController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
+        $consultation_types = Consultation_Types::all();
         $consultation = new Consultation();
 
         if (\Auth::check()) {
@@ -142,7 +133,7 @@ class LegalConsultationsController extends Controller
     public function edit($id)
     {
         $data['languages'] = Languages::all();
-        $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
+        $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($id);
 
         if( $consultation == NULL ) {
@@ -407,7 +398,7 @@ class LegalConsultationsController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
-        $consultation_types = Consultation_Types::where('country_id',session('country'))->get();
+        $consultation_types = Consultation_Types::all();
         $consultation_types_ids = [];
         $i = 0;
         foreach ($consultation_types as $key => $value) {

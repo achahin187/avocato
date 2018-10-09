@@ -27,30 +27,26 @@ class FormulasController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
         $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->get();
-        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         return view('formulas.formulas', $data);
     }
 
     public function create()
     {
         $data['languages'] = Languages::all();
-        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         return view('formulas.formulas_create', $data);
     }
 
     public function getSub(Request $request)
     {
-        $subs = Formula_Contract_Types::where('country_id',session('country'))->where('parent_id', $request->id)->pluck('name', 'id');
+        $subs = Formula_Contract_Types::where('parent_id', $request->id)->pluck('name', 'id');
         return $subs;
     }
     public function getSubs(Request $request)
     {
-        $subs = Formula_Contract_Types::where('country_id',session('country'))->whereIn('parent_id', $request->ids)->pluck('name', 'id');
+        $subs = Formula_Contract_Types::whereIn('parent_id', $request->ids)->pluck('name', 'id');
         return $subs;
     }
 
@@ -198,7 +194,7 @@ class FormulasController extends Controller
     public function edit($id)
     {
         $data['languages'] = Languages::all();
-        $data['main_contracts'] = Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
+        $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         $data['contract'] = Formula_Contracts::find($id);
 
         if( $data['contract'] == NULL ) {
