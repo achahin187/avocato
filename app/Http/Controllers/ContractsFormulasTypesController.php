@@ -22,8 +22,8 @@ class ContractsFormulasTypesController extends Controller
     {
         // $mains=Formula_Contract_Types::where('id',2)->first();
         // return $mains->child;
-        $data['subs'] = Formula_Contract_Types::where('country_id',session('country'))->whereNotNull('parent_id')->get();
-        $data['main_contracts']=Formula_Contract_Types::where('country_id',session('country'))->whereNull('parent_id')->get();
+        $data['subs'] = Formula_Contract_Types::whereNotNull('parent_id')->get();
+        $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
         return view('contracts_formulas_types',$data);
     }
 
