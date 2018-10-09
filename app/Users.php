@@ -182,7 +182,7 @@ class Users extends Authenticatable
 
         public function rate()
     {
-        return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id','id','abbroved')->using('App\User_Ratings');
+        return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id','id','is_approved')->using('App\User_Ratings');
     }
 
     public function getRole(){

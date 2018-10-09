@@ -561,7 +561,7 @@ class LawyersController extends Controller
   {
     // dd($id);
     $rate=User_Ratings::where('id',$id)->update([
-      "abbroved"=>1
+      "is_approved"=>1
     ]);
     // dd($rate);
     return redirect()->back();
