@@ -29,7 +29,7 @@ class AboutController extends Controller
 //          });
 
    
-         $data['about'] = Fixed_Pages::all();
+         $data['about'] = Fixed_Pages::whereIn('page_name', array('aboutus', 'mission', 'vision'))->get();
          return view('about',$data);
 
         // return view('about')->with('about', Fixed_Pages::where('page_name','aboutus')->orWhere('page_name','vision')
