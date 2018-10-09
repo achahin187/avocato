@@ -86,7 +86,7 @@ class Helper {
             $localization->value = $new_value;
             $localization->save();
         } else {
-            Helper::add_localization($entity_id, $field_name, $item_id, $new_value, $lang_id);
+            Helper::add_localization($table_name, $field_name, $item_id, $new_value, $lang_id);
         }
     }
 

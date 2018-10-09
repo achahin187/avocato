@@ -15,49 +15,19 @@ class AboutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-          if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
-
-
-         $clients =  Fixed_Pages::where('country_id',session('country'));
-
-         $clients = $clients->where(function($query)  {
-          $query->where('page_name','aboutus')
-         ->orWhere('page_name','vision')
-         ->orWhere('page_name','mission');
-          });
-
-   
-         $data['about'] = $clients->get();
+    public function index() {
+        $data['about'] = Fixed_Pages::whereIn('page_name', array('aboutus', 'mission', 'vision'))->get();
          return view('about',$data);
-
-        // return view('about')->with('about', Fixed_Pages::where('page_name','aboutus')->orWhere('page_name','vision')
-        //     ->orWhere('page_name','mission')->where('country_id',session('country'))->get());
     }
-
-
-
-     public function terms_conditions()
-    {
-          if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
-        return view('terms')->with('terms', Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first());
+    
+    public function terms_conditions() {
+        return view('terms')->with('terms', Fixed_Pages::where('page_name','terms')->first());
     }
 
 
     public function privacy()
     {
-          if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
-        return view('privacy')->with('terms', Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first());
+        return view('privacy')->with('terms', Fixed_Pages::where('page_name','privacy')->first());
     }
 
 
@@ -101,9 +71,9 @@ class AboutController extends Controller
      */
     public function edit()
     {
-        $data['about']= Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
-        $data['vision']= Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
-        $data['mission']= Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
+        $data['about']= Fixed_Pages::where('page_name','aboutus')->first();
+        $data['vision']= Fixed_Pages::where('page_name','vision')->first();
+        $data['mission']= Fixed_Pages::where('page_name','mission')->first();
         $data['languages']= Languages::all();
         return view('about_edit',$data);
     }
@@ -113,7 +83,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
+        $en = Fixed_Pages::where('page_name','aboutus')->first();
         return $en;
         }
         else{
@@ -127,7 +97,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
+        $en = Fixed_Pages::where('page_name','vision')->first();
         return $en;
         }
         else{
@@ -141,7 +111,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
+        $en = Fixed_Pages::where('page_name','mission')->first();
         return $en;
         }
         else{
@@ -155,7 +125,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+        $en = Fixed_Pages::where('page_name','terms')->first();
         return $en;
         }
         else{
@@ -169,7 +139,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+        $en = Fixed_Pages::where('page_name','privacy')->first();
         return $en;
         }
         else{
@@ -181,7 +151,7 @@ class AboutController extends Controller
 
     public function terms_edit()
     {
-        $data['terms']= Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+        $data['terms']= Fixed_Pages::where('page_name','terms')->first();
         $data['languages']= Languages::all();
         return view('terms_edit',$data);
     }
@@ -189,7 +159,7 @@ class AboutController extends Controller
 
         public function privacy_edit()
     {
-        $data['privacy']= Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+        $data['privacy']= Fixed_Pages::where('page_name','privacy')->first();
         $data['languages']= Languages::all();
         return view('privacy_edit',$data);
     }
@@ -207,7 +177,7 @@ class AboutController extends Controller
     //**** Note still need to add localization (arabic or french) to mission and vission
         // edit info
         if(isset($request->about)){
-        $about_edit = Fixed_Pages::where('page_name','aboutus')->where('country_id',session('country'))->first();
+        $about_edit = Fixed_Pages::where('page_name','aboutus')->first();
            //  dd($about_edit);    
         if($about_edit == null) {
              if ($request->lang_about == 2) {
@@ -235,7 +205,7 @@ class AboutController extends Controller
 
        //vision
         if(isset($request->vision)){
-        $vision_edit = Fixed_Pages::where('page_name','vision')->where('country_id',session('country'))->first();
+        $vision_edit = Fixed_Pages::where('page_name','vision')->first();
            //  dd($about_edit);
         if($vision_edit == null) {
              if ($request->lang_vision == 2) {
@@ -263,7 +233,7 @@ class AboutController extends Controller
        }
 
         if(isset($request->mission)){
-        $mission_edit = Fixed_Pages::where('page_name','mission')->where('country_id',session('country'))->first();
+        $mission_edit = Fixed_Pages::where('page_name','mission')->first();
            //  dd($about_edit);
         if($mission_edit == null) {
              if ($request->lang_mission == 2) {
@@ -298,7 +268,7 @@ class AboutController extends Controller
     { 
 
                 if(isset($request->terms)){
-        $terms_edit = Fixed_Pages::where('page_name','terms')->where('country_id',session('country'))->first();
+        $terms_edit = Fixed_Pages::where('page_name','terms')->first();
            //  dd($about_edit);
         if($terms_edit == null) {
              if ($request->lang_terms == 2) {
@@ -333,7 +303,7 @@ class AboutController extends Controller
     { 
         //privacy update
            if(isset($request->privacy)){
-        $privacy_edit = Fixed_Pages::where('page_name','privacy')->where('country_id',session('country'))->first();
+        $privacy_edit = Fixed_Pages::where('page_name','privacy')->first();
            //  dd($about_edit);
         if($privacy_edit == null) {
              if ($request->lang_privacy == 2) {

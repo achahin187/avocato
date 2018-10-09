@@ -135,6 +135,7 @@ Route::get('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_
 Route::get('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
 Route::get('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
 
+
 });
 
 
@@ -392,6 +393,16 @@ Route::post('/branches_store', 'OfficesController@branch_create')->name('branche
 Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
 Route::post('/branches_delete/{id}', 'OfficesController@branch_destroy')->name('branches_delete');
 
+
+//Contact us
+Route::middleware(['roles:1,2'])->group(function () {
+        Route::match(array('GET','POST'),'/contact_us', 'CompanyContactInfoController@index')->name('contact_us');
+        Route::post('/contact_us/addsocialaccount','CompanyContactInfoController@addSocialAccount')->name('add_social_account');
+        Route::post('/contact_us/deletesocialaccount','CompanyContactInfoController@deleteSocialAccount')->name('delete_social_account');
+        Route::post('/contact_us/Localization','CompanyContactInfoController@getLocalization')->name('get_localization');
+    
+    
+    });
 
 
 
