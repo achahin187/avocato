@@ -17,22 +17,19 @@ class AboutController extends Controller
      */
     public function index()
     {
-          if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
+          
 
 
-         $clients =  Fixed_Pages::where('country_id',session('country'));
+//         $clients =  Fixed_Pages::where('country_id',session('country'));
 
-         $clients = $clients->where(function($query)  {
-          $query->where('page_name','aboutus')
-         ->orWhere('page_name','vision')
-         ->orWhere('page_name','mission');
-          });
+//         $clients = Fixed_Pages::where(function($query)  {
+//          $query->where('page_name','aboutus')
+//         ->orWhere('page_name','vision')
+//         ->orWhere('page_name','mission');
+//          });
 
    
-         $data['about'] = $clients->get();
+         $data['about'] = Fixed_Pages::all();
          return view('about',$data);
 
         // return view('about')->with('about', Fixed_Pages::where('page_name','aboutus')->orWhere('page_name','vision')
