@@ -18,11 +18,8 @@ class IssuesTypesController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
-        $data['issues'] = Cases_Types::where('country_id',session('country'))->get();
+//        $data['issues'] = Cases_Types::where('country_id',session('country'))->get();
+        $data['issues'] = Cases_Types::all();
         return view('issues_types',$data);
     }
 
@@ -74,7 +71,7 @@ class IssuesTypesController extends Controller
 
         $issue = new Cases_Types;
         $issue->name = $request->new_type;
-        $issue->country_id=session('country');
+//        $issue->country_id=session('country');
         $issue->save();
         return redirect()->route('issues_types')->with('success','تم إضافه نوع جديد بنجاح');
     }
