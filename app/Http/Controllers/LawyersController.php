@@ -9,6 +9,7 @@ use App\Tasks;
 use App\Case_;
 use App\Rules;
 use App\Expenses;
+use App\Geo_Cities;
 use App\Geo_Countries;
 use App\Entity_Localizations;
 use App\ClientsPasswords;
