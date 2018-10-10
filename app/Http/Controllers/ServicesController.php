@@ -37,7 +37,7 @@ class ServicesController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
-        $data['services'] = Tasks::where('task_type_id', 3)->get();
+        $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
         return view('services.services', $data);
     }
@@ -178,7 +178,7 @@ class ServicesController extends Controller
             return redirect('/services');
         }
         
-        $data['clients'] = Users::whereHas('rules', function ($q) {
+        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('rule_id', 6);
         })->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
