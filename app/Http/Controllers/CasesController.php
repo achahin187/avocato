@@ -26,6 +26,7 @@ use App\Case_Record_Document;
 use App\Case_Lawyer;
 use App\Case_Client_Role;
 use App\Case_Document;
+use App\case_document_details;
 use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
@@ -721,6 +722,18 @@ class CasesController extends Controller
 
         return response()->download($file, $document->name);
     }
+    
+    public function download_case_document($id)
+    {
+        $document = case_document_details::find($id);
+        $file = public_path() . "/" . $document->file;
+        if(file_exists($file)){
+        return response()->download($file, $document->name);
+        }else{
+            Session::flash('error', 'File not found !');
+            return redirect()->back();
+        }
+    }
 
     public function download_all_documents($id)
     {
@@ -739,6 +752,29 @@ class CasesController extends Controller
         }
         return redirect()->back();
          // return response()->download(public_path()."/investigations.zip");
+    }
+    public function download_all_case_documents($id)
+    {
+        $zipper = new \Chumper\Zipper\Zipper;
+        $docuemnts = Case_Document::where('id', $id)->with('case_document_details')->first();
+        if (count($docuemnts->case_document_details) > 0) {
+            foreach ($docuemnts->case_document_details as $document) {
+                $file = $document->file;
+                $files_counter = 0;
+                if(file_exists(public_path() . "/" .$file)){
+                $zipper->zip('reports.zip')->add($file);
+                $files_counter ++;
+                 }
+            }
+            $zipper->close();
+               if($files_counter > 0 ){
+            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+        }else{
+            Session::flash('error', 'File not found !');
+            return redirect()->back();
+        }
+        }
+        return redirect()->back();
     }
 
     public function filter_cases(Request $request)

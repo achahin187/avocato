@@ -234,25 +234,27 @@ Route::get('/consultations_excel', 'LegalConsultationsController@excel')->name('
 
 Route::middleware(['roles:1,2,3'])->group(function () {
 
-Route::get('/cases', 'CasesController@index')->name('cases');
-Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
-Route::get('/case_archive_view/{id}', 'CasesController@archive_show')->name('case_archive_view');
-Route::get('/case_add', 'CasesController@create')->name('case_add');
-Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
-Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
-Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
-Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
-Route::get('/case_destroy/{id}', 'CasesController@destroy')->name('case_destroy');
-Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_destroy_all');
-Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
-Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
-Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
-Route::get('/case_record_destroy/{id}/{record_id}', 'CasesController@destroy_record')->name('case_record_destroy');
-Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
-Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
-Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
-Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
-Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
+    Route::get('/cases', 'CasesController@index')->name('cases');
+    Route::get('/case_view/{id}', 'CasesController@show')->name('case_view');
+    Route::get('/case_archive_view/{id}', 'CasesController@archive_show')->name('case_archive_view');
+    Route::get('/case_add', 'CasesController@create')->name('case_add');
+    Route::get('/case_edit/{id}', 'CasesController@edit')->name('case_edit');
+    Route::post('/add_new_case', 'CasesController@add')->name('add_new_case');
+    Route::post('/lawyers_cases_filter', 'CasesController@lawyers_filter')->name('lawyers_cases_filter');
+    Route::post('/change_case_state/{id}', 'CasesController@change_case_state')->name('change_case_state');
+    Route::get('/case_destroy/{id}', 'CasesController@destroy')->name('case_destroy');
+    Route::post('/case_destroy_all', 'CasesController@destroy_all')->name('case_destroy_all');
+    Route::post('/case_add_session/{id}', 'CasesController@add_session')->name('case_add_session');
+    Route::post('/case_add_record/{id}', 'CasesController@add_record')->name('case_add_record');
+    Route::post('/add_record_ajax/{id}', 'CasesController@add_record_ajax')->name('add_record_ajax');
+    Route::get('/case_record_destroy/{id}/{record_id}', 'CasesController@destroy_record')->name('case_record_destroy');
+    Route::get('/download_document/{id}', 'CasesController@download_document')->name('download_document');
+    Route::get('/download_case_document/{id}', 'CasesController@download_case_document')->name('download_case_document');
+    Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
+    Route::get('/download_all_case_documents/{id}', 'CasesController@download_all_case_documents')->name('download_all_case_documents');
+    Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
+    Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
+    Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
 
 });
 

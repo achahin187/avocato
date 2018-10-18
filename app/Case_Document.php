@@ -25,4 +25,15 @@ class Case_Document extends Model
     {
     	return $this->belongsTo('App\Case', 'case_id');
     }
+
+
+     public function case_document_details()
+    {
+        return $this->hasMany('App\Case_Document_Details', 'case_document_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Users', 'created_by');
+    }
 }
