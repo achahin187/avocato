@@ -177,13 +177,13 @@ class LawyersController extends Controller
   public function store(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'lawyer_name' => 'required',
+      'lawyer_name' => 'required|unique:users',
       'address' => 'required',
       'nationality' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12',
+      'mobile' => 'required|digits_between:1,12|unique:users',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
