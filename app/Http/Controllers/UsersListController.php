@@ -126,12 +126,12 @@ class UsersListController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_name' => 'required|between:3,20|unique:users,name',
+            'user_name' => 'required|between:3,20|unique:users,name,,,deleted_at,NULL',
             'full_name' => 'required|between:3,100',
             'role'      => 'required',
             'email'     => 'required|email|max:40',
             'phone'     => 'required|digits_between:1,10',
-            'mobile'    => 'required|digits_between:1,12',
+            'mobile'    => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
             'password'  => 'required|between:3,8|same:confirm_password',
             'confirm_password'      => 'required|between:3,8|same:confirm_password',
             'image'     => 'image|mimes:jpg,jpeg,png|max:1024',

@@ -47,10 +47,10 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
-                          <input name="lawyer_name" value="{{ old('lawyer_name') }}" class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">
-                                    @if ($errors->has('lawyer_name'))
-                                    {{ $errors->first('lawyer_name')}}
+                          <label class="master_label mandatory" for="name">اسم المحامى</label>
+                          <input name="name" value="{{ old('name') }}" class="master_input" type="text" placeholder="اسم المحامى .." id="lawyer_name"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('name'))
+                                    {{ $errors->first('name')}}
                                     @endif</span> </span>
                         </div>
                       </div>

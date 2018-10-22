@@ -177,7 +177,7 @@ class LawyersController extends Controller
   public function store(Request $request)
   {
     $validator = Validator::make($request->all(), [
-      'lawyer_name' => 'required|unique:users',
+      'name' => 'required|unique:users',
       'address' => 'required',
       'nationality' => 'required',
       'national_id' => 'required|numeric',
@@ -222,8 +222,8 @@ class LawyersController extends Controller
     }
 
     $lawyer = new Users;
-    $lawyer->name = $request->lawyer_name . $lawyer->id;
-    $lawyer->full_name = $request->lawyer_name;
+    $lawyer->name = $request->name ;
+    $lawyer->full_name = $request->name;
     $lawyer->address = $request->address;
     $lawyer->phone = $request->phone;
     $lawyer->mobile = $request->mobile;
