@@ -32,7 +32,7 @@
            <div class="pull-left">
                : اسم العميل 
            </div>
-            <b>&nbsp;&nbsp;<a href="lawyer_view.html">
+            <b>&nbsp;&nbsp;<a href="{{route('mobile.show',Helper::getUserDetails($complain->user_id)->id)}}">
               {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
             </a></b>
           </div>
@@ -64,7 +64,7 @@
                 تم الرد على الشكوى بواسطة
                 
               </div>
-                &nbsp;<b><a href="lawyer_view.html">
+                &nbsp;<b><a href="{{route('user_profile',Helper::getUserDetails($reply->created_by)->id)}}">
                   {{ Helper::getUserDetails($reply->created_by) ? Helper::getUserDetails($reply->created_by)->full_name : 'لا يوجد' }}  
                 </a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
   
