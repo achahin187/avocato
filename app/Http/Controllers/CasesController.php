@@ -295,7 +295,7 @@ class CasesController extends Controller
             ]);
         }
         Helper::add_log(4, 11, $id);
-        return redirect()->route('cases');
+        return redirect()->route('cases')->with('success', 'تم تعديل القضيه بنجاح');
       // dd($request->all());
     }
 
