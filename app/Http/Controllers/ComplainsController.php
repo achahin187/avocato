@@ -76,7 +76,7 @@ class ComplainsController extends Controller
 
         // redirect to home page if user is not found
         if( $feedback == NULL ) {
-            Session::flash('warning', 'الخبر غير موجود');
+            Session::flash('warning', 'الشكوي غير موجود');
             return redirect('/complains');
         }
 
@@ -118,8 +118,8 @@ class ComplainsController extends Controller
                $mail=Helper::mail($to,$request->newReply); 
                     }
                     catch (\Exception $e) {
-                        $feedbackReply->delete();
-    return redirect()->back()->with('message', 'email cannot be send '); 
+                        // $feedbackReply->delete();
+    return redirect()->back()->with('message', 'error while sending email to client  '); 
 }
             }
             $feedback->is_replied = 1;  // is_replied = true
