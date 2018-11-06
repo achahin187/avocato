@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Users;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
+use Session;
 
 class LoginController extends Controller
 {
@@ -45,8 +46,25 @@ class LoginController extends Controller
     return 'name';
 }
 
+    public function authenticate()
+    {
+        // session('country')="";
+        // Session::put('country', null);
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        //  dd(session('country'));
+       return view('auth/login'); 
+    }
     public function login(Request $request)
     {
+        //check country
+        if(session('country') == null)
+        {
+            return redirect()->route('choose.country');
+        }
+        
         // Check validation
         $this->validate($request, [
             'user_name' => 'required',
@@ -57,11 +75,23 @@ class LoginController extends Controller
         if (Auth::attempt($userdata)) {
             foreach (Auth::user()->rules as $rule){
                 if($rule->id==13 && Auth::user()->is_active==1) {
-                    $u=Users::find(Auth::user()->id);
-                    $u->last_login=date('Y-m-d H:i:s');
-                    $u->save();
-                    Helper::add_log(1,16,Auth::user()->id);
-                    return redirect('/');  
+                    $u=Users::where('id',Auth::user()->id)->where('country_id',session('country'))->first();
+                    // dd($u);
+                    if($u != null)
+                    {
+                        // dd($u);
+                        $u->last_login=date('Y-m-d H:i:s');
+                        $u->save();
+                        Helper::add_log(1,16,Auth::user()->id);
+                        return redirect('reports_statistics'); 
+                    }
+                    else
+                    {
+                        $request->session()->flush();
+                        Session('error','country id doesnot exist , البلد ليست محدده');
+                        return redirect()->route('choose.country');
+                    }
+                    
                 }
             }
             // Helper::add_log(2,12,Auth::user()->id);
@@ -77,6 +107,7 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request) {
+        Session::put('country', null);
         Helper::add_log(2,16,Auth::user()->id);
         Auth::logout();
         return redirect('/'); 

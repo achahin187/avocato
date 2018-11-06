@@ -28,6 +28,10 @@ class MobileController extends Controller
      */
     public function index()
     {
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         return view('clients.mobile.mobile')->with('users', Users::users(7)->get());
     }
 

@@ -29,6 +29,10 @@ class ReportsStatisticsController extends Controller
      */
     public function index()
     {
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
         $data = $this->getData();
 
         return view('reports_statistics', $data);
@@ -119,47 +123,47 @@ class ReportsStatisticsController extends Controller
         $data['count_clients'] = Helper::getUsersBasedOnRules([7, 8, 9, 10])->count();  // count all clients
 
         // mobile clients number and percentage
-        $data['count_mobile'] = Users::users(7)->count();
+        $data['count_mobile'] = Users::users(7)->where('country_id',session('country'))->count();
         $data['percentage_mobile'] = Helper::percent($data['count_mobile'], $data['count_clients']);
 
         // individuals number and percentage
-        $data['count_individuals'] = Users::users(8)->count();
+        $data['count_individuals'] = Users::users(8)->where('country_id',session('country'))->count();
         $data['percentage_individuals'] = Helper::percent($data['count_individuals'], $data['count_clients']);
 
         // companies number and percentage
-        $data['count_companies'] = Users::users(9)->count();
+        $data['count_companies'] = Users::users(9)->where('country_id',session('country'))->count();
         $data['percentage_companies'] = Helper::percent($data['count_companies'], $data['count_clients']);
         
         // individuals-companies number and percentage
-        $data['count_indcom'] = Users::users(10)->count();
+        $data['count_indcom'] = Users::users(10)->where('country_id',session('country'))->count();
         $data['percentage_indcom'] = Helper::percent($data['count_indcom'], $data['count_clients']);
         
-        $data['count_case'] = Case_::count();
+        $data['count_case'] = Case_::where('country_id',session('country'))->count();
 
         // paid services
-        $data['count_paid_services'] = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 2)->count();
+        $data['count_paid_services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->where('task_payment_status_id', 2)->count();
         // free services
-        $data['count_free_services'] = Tasks::where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
+        $data['count_free_services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
 
         /** List data */
         // cases number & percentage
         if(isset ( $filters['gov'] ) || isset ( $filters['city'] ) ) { 
             if(isset($filters['gov'])) { 
-                $data['cases'] = Case_::whereIn('geo_governorate_id', $filters['gov'])->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id'); 
+                $data['cases'] = Case_::where('country_id',session('country'))->whereIn('geo_governorate_id', $filters['gov'])->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id'); 
             }
             if(isset($filters['city'])) { 
-                $data['cases'] = Case_::whereIn('geo_city_id', $filters['city'])->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id'); 
+                $data['cases'] = Case_::where('country_id',session('country'))->whereIn('geo_city_id', $filters['city'])->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id'); 
             }
 
             $data['cases'] = $data['cases']->get();
         } else {
-            $data['cases'] = Case_::select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id')->get();
+            $data['cases'] = Case_::select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->where('country_id',session('country'))->groupBy('geo_governorate_id')->groupBy('geo_city_id')->get();
         }
 
         // Lawyers
         if ( isset ( $filters['sector'] ) || isset ( $filters['level'] ) || isset ( $filters['nationality'] ) || isset ( $filters['title'] ) || isset ( $filters['type'] )  ) {
             
-            $data['lawyers'] = Users::whereHas('rules', function($query) {
+            $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function($query) {
                 $query->whereIn('rule_id', [11, 12]);
             });
 
@@ -213,7 +217,7 @@ class ReportsStatisticsController extends Controller
                 }
             }
         } else {
-            $data['companies'] = Users::users(9)->get();
+            $data['companies'] = Users::users(9)->where('country_id',session('country'))->get();
         }
         
         // Installments

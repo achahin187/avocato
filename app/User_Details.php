@@ -16,15 +16,30 @@ class User_Details extends Model
     protected $dates = ['deleted_at','join_date'];
     public $timestamps = false;
 
-  public function nationality()
+      public function nationality()
    {
        return $this->belongsTo('App\Geo_Countries','nationality_id')->withDefault();
    }
 
-	public function user()
+       public function syndicate_levela()
+   {
+       return $this->belongsTo('App\SyndicateLevels','syndicate_level_id')->withDefault();
+   }
+
+        public function currency()
+   {
+       return $this->belongsTo('App\Geo_Countries','currency_id')->withDefault();
+   }
+
+	   public function user()
    {
 		return $this->belongsTo('App\Users','user_id')->withDefault();
 	 }
+
+       public function city()
+    {
+        return $this->belongsTo('App\Geo_Cities','work_sector_area_id');
+    }
   
 
 }

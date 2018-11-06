@@ -21,23 +21,27 @@ class TasksController extends Controller
      */
     public function normal_index()
     {
-        $data['sessions'] = Tasks::where('task_type_id',2)->get();
-        $data['services'] = Tasks::where('task_type_id',3)->get();
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
+        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->get();
+        $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id',3)->get();
         $data['regions'] = Case_::all('region');
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
-        $data['courts'] = Courts::all(); 
+        $data['courts'] = Courts::where('country_id',session('country'))->get(); 
         // dd($data);
         return view('tasks.tasks_normal',$data);
     }
 
     public function emergency_index()
     {
-        $data['tasks']=Tasks::where('task_type_id',1)->get();
+        $data['tasks']=Tasks::where('country_id',session('country'))->where('task_type_id',1)->get();
 
 
         
-        $data['clients']=Users::whereHas('rules', function ($query) {
+        $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
                                             $query->where('rule_id', '6');
                                         })->with('rules')->get();
         foreach ($data['clients'] as $key => $value) {
@@ -80,7 +84,7 @@ class TasksController extends Controller
 
     public function filter(Request $request)
     { 
-        $data['sessions'] = Tasks::where(function($q) use($request){
+        $data['sessions'] = Tasks::where('country_id',session('country'))->where(function($q) use($request){
 
             $q->where('task_type_id',2);
 

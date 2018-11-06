@@ -10,8 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
-
+// Auth::routes();
+Route::get('/choose_country', 'GeoCountryController@index')->name('choose.country');
+Route::post('/choose_country_info', 'GeoCountryController@choose')->name('choose.country.info');
+Route::group(['middleware' => ['country']], function () {
+Route::get('/login', '\App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
+Route::post('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('auth.login');
 Route::group(['middleware' => ['auth']], function () {
 
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
@@ -25,6 +29,13 @@ Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
 Route::post('/issues_types_destroy_all', 'IssuesTypesController@destroy_all')->name('issues_types_destroy_all');
 Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_types_excel');
+//
+Route::get('/specializations', 'SpecializationsController@index')->name('specializations');
+Route::post('/specializations_store', 'SpecializationsController@store')->name('specializations_store');
+Route::post('/specializations_destroy/{id}', 'SpecializationsController@destroy')->name('specializations_destroy');
+Route::post('/specializations_destroy_all', 'SpecializationsController@destroy_all')->name('specializations_destroy_all');
+Route::get('/specializations_excel', 'SpecializationsController@excel')->name('specializations_excel');
+
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
@@ -56,6 +67,21 @@ Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificati
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 Route::patch('/about_edit', 'AboutController@update')->name('about.update');
+Route::get('/aboutUsAjax/{lang_id}', 'AboutController@aboutUsAjax')->name('aboutUsAjax');
+Route::get('/missionAjax/{lang_id}', 'AboutController@missionAjax')->name('missionAjax');
+Route::get('/visionAjax/{lang_id}', 'AboutController@visionAjax')->name('visionAjax');
+Route::get('/termsAjax/{lang_id}', 'AboutController@termsAjax')->name('termsAjax');
+Route::get('/privacyAjax/{lang_id}', 'AboutController@privacyAjax')->name('privacyAjax');
+
+//terms and conditions
+Route::get('/terms_conditions', 'AboutController@terms_conditions')->name('terms_conditions');
+Route::get('/terms_edit', 'AboutController@terms_edit')->name('terms_edit');
+Route::patch('/terms_edit', 'AboutController@terms_update')->name('terms.update');
+
+//privacy
+Route::get('/privacy', 'AboutController@privacy')->name('privacy');
+Route::get('/privacy_edit', 'AboutController@privacy_edit')->name('privacy_edit');
+Route::patch('/privacy_edit', 'AboutController@privacy_update')->name('privacy.update');
 
 });
 
@@ -108,6 +134,7 @@ Route::post('/news_list_update/{id}', 'NewsListController@update')->name('news.u
 Route::get('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_destroy');
 Route::get('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
 Route::get('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
+
 
 });
 
@@ -205,7 +232,8 @@ Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawy
 Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::post('/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
-
+Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
+Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
 });
 
 
@@ -349,3 +377,36 @@ Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
+
+//offices
+
+Route::get('/offices', 'OfficesController@index')->name('offices');
+//Route::get('/offices_follow', 'OfficesController@follow')->name('offices_follow');
+Route::get('/offices_show/{id}', 'OfficesController@show')->name('offices_show');
+Route::get('/offices_create', 'OfficesController@create')->name('offices_create');
+Route::post('/offices_store', 'OfficesController@store')->name('offices_store');
+Route::get('/offices_edit/{id}', 'OfficesController@edit')->name('offices_edit');
+Route::post('/offices_update/{id}', 'OfficesController@update')->name('offices_update');
+
+Route::post('/offices_destroy_post/{id}', 'OfficesController@destroyPost')->name('offices_destroy_post');
+
+//offices Branches
+Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
+Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
+Route::post('/branches_delete/{id}', 'OfficesController@branch_destroy')->name('branches_delete');
+
+
+//Contact us
+Route::middleware(['roles:1,2'])->group(function () {
+        Route::match(array('GET','POST'),'/contact_us', 'CompanyContactInfoController@index')->name('contact_us');
+        Route::post('/contact_us/addsocialaccount','CompanyContactInfoController@addSocialAccount')->name('add_social_account');
+        Route::post('/contact_us/deletesocialaccount','CompanyContactInfoController@deleteSocialAccount')->name('delete_social_account');
+        Route::post('/contact_us/Localization','CompanyContactInfoController@getLocalization')->name('get_localization');
+    
+    
+    });
+
+
+
+
+});

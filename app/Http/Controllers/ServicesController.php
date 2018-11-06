@@ -33,7 +33,11 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $data['services'] = Tasks::where('task_type_id', 3)->get();
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
+        $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
         return view('services.services', $data);
     }
@@ -45,7 +49,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        $data['clients'] = Users::whereHas('rules', function ($q) {
+        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('rule_id', 6);
         })->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
@@ -83,6 +87,7 @@ class ServicesController extends Controller
         $service->end_datetime = date('Y-m-d');
         $service->task_type_id = 3;
         $service->task_status_id = 1;
+        $service->country_id=session('country');
         $service->save();
         return redirect()->route('services_show', $service->id)->with('success', 'تم إضافه خدمه جديد بنجاح');
 
@@ -173,7 +178,7 @@ class ServicesController extends Controller
             return redirect('/services');
         }
         
-        $data['clients'] = Users::whereHas('rules', function ($q) {
+        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('rule_id', 6);
         })->get();
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
@@ -259,9 +264,9 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if ($request->filled('payment_status'))
-            $data['services'] = Tasks::where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->get();
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->get();
         else
-            $data['services'] = Tasks::where('task_type_id', 3)->get();
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->get();
 
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
 
@@ -281,7 +286,7 @@ class ServicesController extends Controller
     public function filter2(Request $request)
     {
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
-        $data['services'] = Tasks::where(function ($q) use ($request) {
+        $data['services'] = Tasks::where('country_id',session('country'))->where(function ($q) use ($request) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
             $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -318,9 +323,9 @@ class ServicesController extends Controller
 
         })->get();
         $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
-        $data['courts'] = Courts::all();
+        $data['courts'] = Courts::where('country_id',session('country'))->get();
         $data['regions'] = Case_::all('region');
-        $data['sessions'] = Tasks::where('task_type_id', 2)->get();
+        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id', 2)->get();
         return view('tasks.tasks_normal', $data);
     }
 
@@ -372,7 +377,7 @@ class ServicesController extends Controller
     public function lawyer($id)
     {
         $data['types'] = Rules::where('parent_id', 5)->get();
-        $data['lawyers'] = Users::whereHas('rules', function ($q) {
+        $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('rule_id', 5);
         })->where('is_active', 1)->get();
         $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
@@ -410,7 +415,7 @@ class ServicesController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
-        $data['lawyers'] = Users::where(function ($q) use ($request) {
+        $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
             $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -487,6 +492,7 @@ class ServicesController extends Controller
         $service->who_assigned_lawyer_id = \Auth::user()->id;
         $service->start_datetime = $start;
         $service->end_datetime = $end;
+        $service->country_id=session('country');
         $service->save();
         $user = Users::find($request['lawyer']);
         $notification_type = Notification_Types::find(12);

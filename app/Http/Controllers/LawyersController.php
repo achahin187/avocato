@@ -9,9 +9,11 @@ use App\Tasks;
 use App\Case_;
 use App\Rules;
 use App\Expenses;
+use App\Geo_Cities;
 use App\Geo_Countries;
 use App\Entity_Localizations;
 use App\ClientsPasswords;
+use App\OfficeBranches;
 use Validator;
 use Helper;
 use Excel;
@@ -20,6 +22,9 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Exports\LawyersExport;
 use Jenssegers\Date\Date;
+use App\Specializations;
+use App\SyndicateLevels;
+use App\User_Ratings;
 
 
 class LawyersController extends Controller
@@ -31,18 +36,33 @@ class LawyersController extends Controller
    */
   public function index()
   {
+    // if(session('country') == null)
+    //     {
+    //         return redirect()->route('choose.country');
+    //     }
         // return Users::withTrashed()->restore();
-    $data['lawyers'] = Users::whereHas('rules', function ($q) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
+    foreach($data['lawyers'] as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($data['lawyers'][$key]);
+      }
+
+    }
+      
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers', $data);
   }
 
   public function follow()
   {
-    $data['lawyers'] = Users::whereHas('rules', function ($q) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
     $data['test'] = json_encode([
@@ -62,6 +82,10 @@ class LawyersController extends Controller
   {
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['currencies'] = Geo_Countries::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers_create', $data);
   }
 
@@ -92,7 +116,7 @@ class LawyersController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
      */
-    $data['lawyers'] = Users::where(function ($q) use ($request) {
+    $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -114,15 +138,15 @@ class LawyersController extends Controller
       }
 
       if ($request->filled('work_sector')) {
-        $q->whereHas('user_detail', function ($q) use ($request) {
-          $q->where('work_sector', 'like', '%' . $request->work_sector . '%');
+        $q->whereHas('specializations', function ($q) use ($request) {
+          $q->whereIn('name',$request->work_sector);
 
         });
       }
 
-      if ($request->filled('syndicate_level')) {
+      if ($request->filled('syndicate_level_id')) {
         $q->whereHas('user_detail', function ($q) use ($request) {
-          $q->where('syndicate_level', 'like', '%' . $request->syndicate_level . '%');
+          $q->where('syndicate_level_id',$request->syndicate_level_id);
 
         });
       }
@@ -154,6 +178,8 @@ class LawyersController extends Controller
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     foreach ($data['lawyers'] as $lawyer) {
       $filter_ids[] = $lawyer->id;
     }
@@ -181,6 +207,8 @@ class LawyersController extends Controller
       'address' => 'required',
       'nationality' => 'required',
       'national_id' => 'required|numeric',
+      'consultation_price' => 'required|numeric',
+      'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
       'mobile' => 'required|digits_between:1,12|unique:users',
@@ -188,12 +216,12 @@ class LawyersController extends Controller
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
       'work_sector' => 'required',
-      'work_sector_type' => 'required',
+      'work_sector_area' => 'required',
       'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
       'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
-      'syndicate_level' => 'required',
+      'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
     ]);
 
@@ -231,6 +259,8 @@ class LawyersController extends Controller
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $lawyer->image = $image_name;
+    $lawyer->country_id=session('country');
+    $lawyer->note = $request->note;
     $lawyer->save();
     $lawyer = Users::find($lawyer->id);
     $password = Helper::generateRandom(Users::class, 'password', 8);
@@ -238,20 +268,29 @@ class LawyersController extends Controller
     $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
     $lawyer->save();
     $lawyer->rules()->attach([5, $request->work_type]);
+        foreach($request->work_sector as $work_sector)
+    {
+      $lawyer->specializations()->attach($work_sector);
+    }
     $lawyer_details = new User_Details;
     $lawyer_details->national_id = $request->national_id;
     $lawyer_details->nationality_id = $request->nationality;
-    $lawyer_details->work_sector = $request->work_sector;
-    $lawyer_details->work_sector_type = $request->work_sector_type;
+    // $lawyer_details->work_sector = $request->work_sector;
+    $lawyer_details->work_sector_area_id = $request->work_sector_area;
+    $lawyer_details->experience = $request->experience;
+    $lawyer_details->consultation_price = $request->consultation_price;
+    $lawyer_details->currency_id = $request->currency_id;
+    $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
+    $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
     $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
-
+    
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
     else
       $lawyer_details->resign_date = null;
 
     $lawyer_details->litigation_level = $request->litigation_level;
-    $lawyer_details->syndicate_level = $request->syndicate_level;
+    $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
     $lawyer_details->authorization_copy = $authorization_copy;
     $lawyer_details->syndicate_copy = $syndicate_copy;
     $lawyer_plaintext = new ClientsPasswords;
@@ -314,7 +353,7 @@ class LawyersController extends Controller
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
 
     $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    
+    //  dd($data['rates_user']);
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
@@ -358,6 +397,10 @@ class LawyersController extends Controller
     
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
+    $data['work_sectors'] = Specializations::all();
+    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['currencies'] = Geo_Countries::all();
+    $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers_edit', $data);
   }
 
@@ -375,6 +418,11 @@ class LawyersController extends Controller
       'lawyer_name' => 'required',
       'address' => 'required',
       'nationality' => 'required',
+      'consultation_price' => 'required|numeric',
+      'currency_id'=>'required',
+      'syndicate_level_id'=>'required',
+      'work_sector_area' => 'required',
+      'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
@@ -382,11 +430,9 @@ class LawyersController extends Controller
       'email' => 'required|email|max:40',
       'is_active' => 'required',
       'work_sector' => 'required',
-      'work_sector_type' => 'required',
       'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
-      'syndicate_level' => 'required',
     ]);
 
     if ($validator->fails()) {
@@ -403,6 +449,8 @@ class LawyersController extends Controller
     $lawyer->phone = $request->phone;
     $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
+    $lawyer->note = $request->note;
+    $lawyer->country_id=session('country');
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     if ($request->hasFile('image')) {
@@ -422,11 +470,23 @@ class LawyersController extends Controller
     $lawyer->save();
     $lawyer->rules()->detach();
     $lawyer->rules()->attach([5, $request->work_type]);
+    $lawyer->specializations()->detach();
+          foreach($request->work_sector as $work_sector)
+    {
+      $lawyer->specializations()->attach($work_sector);
+    }
     $lawyer_details = User_Details::where('user_id', $id)->first();;
     $lawyer_details->national_id = $request->national_id;
     $lawyer_details->nationality_id = $request->nationality;
-    $lawyer_details->work_sector = $request->work_sector;
-    $lawyer_details->work_sector_type = $request->work_sector_type;
+    // $lawyer_details->work_sector = $request->work_sector;
+    $lawyer_details->work_sector_area_id = $request->work_sector_area;
+    $lawyer_details->experience = $request->experience;
+    $lawyer_details->consultation_price = $request->consultation_price;
+    $lawyer_details->currency_id = $request->currency_id;
+    $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
+    $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
+    $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
+
     $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
@@ -480,6 +540,9 @@ class LawyersController extends Controller
     Helper::add_log(5, 19, $id);
     $user = Users::find($id);
     $user->delete();
+    //for offices (if office has branches)
+    if ( OfficeBranches::where('office_id',$id)->count() >0 ){
+      OfficeBranches::where('office_id',$id)->delete();}
   }
 
   public function destroy_all()
@@ -489,6 +552,26 @@ class LawyersController extends Controller
       Helper::add_log(5, 19, $id);
       $user = Users::find($id);
       $user->delete();
+       //for offices (if office has branches)
+    if ( OfficeBranches::where('office_id',$id)->count() >0 ){
+      OfficeBranches::where('office_id',$id)->delete();}
     }
+  }
+
+  public function rate_edit($id)
+  {
+    // dd($id);
+    $rate=User_Ratings::where('id',$id)->update([
+      "is_approved"=>1
+    ]);
+    // dd($rate);
+    return redirect()->back();
+  }
+  public function rate_delete($id)
+  {
+    // dd($id);
+    $rate=User_Ratings::where('id',$id)->delete();
+    // dd($rate);
+    return redirect()->back();
   }
 }

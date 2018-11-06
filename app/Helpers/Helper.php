@@ -9,6 +9,7 @@ use App\Tasks;
 use App\Log;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\Entity_Localizations;
 
 
 class Helper {
@@ -51,12 +52,16 @@ class Helper {
      *  Result: 
      *  بلاتيني 
      */
-    public static function  localizations($table_name , $field , $item_id)
+    public static function  localizations($table_name , $field , $item_id,$lang_id=null)
     {
       $value_localized = Entities::where('name',$table_name)->with([
-        'localizations' => function($query) use($field, $item_id)
+        'localizations' => function($query) use($field, $item_id,$lang_id)
         {
             $query->where('field', $field)->where('item_id', $item_id);
+            if(!is_null($lang_id))
+            {
+                $query->where('lang_id', $lang_id);
+            }
         }
       ])->get();
       foreach ($value_localized as  $value) {
@@ -68,7 +73,44 @@ class Helper {
      
         
     }
+   
+  public static function edit_entity_localization($table_name, $field_name, $item_id, $lang_id, $new_value)
+    {
+        $entity_id = Entities::where('name', $table_name)->first()->id; // get entity_id
+        $localization = Entity_Localizations::where('entity_id', $entity_id)
+            ->where('field', $field_name)
+            ->where('item_id', $item_id)
+            ->where('lang_id', $lang_id)->first();
 
+        if ($localization != null) {
+            $localization->value = $new_value;
+            $localization->save();
+        } else {
+            Helper::add_localization($table_name, $field_name, $item_id, $new_value, $lang_id);
+        }
+    }
+
+        public static function add_localization($table_name, $field, $item_id, $value, $lang_id)
+    {
+        $entity_id = Entities::where('name', $table_name)->first()->id;
+        $localization = new Entity_Localizations;
+        $localization->entity_id = $entity_id;
+        $localization->field = $field;
+        $localization->value = $value;
+        $localization->item_id = $item_id;
+        $localization->lang_id = $lang_id;
+        $localization->save();
+    }
+
+        public static function remove_localization($table_name, $field, $item_id, $lang_id)
+    {
+        $entity_id = Entities::where('name', $table_name)->first()->id;
+        Entity_Localizations::where('entity_id', '=', $entity_id)
+            ->where('field', '=', $field)
+            ->where('item_id', '=', $item_id)
+            ->where('lang_id', '=', $lang_id)
+            ->delete();
+    }
     
     /**
      *  @param  $userId     user id

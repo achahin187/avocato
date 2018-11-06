@@ -9,6 +9,7 @@ use Auth;
 use Excel;
 use Session;
 use App\News;
+use App\Languages;
 use Validator;
 use \Carbon\Carbon;
 use App\Exports\NewsExport;
@@ -23,7 +24,11 @@ class NewsListController extends Controller
      */
     public function index()
     {
-        return view('news.news_list')->with('news', News::all());
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
+        return view('news.news_list')->with('news', News::where('country_id',session('country'))->get());
     }
 
     public function filter(Request $request)
@@ -96,7 +101,8 @@ class NewsListController extends Controller
      */
     public function create()
     {
-        return view('news.news_list_create');
+        $data['languages'] = Languages::all();
+        return view('news.news_list_create',$data);
     }
 
     /**
@@ -111,7 +117,8 @@ class NewsListController extends Controller
         $this->validate($request, [
             'newsName' => 'required',
             'newsImg' => 'image|mimes:jpeg,jpg,png',
-            'newsContent' => 'required'
+            'newsContent' => 'required',
+            'language' => 'required',
         ]);
         
 
@@ -151,6 +158,8 @@ class NewsListController extends Controller
             $news->published_at = $published_at;
             $news->created_by = $current_user;
             $news->updated_by = $current_user;
+            $news->lang_id = $request->language;
+            $news->country_id=session('country');
             $news->save();
         } catch (Exception $ex) {
             $news->forcedelete();
@@ -197,8 +206,8 @@ class NewsListController extends Controller
             Session::flash('warning', 'الخبر غير موجود');
             return redirect('/news_list');
         }
-
-        return view('news.news_list_edit')->with('news', $news);
+        $data['languages'] = Languages::all();
+        return view('news.news_list_edit',$data)->with('news', $news);
     }
 
     /**
@@ -214,7 +223,8 @@ class NewsListController extends Controller
         $this->validate($request, [
             'newsName' => 'required',
             'newsImg' => 'image|mimes:jpeg,jpg,png',
-            'newsContent' => 'required'
+            'newsContent' => 'required',
+            'language' => 'required',
         ]);
 
         $news = News::find($id);
@@ -255,6 +265,7 @@ class NewsListController extends Controller
             $news->body = $request->newsContent;
             $news->photo = $imgPath;
             $news->is_active = $activate;
+            $news->lang_id = $request->language;
             $news->published_at = $published_at;
             $news->created_by = $current_user;
             $news->updated_by = $current_user;

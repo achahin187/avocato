@@ -14,6 +14,8 @@ use Session;
 use App\Exports\FormulasExport;
 use Helper;
 use Auth;
+use App\Languages;
+
 
 
 class FormulasController extends Controller
@@ -25,13 +27,14 @@ class FormulasController extends Controller
      */
     public function index()
     {
-        $data['contracts'] = Formula_Contracts::all();
+        $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->get();
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         return view('formulas.formulas', $data);
     }
 
     public function create()
     {
+        $data['languages'] = Languages::all();
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         return view('formulas.formulas_create', $data);
     }
@@ -77,7 +80,7 @@ class FormulasController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
-        $data['contracts'] = Formula_Contracts::where(function ($q) use ($request) {
+        $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->where(function ($q) use ($request) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
             $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
             if ($request->filled('date_from') && $request->filled('date_to')) {
@@ -144,6 +147,7 @@ class FormulasController extends Controller
             'subs' => 'required',
             'is_contract' => 'required',
             'file' => 'required|mimes:pdf',
+            'language' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -162,6 +166,8 @@ class FormulasController extends Controller
             Input::file('file')->move($destinationPath, $fileNameToStore);
         }
         $formula->file = $fileNameToStore;
+        $formula->country_id=session('country');
+        $formula->lang_id = $request->language;
         $formula->save();
         Helper::add_log(3, 17, $formula->id);
         return redirect()->route('formulas_create')->with('success', 'تمت الإضافه');
@@ -187,6 +193,7 @@ class FormulasController extends Controller
      */
     public function edit($id)
     {
+        $data['languages'] = Languages::all();
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         $data['contract'] = Formula_Contracts::find($id);
 
@@ -213,6 +220,7 @@ class FormulasController extends Controller
             'subs' => 'required',
             'is_contract' => 'required',
             'file' => 'mimes:pdf',
+            'language' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -236,6 +244,8 @@ class FormulasController extends Controller
             rename(public_path($formula->file), public_path($fileNameToStore));
         }
         $formula->file = $fileNameToStore;
+        $formula->country_id=session('country');
+        $formula->lang_id = $request->language;
         $formula->save();
         Helper::add_log(4, 17, $formula->id);
         return redirect()->route('formulas')->with('success', 'تم تعديل البيانات بنجاح');

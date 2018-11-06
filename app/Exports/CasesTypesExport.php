@@ -31,7 +31,7 @@ class CasesTypesExport implements FromCollection,WithEvents
     
     public  function collection()
     {   
-        $casesArray = array(['الرقم','النوع']) ;
+        $casesArray = array(['الرقم','الاسم']) ;
         if(is_null($this->ids)){
 
         $cases = Cases_Types::all('id','name');

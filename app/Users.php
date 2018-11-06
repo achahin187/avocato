@@ -6,6 +6,7 @@ use App\Installment;
 use App\ClientsPasswords;
 use App\Task_Charges;
 use App\User_Ratings;
+use App\OfficeBranches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,7 +21,7 @@ class Users extends Authenticatable
                            'creditcard_number', 'creditcard_cvv', 'creditcard_month',
                            'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code',
                            'is_verification_code_expired', 'last_login', 'api_token', 'device_token',
-                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at'];
+                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at','country_id'];
    protected $dates = ['deleted_at'];
    public $timestamps = true;
 
@@ -55,6 +56,8 @@ class Users extends Authenticatable
                 }
               }
               }
+
+            //if ( OfficeBranches::where('office_id',$user->id)->count() >0 ) {OfficeBranches::where('office_id',$user->id)->delete();}
             // if ( count($user->offices)>0 ) {$user->offices()->delete();}
             // if ( count($user->expenses)>0 ) {$user->expenses()->delete();}
             // if ( count($user->rate)>0 ) {User_Ratings::where('user_id',$user->id)->delete();}
@@ -179,7 +182,7 @@ class Users extends Authenticatable
 
         public function rate()
     {
-        return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id')->using('App\User_Ratings');
+        return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id','id','is_approved')->using('App\User_Ratings');
     }
 
     public function getRole(){
@@ -197,6 +200,14 @@ class Users extends Authenticatable
         }
       }
     }
+    public function IsOffice(){
+        foreach($this->rules as $rule){
+          if($rule->pivot->rule_id==15){
+            return true;
+          }
+        }
+        return false;
+      }
 
           public function notifications()
     {
@@ -206,6 +217,21 @@ class Users extends Authenticatable
     public function logs()
     {
         return $this->hasMany('App\Log','created_by');
+    }
+
+        public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+        public function specializations()
+    {
+        return $this->belongsToMany('App\Specializations','user_specializations','user_id','specialization_id');
+    }
+
+     public function offices_branches()
+    {
+        return $this->belongsToMany('App\OfficeBranches');
     }
 
 }

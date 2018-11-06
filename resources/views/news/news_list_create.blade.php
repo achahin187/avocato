@@ -83,6 +83,22 @@
         </div>
         {{--  End Activate  --}}
 
+                <div class="col-md-2 col-xs-4">
+          <div class="master_field">
+            <label class="master_label" for="sitch_1">اللغه</label>
+                  <select name="language" class="master_input select2" id="type" data-placeholder="اللغع" style="width:100%;" ,>
+                    @foreach($languages as $language)
+                    <option value="{{$language->id}}" >{{$language->name}}</option>
+                    @endforeach
+                  </select>
+              
+              @if ($errors->has('language'))
+                <span class="master_message color--fadegreen">{{ $errors->first('language') }}</span>
+              @endif
+              
+          </div>
+        </div>
+
       {{--  Start Content  --}}
         <div class="col-xs-12">
           <div class="main-title-conts">

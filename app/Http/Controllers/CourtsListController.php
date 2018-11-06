@@ -9,6 +9,7 @@ use App\Courts;
 use Validator;
 use Excel;
 use App\Exports\CourtsExport;
+use Session;
 
 class CourtsListController extends Controller
 {
@@ -19,13 +20,17 @@ class CourtsListController extends Controller
      */
     public function index()
     {   
-        $data['courts'] = Courts::all();
-        $data['govs'] = Geo_Governorates::all();
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
+        $data['courts'] = Courts::where('country_id',session('country'))->get();
+        $data['govs'] = Geo_Governorates::where('country_id',session('country'))->get();
         return view('courts_list',$data);
     }
 
     public function getCity(Request $request){
-        $cities= Geo_Cities::where('governorate_id', $request->id)->pluck('name', 'id');
+        $cities= Geo_Cities::where('country_id',session('country'))->where('governorate_id', $request->id)->pluck('name', 'id');
         return $cities;
     }
 
@@ -77,6 +82,7 @@ class CourtsListController extends Controller
         $court = new Courts;
         $court->name= $request->court;
         $court->city_id = $request->cities;
+        $court->country_id=session('country');
         $court->save();
         return redirect()->route('courts_list')->with('success','تم إضافه محكمه جديده بنجاح');
 

@@ -55,7 +55,13 @@ public  function collection()
                 $role=$rule->name_ar;
         }
 
-        array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$lawyer->user_detail->work_sector,$lawyer->user_detail->syndicate_level,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
+        $work_sector = '';
+        foreach($lawyer->specializations as $spec)
+        {
+          $work_sector .= $spec->name.' - ';
+        }
+
+        array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
     }  
 
     }
@@ -76,8 +82,15 @@ public  function collection()
                 if($rule->id!=5)
                     $role=$rule->name_ar;
             }
+
+              $work_sector = '';
+            foreach($lawyer->specializations as $spec)
+            {
+              $work_sector .= $spec->name.' - ';
+            }
+
             $lawyer['nationality'] = Helper::localizations('geo_countires','nationality',$lawyer->user_detail->nationality_id);
-            array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$lawyer->user_detail->work_sector,$lawyer->user_detail->syndicate_level,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
+            array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
         } 
     }
 

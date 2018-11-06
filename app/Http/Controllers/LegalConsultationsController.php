@@ -20,6 +20,7 @@ use App\Notifications;
 use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
+use App\Languages;
 
 class LegalConsultationsController extends Controller
 {
@@ -35,20 +36,15 @@ class LegalConsultationsController extends Controller
     public function index()
     {
         $consultation_types = Consultation_Types::all();
-        $consultations = Consultation::orderBy('created_at', 'desc')->get();
+        $consultations = Consultation::where('country_id',session('country'))->orderBy('created_at', 'desc')->get();
         foreach ($consultations as $consultation) {
-
             $consultation_type = Consultation_types::find($consultation->consultation_type_id);
-               // dd($consultation);
             if ($consultation_type) {
                 $consultation['consultation_type'] = $consultation_type->name;
             } else {
                 $consultation['consultation_type'] = 'لا يوجد تصنيف';
             }
-
-
         }
-
         return view('legal_consultations.legal_consultations')->with('consultations', $consultations)->with('consultation_types', $consultation_types);
     }
 
@@ -59,8 +55,9 @@ class LegalConsultationsController extends Controller
      */
     public function add()
     {
+        $data['languages'] = Languages::all();
         $consultation_types = Consultation_Types::all();
-        return view('legal_consultations.legal_consultation_add')->with('consultation_types', $consultation_types);
+        return view('legal_consultations.legal_consultation_add',$data)->with('consultation_types', $consultation_types);
     }
 
     /**
@@ -76,7 +73,7 @@ class LegalConsultationsController extends Controller
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
             'consultation_cat' => 'required',
-
+            'language' => 'required',
 
         ]);
 
@@ -99,7 +96,8 @@ class LegalConsultationsController extends Controller
             $input['created_by'] = \Auth::user()->id;
             $input['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['is_replied'] = 1;
-
+            $input['country_id']=session('country');
+            $input['lang_id'] = $request->language;
             $consultation = Consultation::Create($input);
 
             $consultation->consultation_reply()->create([
@@ -134,6 +132,7 @@ class LegalConsultationsController extends Controller
      */
     public function edit($id)
     {
+        $data['languages'] = Languages::all();
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($id);
 
@@ -142,14 +141,14 @@ class LegalConsultationsController extends Controller
             return redirect('/legal_consultations');
         } 
 
-        return view('legal_consultations.legal_consultation_edit')->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
+        return view('legal_consultations.legal_consultation_edit',$data)->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
     }
 
     public function assign($id)
     {
         $consultation = Consultation::find($id);
         // dd($consultation);
-        $lawyers = Users::whereHas('rules', function ($query) {
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
@@ -266,7 +265,7 @@ class LegalConsultationsController extends Controller
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
             'consultation_cat' => 'required',
-
+            'language' => 'required',
 
         ]);
 
@@ -282,7 +281,8 @@ class LegalConsultationsController extends Controller
         $consultation->Update([
             'consultation_type_id' => $consultation_type->id,
             'is_paid' => $request->input('consultation_type'),
-            'question' => $request->input('consultation_question')
+            'question' => $request->input('consultation_question'),
+            'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->update([
             'reply' => $request->input('consultation_answer')
@@ -409,7 +409,7 @@ class LegalConsultationsController extends Controller
            
 // dd($consultation_types_ids);
              // dd($request->all());
-        $data['consultations'] = Consultation::where(function ($q) use ($request, $consultation_types_ids) {
+        $data['consultations'] = Consultation::where('country_id',session('country'))->where(function ($q) use ($request, $consultation_types_ids) {
             $date_from = date('Y-m-d H:i:s', strtotime($request->consultation_date_from));
             $date_to = date('Y-m-d H:i:s', strtotime($request->consultation_date_to));
 
@@ -474,7 +474,7 @@ class LegalConsultationsController extends Controller
     function lawyers_filter(Request $request, $id)
     {
         $consultation = Consultation::find($id);
-        $lawyers = Users::whereHas('rules', function ($query) {
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
 
             $query->where('rule_id', '5');
         })->where(function ($query) use ($request) {
