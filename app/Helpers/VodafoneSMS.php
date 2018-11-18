@@ -2,7 +2,7 @@
 
 //created_by: Omarmm
 
-namespace App\Libraries;
+namespace App\Helpers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
