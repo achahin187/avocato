@@ -23,7 +23,7 @@ use App\Entity_Localizations;
 use App\Case_;
 use App\Case_Client;
 use App\Tasks;
-use App\Helpers\VodafoneSMS;
+use VodafoneSMS;
 
 class IndividualsController extends Controller
 {

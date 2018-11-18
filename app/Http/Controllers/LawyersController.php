@@ -25,7 +25,7 @@ use Jenssegers\Date\Date;
 use App\Specializations;
 use App\SyndicateLevels;
 use App\User_Ratings;
-use App\Helpers\VodafoneSMS;
+use VodafoneSMS;
 
 
 class LawyersController extends Controller
