@@ -232,8 +232,8 @@ class IndividualsController extends Controller
         }
 
         // redirect with success
-        $vodafone = new VodafoneSMS;
-        $status =$vodafone->send($request->mobile,$request->code , $request->password);
+        // $vodafone = new VodafoneSMS;
+        $status =VodafoneSMS::send($request->mobile,$request->code , $request->password);
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/individuals');
     }
