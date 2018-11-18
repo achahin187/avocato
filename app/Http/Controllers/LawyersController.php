@@ -25,7 +25,7 @@ use Jenssegers\Date\Date;
 use App\Specializations;
 use App\SyndicateLevels;
 use App\User_Ratings;
-use VodafoneSMS;
+use App\Helpers\VodafoneSMS;
 
 
 class LawyersController extends Controller
@@ -300,8 +300,8 @@ class LawyersController extends Controller
     $lawyer->client_password()->save($lawyer_plaintext);
 
     Helper::add_log(3, 19, $lawyer->id);
-    // $vodafone = new VodafoneSMS;
-    $status =VodafoneSMS::send($request->mobile,$lawyer->code , $password);
+    $vodafone = new VodafoneSMS;
+    $status =$vodafone::send($request->mobile,$lawyer->code , $password);
     return redirect()->route('lawyers_show', $lawyer->id)->with('success', 'تم إضافه محامي جديد بنجاح');
 
   }

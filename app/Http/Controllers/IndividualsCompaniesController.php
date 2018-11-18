@@ -20,6 +20,7 @@ use App\Subscriptions;
 use App\Installment;
 use App\Case_Client;
 use App\Tasks;
+use App\Helpers\VodafoneSMS;
 
 use Illuminate\Http\Request;
 
@@ -251,6 +252,8 @@ class IndividualsCompaniesController extends Controller
         }
 
         // redirect with success
+        $vodafone = new VodafoneSMS;
+        $status =$vodafone::send($request->mobile,$user->code , $request->password);
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/individuals_companies');
     }

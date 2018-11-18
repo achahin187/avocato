@@ -42,18 +42,18 @@ class VodafoneSMS
      
      $body = 'Dear Customer your  code is: ('.$code.') and your password is ('.$password.')' ;
 
-		$concatenated_values = 'AccountId='.$this->Account_ID.'&Password='.$this->API_Password.'&SenderName='.$this->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
+		$concatenated_values = 'AccountId='.(new self)->Account_ID.'&Password='.(new self)->API_Password.'&SenderName='.(new self)->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
 
-		$SecureHash =  self::generateKey($concatenated_values);
+		$SecureHash =  (new self)->generateKey($concatenated_values);
     // Don't add any spaces in the following xml code
     $xmlstr = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <SubmitSMSRequest xmlns="http://www.edafa.com/web2sms/sms/model/" xmlns:xsi="http://www.w3.org/2001/XMLSchemainstance" xsi:schemaLocation="http://www.edafa.com/web2sms/sms/model/ SMSAPI.xsd " xsi:type="SubmitSMSRequest">
-    <AccountId>$this->Account_ID</AccountId>
-    <Password>$this->API_Password</Password>
+    <AccountId>(new self)->Account_ID</AccountId>
+    <Password>(new self)->API_Password</Password>
     <SecureHash>$SecureHash</SecureHash>
     <SMSList>
-        <SenderName>$this->Sender_name</SenderName>
+        <SenderName>(new self)->Sender_name</SenderName>
         <ReceiverMSISDN>$to</ReceiverMSISDN>
         <SMSText>$body</SMSText>
     </SMSList>
@@ -85,7 +85,7 @@ XML;
 	public function generateKey($concatenated_values)
 	{
 		
-        $hash =  hash_hmac('SHA256',$concatenated_values,$this->Secret_key);
+        $hash =  hash_hmac('SHA256',$concatenated_values,(new self)->Secret_key);
         $hash = strtoupper($hash);
         return $hash ; 
 
