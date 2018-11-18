@@ -32,9 +32,15 @@
            <div class="pull-left">
                : اسم العميل 
            </div>
-            <b>&nbsp;&nbsp;<a href="{{route('mobile.show',(Helper::getUserDetails($complain->user_id)? Helper::getUserDetails($complain->user_id)->id):0)}}">
+            <b>&nbsp;&nbsp;
+            @if(Helper::getUserDetails($complain->user_id))
+            <a href="{{route('mobile.show',Helper::getUserDetails($complain->user_id)->id)}}">
               {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
-            </a></b>
+            </a>
+            @else
+            زائر 
+            @endif
+            </b>
           </div>
           <div class="pull-right">
             بتاريخ
