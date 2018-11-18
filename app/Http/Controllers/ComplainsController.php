@@ -6,6 +6,7 @@ use Auth;
 use Helper;
 use Session;
 use Excel;
+use VodafoneSMS;
 
 use App\Exports\ComplainsExport;
 use App\Users;
@@ -112,6 +113,7 @@ class ComplainsController extends Controller
             $feedbackReply->save();
             
             $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
+            dd($to);
             if($to != '')
             {
                 try {
