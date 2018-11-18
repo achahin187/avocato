@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
                 $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
              });
 
-        })->get();
+        })->orderBy('created_at','desc')->get();
         foreach($notes as $note){
             if($note->notification_type_id ==2){
 

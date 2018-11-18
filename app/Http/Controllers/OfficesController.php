@@ -204,6 +204,8 @@ class OfficesController extends Controller
   	 // die;
     $validator = Validator::make($request->all(), [
       'office_name' => 'required',
+      'office_email' => 'required|email',
+      'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
       // 'note' => 'required',
       // 'address' => 'required',
       // 'nationality' => 'required',
@@ -260,14 +262,14 @@ class OfficesController extends Controller
 
    
     $office = new Users;
-    $office->name = $request->office_name . $office->id;
+    $office->name = $request->office_name ;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
     $office->phone = $request->office_phone;
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
-    $office->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
+    // $office->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
     $office->country_id=session('country');
     $office->note = $request->note;
