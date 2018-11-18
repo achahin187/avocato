@@ -35,7 +35,7 @@ class VodafoneSMS
 
 	}
 
-	public function send($to, $code , $password)
+	public static function send($to, $code , $password)
 	{
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
@@ -44,7 +44,7 @@ class VodafoneSMS
 
 		$concatenated_values = 'AccountId='.$this->Account_ID.'&Password='.$this->API_Password.'&SenderName='.$this->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
 
-		$SecureHash =  $this->generateKey($concatenated_values);
+		$SecureHash =  self::generateKey($concatenated_values);
     // Don't add any spaces in the following xml code
     $xmlstr = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
