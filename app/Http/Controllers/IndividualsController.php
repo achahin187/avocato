@@ -521,7 +521,7 @@ class IndividualsController extends Controller
         $endto = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
-        $users = Users::where('country_id',session('country'))->users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
+        $users = Users::where('users.country_id',session('country'))->users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
             ->join('user_details', 'users.id', '=', 'user_details.user_id')
             ->select('user_details.*', 'subscriptions.*', 'users.*');
 
