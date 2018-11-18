@@ -38,7 +38,7 @@
               {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
             </a>
             @else
-            زائر 
+            $complain->name
             @endif
             </b>
           </div>
