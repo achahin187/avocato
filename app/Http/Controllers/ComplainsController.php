@@ -121,7 +121,7 @@ class ComplainsController extends Controller
                     }
                     catch (\Exception $e) {
                         // $feedbackReply->delete();
-    return redirect()->back()->with('message', $e); 
+    return redirect()->back()->with('message', 'error while sending email to client  '); 
 }
             }
             $feedback->is_replied = 1;  // is_replied = true
