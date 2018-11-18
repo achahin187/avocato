@@ -212,7 +212,7 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12|unique:users,name,,,deleted_at,NULL',
+      'mobile' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
