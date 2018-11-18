@@ -23,6 +23,7 @@ use App\Entity_Localizations;
 use App\Case_;
 use App\Case_Client;
 use App\Tasks;
+use App\Helpers\VodafoneSMS;
 
 class IndividualsController extends Controller
 {
@@ -77,7 +78,7 @@ class IndividualsController extends Controller
             'national_id' => 'required',
             'birthday' => 'required',
             'nationality' => 'required',
-            'mobile' => 'required',
+            'mobile' => 'required|digits_between:1,12|unique:users,name,,,deleted_at,NULL',
             'email' => 'email',
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
@@ -231,6 +232,8 @@ class IndividualsController extends Controller
         }
 
         // redirect with success
+        $vodafone = new VodafoneSMS;
+        $status =$vodafone->send($request->mobile,$request->code , $request->password);
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/individuals');
     }

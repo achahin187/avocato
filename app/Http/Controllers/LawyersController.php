@@ -25,6 +25,7 @@ use Jenssegers\Date\Date;
 use App\Specializations;
 use App\SyndicateLevels;
 use App\User_Ratings;
+use App\Helpers\VodafoneSMS;
 
 
 class LawyersController extends Controller
@@ -211,7 +212,7 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12|unique:users',
+      'mobile' => 'required|digits_between:1,12|unique:users,name,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
@@ -299,7 +300,8 @@ class LawyersController extends Controller
     $lawyer->client_password()->save($lawyer_plaintext);
 
     Helper::add_log(3, 19, $lawyer->id);
-
+    $vodafone = new VodafoneSMS;
+    $status =$vodafone->send($request->mobile,$lawyer->code , $password);
     return redirect()->route('lawyers_show', $lawyer->id)->with('success', 'تم إضافه محامي جديد بنجاح');
 
   }
