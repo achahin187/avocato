@@ -113,7 +113,7 @@ class ComplainsController extends Controller
             $feedbackReply->save();
             
             $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
-            dd($to);
+            // dd($to);
             if($to != '')
             {
                 try {

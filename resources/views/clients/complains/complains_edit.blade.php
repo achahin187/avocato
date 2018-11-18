@@ -32,7 +32,7 @@
            <div class="pull-left">
                : اسم العميل 
            </div>
-            <b>&nbsp;&nbsp;<a href="{{route('mobile.show',Helper::getUserDetails($complain->user_id)->id)}}">
+            <b>&nbsp;&nbsp;<a href="{{route('mobile.show',(Helper::getUserDetails($complain->user_id)? Helper::getUserDetails($complain->user_id)->id):0)}}">
               {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
             </a></b>
           </div>
