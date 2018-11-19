@@ -346,7 +346,7 @@ class CompaniesController extends Controller
             'activate'      => 'required',  // users as is_active
             'start_date'    => 'required',  // subscription
             'end_date'      => 'required',  // subscription
-            'logo'          => 'image|mimes:jpeg,jpg,png',  // users as image
+            // 'logo'          => 'image|mimes:jpeg,jpg,png',  // users as image
             'subscription_type'     => 'required',  // subscriptions as package_type_id
             'subscription_duration' => 'required',  // subscriptions as duration
             'subscription_value'    => 'required',  // subscriptions as value
