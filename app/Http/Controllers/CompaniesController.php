@@ -67,7 +67,7 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         // Validate data
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'password' => 'required',
             'name'  => 'required',
             'nationality' => 'required',
@@ -88,6 +88,11 @@ class CompaniesController extends Controller
             'number_of_payments' => 'required'
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+              ->withErrors($validator)
+              ->withInput();
+          }
         // upload image to storage/app/public
         if($request->logo) {
             $img = $request->logo;
@@ -331,7 +336,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(),[
             'company_code'  => 'required',  // users
             'password'      => 'required',  // usres - client_password
             'company_name'  => 'required',  // users
@@ -357,6 +362,11 @@ class CompaniesController extends Controller
             'commercial_registration_number'    => 'required',  // user_company details
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+              ->withErrors($validator)
+              ->withInput();
+          }
         $user = Users::find($id);
 
         // upload image to storage/app/public
