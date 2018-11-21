@@ -305,7 +305,7 @@ class NotificationsController extends Controller
         //Server stuff
         $passphrase = 'ss';
         $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', 'SecurePush.pem');
+        stream_context_set_option($ctx, 'ssl', 'local_cert', 'SecureNewPush.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
         $fp = stream_socket_client(
