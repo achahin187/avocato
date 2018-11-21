@@ -301,7 +301,7 @@ class NotificationsController extends Controller
             'item_id' => $item_id,
             'sound' => 'default'
         );
-
+dd($body);
         //Server stuff
         $passphrase = 'ss';
         $ctx = stream_context_create();
