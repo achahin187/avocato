@@ -301,7 +301,6 @@ class NotificationsController extends Controller
             'item_id' => $item_id,
             'sound' => 'default'
         );
-dd($body);
         //Server stuff
         $passphrase = 'ss';
         $ctx = stream_context_create();
@@ -320,7 +319,7 @@ dd($body);
         try {
             $pack_hex = pack('H*', $deviceToken);
         } catch (\Exception $e) { 
-            echo $e.' \n';
+            dd('item_id = '.$item_id.' --- '. $e.' \n');
         }
         
         if(!empty($pack_hex)) {
