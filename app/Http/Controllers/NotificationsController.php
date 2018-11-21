@@ -319,7 +319,7 @@ class NotificationsController extends Controller
         $pack_hex = null;
         try {
             $pack_hex = pack('H*', $deviceToken);
-        } catch (Exception $ex) { 
+        } catch (\Exception $ex) { 
             echo $ex->getMessage.' \n';
         }
         if(!empty($pack_hex)) {
