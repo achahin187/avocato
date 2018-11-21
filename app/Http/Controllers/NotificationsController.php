@@ -316,12 +316,13 @@ class NotificationsController extends Controller
         echo 'Connected to APNS' . PHP_EOL;
         $payload = json_encode($body);
         // Build the binary notification
-        $pack_hex = null;
+        $pack_hex = $result =  null;
         try {
             $pack_hex = pack('H*', $deviceToken);
         } catch (\Exception $e) { 
             echo $e.' \n';
         }
+        
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
