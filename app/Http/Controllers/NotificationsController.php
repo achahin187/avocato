@@ -254,7 +254,6 @@ class NotificationsController extends Controller
             $notification->save();
             $notification_push->delete();
         }
-        dd($results);
     }
 
     public function pushAndroid($registrationIds,$message) {
@@ -336,34 +335,6 @@ class NotificationsController extends Controller
         }
         
     }
-    public function pushIOSP12($deviceToken) {
-        //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
-        $passphrase = '';
-        $message = 'Hello Push Notification';
-        $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('PushDev.p12') ); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
-        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-        $fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
-        // $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
-          echo "<p>Connection Open</p>";
-            if(!$fp){
-                echo "<p>Failed to connect!<br />Error Number: " . $err . " <br />Code: " . $errstrn . "</p>";
-                return;
-            } else {
-                echo "<p>Sending notification!</p>";    
-            }
-        $body['aps'] = array('alert' => $message,'sound' => 'default','extra1'=>'10','extra2'=>'value');
-        $payload = json_encode($body);
-        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-        //var_dump($msg)
-        $result = fwrite($fp, $msg, strlen($msg));
-          if (!$result)
-                    echo '<p>Message not delivered ' . PHP_EOL . '!</p>';
-                else
-                    echo '<p>Message successfully delivered ' . PHP_EOL . '!</p>';
-        fclose($fp);
-    }
-
     
     public function change($id)
     {
