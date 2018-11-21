@@ -247,7 +247,7 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $results [] = $this->pushAndroid($registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
+                 $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent" => 1]);
@@ -319,20 +319,22 @@ class NotificationsController extends Controller
         try {
             $pack_hex = pack('H*', $deviceToken);
         } catch (\Exception $e) { 
-            dd('item_id = '.$item_id.' --- '. $e.' \n');
+//            dd('item_id = '.$item_id.' --- '. $e.' \n');
         }
-        
+        fclose($fp);
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
         }
-//        if (!$result)
+        if (!$result) {
+            return $result;
 //                echo 'Message not delivered' . PHP_EOL;
-//        else
-//                echo 'Message successfully delivered' . PHP_EOL;
-
-        fclose($fp);
+        } else {
+            return $result;
+                echo 'Message successfully delivered' . PHP_EOL;
+        }
+        
     }
     public function pushIOSP12($deviceToken) {
         //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
