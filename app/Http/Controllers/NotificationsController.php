@@ -319,8 +319,8 @@ class NotificationsController extends Controller
         $pack_hex = null;
         try {
             $pack_hex = pack('H*', $deviceToken);
-        } catch (\Exception $ex) { 
-            echo $ex->getMessage.' \n';
+        } catch (\Exception $e) { 
+            echo $e->getMessage().' \n';
         }
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
