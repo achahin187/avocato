@@ -84,7 +84,7 @@ class LawyersController extends Controller
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
-    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
     return view('lawyers.lawyers_create', $data);
