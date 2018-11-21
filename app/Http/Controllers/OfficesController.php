@@ -461,7 +461,7 @@ class OfficesController extends Controller
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
-    $data['work_sector_areas'] = Geo_Cities::all();
+    $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['countries'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
     return view('offices.edit', $data);
@@ -681,6 +681,11 @@ public function branch_destroy($id)
     Helper::add_log(5, 21, $id);
     $user = Users::find($id);
     $user->delete();
+  }
+
+  public function get_cities($country_id)
+  {
+    return Geo_Cities::where('country_id',session('country'))->get();
   }
 
 }

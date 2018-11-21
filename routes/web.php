@@ -370,8 +370,7 @@ Route::middleware(['roles:1,2,3,4'])->group(function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 });
-Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
-Route::get('/push_notification', 'NotificationsController@push_notification')->name('push.notification');
+
 
 Route::get('/Landing/{lang}', 'LandingController@index')->name('landing');
 Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
@@ -394,7 +393,7 @@ Route::post('/offices_destroy_post/{id}', 'OfficesController@destroyPost')->name
 Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
 Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
 Route::post('/branches_delete/{id}', 'OfficesController@branch_destroy')->name('branches_delete');
-
+Route::get('/get_cities/{country_id}', 'OfficesController@get_cities')->name('get_cities');
 
 //Contact us
 Route::middleware(['roles:1,2'])->group(function () {
@@ -410,3 +409,5 @@ Route::middleware(['roles:1,2'])->group(function () {
 
 
 });
+Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
+Route::get('/push_notification', 'NotificationsController@push_notification')->name('push.notification');

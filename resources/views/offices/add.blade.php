@@ -264,7 +264,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_type">الدولة</label>
-                             <select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                             <select name="branches[branch_country][]"  class="master_input select2" id="branch_country" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الدولة</option>
                           @foreach($countries as $nationality)
                             <option value="{{$nationality->id}}">{{$nationality->name}}</option>
@@ -279,10 +279,11 @@
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
                              <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>ختيار المدينة</option>
-                          @foreach($work_sector_areas as $city)
+                          <!-- @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
-                            @endforeach
-                          </select><span class="master_message color--fadegreen">
+                            @endforeach -->
+                          </select>
+                          <span class="master_message color--fadegreen">
                                   @if ($errors->has('branches[branch_city][]'))
                                     {{ $errors->first('branches[branch_city][]')}}
                                     @endif</span>
@@ -397,6 +398,9 @@ $("#branches").append('<div class="more-branches">'
  
       });
      
+    </script>
+    <script>
+
     </script>
 
  @endsection
