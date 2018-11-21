@@ -328,10 +328,10 @@ class NotificationsController extends Controller
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
         }
-        if (!$result)
-                echo 'Message not delivered' . PHP_EOL;
-        else
-                echo 'Message successfully delivered' . PHP_EOL;
+//        if (!$result)
+//                echo 'Message not delivered' . PHP_EOL;
+//        else
+//                echo 'Message successfully delivered' . PHP_EOL;
 
         fclose($fp);
     }
