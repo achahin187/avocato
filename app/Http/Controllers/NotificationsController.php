@@ -313,7 +313,7 @@ class NotificationsController extends Controller
                 $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
         if (!$fp)
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
-        echo 'Connected to APNS' . PHP_EOL;
+//        echo 'Connected to APNS' . PHP_EOL;
         $payload = json_encode($body);
         // Build the binary notification
         $pack_hex = $result =  null;
