@@ -293,4 +293,52 @@ class Helper {
        }
        return false;
     }
+    public static function is_client_individual($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 8 )
+           {
+               return true;
+           }
+       }
+       return false;
+    }
+    public static function is_client_company($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 9 )
+           {
+               return true;
+           }
+       }
+       return false;
+    }
+    public static function is_client_individual_company($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 10 )
+           {
+               return true;
+           }
+       }
+       return false;
+    }
+    public static function is_client_mobile($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 7 )
+           {
+               return true;
+           }
+       }
+       return false;
+    }
 }
