@@ -99,7 +99,7 @@
                         <button class="remodal-confirm" type="submit">فلتر</button>
                       </form>
                       </div>
-                      <table class="table-1">
+                      <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">نص التنبية</span></th>
