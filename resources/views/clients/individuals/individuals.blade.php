@@ -178,8 +178,7 @@
         <table class="table-1" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
-              <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
-              <th><span class="cellcontent">كودالعميل</span></th>
+            <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>              <th><span class="cellcontent">كودالعميل</span></th>
               <th><span class="cellcontent">اسم العميل</span></th>
               <th><span class="cellcontent">عنوان العميل</span></th>
               <th><span class="cellcontent">هاتف</span></th>
@@ -725,4 +724,12 @@
         
     });
   </script>
+  <script LANGUAGE="JavaScript">
+function checkAll(bx) {
+var cbs = document.getElementsByClassName('checkboxes');
+for(var i=0; i < cbs.length; i++) {
+cbs[i].checked = bx.checked;
+}
+}
+</script>
 @endsection

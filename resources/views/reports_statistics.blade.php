@@ -17,9 +17,9 @@
       </div>
     </div>
   </div>
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-    <div class="c100 p{{ $percentage_individuals }} rad_progress_size_small"><span>{{ $percentage_individuals }}%</span>
+    <div class="c100 p{{ round($percentage_individuals) }} rad_progress_size_small"><span>{{ $percentage_individuals }}%</span>
         <div class="slice">
         <div class="bar"></div>
         <div class="fill"></div>
@@ -28,9 +28,9 @@
     <div class="stat-box-content color--fadeblue"><span class="stat-box-text">عملاء افراد</span><span class="stat-box-number">{{ $count_individuals }}</span></div>
     </div>
 </div>
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-    <div class="c100 p{{ $percentage_companies }} rad_progress_size_small"><span>{{ $percentage_companies }}%</span>
+    <div class="c100 p{{ round($percentage_companies) }} rad_progress_size_small"><span>{{ $percentage_companies }}%</span>
         <div class="slice">
         <div class="bar"></div>
         <div class="fill"></div>
@@ -39,9 +39,9 @@
     <div class="stat-box-content color--fadeblue"><span class="stat-box-text">عملاء شركات</span><span class="stat-box-number">{{ $count_companies }}</span></div>
     </div>
 </div>
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-    <div class="c100 p{{ $percentage_indcom }} rad_progress_size_small"><span>{{ $percentage_indcom }}%</span>
+    <div class="c100 p{{ round($percentage_indcom) }} rad_progress_size_small"><span>{{ $percentage_indcom }}%</span>
         <div class="slice">
         <div class="bar"></div>
         <div class="fill"></div>
@@ -50,9 +50,9 @@
     <div class="stat-box-content color--fadeblue"><span class="stat-box-text">عملاء افراد - شركات</span><span class="stat-box-number">{{ $count_indcom }}</span></div>
     </div>
 </div>
-<div class="col-lg-3">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-    <div class="c100 p{{ $percentage_mobile }} rad_progress_size_small"><span>{{ $percentage_mobile }}%</span>
+    <div class="c100 p{{ round($percentage_mobile) }} rad_progress_size_small"><span>{{ $percentage_mobile }}%</span>
         <div class="slice">
         <div class="bar"></div>
         <div class="fill"></div>
@@ -61,20 +61,25 @@
     <div class="stat-box-content color--fadeblue"><span class="stat-box-text">عملاء استشارات عبر التطبيق</span><span class="stat-box-number">{{ $count_mobile }}</span></div>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--fadeorange color--white"><i class="fa fa fa-gavel"></i></span>
     <div class="stat-box-content color--fadeorange"><span class="stat-box-text">عدد القضايا</span><span class="stat-box-number">{{ $count_case }}</span></div>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--gray_d color--white"><i class="fa fa fa-tag"></i></span>
     <div class="stat-box-content color--gray_d"><span class="stat-box-text">عدد الخدمات المدفوعة</span><span class="stat-box-number">{{ $count_paid_services }}</span></div>
     </div>
 </div>
-<div class="col-lg-4">
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--fadebrown color--white"><i class="fa fa fa-gift"></i></span>
     <div class="stat-box-content color--fadebrown"><span class="stat-box-text">عدد الخدمات المجانية</span><span class="stat-box-number">{{ $count_free_services }}</span></div>
     </div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+  <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--fadepurple color--white"><i class="fa fa fa-phone"></i></span>
+    <div class="stat-box-content color--fadepurple"><span class="stat-box-text">عدد المكالمات من التطبيق</span><span class="stat-box-number">1,410</span></div>
+  </div>
 </div>
   <div class="col-md-12">
     <div class="tabs--wrapper">

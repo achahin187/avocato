@@ -149,8 +149,8 @@ class NotificationsController extends Controller
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
 
-          $date_from=date('Y-m-d H:i:s',strtotime($request->date_from));
-          $date_to=date('Y-m-d 23:59:59',strtotime($request->date_to));
+          $date_from=date('Y-m-d ',strtotime($request->date_from));
+          $date_to=date('Y-m-d ',strtotime($request->date_to));
 
           $q->where('notification_type_id',1);
 
@@ -161,15 +161,15 @@ class NotificationsController extends Controller
 
           if($request->filled('date_from') && $request->filled('date_to') )
           {
-            $q->whereBetween('schedule', array($date_from, $date_to));
+            $q->whereDateBetween('schedule', array($date_from, $date_to));
         }
         elseif($request->filled('date_from'))
         {
-            $q->where('schedule','>=',$date_from);
+            $q->whereDate('schedule','>=',$date_from);
         }
         elseif($request->filled('date_to'))
         {
-            $q->where('schedule','<=',$date_to);
+            $q->whereDate('schedule','<=',$date_to);
         }
 
         })->get();
