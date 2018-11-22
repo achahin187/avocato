@@ -17,6 +17,7 @@ use App\Geo_Cities;
 use App\Geo_Governorates;
 use App\Geo_Countries;
 use App\Package_Types;
+use App\User_Details;
 
 use Illuminate\Http\Request;
 
@@ -144,7 +145,19 @@ class ReportsStatisticsController extends Controller
         $data['count_paid_services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->where('task_payment_status_id', 2)->count();
         // free services
         $data['count_free_services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
-
+        // call services
+        $data['call_services'] =0;
+        $calls= User_Details::whereHas('user',function($q){
+            $q->whereHas('rules',function($q){
+                $q->where('rule_id',5);
+            });
+        })->get();
+        // dd($calls);
+        foreach($calls as $call)
+        {
+            $data['call_services'] +=$call['number_of_calls'];
+        }
+        // dd($data['call_services']);
         /** List data */
         // cases number & percentage
         if(isset ( $filters['gov'] ) || isset ( $filters['city'] ) ) { 

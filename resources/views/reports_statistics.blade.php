@@ -78,7 +78,7 @@
 </div>
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
   <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--fadepurple color--white"><i class="fa fa fa-phone"></i></span>
-    <div class="stat-box-content color--fadepurple"><span class="stat-box-text">عدد المكالمات من التطبيق</span><span class="stat-box-number">1,410</span></div>
+    <div class="stat-box-content color--fadepurple"><span class="stat-box-text">عدد المكالمات من التطبيق</span><span class="stat-box-number">{{$call_services}}</span></div>
   </div>
 </div>
   <div class="col-md-12">
@@ -143,7 +143,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">إجمالي عدد القضايا</span></th>
@@ -414,7 +414,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">الاسم</span></th>
                     <th><span class="cellcontent">التخصص</span></th>
                     <th><span class="cellcontent">درجة التقاضي</span></th>
@@ -671,7 +671,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كودالشركة</span></th>
                     <th><span class="cellcontent">اسم الشركة</span></th>
                     <th><span class="cellcontent">نوع التعاقد</span></th>
@@ -920,7 +920,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كود العميل </span></th>
                     <th><span class="cellcontent">نوع التعاقد</span></th>
                     <th><span class="cellcontent">ترتيب القسط</span></th>
@@ -1143,7 +1143,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كودالعميل</span></th>
                     <th><span class="cellcontent">اسم العميل</span></th>
                     <th><span class="cellcontent">نوع العميل</span></th>
@@ -1386,7 +1386,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المحكمة</span></th>
@@ -1617,7 +1617,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">نوع المهمة</span></th>
                     <th><span class="cellcontent">عددالمهام</span></th>
                   </tr>
@@ -1855,7 +1855,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
                     <th><span class="cellcontent">نوع القضية</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
@@ -2040,5 +2040,16 @@
     </div>
   </div>
 </div>
+
+@endsection
+@section('js')
+<script LANGUAGE="JavaScript">
+function checkAll(bx) {
+var cbs = document.getElementsByClassName('checkboxes');
+for(var i=0; i < cbs.length; i++) {
+cbs[i].checked = bx.checked;
+}
+}
+</script>
 
 @endsection
