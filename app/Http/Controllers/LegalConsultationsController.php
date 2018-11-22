@@ -217,7 +217,7 @@ class LegalConsultationsController extends Controller
 
     public function view($id)
     {
-        $consultation = Consultation::where('id', $id)->with('consultation_reply')->first();
+        $consultation = Consultation::where('id', $id)->with('consultation_reply')->with('client')->first();
 
         if( $consultation == NULL ) {
             Session::flash('warning', 'الاستشارة القانونية غير موجودة');
@@ -233,6 +233,7 @@ class LegalConsultationsController extends Controller
             }
 
         }
+        // dd($consultation);
         return view('legal_consultations.legal_consultation_view')->with('consultation', $consultation);
     }
 

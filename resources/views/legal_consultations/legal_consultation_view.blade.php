@@ -26,8 +26,9 @@
                     </div>
                     <div class="col-md-12">
                       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="col-md-12"><span class="pull-left"><b>نص السؤال :</b>&nbsp;
+                        <div class="col-md-12"><span ><b>نص السؤال :</b>&nbsp;
                             {{$consultation->question}}</span>
+                            <hr><span class="pull-left"><b>مرسل الاستشارة</b>&nbsp;<b><a href="clients_mobile_view.html">{{($consultation->client)?$consultation->client->name:''}}</a></b>&nbsp;</span>
                           <div class="pull-right">
                             بتاريخ
                             {{$consultation->created_at}}
@@ -43,6 +44,7 @@
                             رد المحامي
                             &nbsp;<b><a href="{{route('lawyers_show',$lawyer_reply->id)}}">{{$lawyer_reply->lawyer_name}}</a></b>&nbsp;<i class="fa fa-user"></i>&nbsp; &nbsp;
                           </div>
+                          
                           <div class="pull-right">
                             بتاريخ
                             {{$lawyer_reply->created_at}}
@@ -52,7 +54,7 @@
                         <div class="clearfix"></div>
                         <hr>
                         <div class="col-md-12">
-                          <p><b>:الرد </b><p id="original_reply.{{$lawyer_reply->id}}">{{$lawyer_reply->reply}}</p></p>
+                           <span id="original_reply.{{$lawyer_reply->id}}">{{$lawyer_reply->reply}}</span>
                         </div>
                         <div class="col-md-8 col-sm-8 col-xs-12 color--fadebrown bold">
                           <div class="radiorobo" id="radio_group">
