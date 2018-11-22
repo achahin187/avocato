@@ -247,14 +247,13 @@ class NotificationsController extends Controller
             if($notification_push->mobile_os == 'android') {
                 $results [] = $this->pushAndroid($registrationIds, $message);
             } else if($notification_push->mobile_os == 'ios') {
-                $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
+                 $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
             }
             // $notification_table=find($notification_push->notification_id);
             $notification->update(["is_sent" => 1]);
             $notification->save();
             $notification_push->delete();
         }
-        dd($results);
     }
 
     public function pushAndroid($registrationIds,$message) {
@@ -301,7 +300,6 @@ class NotificationsController extends Controller
             'item_id' => $item_id,
             'sound' => 'default'
         );
-
         //Server stuff
         $passphrase = 'ss';
         $ctx = stream_context_create();
@@ -313,47 +311,31 @@ class NotificationsController extends Controller
                 $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
         if (!$fp)
                 exit("Failed to connect: $err $errstr" . PHP_EOL);
-        echo 'Connected to APNS' . PHP_EOL;
+//        echo 'Connected to APNS' . PHP_EOL;
         $payload = json_encode($body);
         // Build the binary notification
-        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-        // Send it to the server
-        $result = fwrite($fp, $msg, strlen($msg));
-        if (!$result)
-                echo 'Message not delivered' . PHP_EOL;
-        else
+        $pack_hex = $result =  null;
+        try {
+            $pack_hex = pack('H*', $deviceToken);
+        } catch (\Exception $e) { 
+//            dd('item_id = '.$item_id.' --- '. $e.' \n');
+        }
+        
+        if(!empty($pack_hex)) {
+            $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
+            // Send it to the server
+            $result = fwrite($fp, $msg, strlen($msg));
+        }
+        fclose($fp);
+        if (!$result) {
+            return $result;
+//                echo 'Message not delivered' . PHP_EOL;
+        } else {
+            return $result;
                 echo 'Message successfully delivered' . PHP_EOL;
-
-        fclose($fp);
+        }
+        
     }
-    public function pushIOSP12($deviceToken) {
-        //$deviceToken = '6e1326c0e4758b54332fab3b3cb2f9ed92e2cd332e9ba8182f49027054b64d29'; //  iPad 5s Gold prod
-        $passphrase = '';
-        $message = 'Hello Push Notification';
-        $ctx = stream_context_create();
-        stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('PushDev.p12') ); // Pem file to generated // openssl pkcs12 -in pushcert.p12 -out pushcert.pem -nodes -clcerts // .p12 private key generated from Apple Developer Account
-        stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
-        $fp = stream_socket_client('ssl://gateway.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // production
-        // $fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx); // developement
-          echo "<p>Connection Open</p>";
-            if(!$fp){
-                echo "<p>Failed to connect!<br />Error Number: " . $err . " <br />Code: " . $errstrn . "</p>";
-                return;
-            } else {
-                echo "<p>Sending notification!</p>";    
-            }
-        $body['aps'] = array('alert' => $message,'sound' => 'default','extra1'=>'10','extra2'=>'value');
-        $payload = json_encode($body);
-        $msg = chr(0) . pack('n', 32) . pack('H*', $deviceToken) . pack('n', strlen($payload)) . $payload;
-        //var_dump($msg)
-        $result = fwrite($fp, $msg, strlen($msg));
-          if (!$result)
-                    echo '<p>Message not delivered ' . PHP_EOL . '!</p>';
-                else
-                    echo '<p>Message successfully delivered ' . PHP_EOL . '!</p>';
-        fclose($fp);
-    }
-
     
     public function change($id)
     {
