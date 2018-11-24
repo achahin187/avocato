@@ -188,8 +188,20 @@ $(document).on('confirmation', '#two', function () {
                   <div class="master_field">
                     <label class="master_label" for="work_sector">التخصص</label>
                   <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                  <option value="0">choose Speification ..</option>
                             @foreach($work_sectors as $work_sector)
-                            <option value="{{$work_sector->name}}">{{$work_sector->name}}</option>
+                            <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                            @endforeach
+                          </select>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label" for="work_sector">التخصص المكانى </label>
+                  <select name="work_sector_area_id" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder=" التخصص لمكانى" style="width:100%" >
+                           <option value="0">choose city ..</option>
+                            @foreach($cities as $city)
+                            <option value="{{$city->id}}">{{$city->name}}</option>
                             @endforeach
                           </select>
                   </div>
@@ -220,7 +232,7 @@ $(document).on('confirmation', '#two', function () {
                   <div class="master_field">
                     <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
                     <div class="bootstrap-timepicker">
-                      <input name="date_from" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_from">
+                      <input name="date_from" class="datepicker master_input" type="date" placeholder="تاريخ الالتحاق" id="work_from">
                     </div><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>
@@ -228,7 +240,23 @@ $(document).on('confirmation', '#two', function () {
                   <div class="master_field">
                     <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
                     <div class="bootstrap-timepicker">
-                      <input name="date_to" class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="work_to">
+                      <input name="date_to" class="datepicker master_input" type="date" placeholder="تاريخ الالتحاق" id="work_to">
+                    </div><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="work_to">  سنوات الخبره</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="experience" class=" master_input" type="number" placeholder=" سنوات الخبره" id="work_to">
+                    </div><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="work_to">  سعر الاستشاره</label>
+                    <div class="bootstrap-timepicker">
+                      <input name="consultation_cost" class=" master_input" type="number" placeholder=" سعر الاستشاره" id="work_to">
                     </div><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>

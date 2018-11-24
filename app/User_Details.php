@@ -12,7 +12,8 @@ class User_Details extends Model
     protected $table = 'user_details';
     protected $fillable = ['user_id', 'country_id', 'nationality_id', 'gender_id', 'job_title',
     'national_id', 'work_sector', 'work_sector_type', 'discount_percentage',
-    'join_date', 'resign_date', 'is_resigned', 'authorization_copy', 'syndicate_copy', 'syndicate_level'];
+    'join_date', 'resign_date', 'is_resigned', 'authorization_copy', 'syndicate_copy', 'syndicate_level','experience','is_international_arbitrator','international_arbitrator_specialization',
+    'consultation_price','has_office','number_of_calls'];
     protected $dates = ['deleted_at','join_date'];
     public $timestamps = false;
 

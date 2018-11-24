@@ -58,6 +58,7 @@ class LawyersController extends Controller
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
     return view('lawyers.lawyers', $data);
   }
 
@@ -137,10 +138,28 @@ class LawyersController extends Controller
 
         });
       }
+      if ($request->has('work_sector_area_id') && $request->work_sector_area_id != 0) {
+        $q->whereHas('user_detail', function ($q) use ($request) {
+          $q->where('work_sector_area_id', $request->work_sector_area_id);
+
+        });
+      }
+      if ($request->has('experience') && $request->experience != null) {
+        $q->whereHas('user_detail', function ($q) use ($request) {
+          $q->where('experience', $request->experience);
+
+        });
+      }
+      if ($request->has('consultation_cost') && $request->consultation_cost != null) {
+        $q->whereHas('user_detail', function ($q) use ($request) {
+          $q->where('consultation_price', $request->consultation_cost);
+
+        });
+      }
 
       if ($request->filled('work_sector')) {
         $q->whereHas('specializations', function ($q) use ($request) {
-          $q->whereIn('name',$request->work_sector);
+          $q->whereIn('id',$request->work_sector);
 
         });
       }
@@ -181,6 +200,7 @@ class LawyersController extends Controller
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
     $data['work_sectors'] = Specializations::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
     foreach ($data['lawyers'] as $lawyer) {
       $filter_ids[] = $lawyer->id;
     }
