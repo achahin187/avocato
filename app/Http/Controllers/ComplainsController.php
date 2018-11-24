@@ -94,6 +94,7 @@ class ComplainsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         $this->validate($request, [
             'newReply'  => 'required'
         ]);
@@ -116,13 +117,15 @@ class ComplainsController extends Controller
             // dd($to);
             if($to != '')
             {
-                try {
+                // try {
+                    // dd($request->newReply);
                $mail=Helper::mail($to,$request->newReply); 
-                    }
-                    catch (\Exception $e) {
-                        // $feedbackReply->delete();
-    return redirect()->back()->with('message', 'error while sending email to client  '); 
-}
+               
+                    // }
+//                     catch (\Exception $e) {
+//                         // $feedbackReply->delete();
+//     return redirect()->back()->with('message', 'error while sending email to client  '); 
+// }
             }
             $feedback->is_replied = 1;  // is_replied = true
             $feedback->save();
