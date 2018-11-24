@@ -4,24 +4,24 @@
   $(document).ready(function(){
 
     $('.noti').click(function(){
-      var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
-      var _token = '{{csrf_token()}}';
+      // var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
+      // var _token = '{{csrf_token()}}';
       $('[data-remodal-id=lawyer_notification]').remodal().open();
       // alert(lawyer_id);
-$(document).on('confirmation', '.remodal', function () {
-        var noti = $('#nots').val(); 
-        var time = $("input[name=date]").val();
-         $.ajax({
-           type:'POST',
-           url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
-           data:{notific:noti,noti_date:time,_token:_token},
-           success:function(data){
-            // alert(data);
-            location.reload();
-          }
-        });
+// $(document).on('confirmation', '.remodal', function () {
+//         var noti = $('#nots').val(); 
+//         var time = $("input[name=date]").val();
+//          $.ajax({
+//            type:'POST',
+//            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
+//            data:{notific:noti,noti_date:time,_token:_token},
+//            success:function(data){
+//             // alert(data);
+//             location.reload();
+//           }
+//         });
 
-});
+// });
           });
 
         $('.noti-all').click(function(){
@@ -152,6 +152,7 @@ $(document).on('confirmation', '#two', function () {
   });
 </script>
 <div class="row">
+
   <div class="col-lg-12">
     <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="row">
@@ -297,6 +298,7 @@ $(document).on('confirmation', '#two', function () {
                 <th><span class="cellcontent">الجنسية</span></th>
                 <th><span class="cellcontent">تفعيل</span></th>
                 <th><span class="cellcontent">الاجراءات</span></th>
+                <th hidden> Notification</th>
               </tr>
             </thead>
             <tbody>
@@ -328,7 +330,40 @@ $(document).on('confirmation', '#two', function () {
                 </span></td>
                 <td><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</span></td>
                   <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                <td hidden>       
+                <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification"><span></span></a>
+            <div class="remodal-bg"></div>
+            <div class="remodal" data-remodal-id="lawyer_notification" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+              <div>
+              <form role="form" action="{{route('notification_lawyer',$lawyer->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="row">
+                  <h3>إرسال تنبيه</h3>
+                  <div class="col-xs-12">
+                    <div class="master_field">
+                      <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
+                      <div class="bootstrap-timepicker">
+                        <input name="noti_date" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
+                      </div><span class="master_message color--fadegreen"></span>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="master_field">
+                      <label class="master_label">نص التنبية</label>
+                      <textarea id="nots" name="notific" class="master_input" placeholder="نص التنبية"></textarea>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </div><br>
+              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+              <button class="remodal-confirm" type="submit">إرسال</button>
+              </form>
+            </div>
+          </div></td>
                 </tr>
+                
                 @endforeach
               </tbody>
             </table>
@@ -490,34 +525,7 @@ $(document).on('confirmation', '#two', function () {
               </div>
             </div>
           </div>
-          <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification"><span></span></a>
-            <div class="remodal-bg"></div>
-            <div class="remodal" data-remodal-id="lawyer_notification" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-              <div>
-                <div class="row">
-                  <h3>إرسال تنبيه</h3>
-                  <div class="col-xs-12">
-                    <div class="master_field">
-                      <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
-                      <div class="bootstrap-timepicker">
-                        <input name="date" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
-                      </div><span class="master_message color--fadegreen"></span>
-                    </div>
-                  </div>
-                  <div class="col-xs-12">
-                    <div class="master_field">
-                      <label class="master_label">نص التنبية</label>
-                      <textarea id="nots" name="noti_text" class="master_input" placeholder="نص التنبية"></textarea>
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
-                </div>
-              </div><br>
-              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-              <button class="remodal-confirm" data-remodal-action="confirm">إرسال</button>
-            </div>
-          </div>
+   
 
 
           <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notifications"><span></span></a>

@@ -109,11 +109,12 @@ class NotificationsController extends Controller
         //
     }
 
-        public function notification_lawyer($id)
+        public function notification_lawyer(Request $request,$id)
     {
-      $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
+        // dd($request->all());
+      $send_date = date('Y-m-d H:i:s',strtotime($request->noti_date));
       $notification = new Notifications;
-      $notification->msg = $_POST['notific'];
+      $notification->msg = $request->notific;
       $notification->schedule = $send_date;
       $notification->notification_type_id=8;
       $notification->is_sent=0;
@@ -121,8 +122,9 @@ class NotificationsController extends Controller
         $item = new Notification_Items;
         $item->item_id = $id;
         $notification->noti_items()->save($item);
-
-        return response()->json('تمت الإضافه');
+session('success','Notification added successfully');
+return redirect()->back();
+        // return response()->json('تمت الإضافه');
     }
 
         public function notification_for_lawyers()
