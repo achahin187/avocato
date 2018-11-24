@@ -12,7 +12,16 @@ class Notifications extends Model
 	public $timestamps = false;
     protected $fillable = ['msg', 'entity_id', 'item_id', 'user_id', 'notification_type_id', 'is_read', 'is_sent','created_at','schedule'];
 
-	protected $dates = ['schedule'];
+    protected $dates = ['schedule'];
+    
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($notification) { // before delete() method call this
+             $notification->noti_items()->delete();
+             // do the rest of the cleanup...
+        });
+    }
 
 	    public function type()
     {

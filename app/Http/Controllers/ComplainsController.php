@@ -94,7 +94,6 @@ class ComplainsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // dd($request->all());
         $this->validate($request, [
             'newReply'  => 'required'
         ]);
@@ -112,23 +111,10 @@ class ComplainsController extends Controller
             $feedbackReply->created_at = \Carbon\Carbon::now()->toDateTimeString();
             $feedbackReply->created_by = Auth::user()->id;
             $feedbackReply->save();
-            
-            $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
-            // dd($to);
-            if($to != '')
-            {
-                // try {
-                    // dd($request->newReply);
-               $mail=Helper::mail($to,$request->newReply); 
-               
-                    // }
-//                     catch (\Exception $e) {
-//                         // $feedbackReply->delete();
-//     return redirect()->back()->with('message', 'error while sending email to client  '); 
-// }
-            }
             $feedback->is_replied = 1;  // is_replied = true
             $feedback->save();
+            $to = Helper::getUserDetails($feedback->user_id) ? Helper::getUserDetails($feedback->user_id)->email : ($feedback->email ? $feedback->email : '');
+            // dd($to);
             $notification_type=Notification_Types::find(10);
             if($feedback->user_id != 0 && $feedback->user_id != NULL )
             {
@@ -152,6 +138,18 @@ class ComplainsController extends Controller
                 "user_id"=>$id
             ]);
             }
+            if($to != '')
+            {
+                try {
+               $mail=Helper::mail($to,$request->newReply); 
+                    }
+                    catch (\Exception $e) {
+                        // $feedbackReply->delete();
+    return redirect()->back()->with('message', 'error while sending email to client  '); 
+}
+            }
+            
+            
            
         
 

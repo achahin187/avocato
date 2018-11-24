@@ -16,7 +16,7 @@ $(document).on('confirmation', '.remodal', function () {
            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
            data:{notific:noti,noti_date:time,_token:_token},
            success:function(data){
-            alert(data);
+            // alert(data);
             location.reload();
           }
         });

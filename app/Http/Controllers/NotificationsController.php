@@ -146,6 +146,11 @@ class NotificationsController extends Controller
 
     public function filter(Request $request)
     {
+        // dd($request->all());
+        if($request->package == '-1' && $request->date_from == null && $request->date_to == null)
+        {
+            return redirect()->back();
+        }
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
 
@@ -161,7 +166,7 @@ class NotificationsController extends Controller
 
           if($request->filled('date_from') && $request->filled('date_to') )
           {
-            $q->whereDateBetween('schedule', array($date_from, $date_to));
+            $q->whereBetween('schedule', array($date_from, $date_to));
         }
         elseif($request->filled('date_from'))
         {
@@ -208,9 +213,11 @@ class NotificationsController extends Controller
      */
     public function destroy($id)
     {
-        $notification = Notifications::find($id);
-        $notification->noti_items()->delete();
-        $notification->delete();
+        // $notification = Notifications::find($id);
+        // $notification->noti_items()->delete();
+        Notification_Schedules::destroy($id);
+        // Session::flash('success', 'تم الحذف بنجاح');
+        return 'success';
     }
 
     public function notification_cron() {

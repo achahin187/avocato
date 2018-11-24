@@ -20,14 +20,15 @@
       function(isConfirm){
         if (isConfirm){
          $.ajax({
-           type:'POST',
+           type:'GET',
            url:'{{url('notifications_destroy')}}'+'/'+noti_id,
            data:{_token:_token},
            success:function(data){
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
             $('tr[data-notification-id='+noti_id+']').fadeOut();
           }
         });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+         
        } else {
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }
@@ -70,7 +71,7 @@
                               <div class="master_field">
                                 <label class="master_label mandatory" for="governorate">ارسال الى مشتركين الباقات</label>
                                 <select class="master_input select2" name="package" id="governorate" style="width:100%;">
-                                      <option >choose type .. </option>
+                                      <option value="-1">choose type .. </option>
                                       @foreach ($subscription_types as $types)
                                       <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
                                       @endforeach
