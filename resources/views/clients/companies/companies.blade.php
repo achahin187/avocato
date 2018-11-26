@@ -171,7 +171,8 @@
         <table class="table-1" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
-            <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>              <th><span class="cellcontent">كودالعميل</span></th>
+            <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>             
+             <th><span class="cellcontent">كودالعميل</span></th>
               <th><span class="cellcontent">كودالشركة</span></th>
               <th><span class="cellcontent">اسم الشركة</span></th>
               <th><span class="cellcontent">عنوان الشركة</span></th>
@@ -191,6 +192,12 @@
               <tr data-company="{{ $filter->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" data-id="{{ $filter->id }}" /></span></td>
                 {{-- Code --}}
+                @if ( $filter->code)
+                  <td><span class="cellcontent">{{ $filter->code }}</span></td>
+                @else
+                  لايوجد
+                @endif
+
                 @if ( $filter->code)
                   <td><span class="cellcontent">{{ $filter->code }}</span></td>
                 @else
