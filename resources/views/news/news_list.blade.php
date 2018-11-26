@@ -338,12 +338,13 @@
                     },
                     success: function ()
                     {
-                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                       
 
                         // fade out selected checkboxes after deletion
                         $.each(allVals, function( index, value ) {
                           $('tr[data-news='+value+']').fadeOut();
                         });
+                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
                     }
                 });
               
@@ -383,8 +384,9 @@
                     },
                     success: function ()
                     {
-                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                        
                         $('tr[data-news='+id+']').fadeOut();
+                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
                     }
                 });
             

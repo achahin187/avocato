@@ -25,9 +25,10 @@
            data:{_token:_token},
            success:function(data){
             $('tr[data-consultation-id='+consultation_id+']').fadeOut();
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }
         });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+         
        } else {
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }
@@ -67,9 +68,10 @@
             $.each( selectedIds, function( key, value ) {
               $('tr[data-consultation-id='+value+']').fadeOut();
             });
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }
         });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+         
        } else {
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }

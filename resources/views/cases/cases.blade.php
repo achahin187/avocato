@@ -621,9 +621,10 @@
            data:{_token:_token},
            success:function(data){
             $('tr[data-case-id='+case_id+']').fadeOut();
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }
         });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+         
        } else {
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }
@@ -664,9 +665,10 @@
             $.each( selectedIds, function( key, value ) {
               $('tr[data-case-id='+value+']').fadeOut();
             });
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }
         });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+         
        } else {
         swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
       }
