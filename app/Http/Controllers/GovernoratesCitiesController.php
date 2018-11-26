@@ -92,14 +92,22 @@ class GovernoratesCitiesController extends Controller
         }
 
         // Add values
-        Geo_Cities::create([
-            'governorate_id' => $request->government_id,
-            'name'           => $request->city_name,
-            'country_id'=>session('country')
-        ]);
+        try{
+            Geo_Cities::create([
+                'governorate_id' => $request->government_id,
+                'name'           => $request->city_name,
+                'country_id'=>session('country')
+            ]);
+            Session::flash('success', 'تم إضافة المدينة بنجاح');
+        }
+        catch(\Exception $ex)
+        {
+            Session::flash('error', 'حدث خطأ'.$ex);
+        }
+        
 
         // redirect back with flash message
-        Session::flash('success', 'تم إضافة المدينة بنجاح');
+        
 
         if($request->addMore != null) {
             return redirect('/governorates_cities#popupModal_1')->withErrors(['government_id' => 'اضف المزيد', 'city_name' => 'اضف المزيد']);

@@ -150,7 +150,7 @@ class ReportsStatisticsController extends Controller
         // call services
         $data['call_services'] =0;
         $calls= User_Details::whereHas('user',function($q){
-            $q->whereHas('rules',function($q){
+            $q->where('country_id',session('country'))->whereHas('rules',function($q){
                 $q->where('rule_id',5);
             });
         })->get();
