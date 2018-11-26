@@ -73,7 +73,7 @@ class NotificationsController extends Controller
         $notification->created_at = date('Y-m-d H:i:s');
         $notification->packages = $packages;
         $notification->save();
-      
+       $schedule_id=$notification->id;
       
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
@@ -88,6 +88,7 @@ class NotificationsController extends Controller
                 $notification->user_id = $user->id;
                 $notification->created_at = date('Y-m-d H:i:s');
                 $notification->packages = $packages;
+                $notification->notification_schedule_id=$schedule_id;
                 $notification->save();
             }
         }
