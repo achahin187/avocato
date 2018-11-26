@@ -78,7 +78,7 @@
                           <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
-                            <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                            <option value="{{$nationality->id}}">{{ (Helper::localizations('geo_countries', 'nationality', $nationality->id)) ?Helper::localizations('geo_countries', 'nationality', $nationality->id) : $nationality->nationality}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('nationality'))

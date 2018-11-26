@@ -82,7 +82,7 @@ class LawyersController extends Controller
    */
   public function create()
   {
-    $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+    $data['nationalities'] = Geo_Countries::all();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
     $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
