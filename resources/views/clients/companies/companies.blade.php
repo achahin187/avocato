@@ -195,34 +195,34 @@
                 @if ( $filter->code)
                   <td><span class="cellcontent">{{ $filter->code }}</span></td>
                 @else
-                  لايوجد
+                  <td>لايوجد</td>
                 @endif
 
                 @if ( $filter->code)
                   <td><span class="cellcontent">{{ $filter->code }}</span></td>
                 @else
-                  لايوجد
+                  <td>لايوجد</td>
                 @endif
 
                 {{-- Full Name --}}
                 @if ( $filter->full_name)
                   <td><span class="cellcontent">{{ $filter->full_name }}</span></td>
                 @else
-                  لايوجد
+                <td>لايوجد</td>
                 @endif
 
                 {{-- Address --}}
                 @if ( $filter->address)
                   <td><span class="cellcontent">{{ $filter->address }}</span></td>
                 @else
-                  لايوجد
+                <td>لايوجد</td>
                 @endif
 
                 {{-- Phone --}}
                 @if ( $filter->phone)
                   <td><span class="cellcontent">{{ $filter->phone }}</span></td>
                 @else
-                  لايوجد
+                <td>لايوجد</td>
                 @endif
 
                 {{-- Package name --}}

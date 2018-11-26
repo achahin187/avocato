@@ -200,7 +200,7 @@
               <th><span class="cellcontent">كودالعميل</span></th>
               <th><span class="cellcontent">كودالشركة</span></th>
               <th><span class="cellcontent">اسم الشركة</span></th>
-              <th><span class="cellcontent">كودالعميل</span></th>
+              <!-- <th><span class="cellcontent">كودالعميل</span></th> -->
               <th><span class="cellcontent">اسم العميل</span></th>
               <th><span class="cellcontent">عنوان العميل</span></th>
               <th><span class="cellcontent">هاتف</span></th>
@@ -246,11 +246,11 @@
                   </td>
 
                   {{-- Individual-Company Code --}}
-                  @if ( $filter->code)
+                  <!-- @if ( $filter->code)
                     <td><span class="cellcontent">{{ $filter->code }}</span></td>
                   @else
                       لا يوجد
-                  @endif
+                  @endif -->
                   
                   {{-- Full Name --}}
                   @if ( $filter->full_name)
