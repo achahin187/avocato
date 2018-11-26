@@ -218,6 +218,7 @@ return redirect()->back();
         // $notification = Notifications::find($id);
         // $notification->noti_items()->delete();
         Notification_Schedules::destroy($id);
+        Notifications::where('notification_schedule_id',$id)->delete();
         // Session::flash('success', 'تم الحذف بنجاح');
         return 'success';
     }
