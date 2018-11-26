@@ -685,7 +685,7 @@ public function branch_destroy($id)
 
   public function get_cities($country_id)
   {
-    return Geo_Cities::where('country_id',session('country'))->get();
+    return response()->json(Geo_Cities::where('country_id',$country_id)->get());
   }
 
 }

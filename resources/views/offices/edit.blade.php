@@ -387,7 +387,7 @@ $("#branches").append('<div class="more-branches">'
            +'<div class="col-md-4 col-sm-6 col-xs-12">'
                           +'<div class="master_field">'
                             +'<label class="master_label mandatory" for="lawyer_type">الدولة</label>'
-                    +'<select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>'
+                    +'<select name="branches[branch_country][]"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" onchange="get_cities(this.value , '+branchNo+' )">'
                          +' <option value="choose" selected disabled>اختر الدولة</option>'
                           @foreach($countries as $nationality)
                            +' <option value="{{$nationality->id}}">{{$nationality->name}}</option>'
@@ -396,7 +396,7 @@ $("#branches").append('<div class="more-branches">'
                           +' <div class="col-md-4 col-sm-6 col-xs-12">'
                           +'<div class="master_field">'
                           +'<label class="master_label mandatory" for="branch_city">المدينة </label>'
-                      +' <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>'
+                      +' <select name="branches[branch_city][]"  class="master_input select2" id="branch_city_'+branchNo+'" data-placeholder="المدينة" style="width:100%;" ,>'
                          +' <option value="choose" selected disabled>ختيار المدينة</option>'
                           @foreach($work_sector_areas as $city)
                           +'  <option value="{{$city->id}}">{{$city->name}}</option>'
@@ -418,6 +418,48 @@ $("#branches").append('<div class="more-branches">'
  
       });
      
+    </script>
+       <script>
+ function get_cities(val , branch_city)
+ {
+  $.ajax({
+           type:'GET',
+           url:"{{url('get_cities')}}"+'/'+val,
+           data_type:JSON,
+           data:{},
+           success:function(data){
+            var options = '<option selected disabled>select city ..</option>';
+            $.each(data, function( index, value ) {
+              options +='<option value="'+index+'">'+value["name"]+'</option>';
+              //  alert(index);
+              });
+              // alert(options);
+              $('#branch_city_'+branch_city).find('option').remove().end().append(options);
+              
+        // $this.html(data);
+      // alert(data);
+          },
+           error: function (jqXHR, exception) {
+        var msg = '';
+        if (jqXHR.status === 0) {
+            msg = 'Not connect.\n Verify Network.';
+        } else if (jqXHR.status == 404) {
+            msg = 'Requested page not found. [404]';
+        } else if (jqXHR.status == 500) {
+            msg = 'Internal Server Error [500].';
+        } else if (exception === 'parsererror') {
+            msg = 'Requested JSON parse failed.';
+        } else if (exception === 'timeout') {
+            msg = 'Time out error.';
+        } else if (exception === 'abort') {
+            msg = 'Ajax request aborted.';
+        } else {
+            msg = 'Uncaught Error.\n' + jqXHR.responseText;
+        }
+        $('#post').html(msg);
+    },
+        });
+ }
     </script>
 
  @endsection
