@@ -138,7 +138,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab1"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="cases-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -152,7 +152,7 @@
                 <tbody>
                   @if (isset($cases) && !empty($cases))
                     @foreach ($cases as $case)
-                    <tr data-case="{{ $case->id }}">
+                    <tr data-case-id="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->governorates) ? $case->governorates->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
@@ -1850,7 +1850,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab8"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1865,7 +1865,7 @@
                 <tbody>
                   @if (isset($cases1) && !empty($cases1))
                     @foreach ($cases1 as $case)
-                    <tr data-case="{{ $case->id }}">
+                    <tr data-case-id="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name  : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ $case->governorates ? $case->governorates->name : 'لا يوجد' }}</span></td>
@@ -2050,6 +2050,31 @@ for(var i=0; i < cbs.length; i++) {
 cbs[i].checked = bx.checked;
 }
 }
+</script>
+<script>
+$('.cases-btn').click(function(){
+    // alert('1');
+     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-case-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('reports_cases_export')}}',
+       data:{ids:selectedIds,filters:filter,type:0},
+       success:function(response){
+        alert(2);
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        // var a = document.createElement("a");
+        // a.href = response.file; 
+        // a.download = response.name+'.xlsx';
+        // document.body.appendChild(a);
+        // a.click();
+        // a.remove();
+        location.href = response;
+      }
+    });
+   });
 </script>
 
 @endsection

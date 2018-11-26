@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 use Helper;
+use Excel;
 
 use App\Case_;
 use App\Users;
@@ -18,6 +19,7 @@ use App\Geo_Governorates;
 use App\Geo_Countries;
 use App\Package_Types;
 use App\User_Details;
+use App\Exports\ReportsExport;
 
 use Illuminate\Http\Request;
 
@@ -396,5 +398,23 @@ class ReportsStatisticsController extends Controller
         }
 
         return view('reports_statistics', $data);
+    }
+
+    public function cases_exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Cases'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+            $ids = explode(",", $request->ids);
+
+            Excel::store(new ReportsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new ReportsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
     }
 }

@@ -461,5 +461,20 @@
     
 
   </script>
+  <script>
+  $(document).ready(function() {
+  $('#license_start_date').datepicker({
+    onSelect: function(dateText, inst){
+        $('#license_end_date').datepicker('option', 'minDate', new Date(dateText));
+    },
+});
+
+$('#license_end_date').datepicker({
+    onSelect: function(dateText, inst){
+        $('#license_start_date').datepicker('option', 'maxDate', new Date(dateText));
+    }
+});
+});
+  </script>
 
 @endsection
