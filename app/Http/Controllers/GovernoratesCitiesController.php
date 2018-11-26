@@ -90,13 +90,13 @@ class GovernoratesCitiesController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         }
-
+        $gov=Geo_Governorates::find($request->government_id);
         // Add values
         try{
             Geo_Cities::create([
                 'governorate_id' => $request->government_id,
                 'name'           => $request->city_name,
-                'country_id'=>session('country')
+                'country_id'=>$gov->country_id
             ]);
             Session::flash('success', 'تم إضافة المدينة بنجاح');
         }
