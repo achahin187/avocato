@@ -84,7 +84,7 @@
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
-                <option value="{{ $nat->id }}">{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
+                <option value="{{ $nat->id }}">{{ (Helper::localizations('geo_countries', 'nationality', $nat->id)) ?Helper::localizations('geo_countries', 'nationality', $nat->id) : $nat->nationality}}</option>
               @endforeach
               
             </select>
