@@ -272,7 +272,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-              <input name="start_date" value="{{ old('start_date') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="license_start_date">
+              <input name="start_date" value="{{ old('start_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="start_date">
               
               @if ($errors->has('start_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -285,7 +285,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ old('end_date') }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
+              <input name="end_date" value="{{ old('end_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="end_date">
               
               @if ($errors->has('end_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -448,9 +448,12 @@
         }, 4000);
         
     });
-
-    
-
+  </script>
+  <script type="text/javascript">
+ 
+      $(function(){
+        dateRange('start_date','end_date')
+      })
   </script>
 
 @endsection
