@@ -116,6 +116,7 @@ class CompaniesController extends Controller
             $user->mobile    = $request->mobile;
             $user->address   = $request->address;
             $user->is_active = $request->activate;
+            $user->country_id=session('country');
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
