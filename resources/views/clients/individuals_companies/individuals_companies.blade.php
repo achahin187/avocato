@@ -197,9 +197,10 @@
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>            
-              <th><span class="cellcontent">كودالعميل</span></th>
-              <th><span class="cellcontent">كودالشركة</span></th>
+            <th><span class="cellcontent">كودالشركة</span></th>
               <th><span class="cellcontent">اسم الشركة</span></th>
+              <th><span class="cellcontent">كودالعميل</span></th>
+             
               <!-- <th><span class="cellcontent">كودالعميل</span></th> -->
               <th><span class="cellcontent">اسم العميل</span></th>
               <th><span class="cellcontent">عنوان العميل</span></th>
@@ -224,7 +225,7 @@
                   لايوجد
                 @endif
                   </td>
-                  
+
                   {{-- Company Code --}}
                   <td>
                     <span class="cellcontent">
