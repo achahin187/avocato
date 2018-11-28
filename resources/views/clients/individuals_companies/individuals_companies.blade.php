@@ -217,6 +217,14 @@
                 <tr data-indcom="{{ $filter->id }}">
                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes  input-in-table" data-id="{{ $filter->id }}" /></span></td>
                   
+                  <td>
+                  @if ( $filter->code)
+                  <span class="cellcontent">{{ $filter->code }}</span>
+                  @else
+                  لايوجد
+                @endif
+                  </td>
+                  
                   {{-- Company Code --}}
                   <td>
                     <span class="cellcontent">
@@ -228,11 +236,9 @@
                     </span>
                   </td>
 
-                  @if ( $filter->code)
-                  <td><span class="cellcontent">{{ $filter->code }}</span></td>
-                @else
-                  <td>لايوجد</td>
-                @endif
+                  
+                  
+                
 
                   {{-- Company Name --}}
                   <td>
