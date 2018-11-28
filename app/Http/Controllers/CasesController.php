@@ -47,7 +47,7 @@ class CasesController extends Controller
         // dd($cases);
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();
-        $courts = Courts::all();
+        $courts = Courts::where('country_id',session('country'))->get();
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
@@ -73,7 +73,7 @@ class CasesController extends Controller
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
         $cases_types = Cases_Types::all();
-        $courts = Courts::all();
+        $courts = Courts::where('country_id',session('country'))->get();
         $governorates = Geo_Governorates::all();
         $countries = Geo_Countries::all();
         $cities = Geo_Cities::all();
@@ -172,7 +172,7 @@ class CasesController extends Controller
         $case = Case_::where('id', $id)->with(['case_records' => function ($q) {
             $q->with('case_record_documents');
         }])->first();
-        $clients = Users::whereHas('rules', function ($query) {
+        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
@@ -182,11 +182,11 @@ class CasesController extends Controller
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
         $cases_types = Cases_Types::all();
-        $courts = Courts::all();
-        $governorates = Geo_Governorates::all();
+        $courts = Courts::where('country_id',session('country'))->get();
+        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
         $countries = Geo_Countries::all();
-        $cities = Geo_Cities::all();
-        $lawyers = Users::whereHas('rules', function ($query) {
+        $cities = Geo_Cities::where('country_id',session('country'))->get();
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
