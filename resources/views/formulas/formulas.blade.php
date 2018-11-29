@@ -194,6 +194,22 @@
                               </div>
                             </div>
                           </div>
+                            <div class="col-md-2 col-xs-8">
+          <div class="master_field">
+            <label class="master_label" for="sitch_1">اللغه</label>
+                  <select name="language" class="master_input select2" id="type" data-placeholder="اللغة" >
+                    <option value="" selected>اختر اللغة</option>
+                    @foreach($languages as $language)
+                    <option value="{{$language->id}}" >{{$language->name}}</option>
+                    @endforeach
+                  </select>
+              
+              @if ($errors->has('language'))
+                <span class="master_message color--fadegreen">{{ $errors->first('language') }}</span>
+              @endif
+              
+          </div>
+                          </div>
                           <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
                           <button class="remodal-confirm" type="submit">فلتر</button>

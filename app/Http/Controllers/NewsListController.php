@@ -28,7 +28,9 @@ class NewsListController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
-        return view('news.news_list')->with('news', News::where('country_id',session('country'))->get());
+          $languages = Languages::all();
+
+        return view('news.news_list')->with('news', News::where('country_id',session('country'))->get())->with('languages', $languages);
     }
 
     public function filter(Request $request)
@@ -76,6 +78,10 @@ class NewsListController extends Controller
                 $filter = $filter->whereBetween('published_at', [$from, $to]);
             }
         }
+        if ($request->filled('language')) {
+           $filter =  $filter->where('lang_id', '=', $request->language);
+               }
+
 
         switch ($request->condition) {
             case "1":
@@ -90,8 +96,10 @@ class NewsListController extends Controller
             default:
                 break;
         }
+         $languages = Languages::all();
 
-        return view('news.news_list')->with('news', $filter);
+        return view('news.news_list')->with('news', $filter)->with('languages', $languages);
+
     }
 
     /**

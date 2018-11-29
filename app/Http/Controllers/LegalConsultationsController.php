@@ -45,7 +45,8 @@ class LegalConsultationsController extends Controller
                 $consultation['consultation_type'] = 'لا يوجد تصنيف';
             }
         }
-        return view('legal_consultations.legal_consultations')->with('consultations', $consultations)->with('consultation_types', $consultation_types);
+        $languages = Languages::all();
+        return view('legal_consultations.legal_consultations')->with('consultations', $consultations)->with('consultation_types', $consultation_types)->with('languages', $languages);
     }
 
     /**
@@ -451,8 +452,9 @@ class LegalConsultationsController extends Controller
                 $q->where('created_at', '<=', $date_to);
             }
 
-
-
+        if ($request->filled('language')) {
+            $q->where('lang_id', '=', $request->language);
+               }
 
 
         })->get();
@@ -469,7 +471,8 @@ class LegalConsultationsController extends Controller
 
         }
         // dd($data);
-        return view('legal_consultations.legal_consultations')->with('consultations', $data['consultations'])->with('consultation_types', $consultation_types);
+         $languages = Languages::all();
+        return view('legal_consultations.legal_consultations')->with('consultations', $data['consultations'])->with('consultation_types', $consultation_types)->with('languages', $languages);
 
     }
     function lawyers_filter(Request $request, $id)

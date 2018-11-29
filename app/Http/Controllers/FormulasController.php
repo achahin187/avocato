@@ -29,6 +29,7 @@ class FormulasController extends Controller
     {
         $data['contracts'] = Formula_Contracts::where('country_id',session('country'))->get();
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
+         $data['languages'] = Languages::all();
         return view('formulas.formulas', $data);
     }
 
@@ -109,7 +110,9 @@ class FormulasController extends Controller
                 });
             }
 
-
+        if ($request->filled('language')) {
+            $q->where('lang_id', '=', $request->language);
+               }
         })->get();
         $data['main_contracts'] = Formula_Contract_Types::whereNull('parent_id')->get();
         foreach ($data['contracts'] as $contract) {
@@ -121,6 +124,7 @@ class FormulasController extends Controller
             $filter_ids[] = 0;
             Session::flash('filter_ids', $filter_ids);
         }
+         $data['languages'] = Languages::all();
         return view('formulas.formulas', $data);
 
     }
