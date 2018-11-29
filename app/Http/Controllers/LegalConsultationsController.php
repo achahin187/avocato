@@ -266,7 +266,7 @@ class LegalConsultationsController extends Controller
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
             'consultation_cat' => 'required',
-            'language' => 'required',
+          //  'language' => 'required',
 
         ]);
 
@@ -283,7 +283,7 @@ class LegalConsultationsController extends Controller
             'consultation_type_id' => $consultation_type->id,
             'is_paid' => $request->input('consultation_type'),
             'question' => $request->input('consultation_question'),
-            'lang_id'=> $request->language,
+            // 'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->update([
             'reply' => $request->input('consultation_answer')

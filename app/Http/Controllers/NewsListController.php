@@ -224,7 +224,7 @@ class NewsListController extends Controller
             'newsName' => 'required',
             'newsImg' => 'image|mimes:jpeg,jpg,png',
             'newsContent' => 'required',
-            'language' => 'required',
+            // 'language' => 'required',
         ]);
 
         $news = News::find($id);
@@ -265,7 +265,7 @@ class NewsListController extends Controller
             $news->body = $request->newsContent;
             $news->photo = $imgPath;
             $news->is_active = $activate;
-            $news->lang_id = $request->language;
+           // $news->lang_id = $news->lang_id;
             $news->published_at = $published_at;
             $news->created_by = $current_user;
             $news->updated_by = $current_user;

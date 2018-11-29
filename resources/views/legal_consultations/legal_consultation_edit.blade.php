@@ -72,7 +72,7 @@
                       </div>
                     </div>
 
-                  <div class="col-md-2 col-xs-4">
+                  <!-- <div class="col-md-2 col-xs-4">
                       <div class="master_field">
                         <label class="master_label" for="sitch_1">اللغه</label>
                               <select name="language" class="master_input select2" id="type" data-placeholder="اللغع" style="width:100%;" ,>
@@ -86,7 +86,7 @@
                           @endif
                           
                       </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-xs-12">
                       <div class="master_field">

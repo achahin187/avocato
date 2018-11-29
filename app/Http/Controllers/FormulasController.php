@@ -220,7 +220,7 @@ class FormulasController extends Controller
             'subs' => 'required',
             'is_contract' => 'required',
             'file' => 'mimes:pdf',
-            'language' => 'required',
+            //'language' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -245,7 +245,7 @@ class FormulasController extends Controller
         }
         $formula->file = $fileNameToStore;
         $formula->country_id=session('country');
-        $formula->lang_id = $request->language;
+       // $formula->lang_id = $request->language;
         $formula->save();
         Helper::add_log(4, 17, $formula->id);
         return redirect()->route('formulas')->with('success', 'تم تعديل البيانات بنجاح');
