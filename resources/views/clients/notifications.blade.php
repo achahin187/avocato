@@ -113,7 +113,7 @@
                           @foreach($notifications as $notification)
                           <tr data-notification-id={{$notification->id}}>
                             <td><span class="cellcontent">{{$notification->msg}}</span></td>
-                            <td><span class="cellcontent">{{$notification->packages}}</span></td>
+                            <td><span class="cellcontent">{{Helper::localizations('package_types', 'name', $notification->packages) }}</span></td>
                             <td><span class="cellcontent">{{$notification->schedule}}</span></td>
                             <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>

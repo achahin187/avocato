@@ -150,10 +150,12 @@ return redirect()->back();
     public function filter(Request $request)
     {
         // dd($request->all());
-        if($request->package == '-1' && $request->date_from == null && $request->date_to == null)
-        {
-            return redirect()->back();
-        }
+       if($request->package == '-1' && !$request->filled('date_from') && !$request->filled('date_to') )
+          { return redirect()->route('notifications');}
+        // if($request->package == '-1' && $request->date_from == null && $request->date_to == null)
+        // {
+        //     return redirect()->back();
+        // }
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
 
