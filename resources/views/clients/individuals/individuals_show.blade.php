@@ -6,6 +6,12 @@
     <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{asset('img/covers/dummy2.jpg')}}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
+           
+                  @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
           <div class="col-xs-12">
             <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset($user->image ? $user->image : '')}}">
               <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
@@ -955,8 +961,8 @@
                             <div class="file-upload">
                               <div class="file-select">
                                 <div class="file-select-name" id="noFile">صورة التوكيل </div>
-                                  <input name="photo" class="chooseFile" type="file" name="chooseFile" id="photo">
-                              </div>
+                                 <input name="image" class="chooseFile" type="file" name="chooseFile" id="lawyer_img">
+                            </div>
                             </div><span class="master_message color--fadegreen">  @if ($errors->has('photo'))
                                       {{ $errors->first('photo')}}
                                     @endif</span>

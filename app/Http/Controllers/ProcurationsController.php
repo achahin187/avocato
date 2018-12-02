@@ -45,13 +45,14 @@ class ProcurationsController extends Controller
      */
     public function store(Request $request)
     {
+       // dd($request);
       $validator = Validator::make($request->all(), [
       'client_id' => 'required',
       'procuration_number' => 'required',
       'procuration_type' => 'required',
       'issue_date' => 'required',
       'office' => 'required',
-      'photo' => 'required',
+      //'photo' => 'required',
       'route_name'=>'required',
 
     ]);
@@ -66,10 +67,10 @@ class ProcurationsController extends Controller
           ->withInput();
     }
 
-    if ($request->hasFile('image')) {
+    if ($request->hasFile('photo')) {
       $destinationPath = 'users_images';
-      $image_name = $destinationPath . '/' . $request->procuration_number . time() . rand(111, 999) . '.' . Input::file('image')->getClientOriginalExtension();
-      Input::file('image')->move($destinationPath, $image_name);
+      $image_name = $destinationPath . '/' . $request->procuration_number . time() . rand(111, 999) . '.' . Input::file('photo')->getClientOriginalExtension();
+      Input::file('photo')->move($destinationPath, $image_name);
     }
 
   // id   client_id   procuration_number  procuration_type    issue_date  office  photo   created_at  updated_at  created_by  updated_by
@@ -86,8 +87,7 @@ class ProcurationsController extends Controller
     $procuration->created_by = \Auth::user()->id;
     $procuration->save();
    // we will send the route name related to section ex : companies.show
-    return redirect()->route($request->route_name, $request->client_id)->with('success', 'تم إضافه متوكيل جديد بنجاح');
-
+    return redirect()->route($request->route_name, $request->client_id)->with('success', 'تم إضافه توكيل جديد بنجاح');
   
     }
 

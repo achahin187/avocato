@@ -20,6 +20,7 @@ use App\Subscriptions;
 use App\Installment;
 use App\Case_Client;
 use App\Tasks;
+use App\Procurations;
 
 use Illuminate\Http\Request;
 
@@ -292,6 +293,7 @@ class CompaniesController extends Controller
 
         // get paid and free services only
         $data['services'] =  Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
+        $data['procurations'] = Procurations::where('client_id', $id)->get();
         return view('clients.companies.companies_show',$data);
     }
 

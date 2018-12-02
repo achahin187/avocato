@@ -6,6 +6,11 @@
     <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{ asset('img/covers/dummy2.jpg') }}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
+            @if(\session('success'))
+                  <div class="alert alert-success">
+                  {{\session('success')}}
+                  </div>
+                  @endif
           <div class="col-xs-12">
             <div class="text-xs-center"><a href="#"><img class="coverglobal__avatar" src="{{  $user->image ? asset($user->image) : ''  }}">
                 <h3 class="coverglobal__title color--gray_d">{{ $user->full_name }} </h3><small class="coverglobal__slogan color--gray_d">{{  $user->is_active ? 'مفعل':'غير مفعل'  }}</small></a></div>
@@ -905,90 +910,15 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
-                <tr>
-                  <td><span class="cellcontent"> 1001</span></td>
-                  <td><span class="cellcontent">6589 لسنة2018</span></td>
-                  <td><span class="cellcontent">مكتب الشهرالعقاري</span></td>
-                  <td><span class="cellcontent">توكيل عام بالبيع و الشراء</span></td>
-                  <td><span class="cellcontent">10-9-2019</span></td>
-                </tr>
+                 @foreach($procurations as $procuration)
+                    <tr>
+                      <td><span class="cellcontent">{{$procuration->id}}</span></td>
+                      <td><span class="cellcontent">{{$procuration->procuration_number}}</span></td>
+                      <td><span class="cellcontent">{{$procuration->office}}</span></td>
+                      <td><span class="cellcontent">{{$procuration->procuration_type}}</span></td>
+                      <td><span class="cellcontent">{{$procuration->issue_date}}</span></td>
+                    </tr>
+                    @endforeach
               </tbody>
             </table>
             <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -1151,51 +1081,67 @@
             <div class="col-md-2 col-sm-6 col-xs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_2"><i class="fa fa-plus"></i><span>اضافة</span></a>
               <div class="remodal-bg"></div>
               <div class="remodal" data-remodal-id="popupModal_2" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal2Desc">
-                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                <div>
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <h3>اضافة</h3>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No">رقم التوكيل</label>
-                        <input class="master_input" type="number" placeholder="رقم التوكيل" id="ID_No"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No">مكتب التوثيق</label>
-                        <input class="master_input" type="text" placeholder="مكتب التوثيق" id="ID_No"><span class="master_message color--fadegreen">message</span>
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No">نوعه</label>
-                        <input class="master_input" type="text" placeholder="نوعه" id="ID_No">
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No">التاريخ</label>
-                        <input class="datepicker-popup master_input" type="text" placeholder="التاريخ" id="ID_No">
-                      </div>
-                    </div>
-                    <div class="col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="ID_No-11">صورة التوكيل </label>
-                        <div class="file-upload">
-                          <div class="file-select">
-                            <div class="file-select-name" id="noFile">صورة التوكيل </div>
-                            <input class="chooseFile" type="file" name="chooseFile" id="ID_No-11">
+                 <form role="form" action="{{route('procuration.store')}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
+                          <!-- id   client_id   procuration_number  procuration_type    issue_date  office  photo   created_at  updated_at  created_by  updated_by -->
+                    <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                    <div>
+                      <div class="row">
+                       <input  type="hidden" name="client_id" value="{{$user->id}}">
+                             <input  type="hidden" name="route_name" value="companies.show">
+                        <div class="col-xs-12">
+                          <h3>اضافة</h3>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No">رقم التوكيل</label>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="ID_No" name="procuration_number">
+                          </div><span class="master_message color--fadegreen">  @if ($errors->has('procuration_number'))
+                                      {{ $errors->first('procuration_number')}}
+                                    @endif</span>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No">مكتب التوثيق</label>
+                            <input class="master_input" type="text" placeholder="مكتب التوثيق" id="ID_No" name="office">
+                          </div><span class="master_message color--fadegreen">  @if ($errors->has('office'))
+                                      {{ $errors->first('office')}}
+                                    @endif</span>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No">نوعه</label>
+                            <input class="master_input" type="text" placeholder="نوعه" id="ID_No" name="procuration_type">
+                          </div><span class="master_message color--fadegreen">  @if ($errors->has('procuration_type'))
+                                      {{ $errors->first('procuration_type')}}
+                                    @endif</span>
+                        </div>
+                        <div class="col-xs-6">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No">التاريخ</label>
+                            <input class="datepicker-popup master_input" type="text" placeholder="التاريخ" id="issue_date" name="issue_date">
+                          </div><span class="master_message color--fadegreen">  @if ($errors->has('issue_date'))
+                                      {{ $errors->first('issue_date')}}
+                                    @endif</span>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="ID_No-11">صورة التوكيل </label>
+                            <div class="file-upload">
+                              <div class="file-select">
+                                <div class="file-select-name" id="noFile">صورة التوكيل </div>
+                                 <input name="image" class="chooseFile" type="file" name="chooseFile" id="lawyer_img">
+                            </div>
+                            </div><span class="master_message color--fadegreen">  @if ($errors->has('photo'))
+                                      {{ $errors->first('photo')}}
+                                    @endif</span>
                           </div>
-                        </div><span class="master_message color--fadegreen">message</span>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div><br>
-                <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                <button class="remodal-confirm" data-remodal-action="confirm">اضافة</button>
+                    </div><br>
+                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                    <button class="remodal-confirm"  type="submit">اضافة</button>
+                  </form>
               </div>
             </div>
             <div class="clearfix"></div>
