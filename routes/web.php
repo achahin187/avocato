@@ -149,6 +149,7 @@ Route::get('/clients/activate/{id}', 'ClientsController@activate')->name('client
 
 Route::get('/individuals', 'IndividualsController@index')->name('ind');
 Route::get('/individuals/show/{id}', 'IndividualsController@show')->name('ind.show');
+Route::post('/procuration/store', 'ProcurationsController@store')->name('procuration.store');
 Route::get('/individuals/create', 'IndividualsController@create')->name('ind.create');
 Route::post('/individuals/store', 'IndividualsController@store')->name('ind.store');
 Route::get('/individuals/edit/{id}', 'IndividualsController@edit')->name('ind.edit');

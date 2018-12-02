@@ -23,6 +23,7 @@ use App\Entity_Localizations;
 use App\Case_;
 use App\Case_Client;
 use App\Tasks;
+use App\Procurations;
 use App\Helpers\VodafoneSMS;
 
 class IndividualsController extends Controller
@@ -262,7 +263,7 @@ class IndividualsController extends Controller
 
         // get paid and free services only
         $data['services'] = Tasks::where('client_id', $id)->where('task_type_id', 3)->get();
-
+        $data['procurations'] = Procurations::where('client_id', $id)->get();
         return view('clients.individuals.individuals_show', $data);
     }
 
