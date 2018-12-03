@@ -406,8 +406,8 @@ class ReportsStatisticsController extends Controller
         $filename = 'Cases'.time().'.xlsx';
 
         if( isset( $request->ids ) && $request->ids != NULL ){
-            $ids = explode(",", $request->ids);
-
+           // $ids = explode(",", $request->ids);
+          $ids =  $request->ids;
             Excel::store(new ReportsExport($ids),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else{

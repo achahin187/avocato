@@ -152,8 +152,8 @@
                 <tbody>
                   @if (isset($cases) && !empty($cases))
                     @foreach ($cases as $case)
-                    <tr data-case-id="{{ $case->id }}">
-                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
+                    <tr data-case-id="{{ $case->geo_city_id }}">
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->geo_city_id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->governorates) ? $case->governorates->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($case->cities) ? $case->cities->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ $case->total ? $case->total : 0 }}</span></td>
@@ -2058,6 +2058,7 @@ $('.cases-btn').click(function(){
      var selectedIds = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-case-id');
     }).get();
+       console.log(selectedIds);
      $.ajax({
        type:'GET',
        url:'{{route('reports_cases_export')}}',

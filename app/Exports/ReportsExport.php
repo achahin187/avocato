@@ -60,7 +60,10 @@ class ReportsExport implements FromCollection,WithEvents
         $selects = $this->ids;
          foreach($selects as $select)
            {
-            $case = Case_::where('id',$select)->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->first();
+            // $case = Case_::where('id',$select)->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->first();
+
+               $case = Case_::select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->where('country_id',session('country'))->
+                  where('geo_city_id',$select)->groupBy('geo_governorate_id')->groupBy('geo_city_id')->first();
             array_push($casesArray,[$case->governorates->name,$case->cities->name,$case->total]);
             } 
         }

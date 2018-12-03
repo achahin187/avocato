@@ -77,6 +77,7 @@
           var selectedIds = $("input:checkbox:checked").map(function(){
             return $(this).closest('tr').attr('data-issue-id');
           }).get();
+           console.log(selectedIds);
           $.ajax({
            type:'GET',
            url:'{{url('issues_types_excel')}}',

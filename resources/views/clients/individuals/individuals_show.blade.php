@@ -6,7 +6,7 @@
     <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{asset('img/covers/dummy2.jpg')}}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
-           
+
                   @if(\session('success'))
                   <div class="alert alert-success">
                   {{\session('success')}}
@@ -742,7 +742,7 @@
                   <tbody>
                     @foreach($procurations as $procuration)
                     <tr>
-                      <td><span class="cellcontent">{{$procuration->id}}</span></td>
+                      <td><span class="cellcontent">{{$loop->iteration}}</span></td>
                       <td><span class="cellcontent">{{$procuration->procuration_number}}</span></td>
                       <td><span class="cellcontent">{{$procuration->office}}</span></td>
                       <td><span class="cellcontent">{{$procuration->procuration_type}}</span></td>
