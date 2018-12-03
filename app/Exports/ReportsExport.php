@@ -47,7 +47,7 @@ class ReportsExport implements FromCollection,WithEvents
         $casesArray = array(['المحافظه','المدينه','اجمالى عدد القضايا']) ;
         if(is_null($this->ids)){
 
-        $cases = Case_::where('country_id',session('country'))->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id');
+        $cases = Case_::where('country_id',session('country'))->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id')->orderBy('total','desc')->get();
         foreach($cases as $case)
         {
             // dd($case->governorates->name);
@@ -61,13 +61,14 @@ class ReportsExport implements FromCollection,WithEvents
          foreach($selects as $select)
            {
             // $case = Case_::where('id',$select)->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->first();
-
+             if($select!=''){
                $case = Case_::select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->where('country_id',session('country'))->
                   where('geo_city_id',$select)->groupBy('geo_governorate_id')->groupBy('geo_city_id')->first();
             array_push($casesArray,[$case->governorates->name,$case->cities->name,$case->total]);
+           }
             } 
         }
-        
+       // dd($casesArray);
         return collect($casesArray);
     }
 
