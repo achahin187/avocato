@@ -223,18 +223,7 @@ class ReportsStatisticsController extends Controller
             $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
         }
         //for export excel after filter 
-
-          foreach ($data['lawyers'] as $lawyer) {
-             $filter_ids[] = $lawyer->id;
-             }
-           if (!empty($filter_ids)) {
-             Session::flash('filter_ids', $filter_ids);
-             } else {
-             $filter_ids[] = 0;
-             Session::flash('filter_ids', $filter_ids);
-             }
-
-          //for export excel after filter 
+          $this->set_filterIDs_session( $data['lawyers'] , 'lawyers' );
    
         // Companies
         if ( isset( $filters['company'] ) ||isset( $filters['packages'] ) ||isset( $filters['activate'] ) ) { 
@@ -263,19 +252,8 @@ class ReportsStatisticsController extends Controller
         }
 
         //for export excel after filter 
+          $this->set_filterIDs_session( $data['companies'] , 'companies' );
 
-          foreach ($data['companies'] as $company) {
-             $filter_companies_ids[] = $company->id;
-             }
-           if (!empty($filter_companies_ids)) {
-             Session::flash('filter_companies_ids', $filter_companies_ids);
-             } else {
-             $filter_companies_ids[] = 0;
-             Session::flash('filter_companies_ids', $filter_companies_ids);
-             }
-
-          //for export excel after filter 
-        
         // Installments
         if ( isset( $filters['code'] ) || isset( $filters['startDate'] ) || isset( $filters['activate1'] ) ) {
             // dd([$filters['code']  , $filters['startDate'] , $filters['activate1']]);
@@ -307,6 +285,9 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['installments'] = Installment::all();
         }
+
+        //for export excel after filter 
+          $this->set_filterIDs_session( $data['installments'] , 'installments' );
         
         // Urgents
         if ( isset( $filters['userType'] ) ) {
@@ -314,7 +295,8 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['urgents'] = Helper::getUrgents([7, 8, 9, 10]);
         }
-       
+        //for export excel after filter 
+          $this->set_filterIDs_session( $data['urgents'] , 'urgents' );
 
         // Courts
         if ( isset( $filters['cities'] ) || isset( $filters['govs'] ) || isset( $filters['courts'] ) ) {
@@ -343,6 +325,10 @@ class ReportsStatisticsController extends Controller
             $data['courts'] = Courts::select('city_id', 'name', \DB::raw('count(*) as total') )->groupBy('city_id')->groupBy('name')->get();
         }
 
+        //for export excel after filter 
+          $this->set_filterIDs_session( $data['courts'] , 'courts' );
+
+
         // Tasks
         if ( isset( $filters['taskType'] ) || isset( $filters['dateFrom'] ) || isset( $filters['dateTo'] ) ) {
             
@@ -370,6 +356,8 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['tasks'] = Task_Types::all();
         }
+         //for export excel after filter 
+          $this->set_filterIDs_session( $data['tasks'] , 'tasks' );
         // Case type
         if ( isset( $filters['cities1'] ) ||isset( $filters['govs1'] ) || isset( $filters['caseType'] ) ) {
 
@@ -390,6 +378,8 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['cases1'] = Case_::select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id')->get();
         }
+         //for export excel after filter 
+          $this->set_filterIDs_session( $data['cases1'] , 'cases1' );
         
         return $data;
     }
@@ -462,4 +452,16 @@ class ReportsStatisticsController extends Controller
 
         return response()->json($response);
     }
+
+public function set_filterIDs_session( $section_data , $section_name ) {
+    foreach ($section_data as $data) {
+             $filter_ids[] = $data->id;
+             }
+           if (!empty($filter_ids)) {
+             Session::flash('filter_'.$section_name.'_ids', $filter_ids);
+             } else {
+             $filter_ids[] = 0;
+             Session::flash('filter_'.$section_name.'_ids', $filter_ids);
+             }
+         }
 }

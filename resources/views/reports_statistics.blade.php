@@ -915,7 +915,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab4"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-installments" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -932,7 +932,7 @@
                 <tbody>
                     @if ( isset($installments) && !empty($installments) )
                         @foreach ($installments as $ins)
-                          <tr>
+                          <tr data-installment-id="{{ $ins->id }}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{ ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($ins->subscription) ? ($ins->subscription->package_type ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد') : 'لا يوجد' }}</span></td>
@@ -1138,7 +1138,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab5"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-urgents" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1153,7 +1153,7 @@
                 <tbody>
                     @if ( isset($urgents) && !empty($urgents) )
                         @foreach ($urgents as $urgent)
-                          <tr>
+                          <tr data-urgent-id="{{ $urgent->id }}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{ ($urgent->code) ? $urgent->code : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($urgent->full_name) ? $urgent->full_name : 'لا يوجد' }}</span></td>
@@ -1381,7 +1381,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab6"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-courts" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1396,7 +1396,7 @@
                 <tbody>
                   @if ( isset($courts) && !empty($courts) )
                       @foreach ($courts as $court)
-                      <tr>
+                      <tr data-court-id="{{ $court->name }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td><span class="cellcontent">{{ ($court->city) ? $court->city->name : 'لا يوجد'  }}</span></td>
                         <td><span class="cellcontent">{{ ($court->city) ? (($court->city->governorate) ? $court->city->governorate->name : 'لا يوجد') : 'لا يوجد'  }}</span></td>
@@ -1612,7 +1612,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab7"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-tasks" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1625,7 +1625,7 @@
                 <tbody>
                   @if ( isset($tasks) && !empty($tasks) )
                       @foreach ($tasks as $task)
-                      <tr>
+                      <tr data-task-id="{{ $task->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td><span class="cellcontent">{{ ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ ($task->tasks) ? $task->tasks->count() : 0 }}</span></td>
@@ -1850,7 +1850,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab8"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-casetype" href="">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1865,7 +1865,7 @@
                 <tbody>
                   @if (isset($cases1) && !empty($cases1))
                     @foreach ($cases1 as $case)
-                    <tr data-case-id="{{ $case->id }}">
+                    <tr data-casetype-id="{{ $case->id }}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name  : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ $case->governorates ? $case->governorates->name : 'لا يوجد' }}</span></td>
@@ -2081,7 +2081,7 @@ $('.cases-btn').click(function(){
 
  $('.excel-btn-lawyers').click(function(){
   var is_report = 1;
-     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var filter='@if(\session('filter_lawyers_ids')){{json_encode(\session('filter_lawyers_ids'))}}@endif';
      var selectedIds = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-lawyer-id');
     }).get();
@@ -2098,7 +2098,6 @@ $('.cases-btn').click(function(){
 
  //companies
 
-  // Export table as Excel file
   $('.excel-btn-companies').click(function(){
         
      var is_report = 1;
@@ -2125,6 +2124,97 @@ $('.cases-btn').click(function(){
           });
 
         });
+
+//dont forget installments
+  //tasks urgent  \\ not the same emergencytasks_excel
+   $('.excel-btn-urgents').click(function(){
+     var is_report = 1;
+     var filter='@if(\session('filter_urgents_ids')){{json_encode(\session('filter_urgents_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-urgent-id');
+    }).get();
+     console.log(selectedIds);
+     $.ajax({
+       type:'GET',
+       url:'{{route('emergencytasks_excel')}}',
+       data:{ids:selectedIds,filters:filter,is_report:is_report},
+       success:function(response){
+
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+
+        location.href = response;
+      }
+    });
+   });
+
+   // courts  
+
+   $('.excel-btn-courts').click(function(){
+        
+     var is_report = 1;
+     var filter='@if(\session('filter_courts_ids')){{json_encode(\session('filter_courts_ids'))}}@endif';
+     var ids = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-court-id');
+    }).get();  
+     console.log(ids);
+          $.ajax(
+          {
+            url: "{{ route('courts_list_excel') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+                "filters":filter,
+                "is_report":is_report,
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
+        });
+
+   // tasks 
+   $('.excel-btn-tasks').click(function(){
+    var is_report = 1;
+     var filter='@if(\session('filter_tasks_ids')){{json_encode(\session('filter_tasks_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-task-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('services_excel2')}}',
+       data:{ids:selectedIds,filters:filter,is_report:is_report},
+       success:function(response){
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        location.href = response;
+      }
+    });
+   });
+
+   //issues types (cases1)
+    $('.excel-btn-casetype').click(function(){
+      var is_report = 1;
+       var filter='@if(\session('filter_cases1_ids')){{json_encode(\session('filter_cases1_ids'))}}@endif';
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-issue-id');
+          }).get();
+           console.log(selectedIds);
+          $.ajax({
+           type:'GET',
+           url:'{{url('issues_types_excel')}}',
+           data:{ids:selectedIds,filters:filter,is_report:is_report},
+           success:function(response){
+                  swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+     
+                    location.href = response;
+
+          }
+            });
+        });
+
+
 
 </script>
 
