@@ -666,7 +666,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab3"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-companies" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -682,7 +682,7 @@
                 <tbody>
                     
                   @foreach ($companies as $company)
-                    <tr>
+                    <tr data-company-id= "{{$company->id}}">
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                       <td><span class="cellcontent">{{ ($company->code) ? $company->code : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($company->full_name) ? $company->full_name : 'لا يوجد' }}</span></td>
@@ -2095,6 +2095,36 @@ $('.cases-btn').click(function(){
       }
     });
    });
+
+ //companies
+
+  // Export table as Excel file
+  $('.excel-btn-companies').click(function(){
+        
+     var is_report = 1;
+     var filter='@if(\session('filter_companies_ids')){{json_encode(\session('filter_companies_ids'))}}@endif';
+     var ids = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-company-id');
+    }).get();  
+          $.ajax(
+          {
+            url: "{{ route('clients.exportXLS') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "userType": 'Companies',
+                "userRule": 9,
+                "_method": 'GET',
+                "filter":filter,
+                "is_report":is_report,
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
+        });
 
 </script>
 

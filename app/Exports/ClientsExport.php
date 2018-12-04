@@ -15,9 +15,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 class ClientsExport implements FromCollection,WithEvents,ShouldAutoSize
 {
     use Exportable, RegistersEventListeners;
-    public function __construct($ids=null, $rule=8){
+    public function __construct($ids=null, $rule=8,$is_report=null){
       $this->ids=$ids;
       $this->rule = $rule;
+      $this->is_report=$is_report;
+
   }
 
 
@@ -36,8 +38,12 @@ class ClientsExport implements FromCollection,WithEvents,ShouldAutoSize
 
 public  function collection()
 {   
+    if(is_null($this->is_report)){
     $usersArray = array(['كود العميل', 'اسم العميل', 'البريد الالكتروني', 'عنوان العميل', 'هاتف', 'نوع الباقة', 'بداية التعاقد', 'نهاية التعاقد', 'حالة التفعيل']) ;
 
+    }else{
+$usersArray = array(['كودالشركة','اسم الشركة','نوع التعاقد','عدد العملاء','عدد القضايا']) ;
+      }
     if( $this->ids != NULL ){
         $users = Users::whereIn('id', $this->ids)->get();
     } else {
@@ -50,6 +56,7 @@ public  function collection()
             if($rule->id == 7 || $rule->id == 8 || $rule->id == 9 || $rule->id == 10 )
                 $role=$rule->name_ar;
         }
+        if(is_null($this->is_report)){
         array_push($usersArray,[$user->code,
                                 $user->full_name ? $user->full_name : 'غير معرف',
                                 $user->email ? $user->email : 'غير معرف',
@@ -60,8 +67,16 @@ public  function collection()
                                 $user->subscription ? ( $user->subscription->end_date   ? $user->subscription->end_date->format('d/m/Y') : '') : '',
                                 $user->is_active ? 'فعال' : 'غير فعال'
                             ]);
+                }else{
+               
+                array_push($usersArray,[$user->code,
+                           $user->full_name ? $user->full_name : 'غير معرف',
+                            $user->subscription ? Helper::localizations('package_types', 'name', $user->subscription->package_type_id) : 'غير معرف',
+                           $user->companyChildren->count(),
+                           $user->clients->count() ]);
+              }
     }
-
+    dd($usersArray);
     return collect($usersArray);
 }
 
