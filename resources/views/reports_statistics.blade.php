@@ -2115,7 +2115,7 @@ $('.cases-btn').click(function(){
                 "userType": 'Companies',
                 "userRule": 9,
                 "_method": 'GET',
-                "filter":filter,
+                "filters":filter,
                 "is_report":is_report,
             },
             success:function(response){

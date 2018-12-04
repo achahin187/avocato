@@ -122,6 +122,12 @@ class ClientsController extends Controller
 
             Excel::store(new ClientsExport($ids, $userRule,$is_report ),$filepath.$filename);
             return response()->json($PathForJson.$filename);
+        
+            } elseif ($_GET['filters'] != '') {
+                $filters = json_decode($_GET['filters']);
+                 Excel::store(new ClientsExport($filters, $userRule,$is_report ),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+
         } else{
             Excel::store((new ClientsExport(null, $userRule,$is_report)),$filepath.$filename);
             return response()->json($PathForJson.$filename); 
