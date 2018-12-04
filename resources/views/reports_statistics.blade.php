@@ -409,7 +409,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab2"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-lawyers" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -428,7 +428,7 @@
                 <tbody>
                   @if ( isset($lawyers) && !empty($lawyers) )
                     @foreach ($lawyers as $lawyer)
-                    <tr>
+                    <tr data-lawyer-id="{{ $lawyer->id }}"> 
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                       <td><span class="cellcontent">{{ ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
@@ -2054,7 +2054,7 @@ cbs[i].checked = bx.checked;
 <script>
 $('.cases-btn').click(function(){
     // alert('1');
-     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var filter='@if(\session('filter_cases_ids')){{json_encode(\session('filter_cases_ids'))}}@endif';
      var selectedIds = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-case-id');
     }).get();
@@ -2076,6 +2076,27 @@ $('.cases-btn').click(function(){
       }
     });
    });
+
+//lawyers
+
+ $('.excel-btn-lawyers').click(function(){
+  var is_report = 1;
+     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+     var selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-lawyer-id');
+    }).get();
+     $.ajax({
+       type:'GET',
+       url:'{{route('lawyers_excel')}}',
+       data:{ids:selectedIds,filters:filter,is_report:is_report},
+       success:function(response){
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        location.href = response;
+      }
+    });
+   });
+
 </script>
+
 
 @endsection

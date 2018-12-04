@@ -12,8 +12,9 @@ use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 class LawyersExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
-    public function __construct($ids=null){
+    public function __construct($ids=null,$is_report=null){
       $this->ids=$ids;
+      $this->is_report=$is_report;
   }
 
 
@@ -32,12 +33,19 @@ class LawyersExport implements FromCollection,WithEvents
 
 public  function collection()
 {   
-    $lawyersArray = array(['كود المحامي','الإسم','نوع العمل','الرقم القومى','التخصص','درجه القيد بالنقابه','عنوان','رقم الموبايل','تاريخ الإلتحاق','الجنسيه','تفعيل']) ;
+      if(is_null($this->is_report)){
+         $lawyersArray = array(['كود المحامي','الإسم','نوع العمل','الرقم القومى','التخصص','درجه القيد بالنقابه','عنوان','رقم الموبايل','تاريخ الإلتحاق','الجنسيه','تفعيل']) ;
+     }else{
+       
+       $lawyersArray = array(['الاسم','التخصص','درجة التقاضي','الجنسية','نوع العمل','الإختصاص المكاني','عدد المهام','عدد القضايا']) ;
+     }
+   
+
     if(is_null($this->ids)){
 
         $lawyers = Users::whereHas('rules', function($q){
         $q->where('rule_id',[5]);
-    })->get();
+    })->orderBy('full_name')->get();
     foreach($lawyers as $lawyer){
         if(isset($lawyer->user_detail))
         $lawyer['nationality'] = Helper::localizations('geo_countires','nationality',$lawyer->user_detail->nationality_id);
@@ -60,8 +68,19 @@ public  function collection()
         {
           $work_sector .= $spec->name.' - ';
         }
-
+        
+        if(is_null($this->is_report)){
         array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
+    }else{
+      
+       array_push($lawyersArray,[$lawyer->full_name,
+                  $lawyer->user_detail->litigation_level,
+                  $lawyer->user_detail->nationality_id,
+                  $lawyer->user_detail->work_sector_type,
+                  $lawyer->tasks->count(),
+                  $lawyer->cases->count()]);
+    }
+
     }  
 
     }
@@ -90,9 +109,21 @@ public  function collection()
             }
 
             $lawyer['nationality'] = Helper::localizations('geo_countires','nationality',$lawyer->user_detail->nationality_id);
+            if(is_null($this->is_report)){
             array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
+
+               }else{
+      
+       array_push($lawyersArray,[$lawyer->full_name,
+                  $lawyer->user_detail->litigation_level,
+                  $lawyer->user_detail->nationality_id,
+                  $lawyer->user_detail->work_sector_type,
+                  $lawyer->tasks->count(),
+                  $lawyer->cases->count()]);
+    }
         } 
     }
+    //dd($lawyersArray);
 
     return collect($lawyersArray);
 }

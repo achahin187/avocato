@@ -175,6 +175,20 @@ class ReportsStatisticsController extends Controller
             $data['cases'] = Case_::select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->where('country_id',session('country'))->groupBy('geo_governorate_id')->groupBy('geo_city_id')->get();
         }
 
+         //for export excel after filter 
+
+          foreach ($data['cases'] as $case) {
+             $filter_cases_ids[] = $case->geo_city_id;
+             }
+           if (!empty($filter_cases_ids)) {
+             Session::flash('filter_cases_ids', $filter_cases_ids);
+             } else {
+             $filter_cases_ids[] = 0;
+             Session::flash('filter_cases_ids', $filter_cases_ids);
+             }
+
+          //for export excel after filter 
+
         // Lawyers
         if ( isset ( $filters['sector'] ) || isset ( $filters['level'] ) || isset ( $filters['nationality'] ) || isset ( $filters['title'] ) || isset ( $filters['type'] )  ) {
             
@@ -208,7 +222,20 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
         }
-        
+        //for export excel after filter 
+
+          foreach ($data['lawyers'] as $lawyer) {
+             $filter_ids[] = $lawyer->id;
+             }
+           if (!empty($filter_ids)) {
+             Session::flash('filter_ids', $filter_ids);
+             } else {
+             $filter_ids[] = 0;
+             Session::flash('filter_ids', $filter_ids);
+             }
+
+          //for export excel after filter 
+   
         // Companies
         if ( isset( $filters['company'] ) ||isset( $filters['packages'] ) ||isset( $filters['activate'] ) ) { 
             $packages = $filters['packages'];
@@ -409,6 +436,10 @@ class ReportsStatisticsController extends Controller
            // $ids = explode(",", $request->ids);
           $ids =  $request->ids;
             Excel::store(new ReportsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+      } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new ReportsExport($filters),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else{
             Excel::store((new ReportsExport()),$filepath.$filename);

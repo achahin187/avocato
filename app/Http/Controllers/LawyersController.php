@@ -96,16 +96,21 @@ class LawyersController extends Controller
     $filepath = 'public/excel/';
     $PathForJson = 'storage/excel/';
     $filename = 'lawyers' . time() . '.xlsx';
+    if (isset($_GET['is_report'])) {
+        $is_report = 1;
+      }else{
+        $is_report = null; 
+      }
     if (isset($_GET['ids'])) {
       $ids = $_GET['ids'];
-      Excel::store(new LawyersExport($ids), $filepath . $filename);
+      Excel::store(new LawyersExport($ids,$is_report), $filepath . $filename);
       return response()->json($PathForJson . $filename);
     } elseif ($_GET['filters'] != '') {
       $filters = json_decode($_GET['filters']);
-      Excel::store((new LawyersExport($filters)), $filepath . $filename);
+      Excel::store((new LawyersExport($filters,$is_report)), $filepath . $filename);
       return response()->json($PathForJson . $filename);
     } else {
-      Excel::store((new LawyersExport()), $filepath . $filename);
+      Excel::store((new LawyersExport(null,$is_report)), $filepath . $filename);
       return response()->json($PathForJson . $filename);
     }
   }
