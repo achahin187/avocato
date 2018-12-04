@@ -261,6 +261,20 @@ class ReportsStatisticsController extends Controller
         } else {
             $data['companies'] = Users::users(9)->where('country_id',session('country'))->get();
         }
+
+        //for export excel after filter 
+
+          foreach ($data['companies'] as $company) {
+             $filter_companies_ids[] = $company->id;
+             }
+           if (!empty($filter_companies_ids)) {
+             Session::flash('filter_companies_ids', $filter_companies_ids);
+             } else {
+             $filter_companies_ids[] = 0;
+             Session::flash('filter_companies_ids', $filter_companies_ids);
+             }
+
+          //for export excel after filter 
         
         // Installments
         if ( isset( $filters['code'] ) || isset( $filters['startDate'] ) || isset( $filters['activate1'] ) ) {

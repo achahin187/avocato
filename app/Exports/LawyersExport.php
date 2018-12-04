@@ -114,16 +114,22 @@ public  function collection()
 
                }else{
       
-       array_push($lawyersArray,[$lawyer->full_name,
-                  $lawyer->user_detail->litigation_level,
-                  $lawyer->user_detail->nationality_id,
-                  $lawyer->user_detail->work_sector_type,
-                  $lawyer->tasks->count(),
-                  $lawyer->cases->count()]);
+
+     
+       array_push($lawyersArray,[ 
+                   ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد',
+                   ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد',
+                   ($lawyer->user_detail) ? ($lawyer->user_detail->litigation_level ? $lawyer->user_detail->litigation_level :'لا يوجد') : 'لا يوجد' ,
+                   ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد',
+                   ($lawyer->user_detail) ? $lawyer->user_detail->job_title : 'لا يوجد',
+                   ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 'لا يوجد',
+                   ($lawyer->tasks) ? $lawyer->tasks->count() : 0 ,
+                   ($lawyer->cases) ? $lawyer->cases->count() : 0 
+                      ]);
     }
         } 
     }
-    //dd($lawyersArray);
+   // dd($lawyersArray);
 
     return collect($lawyersArray);
 }
