@@ -35,7 +35,7 @@ class ComplainsController extends Controller
     })->get();
 
       // dd($complains);
-        return view('clients.complains.complains')->with('complains',$complains );
+        return view('clients.complains.complains')->with('complains',$complains);
     }
 
     /**
