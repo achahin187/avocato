@@ -2064,7 +2064,7 @@ $('.cases-btn').click(function(){
        url:'{{route('reports_cases_export')}}',
        data:{ids:selectedIds,filters:filter,type:0},
        success:function(response){
-        alert(2);
+       // alert(2);
         swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
         // var a = document.createElement("a");
         // a.href = response.file; 
