@@ -14,6 +14,11 @@ class Feedback extends Model
     
     // Relations
 
+     public function user()
+    {
+        return $this->belongsTo('App\Users','user_id');
+    }
+
     public function feedbackReplies() {
         return $this->hasMany('App\FeedbackReply', 'feedback_id');
     }

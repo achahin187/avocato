@@ -30,7 +30,12 @@ class ComplainsController extends Controller
      */
     public function index()
     {
-        return view('clients.complains.complains')->with('complains', Feedback::all());
+        $complains = Feedback::whereHas('user', function($query) {
+        $query->where('country_id' ,Auth::user()->country_id);
+    })->get();
+
+      // dd($complains);
+        return view('clients.complains.complains')->with('complains',$complains );
     }
 
     /**
