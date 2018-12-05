@@ -126,12 +126,11 @@
               <tr data-user="{{ $user->id }}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $user->id }}" /></span></td>
                 <td><span class="cellcontent">
-                 <!--  @if (isset($user->code))
+                  @if (isset($user->code))
                     {{ $user->code }}
                   @else
                     لا يوجد
-                  @endif -->
-                  {{ $user->country_id }}
+                  @endif
                 </span></td>
                 <td><span class="cellcontent">
                   @if(isset($user->name))
