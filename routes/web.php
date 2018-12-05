@@ -359,6 +359,7 @@ Route::get('/reports_cases_export', 'ReportsStatisticsController@cases_exportXLS
 Route::get('/reports_installments_export', 'ReportsStatisticsController@installments_exportXLS')->name('reports_installments_export');
 Route::get('/reports_urgents_export', 'ReportsStatisticsController@urgents_exportXLS')->name('reports_urgents_export');
 Route::get('/reports_tasks_export', 'ReportsStatisticsController@tasks_exportXLS')->name('reports_tasks_export');
+Route::get('/reports_casetype_export', 'ReportsStatisticsController@casetype_exportXLS')->name('reports_casetype_export');
 
 });
 

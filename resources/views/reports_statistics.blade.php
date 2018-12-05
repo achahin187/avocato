@@ -1850,7 +1850,7 @@
                 </div>
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filtertab8"><i class="fa fa-filter"></i>filters</a></div>
-              <div class="bottomActions__btns"><a class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-casetype" href="">استخراج اكسيل</a>
+              <div class="bottomActions__btns"><a class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white excel-btn-casetype" href="#">استخراج اكسيل</a>
               </div>
               <table class="table-1">
                 <thead>
@@ -1865,8 +1865,10 @@
                 <tbody>
                   @if (isset($cases1) && !empty($cases1))
                     @foreach ($cases1 as $case)
-                    <tr data-casetype-id="{{ $case->id }}">
-                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->id }}" /></span></td>
+                    <!-- <tr data-casetype-id="{{ $case->id }}"> -->
+                      <tr data-casetype-id="{{ $case->geo_governorate_id }}">
+                      
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $case->geo_governorate_id }}" /></span></td>
                         <td><span class="cellcontent">{{ ($case->case_types) ? $case->case_types->name  : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ $case->governorates ? $case->governorates->name : 'لا يوجد' }}</span></td>
                         <td><span class="cellcontent">{{ $case->cities ? $case->cities->name : 'لا يوجد' }}</span></td>
@@ -2215,16 +2217,16 @@ $('.cases-btn').click(function(){
 
    //issues types (cases1)
     $('.excel-btn-casetype').click(function(){
-      var is_report = 1;
+    
        var filter='@if(\session('filter_cases1_ids')){{json_encode(\session('filter_cases1_ids'))}}@endif';
           var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-issue-id');
+            return $(this).closest('tr').attr('data-casetype-id');
           }).get();
-           console.log(selectedIds);
+           console.log(filter);
           $.ajax({
            type:'GET',
-           url:'{{url('issues_types_excel')}}',
-           data:{ids:selectedIds,filters:filter,is_report:is_report},
+           url:'{{url('reports_casetype_export')}}',
+           data:{ids:selectedIds,filters:filter},
            success:function(response){
                   swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
      

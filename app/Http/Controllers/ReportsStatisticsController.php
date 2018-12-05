@@ -23,7 +23,7 @@ use App\Exports\ReportsExport;
 use App\Exports\InstallmentsExport;
 use App\Exports\UrgentsExport;
 use App\Exports\TasksExport;
-
+use App\Exports\ReportsCasetypeExport;
 use Illuminate\Http\Request;
 
 class ReportsStatisticsController extends Controller
@@ -393,7 +393,19 @@ class ReportsStatisticsController extends Controller
             $data['cases1'] = Case_::select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id')->get();
         }
          //for export excel after filter 
-          $this->set_filterIDs_session( $data['cases1'] , 'cases1' );
+         // $this->set_filterIDs_session( $data['cases1'] , 'cases1' );
+
+        //for export excel after filter 
+
+          foreach ($data['cases1'] as $case) {
+             $filter_cases1_ids[] = $case->geo_governorate_id;
+             }
+           if (!empty($filter_cases1_ids)) {
+             Session::flash('filter_cases1_ids', $filter_cases1_ids);
+             } else {
+             $filter_cases1_ids[] = 0;
+             Session::flash('filter_cases1_ids', $filter_cases1_ids);
+             }
         
         return $data;
     }
@@ -529,6 +541,28 @@ class ReportsStatisticsController extends Controller
             return response()->json($PathForJson.$filename);
         } else{
             Excel::store((new TasksExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
+    }
+
+     public function casetype_exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'casetype'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+           // $ids = explode(",", $request->ids);
+          $ids =  $request->ids;
+            Excel::store(new ReportsCasetypeExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+      } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new ReportsCasetypeExport($filters),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new ReportsCasetypeExport()),$filepath.$filename);
             return response()->json($PathForJson.$filename); 
         }
 
