@@ -21,7 +21,7 @@ use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 
 
-class UrgentsExport implements FromCollection,WithEvents
+class TasksExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
 	public function __construct($ids=null,$type=null){
@@ -45,21 +45,19 @@ class UrgentsExport implements FromCollection,WithEvents
     
     public  function collection()
     {   
-       $casesArray = array(['كودالعميل','اسم العميل','نوع العميل','عدد حالات الطوارئ']) ;
+       $casesArray = array(['نوع المهمة','عددالمهام']) ;
        // dd($this->ids);
         if(is_null($this->ids)){
 
-        $urgents = Helper::getUrgents([7, 8, 9, 10]);
+        $tasks = Task_Types::all();
        // dd($installments);
-        foreach($urgents as $urgent)
+        foreach($tasks as $task)
         {
             // dd($case->governorates->name);
             array_push($casesArray,[
             
-          ($urgent->code) ? $urgent->code : 'لا يوجد',
-          ($urgent->full_name) ? $urgent->full_name : 'لا يوجد',
-          ($urgent->rules) ? $urgent->rules->last()->name_ar : 'لا يوجد',
-          ($urgent->tasks) ? Helper::countTasks($urgent->id, [1]) : 'لا يوجد'
+        ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد',
+        ($task->tasks) ? $task->tasks->count() : 0
             ]);
         }
 
@@ -68,18 +66,19 @@ class UrgentsExport implements FromCollection,WithEvents
 
         $selects = $this->ids;
        
+      
+       // dd($installments);
         foreach($selects as $select)
         {
-              $urgent = Users::find($select);
-           // dd($case->governorates->name);
+              $task = Task_Types::find($select);
+              //dd($select);
             array_push($casesArray,[
             
-          ($urgent->code) ? $urgent->code : 'لا يوجد',
-          ($urgent->full_name) ? $urgent->full_name : 'لا يوجد',
-          ($urgent->rules) ? $urgent->rules->last()->name_ar : 'لا يوجد',
-          ($urgent->tasks) ? Helper::countTasks($urgent->id, [1]) : 'لا يوجد'
+        ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد',
+        ($task->tasks) ? $task->tasks->count() : 0
             ]);
         }
+
         }
        // dd($casesArray);
         return collect($casesArray);

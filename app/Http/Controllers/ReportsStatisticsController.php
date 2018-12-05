@@ -513,6 +513,29 @@ class ReportsStatisticsController extends Controller
         return response()->json($response);
     }
 
+     public function tasks_exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Tasks'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+           // $ids = explode(",", $request->ids);
+          $ids =  $request->ids;
+            Excel::store(new TasksExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+      } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new TasksExport($filters),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new TasksExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
+    }
+
+
 
 public function set_filterIDs_session( $section_data , $section_name ) {
     foreach ($section_data as $data) {

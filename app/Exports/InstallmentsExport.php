@@ -37,7 +37,7 @@ class InstallmentsExport implements FromCollection,WithEvents
         return [
             AfterSheet::class    => function(AfterSheet $event) {
 
-                $event->sheet->Bolding('A1:B1');
+                $event->sheet->Bolding('A1:K1');
                 $event->sheet->Right();
             }
         ];
