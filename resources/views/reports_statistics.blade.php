@@ -2125,7 +2125,26 @@ $('.cases-btn').click(function(){
 
         });
 
-//dont forget installments
+//installments
+
+ $('.excel-btn-installments').click(function(){
+  var is_report = 1;
+     var installments_filter='@if(\session('filter_installments_ids')){{json_encode(\session('filter_installments_ids'))}}@endif';
+     var Installments_selectedIds = $("input:checkbox:checked").map(function(){
+      return $(this).closest('tr').attr('data-installment-id');
+    }).get();
+     console.log(installments_filter);
+     $.ajax({
+       type:'GET',
+       url:'{{route('reports_installments_export')}}', //will be changed
+       data:{ids:Installments_selectedIds,filters:installments_filter,is_report:is_report},
+       success:function(response){
+        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+        location.href = response;
+      }
+    });
+   });
+
   //tasks urgent  \\ not the same emergencytasks_excel
    $('.excel-btn-urgents').click(function(){
      var is_report = 1;

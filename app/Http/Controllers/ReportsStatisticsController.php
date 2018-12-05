@@ -20,6 +20,7 @@ use App\Geo_Countries;
 use App\Package_Types;
 use App\User_Details;
 use App\Exports\ReportsExport;
+use App\Exports\InstallmentsExport;
 
 use Illuminate\Http\Request;
 
@@ -369,7 +370,7 @@ class ReportsStatisticsController extends Controller
           $this->set_filterIDs_session( $data['tasks'] , 'tasks' );
 
         // Case type
-          
+
         if ( isset( $filters['cities1'] ) ||isset( $filters['govs1'] ) || isset( $filters['caseType'] ) ) {
 
             // dd([$filters['cities1'], $filters['govs1'], $filters['caseType']]);
@@ -463,6 +464,30 @@ class ReportsStatisticsController extends Controller
 
         return response()->json($response);
     }
+
+
+        public function installments_exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Installments'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+           // $ids = explode(",", $request->ids);
+          $ids =  $request->ids;
+            Excel::store(new InstallmentsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+      } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new InstallmentsExport($filters),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new InstallmentsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
+    }
+
 
 public function set_filterIDs_session( $section_data , $section_name ) {
     foreach ($section_data as $data) {

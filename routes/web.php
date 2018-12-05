@@ -355,6 +355,8 @@ Route::middleware(['roles:1'])->group(function () {
 Route::get('/reports_statistics', 'ReportsStatisticsController@index')->name('reports_statistics');
 Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')->name('report.filter');
 Route::get('/reports_cases_export', 'ReportsStatisticsController@cases_exportXLS')->name('reports_cases_export');
+
+Route::get('/reports_installments_export', 'ReportsStatisticsController@installments_exportXLS')->name('reports_installments_export');
 });
 
 
