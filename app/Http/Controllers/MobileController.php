@@ -28,11 +28,12 @@ class MobileController extends Controller
      */
     public function index()
     {
-        if(session('country') == null)
-        {
-            return redirect()->route('choose.country');
-        }
-        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id',session('country'))->get());
+        // if(session('country') == null)
+        // {
+        //     return redirect()->route('choose.country');
+        // }
+       
+        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id', Auth::user()->country_id)->get());
     }
 
     // Filter mobile users
