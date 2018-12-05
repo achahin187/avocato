@@ -231,7 +231,7 @@ class ReportsStatisticsController extends Controller
         // Companies
         if ( isset( $filters['company'] ) ||isset( $filters['packages'] ) ||isset( $filters['activate'] ) ) { 
             $packages = $filters['packages'];
-            $data['companies'] = Users::users(9);
+            $data['companies'] = Users::users(9)->where('country_id',Auth::user()->country_id);
 
             if ( isset( $filters['company'] ) ) {
                 $data['companies'] = $data['companies']->where('users.id', $filters['company']);
@@ -287,6 +287,11 @@ class ReportsStatisticsController extends Controller
 
         } else {
             $data['installments'] = Installment::all();
+    //         Installment::whereHas('subscription', function($query) {
+    //     $query->whereHas('user', function($query2) {
+    //           $query2->where('country_id' ,Auth::user()->country_id);
+    // })->get();
+    // })->get();
         }
 
         //for export excel after filter 

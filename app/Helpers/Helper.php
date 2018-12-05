@@ -10,6 +10,8 @@ use App\Log;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Entity_Localizations;
+use Auth;
+
 
 
 class Helper {
@@ -144,7 +146,7 @@ class Helper {
     public static function getUsersBasedOnRules($userRulesArray) {
         return Users::whereHas('rules', function($query) use($userRulesArray) {
             $query->whereIn('rule_id', $userRulesArray);
-        })->get();
+        })->where('country_id',Auth::user()->country_id)->get();
     }
 
 
@@ -215,7 +217,7 @@ class Helper {
             $query->whereIn('rule_id', $userRulesArray);
             })->whereHas('tasks', function($m) {
                 $m->where('task_type_id', 1);
-        })->get();
+        })->where('country_id',Auth::user()->country_id)->get();
     }
 
     public static function mail($email ,$body ){
