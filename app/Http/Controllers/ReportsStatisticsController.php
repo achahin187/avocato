@@ -328,13 +328,13 @@ class ReportsStatisticsController extends Controller
                 $data['courts'] = $data['courts']->whereIn('id', $filters['courts']);
             }
 
-            $data['courts'] = $data['courts']->get();
+            $data['courts'] = $data['courts']->where('country_id',Auth::user()->country_id)->get();
         } else {
-            $data['courts'] = Courts::select('city_id', 'name', \DB::raw('count(*) as total') )->groupBy('city_id')->groupBy('name')->get();
+            $data['courts'] = Courts::select('city_id', 'name', \DB::raw('count(*) as total') )->groupBy('city_id')->groupBy('name')->where('country_id',Auth::user()->country_id)->get();
         }
 
         //for export excel after filter 
-      
+          $filter_courts_ids[] ='';
           foreach ($data['courts'] as $court) {
              $filter_courts_ids[] = $court->name;
              }

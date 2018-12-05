@@ -64,5 +64,9 @@ class Tasks extends Model
     {
         return $this->hasMany('App\Task_Status_History','task_id');
     }
+
+     public function created_by() {
+            return $this->belongsTo('App\Users', 'created_by');
+    }
 }
 
