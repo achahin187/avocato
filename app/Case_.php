@@ -70,4 +70,8 @@ class Case_ extends Model
         return $this->belongsToMany('App\Users','case_clients','case_id','client_id')->withPivot('case_client_role_id', 'attorney_number'); 
     } 
 
+      public function created_by() {
+            return $this->belongsTo('App\Users', 'created_by');
+    }
+
     }

@@ -393,9 +393,13 @@ class ReportsStatisticsController extends Controller
                 $data['cases1'] = $data['cases1']->whereIn('case_type_id', $filters['caseType'])->select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id');
             }
 
-            $data['cases1'] = $data['cases1']->get();
+            $data['cases1'] = $data['cases1']->whereHas('created_by', function($query) {
+        $query->where('country_id' ,Auth::user()->country_id);
+    })->get();
         } else {
-            $data['cases1'] = Case_::select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id')->get();
+            $data['cases1'] = Case_::select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id')->whereHas('created_by', function($query) {
+        $query->where('country_id' ,Auth::user()->country_id);
+    })->get();
         }
          //for export excel after filter 
          // $this->set_filterIDs_session( $data['cases1'] , 'cases1' );
