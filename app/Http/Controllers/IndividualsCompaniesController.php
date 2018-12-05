@@ -42,7 +42,7 @@ class IndividualsCompaniesController extends Controller
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
         $companies     = Users::users(9)->get();
-        return view('clients.individuals_companies.individuals_companies', compact(['packages', 'subscriptions', 'nationalities', 'companies']))->with('ind_coms', Users::users(10)->get());
+        return view('clients.individuals_companies.individuals_companies', compact(['packages', 'subscriptions', 'nationalities', 'companies']))->with('ind_coms', Users::users(10)->where('country_id',Auth::user()->country_id)->get());
     }
 
     /**

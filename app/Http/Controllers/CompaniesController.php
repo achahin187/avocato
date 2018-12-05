@@ -37,7 +37,7 @@ class CompaniesController extends Controller
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
 
-        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('companies', Users::users(9)->get());
+        return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('companies', Users::users(9)->where('country_id',Auth::user()->country_id)->get());
     }
 
     /**
