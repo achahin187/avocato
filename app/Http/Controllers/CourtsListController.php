@@ -62,6 +62,11 @@ class CourtsListController extends Controller
 
             Excel::store(new CourtsExport($ids,$is_report),$filepath.$filename);
             return response()->json($PathForJson.$filename);
+            // } elseif ($_GET['filters'] != '') {
+        } elseif (isset($_GET['ids'])) {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new CourtsExport($filters,$is_report),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
         } else { 
         Excel::store((new CourtsExport(null,$is_report)),$filepath.$filename);
         return response()->json($PathForJson.$filename); 

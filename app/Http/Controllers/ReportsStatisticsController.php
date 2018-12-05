@@ -326,7 +326,16 @@ class ReportsStatisticsController extends Controller
         }
 
         //for export excel after filter 
-          $this->set_filterIDs_session( $data['courts'] , 'courts' );
+      
+          foreach ($data['courts'] as $court) {
+             $filter_courts_ids[] = $court->name;
+             }
+           if (!empty($filter_courts_ids)) {
+             Session::flash('filter_courts_ids', $filter_courts_ids);
+             } else {
+             $filter_court_ids[] = 0;
+             Session::flash('filter_courts_ids', $filter_courts_ids);
+             }
 
 
         // Tasks
@@ -358,7 +367,9 @@ class ReportsStatisticsController extends Controller
         }
          //for export excel after filter 
           $this->set_filterIDs_session( $data['tasks'] , 'tasks' );
+
         // Case type
+          
         if ( isset( $filters['cities1'] ) ||isset( $filters['govs1'] ) || isset( $filters['caseType'] ) ) {
 
             // dd([$filters['cities1'], $filters['govs1'], $filters['caseType']]);

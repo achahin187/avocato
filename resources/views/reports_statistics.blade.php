@@ -2152,7 +2152,7 @@ $('.cases-btn').click(function(){
    $('.excel-btn-courts').click(function(){
         
      var is_report = 1;
-     var filter='@if(\session('filter_courts_ids')){{json_encode(\session('filter_courts_ids'))}}@endif';
+  //   var filter='@if(\session('filter_courts_ids')){{json_encode(\session('filter_courts_ids'))}}@endif';
      var ids = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-court-id');
     }).get();  
@@ -2164,7 +2164,7 @@ $('.cases-btn').click(function(){
             data: {
                 "ids": ids,
                 "_method": 'GET',
-                "filters":filter,
+                "filters":ids,  //temporary untill fixing log uri
                 "is_report":is_report,
             },
             success:function(response){
