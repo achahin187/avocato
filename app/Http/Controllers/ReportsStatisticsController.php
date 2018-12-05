@@ -21,6 +21,8 @@ use App\Package_Types;
 use App\User_Details;
 use App\Exports\ReportsExport;
 use App\Exports\InstallmentsExport;
+use App\Exports\UrgentsExport;
+use App\Exports\TasksExport;
 
 use Illuminate\Http\Request;
 
@@ -482,6 +484,29 @@ class ReportsStatisticsController extends Controller
             return response()->json($PathForJson.$filename);
         } else{
             Excel::store((new InstallmentsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
+
+        return response()->json($response);
+    }
+
+
+     public function urgents_exportXLS( Request $request ) {
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'Urgents'.time().'.xlsx';
+
+        if( isset( $request->ids ) && $request->ids != NULL ){
+           // $ids = explode(",", $request->ids);
+          $ids =  $request->ids;
+            Excel::store(new UrgentsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+      } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+       Excel::store(new UrgentsExport($filters),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        } else{
+            Excel::store((new UrgentsExport()),$filepath.$filename);
             return response()->json($PathForJson.$filename); 
         }
 

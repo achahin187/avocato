@@ -357,6 +357,8 @@ Route::post('/reports_statistics/filter', 'ReportsStatisticsController@filter')-
 Route::get('/reports_cases_export', 'ReportsStatisticsController@cases_exportXLS')->name('reports_cases_export');
 
 Route::get('/reports_installments_export', 'ReportsStatisticsController@installments_exportXLS')->name('reports_installments_export');
+Route::get('/reports_urgents_export', 'ReportsStatisticsController@urgents_exportXLS')->name('reports_urgents_export');
+
 });
 
 

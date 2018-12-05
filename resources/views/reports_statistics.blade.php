@@ -2145,9 +2145,9 @@ $('.cases-btn').click(function(){
     });
    });
 
-  //tasks urgent  \\ not the same emergencytasks_excel
+  //tasks urgent 
    $('.excel-btn-urgents').click(function(){
-     var is_report = 1;
+   
      var filter='@if(\session('filter_urgents_ids')){{json_encode(\session('filter_urgents_ids'))}}@endif';
      var selectedIds = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-urgent-id');
@@ -2155,8 +2155,8 @@ $('.cases-btn').click(function(){
      console.log(selectedIds);
      $.ajax({
        type:'GET',
-       url:'{{route('emergencytasks_excel')}}',
-       data:{ids:selectedIds,filters:filter,is_report:is_report},
+       url:'{{route('reports_urgents_export')}}',
+       data:{ids:selectedIds,filters:filter},
        success:function(response){
 
         swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
