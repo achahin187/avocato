@@ -66,6 +66,7 @@ class CourtsExport implements FromCollection,WithEvents
                 
                 array_push($courtsArray,[$court->id,$court->name,$court->city->name,$court->city->governorate->name]);
                  }else{
+                    if($select!='' ){
                     $court = Courts::select('city_id', 'name', \DB::raw('count(*) as total') )->where('name',$select)->groupBy('city_id')->groupBy('name')->first();
                array_push($courtsArray,[
 
@@ -76,10 +77,11 @@ class CourtsExport implements FromCollection,WithEvents
                  
 
                  ]);
-            }    
+            }   
+            } 
         }
     }
-        //dd($courtsArray);
+       // dd($courtsArray);
         return collect($courtsArray);
     }
 

@@ -2173,20 +2173,23 @@ $('.cases-btn').click(function(){
    $('.excel-btn-courts').click(function(){
         
      var is_report = 1;
-  //   var filter='@if(\session('filter_courts_ids')){{json_encode(\session('filter_courts_ids'))}}@endif';
+    var filter='@if(\session('filter_courts_ids')){{json_encode(\session('filter_courts_ids'))}}@endif';
+       filter= JSON.parse(filter.replace(/&quot;/g,'"'));
      var ids = $("input:checkbox:checked").map(function(){
       return $(this).closest('tr').attr('data-court-id');
     }).get();  
-     console.log(ids);
+     var _token = '{{csrf_token()}}';
+     console.log(filter);
           $.ajax(
           {
             url: "{{ route('courts_list_excel') }}",
-            type: 'GET',
+            type: 'POST',
             data: {
                 "ids": ids,
-                "_method": 'GET',
-                "filters":ids,  //temporary untill fixing log uri
+                "_method": 'POST',
+                "filters":filter,  //temporary untill fixing log uri
                 "is_report":is_report,
+                "_token":_token
             },
             success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");

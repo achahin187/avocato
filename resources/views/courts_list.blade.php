@@ -114,13 +114,16 @@ true).find("option[value]").remove();
           }
           
           var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+           var _token = '{{csrf_token()}}';
+
           $.ajax(
           {
             url: "{{ route('courts_list_excel') }}",
-            type: 'GET',
+            type: 'POST',
             data: {
                 "ids": ids,
-                "_method": 'GET',
+                "_method": 'POST',
+                  "_token":_token
             },
             success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");

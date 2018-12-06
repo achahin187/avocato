@@ -49,22 +49,25 @@ class CourtsListController extends Controller
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
         $filename = 'courts'.time().'.xlsx';
-         if (isset($_GET['is_report'])) {
+         if (isset($_POST['is_report'])) {
         $is_report = 1;
       }else{
         $is_report = null; 
       }
         
-        if(isset($_GET['ids'])){
-              if (isset($_GET['is_report'])) {$ids = $_GET['ids'];
-                }else{$ids = explode(",", $_GET['ids']);}
+        if(isset($_POST['ids'])){
+              if (isset($_POST['is_report'])) {$ids = $_POST['ids'];
+                }else{$ids = explode(",", $_POST['ids']);}
            // $ids = explode(",", $request->ids);
 
             Excel::store(new CourtsExport($ids,$is_report),$filepath.$filename);
             return response()->json($PathForJson.$filename);
-            // } elseif ($_GET['filters'] != '') {
-        } elseif (isset($_GET['ids'])) {
-      $filters = json_decode($_GET['filters']);
+        } elseif ($_POST['filters'] != '') {
+        // } elseif (isset($_POST['ids'])) {
+      if ($is_report==null) {
+      $filters = json_decode($_POST['filters']);
+        }else{$filters = $_POST['filters'];}
+     // dd( $filters );
        Excel::store(new CourtsExport($filters,$is_report),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else { 
