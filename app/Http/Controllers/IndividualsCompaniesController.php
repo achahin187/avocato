@@ -121,7 +121,7 @@ class IndividualsCompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = preg_replace('0', '+', $request->mobile, 1);
+            $user->mobile    = preg_replace("/0/", "+", $request->mobile, 1);
             $user->address   = $request->address;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;

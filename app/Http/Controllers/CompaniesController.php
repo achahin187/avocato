@@ -68,6 +68,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(preg_replace("/0/", "+", $request->mobile, 1));
         // Validate data
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -115,7 +116,7 @@ class CompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = preg_replace('0', '+', $request->mobile, 1);
+            $user->mobile    = preg_replace("/0/", "+", $request->mobile, 1);
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->country_id=session('country');
