@@ -121,7 +121,7 @@ class IndividualsCompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = $request->mobile;
+            $user->mobile    = preg_replace('0', '+', $request->mobile, 1);
             $user->address   = $request->address;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
@@ -254,7 +254,7 @@ class IndividualsCompaniesController extends Controller
 
         // redirect with success
         $vodafone = new VodafoneSMS;
-        $status =$vodafone::send($request->mobile,$user->code , $request->password);
+        $status =$vodafone::send($user->mobile,$user->code , $request->password);
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/individuals_companies');
     }

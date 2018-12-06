@@ -21,6 +21,7 @@ use App\Installment;
 use App\Case_Client;
 use App\Tasks;
 use App\Procurations;
+use App\Helpers\VodafoneSMS;
 
 use Illuminate\Http\Request;
 
@@ -114,7 +115,7 @@ class CompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = $request->mobile;
+            $user->mobile    = preg_replace('0', '+', $request->mobile, 1);
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->country_id=session('country');
@@ -265,6 +266,8 @@ class CompaniesController extends Controller
         }
 
         // redirect with success
+        $vodafone = new VodafoneSMS;
+        $status =$vodafone::send($user->mobile,$user->code , $request->password);
         Session::flash('success', 'تم إضافة العميل بنجاح');
         return redirect('/companies');
     }

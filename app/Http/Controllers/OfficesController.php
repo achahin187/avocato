@@ -665,7 +665,7 @@ public function branch_edit(Request $request)
      $branch->country_id = $request->branch_country_edit;
      $branch->city_id = $request->branch_city_edit;
      $branch->save();    
-    return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرعجديد بنجاح');
+    return redirect()->route('offices_show',  $request->office_id)->with('success', 'تم إضافه  فرع جديد بنجاح');
 
 }
 

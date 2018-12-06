@@ -204,7 +204,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_mob">رقم الهاتف الجوال</label>
-            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder="رقم الهاتف الجوال" id="client_mob">             
+            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder=" 0201000000000 or 0966000000000" id="client_mob">             
             {{--  Error  --}}             
             @if ($errors->has('mobile'))               
               <span class="master_message color--fadegreen">{{ $errors->first('mobile') }}</span>             
