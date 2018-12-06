@@ -77,7 +77,7 @@ class CompaniesController extends Controller
             'legal_representative_name' => 'required',
             'address'   => 'required',
             'phone' => 'required',
-            'mobile'    => 'required',
+            'mobile'    => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
             'email' => 'required|email',
             'work_sector' =>'required',
             'legal_representative_mobile' => 'required',

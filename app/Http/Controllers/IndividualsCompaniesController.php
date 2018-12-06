@@ -82,7 +82,7 @@ class IndividualsCompaniesController extends Controller
             'nationality'   => 'required',
             'birthday'      => 'required',
             'phone'         => 'required',
-            'mobile'        => 'required',
+            'mobile'        => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
             'email'         => 'required',
             'discount_percentage' => 'required',
             'activate'      => 'required',

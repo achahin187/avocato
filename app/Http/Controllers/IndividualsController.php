@@ -79,7 +79,7 @@ class IndividualsController extends Controller
             'national_id' => 'required',
             'birthday' => 'required',
             'nationality' => 'required',
-            'mobile' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+            'mobile' => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
             'email' => 'email',
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
