@@ -130,7 +130,7 @@ class IndividualsCompaniesController extends Controller
             $user->save();
         } catch(Exception $ex) {
             $user->forcedelete();
-            Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
+            Session::flash('warning', $ex);
             return redirect()->back()->withInput();
         }
 
