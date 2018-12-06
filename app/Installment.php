@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Auth;
 class Installment extends Model
 {
     use SoftDeletes;
@@ -13,6 +13,8 @@ class Installment extends Model
 
 
 	public function subscription() {
-		return $this->belongsTo('App\Subscriptions', 'subscription_id');
+		return $this->belongsTo('App\Subscriptions', 'subscription_id')->whereHas('user', function($query) {
+        $query->where('country_id' ,Auth::user()->country_id);
+    });
 	}
 }

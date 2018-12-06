@@ -263,7 +263,8 @@ class ReportsStatisticsController extends Controller
             $data['installments'] = new Installment;
 
             if ( isset($filters['code']) ) {
-                $data['installments'] = $data['installments']->where('subscription_id', $filters['code']);
+                $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
+            })->where('subscription_id', $filters['code']);
             }
 
             if ( isset($filters['startDate']) ) {
@@ -275,23 +276,23 @@ class ReportsStatisticsController extends Controller
 
             if ( isset($filters['activate1']) ) {
                 if($filters['activate1'] == 1) { 
-                    $data['installments'] = $data['installments']->get();
+                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
+            })->get();
                 }
                 if($filters['activate1'] == 2) {
-                    $data['installments'] = $data['installments']->where('is_paid', 1)->get();
+                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
+            })->where('is_paid', 1)->get();
                 }
                 if($filters['activate1'] == 3) {
-                    $data['installments'] = $data['installments']->where('is_paid', 0)->get();
+                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
+            })->where('is_paid', 0)->get();
                 }
             }
 
         } else {
-            $data['installments'] = Installment::all();
-    //         Installment::whereHas('subscription', function($query) {
-    //     $query->whereHas('user', function($query2) {
-    //           $query2->where('country_id' ,Auth::user()->country_id);
-    // })->get();
-    // })->get();
+            $data['installments'] = //Installment::all();
+            Installment::whereHas('subscription', function($query) {
+            })->get();
         }
 
         //for export excel after filter 
@@ -369,9 +370,12 @@ class ReportsStatisticsController extends Controller
                 });
             }
 
-            $data['tasks'] = $data['tasks']->get();
+            $data['tasks'] = $data['tasks']->whereHas('tasks', function($q){
+                })->get();
         } else {
-            $data['tasks'] = Task_Types::all();
+            $data['tasks'] = //Task_Types::all();
+            Task_Types::whereHas('tasks', function($q){
+                })->get();
         }
          //for export excel after filter 
           $this->set_filterIDs_session( $data['tasks'] , 'tasks' );
