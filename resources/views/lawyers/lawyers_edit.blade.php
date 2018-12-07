@@ -196,20 +196,10 @@
                       </div>
 
                       {{-- </div> --}}
-{{--                       <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
-                          <input value="{{$lawyer->user_detail->work_sector_type}}" name="work_sector_type" class="master_input" type="text" placeholder="الإختصاص المكاني" id="lawyer_spec"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('work_sector_type'))
-                                    {{ $errors->first('work_sector_type')}}
-                                    @endif </span>
-                        </div>
-                      </div> --}}
-
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
-                         <select name="work_sector_area" class="master_input select2" id="currency">
+                        <label class="master_label mandatory" for="lawyer_spec">الإختصاص المكاني </label>
+                        <select name="work_sector_area" class="master_input select2">
                           <option value="choose" selected disabled>اختر التخصص المكانى</option>
                           @foreach($work_sector_areas as $area)
                           <option 
@@ -218,7 +208,7 @@
                           @endif
                            value="{{$area->id}}">{{$area->name}}</option>
                           @endforeach
-                          </select><span class="master_message color--fadegreen">                                        
+                        </select><span class="master_message color--fadegreen">                                        
                                   @if ($errors->has('work_sector_area'))
                                     {{ $errors->first('work_sector_area')}}
                                     @endif</span>
@@ -291,17 +281,17 @@
                           <label class="master_label mandatory" for="currency">العملة</label>
                           <select name="currency_id" class="master_input" id="currency">
                             @foreach($currencies as $currency)
-                            <option @if($currency->id == session('country'))'selected'@endif value="{{$currency->id}}">{{$currency->currency}}</option>
+                            <option @if($currency->id == $lawyer->user_detail->currency_id) 'selected' @endif value="{{$currency->id}}">{{$currency->currency}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('currency_id'))
+                          </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('currency_id'))
                                     {{ $errors->first('currency_id')}}
-                                    @endif</span>
+                            @endif
+                          </span>
                         </div>
                       </div>
-
                       <div class="clearfix"></div>
-
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label">مدرج بجدول محكمي وزارة العدل؟</label>
