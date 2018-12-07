@@ -281,7 +281,7 @@
                           <label class="master_label mandatory" for="currency">العملة</label>
                           <select name="currency_id" class="master_input" id="currency">
                             @foreach($currencies as $currency)
-                            <option @if($currency->id == $lawyer->user_detail->currency_id) 'selected' @endif value="{{$currency->id}}">{{$currency->currency}}</option>
+                            <option @if($currency->id == $lawyer->user_detail->currency_id) selected @endif value="{{$currency->id}}">{{$currency->currency}}</option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
