@@ -74,9 +74,9 @@ class CasesController extends Controller
         }
         $cases_types = Cases_Types::all();
         $courts = Courts::where('country_id',session('country'))->get();
-        $governorates = Geo_Governorates::all();
+        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
         $countries = Geo_Countries::all();
-        $cities = Geo_Cities::all();
+        $cities = Geo_Cities::where('country_id',session('country'))->get();
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
