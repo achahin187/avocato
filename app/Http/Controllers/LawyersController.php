@@ -470,14 +470,14 @@ class LawyersController extends Controller
 
 
     $lawyer = Users::find($id);
-    $lawyer->name = $request->lawyer_name . $lawyer->id;
+    $lawyer->name = $request->lawyer_name;
     $lawyer->full_name = $request->lawyer_name;
     $lawyer->address = $request->address;
     $lawyer->phone = $request->phone;
     $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
     $lawyer->note = $request->note;
-    $lawyer->country_id=session('country');
+    $lawyer->country_id = session('country');
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     if ($request->hasFile('image')) {
