@@ -131,6 +131,7 @@ class ComplainsController extends Controller
                 "item_id"=>$id,
                 "user_id"=>$feedback->user_id,
                 "notification_type_id"=>9,
+                'is_push'=>$notification_type->is_push,
                 "is_read"=>0,
                 "is_sent"=>0,
                 "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
