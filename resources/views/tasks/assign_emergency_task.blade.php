@@ -10,7 +10,7 @@
                         <div class="text-xs-center">
                           <div class="text-wraper">
                             <h4 class="cover-inside-title color--gray_d">المهام <i class="fa fa-chevron-circle-right"></i>
-                              <h4 class="cover-inside-title color--gray_d">المهام العادية </h4>
+                              <h4 class="cover-inside-title color--gray_d">المهام الطارئه </h4>
                             </h4>
                           </div>
                         </div>
