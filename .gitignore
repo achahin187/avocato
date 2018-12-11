@@ -20,3 +20,4 @@ yarn-error.log
 /public/users_images
 /public/logos
 composer.lock
+avocatoa_test.sql

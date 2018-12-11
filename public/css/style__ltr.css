@@ -15150,6 +15150,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 }
 
 .select2-container--default.select2-container--disabled .select2-selection--single {
+
   background-color: #eee;
   cursor: default;
 }
@@ -15234,6 +15235,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
+  overflow-y: scroll;
   border: solid #4f5c6b 1px;
   outline: 0;
 }

@@ -143,7 +143,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_0_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_0')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">إجمالي عدد القضايا</span></th>
@@ -414,7 +414,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_1_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_1')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">الاسم</span></th>
                     <th><span class="cellcontent">التخصص</span></th>
                     <th><span class="cellcontent">درجة التقاضي</span></th>
@@ -671,7 +671,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_2_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_2')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كودالشركة</span></th>
                     <th><span class="cellcontent">اسم الشركة</span></th>
                     <th><span class="cellcontent">نوع التعاقد</span></th>
@@ -920,7 +920,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_3_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_3')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كود العميل </span></th>
                     <th><span class="cellcontent">نوع التعاقد</span></th>
                     <th><span class="cellcontent">ترتيب القسط</span></th>
@@ -1143,7 +1143,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_4_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_4')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">كودالعميل</span></th>
                     <th><span class="cellcontent">اسم العميل</span></th>
                     <th><span class="cellcontent">نوع العميل</span></th>
@@ -1386,7 +1386,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_5_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_5')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المحكمة</span></th>
@@ -1617,7 +1617,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_6_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_6')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">نوع المهمة</span></th>
                     <th><span class="cellcontent">عددالمهام</span></th>
                   </tr>
@@ -1855,7 +1855,7 @@
               <table class="table-1">
                 <thead>
                   <tr class="bgcolor--gray_mm color--gray_d">
-                    <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>
+                    <th><span class="cellcontent" >&lt;input type=&quot;checkbox&quot; data-click-state=&quot;0&quot; name=&quot;select-all&quot; id=&quot;DataTables_Table_7_select-all&quot; onclick=&quot;checkAllRows('DataTables_Table_7')&quot; /&gt;</span></th>
                     <th><span class="cellcontent">نوع القضية</span></th>
                     <th><span class="cellcontent">المحافظة</span></th>
                     <th><span class="cellcontent">المدينة</span></th>
@@ -2241,6 +2241,24 @@ $('.cases-btn').click(function(){
 
 
 
+</script>
+<script type="text/javascript">
+  function checkAllRows(datatableID){
+   let table = $("#"+datatableID);
+    if($("#"+datatableID+"_select-all").attr('data-click-state') == 0) {
+             console.log("state 0")
+              $("#"+datatableID+"_select-all").attr('data-click-state',1)
+              let rows = table.children('tbody').children('tr')
+              $('input.checkboxes', rows).prop('checked',true)
+
+          } else {
+                console.log("state 1")
+              let rows = table.children('tbody').children('tr')
+              $('input.checkboxes', rows).prop('checked',false)
+              $("#"+datatableID+"_select-all").attr('data-click-state', 0);
+
+          }
+  }
 </script>
 
 

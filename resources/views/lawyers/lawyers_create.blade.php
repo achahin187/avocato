@@ -97,7 +97,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_birth">تاريخ الميلاد</label>
-                          <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="lawyer_birth"><span class="master_message color--fadegreen">
+                          <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker_birthdate master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="lawyer_birth"><span class="master_message color--fadegreen">
                                     @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif </span>
@@ -171,10 +171,12 @@
                       <div class="actions">
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
-                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                      <div class="col-md-4 col-sm-6 col-xs-12">
 
-{{--                         <div class="master_field">
+                    
+                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                      <!-- <div class="col-md-4 col-sm-6 col-xs-12">
+
+{{--                       <div class="master_field">
                           <label class="master_label" for="lawyer_email">التخصص</label>
                           <input name="work_sector" value="{{ old('work_sector') }}" class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector"><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_sector'))
@@ -182,6 +184,7 @@
                                     @endif</span>
                         </div> --}}
 
+                      </div> -->
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_type"> التخصص</label>
@@ -194,8 +197,6 @@
                                     {{ $errors->first('work_sector')}}
                                     @endif</span>
                         </div>
-                      </div>
-
                       </div>
 
 {{--                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -237,7 +238,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>
-                          <input name="join_date" value="{{ old('join_date') }}" class="datepicker master_input" readonly type="text" placeholder="اكتب تاريخ الالتحاق بالعمل هنا" id="work_start"><span class="master_message color--fadegreen">
+                          <input name="join_date" value="{{ old('join_date') }}" class="datepicker_join_date master_input" readonly type="text" placeholder="اكتب تاريخ الالتحاق بالعمل هنا" id="work_start"><span class="master_message color--fadegreen">
                                   @if ($errors->has('join_date'))
                                     {{ $errors->first('join_date')}}
                                     @endif </span>
@@ -379,4 +380,15 @@
                   </div>
                 </div>
               </div>
+    <script type="text/javascript">
+      $(function(){
+         
+            $('.datepicker_birthdate,.datepicker_join_date').datepicker({
+            autoclose:true,
+            endDate:new Date(),
+          })
+        })
+     
+    
+    </script>
 @endsection
