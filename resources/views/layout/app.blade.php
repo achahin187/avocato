@@ -640,7 +640,7 @@ if (currentIndex === 5) { //if last step
           var datatable_one =  $(".table-1").DataTable({
             'columnDefs': [{
               'targets': 0,
-              'searchable':false,
+              'searchable':true,
               'orderable':false,
               'className': 'this-include-check'
               
@@ -690,7 +690,7 @@ if (currentIndex === 5) { //if last step
           var datatable_one = $("#dataTableTriggerId_001").DataTable({
             'columnDefs': [{
               'targets': 0,
-              'searchable':false,
+              'searchable':true,
               'orderable':false,
               'className': 'this-include-check'
               
