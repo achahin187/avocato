@@ -10,7 +10,7 @@ class User_Ratings extends Pivot
     use SoftDeletes;
     protected $primaryKey = 'id';
     protected $table = 'user_ratings';
-    protected $fillable=['is_approved'];
+    protected $fillable=['user_id','rate_id','notes','created_by','created_at','deleted_at','is_approved'];
     public $timestamps = false;
     protected $dates = ['created_at'];
 
