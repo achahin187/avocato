@@ -830,7 +830,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <td><span class="cellcontent">{{$rate->full_name}}</span></td>
                                 <td><span class="cellcontent"><span class= stars , data-rating= {{$rate->pivot->rate_type->rate}} ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
-                                <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
+                                <td><span class="cellcontent">{{  (rate->pivot->created_at)?$rate->pivot->created_at->format('Y - m - d'):''}}</span></td>
                                 <td><span class="cellcontent">
                                 
                                 <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
