@@ -504,6 +504,7 @@ class ServicesController extends Controller
             "notification_type_id" => 12,
             "is_read" => 0,
             "is_sent" => 0,
+            'is_push'=>$notification_type->is_push,
             "created_at" => Carbon::now()->format('Y-m-d H:i:s')
         ]);
         $notification_push = Notifications_Push::create([

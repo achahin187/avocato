@@ -127,6 +127,7 @@ return redirect()->route('tasks_emergency');
                 "notification_type_id"=>11,
                 "is_read"=>0,
                 "is_sent"=>0,
+                'is_push'=>$notification_type->is_push,
                 "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
             ]);
              $notification_push=Notifications_Push::create([
@@ -146,6 +147,7 @@ return redirect()->route('tasks_emergency');
                 "notification_type_id"=>13,
                 "is_read"=>0,
                 "is_sent"=>0,
+                'is_push'=>$notification_type_client->is_push,
                 "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
             ]);
              $notification_push=Notifications_Push::create([
