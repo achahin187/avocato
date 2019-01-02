@@ -54,14 +54,14 @@
                         <label class="master_label">نوع الاستشارة</label>
                         <div class="radiorobo">
                           @if(!$consultation->is_paid)
-                          <input type="radio" id="rad_1" name="consultation_type" value="0">
-                          <label for="rad_1">مجانية</label>
-                          <input type="radio" id="rad_2" name="consultation_type" value="1" checked="checked">
-                          <label for="rad_2">مدفوع</label>
-                         @else 
                           <input type="radio" id="rad_1" name="consultation_type" value="0" checked="checked">
                           <label for="rad_1">مجانية</label>
                           <input type="radio" id="rad_2" name="consultation_type" value="1" >
+                          <label for="rad_2">مدفوع</label>
+                         @else 
+                          <input type="radio" id="rad_1" name="consultation_type" value="0" >
+                          <label for="rad_1">مجانية</label>
+                          <input type="radio" id="rad_2" name="consultation_type" value="1" checked="checked">
                           <label for="rad_2">مدفوع</label>
                           @endif
                         </div><span class="master_message color--fadegreen">
