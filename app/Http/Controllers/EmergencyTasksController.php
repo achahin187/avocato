@@ -19,7 +19,7 @@ class EmergencyTasksController extends Controller
 {
     public function view($id)
     {
-    	$data['task']=Tasks::where('id',$id)->first();
+    	$data['task']=Tasks::where('id',$id)->where('country_id',session('country'))->first();
     	 // dd($data);
     	return view('tasks.emergency_view',$data);
     }
