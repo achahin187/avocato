@@ -36,7 +36,7 @@
       var _token = '{{csrf_token()}}';
       $('[data-remodal-id=lawyer_notifications]').remodal().open();
 $(document).on('confirmation', '#two', function () {
-  alert(selectedIds);
+  // alert(selectedIds);
         var noti = $('#nots2').val(); 
         var time = $("input[name=date2]").val();
          $.ajax({
