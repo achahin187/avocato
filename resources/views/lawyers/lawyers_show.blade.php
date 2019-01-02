@@ -825,6 +825,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                             <tbody>
                               @foreach($rates_user as $rate)
                               @foreach($rate->rules as $rule)
+                              @if(isset($rule['pivot']))
                               @if($rule->pivot->rule_id==6)
                               <tr>
                                 <td><span class="cellcontent">{{$rate->full_name}}</span></td>
@@ -836,6 +837,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 @else
                                 ..
                                 @endif
+
                                 </span></td>
                                 <td><span class="cellcontent">
                                 
@@ -845,6 +847,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
 
                               </tr>
+                              @endif
                               @endif
                               @endforeach
                               @endforeach
