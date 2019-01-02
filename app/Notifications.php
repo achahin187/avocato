@@ -9,7 +9,7 @@ class Notifications extends Model
 
     protected $primaryKey = 'id';
     protected $table = 'notifications';
-	public $timestamps = false;
+    public $timestamps = false;
     protected $fillable = ['msg', 'entity_id', 'item_id', 'user_id', 'notification_type_id', 'is_read', 'is_sent','created_at','is_push','schedule','notification_schedule_id'];
 
     protected $dates = ['schedule'];
@@ -23,7 +23,7 @@ class Notifications extends Model
         });
     }
 
-	    public function type()
+    public function type()
     {
         return $this->belongsTo('App\notification_types','notification_type_id');
     }

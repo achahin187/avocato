@@ -73,7 +73,7 @@ class NotificationsController extends Controller
         $notification->created_at = date('Y-m-d H:i:s');
         $notification->packages = $packages;
         $notification->save();
-       $schedule_id=$notification->id;
+        $schedule_id=$notification->id;
       
       foreach($request->package_type as $package){
         $subs = Subscriptions::where('package_type_id',$package)->get();
@@ -112,7 +112,7 @@ class NotificationsController extends Controller
 
     public function notification_lawyer(Request $request,$id) {
         $send_date = date('Y-m-d H:i:s',strtotime($request->noti_date));
-        dd($send_date);
+        
         $notification = new Notifications;
         $notification->msg = $request->notific;
         $notification->schedule = $send_date;
@@ -127,7 +127,7 @@ class NotificationsController extends Controller
         // return response()->json('تمت الإضافه');
     }
 
-        public function notification_for_lawyers()
+    public function notification_for_lawyers()
     {
         $ids = $_POST['ids'];
       $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
