@@ -221,8 +221,8 @@ class Helper {
     }
 
     public static function mail($email ,$body ){
-        Mail::raw('Welcome To avocatoapp   New Feedback'.$body, function($msg){ 
-            $msg->to(['info@avocatoapp.net'])->subject('SecureBridge'); 
+        Mail::raw('New Feedback   is ('.$body.' )', function($msg) use($email){ 
+            $msg->to([$email])->subject('SecureBridge'); 
             $msg->from(['info@avocatoapp.net']); 
 
           });
