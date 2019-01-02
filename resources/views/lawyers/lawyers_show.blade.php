@@ -832,7 +832,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                                 <td><span class="cellcontent"><span class= stars , data-rating= {{$rate->pivot->rate_type->rate}} ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">
-                                @if(rate->pivot->created_at != null)
+                                @if(rate['pivot["created_at"]'] != null)
                                 {{$rate->pivot->created_at->format('Y - m - d')}}
                                 @else
                                 ..
