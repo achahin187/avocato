@@ -98,7 +98,7 @@
                               <!-- Sidebar-->
                               <nav class="navbar navbar-fixed-top bgcolor--gray_m bshadow--0 bradius--noborder " id="sidebar-wrapper" role="navigation">
                                 <ul class="sidebar-navigation">
-                                  <li class="brand bgcolor--gray_m bshadow--0"><a href="{{route('home')}}"> <img src="{{asset('img/logo/logo__dark.png')}}" alt="جسر الأمان"></a></li>
+                                  <li class="brand bgcolor--gray_m bshadow--0"><a href="{{route('home')}}"> <img src="{{asset('img/logo/logo__light.png')}}" alt="جسر الأمان"></a></li>
                                 </ul>
                                 <div class="coverglobal text-center bshadow--2" style="background:#f7f7f7  ;">
                                   <button class="hamburger is-closed" type="button" data-toggle="offcanvas"><span class="hamb-top bgcolor--main_d"></span><span class="hamb-middle bgcolor--main_d"></span><span class="hamb-bottom bgcolor--main_d"></span></button>
