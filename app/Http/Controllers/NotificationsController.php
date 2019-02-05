@@ -122,6 +122,13 @@ class NotificationsController extends Controller
         $item = new Notification_Items;
         $item->item_id = $id;
         $notification->noti_items()->save($item);
+        $user = User::find($id);
+        $notification_push= Notifications_Push::create([
+            "notification_id" => $notification->id , 
+            "device_token" =>  $user->device_token,
+            "mobile_os"=> $user->mobile_os,
+            "user_id"=>$id
+        ]);
         session('success','Notification added successfully');
         return redirect()->back();
         // return response()->json('تمت الإضافه');
