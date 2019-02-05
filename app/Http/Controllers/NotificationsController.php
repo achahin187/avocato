@@ -12,6 +12,7 @@ use App\Subscriptions;
 use Validator;
 use Carbon\Carbon;
 use DB;
+use App\Users;
 
 class NotificationsController extends Controller
 {
@@ -122,7 +123,7 @@ class NotificationsController extends Controller
         $item = new Notification_Items;
         $item->item_id = $id;
         $notification->noti_items()->save($item);
-        $user = User::find($id);
+        $user = Users::find($id);
         $notification_push= Notifications_Push::create([
             "notification_id" => $notification->id , 
             "device_token" =>  $user->device_token,
