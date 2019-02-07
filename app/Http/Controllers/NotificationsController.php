@@ -272,7 +272,12 @@ class NotificationsController extends Controller
                  $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
             }
             // $notification_table=find($notification_push->notification_id);
-            $notification->update(["is_sent" => 1]);
+            $array["is_sent"] =1;
+if($notification->notification_type_id == 8 )
+{
+    $array["created_at"]=Carbon::now();
+}
+            $notification->update($array);
             $notification->save();
             $notification_push->delete();
         }
