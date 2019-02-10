@@ -9,9 +9,9 @@
         <div class="col-xs-12">
           <div class="text-xs-center">
             <div class="text-wraper">
-              <h4 class="cover-inside-title color--gray_d">العملاء <i class="fa fa-chevron-circle-right"></i>
-                <h4 class="cover-inside-title color--gray_d">محتوى </h4>
-                <h3 class="cover-inside-title color--gray_d">الشركات </h3>
+              <h4 class="cover-inside-title color--gray_d">العملاء<i class="fa fa-chevron-circle-right"></i>
+                <h4 class="cover-inside-title color--gray_d">محتوى</h4>
+                <h3 class="cover-inside-title color--gray_d">الشركات</h3>
               </h4>
             </div>
           </div>
@@ -86,9 +86,9 @@
             <label class="master_label mandatory" for="comp_nationality">جنسية الشركة </label>
             <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
                   
-              @foreach ($nationalities as $nat)
+               @foreach ($nationalities as $nat)
                 <option value="{{ $nat->id }}" {{ ($nat->id == $company->user_detail->nationality_id) ? 'selected' : '' }}>{{ Helper::localizations('geo_countries', 'nationality', $nat->id) }}</option>
-              @endforeach
+              @endforeach 
               
             </select>
             {{--  Error  --}}
@@ -376,34 +376,41 @@
         @if($company->subscription)
         <div id="generated">
           @for ($i = 0; $i < $company->subscription->number_of_installments; $i++)
-          <?php $j = $i+1; ?>
-          <div class="col-md-4 col-xs-12">
-              <div class="master_field">
-                <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
-                <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $company->subscription->package_type_id != 7 ?  $installments[$i]->value : '' }}">
-              </div>
-              </div>
-              <div class="col-md-4 col-xs-12">
+          
+            <?php $j = $i + 1; ?>
+            {{-- Payment value --}}
+            <div class="col-md-4 col-xs-12">
                 <div class="master_field">
-                <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                  <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $company->subscription->package_type_id != 7 ? $installments[$i]->payment_date->format('m/d/Y') : '' }}">
+                  <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
+                  <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" @if (isset($installments[$i]->value)) value="{{ $company->subscription->package_type_id != 7 ? $installments[$i]->value : '' }}" @endif>
                 </div>
-              </div>
-              <div class="col-md-4 col-xs-12">
-                <div class="master_field">
-                <label class="master_label">حالة القسط رقم {{ $j }}</label>
-              <div class="radio-inline">
-                <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ $company->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 1 ? 'checked' : '') : '' }} >
-                <label>نعم</label>
-              </div>
-              <div class="radio-inline">
-                <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ $company->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 0 ? 'checked' : '') : 'checked' }} >
-                <label>لا</label>
-              </div>
-            </div>
+                </div>
+
+                {{-- Payment date --}}
+                <div class="col-md-4 col-xs-12">
+                  <div class="master_field">
+                  <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
+                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" @if (isset($installments[$i]->payment_date)) value="{{ $company->subscription->package_type_id != 7 ? $installments[$i]->payment_date->format('m/d/Y') : '' }}" @endif>
+                  </div>
+                </div>
+
+                {{-- Payment status --}}
+                <div class="col-md-4 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label">حالة القسط رقم {{ $j }}</label>
+                    <div class="radio-inline">
+                      <input type="radio" name="payment_status[{{ $i }}]" value="1" @if (isset($installments[$i]->is_paid)) {{ $company->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 1 ? 'checked' : '') : '' }} @endif>
+                      <label>نعم</label>
+                    </div>
+                    <div class="radio-inline">
+                      <input type="radio" name="payment_status[{{ $i }}]" value="0" @if (isset($installments[$i]->is_paid)) {{ $company->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 0 ? 'checked' : '') : 'checked' }} @endif>
+                      <label>لا</label>
+                    </div>
+                  </div>
+                </div>
+
+            @endfor
           </div>
-          @endfor
-        </div>
         @endif
 
         @if ( !$company->subscription )
@@ -433,7 +440,7 @@
   <script>
     $(document).ready(function() {
       // generate number of input fields dynamicly 
-      $('#license_num').on("keyup", function() {
+      $('#license_num').on("keyup change", function() {
         var NumberOfPayments = $('#license_num').val();   // get number of payments
 
         $('#generated div').each(function() {

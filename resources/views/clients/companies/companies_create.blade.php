@@ -387,17 +387,13 @@
   <script>
     $(document).ready(function() {
 
-      // generate number of input fields dynamicly 
-      $('#license_num').on("keyup", function() {
-        var NumberOfPayments = $('#license_num').val();   // get number of payments
+      // get number of payments if page reloaded
+      var NumberOfPayments = $('#license_num').val();  
 
-        $('#generated div').each(function() {
-          $(this).remove();
-        });
-
-        if(NumberOfPayments != '') {
-          for(i=0; i<NumberOfPayments; i++) {
-            //$('#generated div').remove();
+      if(NumberOfPayments != '') {
+          for(i=0; i<NumberOfPayments; i++) 
+          {
+            
             var j = i+1;
             // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
             $('#generated').append('<div class="col-md-4 col-xs-12">\
@@ -425,10 +421,54 @@
                                       </div>\
                                     </div>\
                                   </div>');
-          }
+            }
         } else {
           $('#generated div').remove();
         }
+
+
+      // generate number of input fields dynamicly 
+      $('#license_num').on("keyup change", function() {
+        var NumberOfPayments = $('#license_num').val();   // get number of payments
+
+        $('#generated div').each(function() {
+          $(this).remove();
+        });
+
+        if(NumberOfPayments != '') {
+          for(i=0; i<NumberOfPayments; i++) {
+            
+            var j = i+1;
+            // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
+            $('#generated').append('<div class="col-md-4 col-xs-12">\
+                                      <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
+                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                      </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
+                                          <input required name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                        </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1" >\
+                                        <label>نعم</label>\
+                                      </div>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
+                                      </div>\
+                                    </div>\
+                                  </div>');
+            }
+          } else {
+            $('#generated div').remove();
+          }
       });
       
       $(document).on('click', '#ddate', function(){

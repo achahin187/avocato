@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 // Auth::routes();
 Route::get('/choose_country', 'GeoCountryController@index')->name('choose.country');
 Route::post('/choose_country_info', 'GeoCountryController@choose')->name('choose.country.info');

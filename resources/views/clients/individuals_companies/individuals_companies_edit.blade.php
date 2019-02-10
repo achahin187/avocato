@@ -417,7 +417,7 @@
         $(document).ready(function() {
     
           // generate number of input fields dynamicly 
-          $('#license_num').on("keyup", function() {
+          $('#license_num').on("keyup change", function() {
             var NumberOfPayments = $('#license_num').val();   // get number of payments
     
             $('#generated div').each(function() {

@@ -66,7 +66,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_id">الرقم القومى</label>
-                          <input name="national_id" value="{{ old('national_id') }}" class="master_input" type="text" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">            
+                          <input name="national_id" value="{{ old('national_id') }}" class="master_input" type="number" placeholder="الرقم القومى" id="lawyer_id"><span class="master_message color--fadegreen">            
                                     @if ($errors->has('national_id'))
                                     {{ $errors->first('national_id')}}
                                     @endif</span>
@@ -77,22 +77,24 @@
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
                           <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
-                          @foreach($nationalities as $nationality)
-                            <option value="{{$nationality->id}}">{{ (Helper::localizations('geo_countries', 'nationality', $nationality->id)) ?Helper::localizations('geo_countries', 'nationality', $nationality->id) : $nationality->nationality}}</option>
-                            @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('nationality'))
+                            @foreach($nationalities as $nationality)
+                              <option value="{{$nationality->id}}">{{ (Helper::localizations('geo_countries', 'nationality', $nationality->id)) ?Helper::localizations('geo_countries', 'nationality', $nationality->id) : $nationality->nationality}}</option>
+                              @endforeach
+                          </select>
+                            <span class="master_message color--fadegreen">
+                                @if ($errors->has('nationality'))
                                     {{ $errors->first('nationality')}}
-                                    @endif</span>
+                                @endif
+                            </span>
                         </div>
 
-{{--                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_nationality">الجنسية </label>
-                          <input name="nationality" class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">         
-                                    @if ($errors->has('nationality'))
-                                    {{ $errors->first('nationality')}}
-                                    @endif </span>
-                        </div> --}}
+                      {{-- <div class="master_field">
+                        <label class="master_label mandatory" for="lawyer_nationality">الجنسية </label>
+                        <input name="nationality" class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">         
+                                  @if ($errors->has('nationality'))
+                                  {{ $errors->first('nationality')}}
+                                  @endif </span>
+                      </div> --}}
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
@@ -288,7 +290,7 @@
                           <label class="master_label mandatory" for="currency">العملة</label>
                           <select name="currency_id" class="master_input" id="currency">
                             @foreach($currencies as $currency)
-                            <option @if($currency->id == session('country'))'selected'@endif value="{{$currency->id}}">{{$currency->currency}}</option>
+                            <option @if($currency->id == session('country')) selected @endif value="{{$currency->id}}">{{$currency->currency}}</option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('currency_id'))

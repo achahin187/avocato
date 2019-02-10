@@ -7,7 +7,6 @@ use Helper;
 use Session;
 use Exception;
 use Validator;
-
 use App\Users;
 use App\User_Details;
 use App\Users_Rules;
@@ -35,15 +34,11 @@ class IndividualsController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
         $packages = Package_Types::all();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
-
- return view('clients.individuals.individuals', compact(['packages', 'subscriptions', 'nationalities']))->with('users', Users::users(8)->where('country_id',Auth::user()->country_id)->get());
+        return view('clients.individuals.individuals', compact(['packages', 'subscriptions', 'nationalities']))
+                ->with('users', Users::users(8)->where('country_id',Auth::user()->country_id)->get());
     }
 
     /**
@@ -55,11 +50,9 @@ class IndividualsController extends Controller
     {
         // custom helper function to generate a random number and check if this random number exists on a specific table
         $code = Helper::generateRandom(Users::class, 'code', 6);
-
         $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();
-
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
     }
 
@@ -72,12 +65,12 @@ class IndividualsController extends Controller
     public function store(Request $request)
     { 
         // Validate data
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'job' => 'required',
             'address' => 'required',
             'national_id' => 'required',
-            'birthday' => 'required',
+            'birthday' => 'required|date',
             'nationality' => 'required',
             'mobile' => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
             'email' => 'email',
@@ -86,10 +79,15 @@ class IndividualsController extends Controller
             'end_date' => 'required',
             'subscription_duration' => 'required',
             'subscription_value' => 'required',
-            'number_of_payments' => 'required'
-        ], [
-            'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
-        ]);
+            'number_of_payments' => 'required' ]
+            ,[
+                'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
+                'birthday.date' => 'من فضلك تأكد من ادخال تاريخ ميلاد صحيح',
+            ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         // upload image to storage/app/public
         if ($request->personal_image) {
@@ -123,11 +121,10 @@ class IndividualsController extends Controller
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
             $user->created_by = Auth::user()->id;
-            $user->country_id=session('country');
+            $user->country_id= session('country');
             $user->save();
         } catch (Exception $ex) {
             $user->forcedelete();
-
             Session::flash('warning', $ex);
             return redirect()->back()->withInput();
         }
@@ -142,7 +139,6 @@ class IndividualsController extends Controller
             Users_Rules::insert($data);
         } catch (Exception $ex) {
             $user->forcedelete();
-
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
         }
@@ -156,7 +152,6 @@ class IndividualsController extends Controller
             $client_passwords->save();
         } catch (Exception $ex) {
             $user->forcedelete();
-
             Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -164,7 +159,6 @@ class IndividualsController extends Controller
         // push into users_details
         try {
             $user_details = new User_Details;
-
             $user_details->user_id = $user->id;
             $user_details->country_id = $request->nationality;
             $user_details->nationality_id = $request->nationality;
@@ -177,7 +171,6 @@ class IndividualsController extends Controller
             $user_details->save();
         } catch (Exception $ex) {
             $user->forcedelete();
-
             Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -198,7 +191,6 @@ class IndividualsController extends Controller
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
             $user_details->forcedelete();
-
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -227,7 +219,6 @@ class IndividualsController extends Controller
             }
         } catch (Exception $ex) {
             $user->forcedelete();
-
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -310,24 +301,29 @@ class IndividualsController extends Controller
     public function update(Request $request, $id)
     {
         // Validate data
-        $this->validate($request, [
-            'name' => 'required',
-            'job' => 'required',
-            'address' => 'required',
-            'national_id' => 'required',
-            'birthday' => 'required',
-            'nationality' => 'required',
-            'mobile' => 'required',
-            'email' => 'email',
-            'personal_image' => 'image|mimes:jpeg,jpg,png',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'subscription_duration' => 'required',
-            'subscription_value' => 'required',
-            'number_of_payments' => 'required'
-        ], [
+        $validator = Validator::make($request->all(), [
+        'name' => 'required',
+        'job' => 'required',
+        'address' => 'required',
+        'national_id' => 'required',
+        'birthday' => 'required|date',
+        'nationality' => 'required',
+        'mobile' => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
+        'email' => 'email',
+        'personal_image' => 'image|mimes:jpeg,jpg,png',
+        'start_date' => 'required',
+        'end_date' => 'required',
+        'subscription_duration' => 'required',
+        'subscription_value' => 'required',
+        'number_of_payments' => 'required' ]
+        ,[
             'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
+            'birthday.date' => 'من فضلك تأكد من ادخال تاريخ ميلاد صحيح',
         ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         // Find this user to edit him/her
         $user = Users::find($id);

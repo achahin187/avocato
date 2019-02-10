@@ -80,7 +80,7 @@ class IndividualsCompaniesController extends Controller
             'address'       => 'required',
             'national_id'   => 'required',
             'nationality'   => 'required',
-            'birthday'      => 'required',
+            'birthday'      => 'required|date',
             'phone'         => 'required',
             'mobile'        => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
             'email'         => 'required',

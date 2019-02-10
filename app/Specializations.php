@@ -14,7 +14,4 @@ class Specializations extends Model
     {
         return $this->belongsToMany('App\Users','user_specializations','user_id','specialization_id');
     }
-
-
-
 }

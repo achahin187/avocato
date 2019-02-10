@@ -193,6 +193,9 @@
           <div class="master_field">
             <label class="master_label" for="client_email">البريد الالكترونى</label>
             <input name="email" value="{{ $user->email }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="client_email">
+            @if ($errors->has('email'))
+              <span class="master_message color--fadegreen">{{ $errors->first('email') }}</span>
+            @endif
           </div>
         </div>
 
