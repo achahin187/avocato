@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->getPageSetup()->setHorizontalCentered(true);
             $sheet->getDelegate()->getPageSetup()->setVerticalCentered(false);
         });
-dd(\Session::get('country'));
+// dd(\Session::get('country'));
         $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
              $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
                 $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
