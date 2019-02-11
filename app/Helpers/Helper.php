@@ -193,6 +193,10 @@ class Helper {
 
     public static function percent($part, $all) {
         // return round( ($part * 100) / $all );
+        if($part == 0 || $all == 0)
+        {
+            return 0;
+        }
         return round(($part/$all)*100, 1);
     }
 
