@@ -1,6 +1,5 @@
  @extends('layout.app')             
  @section('content')
-
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg ' )}}') no-repeat center center; background-size:cover">
@@ -41,8 +40,9 @@
                       <div class="clearfix"></div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
+
                           <label class="master_label mandatory" for="office_name">اسم المكتب</label>
-                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name">
+                          <input class="master_input" type="text" value="{{ old('office_name') }}" placeholder="اسم المكتب .." id="office_name" name="office_name">
                           <span class="master_message color--fadegreen">
                             @if($errors->has('office_name') )
                               {{ $errors->first('office_name') }}
@@ -53,7 +53,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_address">عنوان المكتب</label>
-                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address">
+                        <input class="master_input" type="text" value="{{ old('office_address')}}" placeholder="عنوان المكتب .." id="office_address" name="office_address">
                           <span class="master_message color--fadegreen">
                             @if($errors->has('office_address') )
                               {{ $errors->first('office_address') }}
@@ -64,15 +64,15 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
-                          <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
-                          @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
+                          <select name="office_city" class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;">
+                          <option value="choose" selected disabled>اختر المدينة</option>
+                            @foreach($work_sector_areas as $city)
+                              <option value="{{$city->id}}" @if(old('office_city') == $city->id) selected @endif>{{$city->name}}</option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
-                            @if ($errors->has('nationality'))
-                                {{ $errors->first('nationality')}}
+                            @if ($errors->has('office_city'))
+                                {{ $errors->first('office_city')}}
                             @endif
                           </span>
                         </div>
@@ -105,12 +105,12 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للمكتب</div>
-                             <input name="office_image" class="chooseFile" type="file" id="office_img">
+                              <input class="chooseFile" type="file" name="office_image" id="office_img">
                             </div>
                           </div>
                           <span class="master_message color--fadegreen">
-                              @if ($errors->has('image'))
-                                  {{ $errors->first('image')}}
+                              @if ($errors->has('office_image'))
+                                  {{ $errors->first('office_image')}}
                               @endif
                           </span>
                         </div>
@@ -121,7 +121,7 @@
                           <div class="file-upload">
                             <div class="file-select">
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة التوكيل</div>
-                              <input class="chooseFile" type="file" name="attorney_form" id="cer_img">
+                            <input class="chooseFile" type="file" name="attorney_form" id="cer_img">
                             </div>
                           </div>
                           <span class="master_message color--fadegreen">
@@ -131,7 +131,6 @@
                           </span>
                         </div>
                       </div>
-                     <!--  </div> -->
                           <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_info">نبذة عن المكتب</label>
@@ -165,7 +164,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_name">اسم الممثل القانوني</label>
-                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name">
+                          <input class="master_input" value="{{ old('rep_name') }}" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name">
                           <span class="master_message color--fadegreen">
                             @if($errors->has('rep_name'))
                                 {{ $errors->first('rep_name')}}
@@ -187,7 +186,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_id">رقم البطاقة</label>
-                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid">
+                          <input class="master_input" value="{{ old('rep_nid') }}" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid">
                           <span class="master_message color--fadegreen">
                               @if($errors->has('rep_nid'))
                                   {{ $errors->first('rep_nid')}}
@@ -198,7 +197,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="rep_nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                          <select name="rep_nationality" value="{{ old('rep_nationality') }}" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>

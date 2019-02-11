@@ -64,10 +64,10 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
-                          <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" >ختيار المدينة</option>
-                          @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>{{$city->name}}</option>
+                          <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" required>
+                          <option value="choose" >اختر المدينة</option>
+                            @foreach($work_sector_areas as $city)
+                              <option value="{{$city->id}}" @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>{{$city->name}}</option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
@@ -163,7 +163,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_name">اسم الممثل القانوني</label>
-                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name" value="{{$representative->name}}">
+                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name" @if(isset($representative->name)) value="{{$representative->name}}" @endif>
                           <span class="master_message color--fadegreen">
                             @if( $errors->has('rep_name') )
                               {{ $errors->first('rep_name') }}
@@ -174,7 +174,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_birth">تاريخ الميلاد</label>
-                          <input name="rep_birthdate" value="{{$representative->birthdate}}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth">
+                          <input name="rep_birthdate" @if(isset($representative->birthdate)) value="{{$representative->birthdate}}" @endif class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth">
                           <span class="master_message color--fadegreen">
                               @if ($errors->has('rep_birthdate'))
                                  {{ $errors->first('rep_birthdate')}}
@@ -400,7 +400,8 @@
                         </button>
                       </div>
                       <div class="col-md-2 col-sm-6 col-xs-6">
-                        <a href="{{route('offices')}}"><button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
+                        <a href="{{route('offices')}}">
+                        <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="button" onclick="window.location.href={{route('offices')}}"><i class="fa fa-times"></i><span>الغاء</span>
                         </button></a>
                       </div>
                          </form>
