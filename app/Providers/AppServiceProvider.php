@@ -8,6 +8,7 @@ use App\Notifications;
 use Maatwebsite\Excel\Sheet;
 use DB;
 use App\Users;
+use Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->getPageSetup()->setVerticalCentered(false);
         });
 
-        $notes = Notifications::whereIn('notification_type_id',[2,3,4,5,6,7])->where(function ($query) {
-             $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
+        $notes = Notifications::where(function ($query) {
+             $query->where('is_read', '=', 0)->where('is_push', '=', 0)->where('country_id', session('country'))->orWhere(function ($query){
                 $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
              });
 
@@ -74,6 +75,10 @@ class AppServiceProvider extends ServiceProvider
 
             $note['url']='legal_consultation_view';
             }
+            if($note->notification_type_id ==16){
+
+                $note['url']='lawyers_show';
+                }
 
         }
         $counter = 0;

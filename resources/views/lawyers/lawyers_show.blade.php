@@ -128,6 +128,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">نبذة عن المحامي</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->note}} </div>
                       </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12"> تاريخ التسجيل </b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->created_at}} </div>
+                      </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       {{-- <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"> --}}
@@ -357,7 +360,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               @if(isset($rule['pivot']))
                               @if($rule->pivot->rule_id==6)
                               <tr>
-                                <td><span class="cellcontent">{{$rate->full_name}}</span></td>
+                                <td><span class="cellcontent">{{$rate->name}}</span></td>
                                 <td><span class="cellcontent"><span class= stars , data-rating= "{{$rate->pivot->rate_id}}" ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">
