@@ -19,6 +19,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->composer('*', function ($view) 
+        {
+            dd(\Session::get('country'));
+            //this code will be executed when the view is composed, so session will be available
+            $view->with('country', \Session::get('country') );    
+        }); 
         Schema::defaultStringLength(191);
         Sheet::macro('Bolding', function (Sheet $sheet, string $cellRange) {
             $sheet->getDelegate()->getStyle($cellRange)->getFont()->setBold(true);
@@ -31,17 +37,15 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->getPageSetup()->setHorizontalCentered(true);
             $sheet->getDelegate()->getPageSetup()->setVerticalCentered(false);
         });
-// dd(\Session::get('country'));
-        $notes=[];
-        view()->composer('*', function ($view) 
-            {
-                $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
-                    $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
-                        $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
-                    });
 
-                })->orderBy('created_at','desc')->get();
+
+        $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
+            $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
+                $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
             });
+
+        })->orderBy('created_at','desc')->get();
+           
         foreach($notes as $note){
             if($note->notification_type_id ==2){
 
