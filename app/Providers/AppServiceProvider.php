@@ -8,6 +8,7 @@ use App\Notifications;
 use Maatwebsite\Excel\Sheet;
 use DB;
 use App\Users;
+use Session;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $notes = Notifications::where(function ($query) {
-             $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
+             $query->where('is_read', '=', 0)->where('is_push', '=', 0)->where('country_id', session('country'))->orWhere(function ($query){
                 $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
              });
 
