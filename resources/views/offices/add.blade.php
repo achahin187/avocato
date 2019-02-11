@@ -42,13 +42,23 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_name">اسم المكتب</label>
-                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="اسم المكتب .." id="office_name" name="office_name">
+                          <span class="master_message color--fadegreen">
+                            @if($errors->has('office_name') )
+                              {{ $errors->first('office_name') }}
+                            @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_address">عنوان المكتب</label>
-                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="عنوان المكتب .." id="office_address" name="office_address">
+                          <span class="master_message color--fadegreen">
+                            @if($errors->has('office_address') )
+                              {{ $errors->first('office_address') }}
+                            @endif
+                           </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -59,28 +69,34 @@
                           @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('nationality'))
-                                    {{ $errors->first('nationality')}}
-                                    @endif</span>
+                          </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('nationality'))
+                                {{ $errors->first('nationality')}}
+                            @endif
+                          </span>
                         </div>
                       </div>
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
-                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel"><span class="master_message color--fadegreen">
-                                   @if ($errors->has('office_phone'))
-                                    {{ $errors->first('office_phone')}}
-                                    @endif </span>
+                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel">
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('office_phone'))
+                                {{ $errors->first('office_phone')}}
+                            @endif
+                          </span>
                         </div>
                       </div>
                        <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_email">البريد الالكترونى</label>
-                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('office_email'))
-                                    {{ $errors->first('office_email')}}
-                                    @endif</span>
+                          <input name="office_email" value="{{ old('office_email') }}" class="master_input" type="email" placeholder="البريد الالكترونى" id="office_email">
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('office_email'))
+                                  {{ $errors->first('office_email')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -91,10 +107,12 @@
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للمكتب</div>
                              <input name="office_image" class="chooseFile" type="file" id="office_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">
-                                  @if ($errors->has('image'))
-                                    {{ $errors->first('image')}}
-                                    @endif</span>
+                          </div>
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('image'))
+                                  {{ $errors->first('image')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -105,17 +123,24 @@
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة التوكيل</div>
                               <input class="chooseFile" type="file" name="attorney_form" id="cer_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">message</span>
+                          </div>
+                          <span class="master_message color--fadegreen">
+                            @if($errors->has('attorney_form') )
+                                {{ $errors->first('attorney_form')}}
+                            @endif 
+                          </span>
                         </div>
                       </div>
                      <!--  </div> -->
                           <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_info">نبذة عن المكتب</label>
-                          <textarea value="{{ old('note') }}" class="master_input" name="note" id="office_info" placeholder="نبذة"></textarea><span class="master_message color--fadegreen">
-                                  @if ($errors->has('note'))
-                                    {{ $errors->first('note')}}
-                                    @endif</span>
+                          <textarea value="{{ old('note') }}" class="master_input" name="note" id="office_info" placeholder="نبذة"></textarea>
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('note'))
+                                  {{ $errors->first('note')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -140,22 +165,34 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_name">اسم الممثل القانوني</label>
-                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="text" placeholder="اسم الممثل القانوني" id="rep_name" name="rep_name">
+                          <span class="master_message color--fadegreen">
+                            @if($errors->has('rep_name'))
+                                {{ $errors->first('rep_name')}}
+                            @endif 
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_birth">تاريخ الميلاد</label>
-                          <input name="rep_birthdate" value="{{ old('rep_birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth"><span class="master_message color--fadegreen">
-                                    @if ($errors->has('rep_birthdate'))
-                                    {{ $errors->first('rep_birthdate')}}
-                                    @endif </span>
+                          <input name="rep_birthdate" value="{{ old('rep_birthdate') }}" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="rep_birth">
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('rep_birthdate'))
+                                {{ $errors->first('rep_birthdate')}}
+                            @endif 
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_id">رقم البطاقة</label>
-                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid"><span class="master_message color--fadegreen">message </span>
+                          <input class="master_input" type="number" placeholder="رقم بطاقة الممثل القانوني" id="rep_id" name="rep_nid">
+                          <span class="master_message color--fadegreen">
+                              @if($errors->has('rep_nid'))
+                                  {{ $errors->first('rep_nid')}}
+                              @endif 
+                            </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -166,10 +203,12 @@
                           @foreach($nationalities as $nationality)
                             <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('nationality'))
-                                    {{ $errors->first('nationality')}}
-                                    @endif</span>
+                          </select>
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('rep_nationality'))
+                                  {{ $errors->first('rep_nationality')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                      <div class="col-md-4 col-sm-6 col-xs-12">
@@ -179,10 +218,12 @@
                             @foreach($work_sectors as $work_sector)
                             <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('work_sector'))
-                                    {{ $errors->first('work_sector')}}
-                                    @endif</span>
+                          </select>
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('work_sector'))
+                                  {{ $errors->first('work_sector')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -193,7 +234,12 @@
                           @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}" >{{$city->name}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">message </span>
+                          </select>
+                          <span class="master_message color--fadegreen">
+                             @if($errors->has('rep_spec'))
+                              {{ $errors->first('rep_spec') }}
+                             @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">

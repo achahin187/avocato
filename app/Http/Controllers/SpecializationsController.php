@@ -18,11 +18,6 @@ class SpecializationsController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
-       // $data['specializations'] = Specializations::where('country_id', session('country'))->get();
         $data['specializations'] = Specializations::all();
         return view('specializations',$data);
     }
@@ -43,14 +38,14 @@ class SpecializationsController extends Controller
         $PathForJson='storage/excel/';
         $filename = 'specializations'.time().'.xlsx';
         if(isset($_GET['ids'])){
-           $ids = $_GET['ids'];
-        Excel::store(new SpecializationsExport($ids),$filepath.$filename);
-        return response()->json($PathForJson.$filename);
-    }
+            $ids = $_GET['ids'];
+            Excel::store(new SpecializationsExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        }   
         else{
-        Excel::store((new SpecializationsExport()),$filepath.$filename);
-        return response()->json($PathForJson.$filename); 
-      }
+            Excel::store((new SpecializationsExport()),$filepath.$filename);
+            return response()->json($PathForJson.$filename); 
+        }
     }
 
     /**
@@ -61,8 +56,6 @@ class SpecializationsController extends Controller
      */
     public function store(Request $request)
     {
-         // \App::setLocale('en');
-
         $validator = Validator::make($request->all(), [
             'new_specialization'=>'required|unique:specializations,name',
         ]);
@@ -75,7 +68,6 @@ class SpecializationsController extends Controller
 
         $specialization = new Specializations;
         $specialization->name = $request->new_specialization;
-        //$specialization->country_id=session('country');
         $specialization->save();
         return redirect()->route('specializations')->with('success','تم إضافة تخصص جديد بنجاح');
     }

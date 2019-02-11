@@ -20,10 +20,6 @@ class GovernoratesCitiesController extends Controller
      */
     public function index()
     {
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
         // return all cities and governments
         return view('governorates_cities')->with('cities', Geo_Cities::where('country_id',session('country'))->get())
                                         ->with('governments', Geo_Governorates::where('country_id',session('country'))->get());
@@ -191,7 +187,6 @@ class GovernoratesCitiesController extends Controller
 
         if(isset($request->ids)){
             $ids = explode(",", $request->ids);
-
             Excel::store(new GovernoratesCitiesExport($ids),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else{

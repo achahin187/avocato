@@ -379,9 +379,47 @@
 
   <script>
     $(document).ready(function() {
+      
+      // get number of payments if page reloaded
+      var NumberOfPayments = $('#license_num').val();  
+
+        if(NumberOfPayments != '') {
+          for(i=0; i<NumberOfPayments; i++) {
+
+            var j = i+1;
+            // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
+            $('#generated').append('<div class="col-md-4 col-xs-12">\
+                                      <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
+                                        <input class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                      </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
+                                          <input name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" required>\
+                                        </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="1">\
+                                        <label>نعم</label>\
+                                      </div>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <label>لا</label>\
+                                      </div>\
+                                    </div>\
+                                  </div>');
+          }
+        } else {
+          $('#generated div').remove();
+        }
 
       // generate number of input fields dynamicly 
-      $('#license_num').on("keyup", function() {
+      $('#license_num').on("keyup change", function() {
         var NumberOfPayments = $('#license_num').val();   // get number of payments
 
         $('#generated div').each(function() {
@@ -425,7 +463,7 @@
       });
       
       $(function() {
-          $('#company_code').change(function(){
+          $('#company_code').on('change click', function(){
             $('#company_name').val($('#company_code option:selected').data('id'));
           });
       });
@@ -463,18 +501,18 @@
   </script>
   <script>
   $(document).ready(function() {
-  $('#license_start_date').datepicker({
-    onSelect: function(dateText, inst){
-        $('#license_end_date').datepicker('option', 'minDate', new Date(dateText));
-    },
-});
+        $('#license_start_date').datepicker({
+          onSelect: function(dateText, inst){
+              $('#license_end_date').datepicker('option', 'minDate', new Date(dateText));
+          },
+      });
 
-$('#license_end_date').datepicker({
-    onSelect: function(dateText, inst){
-        $('#license_start_date').datepicker('option', 'maxDate', new Date(dateText));
-    }
-});
-});
+      $('#license_end_date').datepicker({
+          onSelect: function(dateText, inst){
+              $('#license_start_date').datepicker('option', 'maxDate', new Date(dateText));
+          }
+      });
+  });
   </script>
 
 @endsection

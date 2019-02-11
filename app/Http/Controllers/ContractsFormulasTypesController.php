@@ -20,8 +20,6 @@ class ContractsFormulasTypesController extends Controller
      */
     public function index()
     {
-        // $mains=Formula_Contract_Types::where('id',2)->first();
-        // return $mains->child;
         $data['subs'] = Formula_Contract_Types::whereNotNull('parent_id')->get();
         $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
         return view('contracts_formulas_types',$data);
@@ -73,9 +71,7 @@ class ContractsFormulasTypesController extends Controller
         }
         $main = new Formula_Contract_Types;
         $main->name= $request->main;
-//        $main->country_id=session('country');
         $main->save();
-
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
     }
 
@@ -168,58 +164,53 @@ class ContractsFormulasTypesController extends Controller
      */
     public function destroy($id)
     {
-     $sub=Formula_Contract_Types::find($id);
-     $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
-     if($counter == 1)
-     {
-        $sub->delete();
-        Formula_Contract_Types::where('id',$sub->parent_id)->delete();
-        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-        foreach($formulas as $formula){
-            File::delete($formula->file);
-            $formula->delete();
+        $sub=Formula_Contract_Types::find($id);
+        $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
+        if($counter == 1)
+        {
+            $sub->delete();
+            Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+            $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+            foreach($formulas as $formula){
+                File::delete($formula->file);
+                $formula->delete();
+            }
         }
-    }
-    else{
-        $sub->delete();
-        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-        foreach($formulas as $formula){
-            File::delete($formula->file);
-            $formula->delete();
+        else{
+            $sub->delete();
+            $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+            foreach($formulas as $formula){
+                File::delete($formula->file);
+                $formula->delete();
+            }
         }
-    }
-
     }
 
     public function destroy_all()
     {
-
         $ids = $_POST['ids'];
         foreach($ids as $id)
         {
-           $sub=Formula_Contract_Types::find($id);
-           $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
-           if($counter == 1)
-           {
-            $sub->delete();
-            Formula_Contract_Types::where('id',$sub->parent_id)->delete();
-        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-        foreach($formulas as $formula){
-            File::delete($formula->file);
-            $formula->delete();
-        }
-        }
-        else{
-            $sub->delete();
-        $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-        foreach($formulas as $formula){
-            File::delete($formula->file);
-            $formula->delete();
-        }
-        }
-    } 
-
-
+            $sub=Formula_Contract_Types::find($id);
+            $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
+            if($counter == 1)
+            {
+                $sub->delete();
+                Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+                $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+                foreach($formulas as $formula){
+                    File::delete($formula->file);
+                    $formula->delete();
+                }
+            }
+            else{
+                $sub->delete();
+                $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+                foreach($formulas as $formula){
+                    File::delete($formula->file);
+                    $formula->delete();
+                }
+            }
+        } 
     }
-
 }

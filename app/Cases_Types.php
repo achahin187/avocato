@@ -10,8 +10,6 @@ class Cases_Types extends Model
     protected $table = 'cases_types';
     public $timestamps = true;
 
-
-
     //relations
     public function cases()
     {

@@ -479,13 +479,11 @@ class OfficesController extends Controller
   {
     $validator = Validator::make($request->all(), [
       'office_name' => 'required',
-     
+      'rep_birthdate' => 'date',
     ]);
 
     if ($validator->fails()) {
-      return redirect()->back()
-        ->withErrors($validator)
-        ->withInput();
+      return redirect()->back()->withErrors($validator)->withInput();
     }
 
     if ($request->hasFile('office_image')) {
@@ -510,8 +508,7 @@ class OfficesController extends Controller
       $syndicate_copy = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('syndicate_copy')->getClientOriginalExtension();
       Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
     }
-
-   
+    
     $office =Users::where('id', $id)->first();
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
@@ -520,34 +517,38 @@ class OfficesController extends Controller
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
-    $office->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
+    $office->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
     $office->image = ($request->hasFile('office_image'))?$office_image_name:$office->image;
     $office->country_id=session('country');
     $office->note = $request->note;
     $office->save();
    
-    $office_details =User_Details::where('user_id', $id)->first();
-    $office_details->national_id = $request->national_id;
-    $office_details->nationality_id = $request->nationality;
-    // $lawyer_details->work_sector = $request->work_sector;
-    $office_details->work_sector_area_id = $request->office_city;
-    $office_details->experience = $request->experience;
-    $office_details->consultation_price = $request->consultation_price;
-    $office_details->currency_id = $request->currency_id;
-    $office_details->is_international_arbitrator = $request->is_international_arbitrator;
-    $office_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
-    // $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
-    
-    if ($request->filled('resign_date'))
-      $office_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
-    else
-      $office_details->resign_date = null;
+    // return $request->all();
 
-    $office_details->litigation_level = $request->litigation_level;
-    $office_details->syndicate_level_id = $request->syndicate_level_id;
-    $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:$office_details->authorization_copy;
-   $office_details->save();
+    $office_details =User_Details::where('user_id', $id)->first();
+    
+    if($office_details){
+      
+      $office_details->national_id = $request->rep_nid;
+      $office_details->nationality_id = $request->rep_nationality;
+      $office_details->work_sector_area_id = $request->office_city;
+      $office_details->experience = $request->experience;
+      $office_details->consultation_price = $request->consultation_price;
+      $office_details->currency_id = $request->currency_id;
+      $office_details->is_international_arbitrator = $request->is_international_arbitrator;
+      $office_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
+      
+      if ($request->filled('resign_date'))
+        $office_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
+      else
+        $office_details->resign_date = null;
   
+      $office_details->litigation_level = $request->litigation_level;
+      $office_details->syndicate_level_id = $request->syndicate_level_id;
+      $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:$office_details->authorization_copy;
+      $office_details->save();
+    }
+    
     // process legal representative
 
     $representative =Users::where('parent_id',$office->id)->first();
@@ -562,6 +563,7 @@ class OfficesController extends Controller
     $representative->password = bcrypt($password);
     $representative->code = Helper::generateRandom(Users::class, 'code', 6);
     $representative->save();
+    
     // representative details
      $rep_details = User_Details::where('user_id', $representative->id)->first();
      $rep_details->user_id = $representative->id;
@@ -581,24 +583,26 @@ class OfficesController extends Controller
      //process office Branches
      //delete old branches update with new
       OfficeBranches::where('office_id',$id )->delete();
-   // $old_branches->delete();
-    // $office->offices_branches()->delete();
-     if(count($request->branches['branch_name']) != 0){ 
-     	if(isset($request->branchNo)){
-    $branchNo = $request->branchNo-1;
-      }else{$branchNo=0;}
-    for($i=0 ; $i<=$branchNo ;$i++){
-     $branch = new OfficeBranches;
-     $branch->office_id = $office->id;
-     $branch->name = $request->branches['branch_name'][$i];
-     $branch->address = $request->branches['branch_address'][$i];
-     $branch->phone = $request->branches['branch_phone'][$i];
-     $branch->email = $request->branches['branch_email'][$i];
-     $branch->country_id = $request->branches['branch_country'][$i];
-     $branch->city_id = $request->branches['branch_city'][$i];
-     $branch->save();
+      // $old_branches->delete();
+      // $office->offices_branches()->delete();
+     
+      if(count($request->branches['branch_name']) != 0){ 
+      	if(isset($request->branchNo)){
+          $branchNo = $request->branchNo-1;
+        
+        }else{$branchNo=0;}
 
-     }
+          for($i=0 ; $i<=$branchNo ;$i++){
+            $branch = new OfficeBranches;
+            $branch->office_id = $office->id;
+            $branch->name = $request->branches['branch_name'][$i];
+            $branch->address = $request->branches['branch_address'][$i];
+            $branch->phone = $request->branches['branch_phone'][$i];
+            $branch->email = $request->branches['branch_email'][$i];
+            $branch->country_id = $request->branches['branch_country'][$i];
+            $branch->city_id = $request->branches['branch_city'][$i];
+            $branch->save();
+        }
      }
 
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
