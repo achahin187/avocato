@@ -8,7 +8,7 @@
       var lawyer_id = $(this).closest('tr').attr('data-office-id');
       var _token = '{{csrf_token()}}';
       $('[data-remodal-id=lawyer_notification]').remodal().open();
-      // alert(lawyer_id);
+      
 $(document).on('confirmation', '.remodal', function () {
         var noti = $('#nots').val(); 
         var time = $("input[name=date]").val();
@@ -17,7 +17,6 @@ $(document).on('confirmation', '.remodal', function () {
            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
            data:{notific:noti,noti_date:time,_token:_token},
            success:function(data){
-            alert(data);
             location.reload();
           }
         });
@@ -37,7 +36,7 @@ $(document).on('confirmation', '.remodal', function () {
       var _token = '{{csrf_token()}}';
       $('[data-remodal-id=lawyer_notifications]').remodal().open();
 $(document).on('confirmation', '#two', function () {
-  alert(selectedIds);
+  
         var noti = $('#nots2').val(); 
         var time = $("input[name=date2]").val();
          $.ajax({
@@ -45,8 +44,7 @@ $(document).on('confirmation', '#two', function () {
            url:'{{url('notification_for_lawyers')}}',
            data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
            success:function(data){
-            alert(data);
-            location.reload();
+              location.reload();
           }
         });
 
@@ -108,179 +106,19 @@ $(document).on('confirmation', '#two', function () {
                           </tr>
                         </thead>
                         <tbody>
-                        	   @foreach($offices as $office)
-                          <tr  data-office-id="{{$office->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">{{$office->code}}</span></td>
-                            <td><span class="cellcontent">{{$office->name}}</span></td>
-                            <td><span class="cellcontent">{{$office->address}}</span></td>
-                            <td><span class="cellcontent">{{$office->phone}}</span></td>
-                            <td><span class="cellcontent">{{$office->is_active ? 'مفعل':'غير مفعل'}}</td>
-                            <td><span class="cellcontent"><a href= {{route('offices_show',$office->id)}} ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= {{route('offices_edit',$office->id)}} ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-
+                          @foreach($offices as $office)
+                            <tr  data-office-id="{{$office->id}}">
+                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                              <td><span class="cellcontent">{{$office->code}}</span></td>
+                              <td><span class="cellcontent">{{$office->name}}</span></td>
+                              <td><span class="cellcontent">{{$office->address}}</span></td>
+                              <td><span class="cellcontent">{{$office->phone}}</span></td>
+                              <td><span class="cellcontent">{{$office->is_active ? 'مفعل':'غير مفعل'}}</td>
+                              <td><span class="cellcontent"><a href= {{route('offices_show',$office->id)}} ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= {{route('offices_edit',$office->id)}} ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            </tr>
                           @endforeach
-                         
-                         
                         </tbody>
                       </table>
-                      <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                        <div>
-                          <h2 class="title">title of the changing log in</h2>
-                          <div class="log-content">
-                            <div class="log-container">
-                              <table class="log-table">
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <th>log title</th>
-                                  <th>user</th>
-                                  <th>time</th>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
 
       <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification"><span></span></a>

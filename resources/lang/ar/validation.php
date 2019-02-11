@@ -118,7 +118,6 @@ return [
 
     'attributes' => [
 
-
         'new_type' => 'نوع جديد',
         'court' => 'محكمه',
         'govs' => 'المحافظه',
@@ -178,6 +177,9 @@ return [
         'legal_representative_name' => 'اسم الممثل القانوني للشركة',
         'company_name'  => 'اسم الشركة',
         'office_name'  => 'اسم المكتب',
+        'Office Phone' => 'رقم الهاتف',
+        'Office City' => 'المدينة',
+        'Office Email' => 'البريد الالكتروني',
         'ind_name'      => 'اسم المكتب',
         'personal_image'=> 'الصورة الشخصية',
         'discount_percentage' => 'قيمة الخصم',
@@ -207,6 +209,10 @@ return [
         'package_type'=>'نوع الباقه',
         'notification'=>'نص التنبيه',
         'language'=>'اللغه',
+        'Rep Name' => 'اسم الممثل',
+        'Rep Birthdate' => 'تاريخ الميلاد',
+        'Rep Nid' => 'رقم البطاقة',
+        'Rep Nationallity' => 'الجنسية',
     ],
 
 ];

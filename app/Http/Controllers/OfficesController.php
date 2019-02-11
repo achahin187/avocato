@@ -165,9 +165,6 @@ class OfficesController extends Controller
         });
       }
 
-
-
-
     })->get();
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
@@ -194,44 +191,19 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
-   	//dd($request);
-   	// var_dump(count( $request->branches['branch_name']));die;
-   
-   //dd($request->branches[]);
-  	 // foreach ($request->branches as $key => $branch) {
-  	 // 	print_r($branch);
-  	 // }
-  	 // die;
     $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
       'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
-      // 'note' => 'required',
-      // 'address' => 'required',
-      // 'nationality' => 'required',
-      // 'national_id' => 'required|numeric',
-      // 'consultation_price' => 'required|numeric',
-      // 'currency_id'=>'required',
-      // 'birthdate' => 'required',
-      // 'phone' => 'required|digits_between:1,10',
-      // 'mobile' => 'required|digits_between:1,12',
-      // 'email' => 'required|email|max:40',
-      // 'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
-      // 'is_active' => 'required',
-      // 'work_sector' => 'required',
-      // 'work_sector_area' => 'required',
-      // 'join_date' => 'required',
-      // 'work_type' => 'required',
-      // 'litigation_level' => 'required',
-      // 'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
-      // 'syndicate_level_id' => 'required',
-      // 'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
+      'office_city' => 'required',
+      'rep_name' => 'required',
+      'rep_birthdate' => 'required|date',
+      'rep_nid' => 'required',
+      'rep_nationality' => 'required',
     ]);
 
     if ($validator->fails()) {
-      return redirect()->back()
-        ->withErrors($validator)
-        ->withInput();
+      return redirect()->back()->withErrors($validator)->withInput();
     }
 
     if ($request->hasFile('office_image')) {
@@ -245,8 +217,6 @@ class OfficesController extends Controller
       $attorney_form = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('attorney_form')->getClientOriginalExtension();
       Input::file('attorney_form')->move($destinationPath, $attorney_form);
     }
-     //dd($attorney_form);
-
 
      if ($request->hasFile('rep_img')) {
       $destinationPath = 'users_images';
@@ -259,7 +229,6 @@ class OfficesController extends Controller
       $syndicate_copy = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('syndicate_copy')->getClientOriginalExtension();
       Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
     }
-
    
     $office = new Users;
     $office->name = $request->office_name ;
@@ -269,7 +238,6 @@ class OfficesController extends Controller
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
-    // $office->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
     $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
     $office->country_id=session('country');
     $office->note = $request->note;
@@ -284,25 +252,24 @@ class OfficesController extends Controller
     $office_details = new User_Details;
     $office_details->national_id = $request->national_id;
     $office_details->nationality_id = $request->nationality;
-    // $lawyer_details->work_sector = $request->work_sector;
     $office_details->work_sector_area_id = $request->office_city;
     $office_details->experience = $request->experience;
     $office_details->consultation_price = $request->consultation_price;
     $office_details->currency_id = $request->currency_id;
     $office_details->is_international_arbitrator = $request->is_international_arbitrator;
     $office_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
-    // $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
-    
-    if ($request->filled('resign_date'))
+     
+    if ($request->filled('resign_date')){
       $office_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
-    else
+    }
+    else{
       $office_details->resign_date = null;
+    }
 
     $office_details->litigation_level = $request->litigation_level;
     $office_details->syndicate_level_id = $request->syndicate_level_id;
     $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:'';
     $office_details->save();
-    //dd($office_details->authorization_copy);
     $office_plaintext = new ClientsPasswords;
     $office_plaintext->password = $password;
     $office->user_detail()->save($office_details);
@@ -324,6 +291,7 @@ class OfficesController extends Controller
     $representative->password = bcrypt($password);
     $representative->code = Helper::generateRandom(Users::class, 'code', 6);
     $representative->save();
+    
     // representative details
      $rep_details = new User_Details;
      $rep_details->user_id = $representative->id;
@@ -333,36 +301,36 @@ class OfficesController extends Controller
      $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:'';
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){
-      //representative specializations 
       $representative->specializations()->attach($request->specializations);
    
      }
      //process office Branches
 
-     
-     if(count($request->branches['branch_name']) != 0){ 
-     	if(isset($request->branchNo)){
-    $branchNo = $request->branchNo-1;
-      }else{$branchNo=0;}
-    for($i=0 ; $i<=$branchNo ;$i++){
-     $branch = new OfficeBranches;
-     $branch->office_id = $office->id;
-     $branch->name = $request->branches['branch_name'][$i];
-     $branch->address = $request->branches['branch_address'][$i];
-     $branch->phone = $request->branches['branch_phone'][$i];
-     $branch->email = $request->branches['branch_email'][$i];
-     if(isset($request->branches['branch_country'][$i])){
-     $branch->country_id = $request->branches['branch_country'][$i];}
-      if(isset($request->branches['branch_city'][$i])){
-     $branch->city_id = $request->branches['branch_city'][$i];}
-     if(isset($request->branches['branch_name'][$i])){
-     $branch->save();
+    if(count($request->branches['branch_name']) != 0){ 
+        if(isset($request->branchNo)){
+            $branchNo = $request->branchNo-1;
+        }else{
+            $branchNo=0;
+        }
+        for($i=0 ; $i<=$branchNo ;$i++){
+            $branch = new OfficeBranches;
+            $branch->office_id = $office->id;
+            $branch->name = $request->branches['branch_name'][$i];
+            $branch->address = $request->branches['branch_address'][$i];
+            $branch->phone = $request->branches['branch_phone'][$i];
+            $branch->email = $request->branches['branch_email'][$i];
+            if( isset($request->branches['branch_country'][$i]) ){
+              $branch->country_id = $request->branches['branch_country'][$i];
+            }
+            if( isset($request->branches['branch_city'][$i]) ){
+              $branch->city_id = $request->branches['branch_city'][$i];
+            }
+            if( isset($request->branches['branch_name'][$i]) ){
+              $branch->save();
+            }
+        }
      }
-     }
-     }
-     
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
-
   }
 
   /**
@@ -373,12 +341,6 @@ class OfficesController extends Controller
    */
   public function show($id)
   {
-    //       $nas = Geo_Countries::where('id',2)->get();
-    //       $s=$nas->flatMap(function ($values) {
-    //       return array_map(function(){return 2;}, $values->toArray());
-    // });
-    //       return $s;
-
     $data['office'] = Users::find($id);
     $data['representative'] = Users::where('parent_id',$id )->first();
     $data['branches'] = OfficeBranches::where('office_id',$id)->get();
@@ -455,16 +417,16 @@ class OfficesController extends Controller
    */
   public function edit($id)
   {
-  	$data['office'] = Users::find($id);
-  	 $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
-    $data['branches'] = OfficeBranches::where('office_id',$id)->get();
-    $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-    $data['types'] = Rules::where('parent_id', 5)->get();
-    $data['work_sectors'] = Specializations::all();
-    $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
-    $data['countries'] = Geo_Countries::all();
-    $data['syndicate_levels'] = SyndicateLevels::all();
-    return view('offices.edit', $data);
+      $data['office'] = Users::find($id);
+      $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
+      $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+      $data['types'] = Rules::where('parent_id', 5)->get();
+      $data['work_sectors'] = Specializations::all();
+      $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
+      $data['countries'] = Geo_Countries::all();
+      $data['syndicate_levels'] = SyndicateLevels::all();
+      return view('offices.edit', $data);
   }
 
 
@@ -478,8 +440,14 @@ class OfficesController extends Controller
   public function update(Request $request, $id)
   {
     $validator = Validator::make($request->all(), [
-      'office_name' => 'required',
-      'rep_birthdate' => 'date',
+        'office_name' => 'required',
+        'office_email' => 'required|email',
+        'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+        'office_city' => 'required',
+        'rep_name' => 'required',
+        'rep_birthdate' => 'required|date',
+        'rep_nid' => 'required',
+        'rep_nationality' => 'required',
     ]);
 
     if ($validator->fails()) {
@@ -509,7 +477,7 @@ class OfficesController extends Controller
       Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
     }
     
-    $office =Users::where('id', $id)->first();
+    $office = Users::where('id', $id)->first();
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
@@ -518,13 +486,11 @@ class OfficesController extends Controller
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
-    $office->image = ($request->hasFile('office_image'))?$office_image_name:$office->image;
-    $office->country_id=session('country');
+    $office->image = ($request->hasFile('office_image')) ? $office_image_name : $office->image;
+    $office->country_id = session('country');
     $office->note = $request->note;
     $office->save();
    
-    // return $request->all();
-
     $office_details =User_Details::where('user_id', $id)->first();
     
     if($office_details){
@@ -540,17 +506,16 @@ class OfficesController extends Controller
       
       if ($request->filled('resign_date'))
         $office_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
-      else
+      else{
         $office_details->resign_date = null;
-  
+      }
       $office_details->litigation_level = $request->litigation_level;
       $office_details->syndicate_level_id = $request->syndicate_level_id;
       $office_details->authorization_copy = ($request->hasFile('attorney_form'))?$attorney_form:$office_details->authorization_copy;
       $office_details->save();
     }
-    
-    // process legal representative
 
+    // process legal representative
     $representative =Users::where('parent_id',$office->id)->first();
     $representative->parent_id = $office->id;
     $representative->name = $request->rep_name;
@@ -573,38 +538,45 @@ class OfficesController extends Controller
      $rep_details->syndicate_copy = ($request->hasFile('syndicate_copy'))?$syndicate_copy:$rep_details->syndicate_copy;
      $rep_details->litigation_level = $request->rep_litigation_level;
      if($rep_details->save()){
-      //representative specializations 
-     	//remove old first
-      $representative->specializations()->detach();
-      //then add new
-      $representative->specializations()->attach($request->specializations);
+        //representative specializations 
+        //remove old first
+        $representative->specializations()->detach();
+        //then add new
+        $representative->specializations()->attach($request->specializations);
    
      }
+   
      //process office Branches
      //delete old branches update with new
       OfficeBranches::where('office_id',$id )->delete();
       // $old_branches->delete();
       // $office->offices_branches()->delete();
-     
-      if(count($request->branches['branch_name']) != 0){ 
-      	if(isset($request->branchNo)){
-          $branchNo = $request->branchNo-1;
-        
-        }else{$branchNo=0;}
 
-          for($i=0 ; $i<=$branchNo ;$i++){
-            $branch = new OfficeBranches;
-            $branch->office_id = $office->id;
-            $branch->name = $request->branches['branch_name'][$i];
-            $branch->address = $request->branches['branch_address'][$i];
-            $branch->phone = $request->branches['branch_phone'][$i];
-            $branch->email = $request->branches['branch_email'][$i];
-            $branch->country_id = $request->branches['branch_country'][$i];
-            $branch->city_id = $request->branches['branch_city'][$i];
-            $branch->save();
+      // return $request->branches;
+
+      if($request->branches){
+       
+        if(count($request->branches['branch_name']) != 0){ 
+
+            if(isset($request->branchNo)){
+              $branchNo = $request->branchNo-1;
+            }else{
+              $branchNo=0;
+            }
+            for($i=0 ; $i<=$branchNo ;$i++){
+
+                $branch = new OfficeBranches;
+                $branch->office_id = $office->id;
+                $branch->name = (isset($request->branches['branch_name'][$i])) ? $request->branches['branch_name'][$i] : null;
+                $branch->address = (isset($request->branches['branch_address'][$i])) ? $request->branches['branch_address'][$i] : null;
+                $branch->phone = (isset($request->branches['branch_phone'][$i])) ? $request->branches['branch_phone'][$i] : null;
+                $branch->email = (isset($request->branches['branch_email'][$i])) ? $request->branches['branch_email'][$i] : null;
+                $branch->country_id = (isset($request->branches['branch_country'][$i])) ? $request->branches['branch_country'][$i] : null;
+                $branch->city_id = (isset($request->branches['branch_city'][$i])) ? $request->branches['branch_city'][$i] : null;
+                $branch->save();
+            }
         }
-     }
-
+      }
     return redirect()->route('offices_show', $office->id)->with('success', 'تم إضافه  مكتب جديد بنجاح');
   }
 
