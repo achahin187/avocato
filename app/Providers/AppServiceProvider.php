@@ -32,12 +32,16 @@ class AppServiceProvider extends ServiceProvider
             $sheet->getDelegate()->getPageSetup()->setVerticalCentered(false);
         });
 // dd(\Session::get('country'));
-        $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
-             $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
-                $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
-             });
+        $notes=[];
+        view()->composer('*', function ($view) 
+            {
+                $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
+                    $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
+                        $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
+                    });
 
-        })->orderBy('created_at','desc')->get();
+                })->orderBy('created_at','desc')->get();
+            });
         foreach($notes as $note){
             if($note->notification_type_id ==2){
 
