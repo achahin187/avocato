@@ -357,7 +357,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                               @if(isset($rule['pivot']))
                               @if($rule->pivot->rule_id==6)
                               <tr>
-                                <td><span class="cellcontent">{{$rate->full_name}}</span></td>
+                                <td><span class="cellcontent">{{$rate->name}}</span></td>
                                 <td><span class="cellcontent"><span class= stars , data-rating= "{{$rate->pivot->rate_id}}" ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">
