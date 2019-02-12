@@ -251,10 +251,9 @@ class NotificationsController extends Controller
                 $push->lang_id = $user->lang_id;
                 $push->user_id = $user->id;
                 $push->save();
-
-                $notification->is_sent = 1;
-                $notification->save();   
            }
+        $notification->is_sent = 1;
+        $notification->save();   
         }
         dd($notifications);
     }
