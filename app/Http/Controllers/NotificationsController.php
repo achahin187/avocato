@@ -283,6 +283,23 @@ class NotificationsController extends Controller
             
             $notification_push->delete();
         }
+
+        $notifications_push_browser = Notifications_Push::where('mobile_os',$browser)->get();
+        foreach($notifications_push_browser as $notification_push) {
+            
+            $notification = $notification_push->notification;
+               $array["is_sent"] = 1;
+               
+                // $notification_table=find($notification_push->notification_id);
+                if($notification->notification_type_id == 8 ) {
+                    $array["created_at"] = Carbon::now();
+                }
+                $notification->update($array);
+                $notification->save();
+            
+            
+            $notification_push->delete();
+        }
     }
 
     public function pushAndroid($registrationIds,$message) {
