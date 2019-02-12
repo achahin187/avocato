@@ -283,21 +283,6 @@ class NotificationsController extends Controller
             
             $notification_push->delete();
         }
-        //
-        $notifications_push_browser = Notifications_Push::where('mobile_os', 'browser')->get();
-        foreach($notifications_push_browser as $notification_browser) {
-            $device_token = $notification_browser->device_token;
-            $notification = $notification_browser->notification;
-            if($notification != null)
-            {
-                $array["is_sent"] = 1;
-                
-                $notification->update($array);
-                $notification->save();
-            }
-            
-            $notification_browser->delete();
-        }
     }
 
     public function pushAndroid($registrationIds,$message) {
