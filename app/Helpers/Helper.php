@@ -54,26 +54,24 @@ class Helper {
      *  Result: 
      *  بلاتيني 
      */
-    public static function  localizations($table_name , $field , $item_id,$lang_id=null)
+    public static function localizations($table_name , $field , $item_id,$lang_id=null)
     {
-      $value_localized = Entities::where('name',$table_name)->with([
-        'localizations' => function($query) use($field, $item_id,$lang_id)
-        {
-            $query->where('field', $field)->where('item_id', $item_id);
-            if(!is_null($lang_id))
+        $value_localized = Entities::where('name',$table_name)->with([
+            'localizations' => function($query) use($field, $item_id,$lang_id)
             {
-                $query->where('lang_id', $lang_id);
+                $query->where('field', $field)->where('item_id', $item_id);
+                if(!is_null($lang_id))
+                {
+                    $query->where('lang_id', $lang_id);
+                }
+            }
+            ])->get();
+        foreach ($value_localized as  $value) {
+            
+            foreach ($value->localizations as $value1) {
+                return $value1->value;       
             }
         }
-      ])->get();
-      foreach ($value_localized as  $value) {
-        
-        foreach ($value->localizations as $value1) {
-            return $value1->value;       
-        }
-      }
-     
-        
     }
    
   public static function edit_entity_localization($table_name, $field_name, $item_id, $lang_id, $new_value)

@@ -1,7 +1,7 @@
  @extends('layout.app')             
  @section('content')
-              <div class="row">
-                <div class="col-lg-12">
+  <div class="row">
+    <div class="col-lg-12">
     <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="row">
         <div class="col-xs-12">
@@ -17,18 +17,17 @@
         </div>
       </div>
     </div>
+    </div>
+    <div class="col-lg-12">
+      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+        <div class="col-xs-12">
+          <h4> الشروط و الأحكام</h4>
+        </div>
+        <div class="col-lg-12">
+          {!!$terms->content!!}
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
   </div>
-                <div class="col-lg-12">
-                  <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="col-xs-12">
-                      <h4> الشروط و الأحكام</h4>
-                    </div>
-                    <div class="col-lg-12">
-                      {!!$terms->content!!}
-                    </div>
-                    <div class="clearfix"></div>
-                  </div>
-                </div>
-              </div>
-
-              @endsection
+@endsection

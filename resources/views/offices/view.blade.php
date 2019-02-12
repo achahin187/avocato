@@ -543,7 +543,10 @@
                              @endif
                               >{{$nationality->name}}</option>
                             @endforeach
-                                        </select><span class="master_message color--fadegreen">message</span>
+                                        </select>
+                                        <span class="master_message color--fadegreen">
+                                          
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">

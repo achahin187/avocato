@@ -11,7 +11,7 @@ class Entities extends Model
     protected $fillable=['name'];
     public $timestamps = false;
 
-        public function localizations()
+    public function localizations()
     {
         return $this->hasMany('App\Entity_Localizations','entity_id');
     }
