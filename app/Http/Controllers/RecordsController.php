@@ -78,9 +78,9 @@ class RecordsController extends Controller
             'number' => 'required',
             'pen' => 'required',
             'name' => 'required',
-            'delivery_date' => 'required',
-            'delivered_at' => 'required',
-            'session_date' => 'required',
+            'delivery_date' => 'required|date',
+            'delivered_at' => 'required|date',
+            'session_date' => 'required|date',
             'notes' => 'required'
         ]);
 
