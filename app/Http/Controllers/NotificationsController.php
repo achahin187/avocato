@@ -273,12 +273,17 @@ class NotificationsController extends Controller
             }
             // $notification_table=find($notification_push->notification_id);
             $array["is_sent"] =1;
-if($notification->notification_type_id == 8 )
-{
-    $array["created_at"]=Carbon::now();
-}
-            $notification->update($array);
-            $notification->save();
+            if($notification != null)
+            {
+                if($notification->notification_type_id == 8 )
+                    {
+                        $array["created_at"]=Carbon::now();
+                    }
+                    $notification->update($array);
+                    $notification->save();
+
+            }
+            
             $notification_push->delete();
         }
     }
