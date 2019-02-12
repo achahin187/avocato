@@ -238,7 +238,7 @@ class NotificationsController extends Controller
     public function notification_cron() {
         $notifications = Notifications::where(function ($query){
             $query->whereIn('notification_type_id',[1,8]);
-            $query->where('is_sent',0);
+            $query->where('is_sent',0); 
             $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
         })->get();
         foreach($notifications as $notification) {
@@ -260,31 +260,43 @@ class NotificationsController extends Controller
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
         $results = array();
-        foreach($notifications_push as $notification_push) { 
+        foreach($notifications_push as $notification_push) {
             $device_token = $notification_push->device_token;
             $notification = $notification_push->notification;
-        if($notification != null)
-        {
-            $registrationIds = array($device_token);
-            $message = $notification->msg;
-            if($notification_push->mobile_os == 'android') {
-                $results [] = $this->pushAndroid($registrationIds, $message);
-            } else if($notification_push->mobile_os == 'ios') {
-                 $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
+            if($notification != null)
+            {
+                $array["is_sent"] = 1;
+                $registrationIds = array($device_token);
+                $message = $notification->msg;
+                if($notification_push->mobile_os == 'android') {
+                    $results [] = $this->pushAndroid($registrationIds, $message);
+                } else if($notification_push->mobile_os == 'ios') {
+                     $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
+                } 
+                // $notification_table=find($notification_push->notification_id);
+                if($notification->notification_type_id == 8 ) {
+                    $array["created_at"] = Carbon::now();
+                }
+                $notification->update($array);
+                $notification->save();
             }
-            // $notification_table=find($notification_push->notification_id);
-            $array["is_sent"] =1;
-            
-                if($notification->notification_type_id == 8 )
-                    {
-                        $array["created_at"]=Carbon::now();
-                    }
-                    $notification->update($array);
-                    $notification->save();
-
-        }
             
             $notification_push->delete();
+        }
+        //
+        $notifications_push_browser = Notifications_Push::where('mobile_os', 'browser')->get();
+        foreach($notifications_push_browser as $notification_browser) {
+            $device_token = $notification_browser->device_token;
+            $notification = $notification_browser->notification;
+            if($notification != null)
+            {
+                $array["is_sent"] = 1;
+                
+                $notification->update($array);
+                $notification->save();
+            }
+            
+            $notification_browser->delete();
         }
     }
 
