@@ -263,6 +263,8 @@ class NotificationsController extends Controller
         foreach($notifications_push as $notification_push) { 
             $device_token = $notification_push->device_token;
             $notification = $notification_push->notification;
+        if($notification != null)
+        {
             $registrationIds = array($device_token);
             $message = $notification->msg;
             if($notification_push->mobile_os == 'android') {
@@ -272,8 +274,7 @@ class NotificationsController extends Controller
             }
             // $notification_table=find($notification_push->notification_id);
             $array["is_sent"] =1;
-            if($notification != null)
-            {
+            
                 if($notification->notification_type_id == 8 )
                     {
                         $array["created_at"]=Carbon::now();
@@ -281,7 +282,7 @@ class NotificationsController extends Controller
                     $notification->update($array);
                     $notification->save();
 
-            }
+        }
             
             $notification_push->delete();
         }
