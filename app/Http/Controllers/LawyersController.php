@@ -90,7 +90,7 @@ class LawyersController extends Controller
     $data['syndicate_levels'] = SyndicateLevels::all();
     foreach($data['syndicate_levels'] as $content)
     {
-      $content['name']=(Helpers::localizations('syndicate_levels','name',$content->id,$lang_id)) ? Helpers::localizations('syndicate_levels','name',$content->id,$lang_id) : $content->name;
+      $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,$lang_id)) ? Helper::localizations('syndicate_levels','name',$content->id,$lang_id) : $content->name;
 
     }
     return view('lawyers.lawyers_create', $data);
