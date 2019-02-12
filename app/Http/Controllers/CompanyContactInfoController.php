@@ -10,8 +10,6 @@ use App\Entities;
 use App\Helpers\Helper;
 class CompanyContactInfoController extends Controller
 {
-    //
-
     public function index(Request $request){
         
         $onload_data=company_contact_info::first();
