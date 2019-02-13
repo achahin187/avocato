@@ -34,22 +34,12 @@ class OfficesController extends Controller
    */
   public function index()
   {
-    // if(session('country') == null)
-    //     {
-    //         return redirect()->route('choose.country');
-    //     }
-        // return Users::withTrashed()->restore();
-  	/********/
-    // $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
-    //   $q->where('rule_id', 5);
-    // })->get();
     $q = Users::orderBy('id','DESC');
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15);
         });
     $data['offices'] = $q->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-   // $data['types'] = Rules::where('parent_id', 5)->get();
     return view('offices.list', $data);
   }
 
@@ -116,31 +106,28 @@ class OfficesController extends Controller
       if ($request->has('types') && $request->types != 0) {
         $q->whereHas('rules', function ($q) use ($request) {
           $q->where('rule_id', $request->types);
-
         });
       } else {
         $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 5);
         });
       }
+
       if ($request->has('nationalities') && $request->nationalities != 0) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('nationality_id', $request->nationalities);
-
         });
       }
 
       if ($request->filled('work_sector')) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('work_sector', 'like', '%' . $request->work_sector . '%');
-
         });
       }
 
       if ($request->filled('syndicate_level')) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('syndicate_level', 'like', '%' . $request->syndicate_level . '%');
-
         });
       }
 
@@ -190,6 +177,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
+     //data validation
       $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
@@ -285,7 +273,6 @@ class OfficesController extends Controller
     Helper::add_log(3, 19, $office->id);
 
     // process legal representative
-
     $representative = new Users;
     $representative->parent_id = $office->id;
     $representative->name = $request->rep_name . $representative->id;
@@ -311,8 +298,8 @@ class OfficesController extends Controller
       $representative->specializations()->attach($request->specializations);
    
      }
-     //process office Branches
-
+   
+    //process office Branches
     if(count($request->branches['branch_name']) != 0){ 
         if(isset($request->branchNo)){
             $branchNo = $request->branchNo-1;
@@ -483,6 +470,7 @@ class OfficesController extends Controller
 
     //get current country id
     $country = Session::get('country');
+    
     if($country == 1){ //Egypt
       $office_phone = '+2'.$request->office_phone;   
     }else{//Saudi Arabia
@@ -557,15 +545,13 @@ class OfficesController extends Controller
         $representative->specializations()->attach($request->specializations);
    
      }
-   
+
      //process office Branches
      //delete old branches update with new
       OfficeBranches::where('office_id',$id )->delete();
-      // $old_branches->delete();
-      // $office->offices_branches()->delete();
-
+ 
       // return $request->branches;
-
+    //  return $request->branchNo;
       if($request->branches){
        
         if(count($request->branches['branch_name']) != 0){ 
@@ -575,6 +561,8 @@ class OfficesController extends Controller
             }else{
               $branchNo=0;
             }
+
+            // return $branchNo;
             for($i=0 ; $i<=$branchNo ;$i++){
 
                 $branch = new OfficeBranches;
@@ -602,7 +590,19 @@ class OfficesController extends Controller
   //create branch
  public function branch_create(Request $request)
   {
-     
+    $validator = Validator::make($request->all() ,[
+        'office_id' => 'required',
+        'branch_name' => 'required',
+        'branch_address' => 'required',
+        'branch_country' => 'required',
+        'branch_city' => 'required',
+        'branch_phone' => 'required|digits_between:1,15'
+    ]);
+
+    if($validator->fails()){
+      return redirect('offices_show/'.$request->office_id.'#add_branch')->withErrors($validator)->withInput();
+    }
+
      $branch = new OfficeBranches;
      $branch->office_id = $request->office_id;
      $branch->name = $request->branch_name;
@@ -618,6 +618,18 @@ class OfficesController extends Controller
 
 public function branch_edit(Request $request)
 {
+    $validator = Validator::make($request->all() ,[
+        'office_id' => 'required',
+        'branch_name_edit' => 'required',
+        'branch_address_edit' => 'required',
+        'branch_country_edit' => 'required',
+        'branch_city_edit' => 'required',
+        'branch_phone_edit' => 'required|digits_between:1,15'
+    ]);
+
+    if($validator->fails()){
+      return redirect('offices_show/'.$request->office_id.'#edit_branch')->withErrors($validator)->withInput();
+    }
      $id = $request->branch_id_edit;
      $branch = OfficeBranches::find($id);
      $branch->office_id = $request->office_id;

@@ -3,7 +3,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg ' )}}') no-repeat center center; background-size:cover">
-                    <div class="add-mode">Editing mode</div>
+                    <div class="add-mode">تعديل مكتب محاماه</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -68,7 +68,10 @@
                           <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" required>
                           <option value="choose" >اختر المدينة</option>
                             @foreach($work_sector_areas as $city)
-                              <option value="{{$city->id}}" @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>{{$city->name}}</option>
+                              <option value="{{$city->id}}" 
+                                @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>
+                                  {{$city->name}}
+                              </option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
@@ -200,7 +203,10 @@
                           <select name="rep_nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                           @foreach($nationalities as $nationality)
-                            <option value="{{$nationality->item_id}}" @if($representative->user_detail->nationality_id == $nationality->item_id ) selected @endif>{{$nationality->value}}</option>
+                            <option value="{{$nationality->item_id}}" 
+                              @if($representative->user_detail->nationality_id == $nationality->item_id ) selected @endif>
+                              {{$nationality->value}}
+                            </option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
@@ -301,11 +307,15 @@
                         <h3>فروع المكتب</h3>
                       </div>
                       <div class="actions">
-                      </div><span class="mainseparator bgcolor--main"></span>
+                      </div>
+                      <span class="mainseparator bgcolor--main"></span>
                     </div>
                     <div class="cardwrap bgcolor--white bradius--noborder">
                         <div class="more-branches">
-                        @foreach($branches as $branch)
+                        @if($branches)
+                        <input type="hidden" id="branchNo" name="branchNo" value="{{count($branches)}}">
+                          @foreach($branches as $branch)
+                        <h3> فرع رقم {{$loop->iteration}}</h3>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
@@ -355,9 +365,7 @@
                           <option value="choose" selected disabled>اختر المدينة</option>
                           @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}" 
-                              @if($branch->city_id == $city->id)
-                                {!!'selected'!!}
-                              @endif >
+                              @if($branch->city_id == $city->id) {!!'selected'!!}  @endif >
                                 {{$city->name}}
                             </option>
                             @endforeach
@@ -392,11 +400,14 @@
                           </div>
                         </div>
                         @endforeach
+                        @endif
                       </div>
                     </div>
                       <div id="branches"></div>
                       <div class="col-md-12">
-                        <button class="btn" id="add_more_btn" type="button">إضافة فرع<i class="fa fa-plus">&nbsp;</i></button>
+                        <button class="btn" id="add_more_btn" type="button">اضافة فرع
+                          <i class="fa fa-plus">&nbsp;</i>
+                        </button>
                       </div>
                       <div class="clearfix"></div><br>
                       <div class="col-md-2 col-sm-6 col-xs-6">
@@ -413,17 +424,12 @@
                     </div>
                   </div>
                 </div>
-
 <script>
-var i=0;
-var branchNo = 0;
-
- $("#branches").append('<input type="hidden" id="branchNo" name="branchNo" >');
-      $('#add_more_btn').click(function(){
-       
-        i++;
-        var branchNo = i+1;
-
+    $('#add_more_btn').click(function(){
+        
+        var branchNo = $('#branchNo').val();
+        branchNo = parseInt(branchNo) + 1;
+    
         $("#branches").append('<div class="more-branches">'
                           +'<h3> فرع رقم '+branchNo+'</h3>'
                           +'<div class="col-md-4 col-sm-6 col-xs-12">'

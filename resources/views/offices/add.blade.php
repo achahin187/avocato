@@ -3,7 +3,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg ' )}}') no-repeat center center; background-size:cover">
-                    <div class="add-mode">Adding mode</div>
+                    <div class="add-mode">اضافة مكتب محاماه</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -229,7 +229,7 @@
                          <div class="master_field">
                           <label class="master_label mandatory" for="rep_spec">الإختصاص المكاني </label>
                          <select name="rep_spec"  class="master_input select2" id="rep_spec" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          <option value="choose" selected disabled>اختر المدينة</option>
                           @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}" >{{$city->name}}</option>
                             @endforeach
@@ -244,10 +244,12 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="rep_litigation_level">درجة التقاضي</label>
-                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_litigation_level" name="rep_litigation_level" value="{{ old('rep_litigation_level') }}"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('rep_litigation_level'))
-                                    {{ $errors->first('rep_litigation_level')}}
-                                    @endif</span>
+                          <input class="master_input" type="text" placeholder="درجة التقاضي.." id="rep_litigation_level" name="rep_litigation_level" value="{{ old('rep_litigation_level') }}">
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('rep_litigation_level'))
+                                  {{ $errors->first('rep_litigation_level')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                      <div class="col-md-4 col-sm-6 col-xs-12">
@@ -258,10 +260,12 @@
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة كارنية النقابة</div>
                               <input name="syndicate_copy" class="chooseFile" type="file" name="chooseFile" id="lawyer_card">
                             </div>
-                          </div><span class="master_message color--fadegreen">
-                                  @if ($errors->has('syndicate_copy'))
-                                    {{ $errors->first('syndicate_copy')}}
-                                    @endif</span>
+                          </div>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('syndicate_copy'))
+                                {{ $errors->first('syndicate_copy')}}
+                            @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
@@ -272,10 +276,12 @@
                               <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة للممثل القانوني</div>
                               <input class="chooseFile" type="file" name="rep_img" id="rep_img">
                             </div>
-                          </div><span class="master_message color--fadegreen">
-                                  @if ($errors->has('rep_img'))
-                                    {{ $errors->first('rep_img')}}
-                                    @endif</span>
+                          </div>
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('rep_img'))
+                                {{ $errors->first('rep_img')}}
+                              @endif
+                          </span>
                         </div>
                       </div>
                       <div class="clearfix"></div>
@@ -292,18 +298,23 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_name'))
-                                    {{ $errors->first('branch_name')}}
-                                    @endif</span>
+                            <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name"  name="branches[branch_name][]">
+                            <span class="master_message color--fadegreen">
+                              @if ($errors->has('branch_name'))
+                                {{ $errors->first('branch_name')}}
+                              @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]"><span class="master_message color--fadegreen">
-                            	   @if ($errors->has('branch_address'))
-                                    {{ $errors->first('branch_address')}}
-                                    @endif</span>
+                            <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branches[branch_address][]">
+                            <span class="master_message color--fadegreen">
+                                @if ($errors->has('branch_address'))
+                                  {{ $errors->first('branch_address')}}
+                                @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -314,19 +325,22 @@
                           @foreach($countries as $nationality)
                             <option value="{{$nationality->id}}">{{$nationality->name}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">@if ($errors->has('branches[branch_country][]'))
-                                    {{ $errors->first('branches[branch_country][]')}}
-                                    @endif</span>
+                          </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('branches[branch_country][]'))
+                              {{ $errors->first('branches[branch_country][]')}}
+                            @endif
+                          </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
                              <select name="branches[branch_city][]"  class="master_input select2" id="branch_city_0" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
-                          <!-- @foreach($work_sector_areas as $city)
+                          <option value="choose" selected disabled>اختر المدينة</option>
+                             @foreach($work_sector_areas as $city)
                             <option value="{{$city->id}}">{{$city->name}}</option>
-                            @endforeach -->
+                            @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
                                   @if ($errors->has('branches[branch_city][]'))
@@ -337,36 +351,41 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]"><span class="master_message color--fadegreen">@if ($errors->has('branch_phone'))
-                                    {{ $errors->first('branch_phone')}}
-                                    @endif</span>
+                            <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branches[branch_phone][]">
+                            <span class="master_message color--fadegreen">
+                              @if ($errors->has('branch_phone'))
+                                {{ $errors->first('branch_phone')}}
+                              @endif
+                            </span>
                           </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]"><span class="master_message color--fadegreen">
+                            <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]">
+                            <span class="master_message color--fadegreen">
                             	  @if($errors->has('branch_email'))
-                                    {{ $errors->first('branch_email')}}
-                                    @endif</span>
+                                  {{ $errors->first('branch_email')}}
+                                @endif
+                            </span>
                           </div>
                         </div>
                       </div>
                       <div id="branches"></div>
-                     <!--  <input type="hidden" id="branchNo" name="branchNo" value="0"> -->
                       <div class="col-md-12">
-                        <button class="btn" id="add_more_btn" type="button">إضافة فرع<i class="fa fa-plus">&nbsp;</i></button>
+                        <button class="btn" id="add_more_btn" type="button">اضافة فرع<i class="fa fa-plus">&nbsp;</i></button>
                       </div>
                       <div class="clearfix"></div><br>
                       <div class="col-md-2 col-sm-6 col-xs-6">
-                        <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
+                        <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit">
+                          <i class="fa fa-save"></i><span>حفظ</span>
                         </button>
                       </div>
                       <div class="col-md-2 col-sm-6 col-xs-6">
                         <a href="{{route('offices')}}"><button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
                         </button></a>
                       </div>
-                         </form>
+                      </form>
                       <div class="clearfix"></div><br>
                     </div>
                   </div>
@@ -411,7 +430,7 @@ var branchNo = 0;
                                     +'<div class="master_field">'
                                     +'<label class="master_label mandatory" for="branch_city">المدينة </label>'
                                 +' <select name="branches[branch_city][]"  class="master_input select2" id="branch_city_'+branchNo+'" data-placeholder="المدينة" style="width:100%;" ,>'
-                                  +' <option value="choose" selected disabled>ختيار المدينة</option>'
+                                  +' <option value="choose" selected disabled>اختر المدينة</option>'
                                     @foreach($work_sector_areas as $city)
                                     +'  <option value="{{$city->id}}">{{$city->name}}</option>'
                                       @endforeach

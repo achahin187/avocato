@@ -122,7 +122,7 @@
                               <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                                    {{csrf_field()}}
                                     <input type="hidden"  name="office_id" value="{{$office->id}}">                
-                                    <h3>اضافة / تعديل فرع</h3>
+                                    <h3>اضافة فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
@@ -164,7 +164,7 @@
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_city">المدينة </label>
                                         <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                                        <option value="choose" selected disabled>ختيار المدينة</option>
+                                        <option value="choose" selected disabled>اختر المدينة</option>
                                           @foreach($work_sector_areas as $city)
                                             <option value="{{$city->id}}">{{$city->name}}</option>
                                           @endforeach
@@ -179,7 +179,8 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branch_phone"><span class="master_message color--fadegreen"> 
+                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_tel" name="branch_phone">
+                                        <span class="master_message color--fadegreen"> 
                                           @if ($errors->has('branch_phone'))
                                           {{ $errors->first('branch_phone')}}
                                           @endif</span>
@@ -188,7 +189,8 @@
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branch_email"><span class="master_message color--fadegreen">
+                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branch_email">
+                                        <span class="master_message color--fadegreen">
                                           @if ($errors->has('branch_email'))
                                           {{ $errors->first('branch_email')}}
                                           @endif</span>
@@ -427,10 +429,12 @@
                                         <label class="master_label mandatory" for="backend_evaluation_date">التاريخ</label>
                                         <div class="bootstrap-timepicker">
                                           <input name="date" class="datepicker master_input" type="text" placeholder="التاريخ" id="backend_evaluation_date">
-                                        </div><span class="master_message color--fadegreen">
-                                    @if ($errors->has('date'))
-                                    {{ $errors->first('date')}}
-                                    @endif</span>
+                                        </div>
+                                        <span class="master_message color--fadegreen">
+                                            @if ($errors->has('date'))
+                                              {{ $errors->first('date')}}
+                                            @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12">
@@ -441,19 +445,23 @@
                                           @foreach($rates as $rate)
                                           <option value="{{$rate->item_id}}" >{{$rate->value}}</option>
                                           @endforeach
-                                        </select><span class="master_message color--fadegreen">
-                                    @if ($errors->has('rate'))
-                                    {{ $errors->first('rate')}}
-                                    @endif</span>
+                                        </select>
+                                        <span class="master_message color--fadegreen">
+                                          @if ($errors->has('rate'))
+                                            {{ $errors->first('rate')}}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
-                                        <textarea name="notes" class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">
-                                    @if ($errors->has('notes'))
-                                    {{ $errors->first('notes')}}
-                                    @endif</span>
+                                        <textarea name="notes" class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea>
+                                        <span class="master_message color--fadegreen">
+                                            @if ($errors->has('notes'))
+                                               {{ $errors->first('notes')}}
+                                            @endif
+                                        </span>
                                       </div>
                                     </div>
                                   </div>
@@ -504,66 +512,84 @@
                                    {{csrf_field()}}
                                   <input type="hidden" id="branch_id_edit" name="branch_id_edit">
                                   <input type="hidden"  name="office_id" value="{{$office->id}}">               
-                                    <h3>اضافة / تعديل فرع</h3>
+                                    <h3> تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name_edit" name="branch_name_edit"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name_edit" name="branch_name_edit">
+                                        <span class="master_message color--fadegreen">
+                                          @if($errors->has('branch_name_edit'))
+                                            {{$errors->first('branch_name_edit')}}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address_edit" name="branch_address_edit"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address_edit" name="branch_address_edit">
+                                        <span class="master_message color--fadegreen">
+                                          @if($errors->has('branch_address_edit'))
+                                            {{$errors->first('branch_address_edit')}}
+                                          @endif   
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="lawyer_type">الدولة</label>
                                         <select class="master_input" id="branch_country_edit" name="branch_country_edit">
-                           @foreach($countries as $nationality)
-                            <option value="{{$nationality->id}}" @if($branch->country_id == $nationality->id){!!'selected'!!}
-                             @endif
-                              >{{$nationality->name}}</option>
-                            @endforeach
+                                          @foreach($countries as $nationality)
+                                            <option value="{{$nationality->id}}" @if($branch->country_id == $nationality->id){!!'selected'!!}
+                                            @endif
+                                              >{{$nationality->name}}</option>
+                                          @endforeach
                                         </select>
                                         <span class="master_message color--fadegreen">
-                                          
+                                            @if($errors->has('branch_country_edit'))
+                                              {{ $errors->first('branch_country_edit') }}
+                                            @endif
                                         </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_city">المدينة </label>
-                           <select name="branch_city_edit"  class="master_input select2" id="branch_city_edit" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
-                          @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}"
-                             @if($branch->city_id == $city->id){!!'selected'!!} @endif
-                              >{{$city->name}}</option>
-                            @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('branch_city'))
-                                    {{ $errors->first('branch_city')}}
-                                    @endif</span>
+                                      <select name="branch_city_edit"  class="master_input select2" id="branch_city_edit" data-placeholder="المدينة" style="width:100%;" ,>
+                                      <option value="choose" selected disabled>اختر المدينة</option>
+                                      @foreach($work_sector_areas as $city)
+                                        <option value="{{$city->id}}"
+                                        @if($branch->city_id == $city->id){!!'selected'!!} @endif
+                                          >{{$city->name}}</option>
+                                        @endforeach
+                                       </select>
+                                      <span class="master_message color--fadegreen">
+                                          @if ($errors->has('branch_city_edit'))
+                                            {{ $errors->first('branch_city_edit')}}
+                                          @endif
+                                      </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_tel">رقم الهاتف</label>
-                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_phone_edit" name="branch_phone_edit"><span class="master_message color--fadegreen"> 
-                                          @if ($errors->has('branch_phone'))
-                                          {{ $errors->first('branch_phone')}}
-                                          @endif</span>
+                                        <input class="master_input" type="number" placeholder="رقم الهاتف" id="branch_phone_edit" name="branch_phone_edit">
+                                        <span class="master_message color--fadegreen"> 
+                                          @if ($errors->has('branch_phone_edit'))
+                                            {{ $errors->first('branch_phone_edit')}}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label" for="branch_email">البريد الالكترونى</label>
-                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email_edit" name="branch_email_edit"><span class="master_message color--fadegreen">
-                                          @if ($errors->has('branch_email'))
-                                          {{ $errors->first('branch_email')}}
-                                          @endif</span>
+                                        <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email_edit" name="branch_email_edit">
+                                        <span class="master_message color--fadegreen">
+                                          @if ($errors->has('branch_email_edit'))
+                                            {{ $errors->first('branch_email_edit')}}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     
