@@ -284,6 +284,7 @@ class LegalConsultationsController extends Controller
             'consultation_type_id' => $consultation_type->id,
             'is_paid' => $request->input('consultation_type'),
             'question' => $request->input('consultation_question'),
+            'is_replied'=>1
             // 'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->update([
@@ -364,7 +365,9 @@ class LegalConsultationsController extends Controller
     {
         $consultation = Consultation::where('id', $request->input('consultation_id'))->with('consultation_reply')->first();
         // dd($consultation->toArray());
+        $consultation->update(['is_replied' => 1]);
         foreach ($consultation->consultation_reply as $value) {
+
             if ($value->id == $request->input('perfect_answer')) {
                 $value->update(['is_perfect_answer' => 1]);
                 $user = Users::find($consultation->created_by);
