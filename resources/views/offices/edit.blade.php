@@ -404,7 +404,7 @@
                       </div>
                     </div>
                       <div id="branches"></div>
-                      <div class="col-md-12">
+                      <div class="col-sm-12">
                         <button class="btn" id="add_more_btn" type="button">اضافة فرع
                           <i class="fa fa-plus">&nbsp;</i>
                         </button>
