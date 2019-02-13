@@ -1,53 +1,14 @@
  @extends('layout.app')             
  @section('content')
-
-
-<script type="text/javascript">
-    $(document).ready(function(){
-
-    $('.exclude').click(function(){
-      var office_id = '{{$office->id or ''}}';
-      var _token = '{{csrf_token()}}';
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-         $.ajax({
-           type:'POST',
-           url:'{{url('offices_destroy_post')}}'+'/'+office_id,
-           data:{_token:_token},
-           success:function(data){
-            // $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
-            location.href= '{{route('offices')}}';
-          }
-        });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
-       } else {
-        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-      }
-    });
-    });
-
-});
-
-</script>
-
- <div class="row">
+     <div class="row">
                 <div class="col-lg-12">
-                  <div class="coverglobal text-center bshadow--2" style="background:#000 url( '../img/covers/dummy2.jpg') no-repeat center center; background-size:cover"><span></span>
+                  <div class="coverglobal text-center bshadow--2" style="background:#000 url( {{asset('img/covers/dummy2.jpg')}} ) no-repeat center center; background-size:cover">
                     <div class="container">
                       <div class="row">
                         <div class="col-xs-12">
-                          <div class="text-xs-center"><a href="user_profile.html"><img class="coverglobal__avatar" src="{{asset(''.$office->image)}}">
+                          <div class="text-xs-center">
+                            <a href="#">
+                              <img class="coverglobal__avatar" @if($office->image) src="{{asset(''.$office->image)}}" @endif>
                               <h3 class="coverglobal__title color--gray_d">{{$office->name}}</h3><small class="coverglobal__slogan color--gray_d">{{$office->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
                           <div class="coverglobal__actions">{{-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="assign_lawyer_task.html">تعيين مهمة للمكتب</a> --}}<a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('offices_edit',$office->id)}}">تعديل البيانات</a><a class="exclude color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="#">استبعاد المكتب</a>
                           </div>
@@ -78,7 +39,9 @@
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$office->note}}</div>
                       </div>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12"><img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450">
+                    </div>
                     <div class="clearfix"></div>
                   </div>
                   <div class="tabs--wrapper">
@@ -97,7 +60,8 @@
                       <li class="tab__content_item active">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <div class="row">
-                            <div class="col-md-2 col-sm-3 text-center"><img class="coverglobal__avatar img-responsive" src="{{asset(''.$representative->image)}}"></div>
+                            <div class="col-md-2 col-sm-3 text-center">
+                              <img class="coverglobal__avatar img-responsive" @if($representative->image) src="{{asset(''.$representative->image)}}" @endif></div>
                             <div class="col-md-10 col-sm-9">
                               <div class="col-xs-6"><b class="col-xs-4">اسم الممثل القانوني</b>
                                 <div class="col-xs-8"> {{$representative->name}}</div>
@@ -129,14 +93,16 @@
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$representative->user_detail->syndicate_copy)}}">
+                              <div class="card--1"><a class="color--main">
+                                <img class="img-responsive bradius--noborder" @if($representative->user_detail->syndicate_copy) src="{{asset(''.$representative->user_detail->syndicate_copy)}}" @endif>
                                   <h4 class="text-center">كارنيه النقابة</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
                           </div>
                           <div class="col-sm-6">
                             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                              <div class="card--1"><a class="color--main"><img class="img-responsive bradius--noborder  " src="{{asset(''.$office->user_detail->authorization_copy)}}">
+                              <div class="card--1"><a class="color--main">
+                                <img class="img-responsive bradius--noborder" @if($office->user_detail->authorization_copy) src="{{asset(''.$office->user_detail->authorization_copy)}}" @endif>
                                   <h4 class="text-center">صورة التوكيل</h4></a></div>
                             </div>
                             <div class="clearfix"></div>
@@ -154,19 +120,29 @@
                                 <div class="row">
                                   <div class="col-xs-12">
                               <form role="form" action="{{route('branches_store')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                                   {{csrf_field()}}<form >
-                    <input type="hidden"  name="office_id" value="{{$office->id}}">                
+                                   {{csrf_field()}}
+                                    <input type="hidden"  name="office_id" value="{{$office->id}}">                
                                     <h3>اضافة / تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
-                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name" name="branch_name"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="اسم الفرع..." id="branch_name" name="branch_name">
+                                        <span class="master_message color--fadegreen">
+                                            @if($errors->has('branch_name'))
+                                              {{ $errors->first('branch_name') }}
+                                            @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_address">عنوان الفرع</label>
-                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branch_address"><span class="master_message color--fadegreen">message </span>
+                                        <input class="master_input" type="text" placeholder="عنوان الفرع..." id="branch_address" name="branch_address">
+                                        <span class="master_message color--fadegreen">
+                                            @if($errors->has('branch_address'))
+                                              {{ $errors->first('branch_address') }}
+                                            @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -176,21 +152,28 @@
                            @foreach($countries as $nationality)
                             <option value="{{$nationality->id}}">{{$nationality->name}}</option>
                             @endforeach
-                                        </select><span class="master_message color--fadegreen">message</span>
+                                        </select>
+                                        <span class="master_message color--fadegreen">
+                                          @if($errors->has('branch_country'))
+                                            {{ $errors->first('branch_country') }}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="branch_city">المدينة </label>
-                                    <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
-                          @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}">{{$city->name}}</option>
-                            @endforeach
-                          </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('branch_city'))
-                                    {{ $errors->first('branch_city')}}
-                                    @endif</span>
+                                        <select name="branch_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                                        <option value="choose" selected disabled>ختيار المدينة</option>
+                                          @foreach($work_sector_areas as $city)
+                                            <option value="{{$city->id}}">{{$city->name}}</option>
+                                          @endforeach
+                                        </select>
+                                        <span class="master_message color--fadegreen">
+                                          @if ($errors->has('branch_city'))
+                                            {{ $errors->first('branch_city')}}
+                                          @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -510,17 +493,17 @@
                 </div>
               </div>
 
-              <!-- Edit Modal  -->
-@if(!empty($branches))
-     <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
+      <!-- Edit Modal  -->
+        @if(!empty($branches))
+               <div class="remodal" data-remodal-id="edit_branch" role="dialog" aria-labelledby="modal3Title" aria-describedby="modal3Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <div class="row">
                                   <div class="col-xs-12">
                               <form role="form" action="{{route('branches_edit')}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                                   {{csrf_field()}}<form >
-                    <input type="hidden" id="branch_id_edit" name="branch_id_edit">
-                    <input type="hidden"  name="office_id" value="{{$office->id}}">               
+                                   {{csrf_field()}}
+                                  <input type="hidden" id="branch_id_edit" name="branch_id_edit">
+                                  <input type="hidden"  name="office_id" value="{{$office->id}}">               
                                     <h3>اضافة / تعديل فرع</h3>
                                     <div class="col-md-4 col-sm-6 col-xs-12">
                                       <div class="master_field">
@@ -647,6 +630,45 @@
     });
     });
   </script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+  $('.exclude').click(function(){
+    var office_id = '{{$office->id or ''}}';
+    var _token = '{{csrf_token()}}';
+    swal({
+      title: "هل أنت متأكد؟",
+      text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'نعم متأكد!',
+      cancelButtonText: "إلغاء",
+      closeOnConfirm: false,
+      closeOnCancel: false
+    },
+    function(isConfirm){
+      if (isConfirm){
+       $.ajax({
+         type:'POST',
+         url:'{{url('offices_destroy_post')}}'+'/'+office_id,
+         data:{_token:_token},
+         success:function(data){
+          // $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
+          location.href= '{{route('offices')}}';
+        }
+      });
+       swal("تم الحذف!", "تم الحذف بنجاح", "success");
+     } else {
+      swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+    }
+  });
+  });
+
+});
+
+</script>
 
  @endsection
 

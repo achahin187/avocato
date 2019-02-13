@@ -1,158 +1,6 @@
 @extends('layout.app')
 @section('content')
-<script>
-  $(document).ready(function(){
-
-    $('.noti').click(function(){
-      // var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
-      // var _token = '{{csrf_token()}}';
-      $('[data-remodal-id=lawyer_notification]').remodal().open();
-      // alert(lawyer_id);
-// $(document).on('confirmation', '.remodal', function () {
-//         var noti = $('#nots').val(); 
-//         var time = $("input[name=date]").val();
-//          $.ajax({
-//            type:'POST',
-//            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
-//            data:{notific:noti,noti_date:time,_token:_token},
-//            success:function(data){
-//             // alert(data);
-//             location.reload();
-//           }
-//         });
-
-// });
-          });
-
-        $('.noti-all').click(function(){
-      var selectedIds = $("input:checkbox:checked").map(function(){
-        return $(this).closest('tr').attr('data-lawyer-id');
-      }).get();
-      if(selectedIds.length <= 0) {
-        confirm('إختر محامى على الأقل لإرسال تنبيه');
-      }
-      else{
-        
-      var _token = '{{csrf_token()}}';
-      $('[data-remodal-id=lawyer_notifications]').remodal().open();
-$(document).on('confirmation', '#two', function () {
-  // alert(selectedIds);
-        var noti = $('#nots2').val(); 
-        var time = $("input[name=date2]").val();
-         $.ajax({
-           type:'POST',
-           url:'{{url('notification_for_lawyers')}}',
-           data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
-           success:function(data){
-            // alert(data);
-            location.reload();
-          }
-        });
-
-});
-      }
-          });
-
-
-    $('.btn-warning-cancel').click(function(){
-      var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
-      var _token = '{{csrf_token()}}';
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-         $.ajax({
-           type:'POST',
-           url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
-           data:{_token:_token},
-           success:function(data){
-            $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
-          }
-        });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
-       } else {
-        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-      }
-    });
-    });
-
-
-    $('.btn-warning-cancel-all').click(function(){
-      var selectedIds = $("input:checkbox:checked").map(function(){
-        return $(this).closest('tr').attr('data-lawyer-id');
-      }).get();
-      var _token = '{{csrf_token()}}';
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-         $.ajax({
-           type:'POST',
-           url:'{{route('lawyers_destroy_all')}}',
-           data:{ids:selectedIds,_token:_token},
-           success:function(data){
-            $.each( selectedIds, function( key, value ) {
-              $('tr[data-lawyer-id='+value+']').fadeOut();
-            });
-          }
-        });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
-       } else {
-        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-      }
-    });
-    });
-
-    $('.excel-btn').click(function(){
-     var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
-     var selectedIds = $("input:checkbox:checked").map(function(){
-      return $(this).closest('tr').attr('data-lawyer-id');
-    }).get();
-     $.ajax({
-       type:'GET',
-       url:'{{route('lawyers_excel')}}',
-       data:{ids:selectedIds,filters:filter},
-       success:function(response){
-        swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-        // var a = document.createElement("a");
-        // a.href = response.file; 
-        // a.download = response.name+'.xlsx';
-        // document.body.appendChild(a);
-        // a.click();
-        // a.remove();
-        location.href = response;
-      }
-    });
-   });
-
-        window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove(); 
-            });
-        }, 4000);
-
-  });
-</script>
 <div class="row">
-
   <div class="col-lg-12">
     <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
       <div class="row">
@@ -404,5 +252,155 @@ $(document).on('confirmation', '#two', function () {
       </div>
     </div>
 
-
+    <script>
+      $(document).ready(function(){
+    
+        $('.noti').click(function(){
+          // var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
+          // var _token = '{{csrf_token()}}';
+          $('[data-remodal-id=lawyer_notification]').remodal().open();
+          // alert(lawyer_id);
+    // $(document).on('confirmation', '.remodal', function () {
+    //         var noti = $('#nots').val(); 
+    //         var time = $("input[name=date]").val();
+    //          $.ajax({
+    //            type:'POST',
+    //            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
+    //            data:{notific:noti,noti_date:time,_token:_token},
+    //            success:function(data){
+    //             // alert(data);
+    //             location.reload();
+    //           }
+    //         });
+    
+    // });
+              });
+    
+            $('.noti-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-lawyer-id');
+          }).get();
+          if(selectedIds.length <= 0) {
+            confirm('إختر محامى على الأقل لإرسال تنبيه');
+          }
+          else{
+            
+          var _token = '{{csrf_token()}}';
+          $('[data-remodal-id=lawyer_notifications]').remodal().open();
+          $(document).on('confirmation', '#two', function () {
+          // alert(selectedIds);
+            var noti = $('#nots2').val(); 
+            var time = $("input[name=date2]").val();
+             $.ajax({
+               type:'POST',
+               url:'{{url('notification_for_lawyers')}}',
+               data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
+               success:function(data){
+                // alert(data);
+                location.reload();
+              }
+            });
+    
+        });
+          }
+              });
+    
+    
+        $('.btn-warning-cancel').click(function(){
+          var lawyer_id = $(this).closest('tr').attr('data-lawyer-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
+              }
+            });
+             swal("تم الحذف!", "تم الحذف بنجاح", "success");
+           } else {
+            swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+          }
+        });
+        });
+    
+    
+        $('.btn-warning-cancel-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-lawyer-id');
+          }).get();
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{route('lawyers_destroy_all')}}',
+               data:{ids:selectedIds,_token:_token},
+               success:function(data){
+                $.each( selectedIds, function( key, value ) {
+                  $('tr[data-lawyer-id='+value+']').fadeOut();
+                });
+              }
+            });
+             swal("تم الحذف!", "تم الحذف بنجاح", "success");
+           } else {
+            swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+          }
+        });
+        });
+    
+        $('.excel-btn').click(function(){
+         var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+         var selectedIds = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-lawyer-id');
+        }).get();
+         $.ajax({
+           type:'GET',
+           url:'{{route('lawyers_excel')}}',
+           data:{ids:selectedIds,filters:filter},
+           success:function(response){
+            swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+            // var a = document.createElement("a");
+            // a.href = response.file; 
+            // a.download = response.name+'.xlsx';
+            // document.body.appendChild(a);
+            // a.click();
+            // a.remove();
+            location.href = response;
+          }
+        });
+       });
+    
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                    $(this).remove(); 
+                });
+            }, 4000);
+    
+      });
+    </script>
     @endsection

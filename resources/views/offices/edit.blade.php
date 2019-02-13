@@ -22,6 +22,7 @@
                   {{\session('success')}}
                   </div>
                   @endif
+
               <form role="form" action="{{route('offices_update',$office->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                 {{csrf_field()}}
                 <input type="hidden" id="office_id" name="office_id" value="{{$office->id}}">
@@ -29,13 +30,13 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="office_code">كود المحامى</label>
-                          <input class="master_input" type="text" placeholder="كود المكتب .." id="office_code" disabled="true">
+                        <input class="master_input" type="text" placeholder="كود المكتب .." id="office_code" disabled="true" value="{{$office->code}}">
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="password">كلمة المرور</label>
-                          <input class="master_input" type="text" placeholder="كلمة المرور .." id="password" disabled="true">
+                          <input class="master_input" type="text" placeholder="كلمة المرور .." id="password" disabled="true" @if(isset($client_password->password)) value="{{ $client_password->password }}" @endif>
                         </div>
                       </div>
                       <div class="clearfix"></div>
@@ -351,11 +352,14 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
                              <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>ختيار المدينة</option>
+                          <option value="choose" selected disabled>اختر المدينة</option>
                           @foreach($work_sector_areas as $city)
-                            <option value="{{$city->id}}" @if($branch->city_id == $city->id)
-                          {!!'selected'!!}
-                          @endif >{{$city->name}}</option>
+                            <option value="{{$city->id}}" 
+                              @if($branch->city_id == $city->id)
+                                {!!'selected'!!}
+                              @endif >
+                                {{$city->name}}
+                            </option>
                             @endforeach
                           </select>
                           <span class="master_message color--fadegreen">
@@ -447,7 +451,7 @@ var branchNo = 0;
                                   +'<div class="master_field">'
                                   +'<label class="master_label mandatory" for="branch_city">المدينة </label>'
                               +' <select name="branches[branch_city][]"  class="master_input select2" id="branch_city_'+branchNo+'" data-placeholder="المدينة" style="width:100%;" ,>'
-                                +' <option value="choose" selected disabled>ختيار المدينة</option>'
+                                +' <option value="choose" selected disabled>اختر المدينة</option>'
                                   @foreach($work_sector_areas as $city)
                                   +'  <option value="{{$city->id}}">{{$city->name}}</option>'
                                     @endforeach
@@ -462,8 +466,7 @@ var branchNo = 0;
                               +' <label class="master_label" for="branch_email">البريد الالكترونى</label>'
                               +' <input class="master_input" type="email" placeholder="البريد الالكترونى" id="branch_email" name="branches[branch_email][]">'
                               +'</div></div>'                                           
-                                                  );
-
+                      );
               $("#branchNo").val(branchNo);
       });
      

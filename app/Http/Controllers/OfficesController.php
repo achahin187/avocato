@@ -25,7 +25,6 @@ use App\Geo_Cities;
 use App\SyndicateLevels;
 use App\OfficeBranches;
 
-
 class OfficesController extends Controller
 {
   /**
@@ -191,7 +190,7 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
-    $validator = Validator::make($request->all(), [
+      $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
       'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
@@ -229,12 +228,20 @@ class OfficesController extends Controller
       $syndicate_copy = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('syndicate_copy')->getClientOriginalExtension();
       Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
     }
-   
+    
+    //get current country id
+    $country = Session::get('country');
+    if($country == 1){ //Egypt
+      $office_phone = '+2'.$request->office_phone;   
+    }else{//Saudi Arabia
+      $office_phone = '+966'.$request->office_phone;
+    }
+
     $office = new Users;
     $office->name = $request->office_name ;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $request->office_phone;
+    $office->phone = $office_phone;
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
@@ -248,7 +255,7 @@ class OfficesController extends Controller
     $office->code = Helper::generateRandom(Users::class, 'code', 6);
     $office->save();
     $office->rules()->attach([15,5]);  //needed later
-    
+
     $office_details = new User_Details;
     $office_details->national_id = $request->national_id;
     $office_details->nationality_id = $request->nationality;
@@ -378,11 +385,7 @@ class OfficesController extends Controller
     $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
     $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
-
     $data['rates_user'] = $data['office']->rate()->with('rules')->get();
-    
-    
-    // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
     $data['work_sector_areas'] = Geo_Cities::all();
     $data['countries'] = Geo_Countries::all();
@@ -426,6 +429,7 @@ class OfficesController extends Controller
       $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
       $data['countries'] = Geo_Countries::all();
       $data['syndicate_levels'] = SyndicateLevels::all();
+      $data['client_password'] = ClientsPasswords::where('user_id',$id)->first();
       return view('offices.edit', $data);
   }
 
@@ -476,12 +480,20 @@ class OfficesController extends Controller
       $syndicate_copy = $destinationPath . '/' . $request->rep_name . time() . rand(111, 999) . '.' . Input::file('syndicate_copy')->getClientOriginalExtension();
       Input::file('syndicate_copy')->move($destinationPath, $syndicate_copy);
     }
+
+    //get current country id
+    $country = Session::get('country');
+    if($country == 1){ //Egypt
+      $office_phone = '+2'.$request->office_phone;   
+    }else{//Saudi Arabia
+      $office_phone = '+966'.$request->office_phone;
+    }
     
     $office = Users::where('id', $id)->first();
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $request->office_phone;
+    $office->phone = $office_phone;
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
@@ -586,31 +598,6 @@ class OfficesController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  // public function destroyGet($id)
-  // {
-  //   Helper::add_log(5, 19, $id);
-  //   $user = Users::find($id);
-  //   $user->delete();
-  //   return redirect()->route('lawyers')->with('success', 'تم حذف عضويه المحامى بنجاح');
-  // }
-
-  // public function destroyPost($id)
-  // {
-  //   Helper::add_log(5, 19, $id);
-  //   $user = Users::find($id);
-  //   $user->delete();
-  // }
-
-  // public function destroy_all()
-  // {
-  //   $ids = $_POST['ids'];
-  //   foreach ($ids as $id) {
-  //     Helper::add_log(5, 19, $id);
-  //     $user = Users::find($id);
-  //     $user->delete();
-  //   }
-  // }
-
 
   //create branch
  public function branch_create(Request $request)
@@ -630,7 +617,7 @@ class OfficesController extends Controller
 }
 
 public function branch_edit(Request $request)
-  { //dd($request->input());
+{
      $id = $request->branch_id_edit;
      $branch = OfficeBranches::find($id);
      $branch->office_id = $request->office_id;
@@ -645,14 +632,13 @@ public function branch_edit(Request $request)
 
 }
 
-public function branch_destroy($id)
+  public function branch_destroy($id)
   {
-    // Helper::add_log(5, 19, $id);
     $user = OfficeBranches::find($id);
     $user->delete();
   }
 
-    public function destroyPost($id)
+  public function destroyPost($id)
   {
     Helper::add_log(5, 21, $id);
     $user = Users::find($id);

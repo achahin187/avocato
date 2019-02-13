@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ClientsPasswords extends Model
 {
     use SoftDeletes;
+    protected $table = 'clients_passwords';
     protected $id   = 'id';
     protected $fillable = ['user_id', 'password', 'confirmation'];
     protected $dates = ['deleted_at'];
+
 
     // inverse one to one realation
     public function user() {

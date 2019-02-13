@@ -65,7 +65,7 @@ $(document).on('confirmation', '#two', function () {
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('offices_create')}}">إضافة مكتب</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--gray_d bradius--small border-btn master-btn" type="button" href="{{route('offices_create')}}">اضافة مكتب</a>
                       </div>
                     </div>
                   </div>

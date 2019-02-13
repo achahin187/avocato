@@ -12,21 +12,19 @@ class Geo_Cities extends Model
     protected $hidden = ['id', 'created_at', 'updated_at'];
     public $timestamps = true;
 
-        public function governorate()
+    public function governorate()
     {
         return $this->belongsTo('App\Geo_Governorates','governorate_id')->withDefault();
     }
-
-        public function courts()
+    public function courts()
     {
         return $this->hasMany('App\Courts','city_id');
     }
-        public function cases()
+    public function cases()
     {
         return $this->hasMany('App\Case_', 'geo_city_id');
     }
-
-        public function users_details()
+    public function users_details()
     {
         return $this->hasMany('App\User_Details','work_sector_area_id');
     }
