@@ -88,6 +88,11 @@ class LawyersController extends Controller
     $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    foreach($data['syndicate_levels'] as $content)
+    {
+      $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,1)) ? Helper::localizations('syndicate_levels','name',$content->id,1) : $content->name;
+
+    }
     return view('lawyers.lawyers_create', $data);
   }
 
@@ -428,6 +433,11 @@ class LawyersController extends Controller
     $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    foreach($data['syndicate_levels'] as $content)
+    {
+      $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,1)) ? Helper::localizations('syndicate_levels','name',$content->id,1) : $content->name;
+
+    }
     return view('lawyers.lawyers_edit', $data);
   }
 

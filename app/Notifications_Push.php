@@ -13,7 +13,7 @@ class Notifications_Push extends Model
 
     public function notification()
     {
-        return $this->belongsTo('App\notifications','notification_id');
+        return $this->belongsTo('App\Notifications','notification_id');
     }
      
 
