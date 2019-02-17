@@ -433,7 +433,7 @@ class OfficesController extends Controller
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
         'office_email' => 'required|email',
-        'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+        'office_phone' => 'required|unique:users,deleted_at,NULL',
         'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',
@@ -471,17 +471,11 @@ class OfficesController extends Controller
     //get current country id
     $country = Session::get('country');
     
-    if($country == 1){ //Egypt
-      $office_phone = '+2'.$request->office_phone;   
-    }else{//Saudi Arabia
-      $office_phone = '+966'.$request->office_phone;
-    }
-    
     $office = Users::where('id', $id)->first();
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $office_phone;
+    $office->phone = $request->office_phone;
     $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;

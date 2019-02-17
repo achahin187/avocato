@@ -370,7 +370,9 @@
                           </div>
                         </div>
                     </div>
-                      <div id="branches"></div>
+                      <div id="branches">
+                          <input type="hidden" id="branchNo" name="branchNo">
+                      </div>
                       <div class="col-sm-12">
                         <button class="btn" id="add_more_btn" type="button">اضافة فرع
                         </button>
@@ -395,7 +397,6 @@
 var i=0;
 var branchNo = 0;
 
- $("#branches").append('<input type="hidden" id="branchNo" name="branchNo" >');
       $('#add_more_btn').click(function(){
        
         i++;
