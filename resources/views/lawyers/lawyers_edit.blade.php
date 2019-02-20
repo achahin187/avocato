@@ -250,16 +250,13 @@
                           <option value="choose" selected disabled>اختر نوع العمل</option>
                           @foreach($types as $type)
                             <option
-                            <?php $r=0; ?>
+                          
                              @foreach($lawyer->rules as $rule)
                             {{$rule->id==$type->id ? 'selected':''}}
-                            @if($rule->id == 14)
-                              <?php $r=1; ?>
                             
-                            @endif
                             @endforeach
                             @if($type->id == 14 )
-                            @if($r == 1)
+                            @if(Helper::is_lawyer_mobile($lawyer->rules))
                             value="{{$type->id}}">{{$type->name_ar}}
                             @endif
                             @else
