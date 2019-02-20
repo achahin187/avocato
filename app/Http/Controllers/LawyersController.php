@@ -254,6 +254,7 @@ class LawyersController extends Controller
       'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
+      'note' => 'min:1|max:100',
     ]);
 
     if ($validator->fails()) {
@@ -470,6 +471,7 @@ class LawyersController extends Controller
       'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
+      'note' => 'min:1|max:100',
     ]);
 
     if ($validator->fails()) {
