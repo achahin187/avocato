@@ -157,7 +157,8 @@
                       <div class="col-md-8 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="lawyer_info">نبذة عن المحامي</label>
-                          <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea><span class="master_message color--fadegreen">
+                          <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea>
+                          <span class="master_message color--fadegreen">
                                   @if ($errors->has('note'))
                                     {{ $errors->first('note')}}
                                     @endif</span>
@@ -249,10 +250,22 @@
                           <option value="choose" selected disabled>اختر نوع العمل</option>
                           @foreach($types as $type)
                             <option
+                            <?php $r=0; ?>
                              @foreach($lawyer->rules as $rule)
                             {{$rule->id==$type->id ? 'selected':''}}
+                            @if($rule->id == 14)
+                              <?php $r=1; ?>
+                            
+                            @endif
                             @endforeach
-                            value="{{$type->id}}">{{$type->name_ar}}</option>
+                            @if($type == 14 )
+                            @if($r == 1)
+                            value="{{$type->id}}">{{$type->name_ar}}
+                            @endif
+                            @else
+                            value="{{$type->id}}">{{$type->name_ar}}
+                            @endif
+                            </option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_type'))
