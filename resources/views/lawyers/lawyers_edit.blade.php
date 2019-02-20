@@ -258,7 +258,7 @@
                             
                             @endif
                             @endforeach
-                            @if($type == 14 )
+                            @if($type->id == 14 )
                             @if($r == 1)
                             value="{{$type->id}}">{{$type->name_ar}}
                             @endif
