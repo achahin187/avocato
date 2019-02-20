@@ -421,7 +421,7 @@ class LawyersController extends Controller
    */
   public function edit($id)
   {
-    $data['lawyer'] = Users::find($id);
+    $data['lawyer'] = Users::where('id',$id)->with('rules')->first();
 
     if( $data['lawyer'] == NULL ) {
       Session::flash('warning', 'العقد او الصيغة غير موجود');
