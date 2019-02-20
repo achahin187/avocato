@@ -458,7 +458,7 @@ class LawyersController extends Controller
       'nationality' => 'required',
       'consultation_price' => 'required|numeric',
       'currency_id'=>'required',
-      'syndicate_level_id'=>'required',
+      // 'syndicate_level_id'=>'required',
       'work_sector_area' => 'required',
       'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
