@@ -256,7 +256,7 @@
                             
                             @endforeach
                             @if($type->id == 14 )
-                            @if(Helper::is_lawyer_mobile($lawyer->rules))
+                            @if(Helper::is_lawyer_mobile($lawyer->id))
                             value="{{$type->id}}">{{$type->name_ar}}
                             @endif
                             @else
