@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Session;
 
 class LawyersExport implements FromCollection,WithEvents
 {
@@ -43,8 +44,10 @@ public  function collection()
 
     if(is_null($this->ids)){
 
-        $lawyers = Users::whereHas('rules', function($q){
-        $q->where('rule_id',[5]);
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function($q){
+        $q->where('rule_id',[5])
+          ->where('rule_id','!=',15);
+
     })->orderBy('full_name')->get();
     foreach($lawyers as $lawyer){
         if(isset($lawyer->user_detail))
