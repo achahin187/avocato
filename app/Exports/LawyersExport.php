@@ -49,6 +49,14 @@ public  function collection()
           ->where('rule_id','!=',15);
 
     })->orderBy('full_name')->get();
+    foreach($lawyers as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($lawyers[$key]);
+      }
+
+    }
     foreach($lawyers as $lawyer){
         if(isset($lawyer->user_detail))
         $lawyer['nationality'] = Helper::localizations('geo_countires','nationality',$lawyer->user_detail->nationality_id);
