@@ -67,6 +67,14 @@ class LawyersController extends Controller
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
+    foreach($data['lawyers'] as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($data['lawyers'][$key]);
+      }
+
+    }
     $data['test'] = json_encode([
       ['lat' => 30.042701, 'lang' => 31.432662],
       ['lat' => 30.036273, 'lang' => 31.432447],
