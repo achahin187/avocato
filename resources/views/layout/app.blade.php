@@ -816,7 +816,7 @@ if (currentIndex === 5) { //if last step
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places&callback=initMap&language=ar" type="text/javascript"></script>
   
   {{-- Map script --}}
-   <script>
+   <!-- <script>
       var map;
       function initMap() {
         @if( isset($data->latitude) && isset($data->longitude) ) 
@@ -941,7 +941,7 @@ function bindDataToForm(address,lat,lng){
    document.getElementById('lng').value = lng;
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-</script>
+</script> -->
 
 
 
