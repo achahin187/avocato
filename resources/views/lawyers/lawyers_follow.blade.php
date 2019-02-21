@@ -6,45 +6,60 @@
 function initMap() {
 
 
- @foreach($lawyers as $lawyer)
+//  @foreach($lawyers as $lawyer)
+//   var geocoder = new google.maps.Geocoder;
+//   @if($lawyer->latitude == null )
+  
+//     $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
+  
+//   @else
+//     geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+// $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
+// });
+  
+//   @endif
+
+// @endforeach
+
+
+
+  var uluru = [];
+  @foreach($lawyers as $lawyer)
   var geocoder = new google.maps.Geocoder;
   @if($lawyer->latitude == null )
   
     $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
   
   @else
-    geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
+  geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
 });
-  
-  @endif
-
-@endforeach
-
-
-
-  var uluru = [];
-  @foreach($lawyers as $lawyer)
-  @if($lawyer->latitude != null )
- uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
+//  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
   
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
   });
-  var i =0;
+
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
+    map: map
+  });
+
+  // var i =0;
   @endif
 
 @endforeach
-  @foreach($lawyers as $lawyer)
-  @if($lawyer->latitude != null )
-  var marker = new google.maps.Marker({
-    position: uluru[i].latlng,
-    map: map
-  });
-  i++;
-  @endif
-  @endforeach
+  // @foreach($lawyers as $lawyer)
+  // @if($lawyer->latitude != null )
+  // var marker = new google.maps.Marker({
+  //   position: uluru[i].latlng,
+  //   map: map
+  // });
+  // i++;
+  // @endif
+  // @endforeach
+
 }
 
 
