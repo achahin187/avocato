@@ -32,7 +32,9 @@ function initMap() {
   
   @else
   geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+    if (status == 'OK') {
 $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
+    }
 });
 //  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
   
