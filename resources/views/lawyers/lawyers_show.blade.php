@@ -19,9 +19,9 @@ function initMap() {
 }
 
 </script>
-<script async defer
+<!-- <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
-</script>
+</script> -->
 
 <script type="text/javascript">
     $(document).ready(function(){
