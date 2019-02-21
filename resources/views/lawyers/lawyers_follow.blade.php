@@ -32,7 +32,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                     </div>
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> 
                     <div id="map_subscribtion" hidden style="font-color:red;"> لقد تم انتهاء اشتراكك فى خرائط جوجل برجاء تجديد الاشتراك</div>
-                    <div id="map" style="height: 140px;width:1140px;"></div>
+                    <div id="map" style="height: 160px;width:1160px;"></div>
                       <hr>
                       <div class="main-title-conts">
                         <div class="caption">
