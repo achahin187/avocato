@@ -31,6 +31,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
                     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> 
+                    <div id="map_subscribtion" hidden>لقد تم انتهاء اشتراكك فى خرائط جوجل</div>
                     <div id="map" style="height: 140px;width:1140px;"></div>
                       <hr>
                       <div class="main-title-conts">
@@ -138,7 +139,11 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
       }
     }
     else {
-      window.alert('Geocoder failed due to: ' + status);
+      if(status == 'OVER_QUERY_LIMIT')
+      {
+        $('#map_subscribtion').show();
+      }
+      // window.alert('Geocoder failed due to: ' + status);
     }
 });
 @if($lawyer->latitude != null )
