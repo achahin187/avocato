@@ -1,75 +1,10 @@
 @extends('layout.app')
 @section('content')
 
-<script>
 
-function initMap() {
-
-
-//  @foreach($lawyers as $lawyer)
-//   var geocoder = new google.maps.Geocoder;
-//   @if($lawyer->latitude == null )
-  
-//     $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
-  
-//   @else
-//     geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-// $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
-// });
-  
-//   @endif
-
-// @endforeach
-
-
-
-  var uluru = [];
-  @foreach($lawyers as $lawyer)
-  var geocoder = new google.maps.Geocoder;
-  @if($lawyer->latitude == null )
-  
-    $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
-  
-  @else
-  geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-    if (status == 'OK') {
-$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
-    }
-});
-//  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
-  
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 10,
-    center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
-  });
-
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
-    map: map
-  });
-
-  // var i =0;
-  @endif
-
-@endforeach
-  // @foreach($lawyers as $lawyer)
-  // @if($lawyer->latitude != null )
-  // var marker = new google.maps.Marker({
-  //   position: uluru[i].latlng,
-  //   map: map
-  // });
-  // i++;
-  // @endif
-  // @endforeach
-
-}
-
-
-
-</script>
-<script async defer
+<!-- <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
-</script>
+</script> -->
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
@@ -157,4 +92,73 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                   </div>
                 </div>
               </div>
+@endsection
+
+@section('js')
+<script>
+
+function initMap() {
+
+
+//  @foreach($lawyers as $lawyer)
+//   var geocoder = new google.maps.Geocoder;
+//   @if($lawyer->latitude == null )
+  
+//     $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
+  
+//   @else
+//     geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+// $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
+// });
+  
+//   @endif
+
+// @endforeach
+
+
+
+  var uluru = [];
+  @foreach($lawyers as $lawyer)
+  var geocoder = new google.maps.Geocoder;
+  @if($lawyer->latitude == null )
+  
+    $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
+  
+  @else
+  geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+    if (status == 'OK') {
+$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
+    }
+});
+//  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
+  
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
+  });
+
+  var marker = new google.maps.Marker({
+    position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
+    map: map
+  });
+
+  // var i =0;
+  @endif
+
+@endforeach
+  // @foreach($lawyers as $lawyer)
+  // @if($lawyer->latitude != null )
+  // var marker = new google.maps.Marker({
+  //   position: uluru[i].latlng,
+  //   map: map
+  // });
+  // i++;
+  // @endif
+  // @endforeach
+
+}
+
+
+
+</script>
 @endsection
