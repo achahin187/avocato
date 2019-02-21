@@ -99,7 +99,13 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
 <script>
 
 function initMap() {
-
+  var giza = {lat: 30.042701, lng: 31.432662};
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: giza,
+            zoom: 11,
+            mapTypeId: 'roadmap',
+            mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
+          })
 
 //  @foreach($lawyers as $lawyer)
 //   var geocoder = new google.maps.Geocoder;
@@ -131,9 +137,9 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
         window.alert('No results found');
       }
     }
-    else {
-      window.alert('Geocoder failed due to: ' + status);
-    }
+    // else {
+    //   window.alert('Geocoder failed due to: ' + status);
+    // }
 });
 @if($lawyer->latitude != null )
  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
