@@ -14,7 +14,7 @@ function initMap() {
   
   @else
     geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
+$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
 });
   
   @endif
