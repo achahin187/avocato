@@ -120,14 +120,18 @@ function initMap() {
   var uluru = [];
   @foreach($lawyers as $lawyer)
   var geocoder = new google.maps.Geocoder;
-  // @if($lawyer->latitude == null )
   
-  //   $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
-  
-  // @else
   geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
     if (status == 'OK') {
+      if (results[0]) {
 $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
+      }
+      else {
+        window.alert('No results found');
+      }
+    }
+    else {
+      window.alert('Geocoder failed due to: ' + status);
     }
 });
 //  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
@@ -142,8 +146,7 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
     map: map
   });
 
-  // var i =0;
-  // @endif
+ 
 
 @endforeach
   // @foreach($lawyers as $lawyer)
