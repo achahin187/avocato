@@ -30,7 +30,8 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       <div class="actions"><a class="color--white bgcolor--fadeorange bradius--small bshadow--0 master-btn" type="button" href="">{{date('Y - m - d  H:i:s')}}</a>
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
-                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> <div id="map" style="height: 140px;width:1150px;"></div>
+                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> 
+                    <div id="map" style="height: 140px;width:1100px;"></div>
                       <hr>
                       <div class="main-title-conts">
                         <div class="caption">
@@ -134,13 +135,14 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
       window.alert('Geocoder failed due to: ' + status);
     }
 });
+@if($lawyer->latitude != null )
  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
   
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
   });
-
+@endif
   // var marker = new google.maps.Marker({
   //   position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
   //   map: map
@@ -176,9 +178,11 @@ for (i = 0; i < uluru.length; i++) {
     }
   })(marker, i));
 }
-}
+
 
 }
+
+
 
 
 
