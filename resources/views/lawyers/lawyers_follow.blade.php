@@ -45,9 +45,9 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
 
 
 </script>
-<script async defer
+<!-- <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
-</script>
+</script> -->
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
