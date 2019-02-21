@@ -134,17 +134,17 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
       window.alert('Geocoder failed due to: ' + status);
     }
 });
-//  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
+ uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
   
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
   });
 
-  var marker = new google.maps.Marker({
-    position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
-    map: map
-  });
+  // var marker = new google.maps.Marker({
+  //   position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
+  //   map: map
+  // });
 
  
 
@@ -158,6 +158,25 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
   // i++;
   // @endif
   // @endforeach
+
+  var infowindow = new google.maps.InfoWindow({});
+
+var marker, i;
+
+for (i = 0; i < uluru.length; i++) {
+  marker = new google.maps.Marker({
+    position: uluru[i].latlng,
+    map: map
+  });
+
+  google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+      infowindow.setContent(locations[i][0]);
+      infowindow.open(map, marker);
+    }
+  })(marker, i));
+}
+}
 
 }
 
