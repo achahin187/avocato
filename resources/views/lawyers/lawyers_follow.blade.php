@@ -8,9 +8,17 @@ function initMap() {
 
  @foreach($lawyers as $lawyer)
   var geocoder = new google.maps.Geocoder;
-geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-$('tr[data-lawyer-id="{{$lawyer->id}}"] .location').text(results[0].formatted_address);
+  @if($lawyer->latitude == null )
+  {
+    $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
+  }
+  @else{
+    geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
 });
+  }
+  @endif
+
 @endforeach
 
 
