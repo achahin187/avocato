@@ -137,9 +137,9 @@ $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_add
         window.alert('No results found');
       }
     }
-    // else {
-    //   window.alert('Geocoder failed due to: ' + status);
-    // }
+    else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
 });
 @if($lawyer->latitude != null )
  uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
