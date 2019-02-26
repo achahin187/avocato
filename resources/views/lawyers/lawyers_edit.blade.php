@@ -115,7 +115,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_mob">رقم الهاتف الجوال</label>
-                          <input value="{{$lawyer->mobile}}" name="mobile" class="master_input" type="text" placeholder="رقم الهاتف الجوال" id="lawyer_mob"><span class="master_message color--fadegreen">
+                          <input value="{{$lawyer->mobile}}" name="mobile" class="master_input" type="text" placeholder="+201200000000 or +966100000000" id="lawyer_mob"><span class="master_message color--fadegreen">
                                   @if ($errors->has('mobile'))
                                     {{ $errors->first('mobile')}}
                                     @endif</span>
