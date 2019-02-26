@@ -420,7 +420,7 @@
               </div>
   
 @endsection
-section('js')
+@section('js')
 <script>
   $(document).ready(function(){
 
