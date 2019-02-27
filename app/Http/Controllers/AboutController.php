@@ -152,6 +152,7 @@ class AboutController extends Controller
     public function terms_edit()
     {
         $data['terms']= Fixed_Pages::where('page_name','terms')->first();
+        dd($data);
         $data['languages']= Languages::all();
         return view('terms_edit',$data);
     }
