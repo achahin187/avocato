@@ -105,7 +105,7 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_tel">رقم الهاتف</label>
+                          <label class="master_label " for="lawyer_tel">رقم الهاتف</label>
                           <input value="{{$lawyer->phone}}" name="phone" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
                                    @if ($errors->has('phone'))
                                     {{ $errors->first('phone')}}
@@ -227,7 +227,7 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>
+                          <label class="master_label " for="work_start">تاريخ الالتحاق بالعمل</label>
                           <input  readonly value="{{$lawyer->user_detail->join_date}}" name="join_date" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الالتحاق بالعمل هنا" id="work_start"><span class="master_message color--fadegreen">
                                   @if ($errors->has('join_date'))
                                     {{ $errors->first('join_date')}}
