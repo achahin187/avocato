@@ -533,8 +533,11 @@ class LawyersController extends Controller
     $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
     $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
     $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
-
-    $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
+    if(isset($request->join_date))
+    {
+      $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
+    }
+   
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
     else
