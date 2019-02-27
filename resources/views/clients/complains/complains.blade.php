@@ -136,7 +136,7 @@
                   <tr data-com="{{ $complain->id }}">
                     <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $complain->id }}"/></span></td>
                     <td><span class="cellcontent">
-                      {{ $complain->code ? $complain->code : 'لا يوجد' }}
+                      {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->code : 'لا يوجد') : $complain->name }}
                     </span></td>
                     <td><span class="cellcontent">
                       {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : 'لا يوجد') : $complain->name }}
