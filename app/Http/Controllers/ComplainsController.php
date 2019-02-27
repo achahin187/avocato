@@ -208,7 +208,8 @@ class ComplainsController extends Controller
         $complains = Feedback::whereBetween('created_at', [$dd_from, $dd_to]);
 
         if($request->code) {
-            $complains = $complains->where('user_id', $request->code);
+            $ids = Users::where('code',$request->code)->pluck('id');
+            $complains = $complains->where('user_id', $ids);
         }
 
         if($request->name) {
