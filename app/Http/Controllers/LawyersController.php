@@ -493,7 +493,10 @@ class LawyersController extends Controller
     $lawyer->name = $request->lawyer_name;
     $lawyer->full_name = $request->lawyer_name;
     $lawyer->address = $request->address;
+    if(isset($request->phone))
+    {
     $lawyer->phone = $request->phone;
+    }
     $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
     $lawyer->note = $request->note;
