@@ -215,7 +215,7 @@ class ComplainsController extends Controller
         
 
         if(isset($request->code)) {
-            $ids = Users::where('code',$request->code)->pluck('id');
+            $ids = Users::where('code', 'LIKE', '%'.$request->code.'%')->pluck('id');
             $complains = $complains->where('user_id', $ids);
         }
 
