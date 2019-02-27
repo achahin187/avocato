@@ -202,10 +202,17 @@ class ComplainsController extends Controller
     public function filter(Request $request) 
     {
         // set timedate
+        if($request->date_from) {
         $dd_from = Helper::checkDate($request->date_from, 1);
+        }
+        if($request->date_to) {
         $dd_to   = Helper::checkDate($request->date_to, 2);
-
-        $complains = Feedback::whereBetween('created_at', [$dd_from, $dd_to]);
+        }
+        if(isset($request->date_from) && isset($request->date_to))
+        {
+            $complains = Feedback::whereBetween('created_at', [$dd_from, $dd_to]);
+        }
+        
 
         if($request->code) {
             $ids = Users::where('code',$request->code)->pluck('id');
