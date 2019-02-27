@@ -471,7 +471,7 @@ class LawyersController extends Controller
       'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
-      'phone' => 'digits_between:1,10',
+      'phone' => 'digits_between:0,10',
       'mobile' => 'required|min:1|max:13',
       'email' => 'required|email|max:40',
       'is_active' => 'required',
