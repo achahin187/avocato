@@ -67,6 +67,14 @@ class LawyersController extends Controller
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
+    foreach($data['lawyers'] as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($data['lawyers'][$key]);
+      }
+
+    }
     $data['test'] = json_encode([
       ['lat' => 30.042701, 'lang' => 31.432662],
       ['lat' => 30.036273, 'lang' => 31.432447],
@@ -242,7 +250,7 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+      'mobile' => 'required|min:1|max:13|unique:users,mobile,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
@@ -254,6 +262,7 @@ class LawyersController extends Controller
       'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
+      'note' => 'min:1|max:100',
     ]);
 
     if ($validator->fails()) {
@@ -420,7 +429,7 @@ class LawyersController extends Controller
    */
   public function edit($id)
   {
-    $data['lawyer'] = Users::find($id);
+    $data['lawyer'] = Users::where('id',$id)->with('rules')->first();
 
     if( $data['lawyer'] == NULL ) {
       Session::flash('warning', 'العقد او الصيغة غير موجود');
@@ -457,19 +466,20 @@ class LawyersController extends Controller
       'nationality' => 'required',
       'consultation_price' => 'required|numeric',
       'currency_id'=>'required',
-      'syndicate_level_id'=>'required',
+      // 'syndicate_level_id'=>'required',
       'work_sector_area' => 'required',
       'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
-      'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12',
+      'phone' => 'digits_between:1,10',
+      'mobile' => 'required|min:1|max:13',
       'email' => 'required|email|max:40',
       'is_active' => 'required',
       'work_sector' => 'required',
-      'join_date' => 'required',
+      // 'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
+      'note' => 'min:1|max:100',
     ]);
 
     if ($validator->fails()) {

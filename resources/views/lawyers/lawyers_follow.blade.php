@@ -1,45 +1,10 @@
 @extends('layout.app')
 @section('content')
 
-<script>
 
-function initMap() {
-
-
- @foreach($lawyers as $lawyer)
-  var geocoder = new google.maps.Geocoder;
-geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
-$('tr[data-lawyer-id="{{$lawyer->id}}"] .location').text(results[0].formatted_address);
-});
-@endforeach
-
-
-
-  var uluru = [];
-  @foreach($lawyers as $lawyer)
-   uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
-   @endforeach
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 10,
-    center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
-  });
-  var i =0;
-
-  @foreach($lawyers as $lawyer)
-  var marker = new google.maps.Marker({
-    position: uluru[i].latlng,
-    map: map
-  });
-  i++;
-  @endforeach
-}
-
-
-
-</script>
-<script async defer
+<!-- <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
-</script>
+</script> -->
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
@@ -65,7 +30,9 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                       <div class="actions"><a class="color--white bgcolor--fadeorange bradius--small bshadow--0 master-btn" type="button" href="">{{date('Y - m - d  H:i:s')}}</a>
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
-                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> <div id="map" style="height: 140px;width:1150px;"></div>
+                    <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"> 
+                    <div id="map_subscribtion" hidden style="color:red;"> لقد تم انتهاء اشتراكك فى خرائط جوجل برجاء تجديد الاشتراك</div>
+                    <div id="map" style="height: 160px;width:1160px;"></div>
                       <hr>
                       <div class="main-title-conts">
                         <div class="caption">
@@ -127,4 +94,108 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                   </div>
                 </div>
               </div>
+@endsection
+
+@section('js')
+<script>
+
+function initMap() {
+  var giza = {lat: 30.042701, lng: 31.432662};
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: giza,
+            zoom: 11,
+            mapTypeId: 'roadmap',
+            mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
+          })
+
+//  @foreach($lawyers as $lawyer)
+//   var geocoder = new google.maps.Geocoder;
+//   @if($lawyer->latitude == null )
+  
+//     $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text('لا يوجد مكان محالى');
+  
+//   @else
+//     geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+// $('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results.formatted_address);
+// });
+  
+//   @endif
+
+// @endforeach
+
+
+
+  var uluru = [];
+  @foreach($lawyers as $lawyer)
+  var geocoder = new google.maps.Geocoder;
+  
+  geocoder.geocode({'location': new google.maps.LatLng("{{$lawyer->latitude}}","{{$lawyer->longtuide}}")}, function(results, status) {
+    if (status == 'OK') {
+      if (results[0]) {
+$('tr[data-lawyer-id="{{$lawyer->id}}"].location').text(results[0].formatted_address);
+      }
+      else {
+        window.alert('No results found');
+      }
+    }
+    else {
+      if(status == 'OVER_QUERY_LIMIT')
+      {
+        $('#map_subscribtion').show();
+      }
+      // window.alert('Geocoder failed due to: ' + status);
+    }
+});
+@if($lawyer->latitude != null )
+ uluru.push({latlng: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})});
+  
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 10,
+    center: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}})
+  });
+@endif
+  // var marker = new google.maps.Marker({
+  //   position: new google.maps.LatLng({{$lawyer->latitude}},{{$lawyer->longtuide}}),
+  //   map: map
+  // });
+
+ 
+
+@endforeach
+  // @foreach($lawyers as $lawyer)
+  // @if($lawyer->latitude != null )
+  // var marker = new google.maps.Marker({
+  //   position: uluru[i].latlng,
+  //   map: map
+  // });
+  // i++;
+  // @endif
+  // @endforeach
+
+  var infowindow = new google.maps.InfoWindow({});
+
+var marker, i;
+
+for (i = 0; i < uluru.length; i++) {
+  marker = new google.maps.Marker({
+    position: uluru[i].latlng,
+    map: map
+  });
+
+  google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    return function () {
+      infowindow.setContent(locations[i][0]);
+      infowindow.open(map, marker);
+    }
+  })(marker, i));
+}
+
+
+}
+
+
+
+
+
+</script>
 @endsection

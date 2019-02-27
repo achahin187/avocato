@@ -73,8 +73,12 @@
                               <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i><span class="badge badge-default"> {{$counter}}</span></a>
                                 <ul class="dropdowny-menu" role="menu">
                                   @foreach($notes as $note)
+<<<<<<< HEAD
                                   <li @if($note->is_read==1)class="read" @endif data-notification-id={{ $note->id }}>
                                   <a class="notification" href="{{route($note->url,$note->item_id)}}">
+=======
+                                  <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if($note->url != null || $note->url != '') href="{{route($note->url,$note->item_id)}}" @endif >
+>>>>>>> cbdb8e4e523a1a807c2fd781872ff977b954f80a
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                     <p>{{$note->msg}}</p>
                                     <span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span>
@@ -817,7 +821,7 @@ if (currentIndex === 5) { //if last step
 
 
     {{-- Google maps API key --}}
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places&callback=initMap" type="text/javascript"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places&callback=initMap&language=ar" type="text/javascript"></script>
   
   {{-- Map script --}}
    <script>
@@ -944,7 +948,7 @@ function bindDataToForm(address,lat,lng){
    document.getElementById('lat').value = lat;
    document.getElementById('lng').value = lng;
 }
-google.maps.event.addDomListener(window, 'load', initialize);
+// google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 
 
