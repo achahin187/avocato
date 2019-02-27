@@ -83,7 +83,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','aboutus')->first();
+        $en = Fixed_Pages::where('page_name','aboutus')->first()['content'];
         return $en;
         }
         else{
@@ -97,7 +97,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','vision')->first();
+        $en = Fixed_Pages::where('page_name','vision')->first()['content'];
         return $en;
         }
         else{
@@ -111,7 +111,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','mission')->first();
+        $en = Fixed_Pages::where('page_name','mission')->first()['content'];
         return $en;
         }
         else{
@@ -125,7 +125,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','terms')->first();
+        $en = Fixed_Pages::where('page_name','terms')->first()['content'];
         return $en;
         }
         else{
@@ -139,7 +139,7 @@ class AboutController extends Controller
         if($lang_id==2)
         {
             
-        $en = Fixed_Pages::where('page_name','privacy')->first();
+        $en = Fixed_Pages::where('page_name','privacy')->first()['content'];
         return $en;
         }
         else{
