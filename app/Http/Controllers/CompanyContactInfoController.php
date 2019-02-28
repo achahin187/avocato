@@ -97,12 +97,11 @@ class CompanyContactInfoController extends Controller
     public function getLocalization(Request $request){
       if(isset($request->selected_lang)){
            $lang_id=$request->selected_lang;
-
-        //  dd($lang_id);
+           
           if($lang_id != '2'){
           
             $form_data=company_contact_info::first();
-          $address= Helper::localizations('company_contact_info','address',$form_data->id,$lang_id); 
+            $address= Helper::localizations('company_contact_info','address',$form_data->id,$lang_id); 
            
           }else{
             $address=company_contact_info::first()->address;

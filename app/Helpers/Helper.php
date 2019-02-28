@@ -90,7 +90,7 @@ class Helper {
         }
     }
 
-        public static function add_localization($table_name, $field, $item_id, $value, $lang_id)
+    public static function add_localization($table_name, $field, $item_id, $value, $lang_id)
     {
         $entity_id = Entities::where('name', $table_name)->first()->id;
         $localization = new Entity_Localizations;
@@ -102,7 +102,7 @@ class Helper {
         $localization->save();
     }
 
-        public static function remove_localization($table_name, $field, $item_id, $lang_id)
+    public static function remove_localization($table_name, $field, $item_id, $lang_id)
     {
         $entity_id = Entities::where('name', $table_name)->first()->id;
         Entity_Localizations::where('entity_id', '=', $entity_id)

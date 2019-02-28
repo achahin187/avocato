@@ -60,10 +60,9 @@
           <div class="clearfix"></div>
         </div>
       </form>
-                </div>
-              </div>
-
-              <script src="{{url('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+    </div>
+  </div>
+  <script src="{{url('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
   <script>
      $(document).ready(function(){
       CKEDITOR.replace( 'editor1' );
@@ -75,20 +74,20 @@
 $('#lang_privacy').on('change', function (e) {
     var optionSelected = $("option:selected", this);
     var valueSelected = this.value;
-        $.ajax({
-    type:'GET',
-    url:'{{url('privacyAjax')}}'+'/'+valueSelected,
-    data:{},
-    success:function(data){
-    CKEDITOR.instances.editor1.setData(data); 
-    },
-    error: function(xhr, textStatus, errorThrown){
-    alert('error');
-    }
+    $.ajax({
+      type:'GET',
+      url:'{{url('privacyAjax')}}'+'/'+valueSelected,
+      data:{},
+      success:function(data){
+        CKEDITOR.instances.editor1.setData(data); 
+      },
+      error: function(xhr, textStatus, errorThrown){
+        alert('error');
+      }
     });
   });
 });
 
   </script>
 
-              @endsection
+  @endsection
