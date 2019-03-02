@@ -66,7 +66,7 @@
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
                           <select name="office_city"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" required>
-                          <option value="choose" >اختر المدينة</option>
+                          <option value="choose" selected disabled >اختر المدينة</option>
                             @foreach($work_sector_areas as $city)
                               <option value="{{$city->id}}" 
                                 @if($office->user_detail->work_sector_area_id == $city->id) {!!'selected'!!} @endif>
