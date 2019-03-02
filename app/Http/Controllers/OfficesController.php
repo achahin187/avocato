@@ -433,7 +433,7 @@ class OfficesController extends Controller
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
         'office_email' => 'required|email',
-        'office_mobile' => 'required|unique:users,deleted_at,NULL',
+        'office_mobile' => 'required||min:13|max:13',
         'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',

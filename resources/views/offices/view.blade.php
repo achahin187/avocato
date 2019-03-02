@@ -87,7 +87,7 @@
                                 @endforeach
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">درجه التقاضى</b>
-                                <div class="col-xs-8">{{ ($representative->litigation_level }}</div>
+                                <div class="col-xs-8">{{ $representative->litigation_level }}</div>
                               </div>
                             </div>
                           </div>
