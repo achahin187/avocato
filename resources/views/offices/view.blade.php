@@ -87,7 +87,7 @@
                                 @endforeach
                               </div>
                               <div class="col-xs-6"><b class="col-xs-4">درجة القيد بالنقابة</b>
-                                <div class="col-xs-8">{{ ($representative->user_detail->syndicate_levela) ? $representative->user_detail->syndicate_levela->name }}</div>
+                                <div class="col-xs-8">{{ ($representative->user_detail->syndicate_levela) ? $representative->user_detail->syndicate_levela->name:'' }}</div>
                               </div>
                             </div>
                           </div>
