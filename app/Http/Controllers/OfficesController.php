@@ -181,7 +181,7 @@ class OfficesController extends Controller
       $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
-      'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+      'office_mobile' => 'required|min:13|max:12|unique:users,mobile,,,deleted_at,NULL',
       'office_city' => 'required',
       'rep_name' => 'required',
       'rep_birthdate' => 'required|date',
@@ -229,8 +229,8 @@ class OfficesController extends Controller
     $office->name = $request->office_name ;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $office_phone;
-    $office->mobile = $request->mobile;
+    // $office->phone = $request->phone;
+    $office->mobile = $request->office_mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
@@ -475,8 +475,8 @@ class OfficesController extends Controller
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $request->office_phone;
-    $office->mobile = $request->mobile;
+    $office->mobile = $request->office_mobile;
+    // $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));
