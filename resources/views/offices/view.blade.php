@@ -86,8 +86,8 @@
                                 <div class="col-xs-8">{{$spec->name}}</div>
                                 @endforeach
                               </div>
-                              <div class="col-xs-6"><b class="col-xs-4">درجة القيد بالنقابة</b>
-                                <div class="col-xs-8">{{ ($representative->user_detail->syndicate_levela) ? $representative->user_detail->syndicate_levela->name:'' }}</div>
+                              <div class="col-xs-6"><b class="col-xs-4">درجه التقاضى</b>
+                                <div class="col-xs-8">{{ ($representative->litigation_level }}</div>
                               </div>
                             </div>
                           </div>
