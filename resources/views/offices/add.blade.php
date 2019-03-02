@@ -59,7 +59,7 @@
                            </span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                      <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
                           <select name="office_city" class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;">
@@ -74,7 +74,7 @@
                             @endif
                           </span>
                         </div>
-                      </div>
+                      </div> -->
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
