@@ -221,7 +221,7 @@ class ComplainsController extends Controller
             if(count($id) > 0)
             {
                 $complains = $complains->where('user_id', $id);
-            }
+            } 
             
         }
 
