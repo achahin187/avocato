@@ -34,7 +34,22 @@
                         <div class="clearfix">
                           <div class="layer clearfix">
                             <div class="tck-info col-xs-12">
-                              <div class="col-xs-12"><span class="tiket-data light-color col-md-4 col-xs-6">اسم العميل: <a href="clients_compaines_view.html">{{$task->client->name or ''}}</a>&nbsp;<span class="color--sec">(
+                              <div class="col-xs-12"><span class="tiket-data light-color col-md-4 col-xs-6">اسم العميل: 
+                               @if(isset($task->client))
+                            @if(Helper::is_client_individual($task->client->id))
+                            <a href="{{route('ind.show',$task->client->id)}}">{{($task->client)?$task->client->name:''}}</a>
+                            @elseif(Helper::is_client_company($task->client->id))
+                            <a href="{{route('companies.show',$task->client->id)}}">{{($task->client)?$task->client->name:''}}</a>
+                            @elseif(Helper::is_client_individual_company($task->client->id))
+                            <a href="{{route('ind.com.show',$task->client->id)}}">{{($task->client)?$task->client->name:''}}</a>
+                            @elseif(Helper::is_client_mobile($task->client->id))
+                            <a href="{{route('mobile.show',$task->client->id)}}">{{($task->client)?$task->client->name:''}}</a>
+                            @else
+                            <a href="#">{{($task->client)?$task->client->name:''}}</a>
+                            @endif
+                            @endif
+                              &nbsp;
+                              <span class="color--sec">(
                               @if($task->client != null) 
                                 @foreach($task->client->rules as $rule)
                                 {{$rule->name_ar or ''}}

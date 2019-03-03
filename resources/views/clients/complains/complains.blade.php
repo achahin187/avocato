@@ -157,7 +157,7 @@
                         </a>
 
                         {{-- Delete link --}}
-                        <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $complain->id }}">
+                        <a  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $complain->id }}">
                           <i class = "fa  fa-trash-o" ></i>
                         </a>
                       </span>
