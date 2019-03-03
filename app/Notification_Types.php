@@ -10,6 +10,14 @@ class Notification_Types extends Model
     protected $table = 'notification_types';
 	public $timestamps = false;
 
+
+    public function getMsgAttribute($value)
+    {
+        $result = (\App::isLocale('ar')) ? Helper::localization('notification_types','msg',$this->id,1) : Helper::localization('notification_types','msg',$this->id,2);
+        return ($result==null)? $value : $result;
+    }
+
+    
 	public function notifications()
     {
         return $this->hasMany('App\notifications','notification_type_id');
