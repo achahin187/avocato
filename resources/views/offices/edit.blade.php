@@ -363,7 +363,7 @@
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
                              <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
                           <option value="choose" selected disabled>اختر المدينة</option>
-                          @foreach($work_sector_areas as $city)
+                          @foreach($branch->cities as $city)
                             <option value="{{$city->id}}" 
                               @if($branch->city_id == $city->id) {!!'selected'!!}  @endif >
                                 {{$city->name}}

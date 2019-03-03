@@ -410,6 +410,24 @@ class OfficesController extends Controller
       $data['office'] = Users::find($id);
       $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
       $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+      foreach($data['branches'] as $key=>$branch)
+      {
+        if($branch['country_id'] != null)
+        {
+          if($branch['city_id'] != null)
+          {
+            $data['branches'][$key]['cities']=Geo_Cities::where('country_id',$branch['country_id'])->get();
+          }
+          else
+          {
+            $data['branches'][$key]['cities']=[];
+          }
+        }
+        else
+        {
+          $data['branches'][$key]['cities']=[];
+        }
+      }
       $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
       $data['types'] = Rules::where('parent_id', 5)->get();
       $data['work_sectors'] = Specializations::all();
