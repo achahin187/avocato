@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Helper;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification_Types extends Model
