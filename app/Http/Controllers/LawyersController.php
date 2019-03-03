@@ -250,7 +250,7 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:1|max:13|unique:users,mobile,,,deleted_at,NULL',
+      'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13|unique:users,mobile,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
@@ -460,6 +460,7 @@ class LawyersController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $user = Users::find($id);
     $validator = Validator::make($request->all(), [
       'lawyer_name' => 'required',
       'address' => 'required',
@@ -472,8 +473,8 @@ class LawyersController extends Controller
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
       'phone' => 'digits_between:0,10',
-      'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:1|max:13',
-      'email' => 'required|email|max:40',
+      'mobile' => ($user->mobile == $request['mobile'])? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+      'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
       'is_active' => 'required',
       'work_sector' => 'required',
       // 'join_date' => 'required',

@@ -448,10 +448,11 @@ class OfficesController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $user = Users::find($id);
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
-        'office_email' => 'required|email',
-        'office_mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13',
+        'office_mobile' => ($user->mobile == $request->office_mobile)? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+        'office_email' => ($user->email == $request->office_email)? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
         'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',
