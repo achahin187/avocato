@@ -13,7 +13,7 @@ class Notification_Types extends Model
 
     public function getMsgAttribute($value)
     {
-        $result = (\App::isLocale('ar')) ? Helper::localization('notification_types','msg',$this->id,1) : Helper::localization('notification_types','msg',$this->id,2);
+        $result = (\App::isLocale('ar')) ? Helper::localizations('notification_types','msg',$this->id,1) : Helper::localizations('notification_types','msg',$this->id,2);
         return ($result==null)? $value : $result;
     }
 
