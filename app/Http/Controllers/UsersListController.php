@@ -273,13 +273,15 @@ class UsersListController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Users::find($id);
         $validator = Validator::make($request->all(), [
             'user_name' => 'required|between:3,20|unique:users,name,' . $id,
             'full_name' => 'required|between:3,100',
             'role' => 'required',
-            'email' => 'required|email|max:40',
+            'mobile' => ($user->mobile == $request['mobile'])? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+            'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
             'phone' => 'required|digits_between:1,10',
-            'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13',
+            
             'password' => 'same:confirm_password',
             'confirm_password' => 'same:confirm_password',
             'image' => 'image|mimes:jpg,jpeg,png|max:1024',
