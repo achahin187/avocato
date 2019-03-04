@@ -327,10 +327,9 @@ class NotificationsController extends Controller
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
-            echo "saaaaaaaaaalmaaaaaaaaaaa  ::  ";
-            dd($result);
+            
+            dd($result.' -----------------  ');
         }
-        print_r($result);
         fclose($fp);
         if (!$result) {
             return $result;
