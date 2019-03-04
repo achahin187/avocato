@@ -321,8 +321,9 @@ class NotificationsController extends Controller
         try {
             $pack_hex = pack('H*', $deviceToken);
         } catch (\Exception $e) { 
-
+            dd('item_id = '.$item_id.' --- '. $e.' \n');
         }
+        
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
