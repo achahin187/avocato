@@ -304,7 +304,7 @@ class NotificationsController extends Controller
             'sound' => 'default'
         );
         //Server stuff
-        $passphrase = '0';
+        $passphrase = '';
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', 'SecureNewPush.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
@@ -328,7 +328,7 @@ class NotificationsController extends Controller
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
             
-            dd($result.' -----------------  ');
+//            dd($result.' -----------------  ');
         }
         fclose($fp);
         if (!$result) {
