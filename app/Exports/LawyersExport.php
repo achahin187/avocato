@@ -144,7 +144,7 @@ public  function collection()
     }
         } 
     }
-   // dd($lawyersArray);
+   
 
     return collect($lawyersArray);
 }

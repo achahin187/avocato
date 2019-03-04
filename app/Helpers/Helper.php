@@ -248,7 +248,7 @@ class Helper {
         {
             $entity= Entities::find($entity_id);
             $model=$entity->model_name;
-            // dd($model);
+           
            
             $item=($model)::find($item_id);
             if($entity_id == 13)
@@ -276,7 +276,7 @@ class Helper {
        $user=Users::find($id);
        foreach($user->rules as $rule)
        {
-        // dd($rule->id);
+       
            if($rule->id == 3 || $rule->id == 4)
            {
                

@@ -81,7 +81,6 @@ class CourtsExport implements FromCollection,WithEvents
             } 
         }
     }
-       // dd($courtsArray);
         return collect($courtsArray);
     }
 

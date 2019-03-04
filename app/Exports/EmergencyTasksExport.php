@@ -57,7 +57,6 @@ class EmergencyTasksExport implements FromCollection,WithEvents
                 $rule=$role->name_ar;
                 }
             }
-            // dd($task->lawyer->name);
             array_push($tasksArray,[$task->client->code,$task->client->name,$rule,$task->client->mobile,$task->client->address,date('d-m-Y', strtotime($task->start_datetime)),date('h:i', strtotime($task->start_datetime)),$task_status,$task->lawyer->name]);
         }
 
@@ -78,7 +77,7 @@ class EmergencyTasksExport implements FromCollection,WithEvents
                 $task_status='لم يتم';
             }
             $rule='';
-            // dd()
+            
             if(!empty($task->client->rules))
             {
                 foreach ($task->client->rules as  $role) 

@@ -46,14 +46,14 @@ class UrgentsExport implements FromCollection,WithEvents
     public  function collection()
     {   
        $casesArray = array(['كودالعميل','اسم العميل','نوع العميل','عدد حالات الطوارئ']) ;
-       // dd($this->ids);
+       
         if(is_null($this->ids)){
 
         $urgents = Helper::getUrgents([7, 8, 9, 10]);
-       // dd($installments);
+       
         foreach($urgents as $urgent)
         {
-            // dd($case->governorates->name);
+            
             array_push($casesArray,[
             
           ($urgent->code) ? $urgent->code : 'لا يوجد',
@@ -71,7 +71,7 @@ class UrgentsExport implements FromCollection,WithEvents
         foreach($selects as $select)
         {
               $urgent = Users::find($select);
-           // dd($case->governorates->name);
+           
             array_push($casesArray,[
             
           ($urgent->code) ? $urgent->code : 'لا يوجد',
@@ -81,7 +81,7 @@ class UrgentsExport implements FromCollection,WithEvents
             ]);
         }
         }
-       // dd($casesArray);
+       
         return collect($casesArray);
     }
 

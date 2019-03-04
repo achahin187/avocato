@@ -76,7 +76,6 @@ $usersArray = array(['كودالشركة','اسم الشركة','نوع التع
                            $user->clients->count() ]);
               }
     }
-    //dd($usersArray);
     return collect($usersArray);
 }
 

@@ -170,7 +170,7 @@ class AboutController extends Controller
         // edit info
         if(isset($request->about)){
         $about_edit = Fixed_Pages::where('page_name','aboutus')->first();
-           //  dd($about_edit);    
+           
         if($about_edit == null) {
              if ($request->lang_about == 2) {
        
@@ -224,7 +224,7 @@ class AboutController extends Controller
 
         if(isset($request->mission)){
         $mission_edit = Fixed_Pages::where('page_name','mission')->first();
-           //  dd($about_edit);
+           
         if($mission_edit == null) {
              if ($request->lang_mission == 2) {
        
