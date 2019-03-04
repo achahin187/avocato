@@ -323,12 +323,14 @@ class NotificationsController extends Controller
         } catch (\Exception $e) { 
             dd('item_id = '.$item_id.' --- '. $e.' \n');
         }
-        
+        print_r($pack_hex);
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
+            print_r($result);
         }
+        print_r($result);
         fclose($fp);
         if (!$result) {
             return $result;
