@@ -46,14 +46,12 @@ class InstallmentsExport implements FromCollection,WithEvents
     public  function collection()
     {   
         $casesArray = array(['كود العميل','نوع التعاقد','ترتيب القسط','التاريخ','القيمة','حالة الدفع']) ;
-       // dd($this->ids);
+       
         if(is_null($this->ids)){
 
         $installments = $data['installments'] = Installment::all();
-       // dd($installments);
         foreach($installments as $ins)
         {
-            // dd($case->governorates->name);
             array_push($casesArray,[
             
           ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد',
@@ -77,7 +75,7 @@ class InstallmentsExport implements FromCollection,WithEvents
         foreach($selects as $select)
         {
               $ins = $data['installments'] = Installment::find($select);
-       // dd($installments);
+
             array_push($casesArray,[
             
           ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد',
@@ -93,7 +91,7 @@ class InstallmentsExport implements FromCollection,WithEvents
             ]);
         }
         }
-       // dd($casesArray);
+
         return collect($casesArray);
     }
 

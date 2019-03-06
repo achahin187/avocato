@@ -59,7 +59,7 @@
                            </span>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                      <!-- <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_city">المدينة </label>
                           <select name="office_city" class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;">
@@ -74,14 +74,14 @@
                             @endif
                           </span>
                         </div>
-                      </div>
+                      </div> -->
                      <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="office_tel">رقم الهاتف</label>
-                          <input name="office_phone" value="{{ old('office_phone') }}" class="master_input" type="text" placeholder="رقم الهاتف" id="office_tel">
+                          <input name="office_mobile" value="{{ old('office_mobile') }}" class="master_input" type="text" placeholder="+201200000000 or +966100000000" id="office_tel">
                           <span class="master_message color--fadegreen">
-                            @if ($errors->has('office_phone'))
-                                {{ $errors->first('office_phone')}}
+                            @if ($errors->has('office_mobile'))
+                                {{ $errors->first('office_mobile')}}
                             @endif
                           </span>
                         </div>

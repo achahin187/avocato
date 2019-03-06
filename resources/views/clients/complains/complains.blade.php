@@ -136,7 +136,7 @@
                   <tr data-com="{{ $complain->id }}">
                     <td><span class="cellcontent"><input type="checkbox" class="checkboxes" data-id="{{ $complain->id }}"/></span></td>
                     <td><span class="cellcontent">
-                      {{ $complain->user_id ? $complain->user_id : 'لا يوجد' }}
+                      {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->code : 'لا يوجد') : 'لا يوجد' }}
                     </span></td>
                     <td><span class="cellcontent">
                       {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->full_name : 'لا يوجد') : $complain->name }}
@@ -157,7 +157,7 @@
                         </a>
 
                         {{-- Delete link --}}
-                        <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $complain->id }}">
+                        <a  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $complain->id }}">
                           <i class = "fa  fa-trash-o" ></i>
                         </a>
                       </span>

@@ -2,65 +2,6 @@
 @section('content')
 
 
-<script type="text/javascript">
-
-  var latitude ='{{$lawyer->latitude or ''}}';
-  var longtuide  ='{{$lawyer->longtuide or ''}}';
-function initMap() {
-  var uluru = {lat: Number(latitude) , lng: Number(longtuide)};
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 20,
-    center: uluru
-  });
-  var marker = new google.maps.Marker({
-    position: uluru,
-    map: map
-  });
-}
-
-</script>
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-
-    $('.exclude').click(function(){
-      var lawyer_id = '{{$lawyer->id or ''}}';
-      var _token = '{{csrf_token()}}';
-      swal({
-        title: "هل أنت متأكد؟",
-        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#DD6B55',
-        confirmButtonText: 'نعم متأكد!',
-        cancelButtonText: "إلغاء",
-        closeOnConfirm: false,
-        closeOnCancel: false
-      },
-      function(isConfirm){
-        if (isConfirm){
-         $.ajax({
-           type:'POST',
-           url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
-           data:{_token:_token},
-           success:function(data){
-            // $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
-            location.href= '{{route('lawyers')}}';
-          }
-        });
-         swal("تم الحذف!", "تم الحذف بنجاح", "success");
-       } else {
-        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-      }
-    });
-    });
-
-});
-
-</script>
 
               
               <!-- =============== Custom Content ===============-->
@@ -134,6 +75,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       {{-- <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"> --}}
+                      <div id="map_subscribtion" hidden style="color:red;"> لقد تم انتهاء اشتراكك فى خرائط جوجل برجاء تجديد الاشتراك</div>
                       <div id="map" style="height: 140px;width:600px;"></div>
                     </div>
                     <div class="clearfix"></div>
@@ -476,7 +418,10 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
                   </div>
                 </div>
               </div>
-  <script>
+  
+@endsection
+@section('js')
+<script>
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){
@@ -543,6 +488,65 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
     });
 
   });
+
+</script>
+<script type="text/javascript">
+
+  var latitude ='{{$lawyer->latitude or ''}}';
+  var longtuide  ='{{$lawyer->longtuide or ''}}';
+function initMap() {
+  var uluru = {lat: Number(latitude) , lng: Number(longtuide)};
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 20,
+    center: uluru
+  });
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+}
+
+</script>
+<!-- <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DBoPudNqgU&callback=initMap&language=ar">
+</script> -->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    $('.exclude').click(function(){
+      var lawyer_id = '{{$lawyer->id or ''}}';
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('lawyers_destroy_post')}}'+'/'+lawyer_id,
+           data:{_token:_token},
+           success:function(data){
+            // $('tr[data-lawyer-id='+lawyer_id+']').fadeOut();
+            location.href= '{{route('lawyers')}}';
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+});
 
 </script>
 @endsection

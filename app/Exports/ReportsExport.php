@@ -50,7 +50,7 @@ class ReportsExport implements FromCollection,WithEvents
         $cases = Case_::where('country_id',session('country'))->select('geo_governorate_id', 'geo_city_id', \DB::raw('count(*) as total'))->groupBy('geo_governorate_id')->groupBy('geo_city_id')->orderBy('total','desc')->get();
         foreach($cases as $case)
         {
-            // dd($case->governorates->name);
+            
             array_push($casesArray,[$case->governorates->name,$case->cities->name,$case->total]);
         }
 
@@ -68,7 +68,7 @@ class ReportsExport implements FromCollection,WithEvents
            }
             } 
         }
-       // dd($casesArray);
+       
         return collect($casesArray);
     }
 

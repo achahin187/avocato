@@ -16,6 +16,7 @@ class GeoCountryController extends Controller
         // }
         // dd(session('country'));
         $data['countries']=Geo_Countries::all();
+        // dd($data);
         return view('choose_country',$data);
     }
 

@@ -68,7 +68,7 @@ class CompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(preg_replace("/0/", "+", $request->mobile, 1));
+        
         // Validate data
         $validator = Validator::make($request->all(), [
             'password' => 'required',
@@ -123,7 +123,7 @@ class CompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            //dd($ex);
+        
             $user->forcedelete();
             Session::flash('warning', $ex);
             return redirect()->back()->withInput();
@@ -134,7 +134,7 @@ class CompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
-            //////dd($ex);
+        
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -149,7 +149,7 @@ class CompaniesController extends Controller
 
             Users_Rules::insert($data);
         } catch(Exception $ex) {
-            //////dd($ex);
+   
             Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
@@ -163,7 +163,7 @@ class CompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
-            //////dd($ex);
+     
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -185,7 +185,7 @@ class CompaniesController extends Controller
             $user_details->discount_percentage   = $request->discount_percentage;
             $user_details->save();
         } catch(Exception $ex) {
-            //////dd($ex);
+          
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -205,7 +205,7 @@ class CompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            //////dd($ex);
+           
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -226,7 +226,7 @@ class CompaniesController extends Controller
                 'legal_representative_mobile'    => $request->legal_representative_mobile
             ]);
         } catch(Exception $ex) {
-            //////dd($ex);
+          
             Users::find($user->id)->forcedelete();
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
@@ -255,7 +255,7 @@ class CompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            //////dd($ex);
+          
             $user->forcedelete();
             Users_Rules::where('user_id', $user->id)->forcedelete();
             $client_passwords->forcedelete();
@@ -402,7 +402,7 @@ class CompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->save();
         } catch(Exception $ex) {
-            //////dd($ex);
+          
             Session::flash('warning', 'إسم العميل موجود بالفعل ، برجاء استبداله والمحاولة مجدداَ #1');
             return redirect()->back()->withInput();
         }
@@ -466,7 +466,7 @@ class CompaniesController extends Controller
             $subscription->number_of_installments    = $request->number_of_payments;
             $subscription->save();
         } catch(Exception $ex) {
-            //////dd($ex);
+           
             Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
@@ -488,7 +488,7 @@ class CompaniesController extends Controller
             $ucd->legal_representative_mobile    = $request->legal_representative_mobile;
             $ucd->save();
         } catch(Exception $ex) {
-            dd($ex);
+           
             Session::flash('warning', '7 حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجدد');
             return redirect()->back()->withInput();
         }

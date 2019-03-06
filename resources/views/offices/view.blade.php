@@ -24,7 +24,7 @@
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$office->address}}</div>
                       </div> -->
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">تليفون</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->phone}}</div>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$office->mobile}}</div>
                       </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">البريد الالكترونى</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$office->email}}</div>
@@ -32,9 +32,9 @@
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">العنوان</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$office->address}}</div>
                       </div>
-                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">المدينة</b>
-                        <div class="col-md-9 col-sm-7 col-xs-12">{{($office->user_detail->city)?$office->user_detail->city->name:''}}</div>
-                      </div>
+                      <!-- <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">المدينة</b> -->
+                        <!-- <div class="col-md-9 col-sm-7 col-xs-12">{{($office->user_detail->city)?$office->user_detail->city->name:''}}</div> -->
+                      <!-- </div> -->
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">نبذة عن المكتب</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$office->note}}</div>
                       </div>
@@ -86,8 +86,8 @@
                                 <div class="col-xs-8">{{$spec->name}}</div>
                                 @endforeach
                               </div>
-                              <div class="col-xs-6"><b class="col-xs-4">درجة القيد بالنقابة</b>
-                                <div class="col-xs-8">{{$representative->user_detail->litigation_level}}</div>
+                              <div class="col-xs-6"><b class="col-xs-4">درجه التقاضى</b>
+                                <div class="col-xs-8">{{ $representative->user_detail->litigation_level }}</div>
                               </div>
                             </div>
                           </div>

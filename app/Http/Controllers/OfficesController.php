@@ -181,7 +181,7 @@ class OfficesController extends Controller
       $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
-      'office_phone' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+      'office_mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:12|unique:users,mobile,,,deleted_at,NULL',
       'office_city' => 'required',
       'rep_name' => 'required',
       'rep_birthdate' => 'required|date',
@@ -229,8 +229,8 @@ class OfficesController extends Controller
     $office->name = $request->office_name ;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $office_phone;
-    $office->mobile = $request->mobile;
+    // $office->phone = $request->phone;
+    $office->mobile = $request->office_mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
@@ -410,6 +410,24 @@ class OfficesController extends Controller
       $data['office'] = Users::find($id);
       $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
       $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+      foreach($data['branches'] as $key=>$branch)
+      {
+        if($branch['country_id'] != null)
+        {
+          if($branch['city_id'] != null)
+          {
+            $data['branches'][$key]['cities']=Geo_Cities::where('country_id',$branch['country_id'])->get();
+          }
+          else
+          {
+            $data['branches'][$key]['cities']=[];
+          }
+        }
+        else
+        {
+          $data['branches'][$key]['cities']=[];
+        }
+      }
       $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
       $data['types'] = Rules::where('parent_id', 5)->get();
       $data['work_sectors'] = Specializations::all();
@@ -430,10 +448,11 @@ class OfficesController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $user = Users::find($id);
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
-        'office_email' => 'required|email',
-        'office_phone' => 'required|unique:users,deleted_at,NULL',
+        'office_mobile' => ($user->mobile == $request->office_mobile)? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+        'office_email' => ($user->email == $request->office_email)? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
         'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',
@@ -475,8 +494,8 @@ class OfficesController extends Controller
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->phone = $request->office_phone;
-    $office->mobile = $request->mobile;
+    $office->mobile = $request->office_mobile;
+    // $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->birthdate = date('Y-m-d H:i:s', strtotime($request->rep_birthdate));

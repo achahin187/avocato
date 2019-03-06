@@ -67,6 +67,14 @@ class LawyersController extends Controller
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->get();
+    foreach($data['lawyers'] as $key=>$lawyer)
+    {
+      if($lawyer->IsOffice())
+      {
+        unset($data['lawyers'][$key]);
+      }
+
+    }
     $data['test'] = json_encode([
       ['lat' => 30.042701, 'lang' => 31.432662],
       ['lat' => 30.036273, 'lang' => 31.432447],
@@ -242,7 +250,7 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12|unique:users,mobile,,,deleted_at,NULL',
+      'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13|unique:users,mobile,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
@@ -254,6 +262,7 @@ class LawyersController extends Controller
       'authorization_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
+      'note' => 'min:0|max:100',
     ]);
 
     if ($validator->fails()) {
@@ -420,7 +429,7 @@ class LawyersController extends Controller
    */
   public function edit($id)
   {
-    $data['lawyer'] = Users::find($id);
+    $data['lawyer'] = Users::where('id',$id)->with('rules')->first();
 
     if( $data['lawyer'] == NULL ) {
       Session::flash('warning', 'العقد او الصيغة غير موجود');
@@ -451,25 +460,27 @@ class LawyersController extends Controller
    */
   public function update(Request $request, $id)
   {
+    $user = Users::find($id);
     $validator = Validator::make($request->all(), [
       'lawyer_name' => 'required',
       'address' => 'required',
       'nationality' => 'required',
       'consultation_price' => 'required|numeric',
       'currency_id'=>'required',
-      'syndicate_level_id'=>'required',
+      // 'syndicate_level_id'=>'required',
       'work_sector_area' => 'required',
       'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
-      'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|digits_between:1,12',
-      'email' => 'required|email|max:40',
+      'phone' => 'digits_between:0,10',
+      'mobile' => ($user->mobile == $request['mobile'])? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+      'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
       'is_active' => 'required',
       'work_sector' => 'required',
-      'join_date' => 'required',
+      // 'join_date' => 'required',
       'work_type' => 'required',
       'litigation_level' => 'required',
+      'note' => 'min:0|max:100',
     ]);
 
     if ($validator->fails()) {
@@ -483,7 +494,10 @@ class LawyersController extends Controller
     $lawyer->name = $request->lawyer_name;
     $lawyer->full_name = $request->lawyer_name;
     $lawyer->address = $request->address;
+    if(isset($request->phone))
+    {
     $lawyer->phone = $request->phone;
+    }
     $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
     $lawyer->note = $request->note;
@@ -523,8 +537,11 @@ class LawyersController extends Controller
     $lawyer_details->is_international_arbitrator = $request->is_international_arbitrator;
     $lawyer_details->international_arbitrator_specialization = $request->international_arbitrator_specialization;
     $lawyer_details->syndicate_level_id = $request->syndicate_level_id;
-
-    $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
+    if(isset($request->join_date))
+    {
+      $lawyer_details->join_date = date('Y-m-d H:i:s', strtotime($request->join_date));
+    }
+   
     if ($request->filled('resign_date'))
       $lawyer_details->resign_date = date('Y-m-d H:i:s', strtotime($request->resign_date));
     else

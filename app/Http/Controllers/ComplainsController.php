@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Helper;
+
 use Session;
 use Excel;
 use VodafoneSMS;
@@ -202,13 +202,27 @@ class ComplainsController extends Controller
     public function filter(Request $request) 
     {
         // set timedate
+        $complains = new Feedback();
+        if($request->date_from) {
         $dd_from = Helper::checkDate($request->date_from, 1);
+        }
+        if($request->date_to) {
         $dd_to   = Helper::checkDate($request->date_to, 2);
+        }
+        if(isset($request->date_from) && isset($request->date_to))
+        {
+            $complains = $complains->whereBetween('created_at', [$dd_from, $dd_to]);
+        }
+        
 
-        $complains = Feedback::whereBetween('created_at', [$dd_from, $dd_to]);
-
-        if($request->code) {
-            $complains = $complains->where('user_id', $request->code);
+        if(isset($request->code)) {
+            $id = Users::where('code', 'LIKE', '%'.$request->code.'%')->pluck('id');
+            // dd($id);
+            if(count($id) > 0)
+            {
+                $complains = $complains->where('user_id', $id);
+            } 
+            
         }
 
         if($request->name) {

@@ -22,22 +22,10 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {   
-        // if(session('country') == null)
-        // {
-        //     return redirect()->route('choose.country');
-        // }
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notification_Schedules::all();
-       
-//        $data['notifications'] = Notifications::whereIn('notification_type_id',[1,8])->get();
-//        $notifications_array = $notifications->toArray();
-//        foreach ($notifications as  $notification) {
-//            $notifications->schedule  = date('Y-m-d H:i:s', $notification['schedule']);
-//        }
-//        $data['notifications'] = $notifications_array;
         return view('clients.notifications',$data);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +35,6 @@ class NotificationsController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -75,31 +62,29 @@ class NotificationsController extends Controller
         $notification->packages = $packages;
         $notification->save();
         $schedule_id=$notification->id;
-      
-      foreach($request->package_type as $package){
-        $subs = Subscriptions::where('package_type_id',$package)->get();
-        foreach($subs as $sub) {
-            $user = $sub->user;
-            if(!empty($user->id) && !empty($user->device_token)) {
-                $notification = new Notifications;
-                $notification->msg = $request->notification;
-                $notification->schedule = $send_date;
-                $notification->notification_type_id=1;
-                $notification->is_sent = 0;
-                $notification->user_id = $user->id;
-                $notification->created_at = date('Y-m-d H:i:s');
-                $notification->packages = $packages;
-                $notification->notification_schedule_id=$schedule_id;
-                $notification->save();
-            }
+        foreach($request->package_type as $package){
+          $subs = Subscriptions::where('package_type_id',$package)->get();
+          foreach($subs as $sub) {
+              $user = $sub->user;
+              if(!empty($user->id) && !empty($user->device_token)) {
+                  $notification = new Notifications;
+                  $notification->msg = $request->notification;
+                  $notification->schedule = $send_date;
+                  $notification->notification_type_id=1;
+                  $notification->is_sent = 0;
+                  $notification->user_id = $user->id;
+                  $notification->created_at = date('Y-m-d H:i:s');
+                  $notification->packages = $packages;
+                  $notification->notification_schedule_id=$schedule_id;
+                  $notification->save();
+              }
+          }
+          $item = new Notification_Items;
+          $item->item_id = $package;
+          $notification->noti_items()->save($item);
         }
-        $item = new Notification_Items;
-        $item->item_id = $package;
-        $notification->noti_items()->save($item);
-      }
         return redirect()->route('notifications')->with('success','تم إضافه تنبيه');
     }
-
     /**
      * Display the specified resource.
      *
@@ -110,7 +95,6 @@ class NotificationsController extends Controller
     {
         //
     }
-
     public function notification_lawyer(Request $request,$id) {
         $send_date = date('Y-m-d H:i:s',strtotime($request->noti_date));
         $user = Users::find($id);
@@ -140,46 +124,35 @@ class NotificationsController extends Controller
     public function notification_for_lawyers()
     {
         $ids = $_POST['ids'];
-      $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
-      $notification = new Notifications;
-      $notification->msg = $_POST['notific'];
-      $notification->schedule = $send_date;
-      $notification->notification_type_id=8;
-      $notification->is_sent=0;
-      $notification->save();
-      foreach($ids as $id){
-        $item = new Notification_Items;
-        $item->item_id = $id;
-        $notification->noti_items()->save($item);
-      }
-
+        $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
+        $notification = new Notifications;
+        $notification->msg = $_POST['notific'];
+        $notification->schedule = $send_date;
+        $notification->notification_type_id=8;
+        $notification->is_sent=0;
+        $notification->save();
+        foreach($ids as $id) {
+            $item = new Notification_Items;
+            $item->item_id = $id;
+            $notification->noti_items()->save($item);
+}
         return response()->json('تمت الإضافه');
     }
 
     public function filter(Request $request)
     {
-        // dd($request->all());
-       if($request->package == '-1' && !$request->filled('date_from') && !$request->filled('date_to') )
-          { return redirect()->route('notifications');}
-        // if($request->package == '-1' && $request->date_from == null && $request->date_to == null)
-        // {
-        //     return redirect()->back();
-        // }
+        if($request->package == '-1' && !$request->filled('date_from') && !$request->filled('date_to') ) { 
+            return redirect()->route('notifications');
+        }
         $data['subscription_types'] = Package_Types::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
-
-          $date_from=date('Y-m-d ',strtotime($request->date_from));
-          $date_to=date('Y-m-d ',strtotime($request->date_to));
-
-          $q->where('notification_type_id',1);
-
-          $q->whereHas('noti_items',function($q) use($request){
+        $date_from=date('Y-m-d ',strtotime($request->date_from));
+        $date_to=date('Y-m-d ',strtotime($request->date_to));
+        $q->where('notification_type_id',1);
+        $q->whereHas('noti_items',function($q) use($request){
             $q->where('item_id',$request->package);
-
-          });  
-
-          if($request->filled('date_from') && $request->filled('date_to') )
-          {
+        });
+        if($request->filled('date_from') && $request->filled('date_to') ) {
             $q->whereBetween('schedule', array($date_from, $date_to));
         }
         elseif($request->filled('date_from'))
@@ -190,10 +163,8 @@ class NotificationsController extends Controller
         {
             $q->whereDate('schedule','<=',$date_to);
         }
-
         })->get();
         return view('clients.notifications',$data);
-
     }
 
     /**
@@ -206,7 +177,6 @@ class NotificationsController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -218,7 +188,6 @@ class NotificationsController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -227,14 +196,10 @@ class NotificationsController extends Controller
      */
     public function destroy($id)
     {
-        // $notification = Notifications::find($id);
-        // $notification->noti_items()->delete();
         Notification_Schedules::destroy($id);
         Notifications::where('notification_schedule_id',$id)->delete();
-        // Session::flash('success', 'تم الحذف بنجاح');
         return 'success';
     }
-
     public function notification_cron() {
         $notifications = Notifications::where(function ($query){
             $query->whereIn('notification_type_id',[1,8]);
@@ -273,31 +238,23 @@ class NotificationsController extends Controller
                 } else if($notification_push->mobile_os == 'ios') {
                      $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
                 } 
-                // $notification_table=find($notification_push->notification_id);
                 if($notification->notification_type_id == 8 ) {
                     $array["created_at"] = Carbon::now();
                 }
                 $notification->update($array);
                 $notification->save();
             }
-            
             $notification_push->delete();
         }
-
         $notifications_push_browser = Notifications_Push::where('mobile_os','browser')->get();
         foreach($notifications_push_browser as $notification_push) {
-            
             $notification = $notification_push->notification;
-               $array["is_sent"] = 1;
-               
-                // $notification_table=find($notification_push->notification_id);
-                if($notification->notification_type_id == 8 ) {
-                    $array["created_at"] = Carbon::now();
-                }
-                $notification->update($array);
-                $notification->save();
-            
-            
+            $array["is_sent"] = 1;
+            if($notification->notification_type_id == 8 ) {
+                $array["created_at"] = Carbon::now();
+            }
+            $notification->update($array);
+            $notification->save();
             $notification_push->delete();
         }
     }
@@ -347,16 +304,21 @@ class NotificationsController extends Controller
             'sound' => 'default'
         );
         //Server stuff
-        $passphrase = 'ss';
+        $passphrase = '';
         $ctx = stream_context_create();
         stream_context_set_option($ctx, 'ssl', 'local_cert', 'SecureNewPush.pem');
         stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 
         $fp = stream_socket_client(
-                'ssl://gateway.push.apple.com:2195', $err,
-                $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+        'ssl://gateway.sandbox.push.apple.com:2195', $err,
+        $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+        
+        $fp = stream_socket_client(
+        'ssl://gateway.push.apple.com:2195', $err,
+        $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
+        
         if (!$fp)
-                exit("Failed to connect: $err $errstr" . PHP_EOL);
+        exit("Failed to connect: $err $errstr" . PHP_EOL);
 //        echo 'Connected to APNS' . PHP_EOL;
         $payload = json_encode($body);
         // Build the binary notification
@@ -366,11 +328,12 @@ class NotificationsController extends Controller
         } catch (\Exception $e) { 
 //            dd('item_id = '.$item_id.' --- '. $e.' \n');
         }
-        
         if(!empty($pack_hex)) {
             $msg = chr(0) . pack('n', 32) . $pack_hex . pack('n', strlen($payload)) . $payload;
             // Send it to the server
             $result = fwrite($fp, $msg, strlen($msg));
+            
+//            dd($result.' -----------------  ');
         }
         fclose($fp);
         if (!$result) {

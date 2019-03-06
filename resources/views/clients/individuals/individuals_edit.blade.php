@@ -372,7 +372,7 @@
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->subscription->package_type_id != 7 ? $installments[$i]->payment_date->format('m/d/Y') : '' }}">
+                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->subscription->package_type_id != 7 ? ($installments[$i]->payment_date != null)?$installments[$i]->payment_date->format('m/d/Y'):'' : '' }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">

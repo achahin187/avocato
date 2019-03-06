@@ -46,32 +46,23 @@ class TasksExport implements FromCollection,WithEvents
     public  function collection()
     {   
        $casesArray = array(['نوع المهمة','عددالمهام']) ;
-       // dd($this->ids);
         if(is_null($this->ids)){
 
         $tasks = Task_Types::all();
-       // dd($installments);
         foreach($tasks as $task)
         {
-            // dd($case->governorates->name);
             array_push($casesArray,[
             
         ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد',
         ($task->tasks) ? $task->tasks->count() : 0
             ]);
         }
-
         }
         else {
-
         $selects = $this->ids;
-       
-      
-       // dd($installments);
         foreach($selects as $select)
         {
               $task = Task_Types::find($select);
-              //dd($select);
             array_push($casesArray,[
             
         ($task->name) ? Helper::localizations('task_types', 'name', $task->id) : 'لا يوجد',
@@ -80,7 +71,6 @@ class TasksExport implements FromCollection,WithEvents
         }
 
         }
-       // dd($casesArray);
         return collect($casesArray);
     }
 

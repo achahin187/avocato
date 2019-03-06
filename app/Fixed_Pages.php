@@ -12,9 +12,9 @@ class Fixed_Pages extends Model
     protected $fillable = ['name', 'content'];
     public $timestamps = true;
 
-    public function getContentAttribute(){
+    // public function getContentAttribute(){
      
-        return  Helper::localizations('fixed_pages','content',$this->id,$lang_id=null);
-    }
+    //     return  Helper::localizations('fixed_pages','content',$this->id,$lang_id=null);
+    // }
 }
 

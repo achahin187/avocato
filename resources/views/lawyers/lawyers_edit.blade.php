@@ -105,7 +105,7 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="lawyer_tel">رقم الهاتف</label>
+                          <label class="master_label " for="lawyer_tel">رقم الهاتف</label>
                           <input value="{{$lawyer->phone}}" name="phone" class="master_input" type="text" placeholder="رقم الهاتف" id="lawyer_tel"><span class="master_message color--fadegreen">
                                    @if ($errors->has('phone'))
                                     {{ $errors->first('phone')}}
@@ -115,7 +115,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_mob">رقم الهاتف الجوال</label>
-                          <input value="{{$lawyer->mobile}}" name="mobile" class="master_input" type="text" placeholder="رقم الهاتف الجوال" id="lawyer_mob"><span class="master_message color--fadegreen">
+                          <input value="{{$lawyer->mobile}}" name="mobile" class="master_input" type="text" placeholder="+201200000000 or +966100000000" id="lawyer_mob"><span class="master_message color--fadegreen">
                                   @if ($errors->has('mobile'))
                                     {{ $errors->first('mobile')}}
                                     @endif</span>
@@ -157,7 +157,8 @@
                       <div class="col-md-8 col-sm-12 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="lawyer_info">نبذة عن المحامي</label>
-                          <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea><span class="master_message color--fadegreen">
+                          <textarea class="master_input" name="note" id="lawyer_info" placeholder="نبذة">{{$lawyer->note}}</textarea>
+                          <span class="master_message color--fadegreen">
                                   @if ($errors->has('note'))
                                     {{ $errors->first('note')}}
                                     @endif</span>
@@ -226,7 +227,7 @@
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
-                          <label class="master_label mandatory" for="work_start">تاريخ الالتحاق بالعمل</label>
+                          <label class="master_label " for="work_start">تاريخ الالتحاق بالعمل</label>
                           <input  readonly value="{{$lawyer->user_detail->join_date}}" name="join_date" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الالتحاق بالعمل هنا" id="work_start"><span class="master_message color--fadegreen">
                                   @if ($errors->has('join_date'))
                                     {{ $errors->first('join_date')}}
@@ -249,10 +250,19 @@
                           <option value="choose" selected disabled>اختر نوع العمل</option>
                           @foreach($types as $type)
                             <option
+                          
                              @foreach($lawyer->rules as $rule)
                             {{$rule->id==$type->id ? 'selected':''}}
+                            
                             @endforeach
-                            value="{{$type->id}}">{{$type->name_ar}}</option>
+                            @if($type->id == 14 )
+                            @if(Helper::is_lawyer_mobile($lawyer->id))
+                            value="{{$type->id}}">{{$type->name_ar}}
+                            @endif
+                            @else
+                            value="{{$type->id}}">{{$type->name_ar}}
+                            @endif
+                            </option>
                             @endforeach
                           </select><span class="master_message color--fadegreen">
                                   @if ($errors->has('work_type'))

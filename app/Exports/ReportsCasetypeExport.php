@@ -51,7 +51,7 @@ class ReportsCasetypeExport implements FromCollection,WithEvents
         $cases = Case_::select(['case_type_id', 'geo_city_id', 'geo_governorate_id'])->groupBy('case_type_id')->groupBy('geo_city_id')->groupBy('geo_governorate_id')->get();
         foreach($cases as $case)
         {
-            // dd($case->governorates->name);
+            
                  array_push($casesArray,[
 
               ($case->case_types) ? $case->case_types->name  : 'لا يوجد',
@@ -81,7 +81,7 @@ class ReportsCasetypeExport implements FromCollection,WithEvents
            }
             } 
         }
-       // dd($casesArray);
+       
         return collect($casesArray);
     }
 

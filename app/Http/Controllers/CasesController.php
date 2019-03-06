@@ -44,7 +44,7 @@ class CasesController extends Controller
     {
         
         $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->get();
-        // dd($cases);
+        
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();
         $courts = Courts::where('country_id',session('country'))->get();
@@ -52,7 +52,6 @@ class CasesController extends Controller
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
         }
-       // dd($roles);
         return view('cases.cases')->with('cases', $cases)->with('roles', $roles)->with('types', $types)->with('courts', $courts);
     }
 
@@ -67,8 +66,6 @@ class CasesController extends Controller
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
-         // dd($cases_record_types);
-        // dd($clients);
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
@@ -85,7 +82,6 @@ class CasesController extends Controller
         foreach ($lawyers as $detail) {
 
             if ($detail->user_detail()->count() != 0) {
-                    // dd($detail->user_detail);
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
 
                 $detail['nationality'] = $value;
@@ -93,8 +89,6 @@ class CasesController extends Controller
                 $detail['nationality'] = '';
             }
         }
-        
-          // dd($cases_record_types);
         $roles = Case_Client_Role::all();
 
         foreach ($roles as $role) {
@@ -139,7 +133,6 @@ class CasesController extends Controller
         }])->with(['case_records' => function ($q) {
             $q->with('case_record_documents');
         }])->first();
-               // dd($case);
         return view('cases.case_view')->with('case', $case)->with('cases_record_types', $cases_record_types);
     }
 
@@ -176,8 +169,6 @@ class CasesController extends Controller
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
-         // dd($cases_record_types);
-        // dd($clients);
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
@@ -202,14 +193,13 @@ class CasesController extends Controller
             }
         }
         
-          // dd($cases_record_types);
         $roles = Case_Client_Role::all();
 
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
         }
-        // dd($case->lawyers->toArray());
+        
         return view('cases.case_edit')->with('case', $case)
                                         ->with('clients', $clients)
                                         ->with('cases_record_types', $cases_record_types)
@@ -222,7 +212,6 @@ class CasesController extends Controller
 
     public function edit_case(Request $request, $id)
     {
-    // dd($request->all());
         $validator = Validator::make($request->all(), [
             'folder_num' => 'required',
             'case_dateRang' => 'required',
@@ -287,8 +276,6 @@ class CasesController extends Controller
             }
         }
         Case_Client::where('case_id', $id)->delete();
-      // dd($request->all());
-      // dd($request['client_name'][1]);
         foreach ($request['client_code'] as $key => $value) {
             Case_Client::Create([
                 'case_id' => $case->id,
@@ -299,7 +286,7 @@ class CasesController extends Controller
         }
         Helper::add_log(4, 11, $id);
         return redirect()->route('cases')->with('success', 'تم تعديل القضيه بنجاح');
-      // dd($request->all());
+     
     }
 
 
@@ -355,7 +342,6 @@ class CasesController extends Controller
 
     public function add(Request $request)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'folder_num' => 'required',
             'case_dateRang' => 'required',
@@ -433,7 +419,7 @@ class CasesController extends Controller
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-            // dd($fileNameToStore);
+     
                 Input::file('docs_upload')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -448,7 +434,7 @@ class CasesController extends Controller
             
         //     $destinationPath='cases_images';
         //     $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-        //     // dd($fileNameToStore);
+       
         //     Input::file('chooseFile_case')[$key]->move($destinationPath,$fileNameToStore);
         // }
         // }
@@ -460,7 +446,7 @@ class CasesController extends Controller
                 ]);
             }
         }
-         // dd($request->all());
+   
         // return $this->create();
         Helper::add_log(3, 11, $case->id);
         return redirect()->route('cases')->with('success', 'تم إضافه قضيه جديده بنجاح');
@@ -508,7 +494,7 @@ class CasesController extends Controller
 
             $query->orderby('join_date', 'desc');
         }])->get();
-          // dd($lawyers);
+     
         foreach ($lawyers as $detail) {
             if (count(Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first())) {
 
@@ -517,9 +503,8 @@ class CasesController extends Controller
                 $detail['assigned'] = 0;
             }
             if (count($detail->user_detail) != 0) {
-                    // dd($detail->user_detail->nationality_id);
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
-              // dd($value);
+             
                 $detail['nationality'] = $value;
             } else {
                 $detail['nationality'] = '';
@@ -536,8 +521,6 @@ class CasesController extends Controller
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
-         // dd($cases_record_types);
-        // dd($clients);
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
@@ -548,7 +531,7 @@ class CasesController extends Controller
         $cities = Geo_Cities::where('country_id',session('country'))->get();
          
         
-          // dd($cases_record_types);
+         
         $roles = Case_Client_Role::all();
 
         foreach ($roles as $role) {
@@ -563,7 +546,7 @@ class CasesController extends Controller
         $state = $_POST['case_state'];
         $case = Case_::find($id);
         $case->update(['archived' => $state]);
-        // dd($case);
+
         return redirect()->route('case_view', $id);
 
     }
@@ -572,7 +555,7 @@ class CasesController extends Controller
     //////add sessions
     public function add_session(Request $request, $id)
     {
-        // dd($request->all());
+       
         $task = Tasks::where('case_id', $id)->orderBy('id', 'desc')->first();
         if (count($task) != 0) {
             Tasks::create([
@@ -602,7 +585,7 @@ class CasesController extends Controller
             ]);
         }
         
-        // dd(Case_::find($id));
+       
         return redirect()->route('case_view', $id);
     }
 
@@ -610,7 +593,7 @@ class CasesController extends Controller
     //add record
     public function add_record(Request $request, $id)
     {
-// dd($request->all());
+
         $case_record = Case_Record::Create([
             'case_id' => $id,
             'record_number' => $request['investigation_no'],
@@ -619,12 +602,12 @@ class CasesController extends Controller
             'created_by' => \Auth::user()->id,
         ]);
         if ($request->has('record_documents')) {
-    // dd($request['record_documents']);
+   
             foreach ($request->record_documents as $key => $file) {
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-            // dd($fileNameToStore);
+          
                 Input::file('record_documents')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -650,7 +633,7 @@ class CasesController extends Controller
 //             'created_by'=>\Auth::user()->id,
 //         ]);
 // if(isset($_GET['files'])){
-//     // dd($request['record_documents']);
+
    
 //     // return response()->json(file_put_contents('sara',serialize($request['files'])));
 //      $error = false;
@@ -670,7 +653,7 @@ class CasesController extends Controller
 //               // return response()->json($file['tmp_name']);
 //             // $destinationPath='investigation_images';
 //             // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-//             // // dd($fileNameToStore);
+
 //             // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
 
 //             // Case_Record_Document::Create([
@@ -688,12 +671,12 @@ class CasesController extends Controller
             'created_by' => \Auth::user()->id,
         ]);
         if ($request->has('record_documents')) {
-    // dd($request['record_documents']);
+   
             foreach ($request->record_documents as $key => $file) {
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-            // dd($fileNameToStore);
+          
                 Input::file('record_documents')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -785,7 +768,7 @@ class CasesController extends Controller
 
     public function filter_cases(Request $request)
     {
-        // dd($request->all());
+       
         $cases = Case_::where('country_id',session('country'))->where(function ($q) use ($request) {
 
             if ($request->filled('case_type')) {

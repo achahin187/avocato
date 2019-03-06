@@ -380,6 +380,7 @@ class LegalConsultationsController extends Controller
                     "notification_type_id" => 14,
                     "is_read" => 0,
                     "is_sent" => 0,
+                    "is_push"=>1,
                     "created_at" => Carbon::now()->format('Y-m-d H:i:s')
                 ]);
                 $notification_push = Notifications_Push::create([
