@@ -16,6 +16,7 @@ use App\Helpers\Helper;
 use App\Log;
 use Carbon\Carbon;
 use Auth;
+use App\Geo_Countries;
 
 class UsersListController extends Controller
 {
@@ -46,6 +47,7 @@ class UsersListController extends Controller
     public function create()
     {
         $data['roles'] = Rules::where('parent_id', 13)->get();
+        $data['codes'] = Geo_Countries::all();
         return view('users.users_list_create', $data);
     }
 
@@ -135,7 +137,7 @@ class UsersListController extends Controller
             'role'      => 'required',
             'email'     => 'required|email|max:40',
             'phone'     => 'required|digits_between:1,10',
-            'mobile'    => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13|unique:users,mobile,,,deleted_at,NULL',
+            'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
             'password'  => 'required|between:3,8|same:confirm_password',
             'confirm_password'      => 'required|between:3,8|same:confirm_password',
             'image'     => 'image|mimes:jpg,jpeg,png|max:1024',
@@ -151,7 +153,9 @@ class UsersListController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->mobile = $request->mobile;
+        $user->tele_code = $request->tele_code ;
+        $user->cellphone = $request->cellphone ;
+        $user->mobile = $request->tele_code.$request->cellphone ;
         $user->is_active = '1';
         $user->password = bcrypt($request->password);
         $user->country_id=session('country');
@@ -254,7 +258,7 @@ class UsersListController extends Controller
     public function edit($id)
     {
         $data['user'] = Users::find($id);
-
+        $data['codes'] = Geo_Countries::all();
         if ($data['user'] == null) {
             Session::flash('warning', 'المستخدم غير موجود');
             return redirect('/users_list');
@@ -278,7 +282,7 @@ class UsersListController extends Controller
             'user_name' => 'required|between:3,20|unique:users,name,' . $id,
             'full_name' => 'required|between:3,100',
             'role' => 'required',
-            'mobile' => ($user->mobile == $request['mobile'])? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+            'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
             'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
             'phone' => 'required|digits_between:1,10',
             
@@ -298,7 +302,9 @@ class UsersListController extends Controller
         $user->full_name = $request->full_name;
         $user->email = $request->email;
         $user->phone = $request->phone;
-        $user->mobile = $request->mobile;
+        $user->tele_code = $request->tele_code ;
+        $user->cellphone = $request->cellphone ;
+        $user->mobile = $request->tele_code.$request->cellphone;
         $user->is_active = $request->is_active;
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);

@@ -122,21 +122,9 @@ class AboutController extends Controller
 
     public function termsAjax($lang_id)
     {
-<<<<<<< HEAD
-        if($lang_id==2)
-        {
-            
-        $en = Fixed_Pages::where('page_name','terms')->first()['content'];
-        return $en;
-        }
-        else{
-        $other_lang = Helper::localizations('fixed_pages','content',4,$lang_id);  
-        return $other_lang;  
-=======
         if($lang_id == 2){
             $eng_value = Fixed_Pages::where('page_name','terms')->first()['content'];
             return $eng_value;
->>>>>>> 09ec6c2333ba0d91892d652190a7469f58c3a708
         }
         $value = Helper::localizations('fixed_pages','content',4,$lang_id);  
         return $value;  
@@ -144,23 +132,11 @@ class AboutController extends Controller
 
     public function privacyAjax($lang_id)
     {
-<<<<<<< HEAD
-        if($lang_id==2)
-        {
-            
-        $en = Fixed_Pages::where('page_name','privacy')->first()['content'];
-        return $en;
-        }
-        else{
-        $other_lang = Helper::localizations('fixed_pages','content',5,$lang_id);  
-        return $other_lang;  
-=======
         if($lang_id == 2){
             // return $lang_id;
             $eng_value = Fixed_Pages::where('page_name','privacy')->first();
             return $eng_value;
             return $eng_value->content;
->>>>>>> 09ec6c2333ba0d91892d652190a7469f58c3a708
         }
         $value = Helper::localizations('fixed_pages','content',5,$lang_id);  
         return $value;  

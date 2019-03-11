@@ -82,7 +82,8 @@ class IndividualsCompaniesController extends Controller
             'nationality'   => 'required',
             'birthday'      => 'required|date',
             'phone'         => 'required',
-            'mobile'        => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
+            'tele_code'=>'required',
+            'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
             'email'         => 'required',
             'discount_percentage' => 'required',
             'activate'      => 'required',
@@ -121,7 +122,10 @@ class IndividualsCompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->mobile = $request->tele . $request->cellphone;
             $user->address   = $request->address;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;
@@ -332,6 +336,8 @@ class IndividualsCompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Users::find($id);
+
         $this->validate($request, [
             'company_code'  => 'required',
             'company_name'  => 'required',
@@ -343,7 +349,8 @@ class IndividualsCompaniesController extends Controller
             'nationality'   => 'required',
             'birthday'      => 'required',
             'phone'         => 'required',
-            'mobile'        => 'required',
+            'tele_code'=>'required',
+            'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
             'email'         => 'required',
             'discount_percentage' => 'required',
             'activate'      => 'required',
@@ -378,7 +385,10 @@ class IndividualsCompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = $request->mobile;
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->mobile = $request->tele . $request->cellphone;
             $user->address   = $request->address;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
             $user->is_active = $request->activate;

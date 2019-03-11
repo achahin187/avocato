@@ -115,10 +115,28 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_mob">رقم الهاتف الجوال</label>
-                          <input value="{{$lawyer->mobile}}" name="mobile" class="master_input" type="text" placeholder="+201200000000 or +966100000000" id="lawyer_mob"><span class="master_message color--fadegreen">
-                                  @if ($errors->has('mobile'))
-                                    {{ $errors->first('mobile')}}
-                                    @endif</span>
+                          <div class="col-md-4">
+                          <select  name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;" >
+                          <option value="choose" selected disabled>اختر الكود</option>
+                            @foreach($codes as $code)
+                            @if($lawyer->tele_code == $code->tele_code)
+                            <option value="{{$code->tele_code}}" selected>{{$code->tele_code}}</option>
+
+                            @else
+                            <option value="{{$code->tele_code}}">{{$code->tele_code}}</option>
+
+                            @endif
+                              @endforeach
+                          </select>
+                          </div>
+                          <div class="col-md-8">
+                          <input name="cellphone" value="{{ $lawyer->cellphone }}" class="master_input" type="number" placeholder="1200000000" id="lawyer_mob">
+                          <span class="master_message color--fadegreen">
+                              @if ($errors->has('cellphone'))
+                                {{ $errors->first('cellphone')}}
+                              @endif
+                          </span>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">

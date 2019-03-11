@@ -82,7 +82,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">الجنسيه</label>
-                          <select name="nationality" name="work_type" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" >
+                          <select name="nationality"  class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" >
                           <option value="choose" selected disabled>اختر الجنسيه</option>
                             @foreach($nationalities as $nationality)
                               <option value="{{$nationality->id}}">{{ (Helper::localizations('geo_countries', 'nationality', $nationality->id)) ?Helper::localizations('geo_countries', 'nationality', $nationality->id) : $nationality->nationality}}</option>
@@ -121,12 +121,22 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_mob">رقم الهاتف الجوال</label>
-                          <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="+201200000000 or +966100000000" id="lawyer_mob">
+                          <div class="col-md-4">
+                          <select  name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;" >
+                          <option value="choose" selected disabled>اختر الكود</option>
+                            @foreach($nationalities as $code)
+                              <option value="{{$code->tele_code}}">{{$code->tele_code}}</option>
+                              @endforeach
+                          </select>
+                          </div>
+                          <div class="col-md-8">
+                          <input name="cellphone" value="{{ old('mobile') }}" class="master_input" type="number" placeholder="1200000000" id="lawyer_mob">
                           <span class="master_message color--fadegreen">
                               @if ($errors->has('mobile'))
                                 {{ $errors->first('mobile')}}
                               @endif
                           </span>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-4 col-sm-6 col-xs-12">

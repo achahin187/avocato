@@ -136,14 +136,24 @@
         </div>
 
         {{--  Mobile  --}}
-        <div class="col-md-3 col-sm-4 col-xs-12">
+        <div class="col-md-6 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_mob">رقم الهاتف الجوال</label>
-            <input name="mobile" value="{{ old('mobile') }}"  class="master_input" type="number" placeholder="0201000000000 or 0966000000000" id="comp_mob">
-            {{--  Error  --}}
-          @if ($errors->has('mobile'))
-              <span class="master_message color--fadegreen">{{ $errors->first('mobile') }}</span>
-            @endif
+            <div class="col-md-3">
+            <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
+            @foreach($nationalities as $code)
+            
+            <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+            
+            @endforeach
+            </select>
+            </div>
+            <div class="col-md-9">
+            <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="مثال : 111111111" id="mob"><span class="master_message color--fadegreen">
+                        @if ($errors->has('cellphone'))
+                        {{ $errors->first('cellphone')}}
+                        @endif</span>
+            </div>
           </div>
           
         </div>

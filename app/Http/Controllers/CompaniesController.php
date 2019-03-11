@@ -78,7 +78,8 @@ class CompaniesController extends Controller
             'legal_representative_name' => 'required',
             'address'   => 'required',
             'phone' => 'required',
-            'mobile'    => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
+            'tele_code'=>'required',
+            'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
             'email' => 'required|email',
             'work_sector' =>'required',
             'legal_representative_mobile' => 'required',
@@ -116,7 +117,10 @@ class CompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->mobile = $request->tele . $request->cellphone;
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->country_id=session('country');
@@ -343,6 +347,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $user = Users::find($id);
         $validator = Validator::make($request->all(),[
             'company_code'  => 'required',  // users
             'password'      => 'required',  // usres - client_password
@@ -350,7 +355,8 @@ class CompaniesController extends Controller
             'nationality'   => 'required',  // user_details
             'address'       => 'required',  // users
             'phone'         => 'required',  // users
-            'mobile'        => 'required',  // users
+            'tele_code'=>'required',
+            'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
             'fax'           => 'required',  // user_company_details
             'website'       => 'required',  // user_company_details
             'work_sector'   => 'required',  // user_details
@@ -396,7 +402,10 @@ class CompaniesController extends Controller
             $user->email     = $request->email;
             $user->image     = $imgPath;
             $user->phone     = $request->phone;
-            $user->mobile    = $request->mobile;
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->mobile = $request->tele . $request->cellphone;
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;

@@ -17,7 +17,8 @@ class Users extends Authenticatable
    protected $primaryKey = 'id';
    protected $table = 'users';
    protected $fillable = ['name', 'password', 'full_name', 'email', 'image',
-                           'phone', 'mobile', 'address', 'code', 'birthdate',
+                           'phone', 'mobile', 'tele_code','cellphone',
+                           'address', 'code', 'birthdate',
                            'creditcard_number', 'creditcard_cvv', 'creditcard_month',
                            'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code',
                            'is_verification_code_expired', 'last_login', 'api_token', 'device_token',

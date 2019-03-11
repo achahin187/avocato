@@ -63,6 +63,7 @@ class OfficesController extends Controller
    */
   public function create()
   {
+    $data['codes']=Geo_Countries::all();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
     $data['work_sectors'] = Specializations::all();
@@ -181,7 +182,8 @@ class OfficesController extends Controller
       $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
-      'office_mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:12|unique:users,mobile,,,deleted_at,NULL',
+      'tele_code'=>'required',
+      'office_cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
       'office_city' => 'required',
       'rep_name' => 'required',
       'rep_birthdate' => 'required|date',
@@ -219,18 +221,20 @@ class OfficesController extends Controller
     
     //get current country id
     $country = Session::get('country');
-    if($country == 1){ //Egypt
-      $office_phone = '+2'.$request->office_phone;   
-    }else{//Saudi Arabia
-      $office_phone = '+966'.$request->office_phone;
-    }
+    // if($country == 1){ //Egypt
+    //   $office_phone = '+2'.$request->office_phone;   
+    // }else{//Saudi Arabia
+    //   $office_phone = '+966'.$request->office_phone;
+    // }
 
     $office = new Users;
     $office->name = $request->office_name ;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
     // $office->phone = $request->phone;
-    $office->mobile = $request->office_mobile;
+    $office->tele_code = $request->tele_code ;
+    $office->cellphone = $request->office_cellphone ;
+    $office->mobile = $request->tele_code.$request->office_cellphone ;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;
     $office->image = ($request->hasFile('office_image'))?$office_image_name:'';
@@ -435,6 +439,7 @@ class OfficesController extends Controller
       $data['countries'] = Geo_Countries::all();
       $data['syndicate_levels'] = SyndicateLevels::all();
       $data['client_password'] = ClientsPasswords::where('user_id',$id)->first();
+      $data['codes']=Geo_Countries::all();
       return view('offices.edit', $data);
   }
 
@@ -451,7 +456,8 @@ class OfficesController extends Controller
     $user = Users::find($id);
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
-        'office_mobile' => ($user->mobile == $request->office_mobile)? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+        'tele_code'=>'required',
+        'office_cellphone' => ($user->cellphone == $request['office_cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
         'office_email' => ($user->email == $request->office_email)? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
         'office_city' => 'required',
         'rep_name' => 'required',
@@ -494,7 +500,9 @@ class OfficesController extends Controller
     $office->name = $request->office_name;
     $office->full_name = $request->office_name;
     $office->address = $request->office_address;
-    $office->mobile = $request->office_mobile;
+    $office->tele_code = $request->tele_code ;
+    $office->cellphone = $request->office_cellphone ;
+    $office->mobile = $request->tele_code.$request->office_cellphone;
     // $office->mobile = $request->mobile;
     $office->email = $request->office_email;
     $office->is_active = $request->is_active;

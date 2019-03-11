@@ -104,10 +104,21 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="mob">موبايل</label>
-                        <input name="mobile" value="{{ old('mobile') }}" class="master_input" type="text" placeholder="مثال : 0111111111" id="mob"><span class="master_message color--fadegreen">
-                                    @if ($errors->has('mobile'))
-                                    {{ $errors->first('mobile')}}
+                        <div class="col-md-3">
+                        <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
+                        @foreach($codes as $code)
+                       
+                        <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+                        
+                        @endforeach
+                        </select>
+                        </div>
+                        <div class="col-md-9">
+                        <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="مثال : 111111111" id="mob"><span class="master_message color--fadegreen">
+                                    @if ($errors->has('cellphone'))
+                                    {{ $errors->first('cellphone')}}
                                     @endif</span>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4 col-xs-6">

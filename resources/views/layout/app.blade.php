@@ -73,16 +73,7 @@
                               <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i><span class="badge badge-default"> {{$counter}}</span></a>
                                 <ul class="dropdowny-menu" role="menu">
                                   @foreach($notes as $note)
-<<<<<<< HEAD
-                                  <li @if($note->is_read==1)class="read" @endif data-notification-id={{ $note->id }}>
-                                  <a class="notification" 
-                                  @if($note->url != null)
-                                  href="{{route($note->url,$note->item_id)}}"
-                                  @endif
-                                  >
-=======
                                   <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if($note->url != null || $note->url != '') href="{{route($note->url,$note->item_id)}}" @endif >
->>>>>>> 09ec6c2333ba0d91892d652190a7469f58c3a708
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                     <p>{{$note->msg}}</p>
                                     <span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span>

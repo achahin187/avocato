@@ -53,6 +53,7 @@ class IndividualsController extends Controller
         $password = rand(10000000, 99999999);
         $subscription_types = Package_Types::all();
         $nationalities = Geo_Countries::all();
+        
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
     }
 
@@ -72,7 +73,8 @@ class IndividualsController extends Controller
             'national_id' => 'required',
             'birthday' => 'required|date',
             'nationality' => 'required',
-            'mobile' => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
+            'tele_code'=>'required',
+            'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
             'email' => 'email',
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
@@ -115,7 +117,10 @@ class IndividualsController extends Controller
             $user->email = $request->email;
             $user->image = $imgPath;
             $user->phone = $request->phone;
-            $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
+            $user->mobile = $request->tele . $request->cellphone;
             $user->address = $request->address;
             $user->code = $request->code;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));
@@ -301,6 +306,7 @@ class IndividualsController extends Controller
     public function update(Request $request, $id)
     {
         // Validate data
+        $user = Users::find($id);
         $validator = Validator::make($request->all(), [
         'name' => 'required',
         'job' => 'required',
@@ -308,7 +314,8 @@ class IndividualsController extends Controller
         'national_id' => 'required',
         'birthday' => 'required|date',
         'nationality' => 'required',
-        'mobile' => 'required|digits_between:1,13|unique:users,mobile,,,deleted_at,NULL',
+        'tele_code'=>'required',
+        'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
         'email' => 'email',
         'personal_image' => 'image|mimes:jpeg,jpg,png',
         'start_date' => 'required',
@@ -326,7 +333,7 @@ class IndividualsController extends Controller
         }
 
         // Find this user to edit him/her
-        $user = Users::find($id);
+        // $user = Users::find($id);
         
         // upload image to storage/app/public
         if ($request->personal_image) {
@@ -349,7 +356,9 @@ class IndividualsController extends Controller
             $user->email = $request->email;
             $user->image = $imgPath;
             $user->phone = $request->phone;
-            $user->mobile = $request->mobile;
+            $user->tele_code = $request->tele_code ;
+            $user->cellphone = $request->cellphone ;
+            $user->mobile = $request->tele_code.$request->cellphone;
             $user->address = $request->address;
             $user->code = $request->code;
             $user->birthdate = date('Y-m-d', strtotime($request->birthday));

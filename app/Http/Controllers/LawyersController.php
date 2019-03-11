@@ -250,7 +250,8 @@ class LawyersController extends Controller
       'currency_id'=>'required',
       'birthdate' => 'required',
       'phone' => 'required|digits_between:1,10',
-      'mobile' => 'required|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13|unique:users,mobile,,,deleted_at,NULL',
+      'tele_code'=>'required',
+      'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
       'email' => 'required|email|max:40',
       'image' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'is_active' => 'required',
@@ -291,10 +292,13 @@ class LawyersController extends Controller
 
     $lawyer = new Users;
     $lawyer->name = $request->name ;
+    $lawyer->tele_code = $request->tele_code ;
+    $lawyer->cellphone = $request->cellphone ;
+    $lawyer->mobile = $request->tele_code.$request->cellphone ;
     $lawyer->full_name = $request->name;
     $lawyer->address = $request->address;
     $lawyer->phone = $request->phone;
-    $lawyer->mobile = $request->mobile;
+    // $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
@@ -442,6 +446,7 @@ class LawyersController extends Controller
     $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    $data['codes']=Geo_Countries::all();
     foreach($data['syndicate_levels'] as $content)
     {
       $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,1)) ? Helper::localizations('syndicate_levels','name',$content->id,1) : $content->name;
@@ -473,7 +478,8 @@ class LawyersController extends Controller
       'national_id' => 'required|numeric',
       'birthdate' => 'required',
       'phone' => 'digits_between:0,10',
-      'mobile' => ($user->mobile == $request['mobile'])? "":"unique:users,mobile,,,deleted_at,NULL|regex:/^\+?[^a-zA-Z]{5,}$/|min:13|max:13",
+      'tele_code'=>'required',
+      'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
       'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
       'is_active' => 'required',
       'work_sector' => 'required',
@@ -498,7 +504,9 @@ class LawyersController extends Controller
     {
     $lawyer->phone = $request->phone;
     }
-    $lawyer->mobile = $request->mobile;
+    $user->tele_code = $request->tele_code ;
+    $user->cellphone = $request->cellphone ;
+    $user->mobile = $request->tele_code.$request->cellphone;
     $lawyer->email = $request->email;
     $lawyer->note = $request->note;
     $lawyer->country_id = session('country');
