@@ -246,12 +246,14 @@ Route::get('/legal_consultations', 'LegalConsultationsController@index')->name('
 Route::get('/legal_consultations_show', 'LegalConsultationsController@show')->name('legal_consultations_show');
 Route::get('/legal_consultation_add', 'LegalConsultationsController@add')->name('legal_consultation_add');
 Route::get('/legal_consultation_edit/{id}', 'LegalConsultationsController@edit')->name('legal_consultation_edit');
+Route::get('/legal_consultation_category/{id}', 'LegalConsultationsController@category')->name('legal_consultation_category');
 Route::get('/legal_consultation_assign/{id}', 'LegalConsultationsController@assign')->name('legal_consultation_assign');
 Route::post('/legal_consultation_store', 'LegalConsultationsController@store')->name('legal_consultation_store');
 Route::get('/legal_consultation_view/{id}', 'LegalConsultationsController@view')->name('legal_consultation_view');
 Route::post('/edit_lawyer_response', 'LegalConsultationsController@edit_lawyer_response')->name('edit_lawyer_response');
 Route::post('/delete_lawyer_response', 'LegalConsultationsController@delete_lawyer_response')->name('delete_lawyer_response');
 Route::post('/legal_edit_consultation/{id}', 'LegalConsultationsController@edit_consultation')->name('legal_edit_consultation');
+Route::post('/legal_category_consultation/{id}', 'LegalConsultationsController@category_consultation')->name('legal_category_consultation');
 Route::get('/legal_consultation_destroy/{id}', 'LegalConsultationsController@destroy')->name('legal_consultation_destroy');
 Route::post('/legal_consultation_destroy_all', 'LegalConsultationsController@destroy_all')->name('legal_consultation_destroy_all');
 Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsultationsController@send_consultation_to_all_lawyers')->name('send_consultation_to_all_lawyers');

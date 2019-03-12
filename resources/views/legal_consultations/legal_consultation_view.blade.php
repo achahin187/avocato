@@ -22,6 +22,7 @@
                         <h3>كود الإستشارة: {{$consultation->code}}</h3>
                       </div>
                       <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="{{URL('legal_consultation_edit/'.$consultation->id)}}">أضافه رد</a>
+                      <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="{{URL('legal_consultation_category/'.$consultation->id)}}">أضافه تصنيف</a>
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>
                     <div class="col-md-12">

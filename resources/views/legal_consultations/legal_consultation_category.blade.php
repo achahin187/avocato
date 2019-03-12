@@ -18,10 +18,10 @@
                     </div>
                   </div>
                 </div>
-                <form role="form" action="{{URL('legal_edit_consultation/'.$id)}}" method="post">
+                <form role="form" action="{{URL('legal_category_consultation/'.$id)}}" method="post">
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <!-- <div class="col-lg-6">
+                    <div class="col-lg-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
                         <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" >
@@ -70,7 +70,7 @@
                                     @endif
                         </span>
                       </div>
-                    </div> -->
+                    </div>
 
                   <!-- <div class="col-md-2 col-xs-4">
                       <div class="master_field">
@@ -88,32 +88,8 @@
                       </div>
                     </div> -->
 
-                    <div class="col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="consultation_question">نص السؤال</label>
-                        <input class="master_input" type="text" placeholder="نص السؤال .." id="consultation_question" name="consultation_question" value="{{$consultation->question}}"><span class="master_message color--fadegreen">
-                            @if ($errors->has('consultation_question'))
-                                    {{ $errors->first('consultation_question')}}
-                                    @endif
-                        </span>
-                      </div>
-                    </div>
-                    <div class="col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="consultation_answer">نص الاجابة</label>
-                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة ">
-                        @foreach($consultation->consultation_reply as $reply) 
-                        @if($reply->lawyer_id == \Auth::user()->id)
-                        {{trim($reply->reply)}}
-                          @endif
-                          @endforeach
-                        </textarea><span class="master_message color--fadegreen">
-                           @if ($errors->has('consultation_answer'))
-                                    {{ $errors->first('consultation_answer')}}
-                                    @endif
-                        </span>
-                      </div>
-                    </div>
+                    
+                   
                     <div class="clearfix"></div>
                     <div class="col-md-2 col-xs-6">
                       <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>

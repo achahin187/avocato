@@ -144,6 +144,19 @@ class LegalConsultationsController extends Controller
 
         return view('legal_consultations.legal_consultation_edit',$data)->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
     }
+    public function category($id)
+    {
+        $data['languages'] = Languages::all();
+        $consultation_types = Consultation_Types::all();
+        $consultation = Consultation::find($id);
+
+        if( $consultation == NULL ) {
+            Session::flash('warning', 'الاستشارة القانونية غير موجودة');
+            return redirect('/legal_consultations');
+        } 
+
+        return view('legal_consultations.legal_consultation_category',$data)->with('id', $id)->with('consultation_types', $consultation_types)->with('consultation', $consultation);
+    }
 
     public function assign($id)
     {
@@ -263,9 +276,51 @@ class LegalConsultationsController extends Controller
     {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
-            'consultation_type' => 'required',
+            // 'consultation_type' => 'required',
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
+            // 'consultation_cat' => 'required',
+          //  'language' => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $consultation_types = Consultation_Types::all();
+        $consultation = Consultation::find($id);
+        // dd($request->all());
+        // $consultation_type = Consultation_Types::where('name', $request->input('consultation_cat'))->first();
+        $consultation->Update([
+            // 'consultation_type_id' => $consultation_type->id,
+            // 'is_paid' => $request->input('consultation_type'),
+            'question' => $request->input('consultation_question'),
+            'is_replied'=>1
+            // 'lang_id'=> $request->language,
+        ]);
+        $consultation_reply = Consultation_Replies::where('consultation_id', $id)->where('lawyer_id',\Auth::user()->id)->update([
+            'reply' => $request->input('consultation_answer')
+        ]);
+        if (!$consultation_reply) {
+            $consultation->consultation_reply()->create([
+
+                'lawyer_id' => \Auth::user()->id,
+                'reply' => $request->input('consultation_answer'),
+                'is_perfect_answer' => 1
+            ]);
+            $consultation->update(['is_replied' => 1]);
+
+        }
+        Helper::add_log(4, 13, $consultation->id);
+        return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
+    }
+    public function category_consultation(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'consultation_type' => 'required',
+           
             'consultation_cat' => 'required',
           //  'language' => 'required',
 
@@ -283,23 +338,10 @@ class LegalConsultationsController extends Controller
         $consultation->Update([
             'consultation_type_id' => $consultation_type->id,
             'is_paid' => $request->input('consultation_type'),
-            'question' => $request->input('consultation_question'),
-            'is_replied'=>1
+           
             // 'lang_id'=> $request->language,
         ]);
-        $consultation_reply = Consultation_Replies::where('consultation_id', $id)->update([
-            'reply' => $request->input('consultation_answer')
-        ]);
-        if (!$consultation_reply) {
-            $consultation->consultation_reply()->create([
-
-                'lawyer_id' => \Auth::user()->id,
-                'reply' => $request->input('consultation_answer'),
-                'is_perfect_answer' => 1
-            ]);
-            $consultation->update(['is_replied' => 1]);
-
-        }
+        
         Helper::add_log(4, 13, $consultation->id);
         return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
     }
