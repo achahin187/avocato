@@ -132,7 +132,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="comp_tel">رقم الهاتف</label>
-            <input name="phone" value="{{ $company->phone }}" class="master_input" type="number" placeholder="رقم الهاتف" id="comp_tel" min="0">
+            <input name="phone" value="{{ $company->phone }}" class="master_input" type="number" placeholder="0212345678" id="comp_tel" min="0">
             {{--  Error  --}}
             @if ($errors->has('phone'))
             <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>
@@ -156,10 +156,10 @@
             </select>
             </div>
             <div class="col-md-9">
-            <input name="cellphone"  class="master_input" type="number" placeholder="مثال : 111111111" id="mob" value="{{$user->cellphone}}"><span class="master_message color--fadegreen">
-                        @if ($errors->has('cellphone'))
-                        {{ $errors->first('cellphone')}}
-                        @endif</span>
+            <input name="cellphone"  class="master_input" type="number" placeholder="1234567890" id="mob" value="{{$user->cellphone}}"><span class="master_message color--fadegreen">
+            @if ($errors->has('cellphone'))
+            {{ $errors->first('cellphone')}}
+            @endif</span>
             </div>
           </div>
         </div>

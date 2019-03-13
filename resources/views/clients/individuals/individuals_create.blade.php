@@ -163,7 +163,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
-            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="text" placeholder="رقم الهاتف" id="client_tel">
+            <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="text" placeholder="0212345678" id="client_tel">
             
               @if ($errors->has('phone'))
                 <span class="master_message color--fadegreen">{{ $errors->first('phone') }}</span>
@@ -178,17 +178,15 @@
             <div class="col-md-3">
             <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
             @foreach($nationalities as $code)
-            
             <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
-            
             @endforeach
             </select>
             </div>
             <div class="col-md-9">
-            <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="مثال : 111111111" id="mob"><span class="master_message color--fadegreen">
-                        @if ($errors->has('cellphone'))
-                        {{ $errors->first('cellphone')}}
-                        @endif</span>
+            <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="1234567890" id="mob"><span class="master_message color--fadegreen">
+            @if ($errors->has('cellphone'))
+            {{ $errors->first('cellphone')}}
+            @endif</span>
             </div>
           </div>
         </div>

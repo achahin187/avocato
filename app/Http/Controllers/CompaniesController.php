@@ -120,7 +120,7 @@ class CompaniesController extends Controller
             $user->tele_code = $request->tele_code ;
             $user->cellphone = $request->cellphone ;
             // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
-            $user->mobile = $request->tele . $request->cellphone;
+            $user->mobile = $request->tele_code. $request->cellphone;
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->country_id=session('country');
@@ -405,7 +405,7 @@ class CompaniesController extends Controller
             $user->tele_code = $request->tele_code ;
             $user->cellphone = $request->cellphone ;
             // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
-            $user->mobile = $request->tele . $request->cellphone;
+            $user->mobile = $request->tele_code . $request->cellphone;
             $user->address   = $request->address;
             $user->is_active = $request->activate;
             $user->created_by= Auth::user()->id;
