@@ -39,12 +39,14 @@
                           <input value="{{$lawyer->code}}" class="master_input" type="text" placeholder="كود المحامى .." id="lawyer_code" disabled="true">
                         </div>
                       </div>
+                      @if(!Helper::is_lawyer_mobile($lawyer->id))
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label" for="password">كلمة المرور</label>
                           <input value="{{$lawyer->client_password->password}}" class="master_input" type="text" placeholder="كلمة المرور .." id="password" disabled="true">
                         </div>
                       </div>
+                      @endif
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
