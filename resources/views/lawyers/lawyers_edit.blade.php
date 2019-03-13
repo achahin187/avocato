@@ -97,7 +97,7 @@
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_birth">تاريخ الميلاد</label>
-                          <input value="{{$lawyer->birthdate}}" name="birthdate" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="lawyer_birth"><span class="master_message color--fadegreen">
+                          <input value="{{date('m/d/Y', strtotime($lawyer->birthdate))}}" name="birthdate" class="datepicker master_input" type="text" placeholder="اكتب تاريخ الميلاد هنا" id="lawyer_birth"><span class="master_message color--fadegreen">
                                     @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif </span>

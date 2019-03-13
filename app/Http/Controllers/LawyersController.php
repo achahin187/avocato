@@ -476,7 +476,7 @@ class LawyersController extends Controller
       'work_sector_area' => 'required',
       'syndicate_level_id' => 'required',
       'national_id' => 'required|numeric',
-      'birthdate' => 'required',
+      'birthdate' => 'required|date',
       'phone' => 'digits_between:0,10',
       'tele_code'=>'required',
       'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
