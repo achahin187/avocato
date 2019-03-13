@@ -86,7 +86,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="client_email">البريد الالكترونى</label>
-                        <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="مثال mail@mail.com" id="client_email"><span class="master_message color--fadegreen">
+                        <input name="email" value="{{ old('email') }}" class="master_input" type="email" placeholder="mail@mail.com" id="client_email"><span class="master_message color--fadegreen">
                                     @if ($errors->has('email'))
                                     {{ $errors->first('email')}}
                                     @endif</span>
@@ -95,7 +95,7 @@
                     <div class="col-md-4 col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="phone">هاتف</label>
-                        <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="مثال : 022222222" id="phone"><span class="master_message color--fadegreen">
+                        <input name="phone" value="{{ old('phone') }}" class="master_input" type="text" placeholder="012345678" id="phone"><span class="master_message color--fadegreen">
                                     @if ($errors->has('phone'))
                                     {{ $errors->first('phone')}}
                                     @endif</span>
@@ -114,7 +114,7 @@
                         </select>
                         </div>
                         <div class="col-md-9">
-                        <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="مثال : 111111111" id="mob"><span class="master_message color--fadegreen">
+                        <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="1234567890" id="mob"><span class="master_message color--fadegreen">
                                     @if ($errors->has('cellphone'))
                                     {{ $errors->first('cellphone')}}
                                     @endif</span>
