@@ -147,7 +147,7 @@
             <div class="col-md-3">
               <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
             @foreach($nationalities as $code)
-            @if($user->tele_code == $code['tele_code'])
+            @if($company->tele_code == $code['tele_code'])
             <option value="{{$code['tele_code']}}" selected>{{$code['tele_code']}}</option>
             @else
             <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
@@ -156,7 +156,7 @@
             </select>
             </div>
             <div class="col-md-9">
-            <input name="cellphone"  class="master_input" type="number" placeholder="1234567890" id="mob" value="{{$user->cellphone}}"><span class="master_message color--fadegreen">
+            <input name="cellphone"  class="master_input" type="number" placeholder="1234567890" id="mob" value="{{$company->cellphone}}"><span class="master_message color--fadegreen">
             @if ($errors->has('cellphone'))
             {{ $errors->first('cellphone')}}
             @endif</span>
