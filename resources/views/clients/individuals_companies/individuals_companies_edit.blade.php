@@ -380,24 +380,24 @@
             <div class="col-md-4 col-xs-12">
                 <div class="master_field">
                   <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
-                  <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $user->subscription->package_type_id != 7 ?  $installments[$i]->value : '' }}">
+                  <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{   $installments[$i]->value  }}">
                 </div>
                 </div>
                 <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                   <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->subscription->package_type_id != 7 ? $installments[$i]->payment_date->format('m/d/Y') : '' }}">
+                    <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{  $installments[$i]->payment_date->format('m/d/Y')  }}">
                   </div>
                 </div>
                 <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                   <label class="master_label">حالة القسط رقم {{ $j }}</label>
                 <div class="radio-inline">
-                  <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 1 ? 'checked' : '') : '' }} >
+                  <input type="radio" name="payment_status[{{ $i }}]" value="1" {{  ($installments[$i]->is_paid == 1 ? 'checked' : '')  }} >
                   <label>نعم</label>
                 </div>
                 <div class="radio-inline">
-                  <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 0 ? 'checked' : '') : 'checked' }} >
+                  <input type="radio" name="payment_status[{{ $i }}]" value="0" {{  ($installments[$i]->is_paid == 0 ? 'checked' : '')  }} >
                   <label>لا</label>
                 </div>
               </div>
