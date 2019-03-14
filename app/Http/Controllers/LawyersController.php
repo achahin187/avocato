@@ -479,7 +479,7 @@ class LawyersController extends Controller
       'birthdate' => 'required|date',
       'phone' => 'digits_between:0,10',
       'tele_code'=>'required',
-      'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
+      'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
       'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
       'is_active' => 'required',
       'work_sector' => 'required',

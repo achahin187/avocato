@@ -356,7 +356,7 @@ class CompaniesController extends Controller
             'address'       => 'required',  // users
             'phone'         => 'required',  // users
             'tele_code'=>'required',
-            'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
+            'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
             'fax'           => 'required',  // user_company_details
             'website'       => 'required',  // user_company_details
             'work_sector'   => 'required',  // user_details

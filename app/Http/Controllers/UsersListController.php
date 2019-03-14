@@ -282,7 +282,7 @@ class UsersListController extends Controller
             'user_name' => 'required|between:3,20|unique:users,name,' . $id,
             'full_name' => 'required|between:3,100',
             'role' => 'required',
-            'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
+            'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
             'email' => ($user->email == $request['email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
             'phone' => 'required|digits_between:1,10',
             
