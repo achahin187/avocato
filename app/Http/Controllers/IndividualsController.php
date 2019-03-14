@@ -315,7 +315,7 @@ class IndividualsController extends Controller
         'birthday' => 'required|date',
         'nationality' => 'required',
         'tele_code'=>'required',
-        'cellphone' => ($user->cellphone == $request['cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
+        'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
         'email' => 'email',
         'personal_image' => 'image|mimes:jpeg,jpg,png',
         'start_date' => 'required',
