@@ -354,6 +354,7 @@ class LegalConsultationsController extends Controller
         $sync_data = [];
         $notification_type = Notification_Types::find(9);
         foreach ($ids as $id) {
+            $user=Users::find($consultation->created_by);
             $sync_data[$id] = ['assigned_by' => \Auth::user()->id, 'assigned_at' => Carbon::now()->format('Y-m-d H:i:s')];
 
             $user = Users::find($id);
@@ -361,6 +362,7 @@ class LegalConsultationsController extends Controller
                 "msg" => $notification_type->msg,
                 "entity_id" => 13,
                 "item_id" => $consultation_id,
+                "item_name" => $user->full_name,
                 "user_id" => $id,
                 "notification_type_id" => 9,
                 "is_read" => 0,
@@ -418,6 +420,7 @@ class LegalConsultationsController extends Controller
                     "msg" => $notification_type->msg,
                     "entity_id" => 13,
                     "item_id" => $consultation->id,
+                    "item_id"=>$user->full_name,
                     "user_id" => $consultation->created_by,
                     "notification_type_id" => 14,
                     "is_read" => 0,

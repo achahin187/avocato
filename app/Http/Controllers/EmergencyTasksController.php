@@ -112,7 +112,8 @@ return redirect()->route('tasks_emergency');
     	// dd($request->all());
       
 
-    	$task = Tasks::find($id);
+      $task = Tasks::find($id);
+      $client=Users::find($task->client_id);
     	$task->update([
     		'assigned_lawyer_id'=>$request['lawyer_id'],
     		'who_assigned_lawyer_id'=>\Auth::user()->id,
@@ -123,6 +124,7 @@ return redirect()->route('tasks_emergency');
                 "msg"=>$notification_type->msg,
                 "entity_id"=>11,
                 "item_id"=>$id,
+                "item_name"=>($client)?$client->name:"",
                 "user_id"=>$request['lawyer_id'],
                 "notification_type_id"=>11,
                 "is_read"=>0,
@@ -137,12 +139,13 @@ return redirect()->route('tasks_emergency');
                 "lang_id"=>$user->lang_id,
                 "user_id"=>$request['lawyer_id']
             ]);
-              $client=Users::find($task->client_id);
+              
       $notification_type_client=Notification_Types::find(13);
       $notification_client=Notifications::create([
                 "msg"=>$notification_type_client->msg,
                 "entity_id"=>12,
                 "item_id"=>$request['lawyer_id'],
+                "item_name"=>$user->full_name,
                 "user_id"=>$task->client_id,
                 "notification_type_id"=>13,
                 "is_read"=>0,
