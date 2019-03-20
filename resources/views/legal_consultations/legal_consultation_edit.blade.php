@@ -21,72 +21,7 @@
                 <form role="form" action="{{URL('legal_edit_consultation/'.$id)}}" method="post">
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <!-- <div class="col-lg-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
-                        <select class="master_input select2" id="consultation_cat"  name="consultation_cat" data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" >
-                          <option value="-1" selected disabled hidden>اختر تصنيف</option>
-                          
-                          @if ( isset($consultation_types) && !empty($consultation_types) )
-                            @foreach($consultation_types as $type)
-
-                             {{--  @if( isset($consultation->consultation_type_id) && !empty($consultation->consultation_type_id) ) --}}
-                                @if($consultation->consultation_type_id == $type->id)
-                                  <option value="{{$type->name}}" selected>{{$type->name}}</option>
-                                @else
-                                  <option value="{{$type->name}}">{{$type->name}}</option>
-                                @endif
-                              {{-- @endif --}}
-
-                            @endforeach
-                          @endif
-                          
-                        </select>
-                          <span class="master_message color--fadegreen">
-                            @if ($errors->has('consultation_cat'))
-                            {{ $errors->first('consultation_cat')}}
-                            @endif
-                          </span>
-                      </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label">نوع الاستشارة</label>
-                        <div class="radiorobo">
-                          @if(!$consultation->is_paid)
-                          <input type="radio" id="rad_1" name="consultation_type" value="0" checked="checked">
-                          <label for="rad_1">مجانية</label>
-                          <input type="radio" id="rad_2" name="consultation_type" value="1" >
-                          <label for="rad_2">مدفوع</label>
-                         @else 
-                          <input type="radio" id="rad_1" name="consultation_type" value="0" >
-                          <label for="rad_1">مجانية</label>
-                          <input type="radio" id="rad_2" name="consultation_type" value="1" checked="checked">
-                          <label for="rad_2">مدفوع</label>
-                          @endif
-                        </div><span class="master_message color--fadegreen">
-                          @if ($errors->has('consultation_type'))
-                                    {{ $errors->first('consultation_type')}}
-                                    @endif
-                        </span>
-                      </div>
-                    </div> -->
-
-                  <!-- <div class="col-md-2 col-xs-4">
-                      <div class="master_field">
-                        <label class="master_label" for="sitch_1">اللغه</label>
-                              <select name="language" class="master_input select2" id="type" data-placeholder="اللغع" style="width:100%;" ,>
-                                @foreach($languages as $language)
-                                <option {{$consultation->lang_id ==$language->id ? 'selected' :''}} value="{{$language->id}}" >{{$language->name}}</option>
-                                @endforeach
-                              </select>
-                          
-                          @if ($errors->has('language'))
-                            <span class="master_message color--fadegreen">{{ $errors->first('language') }}</span>
-                          @endif
-                          
-                      </div>
-                    </div> -->
+                   
 
                     <div class="col-xs-12">
                       <div class="master_field">
@@ -101,13 +36,20 @@
                     <div class="col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="consultation_answer">نص الاجابة</label>
-                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة ">
-                        @foreach($consultation->consultation_reply as $reply) 
+                        <?php $i=0; ?>
+                        @foreach($consultation->consultation_reply as $reply)
                         @if($reply->lawyer_id == \Auth::user()->id)
-                        {{trim($reply->reply)}}
-                          @endif
-                          @endforeach
-                        </textarea><span class="master_message color--fadegreen">
+                        <?php $i=1; ?>
+                        <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة ">{{trim($reply->reply)}}</textarea>
+                         
+                         @endif
+                         @endforeach
+                         @if($i==0)
+                         <textarea class="master_input"  id="consultation_answer" name="consultation_answer" placeholder="نص الاجابة "></textarea>
+
+                         @endif
+                         
+                        <span class="master_message color--fadegreen">
                            @if ($errors->has('consultation_answer'))
                                     {{ $errors->first('consultation_answer')}}
                                     @endif
@@ -131,4 +73,4 @@
                 <!-- =============== PAGE VENDOR Triggers ===============-->
               </div>
 
-               @endsection
+@stop
