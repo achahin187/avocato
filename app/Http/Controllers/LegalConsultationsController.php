@@ -161,6 +161,11 @@ class LegalConsultationsController extends Controller
     public function assign($id)
     {
         $consultation = Consultation::find($id);
+        if($consultation->direct_assigned == 1)
+        {
+            session('error','لا يمكن اضافه رد لهذه الاستشاره لانها موجهه لمحامى');
+            return redirect()->back();
+        }
         // dd($consultation);
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
@@ -356,6 +361,11 @@ class LegalConsultationsController extends Controller
         // dd($consultation_id);
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($consultation_id);
+        if($consultation->direct_assigned == 1)
+        {
+            session('error','لا يمكن تحديد محامين لهذه الاستشاره لانها موجهه لمحامى');
+            return redirect()->back();
+        }
         $ids = $_POST['ids'];
         $sync_data = [];
         $notification_type = Notification_Types::find(9);
