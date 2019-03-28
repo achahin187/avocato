@@ -275,6 +275,12 @@ class LegalConsultationsController extends Controller
     public function edit_consultation(Request $request, $id)
     {
         // dd($request->all());
+        $consultation = Consultation::find($id);
+        if($consultation->direct_assigned == 1)
+        {
+            session('error','لا يمكن اضافه رد لهذه الاستشاره لانها موجهه لمحامى');
+            return redirect()->back();
+        }
         $validator = Validator::make($request->all(), [
             // 'consultation_type' => 'required',
             'consultation_question' => 'required',
@@ -290,7 +296,7 @@ class LegalConsultationsController extends Controller
                 ->withInput();
         }
         $consultation_types = Consultation_Types::all();
-        $consultation = Consultation::find($id);
+        
         // dd($request->all());
         // $consultation_type = Consultation_Types::where('name', $request->input('consultation_cat'))->first();
         $consultation->Update([
