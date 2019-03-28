@@ -110,7 +110,11 @@
                           <div class="col-md-3">
                           <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
                         @foreach($codes as $code)
+                        @if($user->tele_code == $code['tele_code'])
+                        <option value="{{$code['tele_code']}}" selected>{{$code['tele_code']}}</option>
+                        @else
                         <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+                        @endif
                         @endforeach
                         </select>
                         </div>
