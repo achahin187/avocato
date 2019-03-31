@@ -248,7 +248,7 @@ class LawyersController extends Controller
       'national_id' => 'required|numeric',
       'consultation_price' => 'required|numeric',
       'currency_id'=>'required',
-      'birthdate' => 'required',
+      'birthdate' => 'required|date',
       'phone' => 'required|digits_between:1,10',
       'tele_code'=>'required',
       'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
@@ -301,7 +301,7 @@ class LawyersController extends Controller
     // $lawyer->mobile = $request->mobile;
     $lawyer->email = $request->email;
     $lawyer->is_active = $request->is_active;
-    $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
+    $lawyer->birthdate = date('Y-m-d', strtotime($request->birthdate));
     $lawyer->image = $image_name;
     $lawyer->country_id=session('country');
     $lawyer->note = $request->note;
@@ -511,7 +511,7 @@ class LawyersController extends Controller
     $lawyer->note = $request->note;
     $lawyer->country_id = session('country');
     $lawyer->is_active = $request->is_active;
-    $lawyer->birthdate = date('Y-m-d H:i:s', strtotime($request->birthdate));
+    $lawyer->birthdate = date('Y-m-d', strtotime($request->birthdate));
     if ($request->hasFile('image')) {
       $destinationPath = 'users_images';
       $image_name = $destinationPath . '/' . $request->lawyer_name . time() . rand(111, 999) . '.' . Input::file('image')->getClientOriginalExtension();
