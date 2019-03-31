@@ -535,6 +535,11 @@ class LawyersController extends Controller
       $lawyer->specializations()->attach($work_sector);
     }
     $lawyer_details = User_Details::where('user_id', $id)->first();
+    if(count($lawyer_details)==0 )
+    {
+      $lawyer_details = new User_Details();
+      
+    }
     if(isset($request->national_id))
     {
       $lawyer_details->national_id = $request->national_id;
