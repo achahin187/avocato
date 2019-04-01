@@ -262,7 +262,12 @@ else
                             @else
                             <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
                             @endif
-                            <td><span class="cellcontent"><a href= "{{URL('legal_consultation_view/'.$consultation->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{URL('legal_consultation_edit/'.$consultation->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">
+                            <a href= "{{URL('legal_consultation_view/'.$consultation->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
+                            @if($consultation->direct_assigned == 0)
+                            <a href= "{{URL('legal_consultation_edit/'.$consultation->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                            @endif
+                            <a  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endforeach
                           

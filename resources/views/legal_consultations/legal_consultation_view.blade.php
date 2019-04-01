@@ -12,8 +12,10 @@
                           </div>
                         </div>
                       </div>
+                      @if($consultation->direct_assigned == 0)
                       <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{URL('legal_consultation_assign/'.$consultation->id)}}">ارسال الإستشارة لمحامي</a>
                       </div>
+                      @endif
                     </div>
                   </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
@@ -21,7 +23,9 @@
                       <div class="caption">
                         <h3>كود الإستشارة: {{$consultation->code}}</h3>
                       </div>
+                      @if($consultation->direct_assigned == 0)
                       <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="{{URL('legal_consultation_edit/'.$consultation->id)}}">أضافه رد</a>
+                     @endif
                       <div class="actions"><a class="color--white bgcolor--fadegreen bradius--small bshadow--0 master-btn" type="button" href="{{URL('legal_consultation_category/'.$consultation->id)}}">أضافه تصنيف</a>
                       </div><span class="mainseparator bgcolor--main"></span>
                     </div>

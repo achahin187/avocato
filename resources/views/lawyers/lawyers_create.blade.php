@@ -130,10 +130,10 @@
                           </select>
                           </div>
                           <div class="col-md-8">
-                          <input name="cellphone" value="{{ old('mobile') }}" class="master_input" type="number" placeholder="1200000000" id="lawyer_mob">
+                          <input name="cellphone" value="{{ old('cellphone') }}" class="master_input" type="number" placeholder="1200000000" id="lawyer_mob">
                           <span class="master_message color--fadegreen">
-                              @if ($errors->has('mobile'))
-                                {{ $errors->first('mobile')}}
+                              @if ($errors->has('cellphone'))
+                                {{ $errors->first('cellphone')}}
                               @endif
                           </span>
                           </div>
