@@ -10,7 +10,8 @@ class ContactUsController extends Controller
 {
     public function index()
     {
-        $data['branches']=Company_Branch::all();
+        $data['branches']=Company_Branch::with('contact_detail')->get();
+        // dd($data['branches']['0']['contact_detail'][0]['pivot']['name']);
 
       return view('contactus.index',$data);
     }
@@ -32,5 +33,18 @@ class ContactUsController extends Controller
     public function update()
     {
 
+    }
+
+    public function delete($id)
+    {
+        try{
+            Company_Branch::destroy($id);
+            Contact_Detail::where('company_branch_id',$id)->delete();
+        }
+        catch(\Exception $ex)
+        {
+
+        }
+        
     }
 }

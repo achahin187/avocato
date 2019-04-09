@@ -414,6 +414,7 @@ Route::middleware(['roles:1,2'])->group(function () {
         Route::get('/contactus/index','ContactUsController@index')->name('contactus_index');
         Route::get('/contactus/add','ContactUsController@add')->name('contactus_add');
         Route::get('/contactus/edit/{id}','ContactUsController@edit')->name('contactus_edit');
+        Route::get('/contactus/delete/{id}','ContactUsController@delete')->name('contactus_delete');
     
     
     });

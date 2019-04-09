@@ -14,6 +14,6 @@ class Company_Branch extends Model
     //relation
     public function contact_detail()
     {
-    	return $this->belongsToMany('App\Contact_Detail_Type','contact_details','company_branch_id','contact_detail_type')->withDefault();
+    	return $this->belongsToMany('App\Contact_Detail_Type','contact_details','company_branch_id','contact_detail_type')->withPivot('name', 'code','value','icon','photo','is_default');
     }
 }

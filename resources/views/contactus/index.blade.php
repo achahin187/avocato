@@ -38,114 +38,40 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                        @foreach($branches as $branch)
+                          <tr data-branch-id="{{$branch['id']}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">{{$branch['name']}} </span></td>
+                            <td><span class="cellcontent">
+                            @if(count($branch['contact_detail']) > 0)
+                            @foreach($branch['contact_detail'] as $mobile)
+                            @if($mobile['contact_detail_type'] == 1)
+                            {{$mobile['code'].$mobile['value']}}-
+                            @endif
+                            @endforeach
+                            @endif
+                            </span></td>
+                            <td><span class="cellcontent">
+                            @if(count($branch['contact_detail']) > 0)
+                            @foreach($branch['contact_detail'] as $email)
+                            @if($email['contact_detail_type'] == 3)
+                            {{$email['value']}}-
+                            @endif
+                            @endforeach
+                            @endif
+                            </span></td>
+                            <td><span class="cellcontent">{{$branch['address']}}</span></td>
+                            <td><span class="cellcontent">
+                            @if($branch['is_main'])
+                            <i class = "fa color--black fa-check"></i>
+                            @else
+                            <i class = "fa color--black fa-times"></i>
+                            @endif
+                            </span></td>
+                            <td><span class="cellcontent"><a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">مكتب المروة</span></td>
-                            <td><span class="cellcontent">012345678 - 912893478937</span></td>
-                            <td><span class="cellcontent">example@googgle.com - example@googgle.com</span></td>
-                            <td><span class="cellcontent">55 شارع أحمد تيسير - عمارات المروة - مصر الجديدة</span></td>
-                            <td><span class="cellcontent"><i class = "fa color--black fa-times"></i></span></td>
-                            <td><span class="cellcontent"><a href= contact_edit.html ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                         @endforeach
+                         
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -310,4 +236,42 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+@endsection
+@section('js')
+<script>
+$(document).ready(function(){
+
+$('.btn-warning-cancel').click(function(){
+  var branch_id = $(this).closest('tr').attr('data-branch-id');
+  var _token = '{{csrf_token()}}';
+  swal({
+    title: "هل أنت متأكد؟",
+    text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'نعم متأكد!',
+    cancelButtonText: "إلغاء",
+    closeOnConfirm: false,
+    closeOnCancel: false
+  },
+  function(isConfirm){
+    if (isConfirm){
+     $.ajax({
+       type:'GET',
+       url:'{{url('contactus_delete')}}'+'/'+branch_id,
+       data:{_token:_token},
+       success:function(data){
+        $('tr[data-branch-id='+branch_id+']').fadeOut();
+        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+      }
+    });
+     
+   } else {
+    swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+  }
+});
+});
+});
+</script>
 @endsection
