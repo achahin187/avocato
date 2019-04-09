@@ -45,8 +45,8 @@
                             <td><span class="cellcontent">
                             @if(count($branch['contact_detail']) > 0)
                             @foreach($branch['contact_detail'] as $mobile)
-                            @if($mobile['contact_detail_type'] == 1)
-                            {{$mobile['code'].$mobile['value']}}-
+                            @if($mobile['pivot']['contact_detail_type'] == 1)
+                            {{$mobile['pivot']['code'].$mobile['pivot']['value']}}-
                             @endif
                             @endforeach
                             @endif
@@ -54,8 +54,8 @@
                             <td><span class="cellcontent">
                             @if(count($branch['contact_detail']) > 0)
                             @foreach($branch['contact_detail'] as $email)
-                            @if($email['contact_detail_type'] == 3)
-                            {{$email['value']}}-
+                            @if($email['pivot']['contact_detail_type'] == 3)
+                            {{$email['pivot']['value']}}-
                             @endif
                             @endforeach
                             @endif
