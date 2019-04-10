@@ -36,10 +36,10 @@
                         <div class="col-md-10 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
-                            <select class="master_input" id="lang_list">
-                              <option>العربية</option>
-                              <option>English</option>
-                              <option>French</option>
+                            <select class="master_input" id="lang_list" name="lang_id"> 
+                              <option id="lang_2"  class="lang_option" VALUE="2" data-selected="2">English</option>
+                              <option id="lang_1" class="lang_option"  value="1" data-selected="1">العربية</option>
+                              <option id="lang_3"  class="lang_option" value="3" data-selected="3">French</option>
                             </select>
                           </div>
                         </div>

@@ -23,7 +23,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
                       <table class="table-1">
                         <thead>
@@ -272,6 +272,50 @@ $('.btn-warning-cancel').click(function(){
   }
 });
 });
+
+$('.btn-warning-cancel-all').click(function(){
+      var selectedIds = $("input:checkbox:checked").map(function(){
+        return $(this).closest('tr').attr('data-branch-id');
+      }).get();
+      if(selectedIds.length == 0 )
+      {
+        swal("خطأ", "من فضلك اختر فرع :)", "error");
+      }
+      else
+      {
+        // alert(selectedIds);
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('contactus_delete_all')}}',
+           data:{ids:selectedIds,_token:_token},
+           success:function(data){
+            $.each( selectedIds, function( key, value ) {
+              $('tr[data-branch-id='+value+']').fadeOut();
+            });
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
+          }
+        });
+         
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    }
+    });
 });
 </script>
 @endsection
