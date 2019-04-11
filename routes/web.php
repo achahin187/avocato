@@ -418,6 +418,7 @@ Route::middleware(['roles:1,2'])->group(function () {
         Route::post('/contactus/create','ContactUsController@create')->name('contactus_create');
         Route::post('/contactus/update/{id}','ContactUsController@update')->name('contactus_update');
         Route::post('/contactus/delete_all','ContactUsController@destroy_all')->name('contactus_delete_all');
+        Route::post('/contactus/Localization','ContactUsController@getLocalization')->name('get_localization_contact');
     
     
     });

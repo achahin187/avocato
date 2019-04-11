@@ -178,7 +178,7 @@
                   <div class="clearfix"></div>
                 </div>
               </li> -->
-              <li class="tab__content_item">
+              <li class="tab__content_item active">
                 <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                   <div class="full-table">
                     <table class="table dataTable no-footer">
