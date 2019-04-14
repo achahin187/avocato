@@ -88,9 +88,11 @@ return redirect()->route('tasks_emergency');
     	$data['lawyers']=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
-                 $q->where('receive_emergency',1);
+                
                  $q->orderby('join_date','desc');
-                 }])->get();
+                 }])->whereHas('user_detail',function($q){
+                  $q->where('receive_emergency',1);
+                 })->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
