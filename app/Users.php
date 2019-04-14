@@ -234,5 +234,21 @@ class Users extends Authenticatable
     {
         return $this->belongsToMany('App\OfficeBranches');
     }
+    
 
+    public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
+    {
+        $unit = ($unit === "km") ? 6378.10 : 3963.17;
+        $lat = (float) $lat;
+        $lng = (float) $lng;
+        $radius = (double) $radius;
+        return $query->having('distance','<=',$radius)
+            ->select(DB::raw("*,
+                            ($unit * ACOS(COS(RADIANS($lat))
+                                * COS(RADIANS(latitude))
+                                * COS(RADIANS($lng) - RADIANS(longtuide))
+                                + SIN(RADIANS($lat))
+                                * SIN(RADIANS(latitude)))) AS distance")
+            )->orderBy('distance','asc');
+    }
 }

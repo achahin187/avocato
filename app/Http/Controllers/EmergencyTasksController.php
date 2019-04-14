@@ -85,7 +85,7 @@ return redirect()->route('tasks_emergency');
     public function assign_emergency_task($id)
     {
     	$data['task']=Tasks::where('id',$id)->first();
-    	$data['lawyers']=Users::whereHas('rules', function ($query) {
+    	$data['lawyers']=Users::query()->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
                 
