@@ -194,7 +194,7 @@
                         <tr data-id="{{$social_account->id}}">
                           <td><i class="{{$social_account->icon}}"></i></td>
                           <td>{{$social_account->url}}</td>
-                                              <td><a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
+                         <td><a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
                                               
                         </tr>
                         @endforeach
