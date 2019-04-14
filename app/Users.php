@@ -243,8 +243,7 @@ class Users extends Authenticatable
         $lat = (float) $lat;
         $lng = (float) $lng;
         $radius = (double) $radius;
-        return $query->having('distance','<=',$radius)
-            ->select(DB::raw("*,
+        return $query->select(DB::raw("*,
                             ($unit * ACOS(COS(RADIANS($lat))
                                 * COS(RADIANS(latitude))
                                 * COS(RADIANS($lng) - RADIANS(longtuide))
