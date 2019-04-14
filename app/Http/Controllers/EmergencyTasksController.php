@@ -85,14 +85,14 @@ return redirect()->route('tasks_emergency');
     public function assign_emergency_task($id)
     {
     	$data['task']=Tasks::where('id',$id)->first();
-    	$data['lawyers']=Users::query()->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->whereHas('rules', function ($query) {
+    	$data['lawyers']=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
                 
                  $q->orderby('join_date','desc');
                  }])->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
-                 })->get();
+                 })->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
