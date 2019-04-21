@@ -119,7 +119,7 @@ return [
     'attributes' => [
 
         'new_type' => 'نوع جديد',
-        'court' => 'محكمه',
+        'court_name' => 'محكمه',
         'govs' => 'المحافظه',
         'cities' => 'المدينه',
         'main' => 'التصنيف الرئيسي',

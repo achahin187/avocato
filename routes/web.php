@@ -55,6 +55,7 @@ Route::post('/courts_list_store', 'CourtsListController@store')->name('courts_li
 Route::post('/courts_list_destroy/{id}', 'CourtsListController@destroy')->name('courts_list_destroy');
 Route::post('/courts_list_destroy_all', 'CourtsListController@destroy_all')->name('courts_list_destroy_all');
 Route::post('/courts_list_excel', 'CourtsListController@excel')->name('courts_list_excel');
+Route::post('/courts_list/add_localization', 'CourtsListController@add_localization')->name('courts_list_add_localization');
 
 Route::get('/contracts_formulas_types', 'ContractsFormulasTypesController@index')->name('contracts_formulas_types');
 Route::post('/contracts_formulas_types_store', 'ContractsFormulasTypesController@store')->name('contracts_formulas_types_store');

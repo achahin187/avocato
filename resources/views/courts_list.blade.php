@@ -20,51 +20,54 @@
       </div>
       <div class="col-lg-12">
         @if(\session('success'))
-        <div class="alert alert-success">
-        {{\session('success')}}
-        </div>
+          <div class="alert alert-success">
+            {{\session('success')}}
+          </div>
         @endif
-        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+        <div class="cardwrap bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
           <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1"><i class="fa fa-plus"></i><span>إضافة</span></a>
             <div class="remodal-bg"></div>
             <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-            <form role="form" action="{{route('courts_list_store')}}" method="post">
-            {{ csrf_field() }}
-              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-              <div>
-                <div class="row">
-                  <div class="col-xs-12">
-                    <h3>إضافة</h3>
+              <form role="form" action="{{route('courts_list_store')}}" method="post">
+              {{ csrf_field() }}
+                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                <div>
+                  <div class="row">
                     <div class="col-xs-12">
-                      <div class="master_field">
-                        <label class="master_label" for="ID_No">اسم المحكمة</label>
-                        <input name="court" value="{{ old('court') }}" class="master_input" type="text" placeholder="اسم المحكمة" id="ID_No"><span class="master_message color--fadegreen">
-                          @if ($errors->has('court'))
-                          {{ $errors->first('court')}}
-                          @endif
-                        </span>
+                      <h3>إضافة</h3>
+                      <div class="col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label" for="ID_No">اسم المحكمة</label>
+                          <input name="court" value="{{ old('court') }}" class="master_input" type="text" placeholder="اسم المحكمة" id="ID_No"><span class="master_message color--fadegreen">
+                            @if ($errors->has('court'))
+                              {{ $errors->first('court')}}
+                            @endif
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-xs-6">
-                      <div class="master_field">
-                        <label class="master_label mandatory" for="gover2">اسم المحافطة </label>
-                        <select name="govs" class="master_input select2" id="gover2" data-placeholder="اختر المحافظة" style="width:100%;" ,>
-                          <option value="choose" selected disabled>اختر المحافظه</option>
-                        @foreach($govs as $gov)
-                          <option value="{{$gov->id}}">{{$gov->name}}</option>
-                          @endforeach
-                        </select><span class="master_message color--fadegreen">
-                          @if ($errors->has('govs'))
-                          {{ $errors->first('govs')}}
-                          @endif
-                        </span>
+                      <div class="col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="gover2">اسم المحافطة </label>
+                          <select name="govs" class="master_input select2" id="gover2" data-placeholder="اختر المحافظة" style="width:100%;">
+                            <option value="choose" selected disabled>اختر المحافظه</option>
+                            @foreach($govs as $gov)
+                              @if($gov->name != '')
+                                <option value="{{$gov->id}}">{{$gov->name}}</option>
+                              @endif
+                            @endforeach
+                          </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('govs'))
+                              {{ $errors->first('govs')}}
+                            @endif
+                          </span>
+                        </div>
                       </div>
-                    </div>
                     <div class="col-xs-6">
                       <div class="master_field">
                         <label class="master_label mandatory" for="city2">اسم المدينة </label>
-                        <select name="cities" class="master_input select2" id="city2" data-placeholder="اختر المدينة" style="width:100%;" ,>
-                        </select><span class="master_message color--fadegreen">
+                        <select name="cities" class="master_input select2" id="city2" data-placeholder="اختر المدينة" style="width:100%;"></select>
+                        <span class="master_message color--fadegreen">
                           @if ($errors->has('cities'))
                           {{ $errors->first('cities')}}
                           @endif
@@ -77,9 +80,50 @@
               </div><br>
               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
               <button class="remodal-confirm" type="submit">حفظ</button>
-                  </form>
+              </form>
             </div>
           </div>
+        {{--</div> --}}
+          {{--localization modal --}} 
+          <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+              <form role="form" action="{{route('courts_list_add_localization')}}" method="post">
+                {{csrf_field()}}
+              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                <div>
+                  <div class="row">
+                    <h4>ادخال اسم المحكمة بلغات متعددة</h4><br>
+                    <input type="hidden" id="court_id" name="court_id">
+                    <div class="col-sm-5">
+                      <div class="master_field">
+                        <label class="master_label mandatory" for="lang_id">اختار اللغة</label>
+                        <select class="master_input" id="lang_id" name="lang_id">
+                          @foreach($languages as $lang)
+                            @if($lang->id != 1)
+                            <option value="{{$lang->id}}">{{$lang->name}}</option>
+                            @endif
+                          @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <div class="master_field">
+                        <label class="master_label mandatory" for="court_name">ادخال النوع باللغة المختاره</label>
+                        <input class="master_input" type="text" placeholder="اسم المحكمة" id="court_name" name="court_name">
+                        <span class="master_message color--fadegreen">
+                          @if($errors->has('court_name'))
+                            {{$errors->first('court_name')}}
+                          @endif
+                        </span>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  </div><br>
+                  <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                  <button class="remodal-confirm" remodal-action="confirm" type="submit">حفظ</button>
+                </form>
+              </div>  
+              {{-- End localization modal --}}
           <div class="full-table">
             <div class="remodal-bg">
               <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -153,20 +197,29 @@
               </thead>
               <tbody>
                 @foreach($courts as $court)
-                <tr class="court" data-court-id="{{$court->id}}">
-                  <td><span class="cellcontent"><input data-id="{{ $court->id }}" type="checkbox" class="checkboxes input-in-table" /></span></td>
-                  <td><span class="cellcontent">{{$court->name}}</span></td>
-                  <td><span class="cellcontent">@isset($court->city->name){{$court->city->name}}@endisset</span></td>
-                  <td><span class="cellcontent">@isset($court->city->governorate->name){{$court->city->governorate->name}}@endisset</span></td>
-                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                </tr>
+                  @if($court->name != '')
+                  <tr class="court" data-court-id="{{$court->id}}">
+                    <td><span class="cellcontent"><input data-id="{{ $court->id }}" type="checkbox" class="checkboxes input-in-table" /></span></td>
+                    <td><span class="cellcontent">{{$court->name}}</span></td>
+                    <td><span class="cellcontent">@isset($court->city->name){{$court->city->name}}@endisset</span></td>
+                    <td><span class="cellcontent">@isset($court->city->governorate->name){{$court->city->governorate->name}}@endisset</span></td>
+                    <td>
+                      <span class="cellcontent">   
+                        <a id="add_localization" data-city_id="{{$court->id}}" class= "action-btn bgcolor--main color--white add_localization">
+                          <i class = "fa fa-book"></i> &nbsp; اللغات
+                        </a>
+                        <a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                          <i class = "fa fa-trash-o"></i>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  @endif
                 @endforeach
           </div>
           <div class="clearfix"></div>
         </div>
       </div>
-  </div>
-              
 
 <script>
 $(document).ready(function(){  
@@ -305,5 +358,39 @@ $(document).ready(function(){
           }, 4000);
   
     });
+    
+    //language filter
+    $('#quick_Filters_2').click( function(){
+        $('#lang_filter').toggle();
+      });
+
+      // add localization
+      $('.add_localization').click( function(){
+          var localization_modal = $('#localization_modal');
+          var id = $(this).closest('tr').attr('data-court-id');
+          console.log(id);
+          $('#court_id').val(id);
+          $('#localization_modal').remodal().open();
+      });
+
+      //change lang
+      function ChangeLang(id){
+        $.ajax({
+              url: '{{ route("change.language") }}',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                  _token: '{{ csrf_token() }}',
+                  locale: id,
+                  method: 'POST',
+              },
+              success: function (response) {
+                window.location.href = '{{ Request::url() }}';
+              },
+              error: function(response) {
+                console.log(response);
+              }
+          });
+      }
   </script>
 @endsection

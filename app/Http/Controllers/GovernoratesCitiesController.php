@@ -172,7 +172,6 @@ class GovernoratesCitiesController extends Controller
     {
         // get cities IDs from AJAX
         $ids = $request->ids;
-        return $ids;
         foreach($ids as $id){
             Helper::remove_related_localization('geo_cities', $id);
             Geo_Cities::find($id)->delete();

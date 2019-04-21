@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Geo_Governorates;
 use App\Geo_Cities;
 use App\Courts;
+use App\Languages;
 use Validator;
 use Excel;
 use App\Exports\CourtsExport;
 use Session;
+use App\Helpers\Helper;
 
 class CourtsListController extends Controller
 {
@@ -22,6 +24,7 @@ class CourtsListController extends Controller
     {   
         $data['courts'] = Courts::where('country_id',session('country'))->get();
         $data['govs'] = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['languages'] = Languages::all();
         return view('courts_list',$data);
     }
 
@@ -143,6 +146,7 @@ class CourtsListController extends Controller
     public function destroy($id)
     {
        $court=Courts::find($id);
+       Helper::remove_related_localization('courts', $id);
        $court->delete();
     }
 
@@ -151,8 +155,24 @@ class CourtsListController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
            {
+            Helper::remove_related_localization('courts', $id);
             Courts::find($id)->delete();
            } 
+    }
+    
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'court_id' => 'required|integer',
+            'court_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('courts_list#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('courts', 'name', $request->court_id, $request->court_name, $request->lang_id);
+        return redirect()->route('courts_list')->with('success','تم الإضافة بنجاح');
     }
 
 }
