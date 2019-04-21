@@ -1,114 +1,6 @@
  @extends('layout.app')             
  @section('content')
 
- <script >
-  $(document).ready(function(){
-    // $('.issue').click(function(){
-    //   alert($(this).attr('data-specialization-id'));
-    // });
-
-        $('.btn-warning-cancel').click(function(){
-          var specialization_id = $(this).closest('tr').attr('data-specialization-id');
-          var _token = '{{csrf_token()}}';
-          swal({
-            title: "هل أنت متأكد؟",
-            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'نعم متأكد!',
-            cancelButtonText: "إلغاء",
-            closeOnConfirm: false,
-            closeOnCancel: false
-          },
-          function(isConfirm){
-            if (isConfirm){
-             $.ajax({
-               type:'POST',
-               url:'{{url('specializations_destroy')}}'+'/'+specialization_id,
-               data:{_token:_token},
-               success:function(data){
-                $('tr[data-specialization-id='+specialization_id+']').fadeOut();
-               }
-            });
-              swal("تم الحذف!", "تم الحذف بنجاح", "success");
-            } else {
-              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-            }
-          });
-        });
-
-        $('.btn-warning-cancel-all').click(function(){
-          var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-specialization-id');
-          }).get();
-          var _token = '{{csrf_token()}}';
-          swal({
-            title: "هل أنت متأكد؟",
-            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#DD6B55',
-            confirmButtonText: 'نعم متأكد!',
-            cancelButtonText: "إلغاء",
-            closeOnConfirm: false,
-            closeOnCancel: false
-          },
-          function(isConfirm){
-            if (isConfirm){
-             $.ajax({
-               type:'POST',
-               url:'{{url('specializations_destroy_all')}}',
-               data:{ids:selectedIds,_token:_token},
-               success:function(data){
-                $.each( selectedIds, function( key, value ) {
-                  $('tr[data-specialization-id='+value+']').fadeOut();
-                });
-               }
-            });
-              swal("تم الحذف!", "تم الحذف بنجاح", "success");
-            } else {
-              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-            }
-          });
-        });
-
-        $('.excel-btn').click(function(){
-          var selectedIds = $("input:checkbox:checked").map(function(){
-            return $(this).closest('tr').attr('data-specialization-id');
-          }).get();
-          $.ajax({
-           type:'GET',
-           url:'{{url('specializations_excel')}}',
-           data:{ids:selectedIds},
-           success:function(response){
-                  swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
-                    // var a = document.createElement("a");
-                    // a.href = response.file; 
-                    // a.download = response.name;
-                    // document.body.appendChild(a);
-                    // a.click();
-                    // a.remove();
-                    // document.location = 's.rar';
-                    location.href = response;
-
-          }
-            });
-        });
-
-                window.setTimeout(function() {
-            $(".alert").fadeTo(500, 0).slideUp(500, function(){
-                $(this).remove(); 
-            });
-        }, 4000);
-
-
-
-
-  });
-
-
- </script>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' )no-repeat center center; background-size:cover;">
@@ -140,9 +32,6 @@
                       <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                      <form role="form" action="{{route('specializations_store')}}" method="post">
                       {{ csrf_field() }}
-
-
-
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
                           <div class="row">
@@ -152,18 +41,18 @@
                                 <div class="master_field">
                                   <label class="master_label" for="specialization_new">خصص جديد</label>
                                   <input class="master_input" type="text" placeholder="تخصص جديد" id="specialization_new" value="{{ old('new_specialization') }}" name="new_specialization"><span class="master_message color--fadegreen">
-@if(count($errors) > 0)
-@foreach($errors->all() as $error)
+                                  @if(count($errors) > 0)
+                                  @foreach($errors->all() as $error)
 
-{{$error}}
+                                  {{$error}}
 
-@endforeach
-@endif
-@if(\session('error'))
+                                  @endforeach
+                                  @endif
+                                  @if(\session('error'))
 
-{{\session('error')}}
+                                  {{\session('error')}}
 
-@endif</span>
+                                  @endif</span>
                                 </div>
                               </div>
                               <div class="clearfix"></div>
@@ -174,8 +63,45 @@
                         <button class="remodal-confirm" type="submit" >حفظ</button>
                       </form>
                       </div>
-
                     </div>
+                    <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <form role="form" action="{{route('specialization_add_localization')}}" method="post">
+                          {{csrf_field()}}
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                          <div>
+                            <div class="row">
+                              <h4>تخصص جديد باللغات</h4><br>
+                              <input type="hidden" id="specialization_id" name="specialization_id">
+                              <div class="col-sm-5">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="lang_id">اختار اللغة</label>
+                                  <select class="master_input" id="lang_id" name="lang_id">
+                                    @foreach($languages as $lang)
+                                      @if($lang->id != 1)
+                                      <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                      @endif
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-7">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="specialization_name">ادخال التخصص باللغة المختاره</label>
+                                  <input class="master_input" type="text" placeholder="تخصص  جديد" id="specialization_name" name="specialization_name">
+                                  <span class="master_message color--fadegreen">
+                                    @if($errors->has('specialization_name'))
+                                      {{$errors->first('specialization_name')}}
+                                    @endif
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button class="remodal-confirm" remodal-action="confirm" type="submit">حفظ</button>
+                          </form>
+                        </div>  
                     <div class="full-table">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -211,6 +137,27 @@
                       </div>
                       <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
+                      <div class="quick_filter">
+                          <div class="dropdown quickfilter_dropb">
+                            <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                              <small>اللغات  &nbsp;</small>
+                              <i class="fa fa-angle-down"></i>
+                            </button>
+                            <div class="dropdown-menu" role="menu" aria-labelledby="quick_Filters_2" id="lang_filter">
+                              <div class="quick-filter-title"><p><b>اختار</b></p></div>
+                              <div class="quick-filter-content">
+                              @foreach($languages as $lang)
+                                @if($lang->id != \Session::get('AppLocale'))
+                                <div class="radiorobo">
+                                  <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                                  <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
+                                </div>
+                                @endif
+                              @endforeach
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       <table class="table-1" id="dataTableTriggerId_001">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
@@ -221,231 +168,148 @@
                         </thead>
                         <tbody>
                           @foreach($specializations as $specialization)
-                          <tr class="issue" data-specialization-id="{{$specialization->id}}">
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$specialization->name}}</span></td>
-                            <td><span class="cellcontent"><a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                            @if($specialization->name != '')
+                            <tr class="issue" data-specialization-id="{{$specialization->id}}">
+                              <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                              <td><span class="cellcontent">{{$specialization->name}}</span></td>
+                              <td>
+                                <span class="cellcontent">
+                                  <a id="add_localization" data-specialization_id="{{$specialization->id}}" class= "action-btn bgcolor--main color--white add_localization">
+                                    <i class = "fa fa-book"></i> &nbsp; اللغات
+                                  </a>
+                                  <a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                                    <i class = "fa fa-trash-o"></i>
+                                  </a>  
+                                </span>
+                              </td>
+                            </tr>
+                            @endif
                           @endforeach
-<!--                           <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">جنايات</span></td>
-                            <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr> -->
                         </tbody>
                       </table>
-                      <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                        <div>
-                          <h2 class="title">title of the changing log in</h2>
-                          <div class="log-content">
-                            <div class="log-container">
-                              <table class="log-table">
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <th>log title</th>
-                                  <th>user</th>
-                                  <th>time</th>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
                       <div class="clearfix"></div>
                     </div>
                   </div>
                 </div>
               </div>
-
-                @endsection
+              
+ <script >
+    $(document).ready(function(){
+          $('.btn-warning-cancel').click(function(){
+            var specialization_id = $(this).closest('tr').attr('data-specialization-id');
+            var _token = '{{csrf_token()}}';
+            swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'نعم متأكد!',
+              cancelButtonText: "إلغاء",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm){
+               $.ajax({
+                 type:'POST',
+                 url:'{{url('specializations_destroy')}}'+'/'+specialization_id,
+                 data:{_token:_token},
+                 success:function(data){
+                  $('tr[data-specialization-id='+specialization_id+']').fadeOut();
+                 }
+              });
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+          });
+  
+          $('.btn-warning-cancel-all').click(function(){
+            var selectedIds = $("input:checkbox:checked").map(function(){
+              return $(this).closest('tr').attr('data-specialization-id');
+            }).get();
+            var _token = '{{csrf_token()}}';
+            swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'نعم متأكد!',
+              cancelButtonText: "إلغاء",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm){
+               $.ajax({
+                 type:'POST',
+                 url:'{{url('specializations_destroy_all')}}',
+                 data:{ids:selectedIds,_token:_token},
+                 success:function(data){
+                  $.each( selectedIds, function( key, value ) {
+                    $('tr[data-specialization-id='+value+']').fadeOut();
+                  });
+                 }
+              });
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+          });
+  
+          $('.excel-btn').click(function(){
+            var selectedIds = $("input:checkbox:checked").map(function(){
+              return $(this).closest('tr').attr('data-specialization-id');
+            }).get();
+            $.ajax({
+             type:'GET',
+             url:'{{url('specializations_excel')}}',
+             data:{ids:selectedIds},
+             success:function(response){
+                swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+                location.href = response;
+                }
+              });
+          });
+            window.setTimeout(function() {
+              $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                  $(this).remove(); 
+              });
+          }, 4000);
+    });
+    $('#quick_Filters_2').click( function(){
+          $('#lang_filter').toggle();
+        });
+  
+        // add localization
+        $('.add_localization').click( function(){
+            var localization_modal = $('#localization_modal');
+            localization_modal.find('#specialization_id').val($(this).data('specialization_id'));
+            $('#localization_modal').remodal().open();
+        });
+  
+        //change lang
+        function ChangeLang(id){
+          $.ajax({
+                url: '{{ route("change.language") }}',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    locale: id,
+                    method: 'POST',
+                },
+                success: function (response) {
+                  window.location.href = '{{ Request::url() }}';
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+            });
+        }
+   </script>
+  @endsection

@@ -7,7 +7,10 @@ use App\Cases_Types;
 use Validator;
 use Excel;
 use App\Exports\CasesTypesExport;
+use App\Languages;
 use Session;
+use App\Helpers\Helper;
+use App;
 
 class IssuesTypesController extends Controller
 {
@@ -18,8 +21,8 @@ class IssuesTypesController extends Controller
      */
     public function index()
     {
-//        $data['issues'] = Cases_Types::where('country_id',session('country'))->get();
         $data['issues'] = Cases_Types::all();
+        $data['languages'] = Languages::all();
         return view('issues_types',$data);
     }
 
@@ -57,22 +60,19 @@ class IssuesTypesController extends Controller
      */
     public function store(Request $request)
     {
-         // \App::setLocale('en');
-
         $validator = Validator::make($request->all(), [
-            'new_type'=>'required|unique:cases_types,name',
+            'new_type'=>'required|unique:cases_types,name'
         ]);
 
         if ($validator->fails()) {
-            return redirect('issues_types#popupModal_1')
-                        ->withErrors($validator)
-                        ->withInput();
+            return redirect('issues_types#popupModal_1')->withErrors($validator)->withInput();
         }
-
         $issue = new Cases_Types;
         $issue->name = $request->new_type;
-//        $issue->country_id=session('country');
         $issue->save();
+        // if($request->lang_id != 1){
+            // Helper::add_localization('cases_types', 'name', $issue->id, $issue->name, $request->lang_id);
+        // }
         return redirect()->route('issues_types')->with('success','تم إضافه نوع جديد بنجاح');
     }
 
@@ -118,7 +118,8 @@ class IssuesTypesController extends Controller
      */
     public function destroy($id)
     {
-       $issue=Cases_Types::find($id);
+       $issue = Cases_Types::find($id);
+       Helper::remove_related_localization('cases_types', $issue->id);
        $issue->delete();
     }
 
@@ -127,7 +128,29 @@ class IssuesTypesController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
            {
-            Cases_Types::find($id)->delete();
+                Helper::remove_related_localization('cases_types', $id);
+                Cases_Types::find($id)->delete();
            } 
+    }
+
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'issue_id' => 'required|integer',
+            'case_type'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('issues_types#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('cases_types', 'name', $request->issue_id, $request->case_type, $request->lang_id);
+        return redirect()->route('issues_types')->with('success','تم الإضافة بنجاح');
+    }
+
+    public function changeLanguage(Request $request)
+    {
+        Session::put('AppLocale', $request->locale);
+        return response()->json(['lang' => $request->locale]);
     }
 }

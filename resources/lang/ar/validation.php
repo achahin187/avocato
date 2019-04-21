@@ -216,6 +216,7 @@ return [
         'office_phone' => 'رقم الهاتف',
         'office_email' => 'البريد الالكتروني',
         'office_city' => 'المدينة',
+        'case_type' => 'نوع جديد'
     ],
 
 ];
