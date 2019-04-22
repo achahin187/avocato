@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Session;
 use Validator;
 use Excel;
-
 use App\Exports\ConsultationTypesExport;
 use App\Consultation_Types;
 use Illuminate\Http\Request;
+use App\Languages;
+use App\Helpers\Helper;
 
 class ConsultationsClassificationController extends Controller
 {
@@ -19,7 +20,9 @@ class ConsultationsClassificationController extends Controller
      */
     public function index()
     {
-        return view('consultations_classification')->with('consultations', Consultation_Types::all());
+        return view('consultations_classification')
+                ->with('consultations', Consultation_Types::all())
+                ->with('languages', Languages::all());
     }
 
     /**
@@ -106,7 +109,7 @@ class ConsultationsClassificationController extends Controller
     {
         // Find and delete this record
         Consultation_Types::destroy($id);
-
+        Helper::remove_related_localization('formula_contract_types', $id);
         Session::flash('success', 'تم الحذف بنجاح');
         return response()->json([
             'success' => 'Record has been deleted successfully!'
@@ -120,9 +123,11 @@ class ConsultationsClassificationController extends Controller
     {
         // get cities IDs from AJAX
         $ids = $request->ids;
-
-        // transform $ids into array values then search and delete
-        Consultation_Types::whereIn('id', explode(",", $ids))->delete();
+        foreach($ids as $id){
+            // Find and delete this record
+            Consultation_Types::destroy($id);
+            Helper::remove_related_localization('formula_contract_types', $id);
+        }
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
@@ -146,5 +151,20 @@ class ConsultationsClassificationController extends Controller
         }
 
         return response()->json($response);
+    }
+    
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'consult_id' => 'required|integer',
+            'consult_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('consultations_classification#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('consultation_types', 'name', $request->consult_id, $request->consult_name, $request->lang_id);
+        return redirect()->route('consultations_classification')->with('success','تم الإضافة بنجاح');
     }
 }

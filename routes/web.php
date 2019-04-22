@@ -63,12 +63,14 @@ Route::post('/contracts_formulas_types_store_sub', 'ContractsFormulasTypesContro
 Route::post('/contracts_formulas_types_destroy/{id}', 'ContractsFormulasTypesController@destroy')->name('contracts_formulas_types_destroy');
 Route::post('/contracts_formulas_types_destroy_all', 'ContractsFormulasTypesController@destroy_all')->name('contracts_formulas_types_destroy_all');
 Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@excel')->name('contracts_formulas_types_excel');
+Route::post('/contracts_formulas_types/add_localization', 'ContractsFormulasTypesController@add_localization')->name('contracts_formulas_types_add_localization');
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
-Route::get('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
+Route::post('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
 Route::get('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
 Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
+Route::post('/consultations_classification/add_localization', 'ConsultationsClassificationController@add_localization')->name('consultations_classification_add_localization');
 
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');

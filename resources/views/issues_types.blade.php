@@ -21,14 +21,11 @@
                   </div>
                 </div>
                 <div class="col-lg-12">
-
-                  
-
-@if(\session('success'))
-<div class="alert alert-success">
-{{\session('success')}}
-</div>
-@endif
+              @if(\session('success'))
+                <div class="alert alert-success">
+                  {{\session('success')}}
+                </div>
+              @endif
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
     <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1">
       <i class="fa fa-plus"></i><span>إضافة</span></a>
@@ -67,7 +64,7 @@
       </div>
     </div>
     <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-      <form role="form" action="{{route('specialization_add_localization')}}" method="post">
+      <form role="form" action="{{route('issues_types_add_localization')}}" method="post">
         {{csrf_field()}}
       <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
         <div>
