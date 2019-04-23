@@ -504,9 +504,9 @@ class LawyersController extends Controller
     {
     $lawyer->phone = $request->phone;
     }
-    $user->tele_code = $request->tele_code ;
-    $user->cellphone = $request->cellphone ;
-    $user->mobile = $request->tele_code.$request->cellphone;
+    $lawyer->tele_code = $request->tele_code ;
+    $lawyer->cellphone = $request->cellphone ;
+    $lawyer->mobile = $request->tele_code.$request->cellphone;
     $lawyer->email = $request->email;
     $lawyer->note = $request->note;
     $lawyer->country_id = session('country');
@@ -522,11 +522,11 @@ class LawyersController extends Controller
     }
 
     $lawyer->save();
-    $lawyer = Users::find($id);
-        // $password = Helper::generateRandom(Users::class, 'password', 8);
-        // $lawyer->password = bcrypt($password);
-        // $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
-    $lawyer->save();
+    // $lawyer = Users::find($id);
+    //     // $password = Helper::generateRandom(Users::class, 'password', 8);
+    //     // $lawyer->password = bcrypt($password);
+    //     // $lawyer->code = 'code-'.Helper::generateRandom(Users::class, 'code', 6);
+    // $lawyer->save();
     $lawyer->rules()->detach();
     $lawyer->rules()->attach([5, $request->work_type]);
     $lawyer->specializations()->detach();
