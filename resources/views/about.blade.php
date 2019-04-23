@@ -33,7 +33,7 @@
               <li class="tab__content_item active">
                 <div class="panel panel-default">
                   <div class="panel-heading" id="heading-1" role="tab">
-                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#about_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
+                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom about-lang"><a class="trigger color--white" role="button" data-toggle="collapse" href="#about_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
                   </div>
                 </div>
                 <div class="panel-collapse collapse" id="about_collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
@@ -101,7 +101,7 @@
               <li class="tab__content_item">
                 <div class="panel panel-default">
                   <div class="panel-heading" id="heading-1" role="tab">
-                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#vision_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
+                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom about-lang"><a class="trigger color--white" role="button" data-toggle="collapse" href="#vision_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
                   </div>
                 </div>
                 <div class="panel-collapse collapse" id="vision_collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
@@ -169,7 +169,7 @@
               <li class="tab__content_item">
                 <div class="panel panel-default">
                   <div class="panel-heading" id="heading-1" role="tab">
-                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#mission_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
+                    <h4 class="panel-title bgcolor--fadered bradius--noborder bshadow--1 padding--small margin--small-top-bottom about-lang"><a class="trigger color--white" role="button" data-toggle="collapse" href="#mission_collapse-1" aria-expanded="true" aria-controls="collapse-1">English</a></h4>
                   </div>
                 </div>
                 <div class="panel-collapse collapse" id="mission_collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
