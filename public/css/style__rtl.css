@@ -29,6 +29,11 @@
   font-style: normal;
 }
 
+.lang-btn{
+  background-color: #4f5c6b!important; 
+  color:white!important;
+}
+
 .fa {
   display: inline-block;
   font: normal normal normal 14px/1 FontAwesome;
