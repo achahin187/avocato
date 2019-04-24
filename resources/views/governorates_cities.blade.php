@@ -212,7 +212,7 @@
           {{-- Language filter --}}
           <div class="quick_filter">
               <div class="dropdown quickfilter_dropb">
-                <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
                   <small>اللغات  &nbsp;</small>
                   <i class="fa fa-angle-down"></i>
                 </button>
@@ -313,7 +313,6 @@
                           id:city_id
                        },
                       success:function(data){
-                        // console.log(data)
                         $('tr[data-city_id='+city_id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
