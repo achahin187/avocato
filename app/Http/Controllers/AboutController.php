@@ -17,6 +17,7 @@ class AboutController extends Controller
      */
     public function index() {
         $data['about'] = Fixed_Pages::whereIn('page_name', array('aboutus', 'mission', 'vision'))->get();
+        // return $data;
          return view('about',$data);
     }
     
