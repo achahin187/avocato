@@ -91,7 +91,9 @@
                               <select name="government_id" class="master_input select2" id="gov3" style="width:100%;">
                                 
                                 @foreach ($governments as $government)
-                                  <option value="{{ $government->id }}">{{ $government->name }}</option>
+                                  @if($government->name != '')
+                                    <option value="{{ $government->id }}">{{ $government->name }}</option>
+                                  @endif
                                 @endforeach
                                 
                               </select><span class="master_message color--fadegreen">

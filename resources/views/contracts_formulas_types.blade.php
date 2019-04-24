@@ -71,7 +71,9 @@
                               <select name="mains" class="master_input select2" id="main_type" style="width:100%;">
                                 <option value="choose" selected disabled>اختر تصنيف رئيسي</option>
                                 @foreach($main_contracts as $main_contract)
-                                <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
+                                  @if($main_contract->name != '')
+                                    <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
+                                  @endif
                                 @endforeach
                               </select><span class="master_message color--fadegreen">
                           @if ($errors->has('mains'))
