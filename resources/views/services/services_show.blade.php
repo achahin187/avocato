@@ -204,14 +204,7 @@
                               {{substr($document->file, strrpos($document->file, '/')+1)}}<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="{{route('report_download_document',$document->id)}}"><i class="fa fa-cloud-download"></i></a></span></div>
                             </li>
                             @endforeach
-{{--                             <li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-                              <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
-                                App_Desc.docx<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                              </li>
-                              <li><span class="mailbox-attachment-icon has-img"><img src="https://unsplash.it/300/300/?random" alt="Attachment"></span>
-                                <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-camera"></i>&nbsp;
-                                  photo1.png<br></a><span class="mailbox-attachment-size">2.67 MB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                </li> --}}
+
                               </ul>
                             </div>
                           </div>
@@ -223,48 +216,8 @@
                     <div class="clearfix"></div>
                   </div>
                   @endforeach
-{{--                   <div class="row">
-                    <div class="col-md-10">
-                      <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
-                        بتاريخ
-                        10/10/2018
-                        &nbsp;<i class="fa fa-calendar"></i>
-                      </p>
-                      <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="lawyer_view.html">محمد احمد</a>&nbsp;<i class="fa fa-user"></i></p>
-                      <p class="right-text">لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو أيوسمود تيمبورأنكايديديونتيوت لابوري ات دولار ماجنا أليكيوا . يوت انيم أد مينيم فينايم,كيواس نوستريد أكسير سيتاشن يللأمكو لابورأس نيسي يت أليكيوب أكس أيا كوممودو كونسيكيوات . ديواس أيوتي أريري دولار إن ريبريهينديرأيت فوليوبتاتي فيلايت أيسسي كايلليوم دولار أيو فيجايت نيولا باراياتيور. أيكسسيبتيور ساينت أوككايكات كيوبايداتات نون بروايدينت ,سيونت ان كيولباكيو أوفيسيا ديسيريونتموليت انيم أيدي ايست لابوريوم.   </p>
-                    </div>
-                    <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment2"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
-                      <div class="remodal-bg"></div>
-                      <div class="remodal" data-remodal-id="report_attachment2" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                        <div>
-                          <div class="row">
-                            <div class="col-xs-12">
-                              <h3>الملفات المرفقة للتقرير بتاريخ 12/12/2018</h3>
-                              <ul class="mailbox-attachments clearfix right-text">
-                                <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
-                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
-                                    report.pdf<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                  </li>
-                                  <li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-                                    <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
-                                      App_Desc.docx<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                    </li>
-                                    <li><span class="mailbox-attachment-icon has-img"><img src="https://unsplash.it/300/300/?random" alt="Attachment"></span>
-                                      <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-camera"></i>&nbsp;
-                                        photo1.png<br></a><span class="mailbox-attachment-size">2.67 MB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div><br>
-                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
-                            </div>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div> --}}
-                        <div class="col-md-2">{{-- <a class="master-btn color--main bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#popupModal_2"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a> --}}
+
+                        <div class="col-md-2">
                           <div class="remodal-bg"></div>
                           <div class="remodal" data-remodal-id="popupModal_2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                             <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>

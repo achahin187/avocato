@@ -14,12 +14,21 @@ use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
 use Session;
+use App\Entity_Localizations;
 
 class EmergencyTasksController extends Controller
 {
     public function view($id)
     {
-    	$data['task']=Tasks::where('id',$id)->with('client')->where('country_id',session('country'))->first();
+      $data['task']=Tasks::where('id',$id)->with('client')->where('country_id',session('country'))->first();
+      if( $data['task'] == NULL ) {
+        Session::flash('warning', 'لم يتم العثور على الحاله الطارئه');
+        return redirect('/tasks_emergency');
+    }
+      $data['charges'] = Task_Charges::where('task_id', $id)->get();
+      $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
+      $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
+      $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 1)->get();
     	 // dd($data);
     	return view('tasks.emergency_view',$data);
     }
@@ -88,8 +97,11 @@ return redirect()->route('tasks_emergency');
     	$data['lawyers']=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
+                
                  $q->orderby('join_date','desc');
-                 }])->get();
+                 }])->whereHas('user_detail',function($q){
+                  $q->where('receive_emergency',1);
+                 })->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
@@ -116,7 +128,8 @@ return redirect()->route('tasks_emergency');
       $client=Users::find($task->client_id);
     	$task->update([
     		'assigned_lawyer_id'=>$request['lawyer_id'],
-    		'who_assigned_lawyer_id'=>\Auth::user()->id,
+        'who_assigned_lawyer_id'=>\Auth::user()->id,
+        'task_assignment_date'=>carbon::now()
     	]);
       $user=Users::find($request['lawyer_id']);
       $notification_type=Notification_Types::find(11);

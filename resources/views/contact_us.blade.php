@@ -96,7 +96,7 @@
                 <div class="text-xs-center">
                   <div class="text-wraper">
                     <h4 class="cover-inside-title color--gray_d">البيانات الأساسية <i class="fa fa-chevron-circle-right"></i>
-                      <h4 class="cover-inside-title color--gray_d">اتصل بنا </h4>
+                      <h4 class="cover-inside-title color--gray_d">اللينكات  </h4>
                     </h4>
                   </div>
                 </div>
@@ -110,14 +110,14 @@
           <div class="tabs--wrapper">
             <div class="clearfix"></div>
             <ul class="tabs">
-              <li>بيانات اتصل بنا</li>
+              <!-- <li>بيانات اتصل بنا</li> -->
               <li>لينكات التواصل الاجتماعي</li>
               <li>لينكات التطبيق</li>
             </ul>
             <form method="POST" action="{{action('CompanyContactInfoController@index')}}" enctype="multipart/form-data" id="main_form">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <ul class="tab__content">
-              <li class="tab__content_item active">
+              <!-- <li class="tab__content_item active">
                 <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                   <div class="col-lg-12">
                     <div class="master_field">
@@ -177,8 +177,8 @@
                   </div>
                   <div class="clearfix"></div>
                 </div>
-              </li>
-              <li class="tab__content_item">
+              </li> -->
+              <li class="tab__content_item active">
                 <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                   <div class="full-table">
                     <table class="table dataTable no-footer">
@@ -194,7 +194,7 @@
                         <tr data-id="{{$social_account->id}}">
                           <td><i class="{{$social_account->icon}}"></i></td>
                           <td>{{$social_account->url}}</td>
-                                              <td><a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
+                         <td><a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
                                               
                         </tr>
                         @endforeach

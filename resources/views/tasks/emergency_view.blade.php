@@ -127,6 +127,56 @@
                       </div>
                     </div>
                     <div class="clearfix"></div><br>
+                    <div class="clearfix"></div><br>
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading" id="heading-1" role="tab">
+            <h4 class="panel-title bgcolor--fadeblue bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">التقرير الفني</a></h4>
+          </div>
+        </div>
+        <div class="panel-collapse collapse" id="collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
+          <div class="panel-body bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
+            @foreach($reports as $report)
+            <div class="row">
+              <div class="col-md-10">
+                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
+                  بتاريخ
+                  {{$report->created_at->format('Y - m - d')}}
+                  &nbsp;<i class="fa fa-calendar"></i>
+                </p>
+                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$report->lawyer->full_name}}</a>&nbsp;<i class="fa fa-user"></i></p>
+                <p class="right-text">{{$report->body}}</p>
+              </div>
+              <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment1"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
+                <div class="remodal-bg"></div>
+                <div class="remodal" data-remodal-id="report_attachment1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                  <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                  <div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <h3>الملفات المرفقة للتقرير بتاريخ {{$report->created_at->format('Y - m - d')}}</h3>
+                        <ul class="mailbox-attachments clearfix right-text">
+                          @foreach($report->case_tachinical_report_documents as $document)
+                          <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+                            <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($document->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
+                              {{substr($document->file, strrpos($document->file, '/')+1)}}<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="{{route('report_download_document',$document->id)}}"><i class="fa fa-cloud-download"></i></a></span></div>
+                            </li>
+                            @endforeach
+
+                              </ul>
+                            </div>
+                          </div>
+                        </div><br>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <a href="{{route('report_download_all_documents',$report->id)}}"><button class="remodal-confirm">تحميل الكل</button></a>
+                      </div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  @endforeach
+                  </div>
+                  </div>
+                  </div>
                   </div>
                 </div>
               </div>

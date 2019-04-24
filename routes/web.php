@@ -416,6 +416,20 @@ Route::middleware(['roles:1,2'])->group(function () {
     
     });
 
+    Route::middleware(['roles:1,2'])->group(function () {
+        
+        Route::get('/contactus/index','ContactUsController@index')->name('contactus_index');
+        Route::get('/contactus/add','ContactUsController@add')->name('contactus_add');
+        Route::get('/contactus/edit/{id}','ContactUsController@edit')->name('contactus_edit');
+        Route::get('/contactus/delete/{id}','ContactUsController@delete')->name('contactus_delete');
+        Route::post('/contactus/create','ContactUsController@create')->name('contactus_create');
+        Route::post('/contactus/update/{id}','ContactUsController@update')->name('contactus_update');
+        Route::post('/contactus/delete_all','ContactUsController@destroy_all')->name('contactus_delete_all');
+        Route::post('/contactus/Localization','ContactUsController@getLocalization')->name('get_localization_contact');
+    
+    
+    });
+
 
 
 
