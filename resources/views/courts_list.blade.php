@@ -83,7 +83,7 @@
               </form>
             </div>
           </div>
-        {{--</div> --}}
+        {{-- </div> --}}
           {{--localization modal --}} 
           <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
               <form role="form" action="{{route('courts_list_add_localization')}}" method="post">
@@ -163,7 +163,7 @@
             {{-- Language filter --}}
             <div class="quick_filter">
               <div class="dropdown quickfilter_dropb">
-                <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
                   <small>اللغات  &nbsp;</small>
                   <i class="fa fa-angle-down"></i>
                 </button>
