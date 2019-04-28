@@ -39,7 +39,7 @@ class CheckTasks extends Command
      */
     public function handle()
     {
-        $tasks = Tasks::where('is_accepted',0)->whereDate("task_assignment_date","<=",Carbon::now()->subMintes(10)->toDateString())->get();
+        $tasks = Tasks::where('is_accepted',0)->whereDate("task_assignment_date","<=",Carbon::now()->subSeconds(600)->toDateString())->get();
         foreach($tasks as $task)
         {
             $task->update([
