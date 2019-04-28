@@ -75,7 +75,7 @@
                                   @foreach($notes as $note)
                                   <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if($note->url != null || $note->url != '') href="{{route($note->url,$note->item_id)}}" @endif >
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                    <p>{{$note->msg}}</p>
+                                    <p>{{$note->msg . $note->item_name}}</p>
                                     <span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span>
                                     </a>
                                     </li>
