@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Session;
 use Validator;
 use Excel;
-
+use App\Languages;
 use App\Exports\GovernoratesCitiesExport;
 use App\Geo_Cities;
 use App\Geo_Governorates;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 
 class GovernoratesCitiesController extends Controller
 {
@@ -22,7 +23,8 @@ class GovernoratesCitiesController extends Controller
     {
         // return all cities and governments
         return view('governorates_cities')->with('cities', Geo_Cities::where('country_id',session('country'))->get())
-                                        ->with('governments', Geo_Governorates::where('country_id',session('country'))->get());
+                                        ->with('governments', Geo_Governorates::where('country_id',session('country'))->get())
+                                        ->with('languages', Languages::all());
     }
 
     /**
@@ -152,11 +154,11 @@ class GovernoratesCitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         // Find and delete this record
-        Geo_Cities::destroy($id);
-
+        Helper::remove_related_localization('geo_cities', $request->id);
+        Geo_Cities::find($request->id)->delete();
         Session::flash('success', 'تم الحذف بنجاح');
         return response()->json([
             'success' => 'Record has been deleted successfully!'
@@ -166,13 +168,14 @@ class GovernoratesCitiesController extends Controller
     /**
      * Delete selected rows
      */
-    public function destroySelected(Request $request) 
+    public function destroyAll(Request $request) 
     {
         // get cities IDs from AJAX
         $ids = $request->ids;
-
-        // transform $ids into array values then search and delete
-        Geo_Cities::whereIn('id', explode(",", $ids))->delete();
+        foreach($ids as $id){
+            Helper::remove_related_localization('geo_cities', $id);
+            Geo_Cities::find($id)->delete();
+        }
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
@@ -195,6 +198,21 @@ class GovernoratesCitiesController extends Controller
         }
 
         return response()->json($response);
+    }
+    
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'city_id' => 'required|integer',
+            'city_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('governorates_cities#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('geo_cities', 'name', $request->city_id, $request->city_name, $request->lang_id);
+        return redirect()->route('governorates_cities')->with('success','تم الإضافة بنجاح');
     }
 
 }

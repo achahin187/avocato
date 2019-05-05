@@ -72,6 +72,10 @@ class AppServiceProvider extends ServiceProvider
     
                     $note['url']='lawyers_show';
                     }
+                    if($note->notification_type_id ==19 || $note->notification_type_id ==20 || $note->notification_type_id ==23){
+    
+                        $note['url']='task_emergency_view';
+                        }
     
             }
             $counter = 0;

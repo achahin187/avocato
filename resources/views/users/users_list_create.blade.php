@@ -8,11 +8,11 @@
             });
         }, 4000);
   });
-</script>
+        </script>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
-                    <div class="add-mode">Adding mode</div>
+                    <div class="add-mode">اضافة مستخدم</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -107,9 +107,9 @@
                         <div class="col-md-3">
                         <select name="tele_code" class="master_input select2" id="tele_code"  style="width:100%;">
                         @foreach($codes as $code)
-                       
-                        <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
-                        
+                          @if($code->name != '')
+                            <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+                          @endif
                         @endforeach
                         </select>
                         </div>

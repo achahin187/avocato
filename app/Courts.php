@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Helper;
+use Session;
 
 class Courts extends Model
 {
@@ -18,5 +20,15 @@ class Courts extends Model
     public function cases()
     {
         return $this->hasMany('App\Case_', 'court_id');
+    }
+
+    public function getNameAttribute()
+    {
+        $lang = Session::get('AppLocale');
+        if($lang == 2 or $lang == 3){
+            return Helper::localizations('courts' , 'name' , $this->id , $lang);
+        }else{
+            return $this->attributes['name'];
+        }
     }
 }

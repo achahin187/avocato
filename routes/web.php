@@ -30,20 +30,24 @@ Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
 Route::post('/issues_types_destroy_all', 'IssuesTypesController@destroy_all')->name('issues_types_destroy_all');
 Route::get('/issues_types_excel', 'IssuesTypesController@excel')->name('issues_types_excel');
+Route::post('/issues_types_add_localization', 'IssuesTypesController@add_localization')->name('issues_types_add_localization');
+Route::post('/change.language', 'IssuesTypesController@changeLanguage')->name('change.language');
 //
 Route::get('/specializations', 'SpecializationsController@index')->name('specializations');
 Route::post('/specializations_store', 'SpecializationsController@store')->name('specializations_store');
 Route::post('/specializations_destroy/{id}', 'SpecializationsController@destroy')->name('specializations_destroy');
 Route::post('/specializations_destroy_all', 'SpecializationsController@destroy_all')->name('specializations_destroy_all');
 Route::get('/specializations_excel', 'SpecializationsController@excel')->name('specializations_excel');
+Route::post('/specialization_add_localization', 'SpecializationsController@add_localization')->name('specialization_add_localization');
 
 
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
 Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
-Route::get('/governorates_cities/destroy/{id}', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
-Route::get('/governorates_cities/destroySelected', 'GovernoratesCitiesController@destroySelected')->name('governorates_cities.destroySelected');
+Route::post('/governorates_cities/destroy', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
+Route::post('/governorates_cities/destroyAll', 'GovernoratesCitiesController@destroyAll')->name('governorates_cities.destroyAll');
 Route::get('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
+Route::post('/governorates_cities/add_localization', 'GovernoratesCitiesController@add_localization')->name('governorates_cities_add_localization');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 Route::get('/courts_get_city', 'CourtsListController@getCity')->name('courts_get_city');
@@ -51,6 +55,7 @@ Route::post('/courts_list_store', 'CourtsListController@store')->name('courts_li
 Route::post('/courts_list_destroy/{id}', 'CourtsListController@destroy')->name('courts_list_destroy');
 Route::post('/courts_list_destroy_all', 'CourtsListController@destroy_all')->name('courts_list_destroy_all');
 Route::post('/courts_list_excel', 'CourtsListController@excel')->name('courts_list_excel');
+Route::post('/courts_list/add_localization', 'CourtsListController@add_localization')->name('courts_list_add_localization');
 
 Route::get('/contracts_formulas_types', 'ContractsFormulasTypesController@index')->name('contracts_formulas_types');
 Route::post('/contracts_formulas_types_store', 'ContractsFormulasTypesController@store')->name('contracts_formulas_types_store');
@@ -58,12 +63,14 @@ Route::post('/contracts_formulas_types_store_sub', 'ContractsFormulasTypesContro
 Route::post('/contracts_formulas_types_destroy/{id}', 'ContractsFormulasTypesController@destroy')->name('contracts_formulas_types_destroy');
 Route::post('/contracts_formulas_types_destroy_all', 'ContractsFormulasTypesController@destroy_all')->name('contracts_formulas_types_destroy_all');
 Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@excel')->name('contracts_formulas_types_excel');
+Route::post('/contracts_formulas_types/add_localization', 'ContractsFormulasTypesController@add_localization')->name('contracts_formulas_types_add_localization');
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
-Route::get('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
+Route::post('/consultations_classification/destroySelected', 'ConsultationsClassificationController@destroySelected')->name('consult.destroySelected');
 Route::get('/consultations_classification/destroy/{id}', 'ConsultationsClassificationController@destroy')->name('consult.deleteRecord');
 Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
+Route::post('/consultations_classification/add_localization', 'ConsultationsClassificationController@add_localization')->name('consultations_classification_add_localization');
 
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
