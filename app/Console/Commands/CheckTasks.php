@@ -5,7 +5,10 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Tasks;
 use Carbon\Carbon;
-
+use App\User;
+use App\Notification_Types;
+use App\Notifications;
+use App\Notifications_Push;
 class CheckTasks extends Command
 {
     /**
