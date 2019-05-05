@@ -24,7 +24,7 @@ class Cases_Types extends Model
         if($lang == 2 or $lang == 3){
             return Helper::localizations('cases_types' , 'name' , $this->id , $lang);
         }else{
-            return $this->attributes['name'];
+            return $this->name;
         }
     }
 }
