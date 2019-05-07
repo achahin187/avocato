@@ -91,6 +91,9 @@ Route::get('/privacy', 'AboutController@privacy')->name('privacy');
 Route::get('/privacy_edit', 'AboutController@privacy_edit')->name('privacy_edit');
 Route::patch('/privacy_edit', 'AboutController@privacy_update')->name('privacy.update');
 
+//bouquets
+Route::get('/bouquets', 'BouquetsController@index')->name('bouquets');
+
 });
 
 
@@ -332,6 +335,7 @@ Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_d
 Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
 Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
+Route::get('/substitutions', 'SubstitutionsController@index')->name('substitutions');
 
 });
 

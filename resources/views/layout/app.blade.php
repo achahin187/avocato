@@ -138,6 +138,7 @@
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contactus_index')}}">اتصل بنا</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('terms_conditions')}}">الشروط و الأحكام</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('privacy')}}">سياسة الخصوصية</a></li>
+                                          <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('bouquets')}}">تعريف الباقات</a></li>
                                         </ul>
                                       </li>
                                       
@@ -211,7 +212,7 @@
                         @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==4)
                                       
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('tasks_emergency')}}">الحالات الطارئة</a></li>
-                                      
+                                          <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('substitutions')}}">طلبات الانابه </a></li>
                                       @endif
                                         </ul>
                                       </li>
