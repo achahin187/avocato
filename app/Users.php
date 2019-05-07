@@ -251,4 +251,9 @@ class Users extends Authenticatable
                                 * SIN(RADIANS(latitude)))) AS distance")
             )->orderBy('distance','asc');
     }
+
+    public function bouquets()
+    {
+        return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active');
+    }
 }

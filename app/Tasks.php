@@ -68,5 +68,10 @@ class Tasks extends Model
      public function created_by() {
             return $this->belongsTo('App\Users', 'created_by');
     }
+
+    public function substitution()
+    {
+        return $this->hasOne('App\Substitution','task_id');
+    }
 }
 
