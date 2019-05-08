@@ -349,6 +349,7 @@ Route::get('/substitutions_delete/{id}', 'SubstitutionsController@delete')->name
 Route::post('/substitutions_delete_all', 'SubstitutionsController@delete_all')->name('substitutions.delete_all');
 Route::post('/substitutions_create', 'SubstitutionsController@create')->name('substitutions.create');
 Route::get('/substitutions_lawyer_task', 'SubstitutionsController@lawyer_task')->name('substitutions.lawyer_task');
+Route::post('/substitutions_view/{id}', 'SubstitutionsController@view')->name('substitutions.view');
 
 });
 
