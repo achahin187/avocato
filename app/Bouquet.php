@@ -17,7 +17,7 @@ class Bouquet extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'users_bouquets', 'bouquet_id' , 'user_id');
+        return $this->belongsToMany('App\User', 'users_bouquets', 'bouquet_id' , 'user_id')->withPivot('is_subscribed','is_active');
     }
 
     public function payment()

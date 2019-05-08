@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BouquetService extends Model
 {
-    //
+    protected $table="bouquet_services";
 }

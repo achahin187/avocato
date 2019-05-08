@@ -93,7 +93,13 @@ Route::patch('/privacy_edit', 'AboutController@privacy_update')->name('privacy.u
 
 //bouquets
 Route::get('/bouquets', 'BouquetsController@index')->name('bouquets');
-
+Route::get('/bouquets_view/{id}', 'BouquetsController@view')->name('bouquets.view');
+Route::get('/bouquets_edit/{id}', 'BouquetsController@edit')->name('bouquets.edit');
+Route::post('/bouquets_update/{id}', 'BouquetsController@update')->name('bouquets.update');
+Route::get('/bouquets_delete/{id}', 'BouquetsController@delete')->name('bouquets.delete');
+Route::post('/bouquets_delete_all', 'BouquetsController@delete_all')->name('bouquets.delete_all');
+Route::get('/bouquets_add', 'BouquetsController@add')->name('bouquets.add');
+Route::post('/bouquets_create', 'BouquetsController@create')->name('bouquets.create');
 });
 
 
@@ -336,6 +342,13 @@ Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('sessio
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
 Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
 Route::get('/substitutions', 'SubstitutionsController@index')->name('substitutions');
+Route::get('/substitutions_edit', 'SubstitutionsController@edit')->name('substitutions.edit');
+Route::get('/substitutions_assign/{id}', 'SubstitutionsController@assign')->name('substitutions.assign');
+Route::post('/substitutions_assign_lawyer/{id}', 'SubstitutionsController@assign_lawyer')->name('substitutions.assign_lawyer');
+Route::get('/substitutions_delete/{id}', 'SubstitutionsController@delete')->name('substitutions.delete');
+Route::post('/substitutions_delete_all', 'SubstitutionsController@delete_all')->name('substitutions.delete_all');
+Route::post('/substitutions_create', 'SubstitutionsController@create')->name('substitutions.create');
+Route::get('/substitutions_lawyer_task', 'SubstitutionsController@lawyer_task')->name('substitutions.lawyer_task');
 
 });
 

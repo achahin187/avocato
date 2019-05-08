@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="packages_add.html">تعريف باقة جديدة</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('bouquets.add')}}">تعريف باقة جديدة</a>
                       </div>
                     </div>
                   </div>
@@ -165,90 +165,15 @@
                           </tr>
                         </thead>
                         <tbody>
+                        @foreach($bouquets as $bouquet)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
+                            <td><span class="cellcontent">{{$bouquet['name']}} </span></td>
                             <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">{{count($bouquet->users)}}</span></td>
+                            <td><span class="cellcontent"><a href= "{{route('substitution.view')}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('substitution.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">الباقة الذهبية</span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
-                            <td><span class="cellcontent">522</span></td>
-                            <td><span class="cellcontent"><a href= package_view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= packages_edit.html , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                         @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
