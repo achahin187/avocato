@@ -102,6 +102,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                        @foreach($substitutions as $substitution)
                           <tr>
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">20122</span></td>
@@ -114,138 +115,7 @@
                             <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
                             <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
-                          <tr>
-                            <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                          </tr>
+                       @endforeach
                         </tbody>
                       </table>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
