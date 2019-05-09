@@ -322,6 +322,7 @@ class LegalConsultationsController extends Controller
                 'is_perfect_answer' => 1
             ]);
             $consultation->update(['is_replied' => 1]);
+            
 
         }
         Helper::add_log(4, 13, $consultation->id);

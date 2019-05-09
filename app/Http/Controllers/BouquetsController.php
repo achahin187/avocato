@@ -23,8 +23,13 @@ class BouquetsController extends Controller
 
     public function edit($id)
     {
-        $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price')->first();
-        return view('bouquets.edit',$data);
+        $bouquet = Bouquet::where('id',$id)->with('users')->first();
+        if(count($bouquet->users()) == 0 )
+        {
+            session('error','cannot edit this bouquet because it has users ');
+            return redirect()->route('bouquets');  
+        }
+        return redirect()->route('bouquets');
     }
 
     public function update(Request $request , $id)
@@ -60,7 +65,13 @@ class BouquetsController extends Controller
     }
     public function delete($id)
     {
-        $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price')->first();
+        $bouquet = Bouquet::where('id',$id)->with('users')->first();
+        if(count($bouquet->users()) == 0 )
+        {
+            session('error','cannot delete this bouquet because it has users ');
+            return redirect()->route('bouquets');  
+        }
+
         return redirect()->route('bouquets');
     }
 }

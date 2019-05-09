@@ -23,7 +23,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg"></div>
-                      <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="btn-warning-cancel-all master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                       </div>
                       <div class="quick_filter">
                         <div class="dropdown quickfilter_dropb">
@@ -171,7 +171,11 @@
                             <td><span class="cellcontent">{{$bouquet['name']}} </span></td>
                             <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
                             <td><span class="cellcontent">{{count($bouquet->users)}}</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('substitution.view')}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('substitution.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent"><a href= "{{route('substitution.view')}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white ">
+                            <i class = "fa  fa-eye"></i></a>
+                            <a href= "{{route('substitution.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                            <i class = "fa  fa-pencil"></i></a>
+                            <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                          @endforeach
                         </tbody>
@@ -338,4 +342,80 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+@endsection
+@section('js')
+<script>
+ $('.btn-warning-cancel').click(function(){
+          var bouquet_id = $(this).closest('tr').attr('data-bouquet-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{url('bouquets_delete')}}'+'/'+bouquet_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-bouquet-id='+bouquet_id+']').fadeOut();
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+               }
+            });
+              
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+
+                $('.btn-warning-cancel-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-bouquet-id');
+          }).get();
+          if(selectedIds.length == 0 )
+          {
+            swal("خطأ", "من فضلك اختر استشاره :)", "error");
+          }
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{route('bouquets.delete_all')}}',
+               data:{ids:selectedIds,_token:_token},
+               success:function(data){
+                $.each( selectedIds, function( key, value ) {
+                  $('tr[data-bouquet-id='+value+']').fadeOut();
+                });
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+               }
+            });
+            
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+</script>
 @endsection
