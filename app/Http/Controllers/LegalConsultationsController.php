@@ -322,6 +322,27 @@ class LegalConsultationsController extends Controller
                 'is_perfect_answer' => 1
             ]);
             $consultation->update(['is_replied' => 1]);
+            $user = Users::find($consultation->created_by);
+                $notification_type = Notification_Types::find(14);
+                $notification = Notifications::create([
+                    "msg" => $notification_type->msg,
+                    "entity_id" => 13,
+                    "item_id" => $consultation->id,
+                    "item_id"=>$user->full_name,
+                    "user_id" => $consultation->created_by,
+                    "notification_type_id" => 14,
+                    "is_read" => 0,
+                    "is_sent" => 0,
+                    "is_push"=>1,
+                    "created_at" => Carbon::now()->format('Y-m-d H:i:s')
+                ]);
+                $notification_push = Notifications_Push::create([
+                    "notification_id" => $notification->id,
+                    "device_token" => $user->device_token,
+                    "mobile_os" => $user->mobile_os,
+                    "lang_id" => $user->lang_id,
+                    "user_id" => $consultation->created_by
+                ]);
 
         }
         Helper::add_log(4, 13, $consultation->id);
