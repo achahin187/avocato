@@ -71,7 +71,42 @@ class BouquetsController extends Controller
             session('error','cannot delete this bouquet because it has users ');
             return redirect()->route('bouquets');  
         }
+        try{
+            $bouquet->price()->destroy();
+            $bouquet->payment()->destroy();
+            $bouquet->services()->destroy();
+            $bouquet->destroy();
 
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','error while delete');
+        }
+        
         return redirect()->route('bouquets');
+    }
+    
+    public function delete_all(Request $request)
+    {
+        $ids = $_POST['ids'];
+        foreach ($ids as $id) {
+            $bouquet = Bouquet::where('id',$id)->with('users')->first();
+        if(count($bouquet->users()) > 0 )
+        {
+            try{
+                $bouquet->price()->destroy();
+                $bouquet->payment()->destroy();
+                $bouquet->services()->destroy();
+                $bouquet->destroy();
+    
+            }
+            catch(\Exception $e)
+            {
+                return redirect()->back()->with('error','error while delete');
+            } 
+        }
+       
+        }
+        return redirect()->route('bouquets'); 
     }
 }
