@@ -25,7 +25,7 @@
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="col-md-7 col-xs-12 no-padding">
-                      <div class="col-md-3 col-sm-3 col-xs-4">
+                      <!-- <div class="col-md-3 col-sm-3 col-xs-4">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                           <select class="master_input" id="lang_list" name="name_language">
@@ -34,7 +34,7 @@
                             <option value="3">French</option>
                           </select>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-md-9 col-sm-9 col-xs-8">
                         <div class="master_field">
                           <label class="master_label" for="package_name">اسم الباقة</label>
@@ -171,7 +171,7 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div class="col-md-2 col-sm-3 col-xs-3">
+                    <!-- <div class="col-md-2 col-sm-3 col-xs-3">
                       <div class="master_field">
                         <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                         <select class="master_input" id="lang_list" name="description_language">
@@ -180,7 +180,7 @@
                           <option value="3">French</option>
                         </select>
                       </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-10 col-sm-9 col-xs-9">
                       <div class="master_field">
                         <label class="master_label mandatory" for="package_deac">وصف الباقة</label>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Bouquet;
 use App\BouquetPaymentMethod;
 use App\BouquetService;
+use App\BouquetPrice;
 
 class BouquetsController extends Controller
 {
@@ -47,21 +48,23 @@ class BouquetsController extends Controller
     public function create(Request $request)
     {
         dd($request->all());
-        if($request['name_language'] == 2)
+        $bouquet = Bouquet::create($request->all());
+        if($request['bouquet_type'] == 1)
         {
-            $bouquet['name']=$request['name'];
+            foreach($request['price'] as $key => $value)
+            {
+                BouquetPrice::create([
+                    'bouquet_id'=> $bouquet->id,
+                    'price' => $value , 
+                    'count_from' => $request['count_from'][$key],
+                    'count_to' => $request['count_to'][$key]
+                    ]);
+
+            }
+            
         }
-        if($request['description_language'] == 2)
-        {
-            $bouquet['name']=$request['description'];
-        }
-        if($request['client_type'] == 0)
-        {
-            $bouquet['bouquet_type']=$request['client_type'];
-        }
-        
-        $data['bouquet'] = Bouquet::create($request->all());
-        return view('bouquets.view',$data);
+        session('success','added bouquet successfully');
+        return redirect()->route('bouquets');
     }
     public function delete($id)
     {
