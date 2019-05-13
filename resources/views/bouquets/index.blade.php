@@ -23,7 +23,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
                       <div class="remodal-bg"></div>
-                      <div class="bottomActions__btns"><a class="btn-warning-cancel-all master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="btn-warning-cancel-all master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
                       </div>
                       <div class="quick_filter">
                         <div class="dropdown quickfilter_dropb">
@@ -166,14 +166,17 @@
                         </thead>
                         <tbody>
                         @foreach($bouquets as $bouquet)
-                          <tr>
+                          <tr data-bouquet-id="{{$bouquet['id']}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{$bouquet['name']}} </span></td>
-                            <td><span class="cellcontent">سنوي - نصف سنوي</span></td>
+                            <td><span class="cellcontent">
+                            @foreach($bouquet['payment'] as $value)
+                            {{$value['name']}} -
+                            @endforeach</span></td>
                             <td><span class="cellcontent">{{count($bouquet->users)}}</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('substitution.view')}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white ">
+                            <td><span class="cellcontent"><a href= "{{route('bouquets.view',$bouquet->id)}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white ">
                             <i class = "fa  fa-eye"></i></a>
-                            <a href= "{{route('substitution.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white ">
+                            <a href= "{{route('bouquets.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white ">
                             <i class = "fa  fa-pencil"></i></a>
                             <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
@@ -362,7 +365,7 @@
           function(isConfirm){
             if (isConfirm){
              $.ajax({
-               type:'POST',
+               type:'GET',
                url:'{{url('bouquets_delete')}}'+'/'+bouquet_id,
                data:{_token:_token},
                success:function(data){
@@ -384,7 +387,7 @@
           }).get();
           if(selectedIds.length == 0 )
           {
-            swal("خطأ", "من فضلك اختر استشاره :)", "error");
+            swal("خطأ", "من فضلك اختر باقه :)", "error");
           }
           var _token = '{{csrf_token()}}';
           swal({

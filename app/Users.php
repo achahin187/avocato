@@ -254,6 +254,6 @@ class Users extends Authenticatable
 
     public function bouquets()
     {
-        return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active');
+        return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active','start_date','end_date','duration','value','number_of_installments');
     }
 }

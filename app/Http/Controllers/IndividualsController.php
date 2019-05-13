@@ -24,6 +24,15 @@ use App\Case_Client;
 use App\Tasks;
 use App\Procurations;
 use App\Helpers\VodafoneSMS;
+use App\Bouquet;
+use App\BouquetPaymentMethod;
+use App\BouquetMethod;
+use App\BouquetPrice;
+use App\BouquetService;
+use App\BouquetServiceCount;
+use App\UserBouquet;
+use App\UserBouquetPayment;
+use App\UserBouquetServiceCount;
 
 class IndividualsController extends Controller
 {
@@ -34,7 +43,7 @@ class IndividualsController extends Controller
      */
     public function index()
     {
-        $packages = Package_Types::all();
+        $packages = Bouquet::all();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
         return view('clients.individuals.individuals', compact(['packages', 'subscriptions', 'nationalities']))
@@ -51,7 +60,7 @@ class IndividualsController extends Controller
         // custom helper function to generate a random number and check if this random number exists on a specific table
         $code = Helper::generateRandom(Users::class, 'code', 6);
         $password = rand(10000000, 99999999);
-        $subscription_types = Package_Types::all();
+        $subscription_types = Bouquet::with('payment')->with('price')->get();
         $nationalities = Geo_Countries::all();
         
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
@@ -182,14 +191,15 @@ class IndividualsController extends Controller
 
         // push into subscriptions
         try {
-            $subscription = new Subscriptions;
+            $subscription = new UserBouquet;
             $subscription->user_id = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
             $subscription->end_date = date('Y-m-d H:i:s', strtotime($request->end_date));
-            $subscription->package_type_id = $request->subscription_type;
+            $subscription->bouquet_id = $request->subscription_type;
             $subscription->duration = $request->subscription_duration;
             $subscription->value = $request->subscription_value;
             $subscription->number_of_installments = $request->number_of_payments;
+            $subscription->is_active = $request->is_active;
             $subscription->save();
         } catch (Exception $ex) {
             $user->forcedelete();
@@ -212,12 +222,14 @@ class IndividualsController extends Controller
                 } else if ($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment)) {
                     for ($i = 0; $i < $request->number_of_payments; $i++) {
                         $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
-                        Installment::create([
-                            'subscription_id' => $subscription->id,
-                            'installment_number' => $i + 1,
-                            'value' => $request->payment[$i],
-                            'payment_date' => $pay_date,
-                            'is_paid' => $request->payment_status[$i]
+                        UserBouquetPayment::create([
+                            'user_id' => $user->id,
+                            'bouquet_id'=>$request->subscription_type,
+                            'payment_method'=>$request->payment_method,
+                            'period' => $i + 1,
+                            'price' => $request->payment[$i],
+                            'actuall_start_date' => $pay_date,
+                            'payment_status' => $request->payment_status[$i]
                         ]);
                     }
                 }

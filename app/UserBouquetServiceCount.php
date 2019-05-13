@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserBouquetServiceCount extends Model
 {
-    //
+    protected $table = 'users_bouquets';
+    protected $fillable = ['service_id', 'user_id','count'];
 }

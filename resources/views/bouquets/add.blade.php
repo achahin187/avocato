@@ -56,12 +56,13 @@
                             <tr>
                               <td>
                                 <div class="funkyradio">
-                                  <input type="checkbox"  id="p1_feature_{{$service['id']}}" checked="true" name="service_active[{{$service['id']}}]">
+                                <input type="number"  hidden name="service[{{$service['id']}}][id]" value="{{$service['id']}}">
+                                  <input type="checkbox"  id="p1_feature_{{$service['id']}}" checked="true" name="service[{{$service['id']}}][active]">
                                   <label for="p1_feature_{{$service['id']}}">تفعيل</label>
                                 </div>
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="feature_count{{$service['id']}}" placeholder="عدد" mandatory name="service_count[{{$service['id']}}]">
+                                <input class="master_input" type="number" id="feature_count{{$service['id']}}" placeholder="عدد" mandatory name="service[{{$service['id']}}][count]">
                               </td>
                               <td><b>{{$service['service_name']}}</b></td>
                             </tr>
@@ -154,19 +155,19 @@
                             <tr>
                               <td></td>
                               <td>
-                                <input class="master_input" type="number" id="cost1" placeholder="سعر الباقة" mandatory name="price[0]">
+                                <input class="master_input" type="number" id="cost1" placeholder="سعر الباقة" mandatory name="bouquet[0][price]">
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="cost1_to" placeholder="عدد الأفراد الى" mandatory name="count_to[0]">
+                                <input class="master_input" type="number" id="cost1_to" placeholder="عدد الأفراد الى" mandatory name="bouquet[0][count_to]">
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="cost1_from" placeholder="عدد الأفراد من" mandatory name="count_from[0]">
+                                <input class="master_input" type="number" id="cost1_from" placeholder="عدد الأفراد من" mandatory name="bouquet[0][count_from]">
                               </td>
                             </tr>
                           </tbody>
                         </table>
                         <div class="col-md-12 text-right no-padding">
-                          <button class="input-btn" id="add_cost"><b>إضافة نطاق</b><i class="fa fa-plus-circle"></i></button>
+                          <a class="input-btn" id="add_cost"><b>إضافة نطاق</b><i class="fa fa-plus-circle"></i></a>
                         </div>
                       </div>
                     </div>
@@ -245,13 +246,13 @@
               </button>
             </td>
             <td>
-              <input class="master_input" type="number" id="cost`+i+`" placeholder="سعر الباقة" mandatory="yes" name="price[`+i+`]">
+              <input class="master_input" type="number" id="cost`+i+`" placeholder="سعر الباقة" mandatory="yes" name="bouquet[`+i+`][price]">
             </td>
             <td>
-              <input class="master_input" type="number" id="cost`+i+`_to" placeholder="عدد الأفراد الى" mandatory="yes" name="count_to[`+i+`]">
+              <input class="master_input" type="number" id="cost`+i+`_to" placeholder="عدد الأفراد الى" mandatory="yes" name="bouquet[`+i+`][count_to]">
             </td>
             <td>
-              <input class="master_input" type="number" id="cost`+i+`_from" placeholder="عدد الأفراد من" mandatory="yes" name="count_from[`+i+`]">
+              <input class="master_input" type="number" id="cost`+i+`_from" placeholder="عدد الأفراد من" mandatory="yes" name="bouquet[`+i+`][count_from]">
             </td>
           </tr>
         `);
