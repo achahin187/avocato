@@ -34,7 +34,7 @@
                           <thead>
                             <tr>
                               <th>اسم الباقة</th>
-                              <th>لغات أخرى</th>
+                              <th> اللغه</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -195,7 +195,7 @@
                         <thead>
                           <tr>
                             <th>وصف الباقة</th>
-                            <th>لغات</th>
+                            <th>اللغه</th>
                           </tr>
                         </thead>
                         <tbody>

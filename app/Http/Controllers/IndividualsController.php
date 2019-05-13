@@ -255,7 +255,7 @@ class IndividualsController extends Controller
      */
     public function show($id)
     {
-        $data['user'] = Users::find($id);
+        $data['user'] = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->first();
         
         // redirect to home page if user is not found
         if( $data['user'] == NULL ) {

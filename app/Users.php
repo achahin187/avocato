@@ -256,4 +256,8 @@ class Users extends Authenticatable
     {
         return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active','start_date','end_date','duration','value','number_of_installments');
     }
+    public function bouquet_services()
+    {
+        return $this->belongsToMany('App\BouquetService', 'user_bouquet_service_count', 'user_id', 'service_id')->withPivot('count','all_count','used');
+    }
 }
