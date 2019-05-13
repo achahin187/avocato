@@ -10,12 +10,15 @@ use App\BouquetPrice;
 use App\BouquetMethod;
 use App\BouquetServiceCount;
 use Illuminate\Support\Facades\Validator;
+use App\Languages;
+use Helper;
 
 class BouquetsController extends Controller
 {
     public function index()
     {
         $data['bouquets'] = Bouquet::with('price_relation')->with('payment')->with('services')->with('users')->get();
+        $data['languages'] = Languages::all();
         return view('bouquets.index',$data);
     }
 
@@ -56,6 +59,9 @@ class BouquetsController extends Controller
         if($request['bouquet_type'] == 1)
         {
             BouquetPrice::where('bouquet_id',$bouquet->id)->delete();
+             $bouquet->update([
+                'price'=>NULL
+            ]);
             foreach($request['bouquet'] as $key => $value)
             {
                 
@@ -72,6 +78,9 @@ class BouquetsController extends Controller
         if($request['bouquet_type'] == 0)
         {
             BouquetPrice::where('bouquet_id',$bouquet->id)->delete();
+            // $bouquet->update([
+            //     'price'=>$request['price']
+            // ]);
         }
         
         if(array_key_exists('payment_method',$request->all()))
@@ -208,6 +217,7 @@ class BouquetsController extends Controller
             // $bouquet->payment()->delete();
             // $bouquet->services()->delete();
             $bouquet->delete();
+            Helper::remove_related_localization('bouquets', $bouquet->id);
 
         }
         catch(\Exception $e)
@@ -230,6 +240,7 @@ class BouquetsController extends Controller
                 // $bouquet->payment()->delete();
                 // $bouquet->services()->delete();
                 $bouquet->delete();
+                Helper::remove_related_localization('bouquets', $bouquet->id);
     
             }
             catch(\Exception $e)
@@ -240,5 +251,22 @@ class BouquetsController extends Controller
        
         }
         return redirect()->route('bouquets'); 
+    }
+
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'bouquet_id' => 'required|integer',
+            'bouquet_name'=>'required',
+            'bouquet_description'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('bouquets#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('bouquets', 'name', $request->bouquet_id, $request->bouquet_name, $request->lang_id);
+        Helper::add_localization('bouquets', 'description', $request->bouquet_id, $request->bouquet_description, $request->lang_id);
+        return redirect()->route('bouquets')->with('success','تم الإضافة بنجاح');
     }
 }

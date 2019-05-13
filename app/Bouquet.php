@@ -10,6 +10,8 @@ use App\BouquetServiceCount;
 use App\UserBouquet;
 use App\UserBouquetPayment;
 use App\UserBouquetServiceCount;
+use Session;
+use Helper;
 
 class Bouquet extends Model
 {
@@ -41,6 +43,26 @@ class Bouquet extends Model
             }
           
         });
+    }
+
+    //localizations
+    public function getNameAttribute()
+    {
+        $lang = Session::get('AppLocale');
+        if($lang == 2 or $lang == 3){
+            return  (Helper::localizations('bouquets' , 'name' , $this->id , $lang) != null) ? Helper::localizations('bouquets' , 'name' , $this->id , $lang) : $this->attributes['name'];
+        }else{
+            return $this->attributes['name'];
+        }
+    }
+    public function getDescriptionAttribute()
+    {
+        $lang = Session::get('AppLocale');
+        if($lang == 2 or $lang == 3){
+            return Helper::localizations('bouquets' , 'description' , $this->id , $lang);
+        }else{
+            return $this->attributes['name'];
+        }
     }
 
     public function users()

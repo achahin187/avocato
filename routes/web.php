@@ -100,6 +100,7 @@ Route::get('/bouquets_delete/{id}', 'BouquetsController@delete')->name('bouquets
 Route::post('/bouquets_delete_all', 'BouquetsController@delete_all')->name('bouquets.delete_all');
 Route::get('/bouquets_add', 'BouquetsController@add')->name('bouquets.add');
 Route::post('/bouquets_create', 'BouquetsController@create')->name('bouquets.create');
+Route::post('/bouquets_add_localization', 'BouquetsController@add_localization')->name('bouquets.add_localization');
 });
 
 

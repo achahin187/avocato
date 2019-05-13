@@ -164,7 +164,7 @@
                           <div class="actions">
                           </div><span class="mainseparator bgcolor--main"></span>
                         </div>
-                        <input class="master_input" type="number" id="cost" placeholder="سعر الباقة" mandatory name="price" @if($bouquet['bouquet_type'] == 1) value="{{$bouquet['price']}}" @endif>
+                        <input class="master_input" type="number" id="cost" placeholder="سعر الباقة" mandatory name="price" @if($bouquet['bouquet_type'] == 0) value="{{$bouquet['price']}}" @endif>
                       </div>
                       <div class="col-md-12 col-sm-12 col-xs-12" id="cost_company" @if($bouquet['bouquet_type'] == 0) style="display:none;" @endif>
                         <div class="main-title-conts">

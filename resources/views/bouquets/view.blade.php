@@ -14,7 +14,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="packages_edit.html">تعديل</a><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="">حذف الباقة</a>
+                      <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('bouquets.edit',$bouquet->id)}}">تعديل</a><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('bouquets.delete',$bouquet->id)}}">حذف الباقة</a>
                       </div>
                     </div>
                   </div>
@@ -38,20 +38,32 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
+                          <tr>
+                              <td>{{$bouquet->name}}</td>
+                              <td>
+                              @if(Session::get('AppLocale') == 1)
+                            العربيه
+                            @elseif (Session::get('AppLocale') == 2)
+                            English
+                            @else
+                            Francia
+                            @endif
+                              </td>
+                            </tr>
+                            <!-- <tr>
                               <td>Package Name</td>
                               <td>English</td>
                             </tr>
                             <tr>
                               <td>Package Name</td>
                               <td>Francais</td>
-                            </tr>
+                            </tr> -->
                           </tbody>
                         </table>
                       </div>
                       <div class="col-md-4 col-sm-5 col-xs-12">
                         <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--gray_d color--white"><i class="fa fa fa-users"></i></span>
-                          <div class="stat-box-content color--gray_d"><span class="stat-box-text">عدد المشتركين</span><span class="stat-box-number">1,410</span></div>
+                          <div class="stat-box-content color--gray_d"><span class="stat-box-text">عدد المشتركين</span><span class="stat-box-number">{{$bouquet->users()->count()}}</span></div>
                         </div>
                       </div>
                       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -64,17 +76,24 @@
                         </div>
                         <table class="table text-left bgcolor--gray_l">
                           <tbody>
+                          @foreach($bouquet['services'] as $service)
                             <tr>
                               <td>
+                              @if($service['pivot']['service_active'] == 1)
                                 مفعل
                                 &nbsp;<i class="fa fa-check color--fadegreen"></i>
+                              @else
+                              غير مفعل
+                                &nbsp;<i class="fa fa-times color--fadebrown"></i>
+                              @endif
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="feature_count1" placeholder="عدد" value="40" readonly>
+                                <input class="master_input" type="number" id="feature_count1" placeholder="عدد" value="{{$service['pivot']['service_count']}}" readonly>
                               </td>
-                              <td><b>الإستشارات القانونية</b></td>
+                              <td><b>{{$service['service_name']}}</b></td>
                             </tr>
-                            <tr>
+                          @endforeach
+                            <!-- <tr>
                               <td>
                                 غير مفعل
                                 &nbsp;<i class="fa fa-times color--fadebrown"></i>
@@ -103,23 +122,31 @@
                                 <input class="master_input" type="number" id="feature_count4" placeholder="عدد" value="25" readonly>
                               </td>
                               <td><b>الفيتشر الرابعة</b></td>
-                            </tr>
+                            </tr> -->
                           </tbody>
                         </table>
                       </div>
                     </div>
                     <div class="col-md-5 col-xs-12 no-padding">
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label class="master_label">دفع القسط</label><span class="bgcolor--fadeblue color--white bradius--small importance padding--small"> سنوي</span>&nbsp;<span class="bgcolor--fadeblue color--white bradius--small importance padding--small"> نصف سنوي</span>
+                        <label class="master_label">دفع القسط</label>
+                        @foreach($bouquet['payment'] as $payment)
+                        <span class="bgcolor--fadeblue color--white bradius--small importance padding--small"> {{$payment['name']}}</span>
+                        &nbsp;
+                        @endforeach
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                        <label class="master_label mandatory">نوع العميل</label><input class="icon" type="radio" name="client_type" value="company" id="client_2">
-<label for="client_2">شركة</label>
-<input class="icon" type="radio" name="client_type" value="individual" id="client_1" checked="true">
-<label for="client_1">عميل فرد</label>
+                        <label class="master_label mandatory">نوع العميل</label>
+                        @if($bouquet['bouquet_type'] == 1)
+                        <input class="icon" type="radio" name="client_type" value="company" id="client_2" checked>
+                        <label for="client_2">شركة</label>
+                        @else
+                        <input class="icon" type="radio" name="client_type" value="individual" id="client_1" checked="true">
+                        <label for="client_1">عميل فرد</label>
+                        @endif
                       </div>
                       <div class="clearfix"></div>
-                      <div class="col-md-12 col-sm-12 col-xs-12" id="cost_individual">
+                      <div class="col-md-12 col-sm-12 col-xs-12" id="cost_individual" @if($bouquet['bouquet_type'] == 1) style="display:none;" @endif>
                         <div class="main-title-conts">
                           <div class="caption">
                             <h3>سعر الباقة</h3>
@@ -127,9 +154,9 @@
                           <div class="actions">
                           </div><span class="mainseparator bgcolor--main"></span>
                         </div>
-                        <input class="master_input" type="number" id="cost" placeholder="سعر الباقة" value="500" readonly>
+                        <input class="master_input" type="number" id="cost" placeholder="سعر الباقة" @if($bouquet['bouquet_type'] == 0) value="{{$bouquet['price']}}" @endif readonly>
                       </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12" id="cost_company" style="display:none;">
+                      <div class="col-md-12 col-sm-12 col-xs-12" id="cost_company"  @if($bouquet['bouquet_type'] == 0) style="display:none;" @endif>
                         <div class="main-title-conts">
                           <div class="caption">
                             <h3>سعر الباقة طبقا لعدد أفراد الشركة</h3>
@@ -145,18 +172,20 @@
                               <td> عدد الأفراد من</td>
                               <td> عدد الأفراد الى</td>
                             </tr>
+                            @foreach($bouquet['price_relation'] as $price)
                             <tr>
                               <td></td>
                               <td>
-                                <input class="master_input" type="number" id="cost1" placeholder="سعر الباقة" value="500" readonly>
+                                <input class="master_input" type="number" id="cost1" placeholder="سعر الباقة" value="{{$price['price']}}" readonly>
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="cost1_from" placeholder="عدد الأفراد من" value="0" readonly>
+                                <input class="master_input" type="number" id="cost1_from" placeholder="عدد الأفراد من" value="{{$price['count_from']}}" readonly>
                               </td>
                               <td>
-                                <input class="master_input" type="number" id="cost1_to" placeholder="عدد الأفراد الى" value="50" readonly>
+                                <input class="master_input" type="number" id="cost1_to" placeholder="عدد الأفراد الى" value="{{$price['count_to']}}" readonly>
                               </td>
                             </tr>
+                            @endforeach
                           </tbody>
                         </table>
                       </div>
@@ -171,17 +200,25 @@
                         </thead>
                         <tbody>
                           <tr>
-                            <td>وصف الباقة وصف بعض النص</td>
-                            <th>العربية</th>
+                            <td>{{$bouquet['description']}}</td>
+                            <th>
+                            @if(Session::get('AppLocale') == 1)
+                            العربيه
+                            @elseif (Session::get('AppLocale') == 2)
+                            English
+                            @else
+                            Francia
+                            @endif
+                            </th>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td>Package Desc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</td>
                             <th>English</th>
                           </tr>
                           <tr>
                             <td>Package Desc Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidid</td>
                             <th>Francais</th>
-                          </tr>
+                          </tr> -->
                         </tbody>
                       </table>
                     </div>

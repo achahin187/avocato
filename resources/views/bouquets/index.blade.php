@@ -33,14 +33,24 @@
                               <p><b>اختار</b></p>
                             </div>
                             <div class="quick-filter-content">
-                              <div class="radiorobo">
+                            
+                            @foreach($languages as $lang)
+                                @if($lang->id != \Session::get('AppLocale'))
+                                <div class="radiorobo">
+                                  <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                                  <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
+                                </div>
+                                @endif
+                              @endforeach
+                                 
+                              <!-- <div class="radiorobo">
                                 <input type="radio" id="english">
                                 <label for="english">English</label>
                               </div>
                               <div class="radiorobo">
                                 <input type="radio" id="english">
                                 <label for="english">French</label>
-                              </div>
+                              </div> -->
                               <!--.qf-column
                               .qf-column-title
                                 |status
@@ -154,6 +164,55 @@
                           </div>
                         </div>
                       </div>
+                      <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <form role="form" action="{{route('bouquets.add_localization')}}" method="post">
+                          {{csrf_field()}}
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                          <div>
+                            <div class="row">
+                              <h4> باقه باللغات</h4><br>
+                              <input type="hidden" id="bouquet_id" name="bouquet_id">
+                              <div class="col-sm-5">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="lang_id">اختار اللغة</label>
+                                  <select class="master_input" id="lang_id" name="lang_id">
+                                    @foreach($languages as $lang)
+                                      @if($lang->id != 1)
+                                      <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                      @endif
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-7">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="bouquet_name">ادخال اسم  الباقه باللغة المختاره</label>
+                                  <input class="master_input" type="text" placeholder=" اسم الباقه" id="bouquet_name" name="bouquet_name">
+                                  <span class="master_message color--fadegreen">
+                                    @if($errors->has('bouquet_name'))
+                                      {{$errors->first('bouquet_name')}}
+                                    @endif
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="col-sm-7">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="bouquet_description">ادخال وصف  الباقه باللغة المختاره</label>
+                                  <input class="master_input" type="text" placeholder="وصف الباقه" id="bouquet_description" name="bouquet_description">
+                                  <span class="master_message color--fadegreen">
+                                    @if($errors->has('bouquet_description'))
+                                      {{$errors->first('bouquet_description')}}
+                                    @endif
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="clearfix"></div>
+                            </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button class="remodal-confirm" remodal-action="confirm" type="submit">حفظ</button>
+                          </form>
+                        </div>  
                       <table class="table-1">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
@@ -174,7 +233,12 @@
                             {{$value['name']}} -
                             @endforeach</span></td>
                             <td><span class="cellcontent">{{count($bouquet->users)}}</span></td>
-                            <td><span class="cellcontent"><a href= "{{route('bouquets.view',$bouquet->id)}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white ">
+                            <td>
+                            <span class="cellcontent">
+                            <a id="add_localization" data-bouquet-id="{{$bouquet->id}}" class= "action-btn bgcolor--fadebrown color--white add_localization">
+                                    <i class = "fa fa-book"></i> &nbsp; اللغات
+                                  </a>
+                            <a href= "{{route('bouquets.view',$bouquet->id)}}" , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white ">
                             <i class = "fa  fa-eye"></i></a>
                             <a href= "{{route('bouquets.edit',$bouquet->id)}}" , title="تعديل" ,  class= "action-btn bgcolor--fadegreen color--white ">
                             <i class = "fa  fa-pencil"></i></a>
@@ -420,5 +484,37 @@
             }
           });
         });
+
+
+        $('#quick_Filters_2').click( function(){
+          $('#lang_filter').toggle();
+        });
+  
+        // add localization
+        $('.add_localization').click( function(){
+            var localization_modal = $('#localization_modal');
+            localization_modal.find('#bouquet_id').val($(this).data('bouquet-id'));
+            $('#localization_modal').remodal().open();
+        });
+  
+        //change lang
+        function ChangeLang(id){
+          $.ajax({
+                url: '{{ route("change.language") }}',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    locale: id,
+                    method: 'POST',
+                },
+                success: function (response) {
+                  window.location.href = '{{ Request::url() }}';
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+            });
+        }
 </script>
 @endsection
