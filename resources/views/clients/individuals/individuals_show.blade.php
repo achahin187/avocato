@@ -84,7 +84,9 @@
                 </tr>
               </thead>
               <tbody>
+              <?php $all=0; $used=0;?>
               @foreach($user['bouquet_services'] as $service)
+              <?php $all += $service['pivot']['all_count']; $used +=$service['pivot']['used']; ?>
                 <tr>
                   <td> <b>{{$service['pivot']['all_count']}}</b></td>
                   <td> {{$service['pivot']['count']}}</td>
@@ -113,13 +115,13 @@
                 <tr>
                   <th colspan="4">
                     <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-                      <div class="c100 p20 rad_progress_size_small"><span>20%</span>
+                      <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($used * 100)/$all}}%</span>
                         <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
                         </div>
                       </div>
-                      <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">410</span></div>
+                      <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">{{$all- $used}}</span></div>
                     </div>
                   </th>
                 </tr>
@@ -160,14 +162,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if($user->subscription)
-                    @foreach($user->subscription->installments as $installment)
+                    @if($user->bouquet_payment)
+                    @foreach($user->bouquet_payment as $installment)
                     <tr>
-                      <td><span class="cellcontent">{{$installment->installment_number ? $installment->installment_number : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent"> {{$installment->value ? $installment->value : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent">{{$installment->payment_date ? $installment->payment_date->format('d/m/Y') : 'لا يوجد'}} </span></td>
-                      <td><span class="cellcontent"><i class = "fa  {{$installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
-                      <td><span class="cellcontent"><a href= "{{ route('ind.edit', $user->id) }}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
+                      <td><span class="cellcontent">{{$installment->pivot->period ? $installment->pivot->period : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent"> {{$installment->pivot->price ? $installment->pivot->price : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent">{{$installment->pivot->actuall_start_date ? $installment->pivot->actuall_start_date->format('d/m/Y') : 'لا يوجد'}} </span></td>
+                      <td><span class="cellcontent"><i class = "fa  {{$installment->pivot->payment_status ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
+                      <td><span class="cellcontent"><a href= "{{ route('ind.edit', $installment->id) }}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
                     </tr>
                    
                       <div class="clearfix"> </div>
@@ -176,12 +178,12 @@
                     </tbody>
                   </table>
              
-                  @if($user->subscription)
-                  @foreach($user->subscription->installments as $installment)
+                  @if($user->bouquet_payment)
+                  @foreach($user->bouquet_payment as $installment)
                   <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                  <form role="form" action="{{route('ind.ins_update',$installment->id)}}" method="post" accept-charset="utf-8">
+                  <form role="form" action="{{route('bouquets_payment_user.update',$installment->id)}}" method="post" accept-charset="utf-8">
                           {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
@@ -189,19 +191,19 @@
                               <div class="col-xs-12">
                                 <h3>تغيير حالة القسط</h3>
                                 <div class="master_field">
-                                @if($installment->is_paid==1)       
-                                  <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" checked="true">
+                                @if($installment->pivot->payment_status==1)       
+                                  <input class="icon" type="radio" name="payment_status" id="done{{$installment->id}}" value="1" checked="true">
                                   <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" >
+                                  <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->id}}" value="0" >
                                   <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                    
                                   @else
-                                   <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" >
+                                   <input class="icon" type="radio" name="payment_status" id="done{{$installment->id}}" value="1" >
                                   <label for="done{{$installment->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" checked="true">
+                                  <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->id}}" value="0" checked="true">
                                   <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
 
                                   @endif

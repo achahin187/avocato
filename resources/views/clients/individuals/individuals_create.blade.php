@@ -308,16 +308,16 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="subscription_type" class="master_input select2" id="license_type" style="width:100%;">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" onchange="payment_method(this.value)">
                 
-                @foreach ($subscription_types as $types)
-                  <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+                @foreach ($bouquets as $types)
+                  <option value="{{ $types->id }}">{{$types->name}}</option>
                 @endforeach
                 
               </select>
               
-              @if ($errors->has('subscription_type'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_type') }}</span>
+              @if ($errors->has('bouquet_id'))
+                <span class="master_message color--fadegreen">{{ $errors->first('bouquet_id') }}</span>
               @endif
               
             </div>
@@ -327,10 +327,10 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="subscription_duration" value="{{ old('subscription_duration') ? old('subscription_duration') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
+              <input name="duration" value="{{ old('duration') ? old('duration') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
             
-              @if ($errors->has('subscription_duration'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_duration') }}</span>
+              @if ($errors->has('duration'))
+                <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>
               @endif
               
             </div>
@@ -340,10 +340,10 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input name="subscription_value" value="{{ old('subscription_value') ? old('subscription_value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input name="value" value="{{ old('value') ? old('value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
               
-              @if ($errors->has('subscription_value'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
+              @if ($errors->has('value'))
+                <span class="master_message color--fadegreen">{{ $errors->first('value') }}</span>
               @endif
               
             </div>
@@ -353,11 +353,20 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-            <input name="number_of_payments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+            <input name="number_of_installments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
 
-                @if ($errors->has('number_of_payments'))
-                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
+                @if ($errors->has('number_of_installments'))
+                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_installments') }}</span>
                 @endif
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_num">طريقه الدفع</label>
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method">
+
+               </select>
             </div>
           </div>
           <div class="clearfix"></div>
@@ -403,24 +412,24 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input required name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
                                       <div class="radio-inline">\
-                                        <input type="radio" name="payment_status['+i+']" value="1" >\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
                                         <label>نعم</label>\
                                       </div>\
                                       <div class="radio-inline">\
-                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
                                         <label>لا</label>\
                                       </div>\
                                     </div>\

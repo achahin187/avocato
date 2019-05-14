@@ -60,7 +60,7 @@ class IndividualsController extends Controller
         // custom helper function to generate a random number and check if this random number exists on a specific table
         $code = Helper::generateRandom(Users::class, 'code', 6);
         $password = rand(10000000, 99999999);
-        $subscription_types = Bouquet::with('payment')->with('price')->get();
+        $bouquet = Bouquet::with('payment')->with('price')->get();
         $nationalities = Geo_Countries::all();
         
         return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
@@ -255,7 +255,7 @@ class IndividualsController extends Controller
      */
     public function show($id)
     {
-        $data['user'] = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->first();
+        $data['user'] = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->first();
         
         // redirect to home page if user is not found
         if( $data['user'] == NULL ) {
@@ -283,7 +283,7 @@ class IndividualsController extends Controller
      */
     public function edit($id)
     {
-        $user = Users::find($id);
+        $user = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->first();
 
         // redirect to home page if user is not found
         if( $user == NULL ) {

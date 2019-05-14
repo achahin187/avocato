@@ -282,7 +282,7 @@
         </div>
         <div class="actions">
         </div><span class="mainseparator bgcolor--main"></span>
-      </div>
+        </div>
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
 
         {{--  Start date  --}}

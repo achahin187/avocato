@@ -101,6 +101,7 @@ Route::post('/bouquets_delete_all', 'BouquetsController@delete_all')->name('bouq
 Route::get('/bouquets_add', 'BouquetsController@add')->name('bouquets.add');
 Route::post('/bouquets_create', 'BouquetsController@create')->name('bouquets.create');
 Route::post('/bouquets_add_localization', 'BouquetsController@add_localization')->name('bouquets.add_localization');
+Route::post('/bouquets_payment_user_update/{id}', 'BouquetsController@bouquets_payment_user_update')->name('bouquets_payment_user.update');
 });
 
 

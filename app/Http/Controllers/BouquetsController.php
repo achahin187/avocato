@@ -12,6 +12,9 @@ use App\BouquetServiceCount;
 use Illuminate\Support\Facades\Validator;
 use App\Languages;
 use Helper;
+use App\UserBouquet;
+use App\UserBouquetPayment;
+use App\UserBouquetServiceCount;
 
 class BouquetsController extends Controller
 {
@@ -268,5 +271,20 @@ class BouquetsController extends Controller
         Helper::add_localization('bouquets', 'name', $request->bouquet_id, $request->bouquet_name, $request->lang_id);
         Helper::add_localization('bouquets', 'description', $request->bouquet_id, $request->bouquet_description, $request->lang_id);
         return redirect()->route('bouquets')->with('success','تم الإضافة بنجاح');
+    }
+
+    public function bouquets_payment_user_update(Request $request , $id)
+    {
+        try
+        {
+            UserBouquetPayment::where('id',$id)->update($request->all());
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','error update installment');
+        }
+
+       return redirect()->back()->with('success','installment updated successfully');
+
     }
 }
