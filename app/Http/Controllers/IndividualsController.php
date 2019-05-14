@@ -60,10 +60,10 @@ class IndividualsController extends Controller
         // custom helper function to generate a random number and check if this random number exists on a specific table
         $code = Helper::generateRandom(Users::class, 'code', 6);
         $password = rand(10000000, 99999999);
-        $bouquet = Bouquet::with('payment')->with('price')->get();
+        $bouquets = Bouquet::where('bouquet_type',0)->with('payment')->with('price_relation')->get();
         $nationalities = Geo_Countries::all();
         
-        return view('clients.individuals.individuals_create', compact(['code', 'password', 'subscription_types', 'nationalities']));
+        return view('clients.individuals.individuals_create', compact(['code', 'password', 'bouquets', 'nationalities']));
     }
 
     /**

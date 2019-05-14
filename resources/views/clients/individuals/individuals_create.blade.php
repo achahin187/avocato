@@ -474,5 +474,14 @@
         dateRange('start_date','end_date')
       })
   </script>
+  <script>
+  function payment_method(id)
+  {
+    var bouquets = {{$bouquets}};
+    for (i = 0; i < bouquets.length; i++) { 
+     console.log(bouquets[i]);
+   }
+  }
+  </script>
 
 @endsection
