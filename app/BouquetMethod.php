@@ -11,4 +11,9 @@ class BouquetMethod extends Model
     protected $fillable = ['bouquet_id','payment_method_id'];
 
     public $timestamps = false;
+
+    public function payment()
+    {
+        return $this->belongsTo('App\BouquetPaymentMethod','payment_method_id');
+    }
 }

@@ -287,4 +287,20 @@ class BouquetsController extends Controller
        return redirect()->back()->with('success','installment updated successfully');
 
     }
+
+    public function bouquet_payment($id)
+    {
+        $payments = BouquetMethod::where('bouquet_id',$id)->with('payment')->get();
+        return response()->json($payments);
+    }
+
+    public function bouquet_payment_value($id , $discount)
+    {
+        $bouquet = Bouquet::find($id);
+        $discount_value = $bouquet->price * $discount / 100 ;
+        $value = $bouquet->price - $discount_value ;
+
+        return response()->json($value);
+
+    }
 }

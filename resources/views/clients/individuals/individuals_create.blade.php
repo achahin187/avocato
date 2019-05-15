@@ -308,8 +308,8 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" onchange="payment_method(this.value)">
-                
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id">
+                  <option selected value="-1">اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}">{{$types->name}}</option>
                 @endforeach
@@ -340,7 +340,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input name="value" value="{{ old('value') ? old('value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input name="value" value="{{ old('value') ? old('value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees" >
               
               @if ($errors->has('value'))
                 <span class="master_message color--fadegreen">{{ $errors->first('value') }}</span>
@@ -352,8 +352,8 @@
           {{--  Number of payments  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-            <input name="number_of_installments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" required>
+              <label class="master_label mandatory" for="number_of_installments">عدد الاقساط</label>
+            <input name="number_of_installments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="number_of_installments" required readonly>
 
                 @if ($errors->has('number_of_installments'))
                   <span class="master_message color--fadegreen">{{ $errors->first('number_of_installments') }}</span>
@@ -363,7 +363,7 @@
 
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="license_num">طريقه الدفع</label>
+              <label class="master_label mandatory" for="payment_method">طريقه الدفع</label>
             <select name="payment_method" class="master_input disScroll"  required id="payment_method">
 
                </select>
@@ -392,13 +392,93 @@
   </div>
   
 </div>
+@endsection
+@section('js')
+<script>
+$(document).ready(function(){
+  function payment_method()
+  {
+    var id = $('#bouquet_id').val();
+    alert(id);
+    if(id != -1)
+    {
+      $.ajax(
+          {
+              url: "{{ url('/bouquet_payment') }}" +"/"+ id,
+              type: 'GET',
+              dataType: "JSON",
+              data: {
+                  "id": id,
+                  "_method": 'GET',
+              },
+              success: function (data)
+              {
+                 console.log(data);
+                 var discount = $('#client_discount').val();
 
+                 $.ajax(
+                  {
+                      url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+                      type: 'GET',
+                      dataType: "JSON",
+                      data: {
+                          "id": id,
+                          "_method": 'GET',
+                      },
+                      success: function (data)
+                      {
+                        $('#license_fees').val(data);
+                        console.log(data);
+                      }
+                  });
+              }
+          });
+    }
+
+  }
+  $('#bouquet_id').on("change", payment_method);
+});
+  </script>
   <script>
-    $(document).ready(function() {
 
+    $(document).ready(function() {
+      var NumberOfPayments ;
+      var numberOfInstallment ; 
+      $('#payment_method').on("change", function(){
+        var payment_method =$('#payment_method').val();
+        var duration = $('#duration').val();
+        if(payment_method == 1)
+        {
+          numberOfInstallment = duration * 12 ;
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else if(payment_method == 2)
+        {
+          numberOfInstallment = duration * 4 ;
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else if(payment_method == 3)
+        {
+          numberOfInstallment = duration * 2 ;
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else
+        {
+          numberOfInstallment = duration  ;
+          $('#number_of_installments').val(numberOfInstallment);  
+        }
+      });
+       //all installments price value should be equal to value of bouquet 
+       $('#value').on("keyup", function() {
+         var price_for_each_installment = $('#value').val() / numberOfInstallment ; 
+         for(i= 0 ; i < numberOfInstallment ; i++)
+         {
+           $('#payment['+i+'][price]').val(price_for_each_installment);
+         }
+       });
       // generate number of input fields dynamicly 
-      $('#license_num').on("keyup", function() {
-        var NumberOfPayments = $('#license_num').val();   // get number of payments
+      $('#number_of_installments').on("keyup", function() {
+         NumberOfPayments = $('#number_of_installments').val();   // get number of payments
 
         $('#generated div').each(function() {
           $(this).remove();
@@ -412,7 +492,7 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
@@ -474,14 +554,6 @@
         dateRange('start_date','end_date')
       })
   </script>
-  <script>
-  function payment_method(id)
-  {
-    var bouquets = {{$bouquets}};
-    for (i = 0; i < bouquets.length; i++) { 
-     console.log(bouquets[i]);
-   }
-  }
-  </script>
+  
 
 @endsection

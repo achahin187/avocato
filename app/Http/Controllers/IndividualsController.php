@@ -88,9 +88,11 @@ class IndividualsController extends Controller
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
             'end_date' => 'required',
-            'subscription_duration' => 'required',
-            'subscription_value' => 'required',
-            'number_of_payments' => 'required' ]
+            'duration' => 'required',
+            'value' => 'required',
+            'bouquet_id'=>'required',
+            'payment_method'=>'required',
+            'number_of_installments' => 'required' ]
             ,[
                 'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
                 'birthday.date' => 'من فضلك تأكد من ادخال تاريخ ميلاد صحيح',
@@ -195,10 +197,12 @@ class IndividualsController extends Controller
             $subscription->user_id = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
             $subscription->end_date = date('Y-m-d H:i:s', strtotime($request->end_date));
-            $subscription->bouquet_id = $request->subscription_type;
-            $subscription->duration = $request->subscription_duration;
-            $subscription->value = $request->subscription_value;
-            $subscription->number_of_installments = $request->number_of_payments;
+            $subscription->bouquet_id = $request->bouquet_id;
+            $subscription->duration = $request->duration;
+            $subscription->value = $request->value;
+            $subscription->number_of_installments = $request->number_of_installments;
+            $subscription->is_subscribed = 1;
+            $subscription->payment_method_id = $request->payment_method;
             $subscription->is_active = $request->is_active;
             $subscription->save();
         } catch (Exception $ex) {
@@ -213,24 +217,92 @@ class IndividualsController extends Controller
         // push into installments
         try {
             if (isset($request->payment) && !empty($request->payment)) {
-                if ($request->number_of_payments != count($request->payment)) {
+                if ($request->number_of_installments != count($request->payment)) {
                     $user->forcedelete();
 
                     Session::flash('warning', '  حدث خطأ عند ادخال بيانات العميل ، من فضلك تأكد من ان عدد الاقساط التي تم ادخالها مساوٍِِ لحقل عدد الاقساط');
                     return redirect()->back()->withInput();
 
-                } else if ($request->number_of_payments != 0 && $request->number_of_payments == count($request->payment)) {
+                } else if ($request->number_of_installments != 0 && $request->number_of_installments == count($request->payment)) {
+                    $start_date = $request->start_date ;
                     for ($i = 0; $i < $request->number_of_payments; $i++) {
-                        $pay_date = date('Y-m-d', strtotime($request->payment_date[$i]));
+                        $pay_date = date('Y-m-d', strtotime($request->payment[$i]['actuall_start_date']));
+                        if($request->payment_method == 1)
+                        {
+                            $end_date = date('Y-m-d', strtotime($start_date . " +1 month"));
+                            $actuall_end_date = date('Y-m-d', strtotime($request->payment[$i]['actuall_start_date'] . "+1 month"));
+                            
+                        }
+                        if($request->payment_method == 2)
+                        {
+                            $end_date = date('Y-m-d', strtotime($start_date . " +4 month"));
+                            $actuall_end_date = date('Y-m-d', strtotime($request->payment[$i]['actuall_start_date'] . "+4 month"));
+                            
+                        }
+                        if($request->payment_method == 3)
+                        {
+                            $end_date = date('Y-m-d', strtotime($start_date . " +6 month"));
+                            $actuall_end_date = date('Y-m-d', strtotime($request->payment[$i]['actuall_start_date'] . "+6 month"));
+                            
+                        }
+                        if($request->payment_method == 4)
+                        {
+                            $end_date = date('Y-m-d', strtotime($start_date . " +12 month"));
+                            $actuall_end_date = date('Y-m-d', strtotime($request->payment[$i]['actuall_start_date'] . "+12 month"));
+                            
+                        }
                         UserBouquetPayment::create([
                             'user_id' => $user->id,
-                            'bouquet_id'=>$request->subscription_type,
+                            'bouquet_id'=>$request->bouquet_id,
                             'payment_method'=>$request->payment_method,
                             'period' => $i + 1,
-                            'price' => $request->payment[$i],
+                            'price' => $request->payment[$i]['price'],
                             'actuall_start_date' => $pay_date,
-                            'payment_status' => $request->payment_status[$i]
+                            'actuall_end_date' => $actuall_end_date,
+                            'start_date'=>$start_date,
+                            'end_date' => $end_date ,
+                            'payment_status' => $request->payment[$i]['payment_status']
                         ]);
+
+                        $start_date = $end_date;
+
+                        if($request->payment[$i]['payment_status'] == 1)
+                        {
+                            $services = UserBouquetServiceCount::where('bouquet_id',$request->bouquet_id)->get();
+                            foreach($services as $service)
+                            {
+                                if($service->service_active == 1)
+                                {
+                                    
+
+                                  $user_service = UserBouquetServiceCount::where('user_id' , $user->id )->where('service_id',$service->id)->first();
+                                  if($user_service->count() > 0)
+                                  {
+                                    $count = $user_service->count + ($service->service_count / $request->number_of_installments);
+                                    $user_service->update([
+                                        'count'=>$count
+                                    ]);
+                                  }
+                                  else
+                                  {
+                                    $count = $service->service_count / $request->number_of_installments ; 
+                                    UserBouquetServiceCount::create([
+                                        'user_id'=> $user->id ,
+                                        'bouquet_id' => $request->bouquet_id ,
+                                        'service_id' => $service->id ,
+                                        'count_all' => $service->service_count,
+                                        'count'=>$count,
+                                        
+                                    ]);
+
+                                  }
+                                   
+
+                                }
+                                
+                            }
+                            
+                        }
                     }
                 }
             }
