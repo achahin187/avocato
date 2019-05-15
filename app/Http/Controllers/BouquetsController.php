@@ -291,6 +291,7 @@ class BouquetsController extends Controller
     public function bouquet_payment($id)
     {
         $payments = BouquetMethod::where('bouquet_id',$id)->with('payment')->get();
+        // dd($payments);
         return response()->json($payments);
     }
 
@@ -299,7 +300,7 @@ class BouquetsController extends Controller
         $bouquet = Bouquet::find($id);
         $discount_value = $bouquet->price * $discount / 100 ;
         $value = $bouquet->price - $discount_value ;
-
+//  dd($value);
         return response()->json($value);
 
     }

@@ -282,7 +282,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-              <input name="start_date" value="{{ old('start_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="start_date">
+              <input name="start_date" value="{{ old('start_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="ddate">
               
               @if ($errors->has('start_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -295,7 +295,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ old('end_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="end_date">
+              <input name="end_date" value="{{ old('end_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate">
               
               @if ($errors->has('end_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -308,8 +308,8 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id">
-                  <option selected value="-1">اختر الباقه</option>
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+                  <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}">{{$types->name}}</option>
                 @endforeach
@@ -363,8 +363,8 @@
 
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="payment_method">طريقه الدفع</label>
-            <select name="payment_method" class="master_input disScroll"  required id="payment_method">
+              <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id">
 
                </select>
             </div>
@@ -395,11 +395,10 @@
 @endsection
 @section('js')
 <script>
-$(document).ready(function(){
-  function payment_method()
+  function get_payment_method(id)
   {
-    var id = $('#bouquet_id').val();
-    alert(id);
+    // var id = $('#bouquet_id').val();
+    // alert(id);
     if(id != -1)
     {
       $.ajax(
@@ -413,43 +412,60 @@ $(document).ready(function(){
               },
               success: function (data)
               {
-                 console.log(data);
-                 var discount = $('#client_discount').val();
-
-                 $.ajax(
-                  {
-                      url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
-                      type: 'GET',
-                      dataType: "JSON",
-                      data: {
-                          "id": id,
-                          "_method": 'GET',
-                      },
-                      success: function (data)
-                      {
-                        $('#license_fees').val(data);
-                        console.log(data);
-                      }
-                  });
+                var options = '<option selected disabled>select payment method..</option>';
+                  $.each(data, function( index, value ) {
+                    options +='<option value="'+value["payment"]["id"]+'">'+value["payment"]["name"]+'</option>';
+                    //  alert(index);
+                    });
+              
+              $('#payment_method_id').find('option').remove().end().append(options);
+              
+              set_license_fees(id);
+                
               }
           });
     }
 
   }
-  $('#bouquet_id').on("change", payment_method);
-});
+  function set_license_fees(id)
+  {
+    var discount = $('#client_discount').val();
+    // var id = $('#bouquet_id').val();
+                //  alert(discount);
+
+    $.ajax(
+    {
+        url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+        type: 'GET',
+        dataType: "JSON",
+        data: {
+            // "id": id,
+            // "_method": 'GET',
+        },
+        success: function (data)
+        {
+          // alert(data);
+          $('#license_fees').val(data);
+          // console.log(data);
+        }
+        });
+}
+  // $('#bouquet_id').on("change", payment_method);
+
   </script>
   <script>
 
     $(document).ready(function() {
       var NumberOfPayments ;
       var numberOfInstallment ; 
-      $('#payment_method').on("change", function(){
-        var payment_method =$('#payment_method').val();
-        var duration = $('#duration').val();
+      $('#payment_method_id').change( function(){
+        var payment_method = $(this).find(":selected").val();
+        var duration = $('#license_period').val();
+        // alert(duration);
         if(payment_method == 1)
         {
           numberOfInstallment = duration * 12 ;
+          // alert(numberOfInstallment);
           $('#number_of_installments').val(numberOfInstallment); 
         }
         else if(payment_method == 2)
@@ -467,58 +483,65 @@ $(document).ready(function(){
           numberOfInstallment = duration  ;
           $('#number_of_installments').val(numberOfInstallment);  
         }
+        NumberOfPayments = $('#number_of_installments').val();   // get number of payments
+
+$('#generated div').each(function() {
+  $(this).remove();
+});
+
+if(NumberOfPayments != '') {
+  for(i=0; i<NumberOfPayments; i++) {
+    //$('#generated div').remove();
+    var j = i+1;
+    // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
+    $('#generated').append('<div class="col-md-4 col-xs-12">\
+                              <div class="master_field">\
+                                <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
+                                <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                              </div>\
+                              </div>\
+                              <div class="col-md-4 col-xs-12">\
+                                <div class="master_field">\
+                                <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
+                                  <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                </div>\
+                              </div>\
+                              <div class="col-md-4 col-xs-12">\
+                                <div class="master_field">\
+                                <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
+                              <div class="radio-inline">\
+                                <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
+                                <label>نعم</label>\
+                              </div>\
+                              <div class="radio-inline">\
+                                <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
+                                <label>لا</label>\
+                              </div>\
+                            </div>\
+                          </div>');
+  }
+} else {
+  $('#generated div').remove();
+}
+set_price_for_each_installment();
       });
        //all installments price value should be equal to value of bouquet 
-       $('#value').on("keyup", function() {
-         var price_for_each_installment = $('#value').val() / numberOfInstallment ; 
+       $('#license_fees').on("keyup", function() {
+         set_price_for_each_installment();
+       });
+       function set_price_for_each_installment()
+       {
+        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
+        alert(price_for_each_installment);
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
            $('#payment['+i+'][price]').val(price_for_each_installment);
          }
-       });
+       }
       // generate number of input fields dynamicly 
-      $('#number_of_installments').on("keyup", function() {
-         NumberOfPayments = $('#number_of_installments').val();   // get number of payments
-
-        $('#generated div').each(function() {
-          $(this).remove();
-        });
-
-        if(NumberOfPayments != '') {
-          for(i=0; i<NumberOfPayments; i++) {
-            //$('#generated div').remove();
-            var j = i+1;
-            // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
-            $('#generated').append('<div class="col-md-4 col-xs-12">\
-                                      <div class="master_field">\
-                                        <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
-                                      </div>\
-                                      </div>\
-                                      <div class="col-md-4 col-xs-12">\
-                                        <div class="master_field">\
-                                        <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
-                                        </div>\
-                                      </div>\
-                                      <div class="col-md-4 col-xs-12">\
-                                        <div class="master_field">\
-                                        <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                                      <div class="radio-inline">\
-                                        <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
-                                        <label>نعم</label>\
-                                      </div>\
-                                      <div class="radio-inline">\
-                                        <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
-                                        <label>لا</label>\
-                                      </div>\
-                                    </div>\
-                                  </div>');
-          }
-        } else {
-          $('#generated div').remove();
-        }
-      });
+      // $('#number_of_installments').on("keyup", function() {
+        
+      // });
       
       $(document).on('click', '#ddate', function(){
         $(this).datepicker({
