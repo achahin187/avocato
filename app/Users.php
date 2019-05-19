@@ -23,7 +23,7 @@ class Users extends Authenticatable
                            'creditcard_number', 'creditcard_cvv', 'creditcard_month',
                            'creditcard_year', 'is_active', 'deleted_at', 'verificaition_code',
                            'is_verification_code_expired', 'last_login', 'api_token', 'device_token',
-                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at','country_id'];
+                           'created_by', 'modified_by', 'remember_token', 'created_at', 'updated_at','country_id','speed','speed_updated_at'];
    protected $dates = ['deleted_at'];
    public $timestamps = true;
 
@@ -254,7 +254,7 @@ class Users extends Authenticatable
 
     public function bouquets()
     {
-        return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active','start_date','end_date','duration','value','number_of_installments');
+        return $this->belongsToMany('App\Bouquet', 'users_bouquets', 'user_id', 'bouquet_id')->withPivot('is_subscribed','is_active','start_date','end_date','duration','value','number_of_installments','payment_method_id');
     }
     public function bouquet_services()
     {

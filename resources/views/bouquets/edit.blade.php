@@ -20,6 +20,22 @@
                     </div>
                   </div>
                 </div>
+                {{--  Flash messages  --}}
+  <div class="col-lg-12">
+    {{--  Success  --}}
+    @if (Session::has('success'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('success') }}</strong>  
+      </div>
+    @endif
+
+    {{--  Warning  --}}
+    @if (Session::has('warning'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('warning') }}</strong>  
+      </div>
+    @endif
+  </div>
                 <form method="post" action="{{route('bouquets.update',$bouquet->id)}}">
                 {{csrf_field()}}
                 <div class="col-lg-12">

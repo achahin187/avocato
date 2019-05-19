@@ -9,4 +9,7 @@ class UserBouquet extends Model
 {
     protected $table = 'users_bouquets';
     protected $fillable = ['bouquet_id', 'user_id','payment_method_id','is_subscribed','is_active','start_date','end_date','duration','value','number_of_installments'];
+
+
+    public $timestamps=false;
 }

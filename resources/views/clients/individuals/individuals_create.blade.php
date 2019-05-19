@@ -364,9 +364,12 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
-            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id">
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id" required>
 
                </select>
+               @if ($errors->has('payment_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
+              @endif
             </div>
           </div>
           <div class="clearfix"></div>
@@ -483,47 +486,8 @@
           numberOfInstallment = duration  ;
           $('#number_of_installments').val(numberOfInstallment);  
         }
-        NumberOfPayments = $('#number_of_installments').val();   // get number of payments
-
-$('#generated div').each(function() {
-  $(this).remove();
-});
-
-if(NumberOfPayments != '') {
-  for(i=0; i<NumberOfPayments; i++) {
-    //$('#generated div').remove();
-    var j = i+1;
-    // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
-    $('#generated').append('<div class="col-md-4 col-xs-12">\
-                              <div class="master_field">\
-                                <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
-                              </div>\
-                              </div>\
-                              <div class="col-md-4 col-xs-12">\
-                                <div class="master_field">\
-                                <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                  <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
-                                </div>\
-                              </div>\
-                              <div class="col-md-4 col-xs-12">\
-                                <div class="master_field">\
-                                <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
-                              <div class="radio-inline">\
-                                <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
-                                <label>نعم</label>\
-                              </div>\
-                              <div class="radio-inline">\
-                                <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
-                                <label>لا</label>\
-                              </div>\
-                            </div>\
-                          </div>');
-  }
-} else {
-  $('#generated div').remove();
-}
-set_price_for_each_installment();
+        set_number_of_installment();
+        set_price_for_each_installment();
       });
        //all installments price value should be equal to value of bouquet 
        $('#license_fees').on("keyup", function() {
@@ -532,11 +496,55 @@ set_price_for_each_installment();
        function set_price_for_each_installment()
        {
         var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
-        alert(price_for_each_installment);
+        
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
+          // alert('#payment['+i+'][price]');
            $('#payment['+i+'][price]').val(price_for_each_installment);
          }
+       }
+       function set_number_of_installment()
+       {
+        NumberOfPayments = $('#number_of_installments').val();   // get number of payments
+
+        $('#generated div').each(function() {
+          $(this).remove();
+        });
+
+        if(NumberOfPayments != '') {
+          for(i=0; i<NumberOfPayments; i++) {
+            //$('#generated div').remove();
+            var j = i+1;
+            // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
+            $('#generated').append('<div class="col-md-4 col-xs-12">\
+                                      <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                      </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
+                                          <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                        </div>\
+                                      </div>\
+                                      <div class="col-md-4 col-xs-12">\
+                                        <div class="master_field">\
+                                        <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
+                                        <label>نعم</label>\
+                                      </div>\
+                                      <div class="radio-inline">\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
+                                        <label>لا</label>\
+                                      </div>\
+                                    </div>\
+                                  </div>');
+          }
+        } else {
+          $('#generated div').remove();
+        }
        }
       // generate number of input fields dynamicly 
       // $('#number_of_installments').on("keyup", function() {

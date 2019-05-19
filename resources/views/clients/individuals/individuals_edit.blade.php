@@ -285,12 +285,12 @@
 
       {{--  Package info  --}}
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-
+       @foreach($user->bouquets as $bouquet)
           {{--  Start date  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-              <input name="start_date" value="{{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format('m/d/Y') : 0) : 0 }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="license_start_date">
+              <input name="start_date" value="{{ $bouquet->pivot->start_date }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="ddate">
               
               @if ($errors->has('start_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -303,7 +303,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ $user->subscription ? ($user->subscription->end_date ? $user->subscription->end_date->format('m/d/Y') : 0) : 0 }}" class="datepicker master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="license_end_date">
+              <input name="end_date" value="{{ $bouquet->pivot->end_date }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate">
               
               @if ($errors->has('end_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -316,16 +316,16 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="subscription_type" class="master_input select2" id="license_type" style="width:100%;">
-                
-                @foreach ($subscription_types as $types)
-                  <option value="{{ $types->id }}" {{ ($types->id == ($user->subscription ? $user->subscription->package_type_id : 0) ) ? 'selected' : '' }}>{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+                  <option selected disabled>اختر الباقه</option>
+                @foreach ($bouquets as $types)
+                  <option value="{{ $types->id }}" @if($types->id == $bouquet->id) selected @endif>{{$types->name}}</option>
                 @endforeach
                 
               </select>
               
-              @if ($errors->has('subscription_type'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_type') }}</span>
+              @if ($errors->has('bouquet_id'))
+                <span class="master_message color--fadegreen">{{ $errors->first('bouquet_id') }}</span>
               @endif
               
             </div>
@@ -335,10 +335,10 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="subscription_duration" value="{{ $user->subscription ? $user->subscription->duration : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
+              <input name="duration" value="{{ $bouquet->pivot->duration }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
             
-              @if ($errors->has('subscription_duration'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_duration') }}</span>
+              @if ($errors->has('duration'))
+                <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>
               @endif
               
             </div>
@@ -348,10 +348,10 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
-              <input required name="subscription_value" value="{{ $user->subscription ? $user->subscription->value : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees">
+              <input name="value" value="{{ $bouquet->value }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees" >
               
-              @if ($errors->has('subscription_value'))
-                <span class="master_message color--fadegreen">{{ $errors->first('subscription_value') }}</span>
+              @if ($errors->has('value'))
+                <span class="master_message color--fadegreen">{{ $errors->first('value') }}</span>
               @endif
               
             </div>
@@ -360,42 +360,58 @@
           {{--  Number of payments  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="license_num">عدد الاقساط</label>
-              <input required name="number_of_payments" value="{{ $user->subscription ? $user->subscription->number_of_installments : 0 }}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="license_num" >
+              <label class="master_label mandatory" for="number_of_installments">عدد الاقساط</label>
+            <input name="number_of_installments" value="{{$bouquet->pivot->number_of_installments}}" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="number_of_installments" required readonly>
 
-                @if ($errors->has('number_of_payments'))
-                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_payments') }}</span>
+                @if ($errors->has('number_of_installments'))
+                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_installments') }}</span>
                 @endif
             </div>
           </div>
+
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id" required>
+               @foreach($payment_methods as $method)
+               <option value="{{$method->payment->id}}" @if($bouquet->pivot->payment_method_id == $method->payment->id) selected @endif>{{$method->payment->name}}</option>
+               @endforeach
+
+               </select>
+               @if ($errors->has('payment_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
+              @endif
+            </div>
+          </div>
+          @endforeach
           <div class="clearfix"></div>
 
           {{--  Generated input fields  --}}
-          @if( $user->subscription )
+          @if( $user->bouquet_payment )
           <div id="generated">
-              @for ($i = 0; $i < $user->subscription->number_of_installments; $i++)
+              @for ($i = 0; $i < $user->bouquet_payment()->count(); $i++)
               <?php $j = $i+1; ?>
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                     <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
-                    <input required class="master_input disScroll" name="payment[{{ $i }}]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{ $user->subscription->package_type_id != 7 ?  $installments[$i]->value : '' }}">
+                    <input required class="master_input disScroll" name="payment[{{ $i }}][price]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{  $user->bouquet_payment[$i]->pivot->price  }}">
                   </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input required name="payment_date[{{ $i }}]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->subscription->package_type_id != 7 ? ($installments[$i]->payment_date != null)?$installments[$i]->payment_date->format('m/d/Y'):'' : '' }}">
+                      <input required name="payment[{{ $i }}][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->bouquet_payment[$i]->pivot->actuall_start_date }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label">حالة القسط رقم {{ $j }}</label>
                   <div class="radio-inline">
-                    <input type="radio" name="payment_status[{{ $i }}]" value="1" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 1 ? 'checked' : '') : '' }} >
+                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="1" {{  $user->bouquet_payment[$i]->pivot->payment_status == 1 ? 'checked' : '' }} >
                     <label>نعم</label>
                   </div>
                   <div class="radio-inline">
-                    <input type="radio" name="payment_status[{{ $i }}]" value="0" {{ $user->subscription->package_type_id != 7 ? ($installments[$i]->is_paid == 0 ? 'checked' : '') : 'checked' }} >
+                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="0" {{ $user->bouquet_payment[$i]->pivot->payment_status == 0 ? 'checked' : '' }} >
                     <label>لا</label>
                   </div>
                 </div>
@@ -425,11 +441,117 @@
   </div>
 
 
+  @endsection
+ @section('js')
+<script>
+  function get_payment_method(id)
+  {
+    // var id = $('#bouquet_id').val();
+    // alert(id);
+    if(id != -1)
+    {
+      $.ajax(
+          {
+              url: "{{ url('/bouquet_payment') }}" +"/"+ id,
+              type: 'GET',
+              dataType: "JSON",
+              data: {
+                  "id": id,
+                  "_method": 'GET',
+              },
+              success: function (data)
+              {
+                var options = '<option selected disabled>select payment method..</option>';
+                  $.each(data, function( index, value ) {
+                    options +='<option value="'+value["payment"]["id"]+'">'+value["payment"]["name"]+'</option>';
+                    //  alert(index);
+                    });
+              
+              $('#payment_method_id').find('option').remove().end().append(options);
+              
+              set_license_fees(id);
+                
+              }
+          });
+    }
+
+  }
+  function set_license_fees(id)
+  {
+    var discount = $('#client_discount').val();
+    // var id = $('#bouquet_id').val();
+                //  alert(discount);
+
+    $.ajax(
+    {
+        url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+        type: 'GET',
+        dataType: "JSON",
+        data: {
+            // "id": id,
+            // "_method": 'GET',
+        },
+        success: function (data)
+        {
+          // alert(data);
+          $('#license_fees').val(data);
+          // console.log(data);
+        }
+        });
+}
+  // $('#bouquet_id').on("change", payment_method);
+
+  </script>
   <script>
+
     $(document).ready(function() {
-      // generate number of input fields dynamicly 
-      $('#license_num').on("keyup", function() {
-        var NumberOfPayments = $('#license_num').val();   // get number of payments
+      var NumberOfPayments ;
+      var numberOfInstallment ; 
+      $('#payment_method_id').change( function(){
+        var payment_method = $(this).find(":selected").val();
+        var duration = $('#license_period').val();
+        // alert(duration);
+        if(payment_method == 1)
+        {
+          numberOfInstallment = duration * 12 ;
+          // alert(numberOfInstallment);
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else if(payment_method == 2)
+        {
+          numberOfInstallment = duration * 4 ;
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else if(payment_method == 3)
+        {
+          numberOfInstallment = duration * 2 ;
+          $('#number_of_installments').val(numberOfInstallment); 
+        }
+        else
+        {
+          numberOfInstallment = duration  ;
+          $('#number_of_installments').val(numberOfInstallment);  
+        }
+        set_number_of_installment();
+        set_price_for_each_installment();
+      });
+       //all installments price value should be equal to value of bouquet 
+       $('#license_fees').on("keyup", function() {
+         set_price_for_each_installment();
+       });
+       function set_price_for_each_installment()
+       {
+        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
+        
+         for(i= 0 ; i < numberOfInstallment ; i++)
+         {
+          // alert('#payment['+i+'][price]');
+           $('#payment['+i+'][price]').val(price_for_each_installment);
+         }
+       }
+       function set_number_of_installment()
+       {
+        NumberOfPayments = $('#number_of_installments').val();   // get number of payments
 
         $('#generated div').each(function() {
           $(this).remove();
@@ -443,24 +565,24 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required="true" class="master_input disScroll" name="payment['+i+']" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="premium1_amount">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_date">'+ 'تاريخ سداد القسط رقم ' + j + '</label>\
-                                          <input required="true" name="payment_date['+i+']" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
+                                          <input required name="payment['+i+'][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate">\
                                         </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
                                         <div class="master_field">\
                                         <label class="master_label">'+ 'حالة القسط رقم ' + j + '</label>\
                                       <div class="radio-inline">\
-                                        <input type="radio" name="payment_status['+i+']" value="1" >\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="1" >\
                                         <label>نعم</label>\
                                       </div>\
                                       <div class="radio-inline">\
-                                        <input type="radio" name="payment_status['+i+']" value="0" checked>\
+                                        <input type="radio" name="payment['+i+'][payment_status]" value="0" checked>\
                                         <label>لا</label>\
                                       </div>\
                                     </div>\
@@ -469,7 +591,11 @@
         } else {
           $('#generated div').remove();
         }
-      });
+       }
+      // generate number of input fields dynamicly 
+      // $('#number_of_installments').on("keyup", function() {
+        
+      // });
       
       $(document).on('click', '#ddate', function(){
         $(this).datepicker({
@@ -490,10 +616,21 @@
           $(this).off('mousewheel.disableScroll')
         });    
 
+        // hide alert message after 4 seconds => 4000 ms
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 4000);
+        
     });
-
-    
-
+  </script>
+  <script type="text/javascript">
+ 
+      $(function(){
+        dateRange('start_date','end_date')
+      })
   </script>
   
+
 @endsection

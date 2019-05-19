@@ -23,6 +23,22 @@
                     <div class="col-md-2">
                       <div class="right-text margin--medium-top-bottom"><b>المحامي المسئول</b></div><a href="lawyer_view.html">محمد احمد</a>
                     </div>
+                    {{--  Flash messages  --}}
+  <div class="col-lg-12">
+    {{--  Success  --}}
+    @if (Session::has('success'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('success') }}</strong>  
+      </div>
+    @endif
+
+    {{--  Warning  --}}
+    @if (Session::has('warning'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('warning') }}</strong>  
+      </div>
+    @endif
+  </div>
                     <div class="col-md-12"><br>
                       <div class="ticket-container">
                         <div class="clearfix">

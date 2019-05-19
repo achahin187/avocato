@@ -19,6 +19,22 @@
                     </div>
                   </div>
                 </div>
+                {{--  Flash messages  --}}
+  <div class="col-lg-12">
+    {{--  Success  --}}
+    @if (Session::has('success'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('success') }}</strong>  
+      </div>
+    @endif
+
+    {{--  Warning  --}}
+    @if (Session::has('warning'))
+      <div class="alert alert-warning text-center">
+        <strong>{{ Session::get('warning') }}</strong>  
+      </div>
+    @endif
+  </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">
