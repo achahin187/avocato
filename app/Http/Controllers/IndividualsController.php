@@ -43,7 +43,7 @@ class IndividualsController extends Controller
      */
     public function index()
     {
-        $packages = Bouquet::all();
+        $packages = Bouquet::where('bouquet_type',0)->get();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
         return view('clients.individuals.individuals', compact(['packages', 'subscriptions', 'nationalities']))
