@@ -258,7 +258,7 @@
         <div class="col-xs-3">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="discount">
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="client_discount">
             
             @if($errors->has('discount_percentage'))
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>
@@ -380,6 +380,17 @@
                </select>
                @if ($errors->has('payment_method'))
                 <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
+              @endif
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="payment_method_id">عدد الشركه </label>
+            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required >
+
+               </select>
+               @if ($errors->has('price_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('price_method') }}</span>
               @endif
             </div>
           </div>
@@ -525,6 +536,38 @@
 @endsection
 @section('js')
 <script>
+function get_price_method(id)
+  {
+    // var id = $('#bouquet_id').val();
+    // alert(id);
+    if(id != -1)
+    {
+      $.ajax(
+          {
+              url: "{{ url('/bouquet_price') }}" +"/"+ id,
+              type: 'GET',
+              dataType: "JSON",
+              data: {
+                  "id": id,
+                  "_method": 'GET',
+              },
+              success: function (data)
+              {
+                var options = '<option selected disabled>select price method..</option>';
+                  $.each(data, function( index, value ) {
+                    options +='<option value="'+value["id"]+'">'+value["count_from"]+'to'+value["count_to"]+'</option>';
+                    //  alert(index);
+                    });
+              
+              $('#price_method_id').find('option').remove().end().append(options);
+              
+              // set_license_fees(id);
+                
+              }
+          });
+    }
+
+  }
   function get_payment_method(id)
   {
     // var id = $('#bouquet_id').val();
@@ -549,23 +592,24 @@
                     });
               
               $('#payment_method_id').find('option').remove().end().append(options);
-              
-              set_license_fees(id);
+              get_price_method(id);
+              // set_license_fees(id);
                 
               }
           });
     }
 
   }
-  function set_license_fees(id)
+  function set_license_fees()
   {
     var discount = $('#client_discount').val();
-    // var id = $('#bouquet_id').val();
+    var price = $('#price_method_id').val();
+    var id = $('#bouquet_id').val();
                 //  alert(discount);
 
     $.ajax(
     {
-        url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+        url: "{{ url('/bouquet_price_value') }}" +"/"+ id + "/" + discount +"/" + price,
         type: 'GET',
         dataType: "JSON",
         data: {
@@ -580,7 +624,9 @@
         }
         });
 }
-  // $('#bouquet_id').on("change", payment_method);
+   $('#price_method_id').on("change", function(){
+       set_license_fees();
+   });
 
   </script>
   <script>

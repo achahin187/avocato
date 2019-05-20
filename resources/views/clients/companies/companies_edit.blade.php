@@ -402,6 +402,21 @@
               @endif
             </div>
           </div>
+
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="price_method_id">طريقه الدفع</label>
+            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required>
+               @foreach($price_methods as $method)
+               <option value="{{$method->id}}" @if($bouquet->pivot->price_method_id == $method->id) selected @endif>{{$method->count_from .'to' .$method->count_to}}</option>
+               @endforeach
+
+               </select>
+               @if ($errors->has('payment_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
+              @endif
+            </div>
+          </div>
           @endforeach
           <div class="clearfix"></div>
 
@@ -542,6 +557,38 @@
 @endsection
 @section('js')
 <script>
+function get_price_method(id)
+  {
+    // var id = $('#bouquet_id').val();
+    // alert(id);
+    if(id != -1)
+    {
+      $.ajax(
+          {
+              url: "{{ url('/bouquet_price') }}" +"/"+ id,
+              type: 'GET',
+              dataType: "JSON",
+              data: {
+                  "id": id,
+                  "_method": 'GET',
+              },
+              success: function (data)
+              {
+                var options = '<option selected disabled>select price method..</option>';
+                  $.each(data, function( index, value ) {
+                    options +='<option value="'+value["id"]+'">'+value["count_from"]+'to'+value["count_to"]+'</option>';
+                    //  alert(index);
+                    });
+              
+              $('#price_method_id').find('option').remove().end().append(options);
+              
+              // set_license_fees(id);
+                
+              }
+          });
+    }
+
+  }
   function get_payment_method(id)
   {
     // var id = $('#bouquet_id').val();
@@ -567,22 +614,23 @@
               
               $('#payment_method_id').find('option').remove().end().append(options);
               
-              set_license_fees(id);
+              // set_license_fees(id);
                 
               }
           });
     }
 
   }
-  function set_license_fees(id)
+  function set_license_fees()
   {
     var discount = $('#client_discount').val();
-    // var id = $('#bouquet_id').val();
+    var price = $('#price_method_id').val();
+    var id = $('#bouquet_id').val();
                 //  alert(discount);
 
     $.ajax(
     {
-        url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+        url: "{{ url('/bouquet_price_value') }}" +"/"+ id + "/" + discount +"/" + price,
         type: 'GET',
         dataType: "JSON",
         data: {
@@ -597,6 +645,9 @@
         }
         });
 }
+   $('#price_method_id').on("change", function(){
+       set_license_fees();
+   });
   // $('#bouquet_id').on("change", payment_method);
 
   </script>

@@ -104,6 +104,8 @@ Route::post('/bouquets_add_localization', 'BouquetsController@add_localization')
 Route::post('/bouquets_payment_user_update/{id}', 'BouquetsController@bouquets_payment_user_update')->name('bouquets_payment_user.update');
 Route::get('/bouquet_payment/{id}', 'BouquetsController@bouquet_payment')->name('bouquet.payment');
 Route::get('/bouquet_payment_value/{id}/{discount}', 'BouquetsController@bouquet_payment_value')->name('bouquet.payment.value');
+Route::get('/bouquet_price/{id}', 'BouquetsController@bouquet_price')->name('bouquet.price');
+Route::get('/bouquet_price_value/{id}/{discount}/{price_relation}', 'BouquetsController@bouquet_price_value')->name('bouquet.price.value');
 });
 
 
