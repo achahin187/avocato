@@ -305,20 +305,6 @@ class BouquetsController extends Controller
         return response()->json($value);
 
     }
-<<<<<<< HEAD
-
-    public function bouquet_price($id)
-    {
-        $prices = BouquetPrice::where('bouquet_id',$id)->with('payment')->get();
-        // dd($payments);
-        return response()->json($prices);
-    }
-
-    public function bouquet_price_value($id , $discount , $price_method)
-    {
-        $bouquet = Bouquet::find($id);
-        $price = BouquetPrice::find($id);
-=======
     public function bouquet_price($id)
     {
         $payments = BouquetPrice::where('bouquet_id',$id)->get();
@@ -330,11 +316,17 @@ class BouquetsController extends Controller
     {
         $bouquet = Bouquet::find($id);
         $price = BouquetPrice::find($price_relation);
->>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
         $discount_value = $price->price * $discount / 100 ;
         $value = $price->price - $discount_value ;
 //  dd($value);
         return response()->json($value);
 
+    }
+
+    public function bouquet_type($id)
+    {
+        $type = Bouquet::find($id);
+        // dd($payments);
+        return response()->json($type->bouquet_type);
     }
 }

@@ -105,11 +105,8 @@ Route::post('/bouquets_payment_user_update/{id}', 'BouquetsController@bouquets_p
 Route::get('/bouquet_payment/{id}', 'BouquetsController@bouquet_payment')->name('bouquet.payment');
 Route::get('/bouquet_payment_value/{id}/{discount}', 'BouquetsController@bouquet_payment_value')->name('bouquet.payment.value');
 Route::get('/bouquet_price/{id}', 'BouquetsController@bouquet_price')->name('bouquet.price');
-<<<<<<< HEAD
-Route::get('/bouquet_price_value/{id}/{discount}/{price_method}', 'BouquetsController@bouquet_price_value')->name('bouquet.price.value');
-=======
 Route::get('/bouquet_price_value/{id}/{discount}/{price_relation}', 'BouquetsController@bouquet_price_value')->name('bouquet.price.value');
->>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
+Route::get('/bouquet_type/{id}', 'BouquetsController@bouquet_type')->name('bouquet.type');
 });
 
 

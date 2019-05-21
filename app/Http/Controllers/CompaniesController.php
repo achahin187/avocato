@@ -95,10 +95,10 @@ class CompaniesController extends Controller
             'logo'=> 'image|mimes:jpeg,jpg,png',
             'start_date'    => 'required',
             'end_date'  => 'required',
-            'package_type_id' => 'required',
-            'subscription_duration' => 'required',
-            'subscription_value' => 'required',
-            'number_of_payments' => 'required'
+            'bouquet_id' => 'required',
+            'duration' => 'required',
+            'value' => 'required',
+            'number_of_installments' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -414,20 +414,13 @@ class CompaniesController extends Controller
         }
 
         $password = $company->client_password ? ($company->client_password->password ? : 12345678) : 12345678;
-        $bouquets = Bouquet::all();
+        $bouquets = Bouquet::where('bouquet_type',1)->get();
         $nationalities = Geo_Countries::all();
-<<<<<<< HEAD
-        $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
-        $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$company['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-
-        return view('clients.companies.companies_edit', compact(['company', 'password', 'nationalities', 'installments','bouquets','payment_methods']));
-=======
         $installments = $company->bouquet_payment ? $comapny->bouquet_payment: 0;
         $payment_methods = $company->bouquets ? BouquetMethod::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
         $price_methods = $company->bouquets ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->get() : [];
 
         return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_mehtods']));
->>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
     }
 
     /**
@@ -457,10 +450,10 @@ class CompaniesController extends Controller
             'start_date'    => 'required',  // subscription
             'end_date'      => 'required',  // subscription
             // 'logo'          => 'image|mimes:jpeg,jpg,png',  // users as image
-            'subscription_type'     => 'required',  // subscriptions as package_type_id
-            'subscription_duration' => 'required',  // subscriptions as duration
-            'subscription_value'    => 'required',  // subscriptions as value
-            'number_of_payments'    => 'required',  // subscriptions as number_of_installments
+            // 'bouquet_id'     => 'required',  // subscriptions as package_type_id
+            // 'duration' => 'required',  // subscriptions as duration
+            // 'value'    => 'required',  // subscriptions as value
+            // 'number_of_installments'    => 'required',  // subscriptions as number_of_installments
             'discount_percentage'   => 'required',  // user_details
             'legal_representative_name'     => 'required',  // user_company_details
             'legal_representative_mobile'   => 'required',  // user_company_details
