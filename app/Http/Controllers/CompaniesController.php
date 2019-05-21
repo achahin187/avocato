@@ -219,6 +219,7 @@ class CompaniesController extends Controller
             $subscription->is_subscribed = 1;
             $subscription->payment_method_id = $request->payment_method;
             $subscription->is_active = 1;
+            $subscription->price_method_id = $request->price_method;
             $subscription->save();
         } catch (\Exception $ex) {
             $user->forcedelete();
@@ -294,7 +295,7 @@ class CompaniesController extends Controller
                             'actuall_end_date' => $actuall_end_date,
                             'start_date'=>$start_date,
                             'end_date' => $end_date ,
-                            'payment_status' => $request->payment[$i]['payment_status']
+                            'payment_status' => $request->payment[$i]['payment_status'],
                         ]);
 
                         $start_date = $end_date;
@@ -404,7 +405,7 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $company = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->first();
+        $company = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->with('price_relation')->first();
 
         // redirect to home page if user is not found
         if( $company == NULL ) {
@@ -415,10 +416,18 @@ class CompaniesController extends Controller
         $password = $company->client_password ? ($company->client_password->password ? : 12345678) : 12345678;
         $bouquets = Bouquet::all();
         $nationalities = Geo_Countries::all();
+<<<<<<< HEAD
         $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
         $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$company['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
 
         return view('clients.companies.companies_edit', compact(['company', 'password', 'nationalities', 'installments','bouquets','payment_methods']));
+=======
+        $installments = $company->bouquet_payment ? $comapny->bouquet_payment: 0;
+        $payment_methods = $company->bouquets ? BouquetMethod::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
+        $price_methods = $company->bouquets ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->get() : [];
+
+        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_mehtods']));
+>>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
     }
 
     /**

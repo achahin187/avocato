@@ -258,7 +258,7 @@
         <div class="col-xs-3">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="discount">
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="ادخل النسبة المئوية %" id="client_discount">
             
             @if($errors->has('discount_percentage'))
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>
@@ -385,8 +385,13 @@
           </div>
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
+<<<<<<< HEAD
               <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
             <select name="price_method" class="master_input disScroll"  required id="price_method_id" required>
+=======
+              <label class="master_label mandatory" for="payment_method_id">عدد الشركه </label>
+            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required >
+>>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
 
                </select>
                @if ($errors->has('price_method'))
@@ -536,7 +541,11 @@
 @endsection
 @section('js')
 <script>
+<<<<<<< HEAD
  function price_method(id)
+=======
+function get_price_method(id)
+>>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
   {
     // var id = $('#bouquet_id').val();
     // alert(id);
@@ -555,13 +564,21 @@
               {
                 var options = '<option selected disabled>select price method..</option>';
                   $.each(data, function( index, value ) {
+<<<<<<< HEAD
                     options +='<option value="'+value['price_relation']["id"]+'">'+value["price_relation"]["name"]+'</option>';
+=======
+                    options +='<option value="'+value["id"]+'">'+value["count_from"]+'to'+value["count_to"]+'</option>';
+>>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
                     //  alert(index);
                     });
               
               $('#price_method_id').find('option').remove().end().append(options);
               
+<<<<<<< HEAD
               set_license_fees(id);
+=======
+              // set_license_fees(id);
+>>>>>>> bbebe3825f08dc2d3634b70cd0e3cd38ed8af736
                 
               }
           });
@@ -592,23 +609,24 @@
                     });
               
               $('#payment_method_id').find('option').remove().end().append(options);
-              
-              set_license_fees(id);
+              get_price_method(id);
+              // set_license_fees(id);
                 
               }
           });
     }
 
   }
-  function set_license_fees(id)
+  function set_license_fees()
   {
     var discount = $('#client_discount').val();
-    // var id = $('#bouquet_id').val();
+    var price = $('#price_method_id').val();
+    var id = $('#bouquet_id').val();
                 //  alert(discount);
 
     $.ajax(
     {
-        url: "{{ url('/bouquet_payment_value') }}" +"/"+ id + "/" + discount ,
+        url: "{{ url('/bouquet_price_value') }}" +"/"+ id + "/" + discount +"/" + price,
         type: 'GET',
         dataType: "JSON",
         data: {
@@ -623,7 +641,9 @@
         }
         });
 }
-  // $('#bouquet_id').on("change", payment_method);
+   $('#price_method_id').on("change", function(){
+       set_license_fees();
+   });
 
   </script>
   <script>
