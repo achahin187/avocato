@@ -6,15 +6,21 @@ use Illuminate\Http\Request;
 use App\Tasks;
 use App\Substitution;
 use App\SubstitutionType;
+use App\Task_Payment_Statuses;
+use App\Entity_Localizations;
+use App\Task_Charges;
+use App\Case_Techinical_Report_Document;
+use App\Case_Techinical_Report;
+use App\Users;
 
 class SubstitutionsController extends Controller
 {
     public function index()
     {
         $data['substitution_types']=SubstitutionType::all();
-        $data['substitutions']=Tasks::with(['substitution'=>function($q){
+        $data['substitutions']=Tasks::where('task_type_id',4)->with(['substitution'=>function($q){
             $q->with('type');
-        }])->get();
+        }])->with('lawyer')->with('lawyer_substitution')->get();
 
         return view('substitutions.index',$data);
     }
@@ -161,5 +167,57 @@ class SubstitutionsController extends Controller
       // dd($data);
       return view('substitutions.assign',$data);
       // dd($data['lawyers']);
+    }
+
+    public function show($id)
+    {
+      $data['substitution'] = Tasks::where('id',$id)->with(['substitution'=>function($q){
+        $q->with('type');
+    }])->with('lawyer')->with('lawyer_substitution')->first();
+
+
+    if( $data['substitution'] == NULL ) {
+      Session::flash('warning', 'لم يتم العثور على طلب الانابه');
+      return redirect('/services');
+  }
+  // dd($data);
+
+  $data['charges'] = Task_Charges::where('task_id', $id)->get();
+  $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
+  $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
+  $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->get();
+    return view('substitutions.view',$data);
+    }
+
+    public function delete($id)
+    {
+      try{
+        Substitution::where('task_id',$id)->delete();
+        $task=Tasks::find($id)->delete();
+      }
+      catch(\exception $ex)
+      {
+        return redirect()->back()->with('error','error while delete');
+      }
+      
+   
+   return redirect()->route('substitutions.index');
+    }
+
+    public function delete_all()
+    {
+    	$ids = $_POST['ids'];
+        foreach($ids as $id)
+        {
+          try{
+            Substitution::where('task_id',$id)->delete();
+            $task=Tasks::find($id)->delete();
+          }
+          catch(\exception $ex)
+          {
+            return redirect()->back()->with('error','error while delete');
+          }
+        } 
+        return redirect()->route('substitutions.index');
     }
 }

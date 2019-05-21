@@ -119,17 +119,17 @@
                         </thead>
                         <tbody>
                         @foreach($substitutions as $substitution)
-                          <tr>
+                          <tr data-task-id="{{$substitution->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">20122</span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent">نوع</span></td>
-                            <td><span class="cellcontent">12/12/2019</span></td>
-                            <td><span class="cellcontent">محكمة شرق القاهرة</span></td>
-                            <td><span class="cellcontent">دائرة</span></td>
-                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">تم</label></span></td>
-                            <td><span class="cellcontent"><a href="laywer_view.html"> محمد أحمد </a></span></td>
-                            <td><span class="cellcontent"><a href= substitutions-view.html , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= assign_known_task.html , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">{{$substitution->lawyer_substitution->code}}</span></td>
+                            <td><span class="cellcontent"><a href="{{route('lawyers_show',$substitution->lawyer_substitution->id)}}"> {{$substitution->lawyer_substitution->full_name}} </a></span></td>
+                            <td><span class="cellcontent">{{($substitution->substitution) ?$substitution->substitution->type->name : 'لا يوجد'}}</span></td>
+                            <td><span class="cellcontent">{{ ($substitution->substitution) ?$substitution->substitution->date : "لا يوجد"}}</span></td>
+                            <td><span class="cellcontent">{{ ($substitution->substitution) ? $substitution->substitution->court : "لا يوجد"}}</span></td>
+                            <td><span class="cellcontent">{{($substitution->substitution) ? $substitution->substitution->region : "لا يوجد"}}</span></td>
+                            <td><span class="cellcontent"><label class= "data-label bgcolor--fadegreen color--white  ">@if($substitution->task_status_id == 1) لم يتم @else تم @endif</label></span></td>
+                            <td><span class="cellcontent"><a @if($substitution->lawyer()->count() != 0 )href="{{route('lawyers_show',$substitution->lawyer->id)}}" @endif> @if($substitution->lawyer()->count() != 0 )  {{$substitution->lawyer->full_name}}  @else 'لم يتم تحديد محامى' @endif </a></span></td>
+                            <td><span class="cellcontent"><a href={{route('substitutions.view',$substitution->id)}} , title="مشاهدة" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href="{{route('substitutions.assign',$substitution->id)}}" , title="تعيين محامي",  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                        @endforeach
                         </tbody>
@@ -296,4 +296,86 @@
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
+@endsection
+@section('js')
+<script>
+ $('.btn-warning-cancel').click(function(){
+          var task_id = $(this).closest('tr').attr('data-task-id');
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'GET',
+               url:'{{url('substitutions_delete')}}'+'/'+task_id,
+               data:{_token:_token},
+               success:function(data){
+                $('tr[data-task-id='+task_id+']').fadeOut();
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+               }
+            });
+              
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+
+                $('.btn-warning-cancel-all').click(function(){
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-task-id');
+          }).get();
+          if(selectedIds.length == 0 )
+          {
+            swal("خطأ", "من فضلك اختر باقه :)", "error");
+          }
+          var _token = '{{csrf_token()}}';
+          swal({
+            title: "هل أنت متأكد؟",
+            text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'نعم متأكد!',
+            cancelButtonText: "إلغاء",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+             $.ajax({
+               type:'POST',
+               url:'{{route('substitutions.delete_all')}}',
+               data:{ids:selectedIds,_token:_token},
+               success:function(data){
+                $.each( selectedIds, function( key, value ) {
+                  $('tr[data-task-id='+value+']').fadeOut();
+                });
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+               }
+            });
+            
+            } else {
+              swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            }
+          });
+        });
+
+
+        
+  
+        
+  
+</script>
 @endsection

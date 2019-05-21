@@ -189,7 +189,8 @@
                 <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$report->lawyer->full_name}}</a>&nbsp;<i class="fa fa-user"></i></p>
                 <p class="right-text">{{$report->body}}</p>
               </div>
-              <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment1"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
+              <div class="col-md-2">
+              <a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment1"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
                 <div class="remodal-bg"></div>
                 <div class="remodal" data-remodal-id="report_attachment1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -214,8 +215,9 @@
                       </div>
                     </div>
                     <div class="clearfix"></div>
+                    @endforeach
                   </div>
-                  @endforeach
+                 
 
                         <div class="col-md-2">
                           <div class="remodal-bg"></div>
