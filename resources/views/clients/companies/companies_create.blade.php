@@ -383,6 +383,17 @@
               @endif
             </div>
           </div>
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
+            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required>
+
+               </select>
+               @if ($errors->has('price_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('price_method') }}</span>
+              @endif
+            </div>
+          </div>
           <div class="clearfix"></div>
 
         {{--  Generated input fields  --}}
@@ -525,6 +536,38 @@
 @endsection
 @section('js')
 <script>
+ function price_method(id)
+  {
+    // var id = $('#bouquet_id').val();
+    // alert(id);
+    if(id != -1)
+    {
+      $.ajax(
+          {
+              url: "{{ url('/bouquet_price') }}" +"/"+ id,
+              type: 'GET',
+              dataType: "JSON",
+              data: {
+                  "id": id,
+                  "_method": 'GET',
+              },
+              success: function (data)
+              {
+                var options = '<option selected disabled>select price method..</option>';
+                  $.each(data, function( index, value ) {
+                    options +='<option value="'+value['price_relation']["id"]+'">'+value["price_relation"]["name"]+'</option>';
+                    //  alert(index);
+                    });
+              
+              $('#price_method_id').find('option').remove().end().append(options);
+              
+              set_license_fees(id);
+                
+              }
+          });
+    }
+
+  }
   function get_payment_method(id)
   {
     // var id = $('#bouquet_id').val();

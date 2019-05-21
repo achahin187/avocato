@@ -415,10 +415,10 @@ class CompaniesController extends Controller
         $password = $company->client_password ? ($company->client_password->password ? : 12345678) : 12345678;
         $bouquets = Bouquet::all();
         $nationalities = Geo_Countries::all();
-        $installments = $user->bouquet_payment ? $user->bouquet_payment: 0;
-        $payment_methods = $user->bouquets ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
+        $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
+        $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$company['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
 
-        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods']));
+        return view('clients.companies.companies_edit', compact(['company', 'password', 'nationalities', 'installments','bouquets','payment_methods']));
     }
 
     /**

@@ -304,7 +304,7 @@
 
       {{--  Package info  --}}
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-       @foreach($user->bouquets as $bouquet)
+       @foreach($company->bouquets as $bouquet)
           {{--  Start date  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
@@ -406,9 +406,9 @@
           <div class="clearfix"></div>
 
           {{--  Generated input fields  --}}
-          @if( $user->bouquet_payment )
+          @if( $company->bouquet_payment )
           <div id="generated">
-              @for ($i = 0; $i < $user->bouquet_payment()->count(); $i++)
+              @for ($i = 0; $i < $company->bouquet_payment()->count(); $i++)
               <?php $j = $i+1; ?>
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">

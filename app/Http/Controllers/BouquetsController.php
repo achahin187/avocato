@@ -305,4 +305,22 @@ class BouquetsController extends Controller
         return response()->json($value);
 
     }
+
+    public function bouquet_price($id)
+    {
+        $prices = BouquetPrice::where('bouquet_id',$id)->with('payment')->get();
+        // dd($payments);
+        return response()->json($prices);
+    }
+
+    public function bouquet_price_value($id , $discount , $price_method)
+    {
+        $bouquet = Bouquet::find($id);
+        $price = BouquetPrice::find($id);
+        $discount_value = $price->price * $discount / 100 ;
+        $value = $price->price - $discount_value ;
+//  dd($value);
+        return response()->json($value);
+
+    }
 }
