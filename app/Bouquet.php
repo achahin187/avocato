@@ -16,7 +16,7 @@ use Helper;
 class Bouquet extends Model
 {
     protected $primaryKey = 'id';
-    protected $table = 'Bouquets';
+    protected $table = 'bouquets';
 
     protected $fillable = ['name','description','bouquet_type','price','country_id'];
     protected $date = [];
