@@ -304,7 +304,7 @@
 
       {{--  Package info  --}}
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      @if($company->bouquets()->count > 0)
+      @if($company->bouquets()->count() > 0)
        @foreach($company->bouquets as $bouquet)
           {{--  Start date  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
