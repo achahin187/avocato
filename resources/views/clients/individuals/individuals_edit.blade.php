@@ -518,7 +518,7 @@
         
           @endif
 
-          @if ( !$user->bouquets )
+          @if ( $user->bouquets()->count() == 0)
               <div id="generated"></div>
           @endif
 

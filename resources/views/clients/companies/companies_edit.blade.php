@@ -563,7 +563,7 @@
           </div>
           @endif
 
-        @if ( !$company->bouquets )
+        @if ( $company->bouquets()->count() == 0 )
           <div id="generated"></div>
         @endif
 
