@@ -387,7 +387,7 @@
           <div class="clearfix"></div>
 
           {{--  Generated input fields  --}}
-          @if( $user->bouquet_payment )
+          @if( $user->bouquet_payment()->count() > 0 )
           <div id="generated">
               @for ($i = 0; $i < $user->bouquet_payment()->count(); $i++)
               <?php $j = $i+1; ?>
