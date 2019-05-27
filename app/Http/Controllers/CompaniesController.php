@@ -405,7 +405,7 @@ class CompaniesController extends Controller
      */
     public function edit($id)
     {
-        $company = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->with('price_relation')->first();
+        $company = Users::where('id',$id)->with('bouquets')->with('bouquet_services')->with('bouquet_payment')->first();
 
         // redirect to home page if user is not found
         if( $company == NULL ) {
