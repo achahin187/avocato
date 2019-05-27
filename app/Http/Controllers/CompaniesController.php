@@ -416,7 +416,7 @@ class CompaniesController extends Controller
         $password = $company->client_password ? ($company->client_password->password ? : 12345678) : 12345678;
         $bouquets = Bouquet::where('bouquet_type',1)->get();
         $nationalities = Geo_Countries::all();
-        $installments = $company->bouquet_payment ? $comapny->bouquet_payment: 0;
+        $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
         $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
         $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->get() : [];
 
