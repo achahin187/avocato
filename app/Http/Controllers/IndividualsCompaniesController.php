@@ -547,18 +547,39 @@ class IndividualsCompaniesController extends Controller
         // push into subscriptions
         try {
             $subscription =  UserBouquet::where('user_id', $user->id)->first();
-            $subscription->update([
-                'user_id' => $user->id,
-                'start_date' => date('Y-m-d H:i:s', strtotime($request->start_date)),
-                'end_date' => date('Y-m-d H:i:s', strtotime($request->end_date)),
-                'bouquet_id' => $request->bouquet_id,
-                'duration' => $request->duration,
-                'value' => $request->value,
-                'number_of_installments' => $request->number_of_installments,
-                'is_subscribed' => 1,
-                'payment_method_id' => $request->payment_method,
-                'is_active' => 1,
-            ]);
+            if($subscription)
+            {
+                $subscription->update([
+                    'user_id' => $user->id,
+                    'start_date' => date('Y-m-d H:i:s', strtotime($request->start_date)),
+                    'end_date' => date('Y-m-d H:i:s', strtotime($request->end_date)),
+                    'bouquet_id' => $request->bouquet_id,
+                    'duration' => $request->duration,
+                    'value' => $request->value,
+                    'number_of_installments' => $request->number_of_installments,
+                    'is_subscribed' => 1,
+                    'payment_method_id' => $request->payment_method,
+                    'is_active' => 1,
+                ]);
+
+            }
+            
+            else
+            {
+                $subscription = new UserBouquet;
+            $subscription->user_id = $user->id;
+            $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
+            $subscription->end_date = date('Y-m-d H:i:s', strtotime($request->end_date));
+            $subscription->bouquet_id = $request->bouquet_id;
+            $subscription->duration = $request->duration;
+            $subscription->value = $request->value;
+            $subscription->number_of_installments = $request->number_of_installments;
+            $subscription->is_subscribed = 1;
+            $subscription->payment_method_id = $request->payment_method;
+            $subscription->is_active = 1;
+            $subscription->price_method_id = $request->price_method;
+            $subscription->save();
+            }
            
             
         } catch(Exception $ex) {
