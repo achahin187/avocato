@@ -518,7 +518,7 @@
         
           @endif
 
-          @if ( !$user->subscription )
+          @if ( !$user->bouquets )
               <div id="generated"></div>
           @endif
 
