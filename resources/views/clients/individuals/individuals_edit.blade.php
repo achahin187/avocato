@@ -418,6 +418,104 @@
               </div>
               @endfor
           </div>
+          @else
+          {{--  Start date  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
+              <input name="start_date" value="{{ old('start_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="ddate">
+              
+              @if ($errors->has('start_date'))
+                <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
+          {{--  End date  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
+              <input name="end_date" value="{{ old('end_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate">
+              
+              @if ($errors->has('end_date'))
+                <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
+          {{--  Subscriptions type  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+                  <option selected disabled>اختر الباقه</option>
+                @foreach ($bouquets as $types)
+                  <option value="{{ $types->id }}">{{$types->name}}</option>
+                @endforeach
+                
+              </select>
+              
+              @if ($errors->has('bouquet_id'))
+                <span class="master_message color--fadegreen">{{ $errors->first('bouquet_id') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
+          {{--  Subscriptions duration  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
+              <input name="duration" value="{{ old('duration') ? old('duration') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
+            
+              @if ($errors->has('duration'))
+                <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
+          {{--  Subscribtion value  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_fees">قيمة التعاقد</label>
+              <input name="value" value="{{ old('value') ? old('value') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="قيمة التعاقد" id="license_fees" >
+              
+              @if ($errors->has('value'))
+                <span class="master_message color--fadegreen">{{ $errors->first('value') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
+          {{--  Number of payments  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="number_of_installments">عدد الاقساط</label>
+            <input name="number_of_installments" value="0" min="0" class="master_input disScroll" type="number" placeholder="عدد الاقساط" id="number_of_installments" required readonly>
+
+                @if ($errors->has('number_of_installments'))
+                  <span class="master_message color--fadegreen">{{ $errors->first('number_of_installments') }}</span>
+                @endif
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id" required>
+
+               </select>
+               @if ($errors->has('payment_method'))
+                <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
+              @endif
+            </div>
+          </div>
+          <div class="clearfix"></div>
+
+        
           @endif
 
           @if ( !$user->subscription )
