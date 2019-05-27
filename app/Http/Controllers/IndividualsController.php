@@ -368,7 +368,7 @@ class IndividualsController extends Controller
         }
 
         $password = $user->client_password ? ($user->client_password->password ? : 12345678) : 12345678;
-        $bouquets = Bouquet::where('bouquet_type',0);
+        $bouquets = Bouquet::where('bouquet_type',0)->get();
         $nationalities = Geo_Countries::all();
         $installments = $user->bouquet_payment ? $user->bouquet_payment: 0;
         $payment_methods = ($user->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
