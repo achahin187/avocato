@@ -279,7 +279,7 @@ class IndividualsCompaniesController extends Controller
                             'price' => $request->payment[$i]['price'],
                             'actuall_start_date' => $pay_date,
                             'actuall_end_date' => $actuall_end_date,
-                            'start_date'=>$start_date,
+                            'start_date'=>date('Y-m-d H:i:s', strtotime($start_date)),
                             'end_date' => $end_date ,
                             'payment_status' => $request->payment[$i]['payment_status'],
                         ]);
@@ -641,7 +641,7 @@ class IndividualsCompaniesController extends Controller
                                 'price' => $request->payment[$i]['price'],
                                 'actuall_start_date' => $pay_date,
                                 'actuall_end_date' => $actuall_end_date,
-                                'start_date'=>$start_date,
+                                'start_date'=>date('Y-m-d H:i:s', strtotime($start_date)),
                                 'end_date' => $end_date ,
                                 'payment_status' => $request->payment[$i]['payment_status']
                             ]);
@@ -653,7 +653,7 @@ class IndividualsCompaniesController extends Controller
                                 'price' => $request->payment[$i]['price'],
                                 'actuall_start_date' => $pay_date,
                                 'actuall_end_date' => $actuall_end_date,
-                                'start_date'=>$start_date,
+                                'start_date'=>date('Y-m-d H:i:s', strtotime($start_date)),
                                 'end_date' => $end_date ,
                                 'payment_status' => $request->payment[$i]['payment_status']
                             ]);
