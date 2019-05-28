@@ -577,7 +577,7 @@ class IndividualsController extends Controller
         // }
 
         //  // push into installments
-        try {
+        // try {
             if (isset($request->payment) && !empty($request->payment)) {
                 if ($request->number_of_installments != count($request->payment)) {
                     $user->forcedelete();
@@ -692,11 +692,11 @@ class IndividualsController extends Controller
                     }
                 }
             }
-        } catch (\Exception $ex) {
-            // $user->forcedelete();
-            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        // } catch (\Exception $ex) {
+        //     // $user->forcedelete();
+        //     Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
 
         // redirect with success
         Session::flash('success', 'تم تعديل العميل بنجاح');
