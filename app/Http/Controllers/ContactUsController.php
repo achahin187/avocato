@@ -94,7 +94,13 @@ class ContactUsController extends Controller
             unset($request['_token']);
             if($request->lang_id == 2)
             {
-                $branch= Company_Branch::where('id',$id)->update($request->all());
+                $branch= Company_Branch::where('id',$id)->update([
+                    'name'=>$request['name'],
+                    'address'=>$request['address'],
+                    'is_main'=>$request['is_main'],
+                    'longitude'=>$request['longitude'],
+                    'latitude'=>$request['latitude']
+                ]);
             }
            
            if($request->lang_id !='2'){
