@@ -67,6 +67,7 @@
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 3)
                               <input class="master_input" type="email" placeholder="الايميل..." id="email1" value="{{$branch_detail['pivot']['value']}}" name="email[{{$i}}]">
+                              <?php $i++; ?>
                               @endif
                               @endforeach
                               @else
@@ -98,6 +99,7 @@
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 1)
                               <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="{{$branch_detail['pivot']['value']}}" name="mobile[{{$j}}]">
+                              <?php $j++; ?>
                               @endif
                               @endforeach
                               @else
