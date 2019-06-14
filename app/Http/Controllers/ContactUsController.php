@@ -54,13 +54,18 @@ class ContactUsController extends Controller
            {
                foreach($request['mobile'] as $key => $mobile)
                {
-                Contact_Detail::create([
-                    'contact_detail_type'=>1,
-                    'name'=>'mobile',
-                    'code'=>$request['code'][$key],
-                    'value'=>$mobile,
-                    'company_branch_id'=>$branch['id']
-                ]);
+                   if($mobile != null)
+                   {
+                    Contact_Detail::create([
+                        'contact_detail_type'=>1,
+                        'name'=>'mobile',
+                        'code'=>$request['code'][$key],
+                        'value'=>$mobile,
+                        'company_branch_id'=>$branch['id']
+                    ]);
+
+                   }
+               
                }
            }
         }
@@ -94,7 +99,7 @@ class ContactUsController extends Controller
             unset($request['_token']);
             if($request->lang_id == 2)
             {
-                $branch= Company_Branch::where('id',$id)->update([
+                $branch->update([
                     'name'=>$request['name'],
                     'address'=>$request['address'],
                     'is_main'=>$request['is_main'],
@@ -106,7 +111,7 @@ class ContactUsController extends Controller
            if($request->lang_id !='2'){
           
             //set lang
-            $branch= Company_Branch::where('id',$id)->update([
+            $branch->update([
                 'is_main'=>$request['is_main'],
                 'longitude'=>$request['longitude'],
                 'latitude'=>$request['latitude']
@@ -133,13 +138,18 @@ class ContactUsController extends Controller
             Contact_Detail::where('contact_detail_type',1)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['mobile'] as $key => $mobile)
                {
-                Contact_Detail::create([
-                    'contact_detail_type'=>1,
-                    'name'=>'mobile',
-                    'code'=>$request['code'][$key],
-                    'value'=>$mobile,
-                    'company_branch_id'=>$branch['id']
-                ]);
+                   if($mobile != null)
+                   {
+                    Contact_Detail::create([
+                        'contact_detail_type'=>1,
+                        'name'=>'mobile',
+                        'code'=>$request['code'][$key],
+                        'value'=>$mobile,
+                        'company_branch_id'=>$branch['id']
+                    ]);
+
+                   }
+               
                }
            }
         }
