@@ -69,35 +69,91 @@
         <ul class="tab__content">
           <li class="tab__content_item active">
             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-              <div class="row">
-                <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد </b>
+            
+            <div class="row">
+            @foreach($user->bouquets as $bouquet)
+                <div class="col-md-4 col-sm-12">
+                    <table class="table bgcolor--gray_l text-left">
+                      <thead>
+                        <tr class="color--fadeblue bgcolor--gray_mm importance">
+                          <th class="text-center" colspan="4">{{$bouquet->name}}</th>
+                        </tr>
+                        <tr>
+                          <th> الإجمالي</th>
+                          <th> الكوتة</th>
+                          <th> المستهلك</th>
+                          <th> الخاصية</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <?php $all=0; $used=0;?>
+                      @foreach($user['bouquet_services'] as $service)
+                      <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
+                        <tr>
+                          <td> <b>{{$service['pivot']['all_count']}}</b></td>
+                          <td> {{$service['pivot']['count']}}</td>
+                          <td> {{$service['pivot']['used']}}</td>
+                          <td>{{$service['service_name']}}</td>
+                        </tr>
+                      @endforeach
+                        <!-- <tr>
+                          <td> <b>50</b></td>
+                          <td> 25</td>
+                          <td> 22</td>
+                          <td>حالات طارئة</td>
+                        </tr>
+                        <tr>
+                          <td> <b>50</b></td>
+                          <td> 25</td>
+                          <td> 22</td>
+                          <td>العقود والصيع</td>
+                        </tr>
+                        <tr>
+                          <td> <b>50</b></td>
+                          <td> 25</td>
+                          <td> 22</td>
+                          <td>الفيتشر الرابعة</td>
+                        </tr> -->
+                        <tr>
+                          <th colspan="4">
+                            <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
+                              <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($used * 100)/$all}}%</span>
+                                <div class="slice">
+                                  <div class="bar"></div>
+                                  <div class="fill"></div>
+                                </div>
+                              </div>
+                              <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">{{$all- $used}}</span></div>
+                            </div>
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                <b class="col-xs-3">تاريخ بدء التعاقد </b>
                   <div class="col-xs-9">
-                    {{ $user->subscription ? (  $user->subscription->start_date ? $user->subscription->start_date->format("Y - m - d") : 'لا يوجد' ) : 'لا يوجد' }} </div>
+                    {{ $bouquet ? (  $bouquet->pivot->start_date ? $bouquet->pivot->start_date : 'لا يوجد' ) : 'لا يوجد' }} </div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
-                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->duration  : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{ $bouquet ? $bouquet->pivot->duration  : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
-                  <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{ $bouquet ? $bouquet->pivot->value : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
-                  <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format("Y - m - d ") : 'لا يوجد' ) : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{ $bouquet ? ( $bouquet->pivot->end_date ? $bouquet->pivot->end_date : 'لا يوجد' ) : 'لا يوجد' }}</div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
                   <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
-                    @foreach($packages as $package)
-                      @if($user->subscription)
-                        @if($package->item_id == $user->subscription->package_type_id)
-                          {{$package->value}}
-                        @endif
-                      @endif
-                    @endforeach
+                    {{$bouquet ? ($bouquet->bouquet_type == 0) ? "افراد" : "شركات" : "لايوجد"}}
                   </span></div>
                 </div>
                 <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط </b>
-                  <div class="col-xs-9">{{$user->subscription ? $user->subscription->number_of_installments : 'لا يوجد' }}</div>
+                  <div class="col-xs-9">{{$bouquet ? $bouquet->pivot->number_of_installments : 'لا يوجد' }}</div>
                 </div>
-              </div>
+            @endforeach
+          </div>
               <div class="col-lg-12">
                 <table class="table-1">
                   <thead>
@@ -110,14 +166,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if($user->subscription)
-                    @foreach($user->subscription->installments as $installment)
+                    @if($user->bouquet_payment)
+                    @foreach($user->bouquet_payment as $installment)
                     <tr>
-                      <td><span class="cellcontent">{{$installment->installment_number ? $installment->installment_number : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent"> {{$installment->value ? $installment->value : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent">{{$installment->payment_date ? $installment->payment_date->format('d/m/Y') : 'لا يوجد'}} </span></td>
-                      <td><span class="cellcontent"><i class = "fa  {{$installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
-                      <td><span class="cellcontent"><a href= "{{ route('ind.edit', $user->id) }}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
+                      <td><span class="cellcontent">{{$installment->pivot->period ? $installment->pivot->period : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent"> {{$installment->pivot->price ? $installment->pivot->price : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent">{{$installment->pivot->actuall_start_date ? $installment->pivot->actuall_start_date : 'لا يوجد'}} </span></td>
+                      <td><span class="cellcontent"><i class = "fa  {{$installment->pivot->payment_status ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
+                      <td><span class="cellcontent"><a href= "#payment_status_{{$installment->pivot->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
                     </tr>
                    
                       <div class="clearfix"> </div>
@@ -126,12 +182,12 @@
                     </tbody>
                   </table>
              
-                  @if($user->subscription)
-                  @foreach($user->subscription->installments as $installment)
+                  @if($user->bouquet_payment)
+                  @foreach($user->bouquet_payment as $installment)
                   <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
                       <div class="remodal-bg"></div>
-                      <div class="remodal" data-remodal-id="payment_status{{$installment->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                  <form role="form" action="{{route('ind.ins_update',$installment->id)}}" method="post" accept-charset="utf-8">
+                      <div class="remodal" data-remodal-id="payment_status_{{$installment->pivot->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                  <form role="form" action="{{route('bouquets_payment_user.update',$installment->pivot->id)}}" method="post" accept-charset="utf-8">
                           {{csrf_field()}}
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
@@ -139,20 +195,20 @@
                               <div class="col-xs-12">
                                 <h3>تغيير حالة القسط</h3>
                                 <div class="master_field">
-                                @if($installment->is_paid==1)       
-                                  <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" checked="true">
-                                  <label for="done{{$installment->id}}">تم الدفع</label>
+                                @if($installment->pivot->payment_status==1)       
+                                  <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
+                                  <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" >
-                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
+                                  <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
                                    
                                   @else
-                                   <input class="icon" type="radio" name="installment" id="done{{$installment->id}}" value="1" >
-                                  <label for="done{{$installment->id}}">تم الدفع</label>
+                                   <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
+                                  <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                  <input class="icon" type="radio" name="installment" id="not_done{{$installment->id}}" value="0" checked="true">
-                                  <label for="not_done{{$installment->id}}">لم يتم الدفع</label>
+                                  <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
+                                  <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
                                   @endif
                                   

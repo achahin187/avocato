@@ -38,6 +38,10 @@ class Tasks extends Model
     {
         return $this->belongsTo('App\Users','assigned_lawyer_id')->withDefault();
     }
+    public function lawyer_substitution()
+    {
+        return $this->belongsTo('App\Users','client_id')->withDefault();
+    }
     
 
     public function who_assign_lawyer()
@@ -67,6 +71,11 @@ class Tasks extends Model
 
      public function created_by() {
             return $this->belongsTo('App\Users', 'created_by');
+    }
+
+    public function substitution()
+    {
+        return $this->hasOne('App\Substitution','task_id');
     }
 }
 
