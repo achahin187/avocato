@@ -266,7 +266,7 @@ $('.btn-warning-cancel').click(function(){
     if (isConfirm){
      $.ajax({
        type:'GET',
-       url:'{{url('contactus_delete')}}'+'/'+branch_id,
+       url:'{{url("contactus/delete")}}'+'/'+branch_id,
        data:{_token:_token},
        success:function(data){
         $('tr[data-branch-id='+branch_id+']').fadeOut();
@@ -307,7 +307,7 @@ $('.btn-warning-cancel-all').click(function(){
         if (isConfirm){
          $.ajax({
            type:'POST',
-           url:'{{url('contactus_delete_all')}}',
+           url:'{{url("/contactus/delete_all")}}',
            data:{ids:selectedIds,_token:_token},
            success:function(data){
             $.each( selectedIds, function( key, value ) {
