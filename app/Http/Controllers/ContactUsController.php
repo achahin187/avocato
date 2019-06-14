@@ -84,7 +84,7 @@ class ContactUsController extends Controller
     }
     public function update(Request $request , $id)
     {
-        dd($request->all());
+        // dd($request->all());
         $branch = Company_Branch::find($id);
         if(! $branch)
         {
@@ -116,6 +116,7 @@ class ContactUsController extends Controller
           }
            if(array_key_exists('email',$request->all()))
            {
+               dd($request['email']);
             Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['email'] as $email)
                {
