@@ -84,7 +84,7 @@ class ContactUsController extends Controller
     }
     public function update(Request $request , $id)
     {
-        // dd($request->all());
+        dd($request->all());
         $branch = Company_Branch::find($id);
         if(! $branch)
         {
