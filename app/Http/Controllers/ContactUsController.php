@@ -114,7 +114,7 @@ class ContactUsController extends Controller
            $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
            $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
           }
-           if(isset($request['email']))
+           if(array_key_exists('email',$request->all()))
            {
             Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['email'] as $email)
