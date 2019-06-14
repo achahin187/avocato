@@ -24,8 +24,8 @@
                       <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
                   @endif
               
-                  @if ( Session::has('warning') )
-                      <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+                  @if ( Session::has('error') )
+                      <div class="alert alert-warning text-center">{{ Session::get('error') }}</div>
                   @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table">

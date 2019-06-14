@@ -90,7 +90,7 @@ class ContactUsController extends Controller
         {
             return redirect()->back()->with('error','Not A Branch');
         }
-        // try{
+        try{
             unset($request['_token']);
             if($request->lang_id == 2)
             {
@@ -116,7 +116,7 @@ class ContactUsController extends Controller
           }
            if(array_key_exists('email',$request->all()))
            {
-               dd($request['email']);
+            //    dd($request['email']);
             Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['email'] as $email)
                {
@@ -142,11 +142,11 @@ class ContactUsController extends Controller
                 ]);
                }
            }
-        // }
-        // catch(\Exception $e)
-        // {
-        //     return redirect()->back()->with('error','cannot add this branch try again');
-        // }
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','cannot add this branch try again');
+        }
         return redirect()->route('contactus_index')->with('success','branch edited successfully');
     }
 
