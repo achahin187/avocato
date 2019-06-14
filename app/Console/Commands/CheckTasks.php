@@ -5,7 +5,10 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Tasks;
 use Carbon\Carbon;
-
+use App\User;
+use App\Notification_Types;
+use App\Notifications;
+use App\Notifications_Push;
 class CheckTasks extends Command
 {
     /**
@@ -39,7 +42,7 @@ class CheckTasks extends Command
      */
     public function handle()
     {
-        $tasks = Notification::query()->where('is_accepted',0)->whereDate("task_assignment_date","<=",Carbon::now()->subMintes(10)->toDateString())->get();
+        $tasks = Tasks::where('is_accepted',0)->whereDate("task_assignment_date","<=",Carbon::now()->subSeconds(600)->toDateString())->get();
         foreach($tasks as $task)
         {
             $task->update([

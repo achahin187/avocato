@@ -91,6 +91,22 @@ Route::get('/privacy', 'AboutController@privacy')->name('privacy');
 Route::get('/privacy_edit', 'AboutController@privacy_edit')->name('privacy_edit');
 Route::patch('/privacy_edit', 'AboutController@privacy_update')->name('privacy.update');
 
+//bouquets
+Route::get('/bouquets', 'BouquetsController@index')->name('bouquets');
+Route::get('/bouquets_view/{id}', 'BouquetsController@view')->name('bouquets.view');
+Route::get('/bouquets_edit/{id}', 'BouquetsController@edit')->name('bouquets.edit');
+Route::post('/bouquets_update/{id}', 'BouquetsController@update')->name('bouquets.update');
+Route::get('/bouquets_delete/{id}', 'BouquetsController@delete')->name('bouquets.delete');
+Route::post('/bouquets_delete_all', 'BouquetsController@delete_all')->name('bouquets.delete_all');
+Route::get('/bouquets_add', 'BouquetsController@add')->name('bouquets.add');
+Route::post('/bouquets_create', 'BouquetsController@create')->name('bouquets.create');
+Route::post('/bouquets_add_localization', 'BouquetsController@add_localization')->name('bouquets.add_localization');
+Route::post('/bouquets_payment_user_update/{id}', 'BouquetsController@bouquets_payment_user_update')->name('bouquets_payment_user.update');
+Route::get('/bouquet_payment/{id}', 'BouquetsController@bouquet_payment')->name('bouquet.payment');
+Route::get('/bouquet_payment_value/{id}/{discount}', 'BouquetsController@bouquet_payment_value')->name('bouquet.payment.value');
+Route::get('/bouquet_price/{id}', 'BouquetsController@bouquet_price')->name('bouquet.price');
+Route::get('/bouquet_price_value/{id}/{discount}/{price_relation}', 'BouquetsController@bouquet_price_value')->name('bouquet.price.value');
+Route::get('/bouquet_type/{id}', 'BouquetsController@bouquet_type')->name('bouquet.type');
 });
 
 
@@ -332,6 +348,15 @@ Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_d
 Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
 Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
+Route::get('/substitutions', 'SubstitutionsController@index')->name('substitutions');
+Route::get('/substitutions_edit', 'SubstitutionsController@edit')->name('substitutions.edit');
+Route::get('/substitutions_assign/{id}', 'SubstitutionsController@assign')->name('substitutions.assign');
+Route::post('/substitutions_assign_lawyer/{id}', 'SubstitutionsController@assign_lawyer')->name('substitutions.assign_lawyer');
+Route::get('/substitutions_delete/{id}', 'SubstitutionsController@delete')->name('substitutions.delete');
+Route::post('/substitutions_delete_all', 'SubstitutionsController@delete_all')->name('substitutions.delete_all');
+Route::post('/substitutions_create', 'SubstitutionsController@create')->name('substitutions.create');
+Route::get('/substitutions_lawyer_task', 'SubstitutionsController@lawyer_task')->name('substitutions.lawyer_task');
+Route::get('/substitutions_view/{id}', 'SubstitutionsController@show')->name('substitutions.view');
 
 });
 

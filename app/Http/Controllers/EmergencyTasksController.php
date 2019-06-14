@@ -15,6 +15,8 @@ use App\Notification_Items;
 use App\Notifications_Push;
 use Session;
 use App\Entity_Localizations;
+use App\Task_Charges;
+use App\Case_Techinical_Report;
 
 class EmergencyTasksController extends Controller
 {
