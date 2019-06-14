@@ -84,12 +84,14 @@ class ContactUsController extends Controller
     }
     public function update(Request $request , $id)
     {
+        // dd($request->all());
         $branch = Company_Branch::find($id);
         if(! $branch)
         {
             return redirect()->back()->with('error','Not A Branch');
         }
-        try{
+        // try{
+            unset($request['_token']);
             if($request->lang_id == 2)
             {
                 $branch= Company_Branch::where('id',$id)->update($request->all());
@@ -133,11 +135,11 @@ class ContactUsController extends Controller
                 ]);
                }
            }
-        }
-        catch(\Exception $e)
-        {
-            return redirect()->back()->with('error','cannot add this branch try again');
-        }
+        // }
+        // catch(\Exception $e)
+        // {
+        //     return redirect()->back()->with('error','cannot add this branch try again');
+        // }
         return redirect()->route('contactus_index')->with('success','branch edited successfully');
     }
 

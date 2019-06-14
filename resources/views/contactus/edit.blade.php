@@ -40,7 +40,7 @@
                         </div>
                       </div>
                       <form  action="{{ route('contactus_update',$branch['id']) }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                    {{ csrf_field() }}
+                      {{ csrf_field() }}
                       <div class="col-md-4 col-sm-12" id="right">
                         <div class="col-md-10 col-xs-12">
                           <div class="master_field">
