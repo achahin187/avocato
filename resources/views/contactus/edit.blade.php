@@ -112,7 +112,7 @@
                         <div class="col-md-10 col-xs-12"><br>
                           <div class="funkyradio">
                           
-                            <input type="checkbox" name="radio" id="main_branch" @if($branch['is_main']) checked @endif>
+                            <input type="checkbox" name="is_main" id="main_branch" @if($branch['is_main']) checked @endif value="1">
                             <label for="main_branch">الفرع الرئيسي</label>
                           </div>
                         </div>
