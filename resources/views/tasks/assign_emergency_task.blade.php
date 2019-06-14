@@ -109,6 +109,7 @@
                                 <th><span class="cellcontent">هاتف</span></th>
                                 <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
                                 <th><span class="cellcontent">تفعيل</span></th>
+                                <th><span class="cellcontent">المسافه</span></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -131,6 +132,7 @@
                             @else
                             <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
                             @endif
+                            <td><span class="cellcontent">{{$lawyer->distance}}</span></td>
                           </tr>
                           @endforeach
                             

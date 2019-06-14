@@ -9,7 +9,9 @@ use App\Formula_Contracts;
 use Illuminate\Support\Facades\File;
 use Excel;
 use App\Exports\FormulasTypesExport;
+use App\Languages;
 use Session;
+use App\Helpers\Helper;
 
 class ContractsFormulasTypesController extends Controller
 {
@@ -22,6 +24,7 @@ class ContractsFormulasTypesController extends Controller
     {
         $data['subs'] = Formula_Contract_Types::whereNotNull('parent_id')->get();
         $data['main_contracts']=Formula_Contract_Types::whereNull('parent_id')->get();
+        $data['languages'] = Languages::all();
         return view('contracts_formulas_types',$data);
     }
 
@@ -165,6 +168,7 @@ class ContractsFormulasTypesController extends Controller
     public function destroy($id)
     {
         $sub=Formula_Contract_Types::find($id);
+        Helper::remove_related_localization('formula_contract_types', $id);
         $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
         if($counter == 1)
         {
@@ -192,6 +196,7 @@ class ContractsFormulasTypesController extends Controller
         foreach($ids as $id)
         {
             $sub=Formula_Contract_Types::find($id);
+            Helper::remove_related_localization('formula_contract_types', $id);
             $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
             if($counter == 1)
             {
@@ -213,4 +218,20 @@ class ContractsFormulasTypesController extends Controller
             }
         } 
     }
+
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'sub_id' => 'required|integer',
+            'sub_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('contracts_formulas_types#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('formula_contract_types', 'name', $request->sub_id, $request->sub_name, $request->lang_id);
+        return redirect()->route('contracts_formulas_types')->with('success','تم الإضافة بنجاح');
+    }
+
 }

@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Helper;
+use Session;
 
 class Geo_Cities extends Model
 {
@@ -27,5 +29,15 @@ class Geo_Cities extends Model
     public function users_details()
     {
         return $this->hasMany('App\User_Details','work_sector_area_id');
+    }
+    
+    public function getNameAttribute()
+    {
+        $lang = Session::get('AppLocale');
+        if($lang == 2 or $lang == 3){
+            return Helper::localizations('geo_cities' , 'name' , $this->id , $lang);
+        }else{
+            return $this->attributes['name'];
+        }
     }
 }

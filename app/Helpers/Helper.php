@@ -111,6 +111,14 @@ class Helper {
             ->where('lang_id', '=', $lang_id)
             ->delete();
     }
+
+    public static function remove_related_localization($table_name, $item_id)
+    {
+        $entity_id = Entities::where('name', $table_name)->first()->id;
+        Entity_Localizations::where('entity_id', '=', $entity_id)
+            ->where('item_id', '=', $item_id)
+            ->delete();
+    }
     
     /**
      *  @param  $userId     user id

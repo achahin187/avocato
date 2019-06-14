@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Specializations;
+use App\Languages;
 use Validator;
 use Excel;
 use App\Exports\SpecializationsExport;
 use Session;
+use App\Helpers\Helper;
 
 class SpecializationsController extends Controller
 {
@@ -19,6 +21,7 @@ class SpecializationsController extends Controller
     public function index()
     {
         $data['specializations'] = Specializations::all();
+        $data['languages'] = Languages::all();
         return view('specializations',$data);
     }
 
@@ -115,6 +118,7 @@ class SpecializationsController extends Controller
     public function destroy($id)
     {
        $specialization=Specializations::find($id);
+       Helper::remove_related_localization('specializations', $specialization->id);
        $specialization->delete();
     }
 
@@ -123,7 +127,23 @@ class SpecializationsController extends Controller
         $ids = $_POST['ids'];
         foreach($ids as $id)
            {
-            Specializations::find($id)->delete();
+                Helper::remove_related_localization('specializations', $specialization->id);
+                Specializations::find($id)->delete();
            } 
+    }
+
+    public function add_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'specialization_id' => 'required|integer',
+            'specialization_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('specializations#lang')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('specializations', 'name', $request->specialization_id, $request->specialization_name, $request->lang_id);
+        return redirect()->route('specializations')->with('success','تم الإضافة بنجاح');
     }
 }
