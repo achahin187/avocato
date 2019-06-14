@@ -85,6 +85,8 @@ class ContactUsController extends Controller
     {
         $data['branch']=Company_Branch::where('id',$id)->with('contact_detail')->first();
         $data['codes']=Geo_Countries::all();
+        $data['count_mobile']=Contact_Detail::where('contact_detail_type',1)->where('company_branch_id',$id)->get()->count();
+        $data['count_email']=Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$id)->get()->count();
         return view('contactus.edit',$data);
     }
     public function update(Request $request , $id)

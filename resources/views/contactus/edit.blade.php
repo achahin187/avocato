@@ -63,9 +63,10 @@
                             <div class="master_field">
                               <label class="master_label mandatory" for="email1">الايميل</label>
                               @if(count($branch['contact_detail']) > 0)
+                              <?php $i=0 ?>
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 3)
-                              <input class="master_input" type="email" placeholder="الايميل..." id="email1" value="{{$branch_detail['pivot']['value']}}" name="email[0]">
+                              <input class="master_input" type="email" placeholder="الايميل..." id="email1" value="{{$branch_detail['pivot']['value']}}" name="email[{{$i}}]">
                               @endif
                               @endforeach
                               @else
@@ -93,9 +94,10 @@
                             <div class="master_field col-xs-7">
                               <label class="master_label mandatory" for="tel1">التليفون</label>
                               @if(count($branch['contact_detail']) > 0)
+                              <?php $j=0; ?>
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 1)
-                              <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="{{$branch_detail['pivot']['value']}}" name="mobile[0]">
+                              <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="{{$branch_detail['pivot']['value']}}" name="mobile[{{$j}}]">
                               @endif
                               @endforeach
                               @else
@@ -154,8 +156,8 @@
               <!-- =============== PAGE VENDOR Triggers ===============-->
               @section('js')
 <script type="text/javascript">
-      var i=0;
-      var j=0;
+      var i={{$count_email}};
+      var j={{$count_mobile}};
       $("#add_email").click(function(){
         i+=1;
         $("#more_email").append(`
