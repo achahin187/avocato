@@ -177,7 +177,7 @@ class LawyersController extends Controller
 
       if ($request->filled('work_sector')) {
         $q->whereHas('specializations', function ($q) use ($request) {
-          $q->whereIn('id',$request->work_sector);
+          $q->whereIn('specializations.id',$request->work_sector);
 
         });
       }
