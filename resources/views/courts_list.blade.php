@@ -166,7 +166,7 @@
             {{-- Language filter --}}
             <div class="quick_filter">
               <div class="dropdown quickfilter_dropb">
-                <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
                   <small>اللغات  &nbsp;</small>
                   <i class="fa fa-angle-down"></i>
                 </button>
@@ -223,12 +223,14 @@
                   </tr>
                   @endif
                 @endforeach
+              
+              </tbody>
+            </table>
           </div>
           <div class="clearfix"></div>
           </div>
         </div>
-      </div>
-
+  </div>
 <script>
 $(document).ready(function(){  
   $("select[name='govs']").change(function () {
