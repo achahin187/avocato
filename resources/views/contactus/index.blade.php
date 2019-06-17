@@ -32,6 +32,26 @@
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                       </div>
+                      <div class="quick_filter">
+                        <div class="dropdown quickfilter_dropb">
+                          <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2"><small>اللغات  &nbsp;</small><i class="fa fa-angle-down"></i></button>
+                          <div class="dropdown-menu" role="menu" aria-labelledby="quick_Filters_2">
+                            <div class="quick-filter-title">
+                              <p><b>اختار</b></p>
+                            </div>
+                            <div class="quick-filter-content">
+                              <div class="radiorobo">
+                                <input type="radio" id="english">
+                                <label for="english">English</label>
+                              </div>
+                              <div class="radiorobo">
+                                <input type="radio" id="english">
+                                <label for="english">French</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <table class="table-1">
                         <thead>
                           <tr class="bgcolor--gray_mm color--gray_d">
