@@ -180,7 +180,7 @@
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
+                      <button class="remodal-confirm" data-remodal-action="confirm" id="download_all" data-id="{{$case->id}}">تحميل الكل</button>
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -888,6 +888,23 @@
       }
     });
     });
+
+$("#download_all").click(function(){
+case_id = $("#download_all").attr('data-id');
+
+$.ajax({
+           type:'GET',
+           url:'{{URL('download_all_case_documents/'.$case->id)}}',
+           
+           success:function(data){
+            
+            // $('tr[data-record-id='+record_id+']').fadeOut();
+          }
+        });
+
+
+
+});
 
 
       </script>

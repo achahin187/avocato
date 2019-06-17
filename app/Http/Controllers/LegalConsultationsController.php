@@ -244,21 +244,17 @@ class LegalConsultationsController extends Controller
         } 
 
         foreach ($consultation->consultation_reply as $lawyer) {
-            // dd($lawyer->lawyer_id);
             $user = Users::find($lawyer->lawyer_id);
             if ($user) {
-                // dd($user);
                 $lawyer['lawyer_name'] = $user->name;
             }
 
         }
-        // dd($consultation);
         return view('legal_consultations.legal_consultation_view')->with('consultation', $consultation);
     }
 
     public function edit_lawyer_response(Request $request)
     {
-        // dd($request->input('id'));
         $consultation = Consultation_Replies::find($request->input('id'));
         $consultation->Update([
             'reply' => $request->input('reply'),
@@ -279,7 +275,6 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request, $id)
     {
-        // dd($request->all());
         $consultation = Consultation::find($id);
         if($consultation->direct_assigned == 1)
         {
@@ -287,11 +282,11 @@ class LegalConsultationsController extends Controller
             return redirect()->back();
         }
         $validator = Validator::make($request->all(), [
-            // 'consultation_type' => 'required',
+             'consultation_type' => 'required',
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
-            // 'consultation_cat' => 'required',
-          //  'language' => 'required',
+             'consultation_cat' => 'required',
+            'language' => 'required',
 
         ]);
 
@@ -302,14 +297,13 @@ class LegalConsultationsController extends Controller
         }
         $consultation_types = Consultation_Types::all();
         
-        // dd($request->all());
         // $consultation_type = Consultation_Types::where('name', $request->input('consultation_cat'))->first();
         $consultation->Update([
-            // 'consultation_type_id' => $consultation_type->id,
-            // 'is_paid' => $request->input('consultation_type'),
-            'question' => $request->input('consultation_question'),
-            'is_replied'=>1
-            // 'lang_id'=> $request->language,
+             'consultation_type_id' => $request->consultation_cat,
+             'is_paid' => $request->input('consultation_type'),
+             'question' => $request->input('consultation_question'),
+             'is_replied'=>1,
+             'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->where('lawyer_id',\Auth::user()->id)->update([
             'reply' => $request->input('consultation_answer')
