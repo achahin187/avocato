@@ -89,175 +89,60 @@
                             </span></td>
                             <td><span class="cellcontent">{{$branch['address']}}</span></td>
                             <td><span class="cellcontent">
+                            
                             @if($branch['is_main'])
                             <i class = "fa color--black fa-check"></i>
                             @else
                             <i class = "fa color--black fa-times"></i>
                             @endif
                             </span></td>
-                            <td><span class="cellcontent"><a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                            <td><span class="cellcontent">
+                            <a id="add_localization" data-consult-id="" class= "action-btn bgcolor--main color--white add_localization">
+                              <i class = "fa fa-book"></i> &nbsp; اللغات
+                            </a>
+                            <a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                            <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span>
+                            </td>
                           </tr>
                          @endforeach
                          
                         </tbody>
                       </table>
-                      <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      {{--localization modal --}} 
+                    <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <form role="form" action="{{route('consultations_classification_add_localization')}}" method="post">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                        <div>
-                          <h2 class="title">title of the changing log in</h2>
-                          <div class="log-content">
-                            <div class="log-container">
-                              <table class="log-table">
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <th>log title</th>
-                                  <th>user</th>
-                                  <th>time</th>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>January</td>
-                                  <td>$100</td>
-                                  <td>$100</td>
-                                </tr>
-                                <tr class="log-row" data-link="https://www.google.com.eg/">
-                                  <td>February</td>
-                                  <td>$80</td>
-                                  <td>$80</td>
-                                </tr>
-                              </table>
+                          <div>
+                            <div class="row">
+                              <h4>ادخال اسم الفرع بلغات متعددة</h4><br>
+                              <input type="hidden" id="consult_id" name="consult_id">
+                              <div class="col-sm-5">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="lang_id">اختار اللغة</label>
+                                  <select class="master_input" id="lang_id" name="lang_id">
+                                      <option value="">English</option>
+                                      <option value="">French</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-sm-7">
+                                <div class="master_field">
+                                  <label class="master_label mandatory" for="consult_name">ادخال اسم الفرع باللغة المختاره</label>
+                                  <input class="master_input" type="text" placeholder="اسم التصنيف" id="consult_name" name="consult_name">
+                                  <span class="master_message color--fadegreen">
+                                    
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="clearfix"></div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button class="remodal-confirm" remodal-action="confirm" type="submit">حفظ</button>
+                          </form>
+                        </div>  
+                        {{-- End localization modal --}}
+      
                     </div>
                   </div>
                 </div>
@@ -344,5 +229,18 @@ $('.btn-warning-cancel-all').click(function(){
     }
     });
 });
+//language filter
+$('#quick_Filters_2').click( function(){
+        $('#lang_filter').toggle();
+    });
+
+    // add localization
+    $('.add_localization').click( function(){
+        var localization_modal = $('#localization_modal');
+        var id = $(this).closest('tr').attr('data-consult');
+        console.log(id);
+        $('#branch_id').val(id);
+        $('#localization_modal').remodal().open();
+    });
 </script>
 @endsection
