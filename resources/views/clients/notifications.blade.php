@@ -73,7 +73,7 @@
                                 <select class="master_input select2" name="package" id="governorate" style="width:100%;">
                                       <option value="-1">choose type .. </option>
                                       @foreach ($subscription_types as $types)
-                                      <option value="{{ $types->id }}">{{ Helper::localizations('bouquets', 'name', $types->id) }}</option>
+                                      <option value="{{ $types->id }}">{{  $types->name }}</option>
                                       @endforeach
                                 </select><span class="master_message color--fadegreen"></span>
                               </div>
@@ -142,7 +142,7 @@
                                     <label class="master_label mandatory" for="governorate">ارسال الى مشتركين الباقات</label>
                                     <select name="package_type[]" class="master_input select2" id="governorate" multiple="multiple" data-placeholder="ارسال الى" style="width:100%;" ,>
                                       @foreach ($subscription_types as $types)
-                                      <option value="{{ $types->id }}">{{ Helper::localizations('package_types', 'name', $types->id) }}</option>
+                                      <option value="{{ $types->id }}">{{  $types->name }}</option>
                                       @endforeach
                                     </select><span class="master_message color--fadegreen">
                                       @if ($errors->has('package_type'))
