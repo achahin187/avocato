@@ -193,7 +193,7 @@
                                       </li>
                                       @endforeach
                         </div><br>
-                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                   <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($document->case_document_details)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
                               @endif
@@ -201,6 +201,7 @@
                     </div>
                     <div class="clearfix"></div>
                     <hr>
+                    @endforeach
                     <div class="col-md-12">
                       <div class="panel panel-default">
                         <div class="panel-heading" id="heading-1" role="tab">
@@ -258,7 +259,7 @@
                           </div>
                           <hr>
                           @endforeach
-                          <div class="col-md-2 col-sm-3 col-xs-12">
+                          <!-- <div class="col-md-2 col-sm-3 col-xs-12">
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -289,7 +290,7 @@
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
                             </div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
