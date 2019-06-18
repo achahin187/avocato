@@ -179,7 +179,7 @@
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($case->case_documents)>0)
-                              <button class="remodal-confirm" >تحميل الكل</button>
+                              <a class="remodal-confirm"  href="{{route('download_all_case_documents_all')}}">تحميل الكل</a>
                               @endif
                       </div>
                     </div>
