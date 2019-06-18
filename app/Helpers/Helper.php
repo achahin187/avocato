@@ -369,6 +369,14 @@ class Helper {
 
     public static function getPackageName($id)
     {
-        return Bouquet::where('id',$id)->first()->name;
+        $bouquet = Bouquet::where('id',$id)->first();
+        if($bouquet)
+        {
+            return $bouquet->name;
+        }
+        else
+        {
+            return 'ليست باقه';
+        }
     }
 }
