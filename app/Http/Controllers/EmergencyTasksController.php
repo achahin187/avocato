@@ -363,7 +363,7 @@ return redirect()->route('tasks_emergency');
   {
     
     $validator = Validator::make(
-      $request,
+      $request->all(),
       [
         'body' => 'required',
         // 'task_id'=>'required',
