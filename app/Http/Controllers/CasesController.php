@@ -595,7 +595,7 @@ class CasesController extends Controller
     //add record
     public function add_record(Request $request, $id)
     {
-
+      dd($request->all());
         $case_record = Case_Record::Create([
             'case_id' => $id,
             'record_number' => $request['investigation_no'],
