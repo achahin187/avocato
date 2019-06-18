@@ -385,7 +385,7 @@ return redirect()->route('tasks_emergency');
           'case_id' => $task->case_id,
           'item_id' => $id,
           'body' => $request['body'],
-          'created_by' => $user->id,
+          'created_by' => \Auth::user()->id,
         ]);
 
         for ($i = 0; $i < count($request['file']); $i++) {
@@ -406,7 +406,7 @@ return redirect()->route('tasks_emergency');
           'task_id' => $task->id,
           'task_status_id' => $request['status'],
           'datetime' => Carbon::now(),
-          'user_id' => $user->id
+          'user_id' => \Auth::user()->id
         ]);
         $task->update([
           'task_status_id' => $request['status']
