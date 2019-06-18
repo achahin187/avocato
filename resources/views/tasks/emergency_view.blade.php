@@ -203,7 +203,7 @@
                                         <div class="file-upload">
                                           <div class="file-select">
                                             <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                            <input class="chooseFile" type="file" name="file" id="report_upload" required>
+                                            <input class="chooseFile" type="file" name="file" id="report_upload" required multiple>
                                             <input  type="number" name="status" value="2" hidden>
                                           </div>
                                         </div><span class="master_message color--fadegreen">@if ($errors->has('file'))

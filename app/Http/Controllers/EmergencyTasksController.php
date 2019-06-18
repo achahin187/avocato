@@ -387,18 +387,34 @@ return redirect()->route('tasks_emergency');
           'body' => $request['body'],
           'created_by' => \Auth::user()->id,
         ]);
+        
+        if ($request->hasFile('file')) {
 
-        for ($i = 0; $i < count($request['file']); $i++) {
-          if (strpos($request['file'][$i], 'base64') !== false) {
-            $file = Base64ToImageService::convert($request['file'][$i], 'reports/');
-          } else {
-            $file = $request['file'][$i];
+          foreach ($request->file as $key => $file) {
+
+              $destinationPath = 'reports';
+              $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
+   
+              Input::file('file')[$key]->move($destinationPath, $fileNameToStore);
+
+             
+              Case_Techinical_Report_Document::create([
+                'case_techinical_report_id' => $case_report->id,
+                'file' => $fileNameToStore,
+              ]);
           }
-          Case_Techinical_Report_Document::create([
-            'case_techinical_report_id' => $case_report->id,
-            'file' => $file,
-          ]);
-        }
+      }
+        // for ($i = 0; $i < count($request['file']); $i++) {
+        //   if (strpos($request['file'][$i], 'base64') !== false) {
+        //     $file = Base64ToImageService::convert($request['file'][$i], 'reports/');
+        //   } else {
+        //     $file = $request['file'][$i];
+        //   }
+        //   Case_Techinical_Report_Document::create([
+        //     'case_techinical_report_id' => $case_report->id,
+        //     'file' => $file,
+        //   ]);
+        // }
 
 
         $task->update(['task_status_id' => $request['status'], 'end_datetime' => Carbon::now()->format('Y-m-d H:i:s')]);
