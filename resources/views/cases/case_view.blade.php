@@ -178,7 +178,7 @@
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                              @if(count($document->case_document_details)>0)
+                              @if(count($$case->case_documents)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
                               @endif
                       </div>
