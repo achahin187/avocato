@@ -56,13 +56,18 @@ class ContactUsController extends Controller
            {
                foreach($request['mobile'] as $key => $mobile)
                {
-                Contact_Detail::create([
-                    'contact_detail_type'=>1,
-                    'name'=>'mobile',
-                    'code'=>$request['code'][$key],
-                    'value'=>$mobile,
-                    'company_branch_id'=>$branch['id']
-                ]);
+                   if($mobile != null)
+                   {
+                    Contact_Detail::create([
+                        'contact_detail_type'=>1,
+                        'name'=>'mobile',
+                        'code'=>$request['code'][$key],
+                        'value'=>$mobile,
+                        'company_branch_id'=>$branch['id']
+                    ]);
+
+                   }
+               
                }
            }
         }
@@ -82,25 +87,35 @@ class ContactUsController extends Controller
     {
         $data['branch']=Company_Branch::where('id',$id)->with('contact_detail')->first();
         $data['codes']=Geo_Countries::all();
+        $data['count_mobile']=Contact_Detail::where('contact_detail_type',1)->where('company_branch_id',$id)->get()->count();
+        $data['count_email']=Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$id)->get()->count();
         return view('contactus.edit',$data);
     }
     public function update(Request $request , $id)
     {
+        // dd($request->all());
         $branch = Company_Branch::find($id);
         if(! $branch)
         {
             return redirect()->back()->with('error','Not A Branch');
         }
         try{
+            unset($request['_token']);
             if($request->lang_id == 2)
             {
-                $branch= Company_Branch::where('id',$id)->update($request->all());
+                $branch->update([
+                    'name'=>$request['name'],
+                    'address'=>$request['address'],
+                    'is_main'=>$request['is_main'],
+                    'longitude'=>$request['longitude'],
+                    'latitude'=>$request['latitude']
+                ]);
             }
            
            if($request->lang_id !='2'){
           
             //set lang
-            $branch= Company_Branch::where('id',$id)->update([
+            $branch->update([
                 'is_main'=>$request['is_main'],
                 'longitude'=>$request['longitude'],
                 'latitude'=>$request['latitude']
@@ -108,8 +123,9 @@ class ContactUsController extends Controller
            $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
            $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
           }
-           if(isset($request['email']))
+           if(array_key_exists('email',$request->all()))
            {
+            //    dd($request['email']);
             Contact_Detail::where('contact_detail_type',3)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['email'] as $email)
                {
@@ -126,13 +142,18 @@ class ContactUsController extends Controller
             Contact_Detail::where('contact_detail_type',1)->where('company_branch_id',$branch['id'])->delete();
                foreach($request['mobile'] as $key => $mobile)
                {
-                Contact_Detail::create([
-                    'contact_detail_type'=>1,
-                    'name'=>'mobile',
-                    'code'=>$request['code'][$key],
-                    'value'=>$mobile,
-                    'company_branch_id'=>$branch['id']
-                ]);
+                   if($mobile != null)
+                   {
+                    Contact_Detail::create([
+                        'contact_detail_type'=>1,
+                        'name'=>'mobile',
+                        'code'=>$request['code'][$key],
+                        'value'=>$mobile,
+                        'company_branch_id'=>$branch['id']
+                    ]);
+
+                   }
+               
                }
            }
         }

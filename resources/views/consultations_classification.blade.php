@@ -4,7 +4,7 @@
 <div class="row">
 {{--  Start Header  --}}
   <div class="col-lg-12">
-    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+    <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( {{asset('img/covers/dummy2.jpg')}} ) no-repeat center center; background-size:cover;">
       <div class="row">
         <div class="col-xs-12">
           <div class="text-xs-center">
@@ -134,7 +134,7 @@
         {{-- Language filter --}}
         <div class="quick_filter">
           <div class="dropdown quickfilter_dropb">
-            <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
+            <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
               <small>اللغات  &nbsp;</small>
               <i class="fa fa-angle-down"></i>
             </button>

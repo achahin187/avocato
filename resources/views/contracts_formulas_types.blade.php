@@ -71,7 +71,9 @@
                               <select name="mains" class="master_input select2" id="main_type" style="width:100%;">
                                 <option value="choose" selected disabled>اختر تصنيف رئيسي</option>
                                 @foreach($main_contracts as $main_contract)
-                                <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
+                                  @if($main_contract->name != '')
+                                    <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
+                                  @endif
                                 @endforeach
                               </select><span class="master_message color--fadegreen">
                           @if ($errors->has('mains'))
@@ -155,7 +157,7 @@
                 {{-- Language filter --}}
                 <div class="quick_filter">
                   <div class="dropdown quickfilter_dropb">
-                    <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                    <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
                       <small>اللغات  &nbsp;</small>
                       <i class="fa fa-angle-down"></i>
                     </button>

@@ -166,20 +166,23 @@ class LegalConsultationsController extends Controller
             session('error','لا يمكن اضافه رد لهذه الاستشاره لانها موجهه لمحامى');
             return redirect()->back();
         }
-        // dd($consultation);
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
         }])->get();
+ 
         foreach ($lawyers as $detail) {
-            if (count(Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first())) {
+           
+           $consultation_lawyers =Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first();
+            
+           if ( $consultation_lawyers !== null && $consultation_lawyers->count() > 0) {
 
                 $detail['assigned'] = 1;
             } else {
                 $detail['assigned'] = 0;
             }
-            if (count($detail->user_detail) != 0) {
+            if ( $detail->user_detail != null && $detail->user_detail->count() > 0 ) {
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
 
                 $detail['nationality'] = $value;
@@ -376,9 +379,10 @@ class LegalConsultationsController extends Controller
     }
     public function send_consultation_to_all_lawyers($consultation_id)
     {
-        // dd($consultation_id);
+        //  dd($consultation_id);
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($consultation_id);
+        dd($consultation);
         if($consultation->direct_assigned == 1)
         {
             session('error','لا يمكن تحديد محامين لهذه الاستشاره لانها موجهه لمحامى');

@@ -144,7 +144,7 @@ class BouquetsController extends Controller
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'description' => 'required',
+            'description' => 'required|max:150',
             'service' => 'required',
             'payment_method' => 'required',
             'bouquet_type' => 'required',
