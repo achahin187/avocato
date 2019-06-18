@@ -177,10 +177,10 @@
                             </div>
                           </div>
                         </div><br>
-                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <!-- <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($$case->case_documents)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
-                              @endif
+                              @endif -->
                       </div>
                     </div>
                     <div class="clearfix"></div>
