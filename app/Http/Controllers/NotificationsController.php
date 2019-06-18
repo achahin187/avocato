@@ -25,7 +25,9 @@ class NotificationsController extends Controller
     public function index() {   
         $data['subscription_types'] = Bouquet::all();
         $data['notifications'] = Notification_Schedules::all();
+        dd($data['subscription_types']);
         return view('clients.notifications',$data);
+
     }
     /**
      * Show the form for creating a new resource.
