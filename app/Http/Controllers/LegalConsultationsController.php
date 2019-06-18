@@ -382,7 +382,7 @@ class LegalConsultationsController extends Controller
         //  dd($consultation_id);
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($consultation_id);
-        dd($consultation);
+        // dd($consultation);
         if($consultation->direct_assigned == 1)
         {
             session('error','لا يمكن تحديد محامين لهذه الاستشاره لانها موجهه لمحامى');
