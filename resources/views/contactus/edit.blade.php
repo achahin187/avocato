@@ -25,8 +25,8 @@
                       <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
                   @endif
               
-                  @if ( Session::has('warning') )
-                      <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+                  @if ( Session::has('error') )
+                      <div class="alert alert-warning text-center">{{ Session::get('error') }}</div>
                   @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="row">
@@ -40,7 +40,7 @@
                         </div>
                       </div>
                       <form  action="{{ route('contactus_update',$branch['id']) }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                    {{ csrf_field() }}
+                      {{ csrf_field() }}
                       <div class="col-md-4 col-sm-12" id="right">
                         <div class="col-md-10 col-xs-12">
                           <div class="master_field">
@@ -63,9 +63,11 @@
                             <div class="master_field">
                               <label class="master_label mandatory" for="email1">الايميل</label>
                               @if(count($branch['contact_detail']) > 0)
+                              <?php $i=0 ?>
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 3)
-                              <input class="master_input" type="email" placeholder="الايميل..." id="email1" value="{{$branch_detail['pivot']['value']}}" name="email[0]">
+                              <input class="master_input" type="email" placeholder="الايميل..." id="email1" value="{{$branch_detail['pivot']['value']}}" name="email[{{$i}}]">
+                              <?php $i++; ?>
                               @endif
                               @endforeach
                               @else
@@ -93,9 +95,11 @@
                             <div class="master_field col-xs-7">
                               <label class="master_label mandatory" for="tel1">التليفون</label>
                               @if(count($branch['contact_detail']) > 0)
+                              <?php $j=0; ?>
                               @foreach($branch['contact_detail'] as $branch_detail)
                               @if($branch_detail['pivot']['contact_detail_type'] == 1)
-                              <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="{{$branch_detail['pivot']['value']}}" name="mobile[0]">
+                              <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="{{$branch_detail['pivot']['value']}}" name="mobile[{{$j}}]">
+                              <?php $j++; ?>
                               @endif
                               @endforeach
                               @else
@@ -112,7 +116,7 @@
                         <div class="col-md-10 col-xs-12"><br>
                           <div class="funkyradio">
                           
-                            <input type="checkbox" name="radio" id="main_branch" @if($branch['is_main']) checked @endif>
+                            <input type="checkbox" name="is_main" id="main_branch" @if($branch['is_main']) checked @endif value="1">
                             <label for="main_branch">الفرع الرئيسي</label>
                           </div>
                         </div>
@@ -154,8 +158,8 @@
               <!-- =============== PAGE VENDOR Triggers ===============-->
               @section('js')
 <script type="text/javascript">
-      var i=0;
-      var j=0;
+      var i={{$count_email}};
+      var j={{$count_mobile}};
       $("#add_email").click(function(){
         i+=1;
         $("#more_email").append(`

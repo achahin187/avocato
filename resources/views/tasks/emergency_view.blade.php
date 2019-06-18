@@ -172,43 +172,44 @@
                     </div>
                     <div class="clearfix"></div>
                   </div>
-                  @endforeach
-                  {{-- test --}}
-                 
-                  <div class="col-md-2"><a class="master-btn color--main bgcolor--fadegreen bradius--small bshadow--0 btn-block" href="#popupModal_2"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
-                    <div class="remodal-bg"></div>
-                    <div class="remodal" data-remodal-id="popupModal_2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
-                      <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                      <div>
-                        <div class="row">
-                          <div class="col-xs-12">
-                            <h3>إضافة تقرير فني</h3>
-                            <div class="col-md-12">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
-                                <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-12">
-                              <div class="master_field">
-                                <label class="master_label" for="docs_upload">إرفاق ملفات</label>
-                                <div class="file-upload">
-                                  <div class="file-select">
-                                    <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                    <input class="chooseFile" type="file" name="chooseFile" id="docs_upload">
+                
+                   @endforeach
+                   <!-- new added -->
+                  <div class="col-md-2 col-sm-3 col-xs-12">
+                              <a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
+                            <div class="remodal-bg"></div>
+                            <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <h3>إضافة تقرير فني</h3>
+                                    <div class="col-md-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
+                                        <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                      <div class="master_field">
+                                        <label class="master_label" for="report_upload">إرفاق ملفات</label>
+                                        <div class="file-upload">
+                                          <div class="file-select">
+                                            <div class="file-select-name" id="noFile">إرفاق ملفات</div>
+                                            <input class="chooseFile" type="file" name="chooseFile" id="report_upload">
+                                          </div>
+                                        </div><span class="master_message color--fadegreen">message</span>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div><span class="master_message color--fadegreen">message</span>
-                              </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
                             </div>
                           </div>
-                        </div>
-                      </div><br>
-                      <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                      <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
-                    </div>
-                  </div>
 
-                  {{-- test --}}
+                 
                   </div>
                   </div>
                   </div>

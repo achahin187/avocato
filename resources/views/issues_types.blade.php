@@ -1,31 +1,29 @@
  @extends('layout.app')             
  @section('content')
-
- 
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' )no-repeat center center; background-size:cover;">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="text-xs-center">
-                          <div class="text-wraper">
-                            <h4 class="cover-inside-title color--gray_d">البيانات الأساسية <i class="fa fa-chevron-circle-right"></i>
-                              <h4 class="cover-inside-title color--gray_d">انواع القضايا </h4>
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="cover--actions"><span></span>
-                      </div>
-                    </div>
-                  </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' )no-repeat center center; background-size:cover;">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-xs-center">
+                <div class="text-wraper">
+                  <h4 class="cover-inside-title color--gray_d">البيانات الأساسية <i class="fa fa-chevron-circle-right"></i>
+                    <h4 class="cover-inside-title color--gray_d">انواع القضايا </h4>
+                  </h4>
                 </div>
-                <div class="col-lg-12">
-              @if(\session('success'))
-                <div class="alert alert-success">
-                  {{\session('success')}}
-                </div>
-              @endif
+              </div>
+            </div>
+            <div class="cover--actions"><span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12">
+    @if(\session('success'))
+      <div class="alert alert-success">
+        {{\session('success')}}
+      </div>
+    @endif
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
     <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1">
       <i class="fa fa-plus"></i><span>إضافة</span></a>
@@ -138,7 +136,7 @@
             </div>
             <div class="quick_filter">
                 <div class="dropdown quickfilter_dropb">
-                  <button class="dropdown-toggle color--black bgcolor--main bradius--small bshadow--0 lang-btn" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                  <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
                     <small>اللغات  &nbsp;</small>
                     <i class="fa fa-angle-down"></i>
                   </button>
@@ -191,7 +189,7 @@
         </div>
       </div>
     </div>
-    <script >
+    <script>
         $(document).ready(function(){
               $('.btn-warning-cancel').click(function(){
                 var issue_id = $(this).closest('tr').attr('data-issue-id');

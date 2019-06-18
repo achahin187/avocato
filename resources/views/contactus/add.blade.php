@@ -25,8 +25,8 @@
                       <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
                   @endif
               
-                  @if ( Session::has('warning') )
-                      <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
+                  @if ( Session::has('error') )
+                      <div class="alert alert-warning text-center">{{ Session::get('error') }}</div>
                   @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="row">
@@ -42,7 +42,7 @@
                       <form  action="{{ route('contactus_create') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                     {{ csrf_field() }}
                       <div class="col-md-4 col-sm-12" id="right">
-                        <div class="col-md-10 col-xs-12">
+                        <!-- <div class="col-md-10 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lang_list">اختار اللغة</label>
                             <select class="master_input" id="lang_list" name="lang_id"> 
@@ -51,7 +51,7 @@
                             <option id="lang_3"  class="lang_option" value="3" data-selected="3">French</option>
                           </select>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-10 col-xs-10 has-add">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_name">اسم الفرع</label>
@@ -66,33 +66,41 @@
                               <input class="master_input" type="email" placeholder="الايميل..." id="email1"  name="email[0]" required>
                               <span class="master_message color--fadegreen">message</span>
                             </div>
-                            <div id="more_email"></div>
+                            
                           </div>
                           <div class="col-md-2 col-xs-2">
                             <a class="input-btn" id="add_email"><i class="fa fa-plus-circle"></i></a>
                           </div>
+
+                          <div id="more_email"></div>
                         </div>
                         <div class="has-add">
-                          <div class="col-md-10 col-xs-10">
-                          <div class="col-xs-3">
-                            <select name="code[0]" class="master_input select2" id="tele_code"  style="width:100%;">
-                            @foreach($codes as $code)
-                          
-                            <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+
+                            <div class="col-md-3 col-xs-3">
+                              <div class="master_field">
+                                <label id="tele_code" for="code_list">كود</label>
+                                <select  name="code[0]" class="master_input select2" id="code_list">
+                                  @foreach($codes as $code)
+                                  <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+                                  @endforeach
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="col-md-7 col-xs-6">
+                              <div class="master_field">
+                                <label class="master_label mandatory" for="tel1">التليفون</label>
+                                <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="value" name="mobile[0]" required>
+                                <span class="master_message color--fadegreen">message</span>
+                              </div>
+                            </div>
+
+                            <div class="col-md-2 col-xs-2">
+                              <a class="input-btn" id="add_tel"><i class="fa fa-plus-circle"></i></a>
+                            </div>
                             
-                            @endforeach
-                            </select>
-                            </div>
-                            <div class="master_field col-xs-7">
-                              <label class="master_label mandatory" for="tel1">التليفون</label>
-                              <input class="master_input" type="number" placeholder="التليفون..." id="tel1" value="value" name="mobile[0]" required>
-                              <span class="master_message color--fadegreen">message</span>
-                            </div>
                             <div id="more_tel"></div>
-                          </div>
-                          <div class="col-md-2 col-xs-2">
-                            <a class="input-btn" id="add_tel"><i class="fa fa-plus-circle"></i></a>
-                          </div>
+                          
                         </div>
                         <div class="col-md-10 col-xs-12"><br>
                           <div class="funkyradio">
@@ -109,7 +117,7 @@
                             <span class="master_message color--fadegreen">message</span>
                           </div>
                         </div> -->
-                        <div class="col-md-6 col-xs-12">
+                        <div class="col-md-12 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="address">الموقع</label>
                             <input class="master_input" type="text" placeholder="اختر الموقع من الخريطة..." id="pac-input" name="address" required>
@@ -144,36 +152,48 @@
 @section('js')
 <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places"></script> -->
 <script type="text/javascript">
-      var i=0;
-      var j=0;
+      var i=1;
+      var j=1;
       $("#add_email").click(function(){
         i+=1;
         $("#more_email").append(`
-            <input class="master_input" type="email" placeholder="الايميل..." id="email`+i+`" name="email[`+i+`]"><span class="master_message color--fadegreen">message</span>
+          <div class="col-md-12 col-xs-12 no-padding">
+            <div class="col-md-10 col-xs-10">
+              <div class="master_field">
+               <input class="master_input" type="email" placeholder="الايميل..." id="email`+i+`" name="email[`+i+`]"><span class="master_message color--fadegreen">message</span>
+              </div>
+            </div>
+            <div class="col-md-2 col-xs-2">
+              <button class="del-btn" id="del_email" onclick="getElementById('email`+i+`').parentElement.parentElement.parentElement.remove()"><i class="fa fa-times-circle"></i></button>
+            </div>
+          </div>
         `);
       });
       
       $("#add_tel").click(function(){
         j+=1;
         $("#more_tel").append(`
-                           <div class="col-md-3">
-                            <select name="code[`+j+`]" class="master_input select2" id="tele_code"  style="width:100%;">
-                            @foreach($codes as $code)
-                          
-                            <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
-                            
-                            @endforeach
-                            </select>
-                            </div> <input class="master_input" type="number" placeholder="تليفون..." id="tel`+j+`"  name="mobile[`+j+`]"><span class="master_message color--fadegreen">message</span>
+          <div class="col-md-12 col-xs-12 no-padding">
+            <div class="col-md-3">
+              <select name="code[`+j+`]" class="master_input select2" id="tele_code"  style="width:100%;">
+              @foreach($codes as $code)
+              <option value="{{$code['tele_code']}}">{{$code['tele_code']}}</option>
+              @endforeach
+              </select>
+            </div> 
+            
+            <div class="col-md-7 col-xs-10">
+              <div class="master_field">
+              <input class="master_input" type="number" placeholder="تليفون..." id="tel`+j+`"  name="mobile[`+j+`]"><span class="master_message color--fadegreen">message</span>
+              </div>
+            </div>
+            <div class="col-md-2 col-xs-2">
+              <button class="del-btn" id="del_tel" onclick="getElementById('tel`+j+`').parentElement.parentElement.parentElement.remove()"><i class="fa fa-times-circle"></i></button>
+            </div>
+          </div>
         `);
       });
       
-      $("#add_branch").click(function(){
-        i+=1;
-        $("#branches").append(`
-            <input class="master_input" type="email" placeholder="الايميل..." id="email`+x+`_`+i+`" ><span class="master_message color--fadegreen">message</span>
-        `);
-      });
     </script>
   <!-- <script>
 /* script */
