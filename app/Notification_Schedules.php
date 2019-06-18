@@ -16,7 +16,7 @@ class Notification_Schedules extends Model
 
     public function noti_items()
     {
-        return $this->hasMany('App\Notifications_Items','id');
+        return $this->hasMany('App\Notification_Items','id');
     }
 
     
