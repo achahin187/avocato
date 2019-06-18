@@ -181,13 +181,20 @@
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
+                              <form role="form" action="{{route('add_task_report',$task->id)}}" method="post" accept-charset="utf-8">
+                          {{csrf_field()}}
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>إضافة تقرير فني</h3>
                                     <div class="col-md-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
-                                        <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
+                                        <textarea class="master_input" name="body" id="report_desc" placeholder="وصف التقرير" required></textarea>
+                                        <span class="master_message color--fadegreen">
+                                        @if ($errors->has('body'))
+                                    {{ $errors->first('body')}}
+                                    @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-12">
@@ -196,16 +203,20 @@
                                         <div class="file-upload">
                                           <div class="file-select">
                                             <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                            <input class="chooseFile" type="file" name="chooseFile" id="report_upload">
+                                            <input class="chooseFile" type="file" name="file" id="report_upload" required>
+                                            <input  type="number" name="status" value="2" hidden>
                                           </div>
-                                        </div><span class="master_message color--fadegreen">message</span>
+                                        </div><span class="master_message color--fadegreen">@if ($errors->has('file'))
+                                    {{ $errors->first('file')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                              <button class="remodal-confirm" type="submit">إضافة</button>
+                              </form>
                             </div>
                           </div>
 
