@@ -128,7 +128,7 @@
                               <div class="col-sm-7">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="consult_name">ادخال اسم الفرع باللغة المختاره</label>
-                                  <input class="master_input" type="text" placeholder="اسم التصنيف" id="consult_name" name="consult_name">
+                                  <input class="master_input" type="text" placeholder="اسم الفرع" id="consult_name" name="consult_name">
                                   <span class="master_message color--fadegreen">
                                     
                                   </span>
