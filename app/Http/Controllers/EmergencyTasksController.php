@@ -18,7 +18,7 @@ use App\Entity_Localizations;
 use App\Task_Charges;
 use App\Case_Techinical_Report;
 use App\Case_Techinical_Report_Document;
-use Base64ToImageService;
+use App\Helpers\Base64ToImageService;
 use Illuminate\Support\Facades\Validator;
 
 class EmergencyTasksController extends Controller

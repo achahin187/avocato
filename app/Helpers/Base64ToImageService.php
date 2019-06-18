@@ -5,7 +5,7 @@
  * Date: 8/29/2017
  * Time: 11:19 AM
  */
-namespace App\Libraries;
+namespace App\Helpers;
 
 
 class Base64ToImageService
