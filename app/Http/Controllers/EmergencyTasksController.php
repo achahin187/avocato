@@ -379,7 +379,7 @@ return redirect()->route('tasks_emergency');
       ->withInput();
     }
     
-        $task = Task::find($id);
+        $task = Tasks::find($id);
         $case_report = Case_Techinical_Report::create([
           'technical_report_type_id' => $task->task_type_id,
           'case_id' => $task->case_id,
