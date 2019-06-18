@@ -181,7 +181,7 @@
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
-                              <form role="form" action="{{route('add_task_report',$task->id)}}" method="post" accept-charset="utf-8">
+                              <form role="form" action="{{URL('add_task_report/'.$task->id)}}" method="post" accept-charset="utf-8">
                           {{csrf_field()}}
                                 <div class="row">
                                   <div class="col-xs-12">
