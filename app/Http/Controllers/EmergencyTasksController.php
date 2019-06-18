@@ -361,7 +361,7 @@ return redirect()->route('tasks_emergency');
 
   public function add_task_report(Request $request , $id)
   {
-    dd($request->all());
+    // dd($request->all());
     $validator = Validator::make(
       $request->all(),
       [
