@@ -69,7 +69,7 @@ class NotificationsController extends Controller
           $subs = Bouquet::where('id',$package)->first();
           foreach($subs->users() as $user) {
             //   $user = $sub->user;
-              if(!empty($user->id) && !empty($user->device_token)) {
+             dd($user);
                   $notification = new Notifications;
                   $notification->msg = $request->notification;
                   $notification->schedule = $send_date;
@@ -80,7 +80,7 @@ class NotificationsController extends Controller
                   $notification->packages = $packages;
                   $notification->notification_schedule_id=$schedule_id;
                   $notification->save();
-              }
+              
           }
           $item = new Notification_Items;
           $item->item_id = $package;
