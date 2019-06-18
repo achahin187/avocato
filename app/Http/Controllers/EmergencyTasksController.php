@@ -20,6 +20,8 @@ use App\Case_Techinical_Report;
 use App\Case_Techinical_Report_Document;
 use App\Helpers\Base64ToImageService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 
 class EmergencyTasksController extends Controller
 {
