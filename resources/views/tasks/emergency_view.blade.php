@@ -182,7 +182,7 @@
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                               <form role="form" action="{{URL('add_task_report/'.$task->id)}}" method="post" accept-charset="utf-8">
-                          {{csrf_field()}}
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>إضافة تقرير فني</h3>
