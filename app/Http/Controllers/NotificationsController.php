@@ -77,11 +77,17 @@ class NotificationsController extends Controller
                   $notification->packages = $packages;
                   $notification->notification_schedule_id=$schedule_id;
                   $notification->save();
+
+                  // Save Notification Item
+                $item = new Notification_Items;
+                $item->item_id = $package;
+                $item->notification_id = $notification->id;
+                $item->save();
               }
           }
-          $item = new Notification_Items;
-          $item->item_id = $package;
-          $notification->noti_items()->save($item);
+          
+        //   dd($notification);
+         // $notification->noti_items()->save($item);
         }
         return redirect()->route('notifications')->with('success','تم إضافه تنبيه');
     }
