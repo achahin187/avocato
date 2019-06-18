@@ -420,26 +420,7 @@ class LegalConsultationsController extends Controller
             // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
         }
         $consultation->lawyers()->sync($sync_data);
-        // foreach($ids as $id)
-        // {
-        //     $user=Users::find($id);
-        //     $notification=Notifications::create([
-        //         "msg"=>$notification_type->msg,
-        //         "entity_id"=>15,
-        //         "item_id"=>$consultation_id,
-        //         "user_id"=>$id,
-        //         "notification_type_id"=>9,
-        //         "is_read"=>0,
-        //         "is_sent"=>0,
-        //         "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
-        //     ]);
-        //      $notification_push=Notification_Push::create([
-        //         "notification_id"=>$notification->id,
-        //         "device_token"=>$user->device_token,
-        //         "mobile_os"=>$user->mobile_os,
-        //         "lang_id"=>$user->lang_id
-        //     ]);
-        // }
+       
         return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
     }
 
