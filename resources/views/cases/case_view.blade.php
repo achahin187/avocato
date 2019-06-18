@@ -159,41 +159,25 @@
                       <div class="remodal" data-remodal-id="case_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
-                        @foreach($case->case_documents as $document)
                           <div class="row">
-                            <div class="col-md-10">
-                              <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
-                                بتاريخ
-                                {{date('Y-m-d' ,strtotime($document->created_at))}}
-                                &nbsp;<i class="fa fa-calendar"></i>
-                              </p>
-                              <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
-                                القائم بالمهمة
-                                &nbsp;<a href="lawyer_view.html">{{$document->user->name}}</a>&nbsp;<i class="fa fa-user"></i>
-                              </p>
-                              <div class="clearfix"></div>
-                              <p class="right-text">{{$document->notes}}</p>
-                            </div>
-                            <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#case_documents/{{$document->id}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
-                              <div class="remodal-bg"></div>
-                              <div class="remodal" data-remodal-id="case_documents/{{$document->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                 <form action="{{URL('download_all_case_documents/'.$document->id)}}" method="get">
-                                <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                                <div>
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <h3>الملفات المرفقة للتقرير</h3>
-                                      <ul class="mailbox-attachments clearfix right-text">
-                                         @foreach($document->case_document_details as $doc)
+                            <div class="col-xs-12">
+                              <h3>صور مستندات القضية</h3>
+                              
+                              <ul class="mailbox-attachments clearfix right-text">
+                              @foreach($case->case_documents as $document)
+                              @foreach($document->case_document_details as $doc)
                                       <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
 
                                         <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($doc->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
                                             {{$doc->file}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_case_document/'.$doc->id  )}}"><i class="fa fa-cloud-download"></i></a></span></div>
                                       </li>
                                       @endforeach
+                                @endforeach
+                              </ul>
+                            </div>
+                          </div>
                         </div><br>
-                   <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($document->case_document_details)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
                               @endif
@@ -201,7 +185,6 @@
                     </div>
                     <div class="clearfix"></div>
                     <hr>
-                    @endforeach
                     <div class="col-md-12">
                       <div class="panel panel-default">
                         <div class="panel-heading" id="heading-1" role="tab">
