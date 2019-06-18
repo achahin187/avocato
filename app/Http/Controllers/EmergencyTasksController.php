@@ -425,7 +425,7 @@ return redirect()->route('tasks_emergency');
         //   'user_id' => $user->id,
         //   'country_id' => $user->country_id
         // ]);
-        return rediect()->back()->with('success','report uploaded successfully');
+        return redirect()->back()->with('success','report uploaded successfully');
      
   }
 
