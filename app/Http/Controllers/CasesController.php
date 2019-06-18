@@ -132,6 +132,8 @@ class CasesController extends Controller
             $query->where('task_type_id', 2)->orderBy('id', 'desc');
         }])->with(['case_records' => function ($q) {
             $q->with('case_record_documents');
+        }])->with(['case_documents'=>function($q){
+            $q->with('case_document_details');
         }])->first();
         return view('cases.case_view')->with('case', $case)->with('cases_record_types', $cases_record_types);
     }

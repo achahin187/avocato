@@ -159,28 +159,44 @@
                       <div class="remodal" data-remodal-id="case_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
+                        @foreach($case->case_documents as $document)
                           <div class="row">
-                            <div class="col-xs-12">
-                              <h3>صور مستندات القضية</h3>
-                              <ul class="mailbox-attachments clearfix right-text">
-                                <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
-                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
-                                      report.pdf<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                </li>
-                                <li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
-                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
-                                      App_Desc.docx<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                </li>
-                                <li><span class="mailbox-attachment-icon has-img"><img src="https://unsplash.it/300/300/?random" alt="Attachment"></span>
-                                  <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-camera"></i>&nbsp;
-                                      photo1.png<br></a><span class="mailbox-attachment-size">2.67 MB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
-                                </li>
-                              </ul>
+                            <div class="col-md-10">
+                              <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
+                                بتاريخ
+                                {{date('Y-m-d' ,strtotime($document->created_at))}}
+                                &nbsp;<i class="fa fa-calendar"></i>
+                              </p>
+                              <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
+                                القائم بالمهمة
+                                &nbsp;<a href="lawyer_view.html">{{$document->user->name}}</a>&nbsp;<i class="fa fa-user"></i>
+                              </p>
+                              <div class="clearfix"></div>
+                              <p class="right-text">{{$document->notes}}</p>
                             </div>
-                          </div>
+                            <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#case_documents/{{$document->id}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
+                              <div class="remodal-bg"></div>
+                              <div class="remodal" data-remodal-id="case_documents/{{$document->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                 <form action="{{URL('download_all_case_documents/'.$document->id)}}" method="get">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>الملفات المرفقة للتقرير</h3>
+                                      <ul class="mailbox-attachments clearfix right-text">
+                                         @foreach($document->case_document_details as $doc)
+                                      <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($doc->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
+                                            {{$doc->file}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_case_document/'.$doc->id  )}}"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                      @endforeach
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                      <button class="remodal-confirm" data-remodal-action="confirm" id="download_all" data-id="{{$case->id}}">تحميل الكل</button>
+                              @if(count($document->case_document_details)>0)
+                              <button class="remodal-confirm" >تحميل الكل</button>
+                              @endif
                       </div>
                     </div>
                     <div class="clearfix"></div>
@@ -217,7 +233,7 @@
                                 <div>
                                   <div class="row">
                                     <div class="col-xs-12">
-                                      <h3>الملفات المرفقة للتقرير بتاريخ 12/12/2018</h3>
+                                      <h3>الملفات المرفقة للتقرير</h3>
                                       <ul class="mailbox-attachments clearfix right-text">
                                          @foreach($document->case_document_details as $doc)
                                       <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
@@ -242,7 +258,7 @@
                           </div>
                           <hr>
                           @endforeach
-                          <div class="col-md-2 col-sm-3 col-xs-12">
+                          <!-- <div class="col-md-2 col-sm-3 col-xs-12">
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -273,7 +289,7 @@
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
                               <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
                             </div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
