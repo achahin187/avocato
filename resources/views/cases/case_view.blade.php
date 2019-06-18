@@ -154,7 +154,7 @@
                       </form>
                       </div>
                     </div>
-                    <div class="col-md-2 col-sm-6 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadered bradius--small bshadow--0 btn-block" href="#case_attachment"><i class="fa fa-file"></i><span>عرض مستندات القضية</span></a>
+                    <!-- <div class="col-md-2 col-sm-6 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadered bradius--small bshadow--0 btn-block" href="#case_attachment"><i class="fa fa-file"></i><span>عرض مستندات القضية</span></a>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="case_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -177,12 +177,12 @@
                             </div>
                           </div>
                         </div><br>
-                        <!-- <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($$case->case_documents)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
-                              @endif -->
+                              @endif
                       </div>
-                    </div>
+                    </div> -->
                     <div class="clearfix"></div>
                     <hr>
                     <div class="col-md-12">
