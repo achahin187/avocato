@@ -67,7 +67,7 @@ class NotificationsController extends Controller
         $schedule_id=$notification->id;
         foreach($request->package_type as $package){
           $subs = Bouquet::where('id',$package)->with('users')->first();
-          dd($subs);
+          dd($subs->users);
           foreach($subs->users() as $user) {
             //   $user = $sub->user;
             
