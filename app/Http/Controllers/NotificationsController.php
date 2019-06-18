@@ -13,7 +13,8 @@ use Validator;
 use Carbon\Carbon;
 use DB;
 use App\Users;
-
+use App\Bouquet;
+use App\UserBouquet;
 class NotificationsController extends Controller
 {
     /**
@@ -22,7 +23,7 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {   
-        $data['subscription_types'] = Package_Types::all();
+        $data['subscription_types'] = Bouquet::all();
         $data['notifications'] = Notification_Schedules::all();
         return view('clients.notifications',$data);
     }
@@ -63,9 +64,9 @@ class NotificationsController extends Controller
         $notification->save();
         $schedule_id=$notification->id;
         foreach($request->package_type as $package){
-          $subs = Subscriptions::where('package_type_id',$package)->get();
-          foreach($subs as $sub) {
-              $user = $sub->user;
+          $subs = Bouquet::where('id',$package)->first();
+          foreach($subs->users() as $user) {
+            //   $user = $sub->user;
               if(!empty($user->id) && !empty($user->device_token)) {
                   $notification = new Notifications;
                   $notification->msg = $request->notification;
@@ -144,7 +145,7 @@ class NotificationsController extends Controller
         if($request->package == '-1' && !$request->filled('date_from') && !$request->filled('date_to') ) { 
             return redirect()->route('notifications');
         }
-        $data['subscription_types'] = Package_Types::all();
+        $data['subscription_types'] = bouquet::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
         $date_from=date('Y-m-d ',strtotime($request->date_from));
         $date_to=date('Y-m-d ',strtotime($request->date_to));
