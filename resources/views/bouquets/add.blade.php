@@ -201,7 +201,7 @@
                     <div class="col-md-10 col-sm-9 col-xs-9">
                       <div class="master_field">
                         <label class="master_label mandatory" for="package_deac">وصف الباقة</label>
-                        <textarea class="master_input" name="description" id="package_deac" placeholder="وصف الباقة"></textarea><span class="master_message color--fadegreen">message</span>
+                        <textarea class="master_input" name="description" id="package_deac" placeholder="وصف الباقة" maxlength="150"></textarea><span class="master_message color--fadegreen">message</span>
                       </div>
                     </div>
                     <div class="clearfix"></div><br>
