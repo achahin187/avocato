@@ -24,7 +24,7 @@ Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['roles:1,2,3'])->group(function () {
-
+Route::post('/add_task_report/{id}', 'EmergencyTasksController@add_task_report')->name('add_task_report');
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
@@ -375,7 +375,7 @@ Route::get('/emergency_lawyer_task/{id}/{task_id}', 'ServicesController@lawyer_t
 Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@emergency_lawyer_assign_filter')->name('emergency_lawyer_assign_filter');
 Route::get('/emergencytasks_excel', 'EmergencyTasksController@excel')->name('emergencytasks_excel');
 Route::post('/emergency_task_filter', 'EmergencyTasksController@emergency_task_filter')->name('emergency_task_filter');
-Route::post('/add_task_report', 'EmergencyTasksController@add_task_report')->name('add_task_report');
+
 });
 
 
