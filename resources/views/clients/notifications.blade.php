@@ -117,7 +117,7 @@
                               <?php $packages_array =  explode(",", $notification->packages);
                               //dd($packages_array); ?>
                               @foreach($packages_array as $package_id)
-                              {{Helper::localizations('package_types', 'name', $package_id) }}،
+                              {{Helper::getPackageName( $package_id) }}،
                               @endforeach
                             </span></td>
                             <td><span class="cellcontent">{{$notification->schedule}}</span></td>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Entity_Localizations;
 use Auth;
+use App\Bouquet;
 
 
 
@@ -364,5 +365,10 @@ class Helper {
            }
        }
        return false;
+    }
+
+    public static function getPackageName($id)
+    {
+        return Bouquet::where('id',$id)->first()->name;
     }
 }
