@@ -219,7 +219,7 @@
                               </form>
                             </div>
                           </div>
-
+                        </form>
                  
                   </div>
                   </div>
@@ -254,8 +254,39 @@
                 map: map
               });
             }
-         
+            
+            
 
             </script>
+           <script>
+    //    $(document).ready(function(){
+        
+    //      $("#add_case_report").on('click',function(){
+    //        alert('test');
+    //       $("#task_document_form").submit();
+        
+    //     $("#task_document_form").on('submit',function(){
+    //       var formData = new FormData($("#task_document_form")[0]);
+    //           //  alert(task_id);
+    //           $.ajax({
+    //            type:'POST',
+    //            url:'/add_emergency_task_document',
+    //            data: formData,
+    //              success:function(response){
+    //                response = response.parseJSON();
+    //                console.log('Success');
+    //         }
+    //      });
+       
+    //  });
+
+
+       });                    
+         
+
+           
+           
+           
+           </script> 
             
             @endsection
