@@ -7,6 +7,13 @@
         #map {
           height: 100% !important;
         }
+        /* Optional: Makes the sample page fill the window. */
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        //////////////////
         #description {
             font-family: Roboto;
             font-size: 15px;
@@ -77,6 +84,7 @@
           #target {
             width: 345px;
           }
+       ///////////////////
       </style>
 
 <div class="row">
