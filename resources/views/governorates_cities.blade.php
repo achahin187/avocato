@@ -75,34 +75,51 @@
               </div>
               <div class="full-table">
                   <div class="remodal-bg">
-                    <div class="remodal" data-remodal-id="lang1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                    
+                  {{--government_localization modal  --}} 
+                    <div id="government_localization" class="remodal" data-remodal-id="lang1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                       <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                      <div>
-                        <div class="row">
-                          <h4>ادخال اسم محاظة القاهرة باللغات</h4><br>
-                          <div class="col-sm-5">
-                            <div class="master_field">
-                              <label class="master_label mandatory" for="lang_list1">اختار اللغة</label>
-                              <select class="master_input" id="lang_list1">
-                                <option>English</option>
-                                <option>French</option>
-                              </select>
+                      <form action="{{route('governorates_cities.government_localization')}}" method="POST">
+                        {{csrf_field()}}
+                        <input type="hidden" id="government_localization_id" name="government_localization_id">
+                        <div>
+                          <div class="row">
+                            <h4>ادخال اسم باللغات</h4><br>
+                            <div class="col-sm-5">
+                              <div class="master_field">
+                                <label class="master_label mandatory" for="government_localization_lang">اختار اللغة</label>
+                                <select class="master_input" id="government_localization_lang" name="government_localization_lang">
+                                  @foreach($languages as $lang)
+                                    @if($lang->id != 1)
+                                      <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                    @endif
+                                  @endforeach
+                                </select>
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-sm-7">
-                            <div class="master_field">
-                              <label class="master_label mandatory" for="contract_type_new1">ادخال الاسم باللغة المختاره</label>
-                              <input class="master_input" type="text" placeholder="اسم المحافظة" id="contract_type_new1"><span class="master_message color--fadegreen">message</span>
+                            <div class="col-sm-7">
+                              <div class="master_field">
+                                <label class="master_label mandatory" for="government_localization_name"> اسم المحافظة </label>
+                                <input class="master_input" type="text" placeholder="اسم المحافظة" id="government_localization_name" name="government_localization_name">
+                                <span class="master_message color--fadegreen">
+                                  @if($errors->has('government_localization_name'))
+                                    {{$errors->first('government_localization_name')}}
+                                  @endif
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                          <div class="clearfix"></div>
-                        </div>
-                      </div><br>
-                      <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                      <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                    </div>
+                            <div class="clearfix"></div>
+                          </div><br>
+                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                        <button class="remodal-confirm" type="submit">حفظ</button>
+                      </div>
+                    </form>
                   </div>
-                <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                </div>
+                {{-- end of government_localization modal  --}} 
+
+                <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                  <a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel deleteAllgovernments" >حذف المحدد</a>
                 </div>
                 <div class="quick_filter">
                   <div class="dropdown quickfilter_dropb">
@@ -114,14 +131,14 @@
                         <p><b>اختار</b></p>
                       </div>
                       <div class="quick-filter-content">
-                      @foreach($languages as $lang)
-                        @if($lang->id != \Session::get('AppLocale'))
-                        <div class="radiorobo">
-                          <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
-                          <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
-                        </div>
-                        @endif
-                      @endforeach
+                        @foreach($languages as $lang)
+                          @if($lang->id != \Session::get('AppLocale'))
+                          <div class="radiorobo">
+                            <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                            <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
+                          </div>
+                          @endif
+                        @endforeach
                       </div>
                     </div>
                   </div>
@@ -137,15 +154,16 @@
                   <tbody>
                     @foreach ($governments as $government)
                       @if($government->name != '')
-                      <tr data-government-id="{{$government->id}}">
+                      <tr data-government_id="{{$government->id}}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td><span class="cellcontent">{{$government->name}}</span></td>
                         <td>
                           <span class="cellcontent">
-                            <a href= #lang1 class= "action-btn bgcolor--main color--white ">
-                              <i class = "fa  fa-book"></i> &nbsp; اللغات</a>
-                            <a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
-                              <i class = "fa  fa-trash-o"></i>
+                            <a data-government_id="{{$government->id}}" class= "action-btn bgcolor--main color--white government_localization">
+                              <i class = "fa fa-book"></i> &nbsp; اللغات
+                            </a>
+                            <a data-government_id="{{$government->id}}" class= "delete_governate btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                              <i class="fa fa-trash-o"></i>
                             </a>
                           </span>
                         </td>
@@ -174,11 +192,12 @@
                       <div>
                       <form action="{{route('governoratesCities.addCity')}}" method="POST">
                         {{csrf_field()}}
+                        <input type="hidden" id="addMore" name="addMore">
                         <div class="row">
                           <div class="col-xs-12">
                             <h3>اضافة</h3>
                           </div>
-                          <div class="col-lg-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="government_id">المحافظة </label>
                               <select class="master_input select2" id="government_id" name="government_id" style="width:100%">
@@ -195,7 +214,7 @@
                               </span>
                             </div>
                           </div>
-                          <div class="col-xs-12">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="master_field">
                               <label class="master_label mandatory" for="add_city">اسم المدينة</label>
                               <input class="master_input" type="text" placeholder="اسم المدينة" id="add_city" name="add_city">
@@ -207,13 +226,14 @@
                             </div>
                           </div>
                           <div class="col-md-3 col-sm-6 col-xs-12">
-                            <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><span>حفظ واضافة المزيد</span>
+                            <button onclick="addMore(1)" class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit">
+                              <span>حفظ واضافة المزيد</span>
                             </button>
                           </div>
                           <div class="clearfix"></div><br>
                           <div class="text-center">
                             <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                            <button class="remodal-confirm" type="submit">حفظ</button>
+                            <button onclick="addMore(0)" class="remodal-confirm" type="submit">حفظ</button>
                           </div>
                           <div class="clearfix"></div>
                         </div>
@@ -298,32 +318,32 @@
 
                   {{-- Language filter --}}
                   <div class="quick_filter">
-                      <div class="dropdown quickfilter_dropb">
-                        <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
-                          <small>اللغات  &nbsp;</small>
-                          <i class="fa fa-angle-down"></i>
-                        </button>
-                        <div class="dropdown-menu" role="menu" aria-labelledby="quick_Filters_2" id="lang_filter">
-                          <div class="quick-filter-title"><p><b>اختار</b></p></div>
-                          <div class="quick-filter-content">
-                          @foreach($languages as $lang)
-                            @if($lang->id != \Session::get('AppLocale'))
-                            <div class="radiorobo">
-                              <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
-                              <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
-                            </div>
-                            @endif
-                          @endforeach
+                    <div class="dropdown quickfilter_dropb">
+                      <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                        <small>اللغات  &nbsp;</small>
+                        <i class="fa fa-angle-down"></i>
+                      </button>
+                      <div class="dropdown-menu" role="menu" aria-labelledby="quick_Filters_2" id="lang_filter">
+                        <div class="quick-filter-title"><p><b>اختار</b></p></div>
+                        <div class="quick-filter-content">
+                        @foreach($languages as $lang)
+                          @if($lang->id != \Session::get('AppLocale'))
+                          <div class="radiorobo">
+                            <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                            <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
                           </div>
+                          @endif
+                        @endforeach
                         </div>
                       </div>
                     </div>
+                  </div>
                   {{-- End Language filter--}}
 
                   {{-- Buttons - extract excel & delete --}}
                   <div class="bottomActions__btns">
                     <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
-                    <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+                    <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel deleteAllcities" href="#">حذف المحدد</a>
                   </div>
                   {{-- End buttons --}}
 
@@ -355,7 +375,7 @@
                                 <a id="add_localization" data-city_id="{{$city->id}}" class= "action-btn bgcolor--main color--white add_localization">
                                   <i class = "fa fa-book"></i> &nbsp; اللغات
                                 </a>
-                                <a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                                <a data-city_id="{{$city->id}}" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white delete_city">
                                   <i class = "fa fa-trash-o"></i>
                                 </a>
                               </span>
@@ -379,8 +399,8 @@
   <script>
 
       $(document).ready(function(){
-              $('.btn-warning-cancel').click(function(){
-                var city_id = $(this).closest('tr').attr('data-city_id');
+              $('.delete_governate').click(function(){
+                var id = $(this).data('government_id');
                 var _token = '{{csrf_token()}}';
                 swal({
                   title: "هل أنت متأكد؟",
@@ -397,13 +417,13 @@
                   if (isConfirm){
                    $.ajax({
                      type:'POST',
-                     url:'{{route('governorates_cities.destroy')}}',
+                     url:'{{route('governorates_cities.destroy_governate')}}',
                      data:{
                           _token:_token,
-                          id:city_id
+                          id:id
                        },
                       success:function(data){
-                        $('tr[data-city_id='+city_id+']').fadeOut();
+                        $('tr[data-government_id='+id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
                       }
@@ -415,12 +435,11 @@
                 });
               });
       
-              $('.btn-warning-cancel-all').click(function(){
+              $('.deleteAllgovernments').click(function(){
                 var selectedIds = $("input:checkbox:checked").map(function(){
-                  return $(this).closest('tr').attr('data-city_id');
+                  return $(this).closest('tr').attr('data-government_id');
                 }).get();
                 var _token = '{{csrf_token()}}';
-                console.log(selectedIds);
                 swal({
                   title: "هل أنت متأكد؟",
                   text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
@@ -436,7 +455,80 @@
                   if (isConfirm){
                     $.ajax({
                       type:'POST',
-                      url:'{{route('governorates_cities.destroyAll')}}',
+                      url:'{{route('governorates_cities.destroyAllgovernate')}}',
+                      data:{
+                        ids:selectedIds,
+                        _token:_token},
+                      success:function(data){
+                        $.each( selectedIds, function( key, value ) {
+                          $('tr[data-government_id='+value+']').fadeOut();
+                        });
+                      }
+                    });
+                    swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                  }else{
+                    swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+                  }
+                });
+              });
+        
+              $('.delete_city').click(function(){
+                var id = $(this).data('city_id');
+                var _token = '{{csrf_token()}}';
+                swal({
+                  title: "هل أنت متأكد؟",
+                  text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: '#DD6B55',
+                  confirmButtonText: 'نعم متأكد!',
+                  cancelButtonText: "إلغاء",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm){
+                   $.ajax({
+                     type:'POST',
+                     url:'{{route('governorates_cities.destroy_city')}}',
+                     data:{
+                          _token:_token,
+                          id:id
+                       },
+                      success:function(data){
+                        $('tr[data-city_id='+id+']').fadeOut();
+                      },error:function(response){
+                        console.log(response);
+                      }
+                  });
+                    swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                  } else {
+                    swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+                  }
+                });
+              });
+      
+              $('.deleteAllcities').click(function(){
+                var selectedIds = $("input:checkbox:checked").map(function(){
+                  return $(this).closest('tr').attr('data-city_id');
+                }).get();
+                var _token = '{{csrf_token()}}';
+                swal({
+                  title: "هل أنت متأكد؟",
+                  text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: '#DD6B55',
+                  confirmButtonText: 'نعم متأكد!',
+                  cancelButtonText: "إلغاء",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+                function(isConfirm){
+                  if (isConfirm){
+                    $.ajax({
+                      type:'POST',
+                      url:'{{route('governorates_cities.destroyAllcity')}}',
                       data:{
                         ids:selectedIds,
                         _token:_token},
@@ -452,7 +544,6 @@
                   }
                 });
               });
-        
         // Export table as Excel file
         $('#exportSelected').click(function(){
           var allVals = [];                   // selected IDs
@@ -512,6 +603,11 @@
           $('#localization_modal').remodal().open();
       });
 
+      // add localization
+      $('.government_localization').click( function(){
+          $('#government_localization_id').val($(this).data('government_id'));
+          $('#government_localization').remodal().open();
+      });
       //change lang
       function ChangeLang(id){
         $.ajax({
@@ -530,6 +626,10 @@
                 console.log(response);
               }
           });
+      }
+
+      function addMore(val){
+        $('#addMore').val(val);
       }
   </script>
 @endsection

@@ -36,8 +36,7 @@ class Geo_Cities extends Model
         $lang = Session::get('AppLocale');
         if($lang == 2 or $lang == 3){
             return Helper::localizations('geo_cities' , 'name' , $this->id , $lang);
-        }else{
-            return $this->attributes['name'];
         }
+        return $this->attributes['name'];
     }
 }

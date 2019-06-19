@@ -44,10 +44,13 @@ Route::post('/specialization_add_localization', 'SpecializationsController@add_l
 Route::get('/governorates_cities', 'GovernoratesCitiesController@index')->name('governorates_cities');
 Route::post('/governorates_cities/addGovernment', 'GovernoratesCitiesController@storeGovernment')->name('governoratesCities.addGovernment');
 Route::post('/governorates_cities/addCity', 'GovernoratesCitiesController@storeCity')->name('governoratesCities.addCity');
-Route::post('/governorates_cities/destroy', 'GovernoratesCitiesController@destroy')->name('governorates_cities.destroy');
-Route::post('/governorates_cities/destroyAll', 'GovernoratesCitiesController@destroyAll')->name('governorates_cities.destroyAll');
+Route::post('/governorates_cities/destroy_governate', 'GovernoratesCitiesController@destroy_governate')->name('governorates_cities.destroy_governate');
+Route::post('/governorates_cities/destroy_city', 'GovernoratesCitiesController@destroy_city')->name('governorates_cities.destroy_city');
+Route::post('/governorates_cities/destroyAllgovernate', 'GovernoratesCitiesController@destroyAllgovernate')->name('governorates_cities.destroyAllgovernate');
+Route::post('/governorates_cities/destroyAllcity', 'GovernoratesCitiesController@destroyAllcity')->name('governorates_cities.destroyAllcity');
 Route::get('/governorates_cities/exportXLS', 'GovernoratesCitiesController@exportXLS')->name('governorates_cities.exportXLS');
 Route::post('/governorates_cities/add_localization', 'GovernoratesCitiesController@add_localization')->name('governorates_cities_add_localization');
+Route::post('/governorates_cities/government_localization', 'GovernoratesCitiesController@government_localization')->name('governorates_cities.government_localization');
 
 Route::get('/courts_list', 'CourtsListController@index')->name('courts_list');
 Route::get('/courts_get_city', 'CourtsListController@getCity')->name('courts_get_city');

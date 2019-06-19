@@ -94,13 +94,24 @@ class Helper {
     public static function add_localization($table_name, $field, $item_id, $value, $lang_id)
     {
         $entity_id = Entities::where('name', $table_name)->first()->id;
-        $localization = new Entity_Localizations;
-        $localization->entity_id = $entity_id;
-        $localization->field = $field;
-        $localization->value = $value;
-        $localization->item_id = $item_id;
-        $localization->lang_id = $lang_id;
-        $localization->save();
+        //check if localization value is exist or not
+        $localization = Entity_Localizations::where('entity_id', $entity_id)
+                                            ->where('field', $field)
+                                            ->where('item_id', $item_id)
+                                            ->where('lang_id', $lang_id)
+                                            ->first();
+        if($localization){
+            $localization->value = $value;
+            $localization->save();
+        }else{
+            $new_localization = new Entity_Localizations;
+            $new_localization->entity_id = $entity_id;
+            $new_localization->field = $field;
+            $new_localization->value = $value;
+            $new_localization->item_id = $item_id;
+            $new_localization->lang_id = $lang_id;
+            $new_localization->save();
+        }
     }
 
     public static function remove_localization($table_name, $field, $item_id, $lang_id)

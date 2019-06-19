@@ -84,7 +84,7 @@ class GovernoratesCitiesController extends Controller
         if ($validator->fails()) {
             return redirect('/governorates_cities#add_city')->withErrors($validator)->withInput();
         }
-        $gov=Geo_Governorates::find($request->government_id);
+        $gov = Geo_Governorates::find($request->government_id);
         // Add values
         try{
             Geo_Cities::create([
@@ -99,11 +99,8 @@ class GovernoratesCitiesController extends Controller
             Session::flash('error', 'حدث خطأ'.$ex);
         }
         
-
         // redirect back with flash message
-        
-
-        if($request->addMore != null) {
+        if($request->addMore == 1) {
             return redirect('/governorates_cities#add_city')->withErrors(['government_id' => 'اضف المزيد', 'add_city' => 'اضف المزيد']);
         }
 
@@ -150,7 +147,18 @@ class GovernoratesCitiesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy_governate(Request $request)
+    {
+        // Find and delete this record
+        Helper::remove_related_localization('geo_governorates', $request->id);
+        Geo_Governorates::find($request->id)->delete();
+        Session::flash('success', 'تم الحذف بنجاح');
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
+    }
+
+    public function destroy_city(Request $request)
     {
         // Find and delete this record
         Helper::remove_related_localization('geo_cities', $request->id);
@@ -160,22 +168,34 @@ class GovernoratesCitiesController extends Controller
             'success' => 'Record has been deleted successfully!'
         ]);
     }
-
     /**
      * Delete selected rows
      */
-    public function destroyAll(Request $request) 
+    public function destroyAllgovernate(Request $request) 
     {
         // get cities IDs from AJAX
         $ids = $request->ids;
         foreach($ids as $id){
-            Helper::remove_related_localization('geo_cities', $id);
-            Geo_Cities::find($id)->delete();
+            Helper::remove_related_localization('geo_governorates', $id);
+            Geo_Governorates::find($id)->delete();
         }
         return response()->json([
             'success' => 'Records deleted successfully!'
         ]);
     }
+    
+   public function destroyAllcity(Request $request) 
+   {
+       // get cities IDs from AJAX
+       $ids = $request->ids;
+       foreach($ids as $id){
+           Helper::remove_related_localization('geo_cities', $id);
+           Geo_Cities::find($id)->delete();
+       }
+       return response()->json([
+           'success' => 'Records deleted successfully!'
+       ]);
+   }
 
     // export Excel sheets
     public function exportXLS(Request $request)
@@ -208,6 +228,21 @@ class GovernoratesCitiesController extends Controller
             return redirect('governorates_cities#lang')->withErrors($validator)->withInput();
         }
         Helper::add_localization('geo_cities', 'name', $request->city_id, $request->city_name, $request->lang_id);
+        return redirect()->route('governorates_cities')->with('success','تم الإضافة بنجاح');
+    }
+
+    public function government_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'government_localization_id' => 'required|integer',
+            'government_localization_name'=>'required',
+            'government_localization_lang' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('governorates_cities#lang1')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('geo_governorates', 'name', $request->government_localization_id, $request->government_localization_name, $request->government_localization_lang);
         return redirect()->route('governorates_cities')->with('success','تم الإضافة بنجاح');
     }
 
