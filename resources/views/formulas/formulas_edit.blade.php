@@ -45,6 +45,7 @@ $("select[name='mains']").trigger("change");
   });
 </script>
 
+{{\Session::put('AppLocale', 1)}}
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
@@ -95,7 +96,7 @@ $("select[name='mains']").trigger("change");
                         <div class="file-upload">
                           <div class="file-select">
                             <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة العقد / الصيغة</div>
-                            <input name="file" class="chooseFile" type="file" name="chooseFile" id="contract_upload">
+                            <input name="file" class="chooseFile" accept="application/pdf" type="file" name="chooseFile" id="contract_upload">
                           </div>
                         </div><span class="master_message color--fadegreen"></span>
                       </div>

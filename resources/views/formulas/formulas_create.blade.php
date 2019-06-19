@@ -50,6 +50,7 @@
           </div>
         </div>
 
+        {{\Session::put('AppLocale', 1)}}
         <div class="col-lg-12">
           @if(\session('success'))
           <div class="alert alert-success">
@@ -90,7 +91,7 @@
                 <div class="file-upload">
                   <div class="file-select">
                     <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة العقد / الصيغة</div>
-                    <input name="file" class="chooseFile" type="file" name="chooseFile" id="contract_upload">
+                    <input name="file" class="chooseFile" type="file" accept="application/pdf" name="chooseFile" id="contract_upload">
                   </div>
                 </div>
                 <span class="master_message color--fadegreen">

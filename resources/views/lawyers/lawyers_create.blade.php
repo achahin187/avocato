@@ -9,6 +9,7 @@
         }, 4000);
     });
 </script> 
+        {{\Session::put('AppLocale', 1)}}
           <div class="row">
             <div class="col-lg-12">
               <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
