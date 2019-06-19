@@ -74,6 +74,34 @@
 
               </div>
               <div class="full-table">
+                  <div class="remodal-bg">
+                    <div class="remodal" data-remodal-id="lang1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                      <div>
+                        <div class="row">
+                          <h4>ادخال اسم محاظة القاهرة باللغات</h4><br>
+                          <div class="col-sm-5">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="lang_list1">اختار اللغة</label>
+                              <select class="master_input" id="lang_list1">
+                                <option>English</option>
+                                <option>French</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-sm-7">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="contract_type_new1">ادخال الاسم باللغة المختاره</label>
+                              <input class="master_input" type="text" placeholder="اسم المحافظة" id="contract_type_new1"><span class="master_message color--fadegreen">message</span>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </div><br>
+                      <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                      <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                    </div>
+                  </div>
                 <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                 </div>
                 <div class="quick_filter">
