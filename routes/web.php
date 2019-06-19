@@ -24,7 +24,7 @@ Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['roles:1,2,3'])->group(function () {
-
+Route::post('/add_task_report/{id}', 'EmergencyTasksController@add_task_report')->name('add_task_report');
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');
@@ -307,6 +307,7 @@ Route::middleware(['roles:1,2,3'])->group(function () {
     Route::get('/download_case_document/{id}', 'CasesController@download_case_document')->name('download_case_document');
     Route::get('/download_all_documents/{id}', 'CasesController@download_all_documents')->name('download_all_documents');
     Route::get('/download_all_case_documents/{id}', 'CasesController@download_all_case_documents')->name('download_all_case_documents');
+    Route::get('/download_all_case_documents_all/{id}', 'CasesController@download_all_case_documents_all')->name('download_all_case_documents_all');
     Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
     Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
     Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');

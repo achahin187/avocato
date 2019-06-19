@@ -14,7 +14,7 @@
                 </div>
               </div>
             </div>
-            <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="about_edit.html">تعديل </a>
+          <div class="cover--actions"><a class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="button" href="{{route('about_edit')}}">تعديل </a>
             </div>
           </div>
         </div>

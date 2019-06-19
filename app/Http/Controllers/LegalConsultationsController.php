@@ -166,20 +166,23 @@ class LegalConsultationsController extends Controller
             session('error','لا يمكن اضافه رد لهذه الاستشاره لانها موجهه لمحامى');
             return redirect()->back();
         }
-        // dd($consultation);
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
         }])->get();
+ 
         foreach ($lawyers as $detail) {
-            if (count(Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first())) {
+           
+           $consultation_lawyers =Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first();
+            
+           if ( $consultation_lawyers !== null && $consultation_lawyers->count() > 0) {
 
                 $detail['assigned'] = 1;
             } else {
                 $detail['assigned'] = 0;
             }
-            if (count($detail->user_detail) != 0) {
+            if ( $detail->user_detail != null && $detail->user_detail->count() > 0 ) {
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
 
                 $detail['nationality'] = $value;
@@ -244,21 +247,17 @@ class LegalConsultationsController extends Controller
         } 
 
         foreach ($consultation->consultation_reply as $lawyer) {
-            // dd($lawyer->lawyer_id);
             $user = Users::find($lawyer->lawyer_id);
             if ($user) {
-                // dd($user);
                 $lawyer['lawyer_name'] = $user->name;
             }
 
         }
-        // dd($consultation);
         return view('legal_consultations.legal_consultation_view')->with('consultation', $consultation);
     }
 
     public function edit_lawyer_response(Request $request)
     {
-        // dd($request->input('id'));
         $consultation = Consultation_Replies::find($request->input('id'));
         $consultation->Update([
             'reply' => $request->input('reply'),
@@ -279,7 +278,6 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request, $id)
     {
-        // dd($request->all());
         $consultation = Consultation::find($id);
         if($consultation->direct_assigned == 1)
         {
@@ -287,11 +285,11 @@ class LegalConsultationsController extends Controller
             return redirect()->back();
         }
         $validator = Validator::make($request->all(), [
-            // 'consultation_type' => 'required',
+             'consultation_type' => 'required',
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
-            // 'consultation_cat' => 'required',
-          //  'language' => 'required',
+             'consultation_cat' => 'required',
+            'language' => 'required',
 
         ]);
 
@@ -302,14 +300,13 @@ class LegalConsultationsController extends Controller
         }
         $consultation_types = Consultation_Types::all();
         
-        // dd($request->all());
         // $consultation_type = Consultation_Types::where('name', $request->input('consultation_cat'))->first();
         $consultation->Update([
-            // 'consultation_type_id' => $consultation_type->id,
-            // 'is_paid' => $request->input('consultation_type'),
-            'question' => $request->input('consultation_question'),
-            'is_replied'=>1
-            // 'lang_id'=> $request->language,
+             'consultation_type_id' => $request->consultation_cat,
+             'is_paid' => $request->input('consultation_type'),
+             'question' => $request->input('consultation_question'),
+             'is_replied'=>1,
+             'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->where('lawyer_id',\Auth::user()->id)->update([
             'reply' => $request->input('consultation_answer')
@@ -332,8 +329,8 @@ class LegalConsultationsController extends Controller
             "msg" => $notification_type->msg,
             "entity_id" => 13,
             "item_id" => $consultation->id,
-            "item_name"=>$user->full_name,
-            "item_user_id"=>$user->id,
+            "item_name"=>\Auth::user()->fullname,
+            "item_user_id"=>\Auth::user()->id,
             "user_id" => $consultation->created_by,
             "notification_type_id" => 14,
             "is_read" => 0,
@@ -382,9 +379,10 @@ class LegalConsultationsController extends Controller
     }
     public function send_consultation_to_all_lawyers($consultation_id)
     {
-        // dd($consultation_id);
+        //  dd($consultation_id);
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($consultation_id);
+        // dd($consultation);
         if($consultation->direct_assigned == 1)
         {
             session('error','لا يمكن تحديد محامين لهذه الاستشاره لانها موجهه لمحامى');
@@ -396,13 +394,14 @@ class LegalConsultationsController extends Controller
         foreach ($ids as $id) {
             $user=Users::find($consultation->created_by);
             $sync_data[$id] = ['assigned_by' => \Auth::user()->id, 'assigned_at' => Carbon::now()->format('Y-m-d H:i:s')];
-
+            $client=Users::find($consultation->created_by);
             $user = Users::find($id);
             $notification = Notifications::create([
                 "msg" => $notification_type->msg,
                 "entity_id" => 13,
                 "item_id" => $consultation_id,
-                "item_name" => $user->full_name,
+                "item_name" => $client->full_name,
+                "item_user_id"=>$client->id,
                 "user_id" => $id,
                 "notification_type_id" => 9,
                 "is_read" => 0,
@@ -421,26 +420,7 @@ class LegalConsultationsController extends Controller
             // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
         }
         $consultation->lawyers()->sync($sync_data);
-        // foreach($ids as $id)
-        // {
-        //     $user=Users::find($id);
-        //     $notification=Notifications::create([
-        //         "msg"=>$notification_type->msg,
-        //         "entity_id"=>15,
-        //         "item_id"=>$consultation_id,
-        //         "user_id"=>$id,
-        //         "notification_type_id"=>9,
-        //         "is_read"=>0,
-        //         "is_sent"=>0,
-        //         "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
-        //     ]);
-        //      $notification_push=Notification_Push::create([
-        //         "notification_id"=>$notification->id,
-        //         "device_token"=>$user->device_token,
-        //         "mobile_os"=>$user->mobile_os,
-        //         "lang_id"=>$user->lang_id
-        //     ]);
-        // }
+       
         return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
     }
 
@@ -460,7 +440,8 @@ class LegalConsultationsController extends Controller
                     "msg" => $notification_type->msg,
                     "entity_id" => 13,
                     "item_id" => $consultation->id,
-                    "item_id"=>$user->full_name,
+                    "item_name"=>\Auth::user()->fullname,
+                    "item_user_id"=>\Auth::user()->id,
                     "user_id" => $consultation->created_by,
                     "notification_type_id" => 14,
                     "is_read" => 0,

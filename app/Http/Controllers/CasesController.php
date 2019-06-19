@@ -26,7 +26,7 @@ use App\Case_Record_Document;
 use App\Case_Lawyer;
 use App\Case_Client_Role;
 use App\Case_Document;
-use App\case_document_details;
+use App\Case_Document_Details;
 use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
@@ -132,6 +132,8 @@ class CasesController extends Controller
             $query->where('task_type_id', 2)->orderBy('id', 'desc');
         }])->with(['case_records' => function ($q) {
             $q->with('case_record_documents');
+        }])->with(['case_documents'=>function($q){
+            $q->with('case_document_details');
         }])->first();
         return view('cases.case_view')->with('case', $case)->with('cases_record_types', $cases_record_types);
     }
@@ -593,7 +595,7 @@ class CasesController extends Controller
     //add record
     public function add_record(Request $request, $id)
     {
-
+    //   dd($request->all());
         $case_record = Case_Record::Create([
             'case_id' => $id,
             'record_number' => $request['investigation_no'],
@@ -714,7 +716,7 @@ class CasesController extends Controller
     
     public function download_case_document($id)
     {
-        $document = case_document_details::find($id);
+        $document = Case_Document_Details::find($id);
         $file = public_path() . "/" . $document->file;
         if(file_exists($file)){
         return response()->download($file, $document->name);
@@ -755,6 +757,33 @@ class CasesController extends Controller
                 $files_counter ++;
                  }
             }
+            $zipper->close();
+               if($files_counter > 0 ){
+            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+        }else{
+            Session::flash('error', 'File not found !');
+            return redirect()->back();
+        }
+        }
+        return redirect()->back();
+    }
+    public function download_all_case_documents_all($id)
+    {
+        $zipper = new \Chumper\Zipper\Zipper;
+        $docuemnts = Case_Document::where('case_id', $id)->with('case_document_details')->get();
+        if (count($docuemnts) > 0) {
+            foreach($docuemnts as $docuemnt)
+            {
+                foreach ($docuemnt->case_document_details as $doc) {
+                    $file = $doc->file;
+                    $files_counter = 0;
+                    if(file_exists(public_path() . "/" .$file)){
+                    $zipper->zip('reports.zip')->add($file);
+                    $files_counter ++;
+                     }
+                }
+            }
+           
             $zipper->close();
                if($files_counter > 0 ){
             return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);

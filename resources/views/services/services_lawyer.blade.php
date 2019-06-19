@@ -93,8 +93,8 @@
         @endif
         @endforeach
                       </span></td>
-                      <td><span class="cellcontent">{{$lawyer->user_detail->work_sector}}</span></td>
-                      <td><span class="cellcontent syndicate_level">{{$lawyer->user_detail->syndicate_level}}</span></td>
+                      <td><span class="cellcontent">@foreach($lawyer->specializations as $key=>$spec) @if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif  @endforeach</span></td>
+                      <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>

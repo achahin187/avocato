@@ -292,7 +292,7 @@
         </div>
         {{--  Package info  --}}
       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      @if($user->bouquets()->count > 0)
+      @if($user->bouquets->count() > 0)
        @foreach($user->bouquets as $bouquet)
           {{--  Start date  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">

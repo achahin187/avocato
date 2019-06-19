@@ -178,13 +178,15 @@ class OfficesController extends Controller
    */
   public function store(Request $request)
    {
+   //  dd($request->all());
      //data validation
       $validator = Validator::make($request->all(), [
       'office_name' => 'required',
       'office_email' => 'required|email',
       'tele_code'=>'required',
       'office_cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
-      'office_city' => 'required',
+       'branches' => 'required',
+      // 'office_city' => 'required',
       'rep_name' => 'required',
       'rep_birthdate' => 'required|date',
       'rep_nid' => 'required',
@@ -192,6 +194,7 @@ class OfficesController extends Controller
     ]);
 
     if ($validator->fails()) {
+       dd($validator);
       return redirect()->back()->withErrors($validator)->withInput();
     }
 

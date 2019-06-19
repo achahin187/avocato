@@ -143,8 +143,8 @@ class MobileController extends Controller
      */
     public function show($id)
     {
+        
         $data['user'] = Users::find($id);
-
         // redirect to home page if user is not found
         if ($data['user'] == null) {
             Session::flash('warning', 'المستخدم غير موجود');

@@ -19,7 +19,7 @@ use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
 use Carbon\Carbon;
-
+use App\Helpers\Helper;
 
 class ComplainsController extends Controller
 {

@@ -22,6 +22,77 @@
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                    
+                    {{-- Missing Edit Elements Bug 1847 --}}
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="master_field">
+                        <label class="master_label" for="consultation_code">كود الإستشارة</label>
+                      <input class="master_input" type="text" placeholder="كود الإستشارة .." id="consultation_code" disabled="true" name="consultation_code" value="{{$consultation->code}}">
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="master_field">
+                        <label class="master_label mandatory" for="consultation_cat">تصنيف الاستشارة</label>
+                        <select class="master_input select2" id="consultation_cat"  data-placeholder="اختر التصنيف الرئيسي للاستشارات القانونية" style="width:100%;" name="consultation_cat">
+                      
+                          @foreach($consultation_types as $type)
+                             @if ($type->id == $consultation->consultation_type_id)
+                          <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                          @else
+                          <option value="{{$type->id}}">{{$type->name}}</option>
+                         @endif
+                          @endforeach
+                        </select><span class="master_message color--fadegreen">
+                          @if ($errors->has('consultation_cat'))
+                                    {{ $errors->first('consultation_cat')}}
+                                    @endif
+                                  </span>
+                      </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="master_field">
+                        <label class="master_label">نوع الاستشارة</label>
+                        <div class="radiorobo">
+                          @if($consultation->is_paid == 1)
+                          <input type="radio" id="rad_1" name="consultation_type" value="0">
+                          <label for="rad_1">مجانية</label>
+                       
+                          <input type="radio" id="rad_2" name="consultation_type" value="1" checked>
+                          <label for="rad_2">مدفوع</label>
+                          @else
+                          <input type="radio" id="rad_1" name="consultation_type" value="0" checked>
+                          <label for="rad_1">مجانية</label>
+                       
+                          <input type="radio" id="rad_2" name="consultation_type" value="1" >
+                          <label for="rad_2">مدفوع</label>
+                          @endif
+                        </div><span class="master_message color--fadegreen">
+                           @if ($errors->has('consultation_type'))
+                                    {{ $errors->first('consultation_type')}}
+                                    @endif
+                        </span>
+                      </div>
+                    </div>
+
+      <div class="col-md-2 col-xs-4">
+          <div class="master_field">
+            <label class="master_label" for="sitch_1">اللغه</label>
+                  <select name="language" class="master_input select2" id="type" data-placeholder="اللغع" style="width:100%;" ,>
+                    @foreach($languages as $language)
+                    @if($consultation->lang_id == $language->id)
+                    <option value="{{$language->id}}" selected >{{$language->name}}</option>
+                    @else
+                    <option value="{{$language->id}}">{{$language->name}}</option>
+                    @endif
+                    @endforeach
+                  </select>
+              
+              @if ($errors->has('language'))
+                <span class="master_message color--fadegreen">{{ $errors->first('language') }}</span>
+              @endif
+              
+          </div>
+        </div>
+                    {{--  --}}
 
                     <div class="col-xs-12">
                       <div class="master_field">

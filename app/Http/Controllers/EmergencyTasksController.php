@@ -17,6 +17,11 @@ use Session;
 use App\Entity_Localizations;
 use App\Task_Charges;
 use App\Case_Techinical_Report;
+use App\Case_Techinical_Report_Document;
+use App\Helpers\Base64ToImageService;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 
 class EmergencyTasksController extends Controller
 {
@@ -355,5 +360,91 @@ return redirect()->route('tasks_emergency');
         return view('tasks.tasks_emergency',$data);
   }
 
+
+  public function add_task_report(Request $request , $id)
+  {
+    // dd($request->all());
+    $validator = Validator::make(
+      $request->all(),
+      [
+        'body' => 'required',
+        // 'task_id'=>'required',
+        'status' => 'required',
+        'file' => 'required'
+      ]
+    );
+
+    if ($validator->fails()) {
+      // var_dump(current((array)$validator->errors()));
+      return redirect()->back()
+      ->withErrors($validator)
+      ->withInput();
+    }
+    
+        $task = Tasks::find($id);
+        $case_report = Case_Techinical_Report::create([
+          'technical_report_type_id' => $task->task_type_id,
+          'case_id' => $task->case_id,
+          'item_id' => $id,
+          'body' => $request['body'],
+          'created_by' => \Auth::user()->id,
+        ]);
+        
+        if ($request->hasFile('file')) {
+
+          foreach ($request->file as $key => $file) {
+
+              $destinationPath = 'reports';
+              $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
+   
+              Input::file('file')[$key]->move($destinationPath, $fileNameToStore);
+
+             
+              Case_Techinical_Report_Document::create([
+                'case_techinical_report_id' => $case_report->id,
+                'file' => $fileNameToStore,
+              ]);
+          }
+      }
+        // for ($i = 0; $i < count($request['file']); $i++) {
+        //   if (strpos($request['file'][$i], 'base64') !== false) {
+        //     $file = Base64ToImageService::convert($request['file'][$i], 'reports/');
+        //   } else {
+        //     $file = $request['file'][$i];
+        //   }
+        //   Case_Techinical_Report_Document::create([
+        //     'case_techinical_report_id' => $case_report->id,
+        //     'file' => $file,
+        //   ]);
+        // }
+
+
+        $task->update(['task_status_id' => $request['status'], 'end_datetime' => Carbon::now()->format('Y-m-d H:i:s')]);
+        task_status_history::create([
+          'task_id' => $task->id,
+          'task_status_id' => $request['status'],
+          'datetime' => Carbon::now(),
+          'user_id' => \Auth::user()->id
+        ]);
+        $task->update([
+          'task_status_id' => $request['status']
+        ]);
+
+        // Notification::create([
+        //   'msg' => 'قام المحامى ' . $user->name . ' باضافة تقرير فني',
+        //   'entity_id' => 11,
+        //   'item_id' => $task->id,
+        //   'item_name' => $user->name,
+        //   'notification_type_id' => 5,
+        //   'is_read' => 0,
+        //   'is_sent' => 0,
+        //   'is_push' => 0,
+        //   'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        //   'user_id' => $user->id,
+        //   'country_id' => $user->country_id
+        // ]);
+        return redirect()->back()->with('success','report uploaded successfully');
+     
+  }
 
 }

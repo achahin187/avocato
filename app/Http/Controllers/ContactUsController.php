@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Company_Branch;
 use App\Contact_Detail;
 use App\Geo_Countries;
-
+use App\Helpers\Helper;
 class ContactUsController extends Controller
 {
     public function index()
@@ -14,8 +14,9 @@ class ContactUsController extends Controller
         $data['branches']=Company_Branch::with('contact_detail')->get();
         $data['codes']=Geo_Countries::all();
         // dd($data['branches']['0']['contact_detail'][0]['pivot']['name']);
-
+      //    dd($data);
       return view('contactus.index',$data);
+
     }
     
     public function create(Request $request)
@@ -25,10 +26,11 @@ class ContactUsController extends Controller
             if($request->lang_id == 2)
             {
                 $branch= Company_Branch::create($request->all());
+                 
             }
            
            if($request->lang_id !='2'){
-          
+               //dd($request->all());
             //set lang
             $branch= Company_Branch::create([
                 'is_main'=>$request['is_main'],

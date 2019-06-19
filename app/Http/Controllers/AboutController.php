@@ -76,6 +76,7 @@ class AboutController extends Controller
         $data['vision']= Fixed_Pages::where('page_name','vision')->first();
         $data['mission']= Fixed_Pages::where('page_name','mission')->first();
         $data['languages']= Languages::all();
+    
         return view('about_edit',$data);
     }
 
