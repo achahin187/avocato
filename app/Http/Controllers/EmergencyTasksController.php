@@ -17,6 +17,8 @@ use Session;
 use App\Entity_Localizations;
 use App\Task_Charges;
 use App\Case_Techinical_Report;
+use function GuzzleHttp\json_encode;
+
 use App\Case_Techinical_Report_Document;
 use App\Helpers\Base64ToImageService;
 use Illuminate\Support\Facades\Validator;
@@ -78,9 +80,9 @@ class EmergencyTasksController extends Controller
                      $input['client_id']=$request['client_id'];
                      $input['task_type_id']=1;
                      $input['task_status_id']=1;
-                      $input['client_longitude']=$request['client_long'];
-                      $input['client_latitude']=$request['client_lat'];
-                      $input['description']=$request['description'];
+                     $input['client_longitude']=$request['client_long'];
+                     $input['client_latitude']=$request['client_lat'];
+                     $input['description']=$request['description'];
                      $input['created_by']=\Auth::user()->id;
                      $input['start_datetime']=Carbon::now()->format('Y-m-d H:i:s');
                      $input['created_at']=Carbon::now()->format('Y-m-d H:i:s');
@@ -360,6 +362,38 @@ return redirect()->route('tasks_emergency');
         return view('tasks.tasks_emergency',$data);
   }
 
+  public function addEmergencyTaskDocument(Request $request){
+       dd($request->all());
+      if($request->hasFile('file')){
+        dd('hasfile');
+      }
+      $validator = Validator::make($request->all(), [
+         'task_id' => 'required',
+         'file'  => 'required|max:3000',
+         'description' => 'required',
+
+    ]);
+
+    if ($validator->fails()) {
+      return redirect()->back()
+          ->withErrors($validator)
+          ->withInput();
+  }else{
+      
+       
+       $file = $request->file('file');
+       $file_name = $file->getClientOriginalName().'.'.$file->getClientOriginalExtension();
+       $file->move(public_path('case_files'),$file_name);
+       
+      //Add files in table related to emergency tasks 
+     
+
+      $response = json_encode(['status' => 1]);
+       
+     return $response;
+  }
+
+ }
 
   public function add_task_report(Request $request , $id)
   {
