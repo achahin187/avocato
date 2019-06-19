@@ -25,9 +25,13 @@ class Company_Branch extends Model
         //Needs to be changed according to language
         //next release contact_us will have more than one language saved at the same time
      
-        if($value == null){
+        // if($value == null){
             $lang = Session::get('AppLocale');
+    // dd($lang);
+            if($lang != 1 ){      
             $newValue = Helper::localizations('company_branches' , 'name' , $this->id , $lang); 
+         
+            // dd($this->id, $newValue);
             return $newValue ;
             
         }else{

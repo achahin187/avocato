@@ -40,14 +40,15 @@
                               <p><b>اختار</b></p>
                             </div>
                             <div class="quick-filter-content">
-                              <div class="radiorobo">
-                                <input type="radio" id="english">
-                                <label for="english">English</label>
-                              </div>
-                              <div class="radiorobo">
-                                <input type="radio" id="english">
-                                <label for="english">French</label>
-                              </div>
+                              {{-- {{dd($languages)}} --}}
+                                @foreach($languages as $lang)
+                                @if($lang->id != \Session::get('AppLocale'))
+                                <div class="radiorobo">
+                                  <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                                  <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
+                                </div>
+                                @endif
+                              @endforeach
                             </div>
                           </div>
                         </div>
@@ -66,6 +67,7 @@
                         </thead>
                         <tbody>
                         @foreach($branches as $branch)
+                        @if($branch->name != null )
                           <tr data-branch-id="{{$branch['id']}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{$branch['name']}} </span></td>
@@ -97,38 +99,44 @@
                             @endif
                             </span></td>
                             <td><span class="cellcontent">
-                            <a id="add_localization" data-consult-id="" class= "action-btn bgcolor--main color--white add_localization">
+                            <a id="add_localization" data-branch-id="{{$branch['id']}}" class= "action-btn bgcolor--main color--white add_localization">
                               <i class = "fa fa-book"></i> &nbsp; اللغات
                             </a>
                             <a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
                             <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span>
                             </td>
                           </tr>
+                          @endif
                          @endforeach
                          
                         </tbody>
                       </table>
                       {{--localization modal --}} 
                     <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                        <form role="form" action="{{route('consultations_classification_add_localization')}}" method="post">
-                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        <form role="form" action="{{route('add_localization_contact')}}" method="post">
+                            {{csrf_field()}}
+                        <input type="hidden" name="branch_id" id="branch_id"> 
+                        {{-- {{dd($branch->id)}} --}}
+                          <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <div class="row">
                               <h4>ادخال اسم الفرع بلغات متعددة</h4><br>
-                              <input type="hidden" id="consult_id" name="consult_id">
                               <div class="col-sm-5">
                                 <div class="master_field">
                                   <label class="master_label mandatory" for="lang_id">اختار اللغة</label>
                                   <select class="master_input" id="lang_id" name="lang_id">
-                                      <option value="">English</option>
-                                      <option value="">French</option>
+                                      @foreach($languages as $lang)
+                                      @if($lang->id != 1)
+                                      <option value="{{$lang->id}}">{{$lang->name}}</option>
+                                      @endif
+                                    @endforeach
                                   </select>
                                 </div>
                               </div>
                               <div class="col-sm-7">
                                 <div class="master_field">
-                                  <label class="master_label mandatory" for="consult_name">ادخال اسم الفرع باللغة المختاره</label>
-                                  <input class="master_input" type="text" placeholder="اسم الفرع" id="consult_name" name="consult_name">
+                                  <label class="master_label mandatory" for="branch_name">ادخال اسم الفرع باللغة المختاره</label>
+                                  <input class="master_input" type="text" placeholder="اسم الفرع" id="branch_name" name="branch_name">
                                   <span class="master_message color--fadegreen">
                                     
                                   </span>
@@ -237,10 +245,31 @@ $('#quick_Filters_2').click( function(){
     // add localization
     $('.add_localization').click( function(){
         var localization_modal = $('#localization_modal');
-        var id = $(this).closest('tr').attr('data-consult');
+        var id = $(this).closest('tr').attr('data-branch-id');
         console.log(id);
         $('#branch_id').val(id);
         $('#localization_modal').remodal().open();
     });
+
+
+    //change lang
+    function ChangeLang(id){
+          $.ajax({
+                url: '{{ route("change.language") }}',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    locale: id,
+                    method: 'POST',
+                },
+                success: function (response) {
+                  window.location.href = '{{ Request::url() }}';
+                },
+                error: function(response) {
+                  console.log(response);
+                }
+            });
+        }
 </script>
 @endsection

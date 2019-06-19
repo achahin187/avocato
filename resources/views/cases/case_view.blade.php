@@ -251,10 +251,13 @@
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>إضافة تقرير فني</h3>
+                                  <form action="{{URL('case_add_report')}}" id="case_add_form" accept-charset="utf-8" enctype="multipart/form-data" method="POST" >
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="case_id" value="{{$case->id}}">
                                     <div class="col-md-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
-                                        <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
+                                        <textarea class="master_input" name="report_desc" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
                                       </div>
                                     </div>
                                     <div class="col-md-12">
@@ -263,7 +266,7 @@
                                         <div class="file-upload">
                                           <div class="file-select">
                                             <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                            <input class="chooseFile" type="file" name="chooseFile" id="report_upload">
+                                            <input class="chooseFile" type="file" name="report_file" id="report_upload">
                                           </div>
                                         </div><span class="master_message color--fadegreen">message</span>
                                       </div>
@@ -272,9 +275,10 @@
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                              <button class="remodal-confirm" data-remodal-action="confirm" type="submit" id="case_add_submit">إضافة</button>
                             </div>
                           </div>
+                        </form>
                   
                         </div>
                         
@@ -903,15 +907,21 @@ $.ajax({
            url:'{{URL('download_all_case_documents/'.$case->id)}}',
            
            success:function(data){
-            
-            // $('tr[data-record-id='+record_id+']').fadeOut();
+          // $('tr[data-record-id='+record_id+']').fadeOut();
           }
         });
-
-
-
 });
 
 
+      </script>
+
+      <script>
+       $(document).ready(function(){
+         $("#case_add_submit").click(function(){
+          //  alert('Test');
+          $("#case_add_form").submit();
+           
+                    });
+       });
       </script>
       @endsection

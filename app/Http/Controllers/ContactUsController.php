@@ -7,12 +7,16 @@ use App\Company_Branch;
 use App\Contact_Detail;
 use App\Geo_Countries;
 use App\Helpers\Helper;
+use App\Languages;
+use Illuminate\Support\Facades\Validator;
 class ContactUsController extends Controller
 {
     public function index()
     {
         $data['branches']=Company_Branch::with('contact_detail')->get();
         $data['codes']=Geo_Countries::all();
+        $data['languages'] = Languages::all();
+        
         // dd($data['branches']['0']['contact_detail'][0]['pivot']['name']);
       //    dd($data);
       return view('contactus.index',$data);
@@ -23,23 +27,23 @@ class ContactUsController extends Controller
     {
         // dd($request->all());
         try{
-            if($request->lang_id == 2)
-            {
+            // if($request->lang_id == 2)
+            // {
                 $branch= Company_Branch::create($request->all());
                  
-            }
+            // }
            
-           if($request->lang_id !='2'){
-               //dd($request->all());
-            //set lang
-            $branch= Company_Branch::create([
-                'is_main'=>$request['is_main'],
-                'longitude'=>$request['longitude'],
-                'latitude'=>$request['latitude']
-            ]);
-           $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
-           $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
-          }
+        //    if($request->lang_id !='2'){
+        //        //dd($request->all());
+        //     //set lang
+        //     $branch= Company_Branch::create([
+        //         'is_main'=>$request['is_main'],
+        //         'longitude'=>$request['longitude'],
+        //         'latitude'=>$request['latitude']
+        //     ]);
+        // //    $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
+        // //    $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
+        //   }
            if(isset($request['email']))
            {
                foreach($request['email'] as $email)
@@ -225,5 +229,22 @@ class ContactUsController extends Controller
             return response()->json(['success'=>'success','field'=>$field]);
         }
         return response()->json(['error']);
+      }
+
+      public function addLocalization(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'branch_id' => 'required|integer',
+            'branch_name'=>'required',
+            'lang_id' => 'required|integer'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+         Helper::remove_localization('company_branches', 'name', $request->branch_id, $request->lang_id);
+         Helper::add_localization('company_branches', 'name', $request->branch_id, $request->branch_name, $request->lang_id);
+        return redirect()->route('contactus_index')->with('success','تم الإضافة بنجاح');
+
       }
 }

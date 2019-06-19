@@ -29,6 +29,7 @@ class CompanyContactInfoController extends Controller
       $form_data->email=$request->email;
       
       $form_data->mobile=$request->mobile;
+
       
      if($request->lang_id == '2'){
       $form_data->address=$request->address;

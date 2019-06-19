@@ -4,7 +4,7 @@
   <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover">
-                    <div class="edit-mode">Editing mode</div>
+                    <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">

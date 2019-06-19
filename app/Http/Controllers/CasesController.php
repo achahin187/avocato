@@ -30,6 +30,7 @@ use App\Case_Document_Details;
 use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
+use App\Case_Techinical_Report_Document;
 // use Session;
 
 
@@ -557,9 +558,10 @@ class CasesController extends Controller
     //////add sessions
     public function add_session(Request $request, $id)
     {
-       
         $task = Tasks::where('case_id', $id)->orderBy('id', 'desc')->first();
-        if (count($task) != 0) {
+       $client_id = Case_Client::where('case_id',$id)->select('client_id')->first()->client_id;
+    
+       if ($task) {
             Tasks::create([
                 'case_id' => $id,
                 'level' => $request['degree'],
@@ -570,7 +572,8 @@ class CasesController extends Controller
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'task_type_id' => 2,
-                'country_id' => session('country')
+                'country_id' => session('country'),
+                'client_id' => $client_id,
             ]);
         } else {
             Tasks::create([
@@ -583,7 +586,8 @@ class CasesController extends Controller
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'task_type_id' => 2,
-                'country_id'=>session('country')
+                'country_id'=>session('country'),
+                'client_id' => $client_id,
             ]);
         }
         
@@ -847,5 +851,47 @@ class CasesController extends Controller
             Excel::store((new CasesExport(null, $type)), $filepath . $filename);
             return response()->json($PathForJson . $filename);
         }
+    }
+
+    public function addCaseReport(Request $request){
+        // dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'report_file' => 'required|max:3000',
+            'report_desc' => 'required',
+            'case_id' => 'required',
+            '_token' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $case_report = Case_Techinical_Report::create([
+            'technical_report_type_id' => 2,
+            'case_id' => $request->case_id,
+        //    'item_id' => $id,
+            'body' => $request->report_desc,
+            'created_by' => \Auth::user()->id,
+          ]);
+          
+          if ($request->hasFile('report_file')) {
+  
+           
+  
+                $destinationPath = 'reports';
+                $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $request->report_file->getClientOriginalExtension();
+     
+                Input::file('report_file')->move($destinationPath, $fileNameToStore);
+  
+               
+                Case_Techinical_Report_Document::create([
+                  'case_techinical_report_id' => $case_report->id,
+                  'file' => $fileNameToStore,
+                ]);
+            
+
+        }
+        return redirect()->back();
     }
 }

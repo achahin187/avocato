@@ -311,6 +311,7 @@ Route::middleware(['roles:1,2,3'])->group(function () {
     Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
     Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
     Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
+    Route::post('/case_add_report', 'CasesController@addCaseReport')->name('case_add_report');
 
 });
 
@@ -453,7 +454,8 @@ Route::middleware(['roles:1,2'])->group(function () {
         Route::post('/contactus/update/{id}','ContactUsController@update')->name('contactus_update');
         Route::post('/contactus/delete_all','ContactUsController@destroy_all')->name('contactus_delete_all');
         Route::post('/contactus/Localization','ContactUsController@getLocalization')->name('get_localization_contact');
-    
+        Route::post('/contactus/Localization/add','ContactUsController@addLocalization')->name('add_localization_contact');
+         
     
     });
 
