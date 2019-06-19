@@ -63,10 +63,14 @@ Route::post('/courts_list/add_localization', 'CourtsListController@add_localizat
 Route::get('/contracts_formulas_types', 'ContractsFormulasTypesController@index')->name('contracts_formulas_types');
 Route::post('/contracts_formulas_types_store', 'ContractsFormulasTypesController@store')->name('contracts_formulas_types_store');
 Route::post('/contracts_formulas_types_store_sub', 'ContractsFormulasTypesController@store_sub')->name('contracts_formulas_types_store_sub');
-Route::post('/contracts_formulas_types_destroy/{id}', 'ContractsFormulasTypesController@destroy')->name('contracts_formulas_types_destroy');
-Route::post('/contracts_formulas_types_destroy_all', 'ContractsFormulasTypesController@destroy_all')->name('contracts_formulas_types_destroy_all');
-Route::get('/contracts_formulas_types_excel', 'ContractsFormulasTypesController@excel')->name('contracts_formulas_types_excel');
-Route::post('/contracts_formulas_types/add_localization', 'ContractsFormulasTypesController@add_localization')->name('contracts_formulas_types_add_localization');
+Route::post('/contracts_formulas_main_type_destroy/{id}', 'ContractsFormulasTypesController@main_type_destroy')->name('contracts_formulas_main_type_destroy');
+Route::post('/contracts_formulas_main_type_destroyAll', 'ContractsFormulasTypesController@main_type_destroyAll')->name('contracts_formulas_main_type_destroyAll');
+Route::post('/contracts_formulas_sub_type_destroy/{id}', 'ContractsFormulasTypesController@sub_type_destroy')->name('contracts_formulas_sub_type_destroy');
+Route::post('/contracts_formulas_sub_type_destroyAll', 'ContractsFormulasTypesController@sub_type_destroyAll')->name('contracts_formulas_sub_type_destroyAll');
+Route::post('/contracts_formulas_types_main_excel', 'ContractsFormulasTypesController@main_excel')->name('contracts_formulas_types_main_excel');
+Route::get('/contracts_formulas_types_sub_excel', 'ContractsFormulasTypesController@sub_excel')->name('contracts_formulas_types_sub_excel');
+Route::post('/contracts_formulas_types/main_type_localization', 'ContractsFormulasTypesController@main_type_localization')->name('contracts_formulas_main_type_localization');
+Route::post('/contracts_formulas_types/sub_type_localization', 'ContractsFormulasTypesController@sub_type_localization')->name('contracts_formulas_sub_type_localization');
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
