@@ -361,10 +361,8 @@ class ServicesController extends Controller
 
     public function download_all_documents($id)
     {
-        // \File::delete(public_path().'/technical_reports.zip');
         $zipper = new \Chumper\Zipper\Zipper;
-
-        $report = Case_Techinical_Report::where('id', $id)->first();
+        $report = Case_Techinical_Report::where('id', $id)->with('case_tachinical_report_documents')->first();
         foreach ($report->case_tachinical_report_documents as $document) {
             $file = $document->file;
             $zipper->zip('technical_reports.zip')->add($file);
