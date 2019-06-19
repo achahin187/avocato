@@ -180,17 +180,21 @@
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                              <form method="post" enctype="multipart/form-data" id="task_document_form">
-                                {!! csrf_field() !!}
-                              <input type="hidden" name="task_id" value="{{$task->id}}">
-                                <div>
+                              <div>
+                              <form role="form" action="{{URL('add_task_report/'.$task->id)}}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+                              <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>إضافة تقرير فني</h3>
                                     <div class="col-md-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
-                                        <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
+                                        <textarea class="master_input" name="body" id="report_desc" placeholder="وصف التقرير" required></textarea>
+                                        <span class="master_message color--fadegreen">
+                                        @if ($errors->has('body'))
+                                    {{ $errors->first('body')}}
+                                    @endif
+                                        </span>
                                       </div>
                                     </div>
                                     <div class="col-md-12">
@@ -199,16 +203,20 @@
                                         <div class="file-upload">
                                           <div class="file-select">
                                             <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                            <input class="chooseFile" type="file" name="chooseFile" id="report_upload">
+                                            <input class="chooseFile" type="file" name="file[]" id="docs_upload" multiple>
+                                            <input  type="number" name="status" value="2" hidden>
                                           </div>
-                                        </div><span class="master_message color--fadegreen">message</span>
+                                        </div><span class="master_message color--fadegreen">@if ($errors->has('file'))
+                                    {{ $errors->first('file')}}
+                                    @endif</span>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" id="add_case_report" data-remodal-action="confirm" type="submit">إضافة</button>
+                              <button class="remodal-confirm" type="submit">إضافة</button>
+                              </form>
                             </div>
                           </div>
                         </form>
@@ -251,26 +259,26 @@
 
             </script>
            <script>
-       $(document).ready(function(){
+    //    $(document).ready(function(){
         
-         $("#add_case_report").on('click',function(){
-           alert('test');
-          $("#task_document_form").submit();
+    //      $("#add_case_report").on('click',function(){
+    //        alert('test');
+    //       $("#task_document_form").submit();
         
-        $("#task_document_form").on('submit',function(){
-          var formData = new FormData($("#task_document_form")[0]);
-              //  alert(task_id);
-              $.ajax({
-               type:'POST',
-               url:'/add_emergency_task_document',
-               data: formData,
-                 success:function(response){
-                   response = response.parseJSON();
-                   console.log('Success');
-            }
-         });
+    //     $("#task_document_form").on('submit',function(){
+    //       var formData = new FormData($("#task_document_form")[0]);
+    //           //  alert(task_id);
+    //           $.ajax({
+    //            type:'POST',
+    //            url:'/add_emergency_task_document',
+    //            data: formData,
+    //              success:function(response){
+    //                response = response.parseJSON();
+    //                console.log('Success');
+    //         }
+    //      });
        
-     });
+    //  });
 
 
        });                    

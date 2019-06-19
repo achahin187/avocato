@@ -329,8 +329,8 @@ class LegalConsultationsController extends Controller
             "msg" => $notification_type->msg,
             "entity_id" => 13,
             "item_id" => $consultation->id,
-            "item_name"=>$user->full_name,
-            "item_user_id"=>$user->id,
+            "item_name"=>\Auth::user()->fullname,
+            "item_user_id"=>\Auth::user()->id,
             "user_id" => $consultation->created_by,
             "notification_type_id" => 14,
             "is_read" => 0,
@@ -382,7 +382,7 @@ class LegalConsultationsController extends Controller
         //  dd($consultation_id);
         $consultation_types = Consultation_Types::all();
         $consultation = Consultation::find($consultation_id);
-        dd($consultation);
+        // dd($consultation);
         if($consultation->direct_assigned == 1)
         {
             session('error','لا يمكن تحديد محامين لهذه الاستشاره لانها موجهه لمحامى');
@@ -394,13 +394,14 @@ class LegalConsultationsController extends Controller
         foreach ($ids as $id) {
             $user=Users::find($consultation->created_by);
             $sync_data[$id] = ['assigned_by' => \Auth::user()->id, 'assigned_at' => Carbon::now()->format('Y-m-d H:i:s')];
-
+            $client=Users::find($consultation->created_by);
             $user = Users::find($id);
             $notification = Notifications::create([
                 "msg" => $notification_type->msg,
                 "entity_id" => 13,
                 "item_id" => $consultation_id,
-                "item_name" => $user->full_name,
+                "item_name" => $client->full_name,
+                "item_user_id"=>$client->id,
                 "user_id" => $id,
                 "notification_type_id" => 9,
                 "is_read" => 0,
@@ -419,26 +420,7 @@ class LegalConsultationsController extends Controller
             // $consultation->lawyers()->attach([($id,\Auth::user()->id,Carbon::now()->format('Y-m-d H:i:s') )]);
         }
         $consultation->lawyers()->sync($sync_data);
-        // foreach($ids as $id)
-        // {
-        //     $user=Users::find($id);
-        //     $notification=Notifications::create([
-        //         "msg"=>$notification_type->msg,
-        //         "entity_id"=>15,
-        //         "item_id"=>$consultation_id,
-        //         "user_id"=>$id,
-        //         "notification_type_id"=>9,
-        //         "is_read"=>0,
-        //         "is_sent"=>0,
-        //         "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
-        //     ]);
-        //      $notification_push=Notification_Push::create([
-        //         "notification_id"=>$notification->id,
-        //         "device_token"=>$user->device_token,
-        //         "mobile_os"=>$user->mobile_os,
-        //         "lang_id"=>$user->lang_id
-        //     ]);
-        // }
+       
         return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
     }
 
@@ -458,7 +440,8 @@ class LegalConsultationsController extends Controller
                     "msg" => $notification_type->msg,
                     "entity_id" => 13,
                     "item_id" => $consultation->id,
-                    "item_id"=>$user->full_name,
+                    "item_name"=>\Auth::user()->fullname,
+                    "item_user_id"=>\Auth::user()->id,
                     "user_id" => $consultation->created_by,
                     "notification_type_id" => 14,
                     "is_read" => 0,

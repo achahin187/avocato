@@ -24,7 +24,7 @@ Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->nam
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::middleware(['roles:1,2,3'])->group(function () {
-
+Route::post('/add_task_report/{id}', 'EmergencyTasksController@add_task_report')->name('add_task_report');
 Route::get('/issues_types', 'IssuesTypesController@index')->name('issues_types');
 Route::post('/issues_types_store', 'IssuesTypesController@store')->name('issues_types_store');
 Route::post('/issues_types_destroy/{id}', 'IssuesTypesController@destroy')->name('issues_types_destroy');

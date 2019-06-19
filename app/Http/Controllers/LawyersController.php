@@ -436,7 +436,7 @@ class LawyersController extends Controller
     $data['lawyer'] = Users::where('id',$id)->with('rules')->first();
 
     if( $data['lawyer'] == NULL ) {
-      Session::flash('warning', 'العقد او الصيغة غير موجود');
+      Session::flash('warning', 'المحامى غير موجود');
       return redirect('/lawyers');
     } 
     

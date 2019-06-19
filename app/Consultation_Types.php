@@ -18,13 +18,13 @@ class Consultation_Types extends Model
     	return $this->hasMany('App\Consultation', 'consultation_type_id');
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute($value)
     {
         $lang = Session::get('AppLocale');
         if($lang == 2 or $lang == 3){
             return Helper::localizations('consultation_types' , 'name' , $this->id , $lang);
         }else{
-            return $this->attributes['name'];
+            return $value;
         }
     }
 }
