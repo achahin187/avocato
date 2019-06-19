@@ -39,51 +39,61 @@
           </ul>
           <ul class="tab__content">
             <li class="tab__content_item active">
-            <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_gov"><i class="fa fa-plus"></i><span>إضافة</span></a>
+            <div class="col-md-2 col-sm-3 colxs-12 pull-right"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_govenment"><i class="fa fa-plus"></i><span>إضافة</span></a>
                 <div class="remodal-bg"></div>
-                <div class="remodal" data-remodal-id="popupModal_gov" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                <div class="remodal" data-remodal-id="add_govenment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                   <div>
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <h3>إضافة</h3>
-                      </div>
-                      <div class="col-xs-12">
-                        <div class="master_field">
-                          <label class="master_label mandatory" for="type">المحافظة</label>
-                          <input class="master_input" type="text" placeholder="المحافظة" id="type"><span class="master_message color--fadegreen">message</span>
+                    <form action="{{route('governoratesCities.addGovernment')}}" method="POST">
+                      {{csrf_field()}}
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <h3>اضافة</h3>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="master_field">
+                            <label class="master_label mandatory" for="gov_name">المحافظة</label>
+                            <input class="master_input" type="text" placeholder="المحافظة" id="gov_name" name="gov_name" required> 
+                              <span class="master_message color--fadegreen">
+                                @if ($errors->has('gov_name'))
+                                  {{ $errors->first('gov_name')}}
+                                @endif
+                              </span>
+                          </div>
+                        </div>
+                        <div class="clearfix"></div><br>
+                        <div class="text-center">
+                          <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                          <button class="remodal-confirm" type="submit">حفظ</button>
                         </div>
                       </div>
-                      <div class="clearfix"></div><br>
-                      <div class="text-center">
-                        <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                      </div>
-                    </div>
+                    </form>
                     <div class="clearfix"></div>
                   </div>
                 </div>
+
               </div>
               <div class="full-table">
                 <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
                 </div>
                 <div class="quick_filter">
                   <div class="dropdown quickfilter_dropb">
-                    <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2"><small>اللغات  &nbsp;</small><i class="fa fa-angle-down"></i></button>
+                    <button class="dropdown-toggle color--white bgcolor--main bradius--small bshadow--0" type="button" data-toggle="dropdown" id="quick_Filters_2">
+                      <small>اللغات  &nbsp;</small><i class="fa fa-angle-down"></i>
+                    </button>
                     <div class="dropdown-menu" role="menu" aria-labelledby="quick_Filters_2">
                       <div class="quick-filter-title">
                         <p><b>اختار</b></p>
                       </div>
                       <div class="quick-filter-content">
+                      @foreach($languages as $lang)
+                        @if($lang->id != \Session::get('AppLocale'))
                         <div class="radiorobo">
-                          <input type="radio" id="english">
-                          <label for="english">English</label>
+                          <input type="radio" id="lang_{{$lang->id}}" name="lang_id" value="{{$lang->id}}" onclick="ChangeLang({{$lang->id}})">
+                          <label for="lang_{{$lang->id}}">{{$lang->name}}</label>
                         </div>
-                        <div class="radiorobo">
-                          <input type="radio" id="english">
-                          <label for="english">French</label>
-                        </div>
-                    
+                        @endif
+                      @endforeach
                       </div>
                     </div>
                   </div>
@@ -97,16 +107,23 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                      <td><span class="cellcontent">القاهرة</span></td>
-                      <td><span class="cellcontent"><a href= #lang1 ,  class= "action-btn bgcolor--main color--white ">  <i class = "fa  fa-book"></i> &nbsp; اللغات</a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                      <td><span class="cellcontent">القاهرة</span></td>
-                      <td><span class="cellcontent"><a href= #lang1 ,  class= "action-btn bgcolor--main color--white ">  <i class = "fa  fa-book"></i> &nbsp; اللغات</a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                    </tr>
+                    @foreach ($governments as $government)
+                      @if($government->name != '')
+                      <tr data-government-id="{{$government->id}}">
+                        <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                        <td><span class="cellcontent">{{$government->name}}</span></td>
+                        <td>
+                          <span class="cellcontent">
+                            <a href= #lang1 class= "action-btn bgcolor--main color--white ">
+                              <i class = "fa  fa-book"></i> &nbsp; اللغات</a>
+                            <a href="#" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                              <i class = "fa  fa-trash-o"></i>
+                            </a>
+                          </span>
+                        </td>
+                      </tr>
+                      @endif
+                    @endforeach
                   </tbody>
                 </table>
               </div>
@@ -116,7 +133,7 @@
                 <div class="col-md-2 col-sm-3 colxs-12 pull-right">
 
                   {{-- Start Add button --}}
-                  <a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#popupModal_1">
+                  <a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_city">
                     <i class="fa fa-plus"></i><span>إضافة</span>
                   </a>
                   {{-- End add button --}}
@@ -124,27 +141,41 @@
                   <div class="remodal-bg"></div>
 
                   {{-- Start Add modal forms --}}
-                  <div class="remodal" data-remodal-id="popupModal_1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                  <div class="remodal" data-remodal-id="add_city" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                       <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                       <div>
+                      <form action="{{route('governoratesCities.addCity')}}" method="POST">
+                        {{csrf_field()}}
                         <div class="row">
                           <div class="col-xs-12">
-                            <h3>إضافة</h3>
+                            <h3>اضافة</h3>
                           </div>
                           <div class="col-lg-12">
                             <div class="master_field">
-                              <label class="master_label mandatory" for="gov3">المحافظة </label>
-                              <select class="master_input select2" id="gov3" style="width:100%">
-                                <option>القاهرة</option>
-                                <option>الأسكندرية</option>
-                                <option>أسوان</option>
-                              </select><span class="master_message color--fadegreen">message</span>
+                              <label class="master_label mandatory" for="government_id">المحافظة </label>
+                              <select class="master_input select2" id="government_id" name="government_id" style="width:100%">
+                                @foreach ($governments as $government)
+                                  @if($government->name != '')
+                                    <option value="{{$government->id}}">{{$government->name}}</option>
+                                  @endif
+                                @endforeach
+                              </select>
+                              <span class="master_message color--fadegreen">
+                                @if($errors->has('government_id'))
+                                  {{$errors->first('government_id')}}
+                                @endif
+                              </span>
                             </div>
                           </div>
                           <div class="col-xs-12">
                             <div class="master_field">
-                              <label class="master_label mandatory" for="city3">اسم المدينة</label>
-                              <input class="master_input" type="text" placeholder="اسم المدينة" id="city3"><span class="master_message color--fadegreen">message</span>
+                              <label class="master_label mandatory" for="add_city">اسم المدينة</label>
+                              <input class="master_input" type="text" placeholder="اسم المدينة" id="add_city" name="add_city">
+                              <span class="master_message color--fadegreen">
+                                  @if($errors->has('add_city'))
+                                    {{$errors->first('add_city')}}
+                                  @endif
+                              </span>
                             </div>
                           </div>
                           <div class="col-md-3 col-sm-6 col-xs-12">
@@ -154,102 +185,14 @@
                           <div class="clearfix"></div><br>
                           <div class="text-center">
                             <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                            <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                            <button class="remodal-confirm" type="submit">حفظ</button>
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                        <!---------------------- here is the old code-->
-                        <!-- <div class="row">
-                          <div class="col-xs-12">
-                            <h3>إضافة</h3>
-                            <div class="tabs--wrapper">
-                              <div class="clearfix"></div>
-                              <ul class="tabs">
-                                <li>المحافظات </li>
-                                <li>المدن</li>
-                              </ul>
-                              <ul class="tab__content">
-
-                              {{-- Start Add government form --}}
-                              <li class="tab__content_item {{ !$errors->has('city_name') ? 'active' : ''}}" id="right_form">
-                                <form action="{{ route('governoratesCities.addGovernment') }}" method="POST" class="resetForm">
-                                  {{-- Cross Site Request Forgery field --}}
-                                  {{ csrf_field() }}
-                                    <div class="col-xs-12">        
-                                      <div class="master_field">
-                                        <label class="master_label mandatory" for="gov2">اسم المحافظة</label>
-                                        <input name="gov_name" class="master_input" type="text" placeholder="اسم المحافظة" id="gov2" value="{{ old('gov_name') }}" required>
-                                        {{-- Error message --}}
-                                        @if ($errors->has('gov_name'))
-                                          <span class="master_message color--fadegreen">{{ $errors->first('gov_name') }}</span>
-                                        @endif   
-                                      </div>
-                                    </div>  
-                                  <br>
-                                  <button class="remodal-cancel" data-remodal-action="cancel" type="reset">إلغاء</button>
-                                  <button type="submit" class="remodal-confirm">حفظ</button>
-                                </form>
-                              </li>
-                              {{-- End Add government form --}}
-
-                                {{-- Start Add cities "المدن" --}}
-                                <li class="tab__content_item {{ ($errors->has('government_name') || $errors->has('city_name')) ? 'active' : '' }}" id="left_form">
-                                  <form action="{{ route('governoratesCities.addCity') }}" method="POST" class="resetForm">
-                                    {{ csrf_field() }}
-
-                                    <div class="col-lg-12">
-                                    <div class="master_field">
-
-                                      {{-- Government name --}}
-                                      <label class="master_label mandatory" for="gov3">المحافظة </label>
-                                      <select name="government_id" class="master_input select2" id="gov3" style="width:100%;">
-                                        
-                                        @foreach ($governments as $government)
-                                          @if($government->name != '')
-                                            <option value="{{ $government->id }}">{{ $government->name }}</option>
-                                          @endif
-                                        @endforeach
-                                        
-                                      </select><span class="master_message color--fadegreen">
-                                        {{-- Error message --}}
-                                        @if ($errors->has('government_id'))
-                                          {{ $errors->first('government_id') }}
-                                        @endif
-                                      </span>
-                                    </div>
-                                    </div>
-                                    <div class="col-xs-12">
-                                      <div class="master_field">
-
-                                        {{-- City name --}}
-                                        <label class="master_label mandatory" for="city3">اسم المدينة</label>
-                                        <input name="city_name" class="master_input" type="text" placeholder="اسم المدينة" id="city3" value="{{ old('city_name') }}" required>
-                                        
-                                        <span class="master_message color--fadegreen">
-                                          {{-- Error message --}}
-                                          @if ($errors->has('city_name'))
-                                            <span class="master_message color--fadegreen">{{ $errors->first('city_name') }}</span>
-                                          @endif
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                      <button class="master-btn undefined btn-inlineblock color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit" value="addMore" name="addMore"><span>حفظ واضافة المزيد</span>
-                                      </button>
-                                    </div>
-                                    <button class="remodal-cancel" data-remodal-action="cancel" type="reset">إلغاء</button>
-                                    <button type="submit" class="remodal-confirm">حفظ</button>
-                                  </form>
-                                </li>
-                                {{-- End Modal left side --}}
-                              </ul>
-                            </div>
-                            <div class="clearfix"></div>
-                          </div>
-                        </div> -->
+                      </form>
                       </div>
                     </div>
-                  {{-- End add modal forms --}}
+                       
 
                   {{--localization modal --}} 
                   <div id="localization_modal" class="remodal" data-remodal-id="lang" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">

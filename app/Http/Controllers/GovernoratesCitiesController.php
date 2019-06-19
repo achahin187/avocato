@@ -52,9 +52,7 @@ class GovernoratesCitiesController extends Controller
 
         // Check validation
         if ($validator->fails()) {
-            return redirect('/governorates_cities#popupModal_1')
-                            ->withErrors($validator)
-                            ->withInput();
+            return redirect('/governorates_cities#add_govenment')->withErrors($validator)->withInput();
         }
 
         // Add values
@@ -79,22 +77,20 @@ class GovernoratesCitiesController extends Controller
         // Validation
         $validator =  Validator::make($request->all(), [
             'government_id'  => 'required',
-            'city_name'      => 'required|unique:geo_cities,name'
+            'add_city'      => 'required|unique:geo_cities,name'
         ]);
 
         // Check validation
         if ($validator->fails()) {
-            return redirect('/governorates_cities#popupModal_1')
-                            ->withErrors($validator)
-                            ->withInput();
+            return redirect('/governorates_cities#add_city')->withErrors($validator)->withInput();
         }
         $gov=Geo_Governorates::find($request->government_id);
         // Add values
         try{
             Geo_Cities::create([
                 'governorate_id' => $request->government_id,
-                'name'           => $request->city_name,
-                'country_id'=>$gov->country_id
+                'name'           => $request->add_city,
+                'country_id'=> $gov->country_id
             ]);
             Session::flash('success', 'تم إضافة المدينة بنجاح');
         }
@@ -108,7 +104,7 @@ class GovernoratesCitiesController extends Controller
         
 
         if($request->addMore != null) {
-            return redirect('/governorates_cities#popupModal_1')->withErrors(['government_id' => 'اضف المزيد', 'city_name' => 'اضف المزيد']);
+            return redirect('/governorates_cities#add_city')->withErrors(['government_id' => 'اضف المزيد', 'add_city' => 'اضف المزيد']);
         }
 
         return redirect('/governorates_cities');
