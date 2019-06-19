@@ -243,6 +243,7 @@
                           <hr>
                           @endforeach
                           <div class="col-md-2 col-sm-3 col-xs-12">
+                              <a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -274,11 +275,16 @@
                               <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
                             </div>
                           </div>
+                  
                         </div>
+                        
                       </div>
                     </div>
                     <div class="clearfix"></div>
                   </div>
+
+                  
+
                   <div class="tabs--wrapper">
                     <div class="clearfix"></div>
                     <ul class="tabs">
