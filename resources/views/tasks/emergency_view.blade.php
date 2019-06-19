@@ -180,7 +180,10 @@
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                              <div>
+                              <form method="post" enctype="multipart/form-data" id="task_document_form">
+                                {!! csrf_field() !!}
+                              <input type="hidden" name="task_id" value="{{$task->id}}">
+                                <div>
                                 <div class="row">
                                   <div class="col-xs-12">
                                     <h3>إضافة تقرير فني</h3>
@@ -205,10 +208,10 @@
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                              <button class="remodal-confirm" id="add_case_report" data-remodal-action="confirm" type="submit">إضافة</button>
                             </div>
                           </div>
-
+                        </form>
                  
                   </div>
                   </div>
@@ -243,8 +246,39 @@
                 map: map
               });
             }
-         
+            
+            
 
             </script>
+           <script>
+       $(document).ready(function(){
+        
+         $("#add_case_report").on('click',function(){
+           alert('test');
+          $("#task_document_form").submit();
+        
+        $("#task_document_form").on('submit',function(){
+          var formData = new FormData($("#task_document_form")[0]);
+              //  alert(task_id);
+              $.ajax({
+               type:'POST',
+               url:'/add_emergency_task_document',
+               data: formData,
+                 success:function(response){
+                   response = response.parseJSON();
+                   console.log('Success');
+            }
+         });
+       
+     });
+
+
+       });                    
+         
+
+           
+           
+           
+           </script> 
             
             @endsection
