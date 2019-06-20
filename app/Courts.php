@@ -29,7 +29,7 @@ class Courts extends Model
             return Helper::localizations('courts' , 'name' , $this->id , $lang);
         }else{
             // return $this->attributes['name'];
-            return $value
+            return $value;
         }
     }
 }
