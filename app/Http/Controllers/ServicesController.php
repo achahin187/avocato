@@ -355,8 +355,11 @@ class ServicesController extends Controller
     {
         $document = Case_Techinical_Report_Document::find($id);
         $file = public_path() . "/" . $document->file;
-
-        return response()->download($file, $document->name);
+        if(file_exists($file)){
+            
+            return response()->download($file, $document->name);
+        }
+        return redirect()->back();
     }
 
     public function download_all_documents($id)

@@ -147,15 +147,16 @@
                 <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$report->lawyer->full_name}}</a>&nbsp;<i class="fa fa-user"></i></p>
                 <p class="right-text">{{$report->body}}</p>
               </div>
-              <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment1"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
+            <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment{{$loop->iteration}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
                 <div class="remodal-bg"></div>
-                <div class="remodal" data-remodal-id="report_attachment1" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                <div class="remodal" data-remodal-id="report_attachment{{$loop->iteration}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                   <div>
                     <div class="row">
                       <div class="col-xs-12">
                         <h3>الملفات المرفقة للتقرير بتاريخ {{$report->created_at->format('Y - m - d')}}</h3>
                         <ul class="mailbox-attachments clearfix right-text">
+                          {{-- {{dd($report->case_tachinical_report_documents)}} --}}
                           @foreach($report->case_tachinical_report_documents as $document)
                           <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
                             <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($document->file)}}"><i class="fa fa-paperclip"></i>&nbsp;

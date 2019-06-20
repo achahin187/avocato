@@ -211,7 +211,7 @@
                             <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#case_documents/{{$document->id}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
                               <div class="remodal-bg"></div>
                               <div class="remodal" data-remodal-id="case_documents/{{$document->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                 <form action="{{URL('download_all_case_documents/'.$document->id)}}" method="get">
+                                 <form action="{{URL('download_all_techinical_documents/'.$document->id)}}" method="get">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
@@ -223,7 +223,7 @@
                                       <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
 
                                         <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($doc->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
-                                            {{$doc->file}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_case_document/'.$doc->id  )}}"><i class="fa fa-cloud-download"></i></a></span></div>
+                                            {{$doc->file}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_techinical_document/'.$doc->id  )}}"><i class="fa fa-cloud-download"></i></a></span></div>
                                       </li>
                                       @endforeach
                                       
@@ -243,6 +243,7 @@
                           <hr>
                           @endforeach
                           <div class="col-md-2 col-sm-3 col-xs-12">
+                              <a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -899,7 +900,7 @@ case_id = $("#download_all").attr('data-id');
 
 $.ajax({
            type:'GET',
-           url:'{{URL('download_all_case_documents/'.$case->id)}}',
+           url:'{{URL('download_all_techinical_documents/'.$case->id)}}',
            
            success:function(data){
           // $('tr[data-record-id='+record_id+']').fadeOut();

@@ -328,9 +328,9 @@ class IndividualsCompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            dd($ex);
+            
             $user->forcedelete();
-            $user_rules->forcedelete();
+            $user->rules->forcedelete();
             $client_passwords->forcedelete();
             $user_details->forcedelete();
             $subscription->forcedelete();
@@ -338,6 +338,26 @@ class IndividualsCompaniesController extends Controller
             Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput();
         }
+         
+        try {
+
+            $services = BouquetService::all();
+            foreach ($services as $service)
+            {
+                $user_bouque = new UserBouquetServiceCount();
+                $user_bouque->user_id = $user->id;
+                $user_bouque->service_id = $service->id;
+                $user_bouque->count = 1000000;
+                $user_bouque->all_count = 1000000;
+                $user_bouque->used = 0;
+                $user_bouque->bouquet_id = 10;
+                $user_bouque->save();
+            }
+
+          } catch (\Exception $e) {
+
+
+          }
 
         // redirect with success
         $vodafone = new VodafoneSMS;

@@ -319,7 +319,9 @@ Route::middleware(['roles:1,2,3'])->group(function () {
     Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
     Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
     Route::post('/case_add_report', 'CasesController@addCaseReport')->name('case_add_report');
-
+    Route::get('/download_techinical_document/{id}', 'CasesController@downloadTechinicalReportDocument')->name('download_techinical_document');
+    Route::get('/download_all_techinical_documents/{id}', 'CasesController@downloadAllTechinicalDocuments')->name('download_all_techinical_documents');
+    
 });
 
 

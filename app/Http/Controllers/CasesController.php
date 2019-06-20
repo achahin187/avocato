@@ -500,7 +500,7 @@ class CasesController extends Controller
      
         foreach ($lawyers as $detail) {
             if (count(Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first())) {
-
+         
                 $detail['assigned'] = 1;
             } else {
                 $detail['assigned'] = 0;
@@ -752,7 +752,7 @@ class CasesController extends Controller
     {
         $zipper = new \Chumper\Zipper\Zipper;
         $docuemnts = Case_Document::where('id', $id)->with('case_document_details')->first();
-        if (count($docuemnts->case_document_details) > 0) {
+        if ($docuemnts->case_document_details->count()> 0) {
             foreach ($docuemnts->case_document_details as $document) {
                 $file = $document->file;
                 $files_counter = 0;
@@ -894,4 +894,47 @@ class CasesController extends Controller
         }
         return redirect()->back();
     }
+
+    public function downloadTechinicalReportDocument($id){
+
+        $document = Case_Techinical_Report_Document::find($id);
+
+        $file = public_path() . "/" . $document->file;
+        // dd($file);
+        if(file_exists($file)){
+        return response()->download($file, $document->name);
+        }else{
+            Session::flash('error', 'File not found !');
+            return redirect()->back();
+        }
+
+
+    
+    }
+
+    public function downloadAllTechinicalDocuments($id){
+        
+        $zipper = new \Chumper\Zipper\Zipper;
+// dd($id);
+        $documents = Case_Techinical_Report::where('id', $id)->with('case_tachinical_report_documents')->first();
+        
+    // dd($documents);
+
+        if ($documents->case_tachinical_report_documents->count() > 0) {
+            foreach ($documents->case_tachinical_report_documents as $document) {
+                $file = public_path() . "/".$document->file;
+                //   dd($file);
+                $zipper->zip('techinical_report.zip')->add($file);
+          
+            }
+            $zipper->close();
+            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+        }
+        return redirect()->back();
+
+
+    
+    }
+
+
 }
