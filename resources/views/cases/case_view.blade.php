@@ -193,7 +193,7 @@
                       </div>
                       <div class="panel-collapse collapse" id="collapse-1" role="tabpanel" aria-labelledby="heading-1" aria-expanded="true">
                         <div class="panel-body bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
-                          @foreach($case->case_documents as $document)
+                          @foreach($case->case_techinical_reports as $document)
                           <div class="row">
                             <div class="col-md-10">
                               <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
@@ -203,7 +203,7 @@
                               </p>
                               <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
                                 القائم بالمهمة
-                                &nbsp;<a href="lawyer_view.html">{{$document->user->name}}</a>&nbsp;<i class="fa fa-user"></i>
+                                &nbsp;<a href="lawyer_view.html">{{$document->lawyer->name}}</a>&nbsp;<i class="fa fa-user"></i>
                               </p>
                               <div class="clearfix"></div>
                               <p class="right-text">{{$document->notes}}</p>
@@ -219,7 +219,7 @@
                                     <div class="col-xs-12">
                                       <h3>الملفات المرفقة للتقرير</h3>
                                       <ul class="mailbox-attachments clearfix right-text">
-                                         @foreach($document->case_document_details as $doc)
+                                         @foreach($document->case_tachinical_report_documents as $doc)
                                       <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
 
                                         <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($doc->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
@@ -232,7 +232,7 @@
                                 </div>
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                              @if(count($document->case_document_details)>0)
+                              @if(count($document->case_tachinical_report_documents)>0)
                               <button class="remodal-confirm" >تحميل الكل</button>
                               @endif
                             </form>
