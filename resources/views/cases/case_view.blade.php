@@ -44,7 +44,7 @@
                       @foreach($case->lawyers as $lawyer)
                       <a href="{{URL('lawyers_show/'.$lawyer->id)}}">
                         
-                        {{$lawyer->name}} &
+                        {{$lawyer->name}}
                         
                       </a>
                       @endforeach
@@ -202,11 +202,12 @@
                                 &nbsp;<i class="fa fa-calendar"></i>
                               </p>
                               <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12">
-                                القائم بالمهمة
-                                &nbsp;<a href="lawyer_view.html">{{$document->lawyer->name}}</a>&nbsp;<i class="fa fa-user"></i>
+                                &nbsp;<a href="lawyer_view.html"> @foreach($case->lawyers as $lawyer) {{$lawyer->name." " }} @endforeach</a>&nbsp;<i class="fa fa-user"></i>
+                                {{-- القائم بالمهمة --}}
                               </p>
                               <div class="clearfix"></div>
-                              <p class="right-text">{{$document->notes}}</p>
+                              
+                              <p class="right-text">{{$document->body}}</p>
                             </div>
                             <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#case_documents/{{$document->id}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
                               <div class="remodal-bg"></div>

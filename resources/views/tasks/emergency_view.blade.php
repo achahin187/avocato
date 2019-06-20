@@ -144,7 +144,8 @@
                   {{$report->created_at->format('Y - m - d')}}
                   &nbsp;<i class="fa fa-calendar"></i>
                 </p>
-                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$report->lawyer->full_name}}</a>&nbsp;<i class="fa fa-user"></i></p>
+                
+                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">@if(!is_null($task->assigned_lawyer_id )) {{$task->lawyer->name or 'N/A'}}  @endif</a>&nbsp;<i class="fa fa-user"></i></p>
                 <p class="right-text">{{$report->body}}</p>
               </div>
             <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#report_attachment{{$loop->iteration}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
