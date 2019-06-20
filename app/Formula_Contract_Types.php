@@ -25,13 +25,13 @@ class Formula_Contract_Types extends Model
         return $this->hasMany('App\Formula_Contracts','formula_contract_types_id');
     }
 
-    public function getNameAttribute()
-    {
-        $lang = Session::get('AppLocale');
-        if($lang == 2 or $lang == 3){
-            return Helper::localizations('formula_contract_types' , 'name' , $this->id , $lang);
-        }else{
-            return $this->attributes['name'];
-        }
-    }
+    // public function getNameAttribute()
+    // {
+    //     $lang = Session::get('AppLocale');
+    //     if($lang == 2 or $lang == 3){
+    //         return Helper::localizations('formula_contract_types' , 'name' , $this->id , $lang);
+    //     }else{
+    //         return $this->attributes['name'];
+    //     }
+    // }
 }

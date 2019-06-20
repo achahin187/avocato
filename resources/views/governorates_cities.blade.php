@@ -152,11 +152,15 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($governments as $government)
-                      @if($government->name != '')
+                  @foreach ($governments as $government)
+                    @if(\Session::get('AppLocale') == 1)
                       <tr data-government_id="{{$government->id}}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                        <td><span class="cellcontent">{{$government->name}}</span></td>
+                        <td>
+                          <span class="cellcontent">
+                                {{$government->name}}
+                          </span>
+                        </td>
                         <td>
                           <span class="cellcontent">
                             <a data-government_id="{{$government->id}}" class= "action-btn bgcolor--main color--white government_localization">
@@ -168,6 +172,27 @@
                           </span>
                         </td>
                       </tr>
+                    @else
+                        @if(Helper::localizations('geo_governorates', 'name', $government->id, \Session::get('AppLocale')) != '')
+                        <tr data-government_id="{{$government->id}}">
+                          <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
+                          <td>
+                            <span class="cellcontent">
+                                  {{Helper::localizations('geo_governorates', 'name', $government->id, \Session::get('AppLocale'))}}
+                            </span>
+                          </td>
+                          <td>
+                            <span class="cellcontent">
+                              <a data-government_id="{{$government->id}}" class= "action-btn bgcolor--main color--white government_localization">
+                                <i class = "fa fa-book"></i> &nbsp; اللغات
+                              </a>
+                              <a data-government_id="{{$government->id}}" class= "delete_governate btn-warning-cancel action-btn bgcolor--fadebrown color--white ">
+                                <i class="fa fa-trash-o"></i>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                        @endif
                       @endif
                     @endforeach
                   </tbody>
@@ -360,8 +385,8 @@
                     <tbody>
                       
                       @if ( isset($cities) && !empty($cities) )
-                        @foreach ($cities as $city)
-                          @if($city->name != '')
+                        @foreach ($cities as $city) 
+                          @if(\Session::get('AppLocale') == 1)
                           <tr data-city_id="{{ $city->id }}">
                             <td>
                               <span class="cellcontent">
@@ -381,6 +406,28 @@
                               </span>
                             </td>
                           </tr>
+                          @else
+                            @if(Helper::localizations('geo_cities', 'name', $city->id, \Session::get('AppLocale')) != '')
+                            <tr data-city_id="{{ $city->id }}">
+                              <td>
+                                <span class="cellcontent">
+                                  <input type="checkbox" class="checkboxes input-in-table"  data-id="{{ $city->id }}" />
+                                </span>
+                              </td>
+                              <td><span class="cellcontent">{{Helper::localizations('geo_cities', 'name', $city->id, \Session::get('AppLocale')) }}</span></td>
+                              <td><span class="cellcontent">{{ $city->governorate ? $city->governorate->name : '' }}</span></td>
+                              <td>
+                                <span class="cellcontent">
+                                  <a id="add_localization" data-city_id="{{$city->id}}" class= "action-btn bgcolor--main color--white add_localization">
+                                    <i class = "fa fa-book"></i> &nbsp; اللغات
+                                  </a>
+                                  <a data-city_id="{{$city->id}}" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white delete_city">
+                                    <i class = "fa fa-trash-o"></i>
+                                  </a>
+                                </span>
+                              </td>
+                            </tr>
+                            @endif
                           @endif
                         @endforeach
                       @endif

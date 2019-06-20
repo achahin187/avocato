@@ -22,12 +22,4 @@ class Geo_Governorates extends Model
         return $this->hasMany('App\Case_', 'geo_governorate_id');
     }
 
-    public function getNameAttribute($value)
-    { 
-        $lang = Session::get('AppLocale');
-        if($lang == 2 or $lang == 3){
-            return Helper::localizations('geo_governorates', 'name', $this->id, $lang );
-        }
-        return $value;
-    }
 }

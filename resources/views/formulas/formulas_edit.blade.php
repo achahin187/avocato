@@ -113,10 +113,12 @@ $("select[name='mains']").trigger("change");
                          <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
                         @endif
                         @endforeach
-                        </select><span class="master_message color--fadegreen">
-                                   @if ($errors->has('mains'))
-                                    {{ $errors->first('mains')}}
-                                    @endif</span>
+                        </select>
+                        <span class="master_message color--fadegreen">
+                          @if ($errors->has('mains'))
+                            {{ $errors->first('mains')}}
+                          @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12">

@@ -104,7 +104,7 @@
                               </thead>
                               <tbody>
                                 @foreach($main_contracts as $main_contract)
-                                  @if($main_contract->name != '')
+                                  @if(\Session::get('AppLocale') == 1)
                                     <tr data-main_contract="{{$main_contract->id}}">
                                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes"/></span></td>
                                       <td><span class="cellcontent">{{$main_contract->name}}</span></td>
@@ -119,6 +119,23 @@
                                         </span>
                                       </td>
                                     </tr>
+                                  @else 
+                                    @if(Helper::localizations('formula_contract_types' , 'name' , $main_contract->id , \Session::get('AppLocale')) != '')
+                                      <tr data-main_contract="{{$main_contract->id}}">
+                                          <td><span class="cellcontent"><input type="checkbox" class="checkboxes"/></span></td>
+                                          <td><span class="cellcontent">{{ Helper::localizations('formula_contract_types' , 'name' , $main_contract->id , \Session::get('AppLocale')) }}</span></td>
+                                          <td>
+                                            <span class="cellcontent">
+                                              <a data-main_contract="{{$main_contract->id}}" class= "action-btn bgcolor--main color--white main_type_localization">  
+                                                <i class = "fa fa-book"></i> &nbsp; اللغات
+                                              </a>
+                                              <a data-main_contract="{{$main_contract->id}}" class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white main_type_destroy">
+                                                <i class = "fa fa-trash-o"></i>
+                                              </a>
+                                            </span>
+                                          </td>
+                                        </tr>
+                                    @endif
                                   @endif
                                 @endforeach
                               </tbody>
@@ -300,7 +317,7 @@
                             </thead>
                             <tbody>
                               @foreach($subs as $sub)
-                                @if($sub->name != '')
+                                @if(\Session::get('AppLocale') == 1)
                                 <tr data-sub_id="{{$sub->id}}">
                                   <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                                   <td><span class="cellcontent">{{isset($sub->parent->name) ? $sub->parent->name : ''}}</span></td>
@@ -316,6 +333,24 @@
                                     </span>
                                   </td>
                                 </tr>
+                                @else
+                                  @if(Helper::localizations('formula_contract_types' , 'name' , $sub->id , \Session::get('AppLocale')) != '')
+                                  <tr data-sub_id="{{$sub->id}}">
+                                      <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                                      <td><span class="cellcontent">{{isset($sub->parent->name) ? $sub->parent->name : ''}}</span></td>
+                                      <td><span class="cellcontent">{{Helper::localizations('formula_contract_types' , 'name' , $sub->id , \Session::get('AppLocale'))}}</span></td>
+                                      <td> 
+                                        <span class="cellcontent">   
+                                          <a data-sub_id="{{$sub->id}}" class="action-btn bgcolor--main color--white sub_type_localization">
+                                            <i class = "fa fa-book"></i> &nbsp; اللغات
+                                          </a>
+                                          <a data-sub_id="{{$sub->id}}" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white sub_type_destroy">
+                                            <i class = "fa fa-trash-o"></i>
+                                          </a>
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  @endif
                                 @endif
                               @endforeach
                             </tbody>
