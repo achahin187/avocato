@@ -39,13 +39,29 @@ class ContractsFormulasTypesController extends Controller
     }
 
 
-    public function excel()
+    public function sub_excel()
     {   
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
         $filename = 'formulasTypes'.time().'.xlsx';
         if(isset($_GET['ids'])){
            $ids = $_GET['ids'];
+            Excel::store(new FormulasTypesExport($ids),$filepath.$filename);
+            return response()->json($PathForJson.$filename);
+        }
+        else{
+        Excel::store((new FormulasTypesExport()),$filepath.$filename);
+        return response()->json($PathForJson.$filename); 
+      }
+    }
+
+    public function main_excel(Request $request)
+    {   
+        $filepath ='public/excel/';
+        $PathForJson='storage/excel/';
+        $filename = 'formulasTypes'.time().'.xlsx';
+        if(isset($request->ids)){
+           $ids = $request->ids;
             Excel::store(new FormulasTypesExport($ids),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         }
@@ -64,65 +80,35 @@ class ContractsFormulasTypesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'main'=>'required',
+            'contract_main_type_name'=>'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('contracts_formulas_types#popupModal_1')
-            ->withErrors($validator)
-            ->withInput();
+            return redirect('contracts_formulas_types#add_main_contract')->withErrors($validator)->withInput();
         }
         $main = new Formula_Contract_Types;
-        $main->name= $request->main;
+        $main->name= $request->contract_main_type_name;
         $main->save();
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
     }
 
     public function store_sub(Request $request)
     {
-        $tab="tab";
-        switch ($request->input('action')) {
-            case 'one':
-
         $validator = Validator::make($request->all(), [
-            'mains'=>'required',
-            'sub'=>'required',
+            'main_type_id'=>'required|integer',
+            'sub_type_name'=>'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('contracts_formulas_types#popupModal_1')
-            ->withErrors($validator)
-            ->withInput();
+            return redirect('contracts_formulas_types#add_sub_contract')->withErrors($validator)->withInput();
         }
+
         $sub = new Formula_Contract_Types;
-        $sub->name = $request->sub;
-        $sub->parent_id = $request->mains;
-        $sub->country_id=session('country');
+        $sub->name = $request->sub_type_name;
+        $sub->parent_id = $request->main_type_id;
+        $sub->country_id= session('country');
         $sub->save();
-        return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف فرعي جديد');
-
-            break;
-
-            case 'more':
-
-        $validator = Validator::make($request->all(), [
-            'mains'=>'required',
-            'sub'=>'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('contracts_formulas_types#popupModal_1')
-            ->withErrors($validator)
-            ->withInput();
-        }
-        $sub = new Formula_Contract_Types;
-        $sub->name = $request->sub;
-        $sub->parent_id = $request->mains;
-        $sub->country_id=session('country');
-        $sub->save();
-        return redirect('contracts_formulas_types#popupModal_1')->with( ['tab'=> $tab,'success_more' =>'تم إضافه تصنيف فرعي جديد'] );
-            break;
-        }
+        return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف فرعي جديد');      
     }
 
     /**
@@ -165,32 +151,52 @@ class ContractsFormulasTypesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function main_type_destroy($id)
     {
-        $sub=Formula_Contract_Types::find($id);
+        $main_type = Formula_Contract_Types::find($id);
         Helper::remove_related_localization('formula_contract_types', $id);
-        $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
-        if($counter == 1)
-        {
-            $sub->delete();
-            Formula_Contract_Types::where('id',$sub->parent_id)->delete();
-            $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-            foreach($formulas as $formula){
-                File::delete($formula->file);
-                $formula->delete();
-            }
-        }
-        else{
-            $sub->delete();
-            $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
-            foreach($formulas as $formula){
-                File::delete($formula->file);
-                $formula->delete();
-            }
-        }
+        $main_type->children()->delete();
+        $main_type->delete();
     }
 
-    public function destroy_all()
+    public function main_type_destroyAll(Request $request)
+    {
+        foreach($request->ids as $id)
+        {
+            $main_type = Formula_Contract_Types::find($id);
+            Helper::remove_related_localization('formula_contract_types', $id);
+            $main_type->children()->delete();
+            $main_type->delete();
+        } 
+    }
+    
+    public function sub_type_destroy($id)
+    {
+        $sub_type = Formula_Contract_Types::find($id);
+        Helper::remove_related_localization('formula_contract_types', $id);
+        $sub_type->delete();
+        // $counter = Formula_Contract_Types::where('parent_id',$sub->parent_id)->get()->count();
+        // if($counter == 1)
+        // {
+        //     $sub->delete();
+        //     Formula_Contract_Types::where('id',$sub->parent_id)->delete();
+        //     $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        //     foreach($formulas as $formula){
+        //         File::delete($formula->file);
+        //         $formula->delete();
+        //     }
+        // }
+        // else{
+        //     $sub->delete();
+        //     $formulas = Formula_Contracts::where('formula_contract_types_id',$id)->get();
+        //     foreach($formulas as $formula){
+        //         File::delete($formula->file);
+        //         $formula->delete();
+        //     }
+        // }
+    }
+
+    public function sub_type_destroyAll(Request $request)
     {
         $ids = $_POST['ids'];
         foreach($ids as $id)
@@ -219,18 +225,33 @@ class ContractsFormulasTypesController extends Controller
         } 
     }
 
-    public function add_localization(Request $request)
+    public function main_type_localization(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'sub_id' => 'required|integer',
-            'sub_name'=>'required',
-            'lang_id' => 'required|integer'
+            'main_type_localization_id' => 'required|integer',
+            'main_type_localization_name'=>'required',
+            'main_type_localization_lang' => 'required|integer'
         ]);
-
+        
         if ($validator->fails()) {
-            return redirect('contracts_formulas_types#lang')->withErrors($validator)->withInput();
+            return redirect('contracts_formulas_types#main_type_localization')->withErrors($validator)->withInput();
         }
-        Helper::add_localization('formula_contract_types', 'name', $request->sub_id, $request->sub_name, $request->lang_id);
+        Helper::add_localization('formula_contract_types', 'name', $request->main_type_localization_id, $request->main_type_localization_name, $request->main_type_localization_lang);
+        return redirect()->route('contracts_formulas_types')->with('success','تم الإضافة بنجاح');
+    }
+    
+    public function sub_type_localization(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'sub_type_localization_id' => 'required|integer',
+            'sub_type_localization_name'=>'required',
+            'sub_type_localization_lang' => 'required|integer'
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect('contracts_formulas_types#sub_type_localization')->withErrors($validator)->withInput();
+        }
+        Helper::add_localization('formula_contract_types', 'name', $request->sub_type_localization_id, $request->sub_type_localization_name, $request->sub_type_localization_lang);
         return redirect()->route('contracts_formulas_types')->with('success','تم الإضافة بنجاح');
     }
 

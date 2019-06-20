@@ -45,6 +45,7 @@ $("select[name='mains']").trigger("change");
   });
 </script>
 
+{{\Session::put('AppLocale', 1)}}
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
@@ -95,7 +96,7 @@ $("select[name='mains']").trigger("change");
                         <div class="file-upload">
                           <div class="file-select">
                             <div class="file-select-name" id="noFile">اضغط هنا لرفع صورة العقد / الصيغة</div>
-                            <input name="file" class="chooseFile" type="file" name="chooseFile" id="contract_upload">
+                            <input name="file" class="chooseFile" accept="application/pdf" type="file" name="chooseFile" id="contract_upload">
                           </div>
                         </div><span class="master_message color--fadegreen"></span>
                       </div>
@@ -112,10 +113,12 @@ $("select[name='mains']").trigger("change");
                          <option value="{{$main_contract->id}}">{{$main_contract->name}}</option>
                         @endif
                         @endforeach
-                        </select><span class="master_message color--fadegreen">
-                                   @if ($errors->has('mains'))
-                                    {{ $errors->first('mains')}}
-                                    @endif</span>
+                        </select>
+                        <span class="master_message color--fadegreen">
+                          @if ($errors->has('mains'))
+                            {{ $errors->first('mains')}}
+                          @endif
+                        </span>
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12">

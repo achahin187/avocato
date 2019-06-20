@@ -31,13 +31,4 @@ class Geo_Cities extends Model
         return $this->hasMany('App\User_Details','work_sector_area_id');
     }
     
-    public function getNameAttribute()
-    {
-        $lang = Session::get('AppLocale');
-        if($lang == 2 or $lang == 3){
-            return Helper::localizations('geo_cities' , 'name' , $this->id , $lang);
-        }else{
-            return $this->attributes['name'];
-        }
-    }
 }

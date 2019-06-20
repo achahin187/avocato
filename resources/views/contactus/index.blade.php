@@ -91,7 +91,6 @@
                             </span></td>
                             <td><span class="cellcontent">{{$branch['address']}}</span></td>
                             <td><span class="cellcontent">
-                            
                             @if($branch['is_main'])
                             <i class = "fa color--black fa-check"></i>
                             @else
@@ -105,6 +104,7 @@
                             <a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
                             <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span>
                             </td>
+                            <td><span class="cellcontent"><a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endif
                          @endforeach
@@ -143,14 +143,163 @@
                                 </div>
                               </div>
                               <div class="clearfix"></div>
+                      <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        <div>
+                          <h2 class="title">title of the changing log in</h2>
+                          <div class="log-content">
+                            <div class="log-container">
+                              <table class="log-table">
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <th>log title</th>
+                                  <th>user</th>
+                                  <th>time</th>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>January</td>
+                                  <td>$100</td>
+                                  <td>$100</td>
+                                </tr>
+                                <tr class="log-row" data-link="https://www.google.com.eg/">
+                                  <td>February</td>
+                                  <td>$80</td>
+                                  <td>$80</td>
+                                </tr>
+                              </table>
                             </div>
-                            </div><br>
-                            <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                            <button class="remodal-confirm" remodal-action="confirm" type="submit">حفظ</button>
-                          </form>
-                        </div>  
-                        {{-- End localization modal --}}
-      
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
