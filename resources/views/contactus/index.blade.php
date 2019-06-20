@@ -40,7 +40,7 @@
                               <p><b>اختار</b></p>
                             </div>
                             <div class="quick-filter-content">
-                              {{-- {{dd($languages)}} --}}
+                              
                                 @foreach($languages as $lang)
                                 @if($lang->id != \Session::get('AppLocale'))
                                 <div class="radiorobo">
