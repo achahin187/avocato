@@ -104,7 +104,6 @@
                             <a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
                             <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span>
                             </td>
-                            <td><span class="cellcontent"><a href="{{route('contactus_edit',$branch['id'])}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                           </tr>
                           @endif
                          @endforeach

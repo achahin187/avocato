@@ -30,7 +30,7 @@ class ContactUsController extends Controller
             // if($request->lang_id == 2)
             // {
                 $branch= Company_Branch::create($request->all());
-                 
+                //  dd($branch);
             // }
            
         //    if($request->lang_id !='2'){

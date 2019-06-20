@@ -921,6 +921,9 @@ class CasesController extends Controller
     // dd($documents);
 
         if ($documents->case_tachinical_report_documents->count() > 0) {
+            
+            return redirect()->back();
+
             foreach ($documents->case_tachinical_report_documents as $document) {
                 $file = public_path() . "/".$document->file;
                 //   dd($file);
@@ -928,7 +931,13 @@ class CasesController extends Controller
           
             }
             $zipper->close();
-            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+            if(file_exists(public_path() . "/".'techinical_report.zip')){
+
+                return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+            }else{
+                return redirect()->back();
+            }
+
         }
         return redirect()->back();
 
