@@ -267,7 +267,7 @@ class LawyersController extends Controller
     ]);
 
     if ($validator->fails()) {
-      dd($validator);
+      // dd($validator);
       return redirect()->back()
         ->withErrors($validator)
         ->withInput();
