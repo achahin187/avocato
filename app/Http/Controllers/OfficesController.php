@@ -194,7 +194,6 @@ class OfficesController extends Controller
     ]);
 
     if ($validator->fails()) {
-       dd($validator);
       return redirect()->back()->withErrors($validator)->withInput();
     }
 

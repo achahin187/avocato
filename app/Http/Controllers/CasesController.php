@@ -559,8 +559,12 @@ class CasesController extends Controller
     public function add_session(Request $request, $id)
     {
         $task = Tasks::where('case_id', $id)->orderBy('id', 'desc')->first();
-       $client_id = Case_Client::where('case_id',$id)->select('client_id')->first()->client_id;
-    
+
+           $client_id = Case_Client::where('case_id',$id)->select('client_id')->first();
+      
+           if(!$client_id == null){
+               $client_id= $client_id->client_id;
+           }
        if ($task) {
             Tasks::create([
                 'case_id' => $id,
