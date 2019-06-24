@@ -44,7 +44,6 @@ class LawyersController extends Controller
         // return Users::withTrashed()->restore();
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
-    // })->orderBy('created_at','desc')->get();
     })->orderBy('created_at','desc')->paginate(10);
     foreach($data['lawyers'] as $key=>$lawyer)
     {

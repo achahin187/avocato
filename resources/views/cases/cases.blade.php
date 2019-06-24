@@ -109,8 +109,9 @@
                             </div>
                             <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_cases"><i class="fa fa-filter"></i>filters</a></div>
                             <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#" >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                                   {{$cases->links()}}
                             </div>
-                            <table class="table-1 cases_1" id="dataTableTriggerId_001" >
+                            <table class="table-1 cases_1 hide-datatable-pagination" id="dataTableTriggerId_001" >
                               <thead>
                                 <tr class="bgcolor--gray_mm color--gray_d" >
                                   <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>

@@ -38,7 +38,7 @@ class OfficesController extends Controller
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15);
         });
-    $data['offices'] = $q->get();
+    $data['offices'] = $q->paginate(10);
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     return view('offices.list', $data);
   }

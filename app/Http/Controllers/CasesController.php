@@ -44,7 +44,7 @@ class CasesController extends Controller
     public function index()
     {
         
-        $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->get();
+        $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->paginate(10);
         
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();

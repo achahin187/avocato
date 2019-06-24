@@ -28,9 +28,11 @@ class NewsListController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
-          $languages = Languages::all();
-
-        return view('news.news_list')->with('news', News::where('country_id',session('country'))->get())->with('languages', $languages);
+          $data['news'] = News::where('country_id',session('country'))->paginate(10);
+          $data['languages'] = Languages::all();
+          
+        // return view('news.news_list')->with('news', News::where('country_id',session('country'))->get())->with('languages', $languages);
+        return view('news.news_list')->with($data);
     }
 
     public function filter(Request $request)

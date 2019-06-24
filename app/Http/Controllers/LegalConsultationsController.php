@@ -36,7 +36,7 @@ class LegalConsultationsController extends Controller
     public function index()
     {
         $consultation_types = Consultation_Types::all();
-        $consultations = Consultation::where('country_id',session('country'))->orderBy('created_at', 'desc')->get();
+        $consultations = Consultation::where('country_id',session('country'))->orderBy('created_at', 'desc')->paginate(10);
         foreach ($consultations as $consultation) {
             $consultation_type = Consultation_types::find($consultation->consultation_type_id);
             if ($consultation_type) {
