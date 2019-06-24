@@ -651,8 +651,7 @@ if (currentIndex === 5) { //if last step
             }],   
             'order': [1, 'asc'],
 
-            // dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
-            dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination">  > ' ,
+             dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ' ,
             "language": {
               "search": "dd",
               "sLengthMenu": "عرض _MENU_  ",
