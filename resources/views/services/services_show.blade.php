@@ -42,6 +42,15 @@
             });
         }, 4000);
 </script>
+ <script>
+    $(document).ready(function(){
+      $("#service_add_submit").click(function(){
+       //  alert('Test');
+       $("#service_add_form").submit();
+        
+                 });
+    });
+   </script>
 
 
 <!-- =============== Custom Content ===============-->
@@ -216,21 +225,23 @@
                     </div>
                     <div class="clearfix"></div>
                     @endforeach
-                  </div>
-                 
-
+                  {{-- </div> --}}
                         <div class="col-md-2">
+                          <a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
                           <div class="remodal-bg"></div>
-                          <div class="remodal" data-remodal-id="popupModal_2" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                          <div class="remodal" data-remodal-id="add_report" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                             <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                             <div>
                               <div class="row">
                                 <div class="col-xs-12">
                                   <h3>إضافة تقرير فني</h3>
-                                  <div class="col-md-12">
+                                  <form action="{{URL('service_add_report')}}" id="service_add_form" accept-charset="utf-8" enctype="multipart/form-data" method="POST" >                              
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="service_id" value="{{$service->id}}">
+                                    <div class="col-md-12">
                                     <div class="master_field">
                                       <label class="master_label mandatory" for="report_desc">وصف التقرير</label>
-                                      <textarea class="master_input" name="textarea" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
+                                      <textarea class="master_input" name="report_desc" id="report_desc" placeholder="وصف التقرير"></textarea><span class="master_message color--fadegreen">message</span>
                                     </div>
                                   </div>
                                   <div class="col-md-12">
@@ -239,7 +250,7 @@
                                       <div class="file-upload">
                                         <div class="file-select">
                                           <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                          <input class="chooseFile" type="file" name="chooseFile" id="docs_upload">
+                                          <input class="chooseFile" type="file" name="report_file" id="docs_upload">
                                         </div>
                                       </div><span class="master_message color--fadegreen">message</span>
                                     </div>
@@ -248,9 +259,10 @@
                               </div>
                             </div><br>
                             <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                            <button class="remodal-confirm" data-remodal-action="confirm">إضافة</button>
+                            <button class="remodal-confirm" data-remodal-action="confirm" id="service_add_submit">إضافة</button>
                           </div>
                         </div>
+                      </form>
                         <div class="clearfix"></div>
                       </div>
                     </div>

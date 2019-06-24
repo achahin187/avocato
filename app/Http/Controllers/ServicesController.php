@@ -23,7 +23,8 @@ use App\Notification_Types;
 use App\Notifications;
 use App\Notifications_Push;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 class ServicesController extends Controller
 {
     /**
@@ -112,6 +113,7 @@ class ServicesController extends Controller
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
         $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->get();
+    //   dd($data['reports']);
         return view('services.services_show', $data);
     }
 
@@ -516,6 +518,48 @@ class ServicesController extends Controller
             "user_id" => $request['lawyer']
         ]);
         return redirect()->back()->with('success', 'تم تعيين محامى بنجاح');
+    }
+
+    public function addServiceReport(Request $request){
+            // dd($request->all());
+            $validator = Validator::make($request->all(), [
+                'report_file' => 'required|max:3000',
+                'report_desc' => 'required',
+                'service_id' => 'required',
+                '_token' => 'required',
+            ]);
+    
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+            $case_report = Case_Techinical_Report::create([
+                'technical_report_type_id' => 3,
+                'item_id' => $request->service_id,
+            //    'item_id' => $id,
+                'body' => $request->report_desc,
+                'created_by' => \Auth::user()->id,
+              ]);
+              
+              if ($request->hasFile('report_file')) {
+      
+               
+      
+                    $destinationPath = 'reports';
+                    $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $request->report_file->getClientOriginalExtension();
+         
+                    Input::file('report_file')->move($destinationPath, $fileNameToStore);
+      
+                   
+                    Case_Techinical_Report_Document::create([
+                      'case_techinical_report_id' => $case_report->id,
+                      'file' => $fileNameToStore,
+                    ]);
+                
+    
+            }
+            return redirect()->back();
     }
 
 

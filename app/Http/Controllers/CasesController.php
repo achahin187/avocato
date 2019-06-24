@@ -919,10 +919,9 @@ class CasesController extends Controller
     public function downloadAllTechinicalDocuments($id){
         
         $zipper = new \Chumper\Zipper\Zipper;
-// dd($id);
+
         $documents = Case_Techinical_Report::where('id', $id)->with('case_tachinical_report_documents')->first();
         
-    // dd($documents);
 
         if ($documents->case_tachinical_report_documents->count() > 0) {
             

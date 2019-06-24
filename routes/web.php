@@ -349,7 +349,7 @@ Route::get('/services_lawyer/{id}', 'ServicesController@lawyer')->name('services
 Route::get('/services_lawyer_task/{id}', 'ServicesController@lawyer_task')->name('services_lawyer_task');
 Route::post('/services_lawyer_assign/{id}', 'ServicesController@assign')->name('services_lawyer_assign');
 Route::post('/services_lawyer_filter/{id}', 'ServicesController@filter_lawyer')->name('services_lawyer_filter');
-
+Route::post('/service_add_report', 'ServicesController@addServiceReport')->name('service_add_report');
 });
 
 Route::middleware(['roles:1,2'])->group(function () {
