@@ -113,7 +113,7 @@ class ServicesController extends Controller
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
         $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->get();
-    //   dd($data['reports']);
+        // dd($data['reports']);
         return view('services.services_show', $data);
     }
 
@@ -367,8 +367,10 @@ class ServicesController extends Controller
     public function download_all_documents($id)
     {
         $zipper = new \Chumper\Zipper\Zipper;
-        $report = Case_Techinical_Report::where('id', $id)->with('case_tachinical_report_documents')->first();
-        foreach ($report->case_tachinical_report_documents as $document) {
+     
+        $report = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->with('case_tachinical_report_documents')->get(); 
+        foreach ($report as $rep) {
+            foreach($rep->case_tachinical_report_documents as $document)     
             $file = $document->file;
             $zipper->zip('technical_reports.zip')->add($file);
 

@@ -195,7 +195,7 @@
                   {{$report->created_at->format('Y - m - d')}}
                   &nbsp;<i class="fa fa-calendar"></i>
                 </p>
-                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$report->lawyer->full_name}}</a>&nbsp;<i class="fa fa-user"></i></p>
+                <p class="color--gray_d col-md-4 col-md-6 col-sm-6 col-xs-12"><a href="">{{$service->name}}</a>&nbsp;<i class="fa fa-user"></i></p>
                 <p class="right-text">{{$report->body}}</p>
               </div>
               <div class="col-md-2">
@@ -220,7 +220,7 @@
                           </div>
                         </div><br>
                         <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
-                        <a href="{{route('report_download_all_documents',$report->id)}}"><button class="remodal-confirm">تحميل الكل</button></a>
+                        <a href="{{route('report_download_all_documents',$service->id)}}"><button class="remodal-confirm">تحميل الكل</button></a>
                       </div>
                     </div>
                     <div class="clearfix"></div>

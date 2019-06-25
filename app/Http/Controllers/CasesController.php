@@ -920,28 +920,22 @@ class CasesController extends Controller
         
         $zipper = new \Chumper\Zipper\Zipper;
 
-        $documents = Case_Techinical_Report::where('id', $id)->with('case_tachinical_report_documents')->first();
+        $reports = Case_Techinical_Report::where('case_id', $id)->with('case_tachinical_report_documents')->get();
         
 
-        if ($documents->case_tachinical_report_documents->count() > 0) {
+            foreach ($reports as $report) {
             
-            return redirect()->back();
-
-            foreach ($documents->case_tachinical_report_documents as $document) {
-                $file = public_path() . "/".$document->file;
-                //   dd($file);
+             foreach($report->case_tachinical_report_documents as $document)               
+                $file =$document->file;
                 $zipper->zip('techinical_report.zip')->add($file);
           
             }
             $zipper->close();
             if(file_exists(public_path() . "/".'techinical_report.zip')){
-
-                return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
-            }else{
-                return redirect()->back();
-            }
-
-        }
+                return response()->download(public_path() . "/techinical_report.zip")->deleteFileAfterSend(true);
+           
+          
+         }
         return redirect()->back();
 
 

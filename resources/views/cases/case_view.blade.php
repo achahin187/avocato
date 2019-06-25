@@ -212,7 +212,7 @@
                             <div class="col-md-2"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-inlineblock" href="#case_documents/{{$document->id}}"><i class="fa fa-paperclip"></i><span>الملفات المرفقة</span></a>
                               <div class="remodal-bg"></div>
                               <div class="remodal" data-remodal-id="case_documents/{{$document->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                 <form action="{{URL('download_all_techinical_documents/'.$document->id)}}" method="get">
+                                 {{-- <form action="{{URL('download_all_techinical_documents/'.$case->id)}}" method="get"> --}}
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
@@ -234,9 +234,10 @@
                               </div><br>
                               <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
                               @if(count($document->case_tachinical_report_documents)>0)
+                              <a href="{{route('download_all_techinical_documents',$case->id)}}">
                               <button class="remodal-confirm" >تحميل الكل</button>
                               @endif
-                            </form>
+                            {{-- </form> --}}
                               </div>
                             </div>
                             <div class="clearfix"></div>
