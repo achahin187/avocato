@@ -140,6 +140,7 @@ class NotificationsController extends Controller
         $notification->notification_type_id=8;
         $notification->is_sent=0;
         $notification->user_id = $id;
+        $notification->is_push = 1;
         $notification->save();
             $item = new Notification_Items;
             $item->item_id = $id;
