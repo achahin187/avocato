@@ -123,7 +123,7 @@ class NotificationsController extends Controller
             "mobile_os"=> $user->mobile_os,
             "user_id"=>$id
         ]);
-        $request->session()->flash('success', 'Notification Added Successfully');
+        $request->session()->flash('success', 'Notification Sent Successfully');
         return redirect()->back();
         // return response()->json('تمت الإضافه');
     }
@@ -131,8 +131,8 @@ class NotificationsController extends Controller
     public function notification_for_lawyers()
     {
         $ids = $_POST['ids'];
-        
         foreach($ids as $id) {
+        $user = Users::find($id);
         $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
         $notification = new Notifications;
         $notification->msg = $_POST['notific'];
@@ -144,6 +144,14 @@ class NotificationsController extends Controller
             $item = new Notification_Items;
             $item->item_id = $id;
             $notification->noti_items()->save($item);
+            
+            $notification_push= Notifications_Push::create([
+                "notification_id" => $notification->id , 
+                "device_token" =>  $user->device_token,
+                "mobile_os"=> $user->mobile_os,
+                "user_id"=>$id
+            ]);
+
 }
         session()->flash('success', 'Notification Sent Successfully');
         return response()->json('تمت الإضافه');
