@@ -235,11 +235,10 @@
                           @foreach($contracts as $contract)
                           <tr data-contract-id="{{$contract->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
-                            <td><span class="cellcontent">{{$contract->name}}</span></td>
-                            <td><span class="cellcontent">@if(isset($contract->sub->parent->name))
-                  {{$contract->sub->parent->name}}@endif</span></td>
+                            <td><span class="cellcontent">{{$contract->name or 'N/A'}}</span></td>
+                            <td><span class="cellcontent">{{$contract->sub->parent->name or 'N/A'}}</span></td>
                   
-                            <td><span class="cellcontent">{{$contract->sub->name}}</span></td>
+                            <td><span class="cellcontent">{{$contract->sub->name or 'N/A'}}</span></td>
                             <td><span class="cellcontent">@if($contract->is_contract==1)عقد@else صيغه @endif</span></td>
                             <td><span class="cellcontent">{{$contract->created_at}}</span></td>
                             <td><span class="cellcontent"><a href= "{{route('formulas_edit',$contract->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
