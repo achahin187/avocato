@@ -39,7 +39,6 @@ class TasksController extends Controller
     {
         $data['tasks']=Tasks::where('country_id',session('country'))->where('task_type_id',1)->get();
 
-
         
         $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
                                             $query->where('rule_id', '6');

@@ -236,7 +236,9 @@
                           <tr data-contract-id="{{$contract->id}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
                             <td><span class="cellcontent">{{$contract->name}}</span></td>
-                            <td><span class="cellcontent">{{$contract->sub->parent->name}}</span></td>
+                            <td><span class="cellcontent">@if(isset($contract->sub->parent->name)         
+                  {{$contract->sub->parent->name}}@endif</span></td>
+                  
                             <td><span class="cellcontent">{{$contract->sub->name}}</span></td>
                             <td><span class="cellcontent">@if($contract->is_contract==1)عقد@else صيغه @endif</span></td>
                             <td><span class="cellcontent">{{$contract->created_at}}</span></td>

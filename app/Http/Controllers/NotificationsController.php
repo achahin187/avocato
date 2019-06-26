@@ -160,7 +160,7 @@ class NotificationsController extends Controller
     public function filter(Request $request)
     {
         if($request->package == '-1' && !$request->filled('date_from') && !$request->filled('date_to') ) { 
-            return redirect()->route('notifications');
+            return redirect()->route('notifications');  
         }
         $data['subscription_types'] = bouquet::all();
         $data['notifications'] = Notifications::where(function($q) use($request){
