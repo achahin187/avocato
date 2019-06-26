@@ -95,9 +95,12 @@ class EmergencyTasksController extends Controller
                      $input2['task_status_id']=$task->task_status_id;
                      $input2['user_id']=\Auth::user()->id;
                      $input2['datetime']=Carbon::now()->format('Y-m-d H:i:s');
+                     
                      $task_status_history=Task_Status_History::create($input2);
+                     
                      Helper::add_log(7,15,$task->id);
-return redirect()->route('tasks_emergency');
+                     session()->flash('success', 'Task Added Successfully');                    
+                 return redirect()->route('tasks_emergency');
     }
 
     public function assign_emergency_task($id)
