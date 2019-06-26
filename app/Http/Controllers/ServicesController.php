@@ -523,8 +523,8 @@ class ServicesController extends Controller
     }
 
     public function addServiceReport(Request $request){
-            // dd($request->all());
-            $validator = Validator::make($request->all(), [
+
+        $validator = Validator::make($request->all(), [
                 'report_file' => 'required|max:3000',
                 'report_desc' => 'required',
                 'service_id' => 'required',
@@ -539,7 +539,6 @@ class ServicesController extends Controller
             $case_report = Case_Techinical_Report::create([
                 'technical_report_type_id' => 3,
                 'item_id' => $request->service_id,
-            //    'item_id' => $id,
                 'body' => $request->report_desc,
                 'created_by' => \Auth::user()->id,
               ]);

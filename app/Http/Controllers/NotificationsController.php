@@ -131,18 +131,21 @@ class NotificationsController extends Controller
     public function notification_for_lawyers()
     {
         $ids = $_POST['ids'];
+        
+        foreach($ids as $id) {
         $send_date = date('Y-m-d H:i:s',strtotime($_POST['noti_date']));
         $notification = new Notifications;
         $notification->msg = $_POST['notific'];
         $notification->schedule = $send_date;
         $notification->notification_type_id=8;
         $notification->is_sent=0;
+        $notification->user_id = $id;
         $notification->save();
-        foreach($ids as $id) {
             $item = new Notification_Items;
             $item->item_id = $id;
             $notification->noti_items()->save($item);
 }
+        session()->flash('success', 'Notification Sent Successfully');
         return response()->json('تمت الإضافه');
     }
 
