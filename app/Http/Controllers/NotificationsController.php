@@ -123,7 +123,7 @@ class NotificationsController extends Controller
             "mobile_os"=> $user->mobile_os,
             "user_id"=>$id
         ]);
-        session('success','Notification added successfully');
+        $request->session()->flash('success', 'Notification Added Successfully');
         return redirect()->back();
         // return response()->json('تمت الإضافه');
     }
