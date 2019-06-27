@@ -367,7 +367,8 @@ class ServicesController extends Controller
     public function download_all_documents($id)
     {
         $zipper = new \Chumper\Zipper\Zipper;
-     
+
+        
         $report = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->with('case_tachinical_report_documents')->get(); 
         foreach ($report as $rep) {
             foreach($rep->case_tachinical_report_documents as $document)     

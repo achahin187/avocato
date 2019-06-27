@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
     
                 $note['url']='lawyers_show';
                 }
-                if($note->notification_type_id ==7){
+                if($note->notification_type_id ==7 || $note->notification_type_id ==14 ){
     
                 $note['url']='legal_consultation_view';
                 }
