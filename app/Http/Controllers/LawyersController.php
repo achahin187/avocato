@@ -45,6 +45,7 @@ class LawyersController extends Controller
     $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('rule_id', 5);
     })->orderBy('created_at','desc')->paginate(10);
+
     foreach($data['lawyers'] as $key=>$lawyer)
     {
       if($lawyer->IsOffice())
@@ -212,7 +213,7 @@ class LawyersController extends Controller
 
 
 
-    })->get();
+    })->paginate(10);
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
