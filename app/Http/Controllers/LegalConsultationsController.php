@@ -528,7 +528,7 @@ class LegalConsultationsController extends Controller
                }
 
 
-        })->get();
+        })->paginate(10);
         foreach ($data['consultations'] as $consultation) {
 
             $consultation_type = Consultation_types::find($consultation->consultation_type_id);

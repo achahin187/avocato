@@ -33,7 +33,7 @@ class MobileController extends Controller
         //     return redirect()->route('choose.country');
         // }
        
-        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id', Auth::user()->country_id)->get());
+        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id', Auth::user()->country_id)->paginate(10));
     }
 
     // Filter mobile users
@@ -99,13 +99,13 @@ class MobileController extends Controller
 
         switch ($request->activate) {
             case "1":
-                $filter = $filter->get();
+                $filter = $filter->paginate(10);
                 break;
             case "2":
-                $filter = $filter->where('is_active', '!=', 0)->get();
+                $filter = $filter->where('is_active', '!=', 0)->paginate(10);
                 break;
             case "3":
-                $filter = $filter->where('is_active', 0)->get();
+                $filter = $filter->where('is_active', 0)->paginate(10);
                 break;
             default:
                 break;

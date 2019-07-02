@@ -106,8 +106,9 @@
         <div class="bottomActions__btns">
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
+            {{$users->links()}}
         </div>
-        <table class="table-1" id="dataTableTriggerId_001">
+        <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>             

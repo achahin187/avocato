@@ -34,7 +34,7 @@ class UsersListController extends Controller
         // return Users::withTrashed()->restore();
         $data['users'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('parent_id', 13);
-        })->get();
+        })->paginate(10);
         $data['roles'] = Rules::where('parent_id', 13)->get();
         return view('users.users_list', $data);
     }
@@ -107,7 +107,7 @@ class UsersListController extends Controller
 
 
 
-        })->get();
+        })->paginate(10);
         $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
         foreach ($data['users'] as $user) {
             $filter_ids[] = $user->id;

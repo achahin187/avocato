@@ -152,7 +152,7 @@ class OfficesController extends Controller
         });
       }
 
-    })->get();
+    })->paginate(10);
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();

@@ -823,7 +823,7 @@ class CasesController extends Controller
             if ($request->filled('case_date_from') && $request->filled('case_date_to')) {
                 $q->where('claim_date', '<=', $request->case_date_from)->where('claim_date', '<=', $request->case_date_to);
             }
-        })->get();
+        })->paginate(10);
 
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();

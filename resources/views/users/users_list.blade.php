@@ -183,9 +183,10 @@
           </div><br>
           <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
           <button class="remodal-confirm"  type="submit">تطبيق الفلاتر</button>
+          {{$users->links()}}
         </form>
         </div>
-        <table class="table-1" id="dataTableTriggerId_001">
+        <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
               <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>

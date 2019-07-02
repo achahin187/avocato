@@ -148,7 +148,7 @@ Route::get('/users_list_destroy_get/{id}', 'UsersListController@destroyGet')->na
 Route::post('/users_list_destroy_post/{id}', 'UsersListController@destroyPost')->name('users_list_destroy_post');
 Route::post('/users_list_destroy_all', 'UsersListController@destroy_all')->name('users_list_destroy_all');
 Route::get('/users_list_excel', 'UsersListController@excel')->name('users_list_excel');
-Route::post('/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
+Route::match(['get','post'],'/users_list_filter', 'UsersListController@filter')->name('users_list_filter');
 Route::post('/filter_logs/{id}', 'UsersListController@filter_logs')->name('filter_logs');
 
 });
@@ -221,7 +221,7 @@ Route::get('/mobile_show/{id}', 'MobileController@show')->name('mobile.show');
 Route::post('/mobile/exportXLS', 'MobileController@exportXLS')->name('mobile.exportXLS');
 Route::get('/mobile/destroySelected', 'MobileController@destroySelected')->name('mobile.destroySelected');
 Route::get('/mobile/destroy/{id}', 'MobileController@destroy')->name('mobile.destroy');
-Route::post('/mobile/filter', 'MobileController@filter')->name('mobile.filter');
+Route::match(['get','post'],'/mobile/filter', 'MobileController@filter')->name('mobile.filter');
 
 
 Route::get('/notifications', 'NotificationsController@index')->name('notifications');
@@ -288,7 +288,7 @@ Route::post('/legal_category_consultation/{id}', 'LegalConsultationsController@c
 Route::get('/legal_consultation_destroy/{id}', 'LegalConsultationsController@destroy')->name('legal_consultation_destroy');
 Route::post('/legal_consultation_destroy_all', 'LegalConsultationsController@destroy_all')->name('legal_consultation_destroy_all');
 Route::post('/send_consultation_to_all_lawyers/{consultation_id}', 'LegalConsultationsController@send_consultation_to_all_lawyers')->name('send_consultation_to_all_lawyers');
-Route::post('/legal_consultation_filter', 'LegalConsultationsController@consultations_filter')->name('legal_consultation_filter');
+Route::match(['get','post'],'/legal_consultation_filter', 'LegalConsultationsController@consultations_filter')->name('legal_consultation_filter');
 Route::post('/set_perfect_response', 'LegalConsultationsController@set_perfect_response')->name('set_perfect_response');
 Route::post('/lawyers_consultation_filter/{id}', 'LegalConsultationsController@lawyers_filter')->name('lawyers_consultation_filter');
 Route::get('/consultations_excel', 'LegalConsultationsController@excel')->name('consultations_excel');
@@ -317,7 +317,7 @@ Route::middleware(['roles:1,2,3'])->group(function () {
     Route::get('/download_all_case_documents/{id}', 'CasesController@download_all_case_documents')->name('download_all_case_documents');
     Route::get('/download_all_case_documents_all/{id}', 'CasesController@download_all_case_documents_all')->name('download_all_case_documents_all');
     Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
-    Route::post('/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
+    Route::match(['get','poste'],'/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
     Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
     Route::post('/case_add_report', 'CasesController@addCaseReport')->name('case_add_report');
     Route::get('/download_techinical_document/{id}', 'CasesController@downloadTechinicalReportDocument')->name('download_techinical_document');
