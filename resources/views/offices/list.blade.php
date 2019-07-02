@@ -80,7 +80,7 @@ $(document).on('confirmation', '#two', function () {
                   @endif
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="full-table">
+                    <div class="full-table hide-datatable-pagination">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>

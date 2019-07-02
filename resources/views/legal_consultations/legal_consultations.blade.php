@@ -145,7 +145,7 @@ else
                       <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
                   @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="full-table">
+                    <div class="full-table hide-datatable-pagination">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                           <form role="form" action="{{route('legal_consultation_filter')}}" method="post" accept-charset="utf-8">

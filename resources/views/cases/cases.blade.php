@@ -36,7 +36,7 @@
                       </ul>
                       <ul class="tab__content">
                         <li class="tab__content_item active">
-                          <div class="full-table">
+                          <div class="full-table hide-datatable-pagination">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_cases" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                                  <form action="{{route('filter_cases')}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">

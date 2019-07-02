@@ -340,7 +340,7 @@ Route::get('/services_edit/{id}', 'ServicesController@edit')->name('services_edi
 Route::post('/services_update/{id}', 'ServicesController@update')->name('services_update');
 Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
 Route::get('/services_excel2', 'ServicesController@excel2')->name('services_excel2');
-Route::post('/services_filter', 'ServicesController@filter')->name('services_filter');
+Route::match(['get','post'],'/services_filter', 'ServicesController@filter')->name('services_filter');
 Route::post('/services_filter2', 'ServicesController@filter2')->name('services_filter2');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
@@ -359,7 +359,7 @@ Route::get('/tasks_normal', 'TasksController@normal_index')->name('tasks_normal'
 Route::post('/session_destroy/{id}', 'TasksController@destroy')->name('session_destroy');
 Route::post('/session_destroy_all', 'TasksController@destroy_all')->name('session_destroy_all');
 Route::get('/session_excel', 'TasksController@excel')->name('session_excel');
-Route::post('/session_filter', 'TasksController@filter')->name('session_filter');
+Route::match(['get','post'],'/session_filter', 'TasksController@filter')->name('session_filter');
 Route::get('/substitutions', 'SubstitutionsController@index')->name('substitutions');
 Route::get('/substitutions_edit', 'SubstitutionsController@edit')->name('substitutions.edit');
 Route::get('/substitutions_assign/{id}', 'SubstitutionsController@assign')->name('substitutions.assign');

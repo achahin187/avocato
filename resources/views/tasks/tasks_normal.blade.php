@@ -213,7 +213,7 @@
       <ul class="tab__content">
         <li class="tab__content_item active">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-            <div class="full-table">
+            <div class="full-table hide-datatable-pagination">
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filterModal_agenda" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
           <form role="form" action="{{route('session_filter')}}" method="POST" accept-charset="utf-8">
@@ -305,6 +305,7 @@
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_agenda"><i class="fa fa-filter"></i>filters</a></div>
               <div class="bottomActions__btns"><a class="excel-session-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all-session" href="#">حذف المحدد</a>
+              {{$sessions->links()}}
               </div>
               <table class="table-1" id="dataTableTriggerId_001">
                 <thead>
@@ -500,7 +501,7 @@
         </li>
         <li class="tab__content_item">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-            <div class="full-table">
+            <div class="full-table hide-datatable-pagination">
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filterModal_services" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
           <form role="form" action="{{route('services_filter2')}}" method="POST" accept-charset="utf-8">
@@ -573,6 +574,7 @@
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_services"><i class="fa fa-filter"></i>filters</a></div>
               <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                 {{$services->links()}}
               </div>
               <table class="table-1" id="dataTableTriggerId_001">
                 <thead>

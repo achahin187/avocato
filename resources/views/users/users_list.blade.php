@@ -124,7 +124,7 @@
         <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
     @endif
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      <div class="full-table">
+      <div class="full-table hide-datatable-pagination">
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_client_list"><i class="fa fa-filter"></i>filters</a></div>
         <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white " href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
         </div>

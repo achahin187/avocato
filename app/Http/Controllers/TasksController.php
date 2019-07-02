@@ -25,8 +25,8 @@ class TasksController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
-        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->get();
-        $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id',3)->get();
+        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->paginate(10);
+        $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id',3)->paginate(10);
         $data['regions'] = Case_::all('region');
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
         $data['statuses'] = Entity_Localizations::where('entity_id',4)->where('field','name')->get();
@@ -149,7 +149,7 @@ class TasksController extends Controller
 
 
 
-        })->get();
+        })->paginate(10);
 
             foreach($data['sessions'] as $session)
             {
