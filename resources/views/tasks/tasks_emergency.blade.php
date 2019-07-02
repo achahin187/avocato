@@ -32,7 +32,7 @@
                 </div>
                 @endif
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <div class="full-table">
+                    <div class="full-table hide-datatable-pagination">
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                           <form role="form" action="{{route('emergency_task_filter')}}" method="post" accept-charset="utf-8">
@@ -115,6 +115,9 @@
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                       <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white"  >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                     @if($tasks instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                        {{$tasks->links()}}
+                        @endif
                       </div>
                       <table class="table-1" id="dataTableTriggerId_001">
                         <thead>

@@ -37,7 +37,7 @@ class TasksController extends Controller
 
     public function emergency_index()
     {
-        $data['tasks']=Tasks::where('country_id',session('country'))->where('task_type_id',1)->get();
+        $data['tasks']=Tasks::where('country_id',session('country'))->where('task_type_id',1)->paginate(10);
 
         
         $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {

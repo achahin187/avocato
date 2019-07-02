@@ -356,7 +356,7 @@ class EmergencyTasksController extends Controller
                     }
               }
 
-    })->get();
+    })->paginate(10);
 
 
     $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
