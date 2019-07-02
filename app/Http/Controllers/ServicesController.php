@@ -323,7 +323,7 @@ class ServicesController extends Controller
 
 
 
-        })->get();
+        })->paginate(10);
         $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
         $data['courts'] = Courts::where('country_id',session('country'))->get();
         $data['regions'] = Case_::all('region');

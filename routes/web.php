@@ -317,7 +317,7 @@ Route::middleware(['roles:1,2,3'])->group(function () {
     Route::get('/download_all_case_documents/{id}', 'CasesController@download_all_case_documents')->name('download_all_case_documents');
     Route::get('/download_all_case_documents_all/{id}', 'CasesController@download_all_case_documents_all')->name('download_all_case_documents_all');
     Route::post('/edit_case/{id}', 'CasesController@edit_case')->name('edit_case');
-    Route::match(['get','poste'],'/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
+    Route::match(['get','post'],'/filter_cases', 'CasesController@filter_cases')->name('filter_cases');
     Route::get('/cases_excel', 'CasesController@excel')->name('cases_excel');
     Route::post('/case_add_report', 'CasesController@addCaseReport')->name('case_add_report');
     Route::get('/download_techinical_document/{id}', 'CasesController@downloadTechinicalReportDocument')->name('download_techinical_document');
@@ -341,7 +341,7 @@ Route::post('/services_update/{id}', 'ServicesController@update')->name('service
 Route::get('/services_excel', 'ServicesController@excel')->name('services_excel');
 Route::get('/services_excel2', 'ServicesController@excel2')->name('services_excel2');
 Route::match(['get','post'],'/services_filter', 'ServicesController@filter')->name('services_filter');
-Route::post('/services_filter2', 'ServicesController@filter2')->name('services_filter2');
+Route::match(['get','post'],'/services_filter2', 'ServicesController@filter2')->name('services_filter2');
 Route::post('/services_destroy/{id}', 'ServicesController@destroy')->name('services_list_destroy');
 Route::post('/services_destroy_all', 'ServicesController@destroy_all')->name('services_destroy_all');
 Route::get('/report_download_document/{id}', 'ServicesController@download_document')->name('report_download_document');

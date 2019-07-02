@@ -305,7 +305,9 @@
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_agenda"><i class="fa fa-filter"></i>filters</a></div>
               <div class="bottomActions__btns"><a class="excel-session-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all-session" href="#">حذف المحدد</a>
-              {{$sessions->links()}}
+              @if($sessions instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                {{$sessions->links()}}
+              @endif
               </div>
               <table class="table-1" id="dataTableTriggerId_001">
                 <thead>
@@ -574,7 +576,9 @@
               </div>
               <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_services"><i class="fa fa-filter"></i>filters</a></div>
               <div class="bottomActions__btns"><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
-                 {{$services->links()}}
+                @if($services instanceof \Illuminate\Pagination\LengthAwarePaginator) 
+                {{$services->links()}}
+                @endif
               </div>
               <table class="table-1" id="dataTableTriggerId_001">
                 <thead>
