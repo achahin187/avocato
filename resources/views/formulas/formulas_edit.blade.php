@@ -126,10 +126,12 @@ $("select[name='mains']").trigger("change");
                         <label class="master_label mandatory" for="sec_type">التصنيف الفرعي</label>
                         <select name="subs" class="master_input select2" id="sec_type" data-placeholder="اختر التصنيف الفرعي" style="width:100%;" ,>
                         <option value="choose" disabled>اختر تصنيف فرعي</option>
-                        </select><span class="master_message color--fadegreen">
-                                    @if ($errors->has('subs'))
-                                    {{ $errors->first('subs')}}
-                                    @endif</span>
+                        </select>
+                          <span class="master_message color--fadegreen">
+                            @if ($errors->has('subs'))
+                              {{ $errors->first('subs')}}
+                            @endif
+                          </span>
                       </div>
                     </div>
 
