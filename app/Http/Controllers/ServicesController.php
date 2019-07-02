@@ -266,7 +266,7 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if ($request->filled('payment_status'))
-            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->paginat(10);
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->paginate(10);
         else
             $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->paginate(10);
 
