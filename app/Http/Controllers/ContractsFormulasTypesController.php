@@ -86,8 +86,10 @@ class ContractsFormulasTypesController extends Controller
         if ($validator->fails()) {
             return redirect('contracts_formulas_types#add_main_contract')->withErrors($validator)->withInput();
         }
+        
         $main = new Formula_Contract_Types;
         $main->name= $request->contract_main_type_name;
+        $main->lang_id = 1;
         $main->save();
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف رئيسي جديد');
     }
@@ -106,6 +108,7 @@ class ContractsFormulasTypesController extends Controller
         $sub = new Formula_Contract_Types;
         $sub->name = $request->sub_type_name;
         $sub->parent_id = $request->main_type_id;
+        $sub->lang_id = 1;
         $sub->country_id= session('country');
         $sub->save();
         return redirect()->route('contracts_formulas_types')->with('success','تم إضافه تصنيف فرعي جديد');      
