@@ -145,10 +145,22 @@ class EmergencyTasksController extends Controller
     	]);
       $user=Users::find($request['lawyer_id']);
       $notification_type=Notification_Types::find(11);
+      // $notification=Notifications::create([
+      //           "msg"=>$notification_type->msg,
+      //           "entity_id"=>11,
+      //           "item_id"=>$id,
+      //           "item_name"=>($client)?$client->name:"",
+      //           "user_id"=>$request['lawyer_id'],
+      //           "notification_type_id"=>11,
+      //           "is_read"=>0,
+      //           "is_sent"=>0,
+      //           'is_push'=>$notification_type->is_push,
+      //           "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
+      //       ]);
       $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
                 "entity_id"=>11,
-                "item_id"=>$id,
+                "item_id"=>($client)?$client->id:"0",
                 "item_name"=>($client)?$client->name:"",
                 "user_id"=>$request['lawyer_id'],
                 "notification_type_id"=>11,
