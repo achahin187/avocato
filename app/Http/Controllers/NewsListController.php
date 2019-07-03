@@ -87,13 +87,13 @@ class NewsListController extends Controller
 
         switch ($request->condition) {
             case "1":
-                $filter = $filter->get();
+                $filter = $filter->paginate(10);
                 break;
             case "2":
-                $filter = $filter->where('is_active', 1)->get();
+                $filter = $filter->where('is_active', 1)->paginate(10);
                 break;
             case "3":
-                $filter = $filter->where('is_active', 0)->get();
+                $filter = $filter->where('is_active', 0)->paginate(10);
                 break;
             default:
                 break;

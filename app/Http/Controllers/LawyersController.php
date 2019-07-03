@@ -125,6 +125,7 @@ class LawyersController extends Controller
       return response()->json($PathForJson . $filename);
     } else {
       Excel::store((new LawyersExport(null,$is_report)), $filepath . $filename);
+
       return response()->json($PathForJson . $filename);
     }
   }
@@ -138,7 +139,7 @@ class LawyersController extends Controller
             no all items in the table
      */
     
-    $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+      $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -217,7 +218,7 @@ class LawyersController extends Controller
     })->paginate(10);
     
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
-    $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6);
+    $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
     $data['work_sectors'] = Specializations::all();
     $data['syndicate_levels'] = SyndicateLevels::all();

@@ -183,7 +183,9 @@
           </div><br>
           <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
           <button class="remodal-confirm"  type="submit">تطبيق الفلاتر</button>
-          {{$users->links()}}
+          @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+          {{$users->appends(Request::except('page'))->links()}}
+         @endif
         </form>
         </div>
         <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">

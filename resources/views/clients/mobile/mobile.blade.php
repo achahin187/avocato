@@ -106,7 +106,9 @@
         <div class="bottomActions__btns">
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
-            {{$users->links()}}
+         @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+          {{$users->appends(Request::except('page'))->links()}}
+          @endif
         </div>
         <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">
           <thead>

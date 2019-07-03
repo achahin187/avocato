@@ -20,7 +20,7 @@
   </div>
   <div class="col-lg-12">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      <div class="full-table">
+      <div class="full-table hide-datatable-pagination">
 
         @if (Session::has('success'))
             <div class="alert alert-success text-center">{{ Session::get('success') }}</div>
@@ -113,7 +113,9 @@
         <div class="bottomActions__btns">
           <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
           <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
-          {{$news->links()}}
+        @if($news instanceof \Illuminate\Pagination\LengthAwarePaginator)
+          {{$news->appends(Request::except('page'))->links()}}
+        @endif
         </div>
         <table class="table-1 hide-datatable-pagination">
           <thead>

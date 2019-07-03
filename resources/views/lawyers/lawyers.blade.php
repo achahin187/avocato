@@ -25,7 +25,7 @@
         <div class="alert alert-warning text-center">{{ Session::get('warning') }}</div>
     @endif
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-      <div class="full-table">
+      <div class="full-table hide-datatable-pagination">
         <div class="remodal-bg">
           <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
             <form role="form" action="{{route('lawyers_filter')}}" method="post" accept-charset="utf-8">
@@ -81,7 +81,7 @@
                   <div class="master_field">
                     <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
                     <div class="bootstrap-timepicker">
-                      <input name="date_from" class="datepicker master_input" type="date" placeholder="تاريخ الالتحاق" id="work_from">
+                      <input name="date_from" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_from">
                     </div><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>
@@ -89,7 +89,7 @@
                   <div class="master_field">
                     <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
                     <div class="bootstrap-timepicker">
-                      <input name="date_to" class="datepicker master_input" type="date" placeholder="تاريخ الالتحاق" id="work_to">
+                      <input name="date_to" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_to">
                     </div><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>
@@ -129,10 +129,11 @@
           </div>
           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
           <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" >ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" >حذف المحدد</a>
-                        
-            {{$lawyers->links()}} 
+             @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator )          
+            {{$lawyers->appends(Request::except('page'))->links()}} 
+            @endif
           </div>
-          <table class="table-1 hide-datatable-pagination" id="">
+          <table class="table-1" id="">
             <thead>
               <tr class="bgcolor--gray_mm color--gray_d">
                 <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
