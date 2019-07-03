@@ -650,4 +650,18 @@ class LawyersController extends Controller
     // dd($rate);
     return redirect()->back();
   }
+  public function activateDeactivateLawyer($id){
+     
+     $lawyer = Users::find($id);
+  if($lawyer){
+       if($lawyer->is_active == 1){
+         $lawyer->is_active=0;
+        }else{
+         $lawyer->is_active=1;
+      }
+     $lawyer->save();
+}
+     
+       return redirect()->back();
+  }
 }

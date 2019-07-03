@@ -267,6 +267,7 @@ Route::match(['get', 'post'],'/lawyers_filter', 'LawyersController@filter')->nam
 Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
 Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
 Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
+Route::get('/lawyers_activate_deactivate/{id}','lawyersController@activateDeactivateLawyer')->name('lawyers_activate');
 });
 
 

@@ -185,7 +185,7 @@
           <button class="remodal-confirm"  type="submit">تطبيق الفلاتر</button>
           @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
           {{$users->appends(Request::except('page'))->links()}}
-         @endif
+         @endif 
         </form>
         </div>
         <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">
