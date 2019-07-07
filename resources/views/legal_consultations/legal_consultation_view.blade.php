@@ -46,7 +46,7 @@
                             @elseif(Helper::is_admin_superadmin($consultation->client->id))
                             <a href="#">{{($consultation->client)?$consultation->client->name:''}}</a>
                             @elseif(Helper::is_lawyer($consultation->client->id))
-                           <a class="bold"href="{{route('lawyers_show',$consultation->client->id)}}" >{{($consultation->client)?$consultation->client->name:''}}</a>
+                           <a style="font-weight:bold" href="{{route('lawyers_show',$consultation->client->id)}}" >{{($consultation->client)?$consultation->client->name:''}}</a>
                             @endif
                             @endif
                             &nbsp;</span>
