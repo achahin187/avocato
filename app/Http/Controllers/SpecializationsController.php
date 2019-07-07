@@ -125,10 +125,15 @@ class SpecializationsController extends Controller
     public function destroy_all()
     {
         $ids = $_POST['ids'];
+        
         foreach($ids as $id)
            {
-                Helper::remove_related_localization('specializations', $specialization->id);
-                Specializations::find($id)->delete();
+                
+                $specialization = Specializations::find($id);
+                if($specialization){
+                    $specialization->delete();
+                    Helper::remove_related_localization('specializations', $specialization->id);
+                }
            } 
     }
 

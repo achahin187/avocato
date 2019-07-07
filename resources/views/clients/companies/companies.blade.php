@@ -65,9 +65,9 @@
                 {{-- Start Date From --}}
                 <div class="col-md-6">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="license_start_from">تاريخ بداية النعاقد من</label>
+                    <label class="master_label mandatory" for="license_start_from">تاريخ بداية التعاقد من</label>
                     <div class="bootstrap-timepicker">
-                      <input name="start_date_from" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_start_from">
+                      <input name="start_date_from" class="datepicker master_input" type="text" placeholder="تاريخ بداية التعاقد" id="license_start_from">
                     </div>
                     @if ($errors->has('start_date_from'))
                       <span class="master_message color--fadegreen">{{ $errors->first('start_date_from') }}</span>
@@ -78,9 +78,9 @@
                 {{-- Start Date To --}}
                 <div class="col-md-6">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="license_start_to">تاريخ بداية النعاقد الى</label>
+                    <label class="master_label mandatory" for="license_start_to">تاريخ بداية التعاقد الى</label>
                     <div class="bootstrap-timepicker">
-                      <input name="start_date_to" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_start_to">
+                      <input name="start_date_to" class="datepicker master_input" type="text" placeholder="تاريخ بداية التعاقد" id="license_start_to">
                     </div>
                     @if ($errors->has('start_date_to'))
                       <span class="master_message color--fadegreen">{{ $errors->first('start_date_to') }}</span>
@@ -172,8 +172,8 @@
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; onclick=&quot;checkAll(this)&quot; /&gt;</span></th>             
-             <th><span class="cellcontent">كودالعميل</span></th>
-              <!-- <th><span class="cellcontent">كودالشركة</span></th> -->
+             {{-- <th><span class="cellcontent">كودالعميل</span></th> --}}
+               <th><span class="cellcontent">كود الشركة</span></th>
               <th><span class="cellcontent">اسم الشركة</span></th>
               <th><span class="cellcontent">عنوان الشركة</span></th>
               <th><span class="cellcontent">هاتف</span></th>

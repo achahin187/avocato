@@ -195,10 +195,12 @@ class CompaniesController extends Controller
             $user_details->job_title     = $request->job;
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work_sector;
-            $user_details->discount_percentage   = $request->discount_percentage;
+            if(isset($request->discount_percentage)){
+
+                $user_details->discount_percentage   = $request->discount_percentage;
+            }
             $user_details->save();
         } catch(Exception $ex) {
-            // dd('test');
             $user->forceDelete();
             $user->rules->forceDelete();
             $client_passwords->forceDelete();
@@ -463,8 +465,8 @@ class CompaniesController extends Controller
             'phone'         => 'required',  // users
             'tele_code'=>'required',
             'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
-            'fax'           => 'required',  // user_company_details
-            'website'       => 'required',  // user_company_details
+            // 'fax'           => 'required',  // user_company_details
+            // 'website'       => 'required',  // user_company_details
             'work_sector'   => 'required',  // user_details
             'email'         => 'required',  // users
             'activate'      => 'required',  // users as is_active
@@ -475,7 +477,7 @@ class CompaniesController extends Controller
             // 'duration' => 'required',  // subscriptions as duration
             // 'value'    => 'required',  // subscriptions as value
             // 'number_of_installments'    => 'required',  // subscriptions as number_of_installments
-            'discount_percentage'   => 'required',  // user_details
+            // 'discount_percentage'   => 'required',  // user_details
             'legal_representative_name'     => 'required',  // user_company_details
             'legal_representative_mobile'   => 'required',  // user_company_details
             'commercial_registration_number'    => 'required',  // user_company details
@@ -627,8 +629,13 @@ class CompaniesController extends Controller
             
             $ucd->user_id   = $user->id;
             $ucd->commercial_registration_number = $request->commercial_registration_number;
-            $ucd->fax     = $request->fax;
+             if(isset($request->fax)){
+
+                 $ucd->fax     = $request->fax;
+             }
+            if(isset($request->website)){
             $ucd->website = $request->website;
+        }
             $ucd->legal_representative_name      = $request->legal_representative_name;
             $ucd->legal_representative_mobile    = $request->legal_representative_mobile;
             $ucd->save();

@@ -85,7 +85,7 @@ class IndividualsController extends Controller
             'nationality' => 'required',
             'tele_code'=>'required',
             'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
-            'email' => 'email',
+            // 'email' => 'email',
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
             'end_date' => 'required',
@@ -95,12 +95,12 @@ class IndividualsController extends Controller
             'payment_method'=>'required',
             'number_of_installments' => 'required' ]
             ,[
-                'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
+                // 'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
                 'birthday.date' => 'من فضلك تأكد من ادخال تاريخ ميلاد صحيح',
             ]);
-
+            
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
         }
 
         // upload image to storage/app/public
@@ -126,7 +126,10 @@ class IndividualsController extends Controller
             $user->name = $request->name;
             $user->password = bcrypt($request->password);
             $user->full_name = $request->name;
-            $user->email = $request->email;
+            if(isset($request->email)){
+
+                $user->email = $request->email;
+            }
             $user->image = $imgPath;
             $user->phone = $request->phone;
             $user->tele_code = $request->tele_code ;
@@ -207,12 +210,13 @@ class IndividualsController extends Controller
             $subscription->is_active = 1;
             $subscription->save();
         } catch (\Exception $ex) {
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
+
+                $user->rule->forcedelete();
+                $user->client_password->forcedelete();
+                $user->user_detail->forcedelete();
+                $user->forcedelete();
+            // Session::flash('warning', '5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
         }
 
         // push into installments
@@ -426,7 +430,7 @@ class IndividualsController extends Controller
         'nationality' => 'required',
         'tele_code'=>'required',
         'cellphone' => ($user->cellphone == $request['cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
-        'email' => 'email',
+        // 'email' => 'email',
         'personal_image' => 'image|mimes:jpeg,jpg,png',
         'start_date' => 'required',
         'end_date' => 'required',
@@ -465,7 +469,11 @@ class IndividualsController extends Controller
                 $user->password = bcrypt($request->password);
             }
             $user->full_name = $request->name;
-            $user->email = $request->email;
+            if(isset($request->email)){
+
+                $user->email = $request->email;
+            }
+
             $user->image = $imgPath;
             $user->phone = $request->phone;
             $user->tele_code = $request->tele_code ;

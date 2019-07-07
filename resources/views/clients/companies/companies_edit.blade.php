@@ -167,7 +167,7 @@
         {{--  Fax  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="fax_num">رقم الفاكس</label>
+            <label class="master_label" for="fax_num">رقم الفاكس</label>
             
             @if ($company->user_company_detail)
               <input name="fax" value="{{ $company->user_company_detail->fax }}" class="master_input" type="number" placeholder="رقم الفاكس" id="fax_num" min="0">
@@ -185,7 +185,7 @@
         {{--  Website  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="comp_website">موقع الشركة علي الانترنت</label>
+            <label class="master_label" for="comp_website">موقع الشركة علي الانترنت</label>
             
             @if ($company->user_company_detail)
               <input name="website" value="{{ $company->user_company_detail->website }}" class="master_input" type="text" placeholder="موقع الشركة على الانترنت .." id="comp_website">
@@ -272,7 +272,7 @@
         {{--  discount percentage  --}}
         <div class="col-xs-3">
           <div class="master_field">
-            <label class="master_label mandatory" for="discount">نسبة الخصم </label>
+            <label class="master_label" for="discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ $company->user_detail->discount_percentage }}" class="master_input" type="number" placeholder="%" id="discount" min="0">
             {{--  Error  --}}
             @if ($errors->has('discount_percentage'))
