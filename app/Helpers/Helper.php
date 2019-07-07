@@ -365,6 +365,20 @@ class Helper {
        }
        return false;
     }
+
+    public static function is_lawyer($id)
+    {
+       $user=Users::find($id);
+       foreach($user->rules as $rule)
+       {
+           if($rule->id == 5 )
+           {
+               return true;
+           }
+       }
+       return false;
+    }
+
     public static function is_lawyer_mobile($id)
     {
        $user=Users::find($id);

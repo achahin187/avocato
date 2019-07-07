@@ -45,7 +45,7 @@
                             <a href="{{route('mobile.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->name:''}}</a>
                             @elseif(Helper::is_admin_superadmin($consultation->client->id))
                             <a href="#">{{($consultation->client)?$consultation->client->name:''}}</a>
-                            @elseif(Helper::is_lawyer_mobile($consultation->client->id))
+                            @elseif(Helper::is_lawyer($consultation->client->id))
                             <a href="{{route('lawyers_show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->name:''}}</a>
                             @endif
                             @endif
