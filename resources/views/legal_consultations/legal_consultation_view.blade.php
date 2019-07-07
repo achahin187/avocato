@@ -33,7 +33,7 @@
                       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                         <div class="col-md-12"><span ><b>نص السؤال :</b>&nbsp;
                             {{$consultation->question}}</span>
-                            <hr><span class="pull-left"><b>مرسل الاستشارة</b>&nbsp;<b>
+                            <hr><span class="pull-left"><b>مرسل الاستشارة</b>&nbsp;
                             @if(isset($consultation->client))
                             @if(Helper::is_client_individual($consultation->client->id))
                             <a href="{{route('ind.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->name:''}}</a>
@@ -46,10 +46,10 @@
                             @elseif(Helper::is_admin_superadmin($consultation->client->id))
                             <a href="#">{{($consultation->client)?$consultation->client->name:''}}</a>
                             @elseif(Helper::is_lawyer($consultation->client->id))
-                            <a href="{{route('lawyers_show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->name:''}}</a>
+                           <a class="bold"href="{{route('lawyers_show',$consultation->client->id)}}" >{{($consultation->client)?$consultation->client->name:''}}</a>
                             @endif
                             @endif
-                            </b>&nbsp;</span>
+                            &nbsp;</span>
                           <div class="pull-right">
                             بتاريخ
                             {{$consultation->created_at}}
