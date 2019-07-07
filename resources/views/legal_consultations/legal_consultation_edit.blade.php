@@ -23,7 +23,7 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                    
                     {{-- Missing Edit Elements Bug 1847 --}}
-                    <div class="col-md-4 col-sm-6 col-xs-12">
+                    {{-- <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label" for="consultation_code">كود الإستشارة</label>
                       <input class="master_input" type="text" placeholder="كود الإستشارة .." id="consultation_code" disabled="true" name="consultation_code" value="{{$consultation->code}}">
@@ -91,7 +91,7 @@
               @endif
               
           </div>
-        </div>
+        </div> --}}
                     {{--  --}}
 
                     <div class="col-xs-12">

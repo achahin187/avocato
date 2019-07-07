@@ -285,11 +285,11 @@ class LegalConsultationsController extends Controller
             return redirect()->back();
         }
         $validator = Validator::make($request->all(), [
-             'consultation_type' => 'required',
+            //  'consultation_type' => 'required',
             'consultation_question' => 'required',
             'consultation_answer' => 'required',
-             'consultation_cat' => 'required',
-            'language' => 'required',
+            //  'consultation_cat' => 'required',
+            // 'language' => 'required',
 
         ]);
 
@@ -302,11 +302,11 @@ class LegalConsultationsController extends Controller
         
         // $consultation_type = Consultation_Types::where('name', $request->input('consultation_cat'))->first();
         $consultation->Update([
-             'consultation_type_id' => $request->consultation_cat,
-             'is_paid' => $request->input('consultation_type'),
-             'question' => $request->input('consultation_question'),
-             'is_replied'=>1,
-             'lang_id'=> $request->language,
+            //  'consultation_type_id' => $request->consultation_cat,
+            //  'is_paid' => $request->input('consultation_type'),
+                'question' => $request->input('consultation_question'),
+                'is_replied'=>1,
+       //      'lang_id'=> $request->language,
         ]);
         $consultation_reply = Consultation_Replies::where('consultation_id', $id)->where('lawyer_id',\Auth::user()->id)->update([
             'reply' => $request->input('consultation_answer')

@@ -74,7 +74,6 @@ class IndividualsController extends Controller
      */
     public function store(Request $request)
     { 
-        // dd($request->all());
         // Validate data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -85,7 +84,7 @@ class IndividualsController extends Controller
             'nationality' => 'required',
             'tele_code'=>'required',
             'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
-            // 'email' => 'email',
+            'email' => 'email',
             'personal_image' => 'image|mimes:jpeg,jpg,png',
             'start_date' => 'required',
             'end_date' => 'required',
@@ -95,7 +94,7 @@ class IndividualsController extends Controller
             'payment_method'=>'required',
             'number_of_installments' => 'required' ]
             ,[
-                // 'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
+                'email.email' => 'من فضلك تأكد من ادخال البريد الالكتروني بشكل صحيح',
                 'birthday.date' => 'من فضلك تأكد من ادخال تاريخ ميلاد صحيح',
             ]);
             
