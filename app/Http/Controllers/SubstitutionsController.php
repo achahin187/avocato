@@ -12,11 +12,12 @@ use App\Task_Charges;
 use App\Case_Techinical_Report_Document;
 use App\Case_Techinical_Report;
 use App\Users;
-
+use Carbon\carbon;
 class SubstitutionsController extends Controller
 {
     public function index()
     {
+      dd(carbon::now());
         $data['substitution_types']=SubstitutionType::all();
         $data['substitutions']=Tasks::where('task_type_id',4)->with(['substitution'=>function($q){
             $q->with('type');
