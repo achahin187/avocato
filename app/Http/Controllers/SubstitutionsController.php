@@ -201,7 +201,7 @@ class SubstitutionsController extends Controller
       }
       
    
-   return redirect()->route('substitutions.index');
+   return redirect()->route('substitutions');
     }
 
     public function delete_all()
@@ -218,6 +218,6 @@ class SubstitutionsController extends Controller
             return redirect()->back()->with('error','error while delete');
           }
         } 
-        return redirect()->route('substitutions.index');
+        return redirect()->route('substitutions');
     }
 }
