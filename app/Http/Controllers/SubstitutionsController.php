@@ -17,7 +17,7 @@ class SubstitutionsController extends Controller
 {
     public function index()
     {
-      dd(carbon::now());
+      dd(carbon::now()->format('Y-m-d H:i:s'));
         $data['substitution_types']=SubstitutionType::all();
         $data['substitutions']=Tasks::where('task_type_id',4)->with(['substitution'=>function($q){
             $q->with('type');
