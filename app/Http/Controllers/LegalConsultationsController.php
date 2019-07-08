@@ -240,7 +240,7 @@ class LegalConsultationsController extends Controller
     public function view($id)
     {
         $consultation = Consultation::where('id', $id)->with('consultation_reply')->with('client')->first();
-        dd($consultation);
+        // dd($consultation);
         if( $consultation == NULL ) {
             Session::flash('warning', 'الاستشارة القانونية غير موجودة');
             return redirect('/legal_consultations');
