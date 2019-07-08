@@ -193,7 +193,7 @@ class SubstitutionsController extends Controller
     {
       try{
         Substitution::where('task_id',$id)->delete();
-        $task=Tasks::find($id)->delete();
+        $task=Tasks::where('id',$id)->delete();
       }
       catch(\exception $ex)
       {
