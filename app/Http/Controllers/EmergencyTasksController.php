@@ -38,7 +38,7 @@ class EmergencyTasksController extends Controller
       $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
       $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
       $data['reports'] = Case_Techinical_Report::where('item_id', $data['task']->id)->where('technical_report_type_id', 1)->get();
- dd($data['reports']);
+//  dd($data['reports']);
     	return view('tasks.emergency_view',$data);
     }
 
