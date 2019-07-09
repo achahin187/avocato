@@ -62,6 +62,11 @@ class Handler extends ExceptionHandler
                     break;
     
                 // internal error
+                case '500':
+                    return \Response::view('errors.500',array(),500);
+                    break;
+
+                // server error
                 case '502':
                     return \Response::view('errors.502',array(),500);
                     break;
