@@ -175,7 +175,7 @@
                     <div class="clearfix"></div>
                   </div>
                 
-                   @endforeach
+         @endforeach
                    <!-- new added -->
                   <div class="col-md-2 col-sm-3 col-xs-12">
                               <a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_report"><i class="fa fa-plus"></i><span>إضافة تقرير</span></a>
