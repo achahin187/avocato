@@ -167,7 +167,7 @@ class FormulasController extends Controller
             $destinationPath = 'contracts';
             $con_name = str_replace(" ","_",$request->contract_name)."_";
             $fileNameToStore = $destinationPath . '/' . $con_name . time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
-            // dd($fileNameToStore);
+        
             Input::file('file')->move($destinationPath, $fileNameToStore);
         }
         $formula->file = $fileNameToStore;

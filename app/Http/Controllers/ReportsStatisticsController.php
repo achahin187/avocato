@@ -25,6 +25,8 @@ use App\Exports\UrgentsExport;
 use App\Exports\TasksExport;
 use App\Exports\ReportsCasetypeExport;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Rules;
 
 class ReportsStatisticsController extends Controller
 {
@@ -40,7 +42,6 @@ class ReportsStatisticsController extends Controller
         //     return redirect()->route('choose.country');
         // }
         $data = $this->getData();
-
         return view('reports_statistics', $data);
     }
 
@@ -123,7 +124,7 @@ class ReportsStatisticsController extends Controller
         $data['courts_']    = Courts::all();
         $data['tasks_']     = Task_Types::all();
         $data['caseTypes']  = Cases_Types::all();
-
+        $data['lawyer_types'] = Rules::where('parent_id',5)->get();
         /** Countable and percentage data */
         // list data
         $data['count_clients'] = Helper::getUsersBasedOnRules([7, 8, 9, 10])->count();  // count all clients
@@ -419,7 +420,7 @@ class ReportsStatisticsController extends Controller
              $filter_cases1_ids[] = 0;
              Session::flash('filter_cases1_ids', $filter_cases1_ids);
              }
-        
+
         return $data;
     }
 

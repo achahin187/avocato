@@ -517,7 +517,7 @@
             var j = i+1;
             // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
             $('#generated').append('<div class="col-md-4 col-xs-12">\
-                                      <div class="master_field">\
+                                      <dx3.iv class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
                                         <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
                                       </div>\

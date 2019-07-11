@@ -191,7 +191,7 @@
         {{--  Phone  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
+            <label class="master_label" for="client_tel">رقم الهاتف</label>
             <input name="phone" value="{{ old('phone') }}" class="master_input" type="number" placeholder="0212345678" id="client_tel">          
               {{--  Error  --}}         
               @if ($errors->has('phone'))          
@@ -254,7 +254,7 @@
         {{--  discount percentage  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="discount">نسبة الخصم </label>
+            <label class="master_label" for="discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
             {{--  Error  --}}             
             @if ($errors->has('discount_percentage'))               

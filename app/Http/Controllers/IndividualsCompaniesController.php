@@ -90,11 +90,11 @@ class IndividualsCompaniesController extends Controller
             'national_id'   => 'required',
             'nationality'   => 'required',
             'birthday'      => 'required|date',
-            'phone'         => 'required',
+            // 'phone'         => 'required',
             'tele_code'=>'required',
             'cellphone' => (session('country') == 1)?'required|digits:10|unique:users,cellphone,,,deleted_at,NULL':'required|digits:9|unique:users,cellphone,,,deleted_at,NULL',
             'email'         => 'required',
-            'discount_percentage' => 'required',
+            // 'discount_percentage' => 'required',
             'activate'      => 'required',
             'start_date'    => 'required',
             'end_date'      => 'required',
@@ -104,7 +104,7 @@ class IndividualsCompaniesController extends Controller
             'number_of_payments' => 'required'
         ]);
 
-        // upload image to storage/app/public
+        // upload image to storage/app/public 
         if($request->logo) {
             $img = $request->logo;
             $newImg = $request->code.'_'.time().$img->getClientOriginalName(); // current time + original image name
@@ -130,7 +130,7 @@ class IndividualsCompaniesController extends Controller
             $user->full_name = $request->ind_name;
             $user->email     = $request->email;
             $user->image     = $imgPath;
-            $user->phone     = $request->phone;
+            if(isset($request->phone)){ $user->phone = $request->phone;}
             $user->tele_code = $request->tele_code ;
             $user->cellphone = $request->cellphone ;
             // $user->mobile = preg_replace("/0/", "+", $request->mobile, 1);
@@ -199,7 +199,7 @@ class IndividualsCompaniesController extends Controller
             $user_details->national_id   = $request->national_id;
             $user_details->work_sector   = $request->work;
             $user_details->work_sector_type      = $request->work_type;
-            $user_details->discount_percentage   = $request->discount_percentage;
+            if(isset($request->discount_percentage)){$user_details->discount_percentage   = $request->discount_percentage;}
             $user_details->save();
         } catch(Exception $ex) {
             $user->forcedelete();
