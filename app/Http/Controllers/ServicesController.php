@@ -498,6 +498,7 @@ class ServicesController extends Controller
         $service->who_assigned_lawyer_id = \Auth::user()->id;
         $service->start_datetime = $start;
         $service->end_datetime = $end;
+        $service->task_assignment_date = Carbon::now()->format('Y-m-d H:i:s');
         $service->country_id=session('country');
         $service->save();
         $user = Users::find($request['lawyer']);
