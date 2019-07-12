@@ -29,8 +29,8 @@ class EmergencyTasksController extends Controller
 {
     public function view($id)
     {
-      $tasks = Tasks::where('is_accepted',0)->where('task_type_id',1)->where('assigned_lawyer_id','!=',null)->where("task_assignment_date","<=",Carbon::now()->subSeconds(600)->toDateString())->get();
-      dd(Carbon::now()->subSeconds(600)->toDateTimeString());
+      $tasks = Tasks::where('is_accepted',0)->where('task_type_id',1)->where('assigned_lawyer_id','!=',null)->where("task_assignment_date","<=",Carbon::now()->subSeconds(600)->toDateTimeString())->get();
+      // dd(Carbon::now()->subSeconds(600)->toDateTimeString());
       dd($tasks);
       $data['task']=Tasks::where('id',$id)->with('client')->where('country_id',session('country'))->first();
       if( $data['task'] == NULL ) {
