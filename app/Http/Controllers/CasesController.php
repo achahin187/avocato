@@ -126,9 +126,9 @@ class CasesController extends Controller
             return redirect('/cases');
         }
 
-        foreach ($cases_record_types as $value) {
-            $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
-        }
+        // foreach ($cases_record_types as $value) {
+        //     $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
+        // }
         $case = Case_::where('id', $id)->with(['tasks' => function ($query) {
             $query->where('task_type_id', 2)->orderBy('id', 'desc');
         }])->with(['case_records' => function ($q) {

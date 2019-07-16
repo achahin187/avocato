@@ -22,6 +22,7 @@ class Case_Record_Type extends Model
     public function getNameAttribute()
     {
         $lang = Session::get('AppLocale');
+        dd($lang);
         if($lang == 2 or $lang == 3){
             return  (Helper::localizations('case_record_types' , 'name' , $this->id , $lang) != null) ? Helper::localizations('case_record_types' , 'name' , $this->id , $lang) : $this->attributes['name'];
         }else{
