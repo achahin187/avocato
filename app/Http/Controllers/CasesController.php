@@ -117,7 +117,8 @@ class CasesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    { 
+        dd( Session::get('AppLocale'));
         $cases_record_types = Case_Record_Type::all();
 
          // redirect to home page if user is not found
