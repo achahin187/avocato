@@ -427,47 +427,56 @@ class ReportsStatisticsController extends Controller
     public function filter(Request $request) {
         if(count($request->all()) > 1) { 
             // cases tab
-            if( $request->gov || $request->city ) { $data = $this->getData(['gov' => $request->gov, 'city' => $request->city]); }
+            if( $request->gov || $request->city ) { $data = $this->getData(['gov' => $request->gov, 'city' => $request->city]); $tab = 1; }
 
             // lawyers tab
             if( $request->workSector || $request->level || $request->nationality || $request->workTitle || $request->workSectorType ) {
                 $data = $this->getData(['sector'=>$request->workSector, 'level'=>$request->level, 'nationality'=>$request->nationality, 'title'=>$request->workTitle, 'type'=>$request->workSectorType]);
+                $tab = 2;
             }
 
             // company tab
             if ( $request->company || $request->packages || $request->activate ) {
                 $data = $this->getData(['company'=>$request->company, 'packages'=>$request->packages, 'activate'=>$request->activate]);
+                $tab = 3;
             }
 
             // installments
             if ( $request->code || $request->startDate || $request->activate1 ) {
                 $data = $this->getData(['code'=> $request->code, 'startDate'=> $request->startDate, 'activate1'=>$request->activate1]);
+                $tab = 4;
             }
             
             // Urgents
             if ( $request->userType ) {
                 $data = $this->getData(['userType'=>$request->userType]);
+                $tab = 5;
             }
 
             // Courts
             if ( $request->cities || $request->govs || $request->courts ) {
                 $data = $this->getData(['cities'=>$request->cities, 'govs'=>$request->govs, 'courts'=>$request->courts]);
+              $tab = 6;
             }
 
             // Tasks
             if ( $request->taskType || $request->dateFrom || $request->dateTo ) {
                 $data = $this->getData(['taskType'=>$request->taskType, 'dateFrom'=>$request->dateFrom, 'dateTo'=>$request->dateTo]);
+                $tab = 7;
             }
 
             // Cases Types
             if ( $request->cities1 || $request->govs1 || $request->caseType ) {
                 $data = $this->getData(['cities1'=>$request->cities1, 'govs1'=>$request->govs1, 'caseType'=>$request->caseType]);
+              $tab = 8;
             }
 
         } else {
             $data = $this->getData();
+           
         }
-
+        $data['tab'] = $tab;
+        // dd($tab);
         return view('reports_statistics', $data);
     }
 

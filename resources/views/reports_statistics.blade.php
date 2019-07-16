@@ -84,18 +84,18 @@
   <div class="col-md-12">
     <div class="tabs--wrapper">
       <div class="clearfix"></div>
-      <ul class="tabs">
+      <ul id="head-ul" class="tabs">
         <li>القضايا</li>
-        <li>المحاميين</li>
-        <li>الشركات</li>
-        <li>الاقساط</li>
-        <li>الطوارئ</li>
-        <li>المحاكم</li>
-        <li>المهام</li>
-        <li>انواع القضايا</li>
+        <li class=" @if(isset($tab)) @if($tab == 2) active   @endif @endif " >المحاميين</li>
+        <li class=" @if(isset($tab)) @if($tab == 3) active   @endif @endif ">الشركات</li>
+        <li class=" @if(isset($tab)) @if($tab == 4) active   @endif @endif ">الاقساط</li>
+        <li class=" @if(isset($tab)) @if($tab == 5) active   @endif @endif ">الطوارئ</li>
+        <li class=" @if(isset($tab)) @if($tab == 6) active   @endif @endif ">المحاكم</li>
+        <li class=" @if(isset($tab)) @if($tab == 7) active   @endif @endif ">المهام</li>
+        <li class=" @if(isset($tab)) @if($tab == 8) active   @endif @endif ">انواع القضايا</li>
       </ul>
       <ul class="tab__content">
-        <li class="tab__content_item active">
+        <li class="tab__content_item @if(isset($tab))  @if($tab == 1) active @endif  @else active @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -322,7 +322,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 2) active @endif @endif">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -622,7 +622,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 3) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -873,7 +873,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 4) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1127,7 +1127,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 5) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1343,7 +1343,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 6) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1585,7 +1585,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 7) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1813,7 +1813,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 8) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -2278,6 +2278,17 @@ $('.cases-btn').click(function(){
           }
   }
 </script>
+<script>
+   $(document).ready(function(){
+    @if(isset($tab)) 
+    @if($tab != 1)
+    $("#head-ul>li:first").removeClass("active");
+    @endif
+    @endif
 
+
+   });
+ 
+</script>
 
 @endsection
