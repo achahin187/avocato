@@ -122,7 +122,7 @@
                             <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent syndicate_level">@foreach($lawyer->specializations as $spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
+                            <td><span class="cellcontent syndicate_level">@foreach($lawyer->specializations as $key =>$spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
                             <td><span class="cellcontent">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
