@@ -96,10 +96,10 @@
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
 {{--                           <div class="row">
                             <div class="col-xs-6"><b class="col-xs-4">التخصص </b>
-                              <div class="col-xs-8"> {{$lawyer->user_detail->work_sector}}</div>
+                              <div class="col-xs-8"> @foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-4">الاختصاص المكاني</b>
-                              <div class="col-xs-8">{{$lawyer->user_detail->work_sector_type}}</div>
+                              <div class="col-xs-8">{{$lawyer->user_detail->city->name or ''}}</div>
                             </div>
                             <div class="col-xs-6"><b class="col-xs-4">تاريخ الإتحاق بالعمل بالشركة</b>
                               <div class="col-xs-8">{{$lawyer->user_detail->join_date}}</div>
@@ -108,7 +108,7 @@
                               <div class="col-xs-8">{{$lawyer->user_detail->resign}}</div>
                             </div>
                              <div class="col-xs-6"><b class="col-xs-4">درجه التقاضي </b>
-                              <div class="col-xs-8">{{$lawyer->user_detail->litigation_level}}</div>
+                              <div class="col-xs-8">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</div>
                             </div>
                           </div> --}}
                           <div class="row">

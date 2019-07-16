@@ -122,8 +122,8 @@
                             <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent syndicate_level">{{$lawyer->user_detail->work_sector or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
+                            <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
+                            <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
