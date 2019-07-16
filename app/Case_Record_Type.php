@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Helper;
 
 class Case_Record_Type extends Model
 {
