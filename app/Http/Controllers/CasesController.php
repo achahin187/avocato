@@ -120,7 +120,7 @@ class CasesController extends Controller
     { 
         // dd( app()->getLocale());
         $cases_record_types = Case_Record_Type::all();
-
+        dd($cases_record_types);
          // redirect to home page if user is not found
         if( Case_::find($id) == NULL ) {
             Session::flash('warning', 'لم يتم العثور القضية');
