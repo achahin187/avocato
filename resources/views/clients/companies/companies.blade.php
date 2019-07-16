@@ -488,6 +488,7 @@
                 "ids": ids,
                 "userType": 'Companies',
                 "userRule": 9,
+                "is_report":1,
                 "_method": 'GET',
             },
             success:function(response){

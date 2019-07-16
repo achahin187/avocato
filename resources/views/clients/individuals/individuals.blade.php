@@ -649,7 +649,7 @@
             data: {
                 "ids": ids,
                 "userType": 'Individuals',
-                "is_report":1,
+                
                 "userRule": 8,
                 "_method": 'GET',
             },
