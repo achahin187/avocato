@@ -118,7 +118,7 @@ class CasesController extends Controller
      */
     public function show($id)
     { 
-        dd( app()->getLocale());
+        // dd( app()->getLocale());
         $cases_record_types = Case_Record_Type::all();
 
          // redirect to home page if user is not found
