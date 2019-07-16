@@ -108,11 +108,12 @@ class ClientsController extends Controller
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
         $filename = $request->userType.time().'.xlsx';
-        if (isset($_GET['is_report'])) {
-        $is_report = 1;
-      }else{
-        $is_report = null; 
-      }
+    //     if (isset($_GET['is_report'])) {
+    //     $is_report = 1;
+    //   }else{
+    //     $is_report = null; 
+    //   }
+    $is_report = 1;
         $userRule = $request->userRule;
         
         if(isset($request->ids)){
