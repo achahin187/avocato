@@ -35,7 +35,7 @@ class Case_Record_Type extends Model
             $lang = 3;
         }
         if($lang == 2 or $lang == 3){
-            return  (Helper::localizations('case_record_types' , 'name' , $this->id) != null) ? Helper::localizations('case_record_types' , 'name' , $this->id ) : $this->attributes['name'];
+            return  (Helper::localizations('case_record_types' , 'name' , $this->id , $lang) != null) ? Helper::localizations('case_record_types' , 'name' , $this->id , $lang) : $this->attributes['name'];
         }else{
             return $this->attributes['name'];
         }
