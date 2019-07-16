@@ -292,6 +292,7 @@
             data: {
                 "ids": ids,
                 "userType": "Mobile",
+                "is_report":2,
                 "userRule": 7,
                 "_method": 'GET',
             },
