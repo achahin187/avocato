@@ -93,8 +93,8 @@
         @endif
         @endforeach
                       </span></td>
-                      <td><span class="cellcontent syndicate_level">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
-                            <td><span class="cellcontent">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent">@foreach($lawyer->specializations as $key=>$spec) @if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif  @endforeach</span></td>
+                      <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                       <td><span class="cellcontent">{{$lawyer->user_detail->join_date}}</span></td>
