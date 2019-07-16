@@ -627,7 +627,7 @@
                                 @foreach($case->case_records as $record)
                                 <tr data-record-id={{$record->id}}>
                                   <td><span class="cellcontent">{{$record->record_number}}</span></td>
-                                  <td><span class="cellcontent">{{$record->name}}</span></td>
+                                  <td><span class="cellcontent">{{$record->case_record_types->name}}</span></td>
                                   <td><span class="cellcontent">{{$record->record_date}}</span></td>
                                   <td><span class="cellcontent"><a href="#investigation_attachment/{{$record->id}}"  ,  class= "action-btn bgcolor--main color--white "> &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
                                   <td><span class="cellcontent"><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>

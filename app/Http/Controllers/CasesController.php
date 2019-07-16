@@ -120,19 +120,20 @@ class CasesController extends Controller
     { 
         // dd( app()->getLocale());
         $cases_record_types = Case_Record_Type::all();
-        dd($cases_record_types);
+        // dd($cases_record_types);
          // redirect to home page if user is not found
         if( Case_::find($id) == NULL ) {
             Session::flash('warning', 'لم يتم العثور القضية');
             return redirect('/cases');
         }
 
-        // foreach ($cases_record_types as $value) {
-        //     $value['name_ar'] = Helper::localizations('case_record_types', 'name', $value->id);
-        // }
+        foreach ($cases_record_types as $value) {
+            $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
+        }
         $case = Case_::where('id', $id)->with(['tasks' => function ($query) {
             $query->where('task_type_id', 2)->orderBy('id', 'desc');
         }])->with(['case_records' => function ($q) {
+            $q->with('case_record_types');
             $q->with('case_record_documents');
         }])->with(['case_documents'=>function($q){
             $q->with('case_document_details');
