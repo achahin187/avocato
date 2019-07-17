@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
     
                 // not found
                 case '404':
-                    return \Response::view('errors.404',array(),404);
+                    return view('errors.404',array(),404);
                     break;
     
                 // internal error
