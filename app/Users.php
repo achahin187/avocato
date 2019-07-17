@@ -210,6 +210,14 @@ class Users extends Authenticatable
         }
         return false;
       }
+      public function IsLawyer(){
+        foreach($this->rules as $rule){
+          if($rule->pivot->parent_id==5){
+            return true;
+          }
+        }
+        return false;
+      }
 
           public function notifications()
     {

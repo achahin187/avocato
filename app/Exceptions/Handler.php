@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Http\Response;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -48,8 +49,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($this->isHttpException($e)) {
-            switch ($e->getStatusCode()) {
+        if ($this->isHttpException($exception)) {
+            switch ($exception->getStatusCode()) {
     
                 // not authorized
                 case '403':
@@ -58,7 +59,7 @@ class Handler extends ExceptionHandler
     
                 // not found
                 case '404':
-                    return \Response::view('errors.404',array(),404);
+                    return response()->view('errors.404', [], 404);
                     break;
     
                 // internal error
@@ -72,11 +73,11 @@ class Handler extends ExceptionHandler
                     break;
     
                 default:
-                    return $this->renderHttpException($e);
+                    return $this->renderHttpException($exception);
                     break;
             }
         } else {
-            return parent::render($request, $e);
+            return parent::render($request, $exception);
         }
         return parent::render($request, $exception);
     }

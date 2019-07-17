@@ -317,6 +317,7 @@
                     <th><span class="cellcontent">المحكمة/الدائرة </span></th>
                     <th><span class="cellcontent">رقم الدعوى</span></th>
                     <th><span class="cellcontent">الخصم و صفته</span></th>
+                    <th><span class="cellcontent">الموكل و صفته</span></th>
                     <th><span class="cellcontent">ما تم فيها من دفاع وقرارات</span></th>
                     <th><span class="cellcontent">القرار</span></th>
                     <th><span class="cellcontent">تاريخ الجلسة القادمة</span></th>
@@ -332,6 +333,14 @@
                     <td><span class="cellcontent">{{$session->case->courts->name or ''}} / {{$session->case->region}}</span></td>
                     <td><span class="cellcontent">{{$session->case->claim_number}}</span></td>
                     <td><span class="cellcontent">{{$session->case->contender_name}} / {{Helper::localizations('case_client_roles','name',$session->case->contender_case_client_role_id)}}</span></td>
+                    <td><span class="cellcontent">
+                    @if(count($session->case->clients) > 0)
+                    @foreach($session->case->clients as $client) 
+                   {{ $client->full_name}} /{{ Helper::localizations('case_client_roles','name',$client->pivot->case_client_role_id) }}
+                    @endforeach 
+                    @else
+                    'لا يوجد'
+                    @endif</span></td>
                     <td><span class="cellcontent">{{$session->name}}</span></td>
                     <td><span class="cellcontent">{{$session->description}}</span></td>
                     <td><span class="cellcontent">{{$session->next_datetime}}</span></td>
