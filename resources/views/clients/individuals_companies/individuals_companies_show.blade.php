@@ -331,7 +331,7 @@
                         <div class="col-xs-6">
                           <div class="master_field">
                             <label class="master_label mandatory" for="ID_No">التاريخ</label>
-                            <input class="datepicker-popup master_input" type="text" placeholder="التاريخ" id="issue_date" name="issue_date">
+                            <input class="datepicker master_input" type="text" placeholder="التاريخ" id="issue_date" name="issue_date">
                           </div><span class="master_message color--fadegreen">  @if ($errors->has('issue_date'))
                                       {{ $errors->first('issue_date')}}
                                     @endif</span>
