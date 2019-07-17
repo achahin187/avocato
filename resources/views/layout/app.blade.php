@@ -177,11 +177,12 @@
                                       
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('lawyers')}}">السادة المحامين</a>
                                       </li>
-                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('offices')}}">مكاتب المحاماة</a>
-                                      </li>
+                                      
                                       
                                       @endif
                       @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
+                      <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('offices')}}">مكاتب المحاماة</a>
+                                      </li>
                                       
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('legal_consultations')}}">الاستشارات القانونية</a>
                                       </li>

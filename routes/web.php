@@ -407,7 +407,7 @@ Route::get('/reports_casetype_export', 'ReportsStatisticsController@casetype_exp
 });
 
 
-Route::middleware(['roles:1,2,4'])->group(function () {
+Route::middleware(['roles:1,2,3,4'])->group(function () {
     Route::get('/records', 'RecordsController@index')->name('records');
     Route::get('/records/create', 'RecordsController@create')->name('records.add');
     Route::post('/records/store', 'RecordsController@store')->name('record.store');
