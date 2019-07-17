@@ -407,7 +407,7 @@ Route::get('/reports_casetype_export', 'ReportsStatisticsController@casetype_exp
 });
 
 
-Route::middleware(['roles:1,2,3,4'])->group(function () {
+Route::middleware(['roles:1,2,4'])->group(function () {
     Route::get('/records', 'RecordsController@index')->name('records');
     Route::get('/records/create', 'RecordsController@create')->name('records.add');
     Route::post('/records/store', 'RecordsController@store')->name('record.store');
@@ -428,7 +428,7 @@ Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
 
 //offices
-
+Route::middleware(['roles:1,2'])->group(function () {
 Route::get('/offices', 'OfficesController@index')->name('offices');
 //Route::get('/offices_follow', 'OfficesController@follow')->name('offices_follow');
 Route::get('/offices_show/{id}', 'OfficesController@show')->name('offices_show');
@@ -444,6 +444,7 @@ Route::post('/branches_store', 'OfficesController@branch_create')->name('branche
 Route::post('/branches_edit', 'OfficesController@branch_edit')->name('branches_edit');
 Route::post('/branches_delete/{id}', 'OfficesController@branch_destroy')->name('branches_delete');
 Route::get('/get_cities/{country_id}', 'OfficesController@get_cities')->name('get_cities');
+});
 
 //Contact us
 Route::middleware(['roles:1,2'])->group(function () {
