@@ -45,7 +45,7 @@ public  function collection()
       $lawyersArray = array(['كود المكتب','الإسم','عنوان','رقم الموبايل','تفعيل']) ;
 
      }
-   dd($this->is_report);
+  //  dd($this->is_report);
 
     if(is_null($this->ids)){
       if($this->is_report != 2)
