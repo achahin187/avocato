@@ -333,7 +333,7 @@
                     <td><span class="cellcontent">{{$session->case->courts->name or ''}} / {{$session->case->region}}</span></td>
                     <td><span class="cellcontent">{{$session->case->claim_number}}</span></td>
                     <td><span class="cellcontent">{{$session->case->contender_name}} / {{Helper::localizations('case_client_roles','name',$session->case->contender_case_client_role_id)}}</span></td>
-                    <td><span class="cellcontent">{{($session->case->clients) ? $session->case->clients[0]['full_name'] / Helper::localizations('case_client_roles','name',$session->case->clients[0]['case_client_roles']['id']) : 'لا يوجد'}}</span></td>
+                    <td><span class="cellcontent">{{($session->case->clients) ? $session->case->clients[0]['full_name'] / Helper::localizations('case_client_roles','name',$session->case->clients[0]['pivot']['case_client_role_id']) : 'لا يوجد'}}</span></td>
                     <td><span class="cellcontent">{{$session->name}}</span></td>
                     <td><span class="cellcontent">{{$session->description}}</span></td>
                     <td><span class="cellcontent">{{$session->next_datetime}}</span></td>
