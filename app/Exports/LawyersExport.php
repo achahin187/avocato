@@ -49,11 +49,23 @@ public  function collection()
 
     if(is_null($this->ids)){
 
+      if($this->is_report != 2)
+      {
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function($q){
-        $q->where('rule_id',[5])
-          ->where('rule_id','!=',15);
+          $q->where('rule_id',[5])
+            ->where('rule_id','!=',15);
+  
+        })->orderBy('full_name')->get();
 
-      })->orderBy('full_name')->get();
+      }
+      else
+      {
+        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function($q){
+          $q->where('rule_id',[15]);
+  
+        })->orderBy('full_name')->get();
+      }
+        
       if($is_report != 2)
       {
         foreach($lawyers as $key=>$lawyer)
@@ -152,7 +164,7 @@ public  function collection()
             if(is_null($this->is_report)){
             array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
 
-               }else{
+               }else if($this->is_report == 1){
       
 
      
@@ -166,6 +178,13 @@ public  function collection()
                    ($lawyer->tasks) ? $lawyer->tasks->count() : 0 ,
                    ($lawyer->cases) ? $lawyer->cases->count() : 0 
                       ]);
+      
+    }
+    else if($this->is_report == 2)
+    {
+      array_push($lawyersArray,[$lawyer->id,$lawyer->name,$lawyer->address,$lawyer->mobile,$is_active]);
+
+
     }
         } 
     }
