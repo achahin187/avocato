@@ -73,24 +73,7 @@ class OfficesController extends Controller
     return view('offices.add', $data);
   }
 
-  public function excel()
-  {
-    $filepath = 'public/excel/';
-    $PathForJson = 'storage/excel/';
-    $filename = 'lawyers' . time() . '.xlsx';
-    if (isset($_GET['ids'])) {
-      $ids = $_GET['ids'];
-      Excel::store(new LawyersExport($ids), $filepath . $filename);
-      return response()->json($PathForJson . $filename);
-    } elseif ($_GET['filters'] != '') {
-      $filters = json_decode($_GET['filters']);
-      Excel::store((new LawyersExport($filters)), $filepath . $filename);
-      return response()->json($PathForJson . $filename);
-    } else {
-      Excel::store((new LawyersExport()), $filepath . $filename);
-      return response()->json($PathForJson . $filename);
-    }
-  }
+  
 
   public function filter(Request $request)
   {
@@ -683,6 +666,32 @@ public function branch_edit(Request $request)
   public function get_cities($country_id)
   {
     return response()->json(Geo_Cities::where('country_id',$country_id)->get());
+  }
+
+
+  public function excel()
+  {
+    $filepath = 'public/excel/';
+    $PathForJson = 'storage/excel/';
+    $filename = 'lawyers' . time() . '.xlsx';
+    if (isset($_GET['is_report'])) {
+      $is_report = $_GET['is_report'];
+    }else{
+      $is_report = null; 
+    }
+    
+    if (isset($_GET['ids'])) {
+      $ids = $_GET['ids'];
+      Excel::store(new LawyersExport($ids , $is_report), $filepath . $filename);
+      return response()->json($PathForJson . $filename);
+    } elseif ($_GET['filters'] != '') {
+      $filters = json_decode($_GET['filters']);
+      Excel::store((new LawyersExport($filters , $is_report)), $filepath . $filename);
+      return response()->json($PathForJson . $filename);
+    } else {
+      Excel::store((new LawyersExport(null , $is_report)), $filepath . $filename);
+      return response()->json($PathForJson . $filename);
+    }
   }
 
 }
