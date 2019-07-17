@@ -162,7 +162,7 @@
         {{--  landline phone  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
+            <label class="master_label " for="client_tel">رقم الهاتف</label>
             <input name="phone" value="{{ old('phone') }}" min="0" class="master_input disScroll" type="text" placeholder="0212345678" id="client_tel">
             
               @if ($errors->has('phone'))
@@ -205,7 +205,7 @@
         {{--  Work  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="works">قطاع الأعمال </label>
+            <label class="master_label " for="works">قطاع الأعمال </label>
             <input name="work" value="{{ old('work') }}" class="master_input" type="text" placeholder="ادخل قطاع الاعمال.." id="works">
             
               @if ($errors->has('work'))
@@ -217,7 +217,7 @@
         {{--  Work type  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="works_types">نوع قطاع الأعمال </label>
+            <label class="master_label " for="works_types">نوع قطاع الأعمال </label>
             <input name="work_type" value="{{ old('work_type') }}" class="master_input" type="text" placeholder="ادخل نوع قطاع الاعمال" id="works_types">
 
             @if ($errors->has('work_type'))
@@ -230,7 +230,7 @@
         {{--  Personal image  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_img">صورة شخصية</label>
+            <label class="master_label " for="client_img">صورة شخصية</label>
             <div class="file-upload">
               <div class="file-select">
                 <div class="file-select-name" id="noFile">اضغط هنا لرفع الصورة الشخصية للعميل </div>
@@ -243,7 +243,7 @@
         {{--  Discount rate  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_discount">نسبة الخصم </label>
+            <label class="master_label " for="client_discount">نسبة الخصم </label>
             <input name="discount_rate" value="{{ old('discount_rate') }}" min="0" class="master_input disScroll" type="number" placeholder="ادخل النسبة المئوية %" id="client_discount">
             
               @if ($errors->has('discount_rate'))
