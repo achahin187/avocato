@@ -268,7 +268,7 @@ $(document).on('confirmation', '#two', function () {
       $('.excel-btn').click(function(){
          var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
          var selectedIds = $("input:checkbox:checked").map(function(){
-          return $(this).closest('tr').attr('data-lawyer-id');
+          return $(this).closest('tr').attr('data-office-id');
         }).get();
          $.ajax({
            type:'GET',
