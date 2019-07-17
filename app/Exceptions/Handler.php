@@ -48,36 +48,36 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($this->isHttpException($exception)) {
-            switch ($exception->getStatusCode()) {
+        // if ($this->isHttpException($exception)) {
+        //     switch ($exception->getStatusCode()) {
     
-                // not authorized
-                case '403':
-                    return \Response::view('errors.403',array(),403);
-                    break;
+        //         // not authorized
+        //         case '403':
+        //             return \Response::view('errors.403',array(),403);
+        //             break;
     
-                // not found
-                case '404':
-                    return view('errors.404',array(),404);
-                    break;
+        //         // not found
+        //         case '404':
+        //             return \Response::view('errors.404',array(),404);
+        //             break;
     
-                // internal error
-                case '500':
-                    return \Response::view('errors.500',array(),500);
-                    break;
+        //         // internal error
+        //         case '500':
+        //             return \Response::view('errors.500',array(),500);
+        //             break;
 
-                // server error
-                case '502':
-                    return \Response::view('errors.502',array(),500);
-                    break;
+        //         // server error
+        //         case '502':
+        //             return \Response::view('errors.502',array(),500);
+        //             break;
     
-                default:
-                    return $this->renderHttpException($exception);
-                    break;
-            }
-        } else {
-            return parent::render($request, $exception);
-        }
+        //         default:
+        //             return $this->renderHttpException($exception);
+        //             break;
+        //     }
+        // } else {
+        //     return parent::render($request, $exception);
+        // }
         return parent::render($request, $exception);
     }
 }
