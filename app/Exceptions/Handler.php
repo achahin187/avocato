@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($this->isHttpException($exception)) {
-            switch ($e->getStatusCode()) {
+            switch ($exception->getStatusCode()) {
     
                 // not authorized
                 case '403':
