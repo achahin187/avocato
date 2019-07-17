@@ -25,7 +25,7 @@ class TasksController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
-        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->with('clients')->paginate(10);
+        $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->with('clients')->get();
         $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id',3)->paginate(10);
         $data['regions'] = Case_::all('region');
         // $data['types'] = Entity_Localizations::where('entity_id',9)->where('field','name')->get();
