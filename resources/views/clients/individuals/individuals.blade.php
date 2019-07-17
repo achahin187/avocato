@@ -96,7 +96,7 @@
                 {{-- End Date From --}}
                 <div class="col-md-6">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="license_end_from">تاريخ نهاية التعاقد</label>
+                    <label class="master_label mandatory" for="license_end_from">تاريخ نهاية التعاقد من</label>
                     <div class="bootstrap-timepicker">
                       <input name="end_date_from" class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="license_end_from">
                     </div>

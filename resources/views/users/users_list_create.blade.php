@@ -9,6 +9,19 @@
         }, 4000);
   });
         </script>
+        <script>
+        $(document).ready(function(){
+    $('#client_full_name').keypress(function(e) {
+      
+       e = e || window.event;
+       var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
+       var charStr = String.fromCharCode(charCode);
+       if (/\d/.test(charStr)) {
+        return false;
+    }
+    });
+        });    
+        </script>
               <div class="row">
                 <div class="col-lg-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">

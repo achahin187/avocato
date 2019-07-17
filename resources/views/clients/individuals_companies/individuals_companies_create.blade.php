@@ -254,7 +254,7 @@
         {{--  discount percentage  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label" for="discount">نسبة الخصم </label>
+            <label class="master_label" for="client_discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
             {{--  Error  --}}             
             @if ($errors->has('discount_percentage'))               
@@ -383,7 +383,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12" id="company_count" hidden>
             <div class="master_field">
               <label class="master_label mandatory" for="payment_method_id">عدد الشركه </label>
-            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required >
+            <select name="price_method" class="master_input disScroll" id="price_method_id">
 
                </select>
                @if ($errors->has('price_method'))
@@ -654,8 +654,7 @@ function get_price_method(id)
     var discount = $('#client_discount').val();
     var price = $('#price_method_id').val();
     var id = $('#bouquet_id').val();
-                //  alert(discount);
-
+    
     $.ajax(
     {
         url: "{{ url('/bouquet_price_value') }}" +"/"+ id + "/" + discount +"/" + price,
