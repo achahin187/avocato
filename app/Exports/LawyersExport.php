@@ -49,23 +49,10 @@ public  function collection()
 
     if(is_null($this->ids)){
 
-      if($this->is_report != 2)
-      {
         $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function($q){
-          $q->where('rule_id',[5])
-            ->where('rule_id','!=',15);
-  
-        })->orderBy('full_name')->get();
+        $q->where('rule_id',[5]);
 
-      }
-      else
-      {
-        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function($q){
-          $q->where('rule_id',[15]);
-  
-        })->orderBy('full_name')->get();
-      }
-        
+      })->orderBy('full_name')->get();
       if($is_report != 2)
       {
         foreach($lawyers as $key=>$lawyer)
