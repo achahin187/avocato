@@ -36,9 +36,14 @@ public  function collection()
 {   
       if(is_null($this->is_report)){
          $lawyersArray = array(['كود المحامي','الإسم','نوع العمل','الرقم القومى','التخصص','درجه القيد بالنقابه','عنوان','رقم الموبايل','تاريخ الإلتحاق','الجنسيه','تفعيل']) ;
-     }else{
+     }else if($this->is_report == 1){
        
        $lawyersArray = array(['الاسم','التخصص','درجة التقاضي','الجنسية','نوع العمل','الإختصاص المكاني','عدد المهام','عدد القضايا']) ;
+     }
+     else if($this->is_report == 2)
+     {
+      $lawyersArray = array(['كود المكتب','الإسم','عنوان','رقم الموبايل','تفعيل']) ;
+
      }
    
 
@@ -82,7 +87,7 @@ public  function collection()
         
         if(is_null($this->is_report)){
         array_push($lawyersArray,[$lawyer->id,$lawyer->name,$role,$lawyer->user_detail->national_id,$work_sector,$lawyer->user_detail->syndicate_levela->name,$lawyer->address,$lawyer->mobile,$lawyer->user_detail->join_date,$lawyer->nationality,$is_active]);
-    }else{
+    }else if($this->is_report == 1){
       
        array_push($lawyersArray,[ 
                    ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد',
@@ -94,6 +99,9 @@ public  function collection()
                    ($lawyer->tasks) ? $lawyer->tasks->count() : 0 ,
                    ($lawyer->cases) ? $lawyer->cases->count() : 0 
                       ]);
+    }
+    else if($this->is_report == 2){
+      array_push($lawyersArray,[$lawyer->id,$lawyer->name,$lawyer->address,$lawyer->mobile,$is_active]);
     }
 
     }  

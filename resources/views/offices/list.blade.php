@@ -99,7 +99,7 @@ $(document).on('confirmation', '#two', function () {
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                      <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
+                      <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" href="#">حذف المحدد</a>
                        @if($offices instanceof \Illuminate\Pagination\LengthAwarePaginator)
                         {{$offices->appends(Request::except('page'))->links()}}
                         @endif
@@ -265,6 +265,30 @@ $(document).on('confirmation', '#two', function () {
     });
     }
       });
+      $('.excel-btn').click(function(){
+         var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+         var selectedIds = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-lawyer-id');
+        }).get();
+         $.ajax({
+           type:'GET',
+           url:'{{route('lawyers_excel')}}',
+           data:{
+             ids:selectedIds,
+             is_report:2,
+             filters:filter},
+           success:function(response){
+            swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+            // var a = document.createElement("a");
+            // a.href = response.file; 
+            // a.download = response.name+'.xlsx';
+            // document.body.appendChild(a);
+            // a.click();
+            // a.remove();
+            location.href = response;
+          }
+        });
+       });
      </script>
 
 @endsection
