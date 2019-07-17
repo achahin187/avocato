@@ -65,7 +65,7 @@ public  function collection()
 
       }
         
-      if($is_report != 2)
+      if($this->is_report != 2)
       {
         foreach($lawyers as $key=>$lawyer)
         {
