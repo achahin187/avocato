@@ -262,7 +262,7 @@
               </button>
             </td>
             <td>
-              <input class="master_input" type="number" id="cost`+i+`" placeholder="سعر الباقة" mandatory="yes" name="bouquet[`+i+`][price]">
+              <input class="master_input" type="number" id="cost`+i+`" placeholder="سعر الباقة" mandatory="yes" name="bouquet[`+i+`][price]" required>
             </td>
             <td>
               <input class="master_input" type="number" id="cost`+i+`_to" placeholder="عدد الأفراد الى" mandatory="yes" name="bouquet[`+i+`][count_to]">

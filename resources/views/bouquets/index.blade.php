@@ -120,6 +120,7 @@
                           <tr class="bgcolor--gray_mm color--gray_d">
                             <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
                             <th><span class="cellcontent">اسم الباقة</span></th>
+                            <th><span class="cellcontent">تصنيف الباقة</span></th>
                             <th><span class="cellcontent">دفع الأقساط</span></th>
                             <th><span class="cellcontent">عدد المشتركين</span></th>
                             <th><span class="cellcontent">الاجراءات</span></th>
@@ -130,6 +131,12 @@
                           <tr data-bouquet-id="{{$bouquet['id']}}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                             <td><span class="cellcontent">{{$bouquet['name']}} </span></td>
+                            <td><span class="cellcontent">
+                            @if($bouquet['bouquet_type'] == 0)
+                            أفراد
+                            @else
+                            شركات
+                            @endif </span></td>
                             <td><span class="cellcontent">
                             @foreach($bouquet['payment'] as $value)
                             {{$value['name']}} -

@@ -111,7 +111,7 @@ class LawyersController extends Controller
     $PathForJson = 'storage/excel/';
     $filename = 'lawyers' . time() . '.xlsx';
     if (isset($_GET['is_report'])) {
-        $is_report = 1;
+        $is_report = $_GET['is_report'];
       }else{
         $is_report = null; 
       }

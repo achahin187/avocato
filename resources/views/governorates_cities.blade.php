@@ -118,7 +118,7 @@
                 </div>
                 {{-- end of government_localization modal  --}} 
 
-                <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                <div class="bottomActions__btns"><a id="exportSelected_governorates" class=" master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
                   <a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel deleteAllgovernments" >حذف المحدد</a>
                 </div>
                 <div class="quick_filter">
@@ -154,7 +154,7 @@
                   <tbody>
                   @foreach ($governments as $government)
                     @if(\Session::get('AppLocale') == 1)
-                      <tr data-government_id="{{$government->id}}">
+                      <tr data-government-id="{{$government->id}}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td>
                           <span class="cellcontent">
@@ -174,7 +174,7 @@
                       </tr>
                     @else
                         @if(Helper::localizations('geo_governorates', 'name', $government->id, \Session::get('AppLocale')) != '')
-                        <tr data-government_id="{{$government->id}}">
+                        <tr data-government-id="{{$government->id}}">
                           <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                           <td>
                             <span class="cellcontent">
@@ -387,7 +387,7 @@
                       @if ( isset($cities) && !empty($cities) )
                         @foreach ($cities as $city) 
                           @if(\Session::get('AppLocale') == 1)
-                          <tr data-city_id="{{ $city->id }}">
+                          <tr data-city-id="{{ $city->id }}">
                             <td>
                               <span class="cellcontent">
                                 <input type="checkbox" class="checkboxes input-in-table"  data-id="{{ $city->id }}" />
@@ -408,7 +408,7 @@
                           </tr>
                           @else
                             @if(Helper::localizations('geo_cities', 'name', $city->id, \Session::get('AppLocale')) != '')
-                            <tr data-city_id="{{ $city->id }}">
+                            <tr data-city-id="{{ $city->id }}">
                               <td>
                                 <span class="cellcontent">
                                   <input type="checkbox" class="checkboxes input-in-table"  data-id="{{ $city->id }}" />
@@ -470,7 +470,7 @@
                           id:id
                        },
                       success:function(data){
-                        $('tr[data-government_id='+id+']').fadeOut();
+                        $('tr[data-government-id='+id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
                       }
@@ -484,7 +484,7 @@
       
               $('.deleteAllgovernments').click(function(){
                 var selectedIds = $("input:checkbox:checked").map(function(){
-                  return $(this).closest('tr').attr('data-government_id');
+                  return $(this).closest('tr').attr('data-government-id');
                 }).get();
                 var _token = '{{csrf_token()}}';
                 swal({
@@ -508,7 +508,7 @@
                         _token:_token},
                       success:function(data){
                         $.each( selectedIds, function( key, value ) {
-                          $('tr[data-government_id='+value+']').fadeOut();
+                          $('tr[data-government-id='+value+']').fadeOut();
                         });
                       }
                     });
@@ -543,7 +543,7 @@
                           id:id
                        },
                       success:function(data){
-                        $('tr[data-city_id='+id+']').fadeOut();
+                        $('tr[data-city-id='+id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
                       }
@@ -557,7 +557,7 @@
       
               $('.deleteAllcities').click(function(){
                 var selectedIds = $("input:checkbox:checked").map(function(){
-                  return $(this).closest('tr').attr('data-city_id');
+                  return $(this).closest('tr').attr('data-city-id');
                 }).get();
                 var _token = '{{csrf_token()}}';
                 swal({
@@ -581,7 +581,7 @@
                         _token:_token},
                       success:function(data){
                         $.each( selectedIds, function( key, value ) {
-                          $('tr[data-city_id='+value+']').fadeOut();
+                          $('tr[data-city-id='+value+']').fadeOut();
                         });
                       }
                     });
@@ -593,19 +593,21 @@
               });
         // Export table as Excel file
         $('#exportSelected').click(function(){
-          var allVals = [];                   // selected IDs
-
+          // var allVals = [];                   // selected IDs
+          var ids  = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-city-id');
+        }).get();
           // push cities IDs selected by user
-          $('.checkboxes:checked').each(function() {
-            allVals.push($(this).attr('data-city_id'));
-          });
+          // $('.checkboxes:checked').each(function() {
+          //   allVals.push($(this).attr('data-city-id'));
+          // });
           
           // check if user selected nothing
-          if(allVals.length <= 0) {
-            var ids = null;
-          } else {
-            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-          }
+          // if(allVals.length <= 0) {
+          //   var ids = null;
+          // } else {
+          //   var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          // }
           
           $.ajax(
           {
@@ -614,6 +616,43 @@
             data: {
                 "ids": ids,
                 "_method": 'GET',
+                "is_city":1
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
+        });
+
+        // Export table as Excel file
+        $('#exportSelected_governorates').click(function(){
+          // var allVals = [];                   // selected IDs
+
+          // // push cities IDs selected by user
+          // $('.checkboxes:checked').each(function() {
+          //   allVals.push($(this).attr('data-government-id'));
+          // });
+          var ids  = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-government-id');
+        }).get();
+          
+          // check if user selected nothing
+          // if(allVals.length <= 0) {
+          //   var ids = null;
+          // } else {
+          //   var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          // }
+          
+          $.ajax(
+          {
+            url: "{{ route('governorates_cities.exportXLS') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+                "is_city":2
             },
             success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
