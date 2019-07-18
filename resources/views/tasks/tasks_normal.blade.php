@@ -598,6 +598,7 @@
                     <th><span class="cellcontent">العنوان</span></th>
                     <th><span class="cellcontent">التاريخ</span></th>
                     <th><span class="cellcontent">الحالة</span></th>
+                    <th><span class="cellcontent">المحامي المحدد</span></th>
                     <th><span class="cellcontent">الاجراءات</span></th>
                   </tr>
                 </thead>
@@ -615,6 +616,7 @@
                       {{$status->value}}
                       @endif
                     @endforeach</span></td>
+                    <td><span class="cellcontent">{{$service->lawyer->full_name or ''}}</span></td>
                     <td><span class="cellcontent"><a href="{{route('services_show',$service->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('services_edit',$service->id)}}" ,  class= "action-btn bgcolor--fadepurple  color--white "><i class = "fa  fa-edit"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                   </tr>
                   @endforeach
