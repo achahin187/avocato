@@ -255,7 +255,7 @@
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="client_discount">             
             {{--  Error  --}}             
             @if ($errors->has('discount_percentage'))               
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>             
@@ -605,7 +605,7 @@ function get_price_method(id)
               {
                 if(data == 0)
                 {
-                  set_license_fees_ind();
+                  set_license_fees_ind(id);
                 }
                 else
                 {
@@ -674,11 +674,11 @@ function get_price_method(id)
         });
 }
 
-function set_license_fees_ind()
+function set_license_fees_ind(id)
   {
     var discount = $('#client_discount').val();
     // var price = $('#price_method_id').val();
-    var id = $('#bouquet_id').val();
+    // var id = $('#bouquet_id').val();
                 //  alert(discount);
 
     $.ajax(
