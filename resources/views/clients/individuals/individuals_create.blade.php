@@ -500,7 +500,7 @@
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
+           $('#payment['+i+'][price]').innerHTML =price_for_each_installment;
          }
        }
        function set_number_of_installment()
