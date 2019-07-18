@@ -543,6 +543,7 @@
                 "userType": 'individuals-Companies',
                 "userRule": 10,
                 "_method": 'GET',
+                "is_report":3,
             },
             success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
