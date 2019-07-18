@@ -94,9 +94,10 @@ $usersArray = array(['كودالشركة','اسم الشركة','نوع التع
               }
               else if ($this->is_report == 3){
                
-                array_push($usersArray,[$user->code,
+                array_push($usersArray,[
                 $user->companyParent ? $user->companyParent->code : "غير موجود",
                 $user->companyParent ? $user->companyParent->name : "غير موجود",
+                $user->code,
                 $user->full_name ? $user->full_name : 'غير معرف',
                 $user->email ? $user->email : 'غير معرف',
                 $user->address ? $user->address : 'غير معرف',
