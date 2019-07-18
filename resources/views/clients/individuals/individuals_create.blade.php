@@ -487,7 +487,7 @@
           $('#number_of_installments').val(numberOfInstallment);  
         }
         set_number_of_installment();
-        set_price_for_each_installment();
+        // set_price_for_each_installment();
       });
        //all installments price value should be equal to value of bouquet 
        $('#license_fees').on("keyup", function() {
@@ -545,6 +545,7 @@
         } else {
           $('#generated div').remove();
         }
+        set_price_for_each_installment();
        }
       // generate number of input fields dynamicly 
       // $('#number_of_installments').on("keyup", function() {
