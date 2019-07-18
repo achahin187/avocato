@@ -579,6 +579,10 @@
     var discount = $('#client_discount').val();
     // var id = $('#bouquet_id').val();
                 //  alert(discount);
+    if(discount == "undefined" || discount = '')
+    {
+      discount = 0;
+    }
 
     $.ajax(
     {
