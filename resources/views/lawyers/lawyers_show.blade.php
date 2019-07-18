@@ -216,7 +216,13 @@
                                 <td><span class="cellcontent">{{$case->year}}</span></td>
                                 <td><span class="cellcontent">{{$case->date}}</span></td>
                                 <td><span class="cellcontent">{{$case->office_file_number}}</span></td>
-                                <td><span class="cellcontent"><a href= "{{route('case_view',$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "{{route('case_edit',$case->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                                <td>
+                                  <span class="cellcontent">
+                                    <a href= "{{route('case_view',$case->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a>
+                                    <a href= "{{route('case_edit',$case->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a>
+                                    <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a>
+                                  </span>
+                                </td>
                               </tr>
                               @endforeach
                             </tbody>
@@ -393,6 +399,7 @@
                               </tr>
                             </thead>
                             <tbody>
+                              
                               @foreach($rates_user as $rate)
                               @foreach($rate->rules as $rule)
                               @if($rule->pivot->rule_id==13)
@@ -401,9 +408,8 @@
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
                                 <td><span class="cellcontent">
-                                
                                 <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
-                                <i class = "fa  fa-pencil"></i></a>
+                                 <i class = "fa fa-pencil"></i></a>
                                 <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
 
@@ -440,6 +446,45 @@
                               @endif
                               @endforeach
                               @endforeach
+
+                              <!-- I put the following static tr and modal to prove that the problem is with the foreach code not ui-->
+                              <tr>
+                                <td><span class="cellcontent">ممتاز</span></td>
+                                <td><span class="cellcontent">لا توجد ملاحظات</span></td>
+                                <td><span class="cellcontent">20-11-2017</span></td>
+                                <td><span class="cellcontent">
+                                    <a href= #edit_evaluation ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+                              </tr>
+                              <div class="remodal" data-remodal-id="edit_evaluation" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>تعديل التقييم</h3>
+                                      <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
+                                          <select class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%">
+                                            <option>ممتاز</option>
+                                            <option>جيد جدا </option>
+                                            <option>جيد </option>
+                                            <option>مقبول</option>
+                                          </select><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-12">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
+                                          <textarea class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                                <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
+                              </div>
+                              <!--end of static testing part-->
                             </tbody>
                           </table>
 
