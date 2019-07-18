@@ -493,16 +493,7 @@
        $('#license_fees').on("keyup", function() {
          set_price_for_each_installment();
        });
-       function set_price_for_each_installment()
-       {
-        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
-        alert(price_for_each_installment);
-         for(i= 0 ; i < numberOfInstallment ; i++)
-         {
-          // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
-         }
-       }
+      
        function set_number_of_installment()
        {
         NumberOfPayments = $('#number_of_installments').val();   // get number of payments
@@ -546,6 +537,16 @@
           $('#generated div').remove();
         }
         set_price_for_each_installment();
+       }
+       function set_price_for_each_installment()
+       {
+        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
+        // alert();
+         for(var i= 0 ; i < numberOfInstallment ; i++)
+         {
+          // alert('#payment['+i+'][price]');
+           $('#client_discount').val(price_for_each_installment);
+         }
        }
       // generate number of input fields dynamicly 
       // $('#number_of_installments').on("keyup", function() {
