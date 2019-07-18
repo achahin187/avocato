@@ -5,6 +5,7 @@ namespace App\Exports;
 use Helper;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use App\Geo_Cities;
+use App\Geo_Governorates;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
