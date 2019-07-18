@@ -689,6 +689,7 @@ function set_license_fees_ind(id)
     {
       discount = 0;
     }
+    alert(discount);
 
     $.ajax(
     {
