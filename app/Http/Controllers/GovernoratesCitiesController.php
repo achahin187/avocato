@@ -202,14 +202,22 @@ class GovernoratesCitiesController extends Controller
     {
         $filepath ='public/excel/';
         $PathForJson='storage/excel/';
-        $filename = 'Governorates.Cities'.time().'.xlsx';
+        if($request->is_city == 1)
+        {
+            $filename = 'Cities'.time().'.xlsx';
+        }
+        else
+        {
+            $filename = 'Governorates'.time().'.xlsx';
+        }
+        
 
         if(isset($request->ids)){
             $ids = explode(",", $request->ids);
-            Excel::store(new GovernoratesCitiesExport($ids),$filepath.$filename);
+            Excel::store(new GovernoratesCitiesExport($ids , $request->is_city),$filepath.$filename);
             return response()->json($PathForJson.$filename);
         } else{
-            Excel::store((new GovernoratesCitiesExport()),$filepath.$filename);
+            Excel::store((new GovernoratesCitiesExport(null , $request->is_city)),$filepath.$filename);
             return response()->json($PathForJson.$filename); 
         }
 

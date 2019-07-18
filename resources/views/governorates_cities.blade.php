@@ -118,7 +118,7 @@
                 </div>
                 {{-- end of government_localization modal  --}} 
 
-                <div class="bottomActions__btns"><a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                <div class="bottomActions__btns"><a class="exportSelected_governorates master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
                   <a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel deleteAllgovernments" >حذف المحدد</a>
                 </div>
                 <div class="quick_filter">
@@ -614,6 +614,40 @@
             data: {
                 "ids": ids,
                 "_method": 'GET',
+                "is_city":1
+            },
+            success:function(response){
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              location.href = response;
+            }
+          });
+
+        });
+
+        // Export table as Excel file
+        $('#exportSelected_governorates').click(function(){
+          var allVals = [];                   // selected IDs
+
+          // push cities IDs selected by user
+          $('.checkboxes:checked').each(function() {
+            allVals.push($(this).attr('data-government_id'));
+          });
+          
+          // check if user selected nothing
+          if(allVals.length <= 0) {
+            var ids = null;
+          } else {
+            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          }
+          
+          $.ajax(
+          {
+            url: "{{ route('governorates_cities.exportXLS') }}",
+            type: 'GET',
+            data: {
+                "ids": ids,
+                "_method": 'GET',
+                "is_city":2
             },
             success:function(response){
               swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");

@@ -13,8 +13,9 @@ use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 class GovernoratesCitiesExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
-    public function __construct($ids=null){
+    public function __construct($ids=null , $is_city = null){
       $this->ids=$ids;
+      $this->is_city = $is_city;
   }
 
 
@@ -33,17 +34,37 @@ class GovernoratesCitiesExport implements FromCollection,WithEvents
 
 public  function collection()
 {   
-    $usersArray = array(['المحافظة', 'المدينة']) ;
+    $citiesArray = array(['المحافظه' , 'المدينة']) ;
+    $governoratesArray = array(['المحافظه']);
+    
+    if($this->is_city == 1)
+    {
+        if( $this->ids != NULL ){
+            $cities = Geo_Cities::whereIn('id', $this->ids)->get();   
+        } else {
+            $cities = Geo_Cities::all();  
+        }
+        foreach($cities as $city) {
+            array_push($citiesArray,[  $city->governorate->name ,$city->name ]);
+        }
 
-    if( $this->ids != NULL ){
-        $cities = Geo_Cities::whereIn('id', $this->ids)->get();   
-    } else {
-        $cities = Geo_Cities::all();  
+    }
+    else
+    {
+        if( $this->ids != NULL ){
+            $cities = Geo_Governorates::whereIn('id', $this->ids)->get();   
+        } else {
+            $cities = Geo_Governorates::all();  
+        }
+        foreach($cities as $city) {
+            array_push($governoratesArray,[  $city->name ]);
+        }
+
     }
 
-    foreach($cities as $city) {
-        array_push($usersArray,[ $city->governorate->name, $city->name ]);
-    }
+    
+
+   
 
     return collect($usersArray);
 }
