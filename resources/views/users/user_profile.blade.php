@@ -8,7 +8,11 @@
                         <div class="col-xs-12">
                           <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset(''.$user->image)}}">
                               <h3 class="coverglobal__title color--gray_d">{{$user->full_name}}</h3><small class="coverglobal__slogan color--gray_d">{{$user->is_active ? 'مفعل':'غير مفعل'}}</small></a></div>
-                          <div class="coverglobal__actions"><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit',$user->id)}}">تعديل البيانات</a><a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a>
+                          <div class="coverglobal__actions">
+                              <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit',$user->id)}}">تعديل البيانات</a>
+                              <!-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a> -->
+                              <a class="btn-warning-cancel color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" href="#">استبعاد المستخدم</a>
+                              <br>
                           </div>
                         </div>
                       </div>
@@ -17,6 +21,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    
                     <div class="col-md-6">
                       <div class="full-table">
                         <table class="verticaltable">
@@ -147,4 +152,32 @@
                   </div>
                 </div>
               </div>
+ 
+  <a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a>
+                    
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.btn-warning-cancel').click(function(){
+            swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'نعم متأكد!',
+              cancelButtonText: "إلغاء",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm){
+                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+          });
+    });
+  </script>
  @endsection
+ 
