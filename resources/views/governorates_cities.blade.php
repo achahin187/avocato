@@ -154,7 +154,7 @@
                   <tbody>
                   @foreach ($governments as $government)
                     @if(\Session::get('AppLocale') == 1)
-                      <tr data-government_id="{{$government->id}}">
+                      <tr data-government-id="{{$government->id}}">
                         <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                         <td>
                           <span class="cellcontent">
@@ -174,7 +174,7 @@
                       </tr>
                     @else
                         @if(Helper::localizations('geo_governorates', 'name', $government->id, \Session::get('AppLocale')) != '')
-                        <tr data-government_id="{{$government->id}}">
+                        <tr data-government-id="{{$government->id}}">
                           <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                           <td>
                             <span class="cellcontent">
@@ -387,7 +387,7 @@
                       @if ( isset($cities) && !empty($cities) )
                         @foreach ($cities as $city) 
                           @if(\Session::get('AppLocale') == 1)
-                          <tr data-city_id="{{ $city->id }}">
+                          <tr data-city-id="{{ $city->id }}">
                             <td>
                               <span class="cellcontent">
                                 <input type="checkbox" class="checkboxes input-in-table"  data-id="{{ $city->id }}" />
@@ -408,7 +408,7 @@
                           </tr>
                           @else
                             @if(Helper::localizations('geo_cities', 'name', $city->id, \Session::get('AppLocale')) != '')
-                            <tr data-city_id="{{ $city->id }}">
+                            <tr data-city-id="{{ $city->id }}">
                               <td>
                                 <span class="cellcontent">
                                   <input type="checkbox" class="checkboxes input-in-table"  data-id="{{ $city->id }}" />
@@ -470,7 +470,7 @@
                           id:id
                        },
                       success:function(data){
-                        $('tr[data-government_id='+id+']').fadeOut();
+                        $('tr[data-government-id='+id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
                       }
@@ -484,7 +484,7 @@
       
               $('.deleteAllgovernments').click(function(){
                 var selectedIds = $("input:checkbox:checked").map(function(){
-                  return $(this).closest('tr').attr('data-government_id');
+                  return $(this).closest('tr').attr('data-government-id');
                 }).get();
                 var _token = '{{csrf_token()}}';
                 swal({
@@ -508,7 +508,7 @@
                         _token:_token},
                       success:function(data){
                         $.each( selectedIds, function( key, value ) {
-                          $('tr[data-government_id='+value+']').fadeOut();
+                          $('tr[data-government-id='+value+']').fadeOut();
                         });
                       }
                     });
@@ -543,7 +543,7 @@
                           id:id
                        },
                       success:function(data){
-                        $('tr[data-city_id='+id+']').fadeOut();
+                        $('tr[data-city-id='+id+']').fadeOut();
                       },error:function(response){
                         console.log(response);
                       }
@@ -557,7 +557,7 @@
       
               $('.deleteAllcities').click(function(){
                 var selectedIds = $("input:checkbox:checked").map(function(){
-                  return $(this).closest('tr').attr('data-city_id');
+                  return $(this).closest('tr').attr('data-city-id');
                 }).get();
                 var _token = '{{csrf_token()}}';
                 swal({
@@ -581,7 +581,7 @@
                         _token:_token},
                       success:function(data){
                         $.each( selectedIds, function( key, value ) {
-                          $('tr[data-city_id='+value+']').fadeOut();
+                          $('tr[data-city-id='+value+']').fadeOut();
                         });
                       }
                     });
@@ -597,7 +597,7 @@
 
           // push cities IDs selected by user
           $('.checkboxes:checked').each(function() {
-            allVals.push($(this).attr('data-city_id'));
+            allVals.push($(this).attr('data-city-id'));
           });
           
           // check if user selected nothing
@@ -630,7 +630,7 @@
 
           // push cities IDs selected by user
           $('.checkboxes:checked').each(function() {
-            allVals.push($(this).attr('data-government_id'));
+            allVals.push($(this).attr('data-government-id'));
           });
           
           // check if user selected nothing
