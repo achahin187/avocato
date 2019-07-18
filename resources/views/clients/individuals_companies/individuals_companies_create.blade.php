@@ -652,6 +652,10 @@ function get_price_method(id)
   function set_license_fees()
   {
     var discount = $('#client_discount').val();
+    if(discount == "undefined")
+    {
+      discount = 0;
+    }
     var price = $('#price_method_id').val();
     var id = $('#bouquet_id').val();
                 //  alert(discount);
@@ -676,10 +680,15 @@ function get_price_method(id)
 
 function set_license_fees_ind(id)
   {
+    $('#company_count').hide();
     var discount = $('#client_discount').val();
     // var price = $('#price_method_id').val();
     // var id = $('#bouquet_id').val();
                 //  alert(discount);
+    if(discount == "undefined")
+    {
+      discount = 0;
+    }
 
     $.ajax(
     {
