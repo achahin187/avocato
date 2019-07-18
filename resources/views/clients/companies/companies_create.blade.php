@@ -673,7 +673,7 @@ function get_price_method(id)
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
+           $('#payment'+i').val(price_for_each_installment);
          }
        }
        function set_number_of_installment()
@@ -692,7 +692,7 @@ function get_price_method(id)
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment'+i+'">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

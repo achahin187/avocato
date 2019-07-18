@@ -510,7 +510,7 @@
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment'+i+'">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
@@ -545,7 +545,7 @@
          for(var i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#client_discount').val(price_for_each_installment);
+           $('#payment'+i).val(price_for_each_installment);
          }
        }
       // generate number of input fields dynamicly 
