@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
+use Session;
 
 class GovernoratesCitiesExport implements FromCollection,WithEvents
 {
@@ -43,7 +44,7 @@ public  function collection()
         if( $this->ids != NULL ){
             $cities = Geo_Cities::whereIn('id', $this->ids)->get();   
         } else {
-            $cities = Geo_Cities::all();  
+            $cities = Geo_Cities::where('country_id',session('country'))->get();  
         }
         foreach($cities as $city) {
             array_push($citiesArray,[  $city->governorate->name ,$city->name ]);
@@ -55,7 +56,7 @@ public  function collection()
         if( $this->ids != NULL ){
             $cities = Geo_Governorates::whereIn('id', $this->ids)->get();   
         } else {
-            $cities = Geo_Governorates::all();  
+            $cities = Geo_Governorates::where('country_id',session('country'))->get();  
         }
         foreach($cities as $city) {
             array_push($governoratesArray,[  $city->name ]);
