@@ -594,8 +594,8 @@
         // Export table as Excel file
         $('#exportSelected').click(function(){
           // var allVals = [];                   // selected IDs
-          var allVals  = $("input:checkbox:checked").map(function(){
-          return $(this).closest('tr').attr('data-lawyer-id');
+          var ids  = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-city-id');
         }).get();
           // push cities IDs selected by user
           // $('.checkboxes:checked').each(function() {
@@ -603,11 +603,11 @@
           // });
           
           // check if user selected nothing
-          if(allVals.length <= 0) {
-            var ids = null;
-          } else {
-            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-          }
+          // if(allVals.length <= 0) {
+          //   var ids = null;
+          // } else {
+          //   var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          // }
           
           $.ajax(
           {
@@ -628,19 +628,22 @@
 
         // Export table as Excel file
         $('#exportSelected_governorates').click(function(){
-          var allVals = [];                   // selected IDs
+          // var allVals = [];                   // selected IDs
 
-          // push cities IDs selected by user
-          $('.checkboxes:checked').each(function() {
-            allVals.push($(this).attr('data-government-id'));
-          });
+          // // push cities IDs selected by user
+          // $('.checkboxes:checked').each(function() {
+          //   allVals.push($(this).attr('data-government-id'));
+          // });
+          var ids  = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-government-id');
+        }).get();
           
           // check if user selected nothing
-          if(allVals.length <= 0) {
-            var ids = null;
-          } else {
-            var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
-          }
+          // if(allVals.length <= 0) {
+          //   var ids = null;
+          // } else {
+          //   var ids = allVals.join(",");    // join array of IDs into a single variable to explode in controller
+          // }
           
           $.ajax(
           {
