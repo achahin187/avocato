@@ -593,12 +593,14 @@
               });
         // Export table as Excel file
         $('#exportSelected').click(function(){
-          var allVals = [];                   // selected IDs
-
+          // var allVals = [];                   // selected IDs
+          var allVals  = $("input:checkbox:checked").map(function(){
+          return $(this).closest('tr').attr('data-lawyer-id');
+        }).get();
           // push cities IDs selected by user
-          $('.checkboxes:checked').each(function() {
-            allVals.push($(this).attr('data-city-id'));
-          });
+          // $('.checkboxes:checked').each(function() {
+          //   allVals.push($(this).attr('data-city-id'));
+          // });
           
           // check if user selected nothing
           if(allVals.length <= 0) {
