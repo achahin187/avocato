@@ -685,7 +685,7 @@ function set_license_fees_ind(id)
     // var price = $('#price_method_id').val();
     // var id = $('#bouquet_id').val();
                 //  alert(discount);
-    if(discount == "undefined")
+    if(discount == "undefined" || discount == '')
     {
       discount = 0;
       alert(discount);
