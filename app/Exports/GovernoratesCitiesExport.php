@@ -47,7 +47,7 @@ public  function collection()
         foreach($cities as $city) {
             array_push($citiesArray,[  $city->governorate->name ,$city->name ]);
         }
-
+        return collect($citiesArray);
     }
     else
     {
@@ -60,13 +60,14 @@ public  function collection()
             array_push($governoratesArray,[  $city->name ]);
         }
 
+        return collect($governoratesArray);
     }
 
     
 
    
 
-    return collect($usersArray);
+    
 }
 
 }
