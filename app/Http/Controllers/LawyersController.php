@@ -646,9 +646,16 @@ class LawyersController extends Controller
   public function rate_delete($id)
   {
     // dd($id);
-    $rate=User_Ratings::find($id);
-    // dd($rate);
-    $rate->delete();
+    try{
+      $rate=User_Ratings::find($id);
+      // dd($rate);
+      $rate->delete();
+    }
+    catch(\Exception $e)
+    {
+      return response()->json('fail');
+    }
+    
     return response()->json('success');
   }
   public function activateDeactivateLawyer($id){
