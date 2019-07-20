@@ -490,7 +490,7 @@
     $('.btn-warning-cancel-rate').click(function(){
       var rate_id = $(this).closest('tr').attr('data-rate-id');
       var _token = '{{csrf_token()}}';
-      alert(rate_id);
+      // alert(rate_id);
       swal({
         title: "هل أنت متأكد؟",
         text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",

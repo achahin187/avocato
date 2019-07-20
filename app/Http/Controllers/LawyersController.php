@@ -647,9 +647,9 @@ class LawyersController extends Controller
   {
     // dd($id);
     try{
-      $rate=User_Ratings::find($id);
+      $rate=User_Ratings::where('id',$id)->delete();
       // dd($rate);
-      $rate->delete();
+      // $rate->delete();
     }
     catch(\Exception $e)
     {
