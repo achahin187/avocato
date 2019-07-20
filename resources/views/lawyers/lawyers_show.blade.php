@@ -505,7 +505,7 @@
       function(isConfirm){
         if (isConfirm){
          $.ajax({
-           type:'POST',
+           type:'GET',
            url:'{{url('rate_delete')}}'+'/'+ rate_id,
            data:{_token:_token},
            success:function(data){
