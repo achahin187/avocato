@@ -653,14 +653,14 @@ class LawyersController extends Controller
   public function activateDeactivateLawyer($id){
      
      $lawyer = Users::find($id);
-  if($lawyer){
-       if($lawyer->is_active == 1){
-         $lawyer->is_active=0;
-        }else{
-         $lawyer->is_active=1;
+        if($lawyer){
+            if($lawyer->is_active == 1){
+              $lawyer->is_active=0;
+              }else{
+              $lawyer->is_active=1;
+            }
+          $lawyer->save();
       }
-     $lawyer->save();
-}
      
        return redirect()->back();
   }
