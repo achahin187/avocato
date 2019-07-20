@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User_Ratings extends Pivot
 {
-    use SoftDeletes;
+    // use SoftDeletes;
     protected $primaryKey = 'id';
     protected $table = 'user_ratings';
     protected $fillable=['user_id','rate_id','notes','created_by','created_at','deleted_at','is_approved'];
