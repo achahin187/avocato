@@ -506,7 +506,7 @@
         if (isConfirm){
          $.ajax({
            type:'POST',
-           url:'{{url('notes_delete')}}'+'/'+ rate_id,
+           url:'{{url('rate_delete')}}'+'/'+ rate_id,
            data:{_token:_token},
            success:function(data){
             $('tr[data-rate-id='+ rate_id +']').fadeOut();
