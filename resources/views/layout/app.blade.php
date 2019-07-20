@@ -106,6 +106,7 @@
                                 <div class="coverglobal text-center bshadow--2" style="background:#f7f7f7  ;">
                                   <button class="hamburger is-closed" type="button" data-toggle="offcanvas"><span class="hamb-top bgcolor--main_d"></span><span class="hamb-middle bgcolor--main_d"></span><span class="hamb-bottom bgcolor--main_d"></span></button>
                                   <div class="text-center">
+                                  @if (\Auth::check())
                                   @if(Helper::is_admin_superadmin(\Auth::user()->id))
                                   <a href="#">
                                   <img class="coverglobal__avatar bradius--circle" @if (\Auth::check())src="{{asset(''.\Auth::user()->image)}}" @endif>
@@ -118,6 +119,7 @@
                                     <h3 class="coverglobal__title color--gray_d">{{\Auth::user()->name}}</h3>
                                     <small class="coverglobal__slogan color--gray_d"></small>
                                     </a>
+                                    @endif
                                     @endif
                                     </div>
                                   </div>
