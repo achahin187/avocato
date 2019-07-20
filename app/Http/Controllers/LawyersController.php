@@ -403,7 +403,7 @@ class LawyersController extends Controller
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
 
     $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    //  dd($data['rates_user'][0]['pivot']['created_at']);
+     dd($data['rates_user']);
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
