@@ -301,7 +301,7 @@
                               @foreach($rate->rules as $rule)
                               @if(isset($rule['pivot']))
                               @if($rule->pivot->rule_id==6)
-                              <tr data-rate-id="{{$rule->id}}">
+                              <tr data-rate-id="{{rate->pivot->id}}">
                                 <td><span class="cellcontent">{{$rate->name}}</span></td>
                                 <td><span class="cellcontent"><span class= stars , data-rating= "{{$rate->pivot->rate_id}}" ,  data-num-stars=5 ></span></span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
@@ -396,7 +396,7 @@
                               @foreach($rates_user as $rate)
                               @foreach($rate->rules as $rule)
                               @if($rule->pivot->rule_id==13)
-                              <tr data-rate-id="{{$rule->id}}">
+                              <tr data-rate-id="{{$rate->pivot->id}}">
                                 <td><span class="cellcontent">{{Helper::localizations('rates','name',$rate->pivot->rate_id)}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
