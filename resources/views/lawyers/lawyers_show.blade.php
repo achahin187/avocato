@@ -317,7 +317,7 @@
                                 
                                 <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
                                 <i class = "fa  fa-check"></i></a>
-                                <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
+                                <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
 
                               </tr>
@@ -396,7 +396,7 @@
                               @foreach($rates_user as $rate)
                               @foreach($rate->rules as $rule)
                               @if($rule->pivot->rule_id==13)
-                              <tr>
+                              <tr data-rate-id="{{$rule->pivot->id}}">
                                 <td><span class="cellcontent">{{Helper::localizations('rates','name',$rate->pivot->rate_id)}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
@@ -404,7 +404,7 @@
                                 
                                 <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
                                 <i class = "fa  fa-pencil"></i></a>
-                                <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
+                                <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
                               </tr>
                               @endif
@@ -478,6 +478,37 @@
            data:{_token:_token},
            success:function(data){
             $('tr[data-service-id='+service_id+']').fadeOut();
+          }
+        });
+         swal("تم الحذف!", "تم الحذف بنجاح", "success");
+       } else {
+        swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+      }
+    });
+    });
+
+    $('.btn-warning-cancel-rate').click(function(){
+      var rate_id = $(this).closest('tr').attr('data-rate-id');
+      var _token = '{{csrf_token()}}';
+      swal({
+        title: "هل أنت متأكد؟",
+        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'نعم متأكد!',
+        cancelButtonText: "إلغاء",
+        closeOnConfirm: false,
+        closeOnCancel: false
+      },
+      function(isConfirm){
+        if (isConfirm){
+         $.ajax({
+           type:'POST',
+           url:'{{url('notes_delete')}}'+'/'+ rate_id,
+           data:{_token:_token},
+           success:function(data){
+            $('tr[data-rate-id='+ rate_id +']').fadeOut();
           }
         });
          swal("تم الحذف!", "تم الحذف بنجاح", "success");
