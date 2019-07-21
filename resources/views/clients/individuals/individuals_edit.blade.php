@@ -316,7 +316,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" >
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}" @if($types->id == $bouquet->id) selected @endif>{{$types->name}}</option>
