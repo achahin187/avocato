@@ -323,7 +323,7 @@
                      
                       @if($user->bouquets)
                     @foreach($user->bouquets as $bouquet)
-                    {{date('d - m - Y' ,$bouquet->pivot->start_date)}}
+                    {{$bouquet->pivot->start_date}}
                     @endforeach
                     @else
                     'لا يوجد'
@@ -334,7 +334,7 @@
                     <span class="cellcontent">
                     @if($user->bouquets)
                     @foreach($user->bouquets as $bouquet)
-                    {{$bouquet->pivot->end_date->format('d - m - Y')}}
+                    {{$bouquet->pivot->end_date}}
                     @endforeach
                     @else
                     'لا يوجد'

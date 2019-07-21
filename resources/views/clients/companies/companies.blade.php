@@ -323,10 +323,12 @@
                 {{-- End date --}}
                 <td>
                   <span class="cellcontent">
-                    @if (isset($company->subscription->end_date))
-                      {{ $company->subscription->end_date->format('d - m - Y') }}
+                  @if($company->bouquets)
+                    @foreach($company->bouquets as $bouquet)
+                    {{$bouquet->pivot->end_date}}
+                    @endforeach
                     @else
-                      لا يوجد
+                    'لا يوجد'
                     @endif
                   </span>
                 </td>

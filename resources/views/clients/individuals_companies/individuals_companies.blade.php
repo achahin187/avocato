@@ -371,20 +371,24 @@
                   
                   <td>
                     <span class="cellcontent">
-                      @if (isset($ind_com->subscription->package_type_id))
-                        {{ Helper::localizations('package_types', 'name', $ind_com->subscription->package_type_id) }}
-                      @else
-                        لا يوجد
-                      @endif
+                    @if($ind_com->bouquets)
+                    @foreach($ind_com->bouquets as $bouquet)
+                    {{$bouquet->name}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td>
                     <span class="cellcontent">
-                      @if (isset($ind_com->subscription->end_date))
-                        {{ $ind_com->subscription->end_date->format('d - m - Y') }}
-                      @else
-                        لا يوجد
-                      @endif
+                    @if($ind_com->bouquets)
+                    @foreach($ind_com->bouquets as $bouquet)
+                    {{$bouquet->pivot->end_date}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td><span class="cellcontent"><i class="fa color--fadegreen {{ $ind_com->is_active ? 'fa-check' : 'fa-times'}}"></i></span></td>
