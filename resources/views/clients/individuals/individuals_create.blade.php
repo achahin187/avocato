@@ -308,7 +308,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method()">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method_id()">
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $key => $types)
               <option value="{{ $key }}" data-id="{{$types->id}}" {{ (Input::old("bouquet_id") == $key ? "selected":"") }}>{{$types->name}}</option>
@@ -399,7 +399,7 @@
 @endsection
 @section('js')
 <script>
-  function get_payment_method()
+  function get_payment_method_id()
   {
     // var id = $('#bouquet_id').val();
      id = $("#license_type").find(':selected').data('id')
@@ -440,10 +440,10 @@
     var discount = $('#client_discount').val();
     // var id = $('#bouquet_id').val();
                 //  alert(discount);
-    if(discount == "undefined" || discount = '')
-    {
-      discount = 0;
-    }
+    // if(discount == "undefined" || discount = '')
+    // {
+    //   discount = 0;
+    // }
 
     $.ajax(
     {
