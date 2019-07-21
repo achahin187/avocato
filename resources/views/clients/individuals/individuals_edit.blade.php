@@ -316,7 +316,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" >
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}" @if($types->id == $bouquet->id) selected @endif>{{$types->name}}</option>
@@ -449,7 +449,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value , {{$bouquet->pivot->payment_method_id}})">
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}">{{$types->name}}</option>
@@ -542,7 +542,7 @@
   @endsection
  @section('js')
 <script>
-  function get_payment_method(id)
+  function get_payment_method(id , payment_id)
   {
     // var id = $('#bouquet_id').val();
     // alert(id);
@@ -561,7 +561,7 @@
               {
                 var options = '<option selected disabled>select payment method..</option>';
                   $.each(data, function( index, value ) {
-                    options +='<option value="'+value["payment"]["id"]+'">'+value["payment"]["name"]+'</option>';
+                    options +='<option value="'+value["payment"]["id"]+'" @if('+payment_id+' == '+value["payment"]["id"]+') selected @endif>'+value["payment"]["name"]+'</option>';
                     //  alert(index);
                     });
               
