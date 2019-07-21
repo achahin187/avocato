@@ -320,20 +320,25 @@
                   </td>
                   <td>
                     <span class="cellcontent">
-                      @if (isset($user->subscription->start_date))
-                        {{ $user->subscription->start_date->format('d - m - Y') }}
-                      @else
-                        لا يوجد
-                      @endif
+                     
+                      @if($user->bouquets)
+                    @foreach($user->bouquets as $bouquet)
+                    {{$bouquet->pivot->start_date->format('d - m - Y')}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td>
                     <span class="cellcontent">
-                      @if (isset($user->subscription->end_date))
-                        {{ $user->subscription->end_date->format('d - m - Y') }}
-                      @else
-                        لا يوجد
-                      @endif
+                    @if($user->bouquets)
+                    @foreach($user->bouquets as $bouquet)
+                    {{$bouquet->pivot->end_date->format('d - m - Y')}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? ' color--fadegreen fa-check' : 'fa-times  color--fadebrown'}}"></i></span></td>
