@@ -309,7 +309,7 @@
                   @endif
                   <td>
                     <span class="cellcontent">
-                    @if($user->bouquets)
+                    @if(count($user->bouquets) != 0)
                     @foreach($user->bouquets as $bouquet)
                     {{$bouquet->name}}
                     @endforeach
@@ -321,7 +321,7 @@
                   <td>
                     <span class="cellcontent">
                      
-                      @if($user->bouquets)
+                    @if(count($user->bouquets) != 0)
                     @foreach($user->bouquets as $bouquet)
                     {{$bouquet->pivot->start_date}}
                     @endforeach
@@ -332,7 +332,7 @@
                   </td>
                   <td>
                     <span class="cellcontent">
-                    @if($user->bouquets)
+                    @if(count($user->bouquets) != 0)
                     @foreach($user->bouquets as $bouquet)
                     {{$bouquet->pivot->end_date}}
                     @endforeach

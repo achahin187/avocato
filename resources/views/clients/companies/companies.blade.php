@@ -310,7 +310,7 @@
                 {{-- Package name --}}
                 <td>
                   <span class="cellcontent">
-                    @if($company->bouquets)
+                    @if(count($company->bouquets) != 0)
                     @foreach($company->bouquets as $bouquet)
                     {{$bouquet->name}}
                     @endforeach
@@ -323,7 +323,7 @@
                 {{-- End date --}}
                 <td>
                   <span class="cellcontent">
-                  @if($company->bouquets)
+                    @if(count($company->bouquets) != 0)
                     @foreach($company->bouquets as $bouquet)
                     {{$bouquet->pivot->end_date}}
                     @endforeach
