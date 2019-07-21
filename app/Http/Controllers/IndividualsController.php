@@ -394,8 +394,8 @@ class IndividualsController extends Controller
         $bouquets = Bouquet::where('bouquet_type',0)->get();
         $nationalities = Geo_Countries::all();
         $installments = $user->bouquet_payment ? $user->bouquet_payment: 0;
-        $payment_methods = ($user->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-          dd($user);
+        $payment_methods = ($user->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['id'])->with('payment')->get() : [];
+          dd($user['bouquets']);
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'bouquets', 'nationalities', 'installments' , 'payment_methods']));
     }
 
