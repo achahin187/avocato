@@ -426,7 +426,7 @@ class IndividualsCompaniesController extends Controller
         $nationalities = Geo_Countries::all();  
         $installments = $user->bouquet_payment ? $user->bouquet_payment: 0;
         $payment_methods = ($user->bouquets()->count() != 0  ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-        $price_methods = ($user->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->get() : [];
+        $price_methods = ($user->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$user['bouquets'][0]['id'])->get() : [];
         $companies = Users::users(9)->get();
 
         return view('clients.individuals_companies.individuals_companies_edit', compact(['user', 'password', 'bouquets', 'nationalities', 'installments', 'companies' ,'payment_methods','price_methods']) );
