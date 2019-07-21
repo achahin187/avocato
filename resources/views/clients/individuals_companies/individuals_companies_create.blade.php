@@ -657,7 +657,7 @@ function get_price_method(id)
   function set_license_fees()
   {
     var discount = $('#client_discount').val();
-    if(discount == "undefined" || discount = '')
+    if(discount == "undefined" || discount == '')
     {
       discount = 0;
     }

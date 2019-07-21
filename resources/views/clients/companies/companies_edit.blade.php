@@ -736,7 +736,7 @@ function get_price_method(id)
     var price = $('#price_method_id').val();
     var id = $('#bouquet_id').val();
                 //  alert(discount);
-    if(discount == "undefined" || discount = '')
+    if(discount == "undefined" || discount == '')
     {
       discount = 0;
     }
