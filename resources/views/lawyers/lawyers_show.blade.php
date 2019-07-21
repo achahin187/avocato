@@ -358,6 +358,7 @@
                                     @endif</span>
                                       </div>
                                     </div>
+                                    
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                       <div class="master_field">
                                         <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
@@ -389,6 +390,64 @@
                             </form>
                             </div>
                           </div>
+
+                          {{-- Lawyer Rate Edit --}}
+                          <div class="remodal-bg"></div>
+                          <div class="remodal" id="edit_evaluation_modal" data-remodal-id="edit_evaluation_modal" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                  <form role="form" action=" " method="post" id="edit_rate_form" accept-charset="utf-8">
+                      {{csrf_field()}}
+                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                            <div>
+                              <div class="row">
+                                <div class="col-xs-12">
+                                  <h3>إضافة تقييم</h3>
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="backend_evaluation_date">التاريخ</label>
+                                      <div class="bootstrap-timepicker">
+                                        <input name="date" class="datepicker master_input" type="text" placeholder="التاريخ" id="backend_evaluation_date">
+                                      </div><span class="master_message color--fadegreen">
+                                  @if ($errors->has('date'))
+                                  {{ $errors->first('date')}}
+                                  @endif</span>
+                                    </div>
+                                  </div>
+                                  
+                                  <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
+                                      <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;">
+                                        <option selected disabled >اختر التقييم</option>
+                                        @foreach($rates as $rate)
+                                        <option value="{{$rate->item_id}}" >{{$rate->value}}</option>
+                                        @endforeach
+                                      </select><span class="master_message color--fadegreen">
+                                  @if ($errors->has('rate'))
+                                  {{ $errors->first('rate')}}
+                                  @endif</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
+                                      <textarea name="notes" class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">
+                                  @if ($errors->has('notes'))
+                                  {{ $errors->first('notes')}}
+                                  @endif</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div><br>
+                            <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                            <button class="remodal-confirm" type="submit">إضافة</button>
+                          </form>
+                          </div>
+                        </div>
+                                  
+                            
+                          {{--  --}}
+
                           <table class="table-1">
                             <thead>
                               <tr class="bgcolor--gray_mm color--gray_d">
@@ -408,8 +467,13 @@
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
                                 <td><span class="cellcontent">
+<<<<<<< HEAD
                                 <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
 <<<<<<< HEAD
+=======
+                                
+                                <a href="#edit_evaluation_modal" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
+>>>>>>> origin/4.1.5
                                 <i class = "fa  fa-pencil"></i></a>
                                 <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
 =======
@@ -663,5 +727,28 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlXHCCfSGKzPquzvLKcFB37DB
 
 });
 
+</script>
+<script>
+$(document).ready(function () {
+  var $updateModal = $('#edit_evaluation_modal');
+    $('#edit_rating').on('click', function (evn) { // this is the "a" tag
+    evn.preventDefault();
+
+    $updateModal.modal('show');
+    var resourceId = $(this).data('item_id'),
+        $pressedButton = $(this);
+
+    $updateModal.find('.remodal-confirm').on('click', function (e) {
+        e.preventDefault();
+        // var submitUrl = '/update/product/' + resourceId,
+        var submitUrl = "{{route('notes_edit',':resourceId')}}";
+        submitUrl = submitUrl.replace(':resourceId',resourceId);
+        form = $('#edit_rate_form'); // change with your form
+
+        form.attr('action', submitUrl);
+        form.submit();
+    });
+  });
+});
 </script>
 @endsection

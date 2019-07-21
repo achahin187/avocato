@@ -84,18 +84,18 @@
   <div class="col-md-12">
     <div class="tabs--wrapper">
       <div class="clearfix"></div>
-      <ul class="tabs">
+      <ul id="head-ul" class="tabs">
         <li>القضايا</li>
-        <li>المحاميين</li>
-        <li>الشركات</li>
-        <li>الاقساط</li>
-        <li>الطوارئ</li>
-        <li>المحاكم</li>
-        <li>المهام</li>
-        <li>انواع القضايا</li>
+        <li class=" @if(isset($tab)) @if($tab == 2) active   @endif @endif " >المحاميين</li>
+        <li class=" @if(isset($tab)) @if($tab == 3) active   @endif @endif ">الشركات</li>
+        <li class=" @if(isset($tab)) @if($tab == 4) active   @endif @endif ">الاقساط</li>
+        <li class=" @if(isset($tab)) @if($tab == 5) active   @endif @endif ">الطوارئ</li>
+        <li class=" @if(isset($tab)) @if($tab == 6) active   @endif @endif ">المحاكم</li>
+        <li class=" @if(isset($tab)) @if($tab == 7) active   @endif @endif ">المهام</li>
+        <li class=" @if(isset($tab)) @if($tab == 8) active   @endif @endif ">انواع القضايا</li>
       </ul>
       <ul class="tab__content">
-        <li class="tab__content_item active">
+        <li class="tab__content_item @if(isset($tab))  @if($tab == 1) active @endif  @else active @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -322,7 +322,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 2) active @endif @endif">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -374,7 +374,7 @@
                             </select>  
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
+                      {{-- <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="work_type">نوع العمل</label>
                           <select name="workTitle" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
@@ -386,7 +386,23 @@
                             @endif
                           </select>
                         </div>
+                      </div> --}}
+                      {{-- Client Changes --}}
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="work_type">نوع العمل</label>
+                          <select name="workTitle" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                              <option value="-1" selected disabled hidden>اختر نوع العمل</option>
+                              @if ( isset($lawyer_types) && !empty($lawyer_types) )
+                              
+                              @foreach ($lawyer_types as $lawyer_type)
+                                <option value="{{ ($lawyer_type->id)}}">{{$lawyer_type->name_ar or ''}} </option>
+                              @endforeach
+                            @endif
+                          </select>
+                        </div>
                       </div>
+                      {{--  --}}
                       <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="lawyer_place">الإختصاص المكاني</label>
@@ -426,15 +442,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @if ( isset($lawyers) && !empty($lawyers) )
+                  @if ( isset($lawyers) && !empty($lawyers))
                     @foreach ($lawyers as $lawyer)
+                    
                     <tr data-lawyer-id="{{ $lawyer->id }}"> 
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                       <td><span class="cellcontent">{{ ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? ($lawyer->user_detail->litigation_level ? $lawyer->user_detail->litigation_level :'لا يوجد') : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td>
+                      {{-- <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td> --}}
+                      <td><span class="cellcontent"> @if(isset($lawyer->rules)) @foreach($lawyer->rules as $rule) {{$rule->name_ar}} @if(!($loop->last)) <b>-</b> @endif @endforeach  @endif</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector_type : 'لا يوجد' }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->tasks) ? $lawyer->tasks->count() : 0 }}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->cases) ? $lawyer->cases->count() : 0 }}</span></td>
@@ -604,7 +622,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 3) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -855,7 +873,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 4) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1109,7 +1127,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 5) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1325,7 +1343,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 6) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1567,7 +1585,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 7) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -1795,7 +1813,7 @@
             <div class="clearfix"></div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item @if(isset($tab)) @if($tab == 8) active @endif @endif ">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table">
               <div class="remodal-bg">
@@ -2260,6 +2278,17 @@ $('.cases-btn').click(function(){
           }
   }
 </script>
+<script>
+   $(document).ready(function(){
+    @if(isset($tab)) 
+    @if($tab != 1)
+    $("#head-ul>li:first").removeClass("active");
+    @endif
+    @endif
 
+
+   });
+ 
+</script>
 
 @endsection

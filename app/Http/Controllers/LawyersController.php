@@ -540,7 +540,9 @@ class LawyersController extends Controller
       $lawyer->specializations()->attach($work_sector);
     }
     $lawyer_details = User_Details::where('user_id', $id)->first();
-    if(count($lawyer_details)==0 )
+    // if(count($lawyer_details)==0 )
+    
+    if ($lawyer_details == null || empty($lawyer_details))
     {
       $lawyer_details = new User_Details();
       

@@ -6,6 +6,7 @@
 
             $("select[name='client_code']").change(function () {
               @foreach($clients as $client)
+              
               if({{$client->id}} == $("select[name='client_code']").val())
               {
               $("input[name=name]").val('{{$client->full_name}}');

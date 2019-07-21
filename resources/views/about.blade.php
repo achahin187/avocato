@@ -45,7 +45,8 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <p>
-                              {{\Helper::localizations('fixed_pages' , 'content' , $tab_content->id, 2)}}
+                             
+                              {!! $tab_content->content !!}
                           </p>
                         </div>
                       </div>
@@ -66,7 +67,8 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <p>
-                              {!! $tab_content->content !!}
+                              
+                              {{!! \Helper::localizations('fixed_pages' , 'content' , $tab_content->id, 1)!!}}
                           </p>
                         </div>
                       </div>
@@ -87,7 +89,7 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <p>
-                            {{ \Helper::localizations('fixed_pages' , 'content' , $tab_content->id, 3) }}
+                            {{!! \Helper::localizations('fixed_pages' , 'content' , $tab_content->id, 3) !!}}
                             </p>
                           </div>
                         </div>
