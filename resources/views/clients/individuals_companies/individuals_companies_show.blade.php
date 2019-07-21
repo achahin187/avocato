@@ -191,7 +191,7 @@
                       <th><span class="cellcontent">المحكمة</span></th>
                       <th><span class="cellcontent">الدائرة</span></th>
                       <th><span class="cellcontent">رقم الدعوى</span></th>
-                      <th><span class="cellcontent">لسنة</span></th>
+                      <th><span class="cellcontent">السنة</span></th>
                       <th><span class="cellcontent">تاريخ قيد الدعوى</span></th>
                       <th><span class="cellcontent">رقم الملف بالمكتب</span></th>
                       <th><span class="cellcontent">رقم التوكيل</span></th>
