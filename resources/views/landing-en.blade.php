@@ -176,7 +176,7 @@ Avocato app The leading only society for legal services</h4>
                         <div class="col-md-3 col-sm-4 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_birth">Birth Date</label>
-                            <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker-popup master_input" type="text" placeholder="Birth Date" id="client_birth"><span class="master_message color--fadegreen">
+                            <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="Birth Date" id="client_birth"><span class="master_message color--fadegreen">
                                   @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif</span>
@@ -263,7 +263,7 @@ Avocato app The leading only society for legal services</h4>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="lawyer_birth">Birth Date</label>
-                            <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker-popup master_input" type="text" placeholder="Birth Date" id="lawyer_birth"><span class="master_message color--fadegreen">
+                            <input name="birthdate" value="{{ old('birthdate') }}" class="datepicker master_input" type="text" placeholder="Birth Date" id="lawyer_birth"><span class="master_message color--fadegreen">
                               @if ($errors->has('birthdate'))
                                     {{ $errors->first('birthdate')}}
                                     @endif</span>
