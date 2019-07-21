@@ -310,7 +310,13 @@
                 {{-- Package name --}}
                 <td>
                   <span class="cellcontent">
-                    {{ $company->subscription ? ( $company->subscription->package_type ? ( $company->subscription->package_type->id ? Helper::localizations('package_types', 'name', $company->subscription->package_type->id) : 'لا يوجد' ) : 'لا يوجد' ) : 'لا يوجد' }}
+                    @if($company->bouquets)
+                    @foreach($company->bouquets as $bouquet)
+                    {{$bouquet->name}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                   </span>
                 </td>
 
