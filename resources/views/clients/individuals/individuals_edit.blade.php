@@ -545,7 +545,7 @@
   function get_payment_method(id , payment_id)
   {
     // var id = $('#bouquet_id').val();
-    // alert(id);
+    alert(payment_id);
     if(id != -1)
     {
       $.ajax(
