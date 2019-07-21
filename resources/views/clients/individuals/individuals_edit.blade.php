@@ -561,7 +561,15 @@
               {
                 var options = '<option selected disabled>select payment method..</option>';
                   $.each(data, function( index, value ) {
-                    options +='<option value="'+value["payment"]["id"]+'" @if('+payment_id+' == '+value["payment"]["id"]+') selected @endif>'+value["payment"]["name"]+'</option>';
+                    if(payment_id == value["payment"]["id"])
+                    {
+                      options +='<option value="'+value["payment"]["id"]+'" selected >'+value["payment"]["name"]+'</option>';
+                    }
+                    else
+                    {
+                      options +='<option value="'+value["payment"]["id"]+'" >'+value["payment"]["name"]+'</option>';
+                    }
+                  
                     //  alert(index);
                     });
               
