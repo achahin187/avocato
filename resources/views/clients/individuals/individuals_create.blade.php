@@ -403,7 +403,7 @@
   {
     // var id = $('#bouquet_id').val();
      id = $("#license_type").find(':selected').data('id')
-   alert(id);
+  //  alert(id);
     if(id != -1)
     {
       $.ajax(
