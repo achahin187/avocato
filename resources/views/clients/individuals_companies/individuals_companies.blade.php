@@ -371,7 +371,7 @@
                   
                   <td>
                     <span class="cellcontent">
-                    @if(count($ind_com->bouquets) != )
+                    @if(count($ind_com->bouquets) != 0)
                     @foreach($ind_com->bouquets as $bouquet)
                     {{$bouquet->name}}
                     @endforeach
@@ -382,7 +382,7 @@
                   </td>
                   <td>
                     <span class="cellcontent">
-                    @if(count($ind_com->bouquets) != )
+                    @if(count($ind_com->bouquets) != 0)
                     @foreach($ind_com->bouquets as $bouquet)
                     {{$bouquet->pivot->end_date}}
                     @endforeach
