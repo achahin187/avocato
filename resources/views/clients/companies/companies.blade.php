@@ -310,17 +310,25 @@
                 {{-- Package name --}}
                 <td>
                   <span class="cellcontent">
-                    {{ $company->subscription ? ( $company->subscription->package_type ? ( $company->subscription->package_type->id ? Helper::localizations('package_types', 'name', $company->subscription->package_type->id) : 'لا يوجد' ) : 'لا يوجد' ) : 'لا يوجد' }}
+                    @if(count($company->bouquets) != 0)
+                    @foreach($company->bouquets as $bouquet)
+                    {{$bouquet->name}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                   </span>
                 </td>
 
                 {{-- End date --}}
                 <td>
                   <span class="cellcontent">
-                    @if (isset($company->subscription->end_date))
-                      {{ $company->subscription->end_date->format('d - m - Y') }}
+                    @if(count($company->bouquets) != 0)
+                    @foreach($company->bouquets as $bouquet)
+                    {{$bouquet->pivot->end_date}}
+                    @endforeach
                     @else
-                      لا يوجد
+                    'لا يوجد'
                     @endif
                   </span>
                 </td>

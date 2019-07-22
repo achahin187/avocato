@@ -12,7 +12,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                   <h1>500 NoT Found</h1>
+                   <h1>403 NoT Found</h1>
                 </div>
               </div>
 

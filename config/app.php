@@ -238,7 +238,8 @@ return [
         // 'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'PDF' => Vsmoraes\Pdf\PdfFacade::class,
         // 'PDF' =>  PDFAnony\TCPDF\Facades\AnonyPDF::class,
-        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class
+        'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
 
     ],
 

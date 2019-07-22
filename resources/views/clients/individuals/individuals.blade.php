@@ -96,7 +96,7 @@
                 {{-- End Date From --}}
                 <div class="col-md-6">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="license_end_from">تاريخ نهاية التعاقد</label>
+                    <label class="master_label mandatory" for="license_end_from">تاريخ نهاية التعاقد من</label>
                     <div class="bootstrap-timepicker">
                       <input name="end_date_from" class="datepicker master_input" type="text" placeholder="تاريخ نهاية التعاقد" id="license_end_from">
                     </div>
@@ -309,29 +309,36 @@
                   @endif
                   <td>
                     <span class="cellcontent">
-                      @if (isset($user->subscription->package_type->name))
-                        {{ Helper::localizations('package_types', 'name', $user->subscription->package_type->id) }}
-                      @else
-                        لا يوجد
-                      @endif
+                    @if(count($user->bouquets) != 0)
+                    @foreach($user->bouquets as $bouquet)
+                    {{$bouquet->name}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td>
                     <span class="cellcontent">
-                      @if (isset($user->subscription->start_date))
-                        {{ $user->subscription->start_date->format('d - m - Y') }}
-                      @else
-                        لا يوجد
-                      @endif
+                     
+                    @if(count($user->bouquets) != 0)
+                    @foreach($user->bouquets as $bouquet)
+                    {{$bouquet->pivot->start_date}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td>
                     <span class="cellcontent">
-                      @if (isset($user->subscription->end_date))
-                        {{ $user->subscription->end_date->format('d - m - Y') }}
-                      @else
-                        لا يوجد
-                      @endif
+                    @if(count($user->bouquets) != 0)
+                    @foreach($user->bouquets as $bouquet)
+                    {{$bouquet->pivot->end_date}}
+                    @endforeach
+                    @else
+                    'لا يوجد'
+                    @endif
                     </span>
                   </td>
                   <td><span class="cellcontent"><i class = "fa {{ $user->is_active ? ' color--fadegreen fa-check' : 'fa-times  color--fadebrown'}}"></i></span></td>

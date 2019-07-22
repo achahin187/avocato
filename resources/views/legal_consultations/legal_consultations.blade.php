@@ -24,7 +24,7 @@
            url:'{{url('legal_consultation_destroy')}}'+'/'+consultation_id,
            data:{_token:_token},
            success:function(data){
-            $('tr[data-consultation-id='+consultation_id+']').fadeOut();
+            $('tr[data-consultation-id='+consultation_id+']').fadeOut().remove();
             swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }
         });
@@ -66,7 +66,7 @@
            data:{ids:selectedIds,_token:_token},
            success:function(data){
             $.each( selectedIds, function( key, value ) {
-              $('tr[data-consultation-id='+value+']').fadeOut();
+              $('tr[data-consultation-id='+value+']').fadeOut().remove();
             });
             swal("تم الحذف!", "تم الحذف بنجاح", "success");
           }

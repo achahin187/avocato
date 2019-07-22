@@ -129,7 +129,7 @@
         {{-- Notes --}}
         <div class="col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="ID_No">ملاحظات</label>
+            <label class="master_label" for="ID_No">ملاحظات</label>
             <textarea name="notes" class="master_input" name="textarea" id="ID_No" placeholder="ملاحظات">{{ old('notes') }}</textarea>
 
             {{--  Error  --}}            

@@ -112,7 +112,7 @@
                         <div class="col-md-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label" for="address">الموقع</label>
-                            <input class="master_input" type="text" placeholder="اختر الموقع من الخريطة..." id="pac-input" name="address" required>
+                            <input class="master_input" type="text" placeholder="اختر الموقع من الخريطة..." id="pac-input" name="address">
                            
                           </div>
                         </div><br>

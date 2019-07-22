@@ -20,20 +20,20 @@ class BouquetsController extends Controller
 {
     public function index()
     {
-        $data['bouquets'] = Bouquet::with('price_relation')->with('payment')->with('services')->with('users')->get();
+        $data['bouquets'] = Bouquet::with('price_relation')->with('payment')->with('services')->with('users')->where('country_id',session('country'))->get();
         $data['languages'] = Languages::all();
         return view('bouquets.index',$data);
     }
 
     public function view($id)
     {
-        $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price_relation')->first();
+        $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price_relation')->where('country_id',session('country'))->first();
         return view('bouquets.view',$data);
     }
 
     public function edit($id)
     {
-        $data['bouquet'] = Bouquet::where('id',$id)->with('users')->with('price_relation')->with('payment')->with('services')->first();
+        $data['bouquet'] = Bouquet::where('id',$id)->with('users')->with('price_relation')->with('payment')->with('services')->where('country_id',session('country'))->first();
         
         if($data['bouquet']->users()->count() > 0 )
         {

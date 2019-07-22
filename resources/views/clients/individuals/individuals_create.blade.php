@@ -143,8 +143,8 @@
         {{--  Nationality  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="license_type">جنسية العميل</label>
-            <select name="nationality" class="master_input select2" id="license_type" style="width:100%;">
+            <label class="master_label mandatory" for="nationality">جنسية العميل</label>
+            <select name="nationality" class="master_input select2" id="nationality" style="width:100%;">
                 
               @foreach ($nationalities as $nat)
                 <option value="{{ $nat->id }}">{{ (Helper::localizations('geo_countries', 'nationality', $nat->id)) ?Helper::localizations('geo_countries', 'nationality', $nat->id) : $nat->nationality}}</option>
@@ -308,10 +308,11 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method()">
                   <option selected disabled>اختر الباقه</option>
-                @foreach ($bouquets as $types)
-                  <option value="{{ $types->id }}">{{$types->name}}</option>
+                @foreach ($bouquets as $key => $types)
+              <option value="{{ $key }}" data-id="{{$types->id}}" {{ (Input::old("bouquet_id") == $key ? "selected":"") }}>{{$types->name}}</option>
+                
                 @endforeach
                 
               </select>
@@ -364,7 +365,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="payment_method_id">طريقه الدفع</label>
-            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id" required>
+            <select name="payment_method" class="master_input disScroll"  required id="payment_method_id" data-prev="" required >
 
                </select>
                @if ($errors->has('payment_method'))
@@ -398,10 +399,11 @@
 @endsection
 @section('js')
 <script>
-  function get_payment_method(id)
+  function get_payment_method()
   {
     // var id = $('#bouquet_id').val();
-    // alert(id);
+     id = $("#license_type").find(':selected').data('id')
+  //  alert(id);
     if(id != -1)
     {
       $.ajax(
@@ -422,6 +424,9 @@
                     });
               
               $('#payment_method_id').find('option').remove().end().append(options);
+                
+              
+              
               
               set_license_fees(id);
                 
@@ -435,6 +440,10 @@
     var discount = $('#client_discount').val();
     // var id = $('#bouquet_id').val();
                 //  alert(discount);
+    if(discount == "undefined" || discount == '')
+    {
+      discount = 0;
+    }
 
     $.ajax(
     {
@@ -487,22 +496,13 @@
           $('#number_of_installments').val(numberOfInstallment);  
         }
         set_number_of_installment();
-        set_price_for_each_installment();
+        // set_price_for_each_installment();
       });
        //all installments price value should be equal to value of bouquet 
        $('#license_fees').on("keyup", function() {
          set_price_for_each_installment();
        });
-       function set_price_for_each_installment()
-       {
-        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
-        
-         for(i= 0 ; i < numberOfInstallment ; i++)
-         {
-          // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
-         }
-       }
+      
        function set_number_of_installment()
        {
         NumberOfPayments = $('#number_of_installments').val();   // get number of payments
@@ -517,9 +517,9 @@
             var j = i+1;
             // payId = payment1, payment2, payment3... || data-id = 1, 2, 3, 4...
             $('#generated').append('<div class="col-md-4 col-xs-12">\
-                                      <div class="master_field">\
+                                      <dx3.iv class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment'+i+'">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
@@ -545,6 +545,17 @@
         } else {
           $('#generated div').remove();
         }
+        set_price_for_each_installment();
+       }
+       function set_price_for_each_installment()
+       {
+        var price_for_each_installment = $('#license_fees').val() / numberOfInstallment ; 
+        // alert();
+         for(var i= 0 ; i < numberOfInstallment ; i++)
+         {
+          // alert('#payment['+i+'][price]');
+           $('#payment'+i).val(price_for_each_installment);
+         }
        }
       // generate number of input fields dynamicly 
       // $('#number_of_installments').on("keyup", function() {
@@ -583,7 +594,7 @@
  
       $(function(){
         dateRange('start_date','end_date')
-      })
+      })    
   </script>
   
 

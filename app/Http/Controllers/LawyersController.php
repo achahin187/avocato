@@ -403,7 +403,7 @@ class LawyersController extends Controller
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
 
     $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    //  dd($data['rates_user'][0]['pivot']['created_at']);
+    //  dd($data['rates_user']);
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
@@ -540,7 +540,9 @@ class LawyersController extends Controller
       $lawyer->specializations()->attach($work_sector);
     }
     $lawyer_details = User_Details::where('user_id', $id)->first();
-    if(count($lawyer_details)==0 )
+    // if(count($lawyer_details)==0 )
+    
+    if ($lawyer_details == null || empty($lawyer_details))
     {
       $lawyer_details = new User_Details();
       
@@ -646,21 +648,29 @@ class LawyersController extends Controller
   public function rate_delete($id)
   {
     // dd($id);
-    $rate=User_Ratings::where('id',$id)->delete();
-    // dd($rate);
-    return redirect()->back();
+    try{
+      $rate=User_Ratings::destroy($id);
+      // dd($rate);
+      // $rate->delete();
+    }
+    catch(\Exception $e)
+    {
+      return response()->json('fail');
+    }
+    
+    return response()->json('success');
   }
   public function activateDeactivateLawyer($id){
      
      $lawyer = Users::find($id);
-  if($lawyer){
-       if($lawyer->is_active == 1){
-         $lawyer->is_active=0;
-        }else{
-         $lawyer->is_active=1;
+        if($lawyer){
+            if($lawyer->is_active == 1){
+              $lawyer->is_active=0;
+              }else{
+              $lawyer->is_active=1;
+            }
+          $lawyer->save();
       }
-     $lawyer->save();
-}
      
        return redirect()->back();
   }

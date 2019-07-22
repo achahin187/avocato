@@ -46,7 +46,7 @@ class CompaniesController extends Controller
         $packages = Bouquet::where('bouquet_type',1)->get();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
-
+        
         return view('clients.companies.companies', compact(['packages', 'subscriptions', 'nationalities']))->with('companies', Users::users(9)->where('country_id',Auth::user()->country_id)->get());
     }
 
@@ -60,7 +60,7 @@ class CompaniesController extends Controller
         $ids = array();
         
         $password = rand(10000000, 99999999);
-        $bouquets = Bouquet::where('bouquet_type',1)->with('payment')->with('price_relation')->get();
+        $bouquets = Bouquet::where('bouquet_type',1)->with('payment')->with('price_relation')->where('country_id',session('country'))->get();
 
         $nationalities = Geo_Countries::all();
         // $packages = Package_Types::all();
@@ -441,7 +441,7 @@ class CompaniesController extends Controller
         $nationalities = Geo_Countries::all();
         $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
         $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-        $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->get() : [];
+        $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['id'])->get() : [];
             
         return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_mehtods']));
     }

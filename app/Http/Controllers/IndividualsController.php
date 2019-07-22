@@ -46,6 +46,7 @@ class IndividualsController extends Controller
         $packages = Bouquet::where('bouquet_type',0)->get();
         $subscriptions = Subscriptions::all();
         $nationalities = Geo_Countries::all();
+        // dd(Users::users(8)->where('country_id',Auth::user()->country_id)->with('bouquets')->get());
         return view('clients.individuals.individuals', compact(['packages', 'subscriptions', 'nationalities']))
                 ->with('users', Users::users(8)->where('country_id',Auth::user()->country_id)->get());
     }
@@ -394,8 +395,8 @@ class IndividualsController extends Controller
         $bouquets = Bouquet::where('bouquet_type',0)->get();
         $nationalities = Geo_Countries::all();
         $installments = $user->bouquet_payment ? $user->bouquet_payment: 0;
-        $payment_methods = ($user->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-
+        $payment_methods = ($user->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$user['bouquets'][0]['id'])->with('payment')->get() : [];
+        //   dd($payment_methods);
         return view('clients.individuals.individuals_edit', compact(['user', 'password', 'bouquets', 'nationalities', 'installments' , 'payment_methods']));
     }
 

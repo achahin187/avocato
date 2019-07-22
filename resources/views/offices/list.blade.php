@@ -81,6 +81,7 @@ $(document).on('confirmation', '#two', function () {
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="full-table hide-datatable-pagination">
+                    {{-- <form role="form" action="{{route('offices_city_filter')}}" method="POST" enctype="multipart/form-data"> --}}
                       <div class="remodal-bg">
                         <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
@@ -89,13 +90,28 @@ $(document).on('confirmation', '#two', function () {
                             <div class="col-md-12 col-sm-12 col-xs-12">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="office_address">المدينة</label>
-                                <input class="master_input" type="text" placeholder="المدينة" id="office_address"><span class="master_message color--fadegreen">message</span>
+                                {{-- <input class="master_input" type="text" placeholder="المدينة" id="office_address"><span class="master_message color--fadegreen">message</span> --}}
+                                
+                                <form role="form" action="{{ action('OfficesController@cityFilter') }}" method="POST" enctype="multipart/form-data">
+                                  <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
+                                  <select class="master_input" name="office_city" id="office_address">
+                                  <option value="">اختر المدينة</option>
+                                @foreach($cities as $city)
+                                <option value="{{$city->id}}">{{$city->name}}</option>
+                                @endforeach  
+                                </select>
+                                <span class="master_message color--fadegreen">message</span>
+                                <div class="clearfix"></div>
+                               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                               <button class="remodal-confirm" type="submit">فلتر</button>
+                        </form>
                               </div>
                             </div>
                           </div>
-                          <div class="clearfix"></div>
+                          {{-- <div class="clearfix"></div>
                           <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                          <button class="remodal-confirm" type="submit" data-remodal-action="confirm">فلتر</button>
+                        </form> --}}
                         </div>
                       </div>
                       <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>

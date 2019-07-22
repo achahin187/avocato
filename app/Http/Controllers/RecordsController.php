@@ -81,7 +81,7 @@ class RecordsController extends Controller
             'delivery_date' => 'required|date',
             'delivered_at' => 'required|date',
             'session_date' => 'required|date',
-            'notes' => 'required'
+            // 'notes' => 'required'
         ]);
 
         try {
@@ -92,7 +92,7 @@ class RecordsController extends Controller
             $record->delivery_date = date('Y-m-d', strtotime($request->delivery_date));
             $record->delivered_at = date('Y-m-d', strtotime($request->delivered_at));
             $record->session_date = date('Y-m-d', strtotime($request->session_date));
-            $record->notes = $request->notes;
+            if(isset($request->notes)){ $record->notes = $request->notes; }
             $record->created_by = Auth::user()->id;
             $record->save();
 

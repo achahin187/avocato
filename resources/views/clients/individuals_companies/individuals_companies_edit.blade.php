@@ -324,7 +324,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value , {{$bouquet->pivot->payment_method_id }})">
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}" @if($types->id == $bouquet->id) selected @endif>{{$types->name}}</option>
@@ -438,7 +438,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_type">نوع التعاقد</label>
-              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value)">
+              <select name="bouquet_id" class="master_input select2" id="license_type" style="width:100%;" id="bouquet_id" onchange="get_payment_method(this.value , null)">
                   <option selected disabled>اختر الباقه</option>
                 @foreach ($bouquets as $types)
                   <option value="{{ $types->id }}">{{$types->name}}</option>
@@ -717,7 +717,7 @@ function get_price_method(id)
               }
           }); 
   }
-  function get_payment_method(id )
+  function get_payment_method(id , payment_id )
   {
     // var id = $('#bouquet_id').val();
     // alert(id);
@@ -738,7 +738,14 @@ function get_price_method(id)
                 bouquet_type(id);
                 var options = '<option selected disabled>select payment method..</option>';
                   $.each(data, function( index, value ) {
-                    options +='<option value="'+value["payment"]["id"]+'">'+value["payment"]["name"]+'</option>';
+                    if(payment_id == value["payment"]["id"])
+                    {
+                      options +='<option value="'+value["payment"]["id"]+'" selected >'+value["payment"]["name"]+'</option>';
+                    }
+                    else
+                    {
+                      options +='<option value="'+value["payment"]["id"]+'" >'+value["payment"]["name"]+'</option>';
+                    }
                     //  alert(index);
                     });
               
@@ -756,6 +763,10 @@ function get_price_method(id)
     var price = $('#price_method_id').val();
     var id = $('#bouquet_id').val();
                 //  alert(discount);
+   if(discount == "undefined" || discount == '')
+    {
+      discount = 0;
+    }
 
     $.ajax(
     {
@@ -848,7 +859,7 @@ function set_license_fees_ind()
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
+           $('#payment'+i).val(price_for_each_installment);
          }
        }
        function set_number_of_installment()
@@ -867,7 +878,7 @@ function set_license_fees_ind()
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment'+i+'">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\

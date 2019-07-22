@@ -191,7 +191,7 @@
         {{--  Phone  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-            <label class="master_label mandatory" for="client_tel">رقم الهاتف</label>
+            <label class="master_label" for="client_tel">رقم الهاتف</label>
             <input name="phone" value="{{ old('phone') }}" class="master_input" type="number" placeholder="0212345678" id="client_tel">          
               {{--  Error  --}}         
               @if ($errors->has('phone'))          
@@ -254,8 +254,13 @@
         {{--  discount percentage  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
+<<<<<<< HEAD
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
+            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="client_discount">             
+=======
+            <label class="master_label" for="client_discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
+>>>>>>> origin/4.1.5
             {{--  Error  --}}             
             @if ($errors->has('discount_percentage'))               
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>             
@@ -383,7 +388,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12" id="company_count" hidden>
             <div class="master_field">
               <label class="master_label mandatory" for="payment_method_id">عدد الشركه </label>
-            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required >
+            <select name="price_method" class="master_input disScroll" id="price_method_id">
 
                </select>
                @if ($errors->has('price_method'))
@@ -605,7 +610,7 @@ function get_price_method(id)
               {
                 if(data == 0)
                 {
-                  set_license_fees_ind();
+                  set_license_fees_ind(id);
                 }
                 else
                 {
@@ -652,10 +657,13 @@ function get_price_method(id)
   function set_license_fees()
   {
     var discount = $('#client_discount').val();
+    if(discount == "undefined" || discount == '')
+    {
+      discount = 0;
+    }
     var price = $('#price_method_id').val();
     var id = $('#bouquet_id').val();
-                //  alert(discount);
-
+    
     $.ajax(
     {
         url: "{{ url('/bouquet_price_value') }}" +"/"+ id + "/" + discount +"/" + price,
@@ -674,12 +682,19 @@ function get_price_method(id)
         });
 }
 
-function set_license_fees_ind()
+function set_license_fees_ind(id)
   {
+    $('#company_count').hide();
     var discount = $('#client_discount').val();
     // var price = $('#price_method_id').val();
-    var id = $('#bouquet_id').val();
+    // var id = $('#bouquet_id').val();
                 //  alert(discount);
+    if(discount == "undefined" || discount == '')
+    {
+      discount = 0;
+      // alert(discount);
+    }
+    // alert(discount);
 
     $.ajax(
     {
@@ -747,7 +762,7 @@ function set_license_fees_ind()
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#payment['+i+'][price]').val(price_for_each_installment);
+           $('#payment'+i).val(price_for_each_installment);
          }
        }
        function set_number_of_installment()
@@ -766,7 +781,7 @@ function set_license_fees_ind()
             $('#generated').append('<div class="col-md-4 col-xs-12">\
                                       <div class="master_field">\
                                         <label class="master_label mandatory" for="premium1_amount">'+ 'قيمة القسط رقم ' + j + '</label>\
-                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment['+i+'][price]">\
+                                        <input required class="master_input disScroll" name="payment['+i+'][price]" data-id="'+ j + '" type="number" placeholder="'+ 'قيمة القسط رقم ' + j + '" id="payment'+i+'">\
                                       </div>\
                                       </div>\
                                       <div class="col-md-4 col-xs-12">\
