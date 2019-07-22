@@ -60,7 +60,7 @@ class CompaniesController extends Controller
         $ids = array();
         
         $password = rand(10000000, 99999999);
-        $bouquets = Bouquet::where('bouquet_type',1)->with('payment')->with('price_relation')->get();
+        $bouquets = Bouquet::where('bouquet_type',1)->with('payment')->with('price_relation')->where('country_id',session('country'))->get();
 
         $nationalities = Geo_Countries::all();
         // $packages = Package_Types::all();
