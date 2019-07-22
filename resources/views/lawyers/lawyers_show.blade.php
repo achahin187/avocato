@@ -467,19 +467,13 @@
                                 <td><span class="cellcontent">{{$rate->pivot->notes}}</span></td>
                                 <td><span class="cellcontent">{{$rate->pivot->created_at->format('Y - m - d')}}</span></td>
                                 <td><span class="cellcontent">
-<<<<<<< HEAD
-                                <a href="{{route('notes_edit',$rate->pivot->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
-<<<<<<< HEAD
-=======
+
                                 
                                 <a href="#edit_evaluation_modal" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
->>>>>>> origin/4.1.5
-                                <i class = "fa  fa-pencil"></i></a>
-                                <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
-=======
+
                                  <i class = "fa fa-pencil"></i></a>
-                                <a  href="{{route('notes_delete',$rate->pivot->id)}}"  class= "btn-warning-cancel-note action-btn bgcolor--fadebrown color--white ">
->>>>>>> origin/4.1.3
+                                <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
+
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
 
                                 <div class="remodal" data-remodal-id="{{route('notes_edit',$rate->pivot->id)}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
