@@ -438,6 +438,7 @@ Route::get('/offices_edit/{id}', 'OfficesController@edit')->name('offices_edit')
 Route::post('/offices_update/{id}', 'OfficesController@update')->name('offices_update');
 
 Route::post('/offices_destroy_post/{id}', 'OfficesController@destroyPost')->name('offices_destroy_post');
+Route::post('/offices_city_filter', 'OfficesController@cityFilter')->name('offices_city_filter');
 
 //offices Branches
 Route::post('/branches_store', 'OfficesController@branch_create')->name('branches_store');
