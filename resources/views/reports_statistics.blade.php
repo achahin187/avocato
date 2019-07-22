@@ -899,16 +899,6 @@
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12">
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="master_field">
-                          <label class="master_label mandatory" for="license_date">التاريخ</label>
-                          <div class="bootstrap-timepicker">
-                            <input name="startDate" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_date">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory">حالة الدفع</label>
                           <div class="radiorobo">
@@ -925,6 +915,32 @@
                           </div>
                         </div>
                       </div>
+                      <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="license_date">تاريخ بداية التعاقد</label>
+                          <div class="bootstrap-timepicker">
+                            <input name="license_date" class="datepicker master_input" type="text" placeholder="تاريخ بداية النعاقد" id="license_date">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="payment_date_from">تاريخ الاستحقاق/الدفع من</label>
+                          <div class="bootstrap-timepicker">
+                            <input name="payment_date_from" class="datepicker master_input" type="text" placeholder="تاريخ الاستحقاق/الدفع من" id="payment_date_from">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 col-sm-4 col-xs-6">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="payment_date_to">تاريخ الاستحقاق/الدفع الي</label>
+                          <div class="bootstrap-timepicker">
+                            <input name="payment_date_to" class="datepicker master_input" type="text" placeholder="تاريخ الاستحقاق/الدفع الي" id="payment_date_to">
+                          </div>
+                        </div>
+                      </div>
+                      
                     </div>
                     <div class="clearfix"></div>
                     <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
