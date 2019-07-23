@@ -469,7 +469,7 @@
                                 <td><span class="cellcontent">
 
                                 
-                                <a href="#edit_evaluation_modal" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
+                                <a href="#edit_evaluation" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
 
                                  <i class = "fa fa-pencil"></i></a>
                                 <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
@@ -478,7 +478,7 @@
 
                                 
                               </tr>
-                              <div class="remodal" data-remodal-id="edit_evaluation_modal" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                              <div class="remodal" data-remodal-id="edit_evaluation_modal{{$rate->pivot->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                   <form role="form" action="{{route('notes_edit_admin',$lawyer->id)}}" method="post" accept-charset="utf-8">
                                      {{csrf_field()}}
@@ -529,7 +529,7 @@
                                 <td><span class="cellcontent">20-11-2017</span></td>
                                 <td><span class="cellcontent">
                                     <a href= #edit_evaluation ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
-                              </tr>
+                              </tr>-->
                               <div class="remodal" data-remodal-id="edit_evaluation" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                                 <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                 <div>
@@ -558,7 +558,7 @@
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
                                 <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                              </div> -->
+                              </div> 
                               <!--end of static testing part-->
                             </tbody>
                           </table>
