@@ -492,8 +492,8 @@
                                               <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
                                               <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;" required>
                                                 <option selected disabled >اختر التقييم</option>
-                                                @foreach($rates as $rate)
-                                                <option value="{{$rate->item_id}}" @if($rate->pivot->rate_id == $rate->item_id) selected @endif>{{$rate->value}}</option>
+                                                @foreach($rates as $rateee)
+                                                <option value="{{$rateee->item_id}}" @if($rate->pivot->rate_id == $rateee->item_id) selected @endif>{{$rateee->value}}</option>
                                                 @endforeach
                                               </select><span class="master_message color--fadegreen">
                                                 @if ($errors->has('rate'))
