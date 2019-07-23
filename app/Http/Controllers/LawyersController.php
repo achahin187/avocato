@@ -430,6 +430,28 @@ class LawyersController extends Controller
 
 
   }
+  public function edit_rate(Request $request, $id)
+  {
+    $validator = Validator::make($request->all(), [
+      'rate_id' => 'required',
+      'rate' => 'required',
+      'notes' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+      return redirect('lawyers_show/' . $id . '#edit_rate_form')
+        ->withErrors($validator)
+        ->withInput();
+    }
+    $lawyer = Users::find($id);
+    User_Ratings::where('id',$request->rate_id)->update([
+      'rate_id'=>$request->rate,
+      'notes'=>$request->notes
+    ]);
+    return redirect()->route('lawyers_show', $id);
+
+
+  }
   /**
    * Show the form for editing the specified resource.
    *

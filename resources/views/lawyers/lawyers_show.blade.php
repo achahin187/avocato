@@ -394,51 +394,51 @@
                           {{-- Lawyer Rate Edit --}}
                           <div class="remodal-bg"></div>
                           <div class="remodal" id="edit_evaluation_modal" data-remodal-id="edit_evaluation_modal" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
-                  <form role="form" action=" " method="post" id="edit_rate_form" accept-charset="utf-8">
-                      {{csrf_field()}}
+                           <form role="form" action=" " method="post" id="edit_rate_form" accept-charset="utf-8">
+                           {{csrf_field()}}
                             <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                            <div>
-                              <div class="row">
-                                <div class="col-xs-12">
-                                  <h3>إضافة تقييم</h3>
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="master_field">
-                                      <label class="master_label mandatory" for="backend_evaluation_date">التاريخ</label>
-                                      <div class="bootstrap-timepicker">
-                                        <input name="date" class="datepicker master_input" type="text" placeholder="التاريخ" id="backend_evaluation_date">
-                                      </div><span class="master_message color--fadegreen">
-                                  @if ($errors->has('date'))
-                                  {{ $errors->first('date')}}
-                                  @endif</span>
-                                    </div>
-                                  </div>
-                                  
-                                  <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="master_field">
-                                      <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
-                                      <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;">
-                                        <option selected disabled >اختر التقييم</option>
-                                        @foreach($rates as $rate)
-                                        <option value="{{$rate->item_id}}" >{{$rate->value}}</option>
-                                        @endforeach
-                                      </select><span class="master_message color--fadegreen">
-                                  @if ($errors->has('rate'))
-                                  {{ $errors->first('rate')}}
-                                  @endif</span>
-                                    </div>
-                                  </div>
+                              <div>
+                                <div class="row">
                                   <div class="col-xs-12">
-                                    <div class="master_field">
-                                      <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
-                                      <textarea name="notes" class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">
-                                  @if ($errors->has('notes'))
-                                  {{ $errors->first('notes')}}
-                                  @endif</span>
+                                    <h3>إضافة تقييم</h3>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="backend_evaluation_date">التاريخ</label>
+                                        <div class="bootstrap-timepicker">
+                                          <input name="date" class="datepicker master_input" type="text" placeholder="التاريخ" id="backend_evaluation_date">
+                                        </div><span class="master_message color--fadegreen">
+                                    @if ($errors->has('date'))
+                                    {{ $errors->first('date')}}
+                                    @endif</span>
+                                      </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
+                                        <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;">
+                                          <option selected disabled >اختر التقييم</option>
+                                          @foreach($rates as $rate)
+                                          <option value="{{$rate->item_id}}" >{{$rate->value}}</option>
+                                          @endforeach
+                                        </select><span class="master_message color--fadegreen">
+                                    @if ($errors->has('rate'))
+                                    {{ $errors->first('rate')}}
+                                    @endif</span>
+                                      </div>
+                                    </div>
+                                    <div class="col-xs-12">
+                                      <div class="master_field">
+                                        <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
+                                        <textarea name="notes" class="master_input" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">
+                                    @if ($errors->has('notes'))
+                                    {{ $errors->first('notes')}}
+                                    @endif</span>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div><br>
+                              </div><br>
                             <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
                             <button class="remodal-confirm" type="submit">إضافة</button>
                           </form>
@@ -476,42 +476,54 @@
 
                                 <i class = "fa  fa-trash-o"></i></a></span></td>
 
-                                <div class="remodal" data-remodal-id="{{route('notes_edit',$rate->pivot->id)}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                                
+                              </tr>
+                              <div class="remodal" data-remodal-id="{{route('notes_edit',$rate->pivot->id)}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                                  <div>
-                                    <div class="row">
-                                      <div class="col-xs-12">
-                                        <h3>تعديل التقييم</h3>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <div class="master_field">
-                                            <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
-                                            <select class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%">
-                                              <option>ممتاز</option>
-                                              <option>جيد جدا </option>
-                                              <option>جيد </option>
-                                              <option>مقبول</option>
-                                            </select><span class="master_message color--fadegreen">message</span>
-                                          </div>
-                                        </div>
+                                  <form role="form" action="{{route('notes_edit_admin',$lawyer->id)}}" method="post" accept-charset="utf-8">
+                                     {{csrf_field()}}
+                                    <div>
+                                      <div class="row">
+                                      <input  type="number" value="{{$rate->pivot->id}}" hidden>
                                         <div class="col-xs-12">
-                                          <div class="master_field">
-                                            <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
-                                            <textarea class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">message</span>
+                                          <h3>تعديل التقييم</h3>
+                                          <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="master_field">
+                                              <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
+                                              <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;" required>
+                                                <option selected disabled >اختر التقييم</option>
+                                                @foreach($rates as $rate)
+                                                <option value="{{$rate->item_id}}" @if($rate->pivot->rate_id == $rate->item_id) selected @endif>{{$rate->value}}</option>
+                                                @endforeach
+                                              </select><span class="master_message color--fadegreen">
+                                                @if ($errors->has('rate'))
+                                                {{ $errors->first('rate')}}
+                                                @endif</span>
+                                            </div>
+                                          </div>
+                                          <div class="col-xs-12">
+                                            <div class="master_field">
+                                              <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
+                                              <textarea name="notes" class="master_input"  id="backend_evaluation_notes" placeholder="ملاحظات الإدارة" required >{{$rate->pivot->notes}}</textarea>
+                                              <span class="master_message color--fadegreen">
+                                              @if ($errors->has('notes'))
+                                              {{ $errors->first('notes')}}
+                                              @endif</span>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
-                                    </div>
-                                  </div><br>
-                                  <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                                  <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                                </div>
-                              </tr>
+                                    </div><br>
+                                    <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
+                                    <button class="remodal-confirm" type="submit">حفظ</button>
+                                  </from>
+                              </div>
                               @endif
                               @endforeach
                               @endforeach
 
                               <!-- I put the following static tr and modal to prove that the problem is with the foreach code not ui-->
-                              <tr>
+                              <!-- <tr>
                                 <td><span class="cellcontent">ممتاز</span></td>
                                 <td><span class="cellcontent">لا توجد ملاحظات</span></td>
                                 <td><span class="cellcontent">20-11-2017</span></td>
@@ -546,7 +558,7 @@
                                 </div><br>
                                 <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
                                 <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                              </div>
+                              </div> -->
                               <!--end of static testing part-->
                             </tbody>
                           </table>
