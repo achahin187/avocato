@@ -273,6 +273,7 @@ class ContractsFormulasTypesController extends Controller
             //     'file' => $fileNameToStore
             // ]);
             $all[$key]['file'] = $fileNameToStore;
+            $all[$key]['extension'] = '.'.$extension;
             $all[$key]->save();
             // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
 

@@ -243,6 +243,7 @@ class FormulasController extends Controller
             $fileNameToStore = $destinationPath . '/' .  time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
             $destinationPath = 'contracts';
             Input::file('file')->move($destinationPath, $fileNameToStore);
+            $formula->extension = '.'.Input::file('file')->getClientOriginalExtension();
         } else {
             $destinationPath = 'contracts';
             $fileNameToStore = $destinationPath . '/' .  time() . rand(111, 999) . '.' . substr($formula->file, strrpos($formula->file, '.') + 1);
