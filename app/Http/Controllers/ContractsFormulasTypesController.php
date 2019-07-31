@@ -264,8 +264,10 @@ class ContractsFormulasTypesController extends Controller
         $all = Formula_Contracts::all();
         foreach($all as $key => $con_for)
         {
+            $extension = substr($con_for->file, strpos($con_for->file, "_") + 1);
+            dd($extension);
             $destinationPath = 'contracts';
-            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999);
+            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999).Input::file('file')->getClientOriginalExtension();
             rename(public_path($con_for->file), public_path($fileNameToStore));
             // $all[$key]->update([
             //     'file' => $fileNameToStore
