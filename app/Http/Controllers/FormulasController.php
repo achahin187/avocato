@@ -240,12 +240,12 @@ class FormulasController extends Controller
         if ($request->hasFile('file')) {
             $destinationPath = 'contracts';
             File::delete($formula->file);
-            $fileNameToStore = $destinationPath . '/' . $request->contract_name . time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
+            $fileNameToStore = $destinationPath . '/' .  time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
             $destinationPath = 'contracts';
             Input::file('file')->move($destinationPath, $fileNameToStore);
         } else {
             $destinationPath = 'contracts';
-            $fileNameToStore = $destinationPath . '/' . $request->contract_name . time() . rand(111, 999) . '.' . substr($formula->file, strrpos($formula->file, '.') + 1);
+            $fileNameToStore = $destinationPath . '/' .  time() . rand(111, 999) . '.' . substr($formula->file, strrpos($formula->file, '.') + 1);
             rename(public_path($formula->file), public_path($fileNameToStore));
         }
         $formula->file = $fileNameToStore;
