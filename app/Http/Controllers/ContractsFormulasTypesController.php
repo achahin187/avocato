@@ -273,6 +273,7 @@ class ContractsFormulasTypesController extends Controller
             try{
                 rename(public_path($con_for->file), public_path($fileNameToStore));
                 $all[$key]['file'] = $fileNameToStore;
+                $all[$key]['extension'] = '.'.$extension;
             }
             catch(\exception $extension)
             {
@@ -283,7 +284,7 @@ class ContractsFormulasTypesController extends Controller
             //     'file' => $fileNameToStore
             // ]);
             
-            $all[$key]['extension'] = '.'.$extension;
+            
             $all[$key]->save();
             // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
 
