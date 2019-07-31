@@ -262,13 +262,13 @@ class ContractsFormulasTypesController extends Controller
     public function rename_files()
     {
         $all = Formula_Contracts::all();
-        foreach($all as $con_for)
+        foreach($all as $key => $con_for)
         {
             $destinationPath = 'contracts';
             $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999);
             rename(public_path($con_for->file), public_path($fileNameToStore));
-            $con_for->update([
-                'file'=>$fileNameToStore
+            $all[$key]->update([
+                'file' => $fileNameToStore
             ]);
             // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
 
