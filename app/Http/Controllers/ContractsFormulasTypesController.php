@@ -267,9 +267,11 @@ class ContractsFormulasTypesController extends Controller
             $destinationPath = 'contracts';
             $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999);
             rename(public_path($con_for->file), public_path($fileNameToStore));
-            $all[$key]->update([
-                'file' => $fileNameToStore
-            ]);
+            // $all[$key]->update([
+            //     'file' => $fileNameToStore
+            // ]);
+            $con_for->file = $fileNameToStore;
+            $con_for->save();
             // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
 
         }
