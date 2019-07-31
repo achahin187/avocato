@@ -469,7 +469,7 @@
                                 <td><span class="cellcontent">
 
                                 
-                                <a href="#edit_evaluation" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
+                                <a href="#edit_evaluation_modal{{$rate->pivot->id}}" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
 
                                  <i class = "fa fa-pencil"></i></a>
                                 <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
@@ -493,7 +493,7 @@
                                               <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;" required>
                                                 <option selected disabled >اختر التقييم</option>
                                                 @foreach($rates as $rateee)
-                                                <option value="{{$rateee->item_id}}" @if($rate->pivot->rate_id == $rateee->item_id) selected @endif>{{$rateee->value}}</option>
+                                                <option value="{{$rateee->item_id}}" @if($rate->pivot->rate_id == $rateee->item_id) selected @endif>{{$rate->value}}</option>
                                                 @endforeach
                                               </select><span class="master_message color--fadegreen">
                                                 @if ($errors->has('rate'))
@@ -562,35 +562,7 @@
                               <!--end of static testing part-->
                             </tbody>
                           </table>
-                          <div class="remodal" data-remodal-id="edit_evaluation" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
-                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                                <div>
-                                  <div class="row">
-                                    <div class="col-xs-12">
-                                      <h3>تعديل التقييم</h3>
-                                      <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="backend_evaluation_lawyer_evaluation">التقييم </label>
-                                          <select class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%">
-                                            <option>ممتاز</option>
-                                            <option>جيد جدا </option>
-                                            <option>جيد </option>
-                                            <option>مقبول</option>
-                                          </select><span class="master_message color--fadegreen">message</span>
-                                        </div>
-                                      </div>
-                                      <div class="col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="backend_evaluation_notes">ملاحظات الإدارة</label>
-                                          <textarea class="master_input" name="textarea" id="backend_evaluation_notes" placeholder="ملاحظات الإدارة"></textarea><span class="master_message color--fadegreen">message</span>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div><br>
-                                <button class="remodal-cancel" data-remodal-action="cancel">إغلاق</button>
-                                <button class="remodal-confirm" data-remodal-action="confirm">حفظ</button>
-                              </div>
+
                           
                         </div>
                       </li>

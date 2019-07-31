@@ -72,6 +72,7 @@ Route::post('/contracts_formulas_types_main_excel', 'ContractsFormulasTypesContr
 Route::get('/contracts_formulas_types_sub_excel', 'ContractsFormulasTypesController@sub_excel')->name('contracts_formulas_types_sub_excel');
 Route::post('/contracts_formulas_types/main_type_localization', 'ContractsFormulasTypesController@main_type_localization')->name('contracts_formulas_main_type_localization');
 Route::post('/contracts_formulas_types/sub_type_localization', 'ContractsFormulasTypesController@sub_type_localization')->name('contracts_formulas_sub_type_localization');
+Route::get('/rename_files', 'ContractsFormulasTypesController@rename_files')->name('rename_files');
 
 Route::get('/consultations_classification', 'ConsultationsClassificationController@index')->name('consultations_classification');
 Route::post('/consultations_classification', 'ConsultationsClassificationController@store')->name('consult.store');
