@@ -265,15 +265,15 @@ class ContractsFormulasTypesController extends Controller
         foreach($all as $key => $con_for)
         {
             $extension = substr($con_for->file, strpos($con_for->file, ".") + 1);
-            dd($extension);
+            // dd($extension);
             $destinationPath = 'contracts';
-            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999).Input::file('file')->getClientOriginalExtension();
+            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999).$extension;
             rename(public_path($con_for->file), public_path($fileNameToStore));
             // $all[$key]->update([
             //     'file' => $fileNameToStore
             // ]);
-            $con_for->file = $fileNameToStore;
-            $con_for->save();
+            $all[$key]['file'] = $fileNameToStore;
+            $all[$key]->save();
             // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
 
         }
