@@ -280,7 +280,7 @@
                         @foreach ($services as $service)
                         <tr>
                           <td><span class="cellcontent">{{ ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد' }}</span></td>
-                  
+                          <td><span class="cellcontent">{{ ($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id)->full_name : 'لا يوجد' : 'لا يوجد'}}</span></td>
                         </tr>
                         @endforeach
                     @endif
