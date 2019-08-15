@@ -855,7 +855,7 @@ class CasesController extends Controller
         } else {
             $type = $_GET['type'];
             Excel::store((new CasesExport(null, $type)), $filepath . $filename);
-            return response()->json('/storage/app/public/excel/'.$filename);
+            return response()->json($PathForJson . $filename);
         }
     }
 
