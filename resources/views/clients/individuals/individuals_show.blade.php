@@ -71,6 +71,7 @@
             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             
             <div class="row">
+            @if(isset($user->bouquets))
             @foreach($user->bouquets as $bouquet)
                 <div class="col-md-4 col-sm-12">
                     <table class="table bgcolor--gray_l text-left">
@@ -153,6 +154,7 @@
                   <div class="col-xs-9">{{$bouquet ? $bouquet->pivot->number_of_installments : 'لا يوجد' }}</div>
                 </div>
             @endforeach
+            @endif
           </div>
               <div class="col-lg-12">
                 <table class="table-1">
@@ -195,6 +197,7 @@
                               <div class="col-xs-12">
                                 <h3>تغيير حالة القسط</h3>
                                 <div class="master_field">
+                                @if(isset($installment->pivot))
                                 @if($installment->pivot->payment_status==1)       
                                   <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
                                   <label for="done{{$installment->pivot->id}}">تم الدفع</label>
@@ -210,6 +213,7 @@
                                   <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
                                   <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
+                                  @endif
                                   @endif
                                   
                                   
