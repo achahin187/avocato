@@ -11,7 +11,7 @@
                           <div class="coverglobal__actions">
                               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit',$user->id)}}">تعديل البيانات</a>
                               <!-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a> -->
-                              <a class=" color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a>
+                              <a class="btn-warning-cancel color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" href="#" >استبعاد المستخدم</a>
                               <br>
                           </div>
                         </div>
@@ -158,6 +158,7 @@
   <script type="text/javascript">
     $(document).ready(function(){
       $('.btn-warning-cancel').click(function(){
+        // var user_id = $(this).closest('tr').attr('data-user-id');
             swal({
               title: "هل أنت متأكد؟",
               text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
@@ -171,7 +172,15 @@
             },
             function(isConfirm){
               if (isConfirm){
-                swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                $.ajax({
+           type:'POST',
+           url:'{{url('users_list_destroy_post')}}'+'/'+'{{$user->id}}',
+           data:{_token:_token},
+           success:function(data){
+            swal("تم الحذف!", "تم الحذف بنجاح", "success");
+          }
+        });
+               
               } else {
                 swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
               }
