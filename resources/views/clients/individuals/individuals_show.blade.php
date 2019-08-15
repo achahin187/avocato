@@ -266,7 +266,28 @@
                 </table>
               </div>
             </li>
-            
+            <li class="tab__content_item">
+              <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                <table class="table-1">
+                  <thead>
+                    <tr class="bgcolor--gray_mm color--gray_d">
+                      <th><span class="cellcontent">نوع الخدمة</span></th>
+                      <th><span class="cellcontent">القائم بالاجراء</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @if (isset($services) && !empty($services))
+                        @foreach ($services as $service)
+                        <tr>
+                          <td><span class="cellcontent">{{ ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد' }}</span></td>
+                  
+                        </tr>
+                        @endforeach
+                    @endif
+                  </tbody>
+                </table>
+              </div>
+            </li>
             <li class="tab__content_item">
               <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                 <table class="table-1">
