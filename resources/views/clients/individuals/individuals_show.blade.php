@@ -168,23 +168,55 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @if($user->bouquet_payment)
-                    @foreach($user->bouquet_payment as $installment)
-                    <tr>
-                      <td><span class="cellcontent">{{$installment->pivot->period ? $installment->pivot->period : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent"> {{$installment->pivot->price ? $installment->pivot->price : 'لا يوجد'}}</span></td>
-                      <td><span class="cellcontent">{{$installment->pivot->actuall_start_date ? $installment->pivot->actuall_start_date : 'لا يوجد'}} </span></td>
-                      <td><span class="cellcontent"><i class = "fa  {{$installment->pivot->payment_status ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
-                      <td><span class="cellcontent"><a href= "#payment_status_{{$installment->pivot->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
-                    </tr>
-                   
-                      <div class="clearfix"> </div>
-                      @endforeach
-                      @endif
+                    
                     </tbody>
                   </table>
              
-                  
+                  @if($user->bouquet_payment)
+                  @foreach($user->bouquet_payment as $installment)
+                      <div class="col-md-2"><a class="master-btn undefined undefined undefined undefined undefined" href="#payment_status"><span></span></a>
+                          <div class="remodal-bg"></div>
+                          <div class="remodal" data-remodal-id="payment_status_{{$installment->pivot->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      <form role="form" action="{{route('bouquets_payment_user.update',$installment->pivot->id)}}" method="post" accept-charset="utf-8">
+                              {{csrf_field()}}
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <h3>تغيير حالة القسط</h3>
+                                    <div class="master_field">
+                                    @if(isset($installment->pivot))
+                                    @if($installment->pivot->payment_status==1)       
+                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
+                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+
+                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
+                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+
+                                      
+                                      @else
+                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
+                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+
+                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
+                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+
+                                      @endif
+                                      @endif
+                                      
+                                      
+                                    
+                                    </div>
+                                  </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              <button class="remodal-confirm" type="submit">تغيير حالة القسط</button>
+                            </form>
+                            </div>
+                          </div>
+                @endforeach
+                @endif
                 </div>
               </div>
             </li>
