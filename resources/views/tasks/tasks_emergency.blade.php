@@ -483,10 +483,10 @@ var client_long;
           //    // $('.modal-backdrop').remove();
           // });
           // $('[data-remodal-id=add_task_service]').remodal('close');;
-            // / window.location.reload();
+             window.location.reload();
              
               // alert(data);
-        $this.html(data);
+        // $this.html(data);
       // alert(data);
           },
            error: function (jqXHR, exception) {
