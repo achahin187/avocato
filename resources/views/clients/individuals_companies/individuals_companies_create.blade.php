@@ -254,13 +254,8 @@
         {{--  discount percentage  --}}
         <div class="col-md-3 col-sm-4 col-xs-12">
           <div class="master_field">
-<<<<<<< HEAD
             <label class="master_label mandatory" for="discount">نسبة الخصم </label>
             <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="client_discount">             
-=======
-            <label class="master_label" for="client_discount">نسبة الخصم </label>
-            <input name="discount_percentage" value="{{ old('discount_percentage') }}"  class="master_input" type="number" placeholder="%" id="discount">             
->>>>>>> origin/4.1.5
             {{--  Error  --}}             
             @if ($errors->has('discount_percentage'))               
               <span class="master_message color--fadegreen">{{ $errors->first('discount_percentage') }}</span>             
