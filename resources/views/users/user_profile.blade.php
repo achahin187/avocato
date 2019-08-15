@@ -11,7 +11,7 @@
                           <div class="coverglobal__actions">
                               <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_edit',$user->id)}}">تعديل البيانات</a>
                               <!-- <a class="color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" type="button" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a> -->
-                              <a class="btn-warning-cancel color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" href="#">استبعاد المستخدم</a>
+                              <a class=" color--gray_d bordercolor-gray_d bradius--small border-btn master-btn" href="{{route('users_list_destroy_get',$user->id)}}">استبعاد المستخدم</a>
                               <br>
                           </div>
                         </div>
