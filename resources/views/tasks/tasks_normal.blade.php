@@ -211,12 +211,12 @@
         <li>الخدمات</li>
       </ul>
       <ul class="tab__content">
-        <li class="tab__content_item active">
+        <li class="tab__content_item active" id="sessions">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table hide-datatable-pagination">
               <div class="remodal-bg">
                 <div class="remodal" data-remodal-id="filterModal_agenda" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-          <form role="form" action="{{route('session_filter')}}" method="POST" accept-charset="utf-8">
+            <form role="form" action="{{route('session_filter')}}" method="POST" accept-charset="utf-8">
             {{ csrf_field() }}
                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                   <div>
@@ -510,7 +510,7 @@
             </div>
           </div>
         </li>
-        <li class="tab__content_item">
+        <li class="tab__content_item" id="services">
           <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
             <div class="full-table hide-datatable-pagination">
               <div class="remodal-bg">
@@ -788,4 +788,12 @@
   </div>
 </div>
 
+@endsection
+@section('js')
+<script>
+if (window.location.href.indexOf("services_filter2") > -1) { 
+  $('#sessions').removeClass("active");
+  $('#services').addClass("active");
+}
+</script>
 @endsection
