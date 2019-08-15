@@ -178,7 +178,9 @@
                     url:'{{url('users_list_destroy_post')}}'+'/'+'{{$user->id}}',
                     data:{_token:_token},
                     success:function(data){
+                      
                       swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                      window.location = data;
                     }
                   });
                
