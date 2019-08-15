@@ -232,22 +232,33 @@
                 </div>
               </div>
             </li>
-            
             <li class="tab__content_item">
               <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                 <table class="table-1">
                   <thead>
                     <tr class="bgcolor--gray_mm color--gray_d">
-                      <th><span class="cellcontent">نوع الخدمة</span></th>
-                      <th><span class="cellcontent">القائم بالاجراء</span></th>
+                      <th><span class="cellcontent">نوع القضية</span></th>
+                      <th><span class="cellcontent">المحكمة</span></th>
+                      <th><span class="cellcontent">الدائرة</span></th>
+                      <th><span class="cellcontent">رقم الدعوى</span></th>
+                      <th><span class="cellcontent">السنة</span></th>
+                      <th><span class="cellcontent">تاريخ قيد الدعوى</span></th>
+                      <th><span class="cellcontent">رقم الملف بالمكتب</span></th>
+                      <th><span class="cellcontent">رقم التوكيل</span></th>
                     </tr>
                   </thead>
                   <tbody>
-                    @if (isset($services) && !empty($services))
-                        @foreach ($services as $service)
+                    @if (isset($cases) && !empty($cases))
+                        @foreach ($cases as $case)
                         <tr>
-                          <td><span class="cellcontent">{{ ($service->task_payment_status_id) ? Helper::localizations('task_payment_statuses', 'name', $service->task_payment_status_id) : 'لا يوجد' }}</span></td>
-                          <td><span class="cellcontent">{{ ($service->assigned_lawyer_id) ? Helper::getUserDetails($service->assigned_lawyer_id)->full_name : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->case_types) ? $case->cases->case_types->name : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->courts) ? $case->cases->courts->name : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->region) ? $case->cases->region : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->claim_number) ? $case->cases->claim_number : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->claim_year) ? $case->cases->claim_year : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ $case->cases ? ($case->cases->claim_date ? $case->cases->claim_date->format('d/m/Y') : 'لا يوجد') : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->cases->office_file_number) ? $case->cases->office_file_number : 'لا يوجد' }}</span></td>
+                          <td><span class="cellcontent">{{ ($case->attorney_number) ? $case->attorney_number : 'لا يوجد' }}</span></td>
                         </tr>
                         @endforeach
                     @endif
@@ -255,6 +266,7 @@
                 </table>
               </div>
             </li>
+            
             <li class="tab__content_item">
               <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                 <table class="table-1">
