@@ -159,6 +159,7 @@
     $(document).ready(function(){
       $('.btn-warning-cancel').click(function(){
         // var user_id = $(this).closest('tr').attr('data-user-id');
+        var _token = '{{csrf_token()}}';
             swal({
               title: "هل أنت متأكد؟",
               text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
@@ -173,13 +174,13 @@
             function(isConfirm){
               if (isConfirm){
                 $.ajax({
-           type:'POST',
-           url:'{{url('users_list_destroy_post')}}'+'/'+'{{$user->id}}',
-           data:{_token:_token},
-           success:function(data){
-            swal("تم الحذف!", "تم الحذف بنجاح", "success");
-          }
-        });
+                    type:'POST',
+                    url:'{{url('users_list_destroy_post')}}'+'/'+'{{$user->id}}',
+                    data:{_token:_token},
+                    success:function(data){
+                      swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                    }
+                  });
                
               } else {
                 swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
