@@ -101,7 +101,7 @@ class EmergencyTasksController extends Controller
                      
                      Helper::add_log(7,15,$task->id);
                      session()->flash('success', 'Task Added Successfully');                    
-                 return redirect()->back()->route('tasks_emergency');
+                 return redirect()->route('tasks_emergency');
     }
 
     public function assign_emergency_task($id)

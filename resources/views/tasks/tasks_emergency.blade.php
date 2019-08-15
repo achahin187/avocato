@@ -482,7 +482,8 @@ var client_long;
           //    $('.remodal-bg').hide();
           //    // $('.modal-backdrop').remove();
           // });
-             window.location.reload();
+          $('[data-remodal-id=add_task_service]').cancel();
+            //  window.location.reload();
              
               // alert(data);
         // $this.html(data);
