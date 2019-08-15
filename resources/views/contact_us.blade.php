@@ -194,7 +194,7 @@
                         <tr data-id="{{$social_account->id}}">
                           <td><i class="{{$social_account->icon}}"></i></td>
                           <td>{{$social_account->url}}</td>
-                         <td><a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
+                         <td><a class=" action-btn bgcolor--fadebrown color--white" onclick="delete_btn({{$social_account->id}})"><i class="delete-icon fa fa-trash" id="delete_button"></i></a></td>
                                               
                         </tr>
                         @endforeach
@@ -811,23 +811,43 @@
     <script type="text/javascript">
    
       function delete_btn(id){
-        $.ajax({ 
-          type: 'POST',
-          url : '{{route("delete_social_account")}}',
-          data : {
-            "id": id,
-            "_token": "{{ csrf_token() }}"
-          },
-          success: function(){
-            //console.log('success');
+        swal({
+              title: "هل أنت متأكد؟",
+              text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: '#DD6B55',
+              confirmButtonText: 'نعم متأكد!',
+              cancelButtonText: "إلغاء",
+              closeOnConfirm: false,
+              closeOnCancel: false
+            },
+            function(isConfirm){
+              if (isConfirm){
+                $.ajax({ 
+                  type: 'POST',
+                  url : '{{route("delete_social_account")}}',
+                  data : {
+                    "id": id,
+                    "_token": "{{ csrf_token() }}"
+                  },
+                  success: function(){
+                    //console.log('success');
 
-            $("tr[data-id="+id+"]").fadeOut();
-          },
-          error: function(){
-            console.log('error');
-          }
+                    $("tr[data-id="+id+"]").fadeOut();
+                    swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                  },
+                  error: function(){
+                    console.log('error');
+                  }
 
-        });
+                });
+                
+              } else {
+                swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+              }
+            });
+       
       }
        
     </script> 
