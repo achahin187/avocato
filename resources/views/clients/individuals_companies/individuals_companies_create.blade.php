@@ -500,11 +500,7 @@
         }
       });
       
-      $(function() {
-          $('#company_code').on('change click', function(){
-            $('#company_name').val($('#company_code option:selected').data('id'));
-          });
-      });
+     
 
       $(document).on('click', '#ddate', function(){
         $(this).datepicker({
@@ -840,7 +836,13 @@ function set_license_fees_ind(id)
  
       $(function(){
         dateRange('start_date','end_date')
-      })
+      });
+
+      $(function() {
+          $('#company_code').on('change click', function(){
+            $('#company_name').val($('#company_code option:selected').data('id'));
+          });
+      });
   </script>
   
 
