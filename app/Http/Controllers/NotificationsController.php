@@ -23,6 +23,12 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {   
+        $notifications = Notifications::where(function ($query){
+            $query->whereIn('notification_type_id',[1,8]);
+            $query->where('is_sent',0); 
+            $query->whereDate('schedule', '<=', date('Y-m-d'));
+        })->get();
+        dd($notifications);
         $data['subscription_types'] = Bouquet::all();
         $data['notifications'] = Notification_Schedules::all();
         // dd($data['subscription_types']);
@@ -223,7 +229,7 @@ class NotificationsController extends Controller
         $notifications = Notifications::where(function ($query){
             $query->whereIn('notification_type_id',[1,8]);
             $query->where('is_sent',0); 
-            $query->whereDate('schedule', '<=', date('Y-m-d H:i:s'));
+            $query->whereDate('schedule', '<=', date('Y-m-d'));
         })->get();
         foreach($notifications as $notification) {
             $user = $notification->user;
