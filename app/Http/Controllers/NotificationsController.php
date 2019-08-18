@@ -28,6 +28,20 @@ class NotificationsController extends Controller
             $query->where('is_sent',0); 
             $query->whereDate('schedule', '<=', date('Y-m-d'));
         })->get();
+        foreach($notifications as $notification) {
+            $user = $notification->user;
+            if(!empty($notification->user_id) && !empty($user->device_token)) {    
+                $push = new Notifications_Push;
+                $push->notification_id = $notification->id;
+                $push->device_token  = $user->device_token;
+                $push->mobile_os = $user->mobile_os;
+                $push->lang_id = $user->lang_id;
+                $push->user_id = $user->id;
+                $push->save();
+           }
+        $notification->is_sent = 1;
+        $notification->save();   
+        }
         dd($notifications);
         $data['subscription_types'] = Bouquet::all();
         $data['notifications'] = Notification_Schedules::all();
