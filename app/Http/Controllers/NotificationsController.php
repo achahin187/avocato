@@ -77,6 +77,7 @@ class NotificationsController extends Controller
                   $notification->schedule = $send_date;
                   $notification->notification_type_id=1;
                   $notification->is_sent = 0;
+                  $notification->is_push=1;
                   $notification->user_id = $user->id;
                   $notification->created_at = date('Y-m-d H:i:s');
                   $notification->packages = $packages;
