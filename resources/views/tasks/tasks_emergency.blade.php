@@ -340,7 +340,10 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_task_service"><i class="fa fa-plus"></i><span>إضافة حالة طارئة</span></a>
+                    <div class="col-md-2 col-sm-3 colxs-12">
+                      <a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_task_service"><i class="fa fa-plus"></i><span>إضافة حالة طارئة</span>
+                      </a>
+                      </div>
                       <div class="remodal-bg"></div>
                       <div class="remodal" data-remodal-id="add_task_service" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" id="modal">
                     
@@ -399,7 +402,7 @@
                         <button class="remodal-confirm" type="submit" onclick="add_emergency()">حفظ</button>
                       
                       </div>
-                    </div>
+                    
                     <div class="clearfix"></div>
                   </div>
                 </div>
