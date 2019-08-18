@@ -33,6 +33,16 @@
               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
               <div>
                 <h2 id="modal1Title">فلتر</h2>
+
+                <!----------- new field--->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="general_search">بحث</label>
+                    <input name="general_search" class="master_input"  placeholder="بحث في الجدول" id="general_search">
+                    <span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
+
                 <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="master_field">
                     <label class="master_label" for="work_sector">التخصص</label>
