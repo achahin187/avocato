@@ -551,6 +551,18 @@
 
 @endsection
 @section('js')
+<script type="text/javascript">
+ 
+      // $(function(){
+      //   dateRange('start_date','end_date')
+      // });
+
+      $(function() {
+          $('#company_code').on('change click', function(){
+            $('#company_name').val($('#company_code option:selected').data('id'));
+          });
+      });
+  </script>
 <script>
 function get_price_method(id)
   {
@@ -832,18 +844,7 @@ function set_license_fees_ind(id)
         
     });
   </script>
-  <script type="text/javascript">
- 
-      $(function(){
-        dateRange('start_date','end_date')
-      });
-
-      $(function() {
-          $('#company_code').on('change click', function(){
-            $('#company_name').val($('#company_code option:selected').data('id'));
-          });
-      });
-  </script>
+  
   
 
 @endsection
