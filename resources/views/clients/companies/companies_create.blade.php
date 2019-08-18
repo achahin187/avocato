@@ -536,6 +536,32 @@
 @endsection
 @section('js')
 <script>
+$(document).on('click', '#ddate', function(){
+        $(this).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd"
+        }).focus();
+        $(this).removeClass('datepicker'); 
+      });
+
+        $('.disScroll').on('focus', 'input[type=number]', function (e) {
+          $(this).on('mousewheel.disableScroll', function (e) {
+            e.preventDefault()
+          })
+        });
+
+        $('.disScroll').on('blur', 'input[type=number]', function (e) {
+          $(this).off('mousewheel.disableScroll')
+        });    
+
+        // hide alert message after 4 seconds => 4000 ms
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove(); 
+            });
+        }, 4000);
+    });
 function get_price_method(id)
   {
     // var id = $('#bouquet_id').val();
