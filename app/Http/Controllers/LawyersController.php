@@ -667,6 +667,15 @@ class LawyersController extends Controller
     // dd($rate);
     return redirect()->back();
   }
+  public function rate_edit_notes(Request $request)
+  {
+    User_Ratings::where('id',$request->rate_id)->update([
+        'rate_id'=>$request->rate,
+        'notes'=>$request->notes
+    ]);
+   
+    return redirect()->back()->with(['success'=>'rate updated successfully']);
+  }
   public function rate_delete($id)
   {
     // dd($id);

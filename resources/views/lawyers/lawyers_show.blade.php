@@ -484,7 +484,7 @@
                                      {{csrf_field()}}
                                     <div>
                                       <div class="row">
-                                      <input  type="number" value="{{$rate->pivot->id}}" hidden>
+                                      <input  type="number" value="{{$rate->pivot->id}}" hidden name="rate_id" required>
                                         <div class="col-xs-12">
                                           <h3>تعديل التقييم</h3>
                                           <div class="col-md-12 col-sm-12 col-xs-12">

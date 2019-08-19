@@ -267,7 +267,7 @@ Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
 Route::match(['get', 'post'],'/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
 Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
 Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
-Route::post('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit_admin');
+Route::post('/rate_edit_notes', 'LawyersController@rate_edit_notes')->name('notes_edit_admin');
 Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
 Route::get('/lawyers_activate_deactivate/{id}','LawyersController@activateDeactivateLawyer')->name('lawyers_activate');
 });
