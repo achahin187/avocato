@@ -28,13 +28,13 @@ class Geo_Countries extends Model
         return $this->hasMany('App\Entity_Localizations','item_id');
     }
 
-    public function getNameAttribute()
+    public function getNameAttribute($value)
     {
         $lang = Session::get('AppLocale');
         if($lang == 2 or $lang == 3){
             return Helper::localizations('geo_cities' , 'name' , $this->id , $lang);
         }else{
-            return $this->attributes['name'];
+            return $value;
         }
     }
 }
