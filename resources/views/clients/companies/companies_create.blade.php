@@ -561,7 +561,7 @@ $(document).on('click', '#ddate', function(){
                 $(this).remove(); 
             });
         }, 4000);
-    });
+    
 function get_price_method(id)
   {
     // var id = $('#bouquet_id').val();
