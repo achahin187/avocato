@@ -448,8 +448,8 @@
                     <tr data-lawyer-id="{{ $lawyer->id }}"> 
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                       <td><span class="cellcontent">{{ ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? ($lawyer->user_detail->litigation_level ? $lawyer->user_detail->litigation_level :'لا يوجد') : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
+                      <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد' }}</span></td>
                       {{-- <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td> --}}
                       <td><span class="cellcontent"> @if(isset($lawyer->rules)) @foreach($lawyer->rules as $rule) {{$rule->name_ar}} @if(!($loop->last)) <b>-</b> @endif @endforeach  @endif</span></td>
