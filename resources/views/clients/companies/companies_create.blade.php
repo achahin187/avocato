@@ -703,7 +703,7 @@ function get_price_method(id)
          for(i= 0 ; i < numberOfInstallment ; i++)
          {
           // alert('#payment['+i+'][price]');
-           $('#payment'+i').val(price_for_each_installment);
+           $('#payment'+i).val(price_for_each_installment);
          }
        }
        function set_number_of_installment()
