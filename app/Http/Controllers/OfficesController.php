@@ -443,8 +443,8 @@ class OfficesController extends Controller
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
         'tele_code'=>'required',
-        'office_cellphone' => ($user->cellphone == $request['office_cellphone'])? "":(session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9",
-        'office_email' => ($user->email == $request->office_email)? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
+        'office_cellphone' => ($user->cellphone == $request['office_cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
+        'office_email' => ($user->email == $request['office_email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
         'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',
