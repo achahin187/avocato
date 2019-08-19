@@ -478,7 +478,7 @@
 
                                 
                               </tr>
-                              <div class="remodal" data-remodal-id="edit_evaluation_modal{{$rate->pivot->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                              <div class="remodal" data-remodal-id="edit_evaluation_modal{{$rate->pivot->id}}" id="edit_evaluation_modal{{$rate->pivot->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                   <form role="form" action="{{route('notes_edit_admin',$lawyer->id)}}" method="post" accept-charset="utf-8">
                                      {{csrf_field()}}
