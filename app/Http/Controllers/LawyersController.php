@@ -407,6 +407,7 @@ class LawyersController extends Controller
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
+    dd($data['rates']);
     return view('lawyers.lawyers_show', $data);
   }
 
