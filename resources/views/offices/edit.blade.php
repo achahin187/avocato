@@ -97,6 +97,11 @@
                             @endif
                               @endforeach
                           </select>
+                          <span class="master_message color--fadegreen">
+                            @if($errors->has('tele_code'))
+                              {{ $errors->first('tele_code')}}
+                            @endif
+                          </span>
                           </div>
                           <div class="col-md-8">
                           <input name="office_cellphone" value="{{ $office->cellphone }}" class="master_input" type="number" placeholder="1200000000" id="lawyer_mob">
