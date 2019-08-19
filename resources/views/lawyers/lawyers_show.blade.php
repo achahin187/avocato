@@ -469,7 +469,7 @@
                                 <td><span class="cellcontent">
 
                                 
-                                <a href="#edit_evaluation_modal{{$rate->pivot->id}}" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
+                                <a href="#" onclick="edit_note('edit_evaluation_modal{{$rate->pivot->id}}')" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
 
                                  <i class = "fa fa-pencil"></i></a>
                                 <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
@@ -574,6 +574,10 @@
 @endsection
 @section('js')
 <script>
+  function edit_note(id)
+  {
+    $('#'+id).remodal().open();
+  }
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){
