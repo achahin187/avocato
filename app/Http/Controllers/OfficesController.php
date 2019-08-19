@@ -439,7 +439,7 @@ class OfficesController extends Controller
    */
   public function update(Request $request, $id)
   {
-    dd($request->all());
+    
     $user = Users::find($id);
     $validator = Validator::make($request->all(), [
         'office_name' => 'required',
