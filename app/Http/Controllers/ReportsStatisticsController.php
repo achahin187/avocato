@@ -210,11 +210,11 @@ class ReportsStatisticsController extends Controller
             $title  = $filters['title'];
             $type   = $filters['type'];
 
-            if ( isset($filters['sector']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($sector) { 
-                $q->where('work_sector_area_id', $sector); }); 
+            if ( isset($filters['sector']) ) { $data['lawyers'] = $data['lawyers']->whereHas('specializations', function($q) use($sector) { 
+                $q->where('specialization_id', $sector); }); 
             }
             if ( isset($filters['level']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($level) { 
-                $q->where('litigation_level',$level); }); 
+                $q->where('syndicate_level_id',$level); }); 
             }
             if ( isset($filters['nationality']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($nat) { 
                 $q->where('nationality_id', $nat); }); 
@@ -223,7 +223,7 @@ class ReportsStatisticsController extends Controller
                 $q->where('job_title', $title); }); 
             }
             if ( isset($filters['type']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($type) { 
-                $q->where('syndicate_level_id', $type); }); 
+                $q->where('work_sector_type', $type); }); 
             }
 
             $data['lawyers'] = $data['lawyers']->get();
