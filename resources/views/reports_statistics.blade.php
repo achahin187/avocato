@@ -341,7 +341,7 @@
                               <option value="-1" selected disabled hidden>اختر التخصص</option>
                             @if ( isset($work_sectors) && !empty($work_sectors) )
                               @foreach ($work_sectors as $lawyer)
-                                <option value="{{ ($lawyer->id }}">{{ ($lawyer->name }}</option>
+                                <option value="{{ $lawyer->id }}">{{ ($lawyer->name }}</option>
                               @endforeach
                             @endif
                           </select>
@@ -354,7 +354,7 @@
                               <option value="-1" selected disabled hidden>اختر درجة التقاضي</option>
                             @if ( isset($syndicate_levels) && !empty($syndicate_levels) )
                               @foreach ($syndicate_levels as $lawyer)
-                                <option value="{{ ($lawyer->id }}">{{ ($lawyer->name }}</option>
+                                <option value="{{ $lawyer->id }}">{{ ($lawyer->name }}</option>
                               @endforeach
                             @endif
                           </select>
