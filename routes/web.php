@@ -167,6 +167,7 @@ Route::post('/news_list_update/{id}', 'NewsListController@update')->name('news.u
 Route::get('/news_list/destroy/{id}', 'NewsListController@destroy')->name('news_destroy');
 Route::get('/news_list/destroySelected', 'NewsListController@destroySelected')->name('news_destroySelected');
 Route::get('/news_list/exportXLS', 'NewsListController@exportXLS')->name('news.exportXLS');
+Route::get('/news_list/rename_files', 'NewsListController@rename_files')->name('news.rename_files');
 
 
 });
