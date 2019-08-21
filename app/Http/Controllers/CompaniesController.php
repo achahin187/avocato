@@ -880,6 +880,12 @@ class CompaniesController extends Controller
         if($request->nationality) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
         }
+        if(array_key_exists('search',$request->all()))
+            {
+                // dd($request->all());
+                
+                $users =$users->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+            }
 
         switch($request->activate) {
             case "1":

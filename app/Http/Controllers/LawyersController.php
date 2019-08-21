@@ -211,7 +211,12 @@ class LawyersController extends Controller
 
         });
       }
-
+      if(array_key_exists('search',$request->all()))
+            {
+                // dd($request->all());
+                
+                $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('national_id','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+            }
 
 
 
