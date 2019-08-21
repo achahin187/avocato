@@ -99,9 +99,10 @@ class MobileController extends Controller
             $filter = Users::users(7);
         }
 
-        dd($request->all());
+       
             if(array_key_exists('search',$request->all()))
             {
+                dd($request->all());
                 
                 $filter->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
             }
