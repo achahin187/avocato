@@ -45,7 +45,20 @@
               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
               <div>
                 <h3 id="modal1Title">فلتر</h3>
-
+                {{-- Search --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="ID_No">بحث بالاسم اوالكود </label>
+                    <div class="bootstrap-timepicker">
+                      <input name="search" class=" master_input" type="text" placeholder="بحث بالاسماوالكود" id="search" value="{{ old('search') }}">
+                    </div>
+          
+                    @if ($errors->has('start_date'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
+                    @endif
+                  {{--  Start date  --}}
+                  </div>
+                </div>
                 {{-- Start date --}}
                 <div class="col-md-6">
                   <div class="master_field">

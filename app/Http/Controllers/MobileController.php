@@ -83,17 +83,44 @@ class MobileController extends Controller
         if ($from && $to) {
             $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
                 $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
+                
+            })->where(function($query)use ($request)
+            {
+                if(array_key_exists('search',$request))
+                {
+                    $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                }
             });
         } else if ($from && !$to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
+            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('start_date', '>=', $from);
+                
+            })->where(function($query)use ($request)
+            {
+                if(array_key_exists('search',$request))
+                {
+                    $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                }
             });
         } else if (!$from && $to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
+            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('end_date', '<=', $to);
+                
+            })->where(function($query)use ($request)
+            {
+                if(array_key_exists('search',$request))
+                {
+                    $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                }
             });
         } else {
-            $filter = Users::users(7);
+            $filter = Users::users(7)->where(function($query)use ($request)
+            {
+                if(array_key_exists('search',$request))
+                {
+                    $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                }
+            });
         }
 
 
