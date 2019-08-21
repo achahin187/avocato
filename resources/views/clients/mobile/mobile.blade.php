@@ -50,11 +50,11 @@
                   <div class="master_field">
                     <label class="master_label mandatory" for="ID_No">بحث بالاسم اوالكود </label>
                     <div class="bootstrap-timepicker">
-                      <input name="search" class=" master_input" type="text" placeholder="بحث بالاسماوالكود" id="search" value="{{ old('search') }}">
+                      <input name="search" class=" master_input" type="text" placeholder="بحث بالاسم اوالكود" id="search" value="{{ old('search') }}">
                     </div>
           
                     @if ($errors->has('start_date'))
-                      <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
+                      <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
                     @endif
                   {{--  Start date  --}}
                   </div>
