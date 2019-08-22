@@ -109,13 +109,13 @@ class MobileController extends Controller
         
         switch ($request->activate) {
             case "1":
-                $filter = $filter->distincit()->paginate(10);
+                $filter = $filter->distinct()->paginate(10);
                 break;
             case "2":
-                $filter = $filter->distincit()->where('is_active', '!=', 0)->paginate(10);
+                $filter = $filter->distinct()->where('is_active', '!=', 0)->paginate(10);
                 break;
             case "3":
-                $filter = $filter->distincit()->where('is_active', 0)->paginate(10);
+                $filter = $filter->distinct()->where('is_active', 0)->paginate(10);
                 break;
             default:
                 break;
