@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 
-class CasesExport implements FromCollection,WithEvents
+class SubstitutionsExport implements FromCollection,WithEvents
 {
     use Exportable, RegistersEventListeners;
 	public function __construct($ids=null){
