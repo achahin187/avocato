@@ -42,7 +42,7 @@ class LawyersController extends Controller
     //         return redirect()->route('choose.country');
     //     }
         // return Users::withTrashed()->restore();
-    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
+    $data['lawyers'] = Users::whereNull('deleted_at')->where('is_active',1)->where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('parent_id', 5);
     })->orderBy('created_at','desc')->paginate(10);
 
