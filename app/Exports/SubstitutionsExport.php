@@ -46,7 +46,7 @@ class SubstitutionsExport implements FromCollection,WithEvents
             ,$case->substitution->date
             ,$case->substitution->court 
             ,$case->substitution->region
-            ,$case->task_status_id == 1? 'تم':'لم يتم'
+            ,$case->task_status_id == 1? 'لم يتم':'تم'
             ,($case->lawyer()->count() != 0 ) ? $case->lawyer->full_name  : 'لم يتم تحديد محامى' ]);
         }
 
