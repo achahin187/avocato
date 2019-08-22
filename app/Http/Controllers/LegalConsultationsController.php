@@ -324,13 +324,15 @@ class LegalConsultationsController extends Controller
 
         }
         $user = Users::find($consultation->created_by);
+        $admin = Users::find(\Auth::user()->id);
+        dd($admin);
         $notification_type = Notification_Types::find(14);
         $notification = Notifications::create([
             "msg" => $notification_type->msg,
             "entity_id" => 13,
             "item_id" => $consultation->id,
-            "item_name"=>\Auth::user()->full_name,
-            "item_user_id"=>\Auth::user()->id,
+            "item_name"=>$admin->full_name,
+            "item_user_id"=>$admin->id,
             "user_id" => $consultation->created_by,
             "notification_type_id" => 14,
             "is_read" => 0,
