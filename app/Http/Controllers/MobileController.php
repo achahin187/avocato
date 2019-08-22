@@ -81,22 +81,22 @@ class MobileController extends Controller
         }
 
         if ($from && $to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
+            $filter = Users::distinct()->users(7)->whereHas('subscription', function ($query) use ($from, $to) {
                 $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
                 
             });
         } else if ($from && !$to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
+            $filter = Users::distinct()->users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('start_date', '>=', $from);
                 
             });
         } else if (!$from && $to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
+            $filter = Users::distinct()->users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('end_date', '<=', $to);
                 
             });
         } else {
-            $filter = Users::users(7);
+            $filter = Users::distinct()->users(7);
         }
 
        
@@ -120,7 +120,7 @@ class MobileController extends Controller
             default:
                 break;
         }
-          dd($filter);
+
         return view('clients.mobile.mobile')->with('users', $filter);
     }
 
