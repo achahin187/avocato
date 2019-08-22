@@ -104,7 +104,8 @@ class MobileController extends Controller
             {
                 // dd($request->all());
                 
-                $filter=$filter->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                $filter=$filter->distinct()
+                ->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
             }
         
         switch ($request->activate) {
