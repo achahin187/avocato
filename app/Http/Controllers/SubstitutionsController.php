@@ -14,6 +14,7 @@ use App\Case_Techinical_Report;
 use App\Users;
 use Carbon\carbon;
 use Excel;
+use App\Exports\SubstitutionsExport;
 class SubstitutionsController extends Controller
 {
     public function index()
