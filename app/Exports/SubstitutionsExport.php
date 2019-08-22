@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use App\Task;
+use App\Tasks;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -35,7 +35,7 @@ class SubstitutionsExport implements FromCollection,WithEvents
         $casesArray = array(['المحامى المحدد','الحاله ','الدائره','المحكمه',' تاريخ','نوع الانابه','اسم المحامى','كود المحامى']) ;
         if(is_null($this->ids)){
 
-        $cases = Task::where('task_type_id',4)->with(['substitution'=>function($q){
+        $cases = Tasks::where('task_type_id',4)->with(['substitution'=>function($q){
             $q->with('type');
         }])->with('lawyer')->with('lawyer_substitution')->get();
         foreach($cases as $case)
@@ -56,7 +56,7 @@ class SubstitutionsExport implements FromCollection,WithEvents
         $selects = $this->ids;
          foreach($selects as $select)
            {
-            $case = Task::where('id',$select)->with(['substitution'=>function($q){
+            $case = Tasks::where('id',$select)->with(['substitution'=>function($q){
                 $q->with('type');
             }])->with('lawyer')->with('lawyer_substitution')->get();
             array_push($casesArray,[$case->lawyer_substitution->code
