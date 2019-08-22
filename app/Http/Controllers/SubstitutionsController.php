@@ -221,4 +221,26 @@ class SubstitutionsController extends Controller
         } 
         return redirect()->route('substitutions');
     }
+
+    public function excel()
+    {
+        $filepath = 'public/excel/';
+        $PathForJson = 'storage/excel/';
+        $filename = 'substitutions' . time() . '.xlsx';
+        if (isset($_GET['ids'])) {
+            $ids = $_GET['ids'];
+
+            Excel::store(new CasesExport($ids), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } elseif ($_GET['filters'] != '') {
+            $filters = json_decode($_GET['filters']);
+            
+            Excel::store((new CasesExport($filters)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } else {
+            
+            Excel::store((new CasesExport(null)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        }
+    }
 }
