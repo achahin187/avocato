@@ -32,7 +32,7 @@ class SubstitutionsExport implements FromCollection,WithEvents
     
     public  function collection()
     {   
-        $casesArray = array(['المحامى المحدد','الحاله ','الدائره','المحكمه',' تاريخ','نوع الانابه','اسم المحامى','كود المحامى']) ;
+        $casesArray = array(['كود المحامى','اسم المحامى','نوع الانابه',' تاريخ','المحكمه','الدائره','الحاله ','المحامى المحدد']) ;
         if(is_null($this->ids)){
 
         $cases = Tasks::where('task_type_id',4)->with(['substitution'=>function($q){
