@@ -325,7 +325,7 @@ class LegalConsultationsController extends Controller
         }
         $user = Users::find($consultation->created_by);
         $admin = Users::find(\Auth::user()->id);
-        dd($admin);
+        // dd($admin);
         $notification_type = Notification_Types::find(14);
         $notification = Notifications::create([
             "msg" => $notification_type->msg,
