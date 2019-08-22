@@ -140,19 +140,14 @@ class LawyersController extends Controller
      */
     
       $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+        if($request->has('search'))
+        {
+          $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+        }
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
-      if ($request->has('types') && $request->types != 0) {
-        $q->whereHas('rules', function ($q) use ($request) {
-          $q->where('rule_id', $request->types);
-
-        });
-      } else {
-        $q->whereHas('rules', function ($q) {
-          $q->where('rule_id', 5);
-        });
-      }
+     
       if ($request->has('nationalities') && $request->nationalities != 0) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('nationality_id', $request->nationalities);
@@ -211,15 +206,21 @@ class LawyersController extends Controller
 
         });
       }
-      if(array_key_exists('search',$request->all()))
-            {
-                // dd($request->all());
-                
-                $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
-            }
+     
 
 
 
+    })->whereHas('rules',function($q)use($request){
+      if ($request->has('types') && $request->types != 0) {
+       
+          $q->where('rule_id', $request->types);
+
+        
+      } else {
+       
+          $q->where('parent_id', 5);
+        
+      }
     })->paginate(10);
     
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
