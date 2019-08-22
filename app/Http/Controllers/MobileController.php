@@ -33,7 +33,7 @@ class MobileController extends Controller
         //     return redirect()->route('choose.country');
         // }
        
-        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id', Auth::user()->country_id)->paginate(50));
+        return view('clients.mobile.mobile')->with('users', Users::users(7)->where('country_id', Auth::user()->country_id)->paginate(10));
     }
 
     // Filter mobile users

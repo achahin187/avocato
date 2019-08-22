@@ -44,7 +44,7 @@ class LawyersController extends Controller
         // return Users::withTrashed()->restore();
     $data['lawyers'] = Users::whereNull('deleted_at')->where('country_id',session('country'))->whereHas('rules', function ($q) {
       $q->where('parent_id', 5);
-    })->orderBy('created_at','desc')->paginate(50);
+    })->orderBy('created_at','desc')->paginate(10);
 
     // foreach($data['lawyers'] as $key=>$lawyer)
     // {
