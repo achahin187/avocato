@@ -490,12 +490,7 @@ class CasesController extends Controller
                 });
               }
         
-              if ($request->filled('syndicate_level_id')) {
-                $q->whereHas('user_detail', function ($q) use ($request) {
-                  $q->where('syndicate_level_id',$request->syndicate_level_id);
-        
-                });
-              }
+             
 
         })->with(['user_detail' => function ($query) use ($request) {
 
@@ -520,6 +515,12 @@ class CasesController extends Controller
                   $q->where('nationality_id', $request->nationalities);
         
                 
+              }
+              if ($request->filled('syndicate_level_id')) {
+                
+                  $q->where('syndicate_level_id',$request->syndicate_level_id);
+        
+               
               }
 
 
