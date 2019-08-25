@@ -172,9 +172,11 @@
                             <div class="master_field">
                               <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
                               <select class="master_input select2 required" id="investigation_type" name="investigation_type" style="width:100%;" required>
-                                @foreach($cases_record_types as $type)
-                                <option value="{{$type->id}}">{{$type->name_ar}}</option>
-                                @endforeach
+      
+                                    @foreach($cases_record_types as $type)
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                          
                               </select><span class="master_message color--fadegreen">
                                 @if ($errors->has('investigation_type'))
                                     {{ $errors->first('investigation_type')}}

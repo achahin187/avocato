@@ -71,7 +71,7 @@ class CasesController extends Controller
         })->get();
         $data['cases_record_types'] = Case_Record_Type::all();
         foreach ($data['cases_record_types'] as $value) {
-            $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
+            $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
         }
         $data['cases_types'] = Cases_Types::all();
         $data['courts'] = Courts::where('country_id',session('country'))->get();
