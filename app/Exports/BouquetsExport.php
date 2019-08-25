@@ -42,7 +42,7 @@ class BouquetsExport implements FromCollection,WithEvents
             $payment = '';
             foreach($bouquet['payment'] as $value)
             {
-                $payment += $value['name'] . '-';
+                $payment .= $value['name'] . '-';
             } 
             array_push($bouquetsArray,[$bouquet['name']
             ,($bouquet['bouquet_type'] == 0) ? 'أفراد' : 'شركات' 
@@ -61,7 +61,7 @@ class BouquetsExport implements FromCollection,WithEvents
             $payment = '';
             foreach($bouquet['payment'] as $value)
             {
-                $payment += $value['name'] . '-';
+                $payment .= $value['name'] . '-';
             } 
             array_push($bouquetsArray,[$bouquet['name']
             ,($bouquet['bouquet_type'] == 0) ? 'أفراد' : 'شركات' 
