@@ -408,10 +408,15 @@
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
-                                <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality" name="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
-                              </div>
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="nationality">الجنسيه</label>
+                              <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
+                                <option value="0" selected="selected">الكل</option>
+                                @foreach($nationalities as $nationality)
+                                <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                                @endforeach
+                              </select><span class="master_message color--fadegreen"></span>
+                            </div>
                             </div>
                             <div class="col-md-6">
                             <div class="master_field">
