@@ -848,9 +848,9 @@
   filter_data['lawyer_code']=$('#lawyer_code').val();
   filter_data['lawyer_name']=$('#lawyer_name').val();
   filter_data['lawyer_national_id']=$('#lawyer_national_id').val();
-  filter_data['lawyer_nationality']=$('#lawyer_nationality').val();
-  filter_data['lawyer_work_sector']=$('#lawyer_work_sector').val();
-  filter_data['lawyer_level']=$('#lawyer_level').val();
+  filter_data['nationalities']=$('#nationality').val();
+  filter_data['work_sector']=$('#lawyer_type').val();
+  filter_data['syndicate_level_id']=$('#syndicate_level_id').val();
   filter_data['lawyer_tel']=$('#lawyer_tel').val();
   filter_data['start_date']=$('#start_date').val();
 // alert(data['lawyer_code']);
