@@ -414,15 +414,25 @@
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
-                                <input class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector" name="lawyer_work_sector" ><span class="master_message color--fadegreen">message content</span>
-                              </div>
+                            <div class="master_field">
+                              <label class="master_label" for="work_sector">التخصص</label>
+                            <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                            <option value="0">choose Speification ..</option>
+                                      @foreach($work_sectors as $work_sector)
+                                      <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                                      @endforeach
+                                    </select>
+                            </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_degree">درجة التقاضي</label>
-                                <input class="master_input" type="text" placeholder="درجه التقاضى" id="lawyer_level" name="lawyer_level"><span class="master_message color--fadegreen">message content</span>
+                            <div class="master_field">
+                                <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
+                                   <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
+                                      <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
+                                      @foreach($syndicate_levels as $syndicate)
+                                      <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
+                                      @endforeach
+                                   </select>
                               </div>
                             </div>
                             <div class="col-md-6">
