@@ -31,6 +31,9 @@ use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
 use App\Case_Techinical_Report_Document;
+use App\Entity_Localizations;
+use App\Specializations;
+use App\SyndicateLevels;
 // use Session;
 
 
