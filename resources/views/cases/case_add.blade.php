@@ -488,9 +488,17 @@
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
+                            <td><span class="cellcontent">
+                              @isset($lawyer->user_detail->nationality->id)
+                              @foreach($nationalities as $nationality)
+                              @if($lawyer->user_detail->nationality->id == $nationality->item_id)
+                              {{$nationality->value}}
+                              @endif
+                              @endforeach
+                              @endisset
+                            </span></td>
+                            <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
