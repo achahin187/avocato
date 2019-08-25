@@ -40,7 +40,7 @@
                     <div class="full-table">
                       <div class="remodal-bg"></div>
                       <div class="bottomActions__btns">
-                        <a class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
+                        <a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
                         <a class="btn-warning-cancel-all master-btn bradius--small padding--small bgcolor--fadebrown color--white" href="#">حذف المحدد</a>
                       </div>
                       <div class="quick_filter">
@@ -269,5 +269,30 @@
                 }
             });
         }
+
+        $('.excel-btn').click(function(){
+          // alert('1');
+          var filter='@if(\session('filter_ids')){{json_encode(\session('filter_ids'))}}@endif';
+          var selectedIds = $("input:checkbox:checked").map(function(){
+            return $(this).closest('tr').attr('data-bouquet-id');
+          }).get();
+          $.ajax({
+            type:'GET',
+            url:'{{route('bouquets.excel')}}',
+            data:{ids:selectedIds,filters:filter},
+            success:function(response){
+              // alert(2);
+              location.href = response;
+              swal("تمت العملية بنجاح!", "تم استخراج الجدول علي هيئة ملف اكسيل", "success");
+              // var a = document.createElement("a");
+              // a.href = response.file; 
+              // a.download = response.name+'.xlsx';
+              // document.body.appendChild(a);
+              // a.click();
+              // a.remove();
+            
+            }
+          });
+   });
 </script>
 @endsection

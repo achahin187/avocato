@@ -116,6 +116,7 @@ Route::get('/bouquet_payment_value/{id}/{discount}', 'BouquetsController@bouquet
 Route::get('/bouquet_price/{id}', 'BouquetsController@bouquet_price')->name('bouquet.price');
 Route::get('/bouquet_price_value/{id}/{discount}/{price_relation}', 'BouquetsController@bouquet_price_value')->name('bouquet.price.value');
 Route::get('/bouquet_type/{id}', 'BouquetsController@bouquet_type')->name('bouquet.type');
+Route::get('/bouquets/excel', 'BouquetsController@excel')->name('bouquets.excel');
 });
 
 

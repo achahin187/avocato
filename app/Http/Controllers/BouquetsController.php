@@ -15,6 +15,8 @@ use Helper;
 use App\UserBouquet;
 use App\UserBouquetPayment;
 use App\UserBouquetServiceCount;
+use Excel;
+use App\Exports\BouquetsExport;
 
 class BouquetsController extends Controller
 {
@@ -328,5 +330,27 @@ class BouquetsController extends Controller
         $type = Bouquet::find($id);
         // dd($payments);
         return response()->json($type->bouquet_type);
+    }
+
+    public function excel()
+    {
+        $filepath = 'public/excel/';
+        $PathForJson = 'storage/excel/';
+        $filename = 'bouquets' . time() . '.xlsx';
+        if (isset($_GET['ids'])) {
+            $ids = $_GET['ids'];
+
+            Excel::store(new BouquetsExport($ids), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } elseif ($_GET['filters'] != '') {
+            $filters = json_decode($_GET['filters']);
+            
+            Excel::store((new BouquetsExport($filters)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } else {
+            
+            Excel::store((new BouquetsExport(null)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        }
     }
 }
