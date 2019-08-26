@@ -696,10 +696,10 @@ public function branch_edit(Request $request)
       $q=$q->orderBy('id','DESC');
   }   
      
-     $data['offices'] = $q->get();
+     $data['offices'] = $q->paginate(30);
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-    dd($data);
+    dd($data['offices']);
     return view('offices.list', $data);
       
     }else if($request->office_city == null && $request->search == null){
