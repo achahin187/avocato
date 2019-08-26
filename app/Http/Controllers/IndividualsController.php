@@ -779,10 +779,10 @@ class IndividualsController extends Controller
                 ->withInput();
         }
 
-        $startfrom = Helper::checkDate($request->start_date_from, 1);
-        $startto = Helper::checkDate($request->start_date_to, 2);
-        $endfrom = Helper::checkDate($request->end_date_from, 1);
-        $endto = Helper::checkDate($request->end_date_to, 2);
+        $startfrom = ($request->start_date_from != null ) ? Helper::checkDate($request->start_date_from, 1) : null;
+        $startto = ($request->start_date_to != null ) ? Helper::checkDate($request->start_date_to, 2) : null;
+        $endfrom = ($request->end_date_from != null ) ? Helper::checkDate($request->end_date_from, 1) : null;
+        $endto = ($request->end_date_to != null ) ? Helper::checkDate($request->end_date_to, 2) : null;
 
         // intial join query between `users` & `subscriptions` & `user_details`
         $users = Users::where('users.country_id',session('country'))->users(8)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
