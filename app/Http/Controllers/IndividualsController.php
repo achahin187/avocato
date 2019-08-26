@@ -767,7 +767,7 @@ class IndividualsController extends Controller
     // Filter individuals based on package_type, start-end dates and nationality
     public function filter(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'activate' => 'required'
         ]);
@@ -801,13 +801,13 @@ class IndividualsController extends Controller
         }
 
         // check on start and end dates
-        if ($startfrom && $startto && $endfrom && $endto) {
+        if ($startfrom && $startto && $endfrom && $endto  && $startfrom != null && $startto != null && $endfrom != null && $endto != null) {
             $users = $users->whereBetween('start_date', [$startfrom, $startto]);
             $users = $users->whereBetween('end_date', [$endfrom, $endto]);
         }
 
         // check nationality
-        if ($request->nationality) {
+        if ($request->nationality && $request->nationality != null) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
         }
         dd($users->toSql());
