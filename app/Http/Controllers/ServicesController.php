@@ -266,9 +266,21 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if ($request->filled('payment_status'))
-            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->paginate(10);
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status);
         else
-            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->paginate(10);
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3);
+        
+
+        if($request->filled('search'))
+        {
+            $data['services'] = $data['services']->where('name','like','%'.$request->search.'%')->orwhere(function($query) use ($request){
+                $query->whereHas('client',function($q) use ($request){
+                    $q->where('client.full_name','like','%'.$request->search.'%')->orwhere('client.code','like','%'.$request->search.'%');
+                });
+            }); 
+        }
+
+            $data['services'] = $data['services']->paginate(10);
 
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
 
