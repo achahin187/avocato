@@ -853,7 +853,7 @@ class IndividualsCompaniesController extends Controller
             $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
           });
         }
-        
+       
         // check activation 
         switch($request->activate) {
             case "1":

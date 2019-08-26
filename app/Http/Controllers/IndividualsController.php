@@ -809,7 +809,7 @@ class IndividualsController extends Controller
         if ($request->nationality) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
         }
-
+        dd($users->toSql());
         switch ($request->activate) {
             case "1":
                 $users = $users->get();
