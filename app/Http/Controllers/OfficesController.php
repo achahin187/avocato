@@ -680,6 +680,10 @@ public function branch_edit(Request $request)
     if(isset($request->office_city)){
        
         $q = Users::orderBy('id','DESC');
+        if($request->has('search'))
+        {
+          $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+        }
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15)->where('country_id',session('country'));
         });
