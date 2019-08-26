@@ -685,8 +685,8 @@ public function branch_edit(Request $request)
             });
         if($request->has('search'))
         {
-          $q = $q->where(function($query){
-            where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+          $q = $q->where(function($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
           });
         }
     
