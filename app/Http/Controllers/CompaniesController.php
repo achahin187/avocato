@@ -854,35 +854,38 @@ class CompaniesController extends Controller
                             ->withInput();
         }
 
-        $startfrom = Helper::checkDate($request->start_date_from, 1);
-        $startto   = Helper::checkDate($request->start_date_to, 2);
-        $endfrom   = Helper::checkDate($request->end_date_from, 1);
-        $endto     = Helper::checkDate($request->end_date_to, 2);
+        $from = $to = null;
 
-        // intial join query between `users` & `subscriptions` & `user_details`
-        $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')
-                        ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
-                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                        ->select('user_company_details.*', 'user_details.*', 'subscriptions.*', 'users.*');
-
-        // check package type
-        if( $request->package_type ) {
-            $users = $users->whereIn('package_type_id', $request->package_type);
+        if ($request->start_date) {
+            $from = date("Y-m-d 00:00:00", strtotime($request->start_date));
+        }
+        if ($request->end_date) {
+            $to = date("Y-m-d 23:59:59", strtotime($request->end_date));
+        }
+       
+        if ($from && $to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to) {
+                $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
+                
+            });
+        } else if ($from && !$to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('start_date', '>=', $from);
+                
+            });
+        } else if (!$from && $to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('end_date', '<=', $to);
+                
+            });
+        } else {
+            $users = Users::users(9);
         }
 
-        // check on start and end dates
-        if($startfrom && $startto && $endfrom && $endto) {
-            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
-            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
-        }
-
-        // check nationality
-        if($request->nationality) {
-            $users = $users->where('user_details.nationality_id', $request->nationality);
-        }
+       
         if($request->has('search'))
         {
-          $users = $users->where(function($query) use ($request){
+          $users = $users->distinct()->where(function($query) use ($request){
             $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
           });
         }
