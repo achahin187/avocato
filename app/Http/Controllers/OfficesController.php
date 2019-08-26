@@ -679,9 +679,7 @@ public function branch_edit(Request $request)
     
     if(isset($request->office_city) || isset($request->search)){
        
-        $q = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
-          $query->where('rule_id', 15);
-        });
+        $q = Users::where('country_id',session('country'));
         if($request->has('search'))
         {
           $q = $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
@@ -696,7 +694,9 @@ public function branch_edit(Request $request)
       $q=$q->orderBy('id','DESC');
   }   
      
-     $data['offices'] = $q->with('rules')->paginate(10);
+     $data['offices'] = $q->whereHas('rules', function ($query) {
+      $query->where('rule_id', 15);
+    })->with('rules')->paginate(10);
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     dd($data['offices']);
