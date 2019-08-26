@@ -273,7 +273,7 @@ class ServicesController extends Controller
 
         if($request->filled('search'))
         {
-            $data['services'] = $data['services']->distinct()->where(function($query){
+            $data['services'] = $data['services']->distinct()->where(function($query) use ($request){
                 $query->where('name','like','%'.$request->search.'%')->orwhere(function($query) use ($request){
                 $query->whereHas('client',function($q) use ($request){
                     
