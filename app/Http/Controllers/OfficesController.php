@@ -677,7 +677,7 @@ public function branch_edit(Request $request)
   
   public function cityFilter(Request $request){
     
-    if(isset($request->office_city)){
+    if(isset($request->office_city) || isset($request->search)){
        
         $q = Users::orderBy('id','DESC');
         if($request->has('search'))
@@ -687,9 +687,12 @@ public function branch_edit(Request $request)
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15)->where('country_id',session('country'));
         });
+        if($request->has('office_city'))
+        {
     $q->whereHas('user_detail',function($q) use ($request) {
         $q->where('work_sector_area_id',$request->office_city);
-    });    
+    }); 
+  }   
      
      $data['offices'] = $q->paginate(10);
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
