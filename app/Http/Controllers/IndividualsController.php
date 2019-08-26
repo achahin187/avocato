@@ -790,7 +790,7 @@ class IndividualsController extends Controller
             ->select('user_details.*', 'subscriptions.*', 'users.*');
 
         // check package type
-        if ($request->package_type) {
+        if ($request->package_type && $request->package_type != null) {
             $users = $users->whereIn('package_type_id', $request->package_type);
         }
         if($request->has('search') && $request->search != null)
