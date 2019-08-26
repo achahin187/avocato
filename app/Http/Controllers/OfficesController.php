@@ -693,11 +693,11 @@ public function branch_edit(Request $request)
 
       $q=$q->orderBy('id','DESC');
   }   
-     
-     $data['offices'] = $q->whereHas('rules', function ($query) {
+     $q = $q->whereHas('rules', function ($query) {
       $query->where('rules.id', 15);
       $query->where('rules.parent_id','!=',5);
     })->with('rules')->paginate(10);
+     $data['offices'] = $q;
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     dd($data['offices']);
