@@ -87,12 +87,27 @@ $(document).on('confirmation', '#two', function () {
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
+                            <form role="form" action="{{ action('OfficesController@cityFilter') }}" method="POST" enctype="multipart/form-data">
                             <div class="col-md-12 col-sm-12 col-xs-12">
+                              <div class="master_field">
+                                <label class="master_label mandatory" for="ID_No">بحث  </label>
+                                <div class="bootstrap-timepicker">
+                                  <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او الرقم القومي او الموبايل" id="search" value="{{ old('search') }}">
+                                </div>
+                      
+                                @if ($errors->has('start_date'))
+                                  <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
+                                @endif
+                              {{--  Start date  --}}
+                              </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{-- Search --}}
+             
                               <div class="master_field">
                                 <label class="master_label mandatory" for="office_address">المدينة</label>
                                 {{-- <input class="master_input" type="text" placeholder="المدينة" id="office_address"><span class="master_message color--fadegreen">message</span> --}}
                                 
-                                <form role="form" action="{{ action('OfficesController@cityFilter') }}" method="POST" enctype="multipart/form-data">
+                               
                                   <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
                                   <select class="master_input" name="office_city" id="office_address">
                                   <option value="">اختر المدينة</option>

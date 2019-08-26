@@ -85,6 +85,10 @@ class OfficesController extends Controller
             no all items in the table
      */
     $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+      if($request->has('search'))
+      {
+        $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+      }
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
