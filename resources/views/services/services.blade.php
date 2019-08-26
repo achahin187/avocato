@@ -149,6 +149,7 @@
                               @endif
                             {{--  Start date  --}}
                             </div>
+                            </div>
                             <div class="col-md-12">
                               <div class="master_field">
                                 <label class="master_label mandatory" for="service_type"> نوع الخدمة </label>
