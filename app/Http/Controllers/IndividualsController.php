@@ -787,7 +787,7 @@ class IndividualsController extends Controller
         if ($request->end_date) {
             $to = date("Y-m-d 23:59:59", strtotime($request->end_date));
         }
-
+       
         if ($from && $to) {
             $users = Users::users(8)->whereHas('subscription', function ($query) use ($from, $to) {
                 $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);

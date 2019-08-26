@@ -83,7 +83,10 @@ class NewsListController extends Controller
         if ($request->filled('language')) {
            $filter =  $filter->where('lang_id', '=', $request->language);
                }
-
+        if($request->has('search'))
+        {
+            $filter = $filter->where('name','like','%'.$request->search.'%');
+        }
 
         switch ($request->condition) {
             case "1":
