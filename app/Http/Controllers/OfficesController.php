@@ -679,14 +679,14 @@ public function branch_edit(Request $request)
     
     if(isset($request->office_city) || isset($request->search)){
        
-        $q = Users::orderBy('id','DESC');
+        $q = Users::orderBy('id','DESC')->where('country_id',session('country'))->whereHas('rules', function ($query) {
+          $query->where('rule_id', 15);
+        });
         if($request->has('search'))
         {
           $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
         }
-    $q->whereHas('rules', function ($q) {
-          $q->where('rule_id', 15)->where('country_id',session('country'));
-        });
+    
         if($request->has('office_city'))
         {
     $q->whereHas('user_detail',function($q) use ($request) {
