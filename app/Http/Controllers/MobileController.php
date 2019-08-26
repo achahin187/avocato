@@ -100,13 +100,12 @@ class MobileController extends Controller
         }
 
        
-            if(array_key_exists('search',$request->all()))
-            {
-                // dd($request->all());
-                
-                $filter=$filter->distinct()
-                ->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
-            }
+        if($request->has('search'))
+        {
+          $filter = $filter->distinct()->where(function($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+          });
+        }
         
         switch ($request->activate) {
             case "1":
