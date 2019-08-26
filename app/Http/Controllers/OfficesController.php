@@ -696,7 +696,7 @@ public function branch_edit(Request $request)
       $q=$q->orderBy('id','DESC');
   }   
      
-     $data['offices'] = $q->paginate(10);
+     $data['offices'] = $q->get();
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     dd($data);
