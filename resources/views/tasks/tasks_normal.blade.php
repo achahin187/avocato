@@ -207,8 +207,8 @@
     <div class="tabs--wrapper">
       <div class="clearfix"></div>
       <ul class="tabs">
-        <li>الأجندة القضائية</li>
-        <li>الخدمات</li>
+        <li  id="sessions_li">الأجندة القضائية</li>
+        <li  id="services_li">الخدمات</li>
       </ul>
       <ul class="tab__content">
         <li class="tab__content_item active" id="sessions">
@@ -237,7 +237,7 @@
                         </div><span class="master_message color--fadegreen"></span>
                       </div>
                     </div>
-{{--                     <div class="col-md-4 col-sm-6 col-xs-12">
+        {{--                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="agenda_client">اسم العميل</label>
                         <input class="master_input" type="text" placeholder="اسم العميل (الموكل)" id="agenda_client"><span class="master_message color--fadegreen"></span>
@@ -350,163 +350,7 @@
                   @endforeach
                 </tbody>
               </table>
-              <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                <div>
-                  <h2 class="title">title of the changing log in</h2>
-                  <div class="log-content">
-                    <div class="log-container">
-                      <table class="log-table">
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <th>log title</th>
-                          <th>user</th>
-                          <th>time</th>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>January</td>
-                          <td>$100</td>
-                          <td>$100</td>
-                        </tr>
-                        <tr class="log-row" data-link="https://www.google.com.eg/">
-                          <td>February</td>
-                          <td>$80</td>
-                          <td>$80</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
+             
             </div>
           </div>
         </li>
@@ -794,6 +638,9 @@
 if (window.location.href.indexOf("services_filter2") > -1) { 
   $('#sessions').removeClass("active");
   $('#services').addClass("active");
+
+  $('#sessions_li').removeClass("active");
+  $('#services_li').addClass("active");
 }
 </script>
 @endsection
