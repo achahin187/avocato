@@ -810,7 +810,7 @@ class IndividualsController extends Controller
         if ($request->nationality && $request->nationality != null) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
         }
-        dd($users->toSql());
+        // dd($users->toSql());
         switch ($request->activate) {
             case "1":
                 $users = $users->get();
