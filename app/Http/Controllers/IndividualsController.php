@@ -767,6 +767,7 @@ class IndividualsController extends Controller
     // Filter individuals based on package_type, start-end dates and nationality
     public function filter(Request $request)
     {
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             'activate' => 'required'
         ]);
@@ -792,7 +793,7 @@ class IndividualsController extends Controller
         if ($request->package_type) {
             $users = $users->whereIn('package_type_id', $request->package_type);
         }
-        if($request->has('search'))
+        if($request->has('search') && $request->search != null)
         {
           $users = $users->where(function($query) use ($request){
             $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
