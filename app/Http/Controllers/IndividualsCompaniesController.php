@@ -845,7 +845,15 @@ class IndividualsCompaniesController extends Controller
         if($request->nationality) {
             $users = $users->where('user_details.nationality_id', $request->nationality);
         }
+    
 
+        if($request->has('search'))
+        {
+          $users = $users->where(function($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+          });
+        }
+        
         // check activation 
         switch($request->activate) {
             case "1":
