@@ -275,7 +275,7 @@ class ServicesController extends Controller
         {
             $data['services'] = $data['services']->where('name','like','%'.$request->search.'%')->orwhere(function($query) use ($request){
                 $query->whereHas('client',function($q) use ($request){
-                    $q->where('client.full_name','like','%'.$request->search.'%')->orwhere('client.code','like','%'.$request->search.'%');
+                    $q->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
                 });
             }); 
         }
