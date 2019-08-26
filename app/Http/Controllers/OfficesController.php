@@ -679,19 +679,21 @@ public function branch_edit(Request $request)
     
     if(isset($request->office_city) || isset($request->search)){
        
-        $q = Users::orderBy('id','DESC')->where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $q = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
           $query->where('rule_id', 15);
         });
         if($request->has('search'))
         {
-          $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+          $q = $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
         }
     
         if($request->has('office_city'))
         {
-    $q->whereHas('user_detail',function($q) use ($request) {
+       $q = $q->whereHas('user_detail',function($q) use ($request) {
         $q->where('work_sector_area_id',$request->office_city);
     }); 
+
+      $q=$q->orderBy('id','DESC');
   }   
      
      $data['offices'] = $q->paginate(10);
