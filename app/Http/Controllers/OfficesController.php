@@ -38,7 +38,7 @@ class OfficesController extends Controller
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15);
         });
-    $data['offices'] = $q->with(['user_detail'=>function($w){$w->select('work_sector_area_id','user_id');}])->where('country_id',session('country'))->paginate(10);
+    $data['offices'] = $q->with(['user_detail'=>function($w){$w->select('work_sector_area_id','user_id');}])->paginate(10);
     $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     return view('offices.list', $data);
@@ -702,7 +702,7 @@ public function branch_edit(Request $request)
     
     return view('offices.list', $data);
       
-    }else if($request->office_city == null){
+    }else if($request->office_city == null && $request->search == null){
       return redirect()->route('offices');
     }     
  
