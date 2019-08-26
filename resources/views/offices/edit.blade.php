@@ -382,7 +382,7 @@
                         <div class="col-md-4 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="branch_city">المدينة </label>
-                             <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" ,>
+                             <select name="branches[branch_city][]"  class="master_input select2" id="office_city" data-placeholder="المدينة" style="width:100%;" >
                           <option value="choose" selected disabled>اختر المدينة</option>
                           @foreach($branch->cities as $city)
                             <option value="{{$city->id}}" 

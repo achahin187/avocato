@@ -34,9 +34,9 @@ class OfficesController extends Controller
    */
   public function index()
   {
-    $q = Users::orderBy('id','DESC');
+    $q = Users::orderBy('id','DESC')->where('country_id',session('country'));
     $q->whereHas('rules', function ($q) {
-          $q->where('rule_id', 15)->where('country_id',session('country'));
+          $q->where('rule_id', 15);
         });
     $data['offices'] = $q->with(['user_detail'=>function($w){$w->select('work_sector_area_id','user_id');}])->where('country_id',session('country'))->paginate(10);
     $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
@@ -446,7 +446,7 @@ class OfficesController extends Controller
         'tele_code'=>'required',
         'office_cellphone' => ($user->cellphone == $request['office_cellphone'])? "":((session('country')==1)?"unique:users,cellphone,,,deleted_at,NULL|digits:10":"unique:users,cellphone,,,deleted_at,NULL|digits:9"),
         'office_email' => ($user->email == $request['office_email'])? "email":"bail|email|unique:users,email,,,deleted_at,NULL",
-        'office_city' => 'required',
+        // 'office_city' => 'required',
         'rep_name' => 'required',
         'rep_birthdate' => 'required|date',
         'rep_nid' => 'required',
@@ -454,12 +454,13 @@ class OfficesController extends Controller
     ]);
 
     if ($validator->fails()) {
+      // dd($validator);
       return redirect()->back()->withErrors($validator)->withInput();
     }
 
     if ($request->hasFile('office_image')) {
       $destinationPath = 'users_images';
-      $office_image_name = $destinationPath . '/' . $request->office_name . time() . rand(111, 999) . '.' . Input::file('office_image')->getClientOriginalExtension();
+      $office_image_name = $destinationPath . '/'. time() . rand(111, 999) . '.' . Input::file('office_image')->getClientOriginalExtension();
       Input::file('office_image')->move($destinationPath, $office_image_name);
     }
 
