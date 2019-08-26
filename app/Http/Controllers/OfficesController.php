@@ -679,25 +679,27 @@ public function branch_edit(Request $request)
     
     if(isset($request->office_city) || isset($request->search)){
        
-        $q = Users::where('country_id',session('country'));
+        $q = Users::orderBy('id','DESC')->where('country_id',session('country'));
+        $q->whereHas('rules', function ($q) {
+              $q->where('rule_id', 15);
+            });
         if($request->has('search'))
         {
-          $q = $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+          $q = $q->where(function($query){
+            where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+          });
         }
     
         if($request->has('office_city'))
         {
-       $q = $q->whereHas('user_detail',function($q) use ($request) {
-        $q->where('work_sector_area_id',$request->office_city);
-    }); 
+              $q = $q->whereHas('user_detail',function($q) use ($request) {
+                $q->where('work_sector_area_id',$request->office_city);
+            }); 
 
-      $q=$q->orderBy('id','DESC');
-  }   
-     $q = $q->whereHas('rules', function ($query) {
-      $query->where('rules.id', 15);
-      $query->where('rules.parent_id','!=',5);
-    })->with('rules')->paginate(10);
-     $data['offices'] = $q;
+              
+          }   
+     
+     $data['offices'] = $q->paginate(10);
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     dd($data['offices']);
