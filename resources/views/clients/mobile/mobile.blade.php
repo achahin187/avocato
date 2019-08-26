@@ -36,7 +36,7 @@
   <div class="">
     <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
       <div class="clearfix"></div>
-      <div class="full-table">
+      <div class="full-table hide-datatable-pagination">
         <div class="remodal-bg">
           <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
             
@@ -45,7 +45,20 @@
               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
               <div>
                 <h3 id="modal1Title">فلتر</h3>
-
+                {{-- Search --}}
+                <div class="col-md-6">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="ID_No">بحث بالاسم اوالكود </label>
+                    <div class="bootstrap-timepicker">
+                      <input name="search" class=" master_input" type="text" placeholder="بحث بالاسم اوالكود" id="search" value="{{ old('search') }}">
+                    </div>
+          
+                    @if ($errors->has('start_date'))
+                      <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
+                    @endif
+                  {{--  Start date  --}}
+                  </div>
+                </div>
                 {{-- Start date --}}
                 <div class="col-md-6">
                   <div class="master_field">

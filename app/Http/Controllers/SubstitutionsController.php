@@ -13,6 +13,8 @@ use App\Case_Techinical_Report_Document;
 use App\Case_Techinical_Report;
 use App\Users;
 use Carbon\carbon;
+use Excel;
+use App\Exports\SubstitutionsExport;
 class SubstitutionsController extends Controller
 {
     public function index()
@@ -220,5 +222,27 @@ class SubstitutionsController extends Controller
           }
         } 
         return redirect()->route('substitutions');
+    }
+
+    public function excel()
+    {
+        $filepath = 'public/excel/';
+        $PathForJson = 'storage/excel/';
+        $filename = 'substitutions' . time() . '.xlsx';
+        if (isset($_GET['ids'])) {
+            $ids = $_GET['ids'];
+
+            Excel::store(new SubstitutionsExport($ids), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } elseif ($_GET['filters'] != '') {
+            $filters = json_decode($_GET['filters']);
+            
+            Excel::store((new SubstitutionsExport($filters)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        } else {
+            
+            Excel::store((new SubstitutionsExport(null)), $filepath . $filename);
+            return response()->json($PathForJson . $filename);
+        }
     }
 }

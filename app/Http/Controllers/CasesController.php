@@ -31,6 +31,9 @@ use App\Case_Techinical_Report;
 use App\Tasks;
 use App\Exports\CasesExport;
 use App\Case_Techinical_Report_Document;
+use App\Entity_Localizations;
+use App\Specializations;
+use App\SyndicateLevels;
 // use Session;
 
 
@@ -63,24 +66,24 @@ class CasesController extends Controller
      */
     public function create()
     {
-        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
-        $cases_record_types = Case_Record_Type::all();
-        foreach ($cases_record_types as $value) {
-            $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
+        $data['cases_record_types'] = Case_Record_Type::all();
+        foreach ($data['cases_record_types'] as $value) {
+            $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
         }
-        $cases_types = Cases_Types::all();
-        $courts = Courts::where('country_id',session('country'))->get();
-        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
-        $countries = Geo_Countries::all();
-        $cities = Geo_Cities::where('country_id',session('country'))->get();
-        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['cases_types'] = Cases_Types::all();
+        $data['courts'] = Courts::where('country_id',session('country'))->get();
+        $data['governorates'] = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['countries'] = Geo_Countries::all();
+        $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
+        $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
         }])->get();
-        foreach ($lawyers as $detail) {
+        foreach ($data['lawyers'] as $detail) {
 
             if ($detail->user_detail()->count() != 0) {
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
@@ -90,13 +93,17 @@ class CasesController extends Controller
                 $detail['nationality'] = '';
             }
         }
-        $roles = Case_Client_Role::all();
+        $data['roles'] = Case_Client_Role::all();
 
-        foreach ($roles as $role) {
+        foreach ($data['roles'] as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
         }
-        return view('cases.case_add')->with('clients', $clients)->with('cases_record_types', $cases_record_types)->with('cases_types', $cases_types)->with(['courts' => $courts, 'governorates' => $governorates, 'countries' => $countries, 'cities' => $cities, 'lawyers' => $lawyers, 'roles' => $roles]);
+        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+        
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
+        return view('cases.case_add' , $data);
     }
 
     /**
@@ -476,6 +483,14 @@ class CasesController extends Controller
 
                 $query->where('mobile', $request->lawyer_tel);
             }
+            if ($request->filled('work_sector')) {
+                $q->whereHas('specializations', function ($q) use ($request) {
+                  $q->whereIn('specializations.id',$request->work_sector);
+        
+                });
+              }
+        
+             
 
         })->with(['user_detail' => function ($query) use ($request) {
 
@@ -495,6 +510,18 @@ class CasesController extends Controller
 
                 $query->where('work_sector', $request->lawyer_work_sector);
             }
+            if ($request->has('nationalities') && $request->nationalities != 0) {
+               
+                  $q->where('nationality_id', $request->nationalities);
+        
+                
+              }
+              if ($request->filled('syndicate_level_id')) {
+                
+                  $q->where('syndicate_level_id',$request->syndicate_level_id);
+        
+               
+              }
 
 
             $query->orderby('join_date', 'desc');
@@ -522,28 +549,31 @@ class CasesController extends Controller
     }
     public function filter_create($lawyers)
     {
-        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
-        $cases_record_types = Case_Record_Type::all();
-        foreach ($cases_record_types as $value) {
-            $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
+        $data['cases_record_types'] = Case_Record_Type::all();
+        foreach ($data['cases_record_types'] as $value) {
+            $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
         }
-        $cases_types = Cases_Types::where('country_id',session('country'))->get();
-        $courts = Courts::where('country_id',session('country'))->get();
-        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
-        $countries = Geo_Countries::where('country_id',session('country'))->get();
-        $cities = Geo_Cities::where('country_id',session('country'))->get();
-         
-        
-         
-        $roles = Case_Client_Role::all();
+        $data['cases_types'] = Cases_Types::all();
+        $data['courts'] = Courts::where('country_id',session('country'))->get();
+        $data['governorates'] = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['countries'] = Geo_Countries::all();
+        $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
+        $data['lawyers'] = $lawyers;
+        $data['roles'] = Case_Client_Role::all();
 
-        foreach ($roles as $role) {
+        foreach ($data['roles'] as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
         }
-        return view('cases.case_add')->with('clients', $clients)->with('cases_record_types', $cases_record_types)->with('cases_types', $cases_types)->with(['courts' => $courts, 'governorates' => $governorates, 'countries' => $countries, 'cities' => $cities, 'lawyers' => $lawyers, 'roles' => $roles]);
+        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+        
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
+        return view('cases.case_add' , $data);
+        
     }
     public function change_case_state($id)
     {

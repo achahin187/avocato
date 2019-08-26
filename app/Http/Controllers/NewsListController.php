@@ -139,11 +139,14 @@ class NewsListController extends Controller
         } else {
             $published_at = null;
         }
+        $news = new News;
 
         // upload image to storage/app/public
         if ($request->newsImg) {
             $img = $request->newsImg;
-            $newImg = time() . $img->getClientOriginalName(); // current time + original image name
+            $news->photo_name = $img->getClientOriginalName();
+            $news->extension = $img->getClientOriginalExtension();
+            $newImg = time(). rand(111, 999).'.'.$img->getClientOriginalExtension(); // current time + original image name
             $img->move('storage/app/public/news', $newImg);      // move to /storage/app/public
             $imgPath = 'storage/app/public/news/' . $newImg;       // new path: /storage/app/public/imageName
         } else {
@@ -160,7 +163,7 @@ class NewsListController extends Controller
         $current_user = Auth::user()->id;
 
         try {
-            $news = new News;
+            
             $news->name = $request->newsName;
             $news->body = $request->newsContent;
             $news->photo = $imgPath;
@@ -250,7 +253,9 @@ class NewsListController extends Controller
         // upload image to storage/app/public
         if ($request->newsImg) {
             $img = $request->newsImg;
-            $newImg = time() . $img->getClientOriginalName();
+            $news->photo_name = $img->getClientOriginalName();
+            $news->extension = $img->getClientOriginalExtension();
+            $newImg = time(). rand(111, 999).'.'.$img->getClientOriginalExtension();
             $img->move('storage/app/public', $newImg);
             $imgPath = 'storage/app/public/' . $newImg;
         } else {
@@ -365,5 +370,43 @@ class NewsListController extends Controller
         }
 
         return response()->json($response);
+    }
+
+    public function rename_files()
+    {
+        $all = News::all();
+        foreach($all as $key => $news)
+        {
+            if($news->photo != null)
+            {
+                $extension = substr($news->photo, strpos($news->photo, ".") + 1);
+            // dd($extension);
+            $file = $news->file;
+
+            $destinationPath = 'storage/app/public';
+            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999).'.'.$extension;
+            // try{
+                rename(public_path($news->photo), public_path($fileNameToStore));
+                $all[$key]['photo'] = $fileNameToStore;
+                $all[$key]['extension'] = $extension;
+            // }
+            // catch(\exception $extension)
+            // {
+            //     $all[$key]['photo'] = $file;
+            // }
+            
+            // $all[$key]->update([
+            //     'file' => $fileNameToStore
+            // ]);
+            
+            
+            $all[$key]->save();
+
+            }
+            
+            // Storage::move('hodor/file1.jpg', 'holdthedoor/file2.jpg');
+
+        }
+        
     }
 }

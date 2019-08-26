@@ -792,6 +792,12 @@ class IndividualsController extends Controller
         if ($request->package_type) {
             $users = $users->whereIn('package_type_id', $request->package_type);
         }
+        if(array_key_exists('search',$request->all()))
+            {
+                // dd($request->all());
+                
+                $users =$users->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+            }
 
         // check on start and end dates
         if ($startfrom && $startto && $endfrom && $endto) {

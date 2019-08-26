@@ -172,9 +172,11 @@
                             <div class="master_field">
                               <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
                               <select class="master_input select2 required" id="investigation_type" name="investigation_type" style="width:100%;" required>
-                                @foreach($cases_record_types as $type)
-                                <option value="{{$type->id}}">{{$type->name_ar}}</option>
-                                @endforeach
+      
+                                    @foreach($cases_record_types as $type)
+                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                    @endforeach
+                                          
                               </select><span class="master_message color--fadegreen">
                                 @if ($errors->has('investigation_type'))
                                     {{ $errors->first('investigation_type')}}
@@ -408,21 +410,36 @@
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
-                                <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality" name="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
-                              </div>
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="nationality">الجنسيه</label>
+                              <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
+                                <option value="0" selected="selected">الكل</option>
+                                @foreach($nationalities as $nationality)
+                                <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
+                                @endforeach
+                              </select><span class="master_message color--fadegreen"></span>
+                            </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
-                                <input class="master_input" type="text" placeholder="التخصص" id="lawyer_work_sector" name="lawyer_work_sector" ><span class="master_message color--fadegreen">message content</span>
-                              </div>
+                            <div class="master_field">
+                              <label class="master_label" for="work_sector">التخصص</label>
+                            <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                            <option value="0">choose Speification ..</option>
+                                      @foreach($work_sectors as $work_sector)
+                                      <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                                      @endforeach
+                                    </select>
+                            </div>
                             </div>
                             <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_degree">درجة التقاضي</label>
-                                <input class="master_input" type="text" placeholder="درجه التقاضى" id="lawyer_level" name="lawyer_level"><span class="master_message color--fadegreen">message content</span>
+                            <div class="master_field">
+                                <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
+                                   <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
+                                      <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
+                                      @foreach($syndicate_levels as $syndicate)
+                                      <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
+                                      @endforeach
+                                   </select>
                               </div>
                             </div>
                             <div class="col-md-6">
@@ -471,9 +488,17 @@
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->nationality}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
+                            <td><span class="cellcontent">
+                              @isset($lawyer->user_detail->nationality->id)
+                              @foreach($nationalities as $nationality)
+                              @if($lawyer->user_detail->nationality->id == $nationality->item_id)
+                              {{$nationality->value}}
+                              @endif
+                              @endforeach
+                              @endisset
+                            </span></td>
+                            <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
@@ -723,7 +748,7 @@
                 }
                
               </script>
-              <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+              <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
               <script type="text/javascript">
                 var form = $("#horizontal-pill-steps").show();
@@ -823,9 +848,9 @@
   filter_data['lawyer_code']=$('#lawyer_code').val();
   filter_data['lawyer_name']=$('#lawyer_name').val();
   filter_data['lawyer_national_id']=$('#lawyer_national_id').val();
-  filter_data['lawyer_nationality']=$('#lawyer_nationality').val();
-  filter_data['lawyer_work_sector']=$('#lawyer_work_sector').val();
-  filter_data['lawyer_level']=$('#lawyer_level').val();
+  filter_data['nationalities']=$('#nationality').val();
+  filter_data['work_sector']=$('#lawyer_type').val();
+  filter_data['syndicate_level_id']=$('#syndicate_level_id').val();
   filter_data['lawyer_tel']=$('#lawyer_tel').val();
   filter_data['start_date']=$('#start_date').val();
 // alert(data['lawyer_code']);

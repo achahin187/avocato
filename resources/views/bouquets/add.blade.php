@@ -54,8 +54,12 @@
                       <div class="col-md-9 col-sm-9 col-xs-8">
                         <div class="master_field">
                           <label class="master_label" for="package_name">اسم الباقة</label>
-                          <input class="master_input" type="text" placeholder="اسم الباقة" id="package_name" name="name">
-                          <span class="master_message color--fadegreen">message</span>
+                          <input class="master_input" type="text" placeholder="اسم الباقة" id="package_name" name="name" required>
+                          <span class="master_message color--fadegreen">
+                          @if ($errors->has('name'))
+                          {{ $errors->first('name')}}
+                          @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-12 col-sm-12 col-xs-12">
@@ -127,11 +131,15 @@
                       <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="master_field">
                           <label class="master_label mandatory" for="payment">دفع القسط</label>
-                          <select class="master_input select2" id="payment" multiple="multiple" data-placeholder="" style="width:100%" name="payment_method[]">
+                          <select class="master_input select2" id="payment" multiple="multiple" data-placeholder="" style="width:100%" name="payment_method[]" required>
                             @foreach($payment_methods as $method)
                             <option value="{{$method['id']}}">{{$method['name']}}</option>
                             @endforeach
-                          </select><span class="master_message color--fadegreen">message content</span>
+                          </select><span class="master_message color--fadegreen">
+                          @if ($errors->has('payment_method'))
+                          {{ $errors->first('payment_method')}}
+                          @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12">
@@ -140,6 +148,11 @@
                         <label for="client_2">شركة</label>
                         <input class="icon" type="radio" name="bouquet_type" value="0" id="client_1" checked="true" name="bouquet_type">
                         <label for="client_1">عميل فرد</label>
+                        <span class="master_message color--fadegreen">
+                          @if ($errors->has('bouquet_type'))
+                          {{ $errors->first('bouquet_type')}}
+                          @endif
+                          </span>
                       </div>
                       <div class="clearfix"></div>
                       <div class="col-md-12 col-sm-12 col-xs-12" id="cost_individual">
@@ -201,7 +214,12 @@
                     <div class="col-md-10 col-sm-9 col-xs-9">
                       <div class="master_field">
                         <label class="master_label mandatory" for="package_deac">وصف الباقة</label>
-                        <textarea class="master_input" name="description" id="package_deac" placeholder="وصف الباقة" maxlength="150"></textarea><span class="master_message color--fadegreen">message</span>
+                        <textarea class="master_input" name="description" required id="package_deac" placeholder="وصف الباقة" maxlength="150"></textarea>
+                        <span class="master_message color--fadegreen">
+                          @if ($errors->has('description'))
+                          {{ $errors->first('description')}}
+                          @endif
+                          </span>
                       </div>
                     </div>
                     <div class="clearfix"></div><br>

@@ -42,18 +42,18 @@ class LawyersController extends Controller
     //         return redirect()->route('choose.country');
     //     }
         // return Users::withTrashed()->restore();
-    $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
-      $q->where('rule_id', 5);
+    $data['lawyers'] = Users::whereNull('deleted_at')->where('country_id',session('country'))->whereHas('rules', function ($q) {
+      $q->where('parent_id', 5);
     })->orderBy('created_at','desc')->paginate(10);
 
-    foreach($data['lawyers'] as $key=>$lawyer)
-    {
-      if($lawyer->IsOffice())
-      {
-        unset($data['lawyers'][$key]);
-      }
+    // foreach($data['lawyers'] as $key=>$lawyer)
+    // {
+    //   if($lawyer->IsOffice())
+    //   {
+    //     unset($data['lawyers'][$key]);
+    //   }
 
-    }
+    // }
       
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     $data['types'] = Rules::where('parent_id', 5)->get();
@@ -140,19 +140,14 @@ class LawyersController extends Controller
      */
     
       $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+        if($request->has('search'))
+        {
+          $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+        }
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
-      if ($request->has('types') && $request->types != 0) {
-        $q->whereHas('rules', function ($q) use ($request) {
-          $q->where('rule_id', $request->types);
-
-        });
-      } else {
-        $q->whereHas('rules', function ($q) {
-          $q->where('rule_id', 5);
-        });
-      }
+     
       if ($request->has('nationalities') && $request->nationalities != 0) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('nationality_id', $request->nationalities);
@@ -211,10 +206,21 @@ class LawyersController extends Controller
 
         });
       }
+     
 
 
 
+    })->whereHas('rules',function($q)use($request){
+      if ($request->has('types') && $request->types != 0) {
+       
+          $q->where('rule_id', $request->types);
 
+        
+      } else {
+       
+          $q->where('parent_id', 5);
+        
+      }
     })->paginate(10);
     
     $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
@@ -407,6 +413,7 @@ class LawyersController extends Controller
     
     // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
+    // dd($data['rates']);
     return view('lawyers.lawyers_show', $data);
   }
 
@@ -666,6 +673,15 @@ class LawyersController extends Controller
     ]);
     // dd($rate);
     return redirect()->back();
+  }
+  public function rate_edit_notes(Request $request)
+  {
+    User_Ratings::where('id',$request->rate_id)->update([
+        'rate_id'=>$request->rate,
+        'notes'=>$request->notes
+    ]);
+   
+    return redirect()->back()->with(['success'=>'rate updated successfully']);
   }
   public function rate_delete($id)
   {

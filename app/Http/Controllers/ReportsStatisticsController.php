@@ -27,6 +27,8 @@ use App\Exports\ReportsCasetypeExport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Rules;
+use App\Specializations;
+use App\SyndicateLevels;
 
 class ReportsStatisticsController extends Controller
 {
@@ -125,6 +127,8 @@ class ReportsStatisticsController extends Controller
         $data['tasks_']     = Task_Types::all();
         $data['caseTypes']  = Cases_Types::all();
         $data['lawyer_types'] = Rules::where('parent_id',5)->get();
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
         /** Countable and percentage data */
         // list data
         $data['count_clients'] = Helper::getUsersBasedOnRules([7, 8, 9, 10])->count();  // count all clients
@@ -206,11 +210,11 @@ class ReportsStatisticsController extends Controller
             $title  = $filters['title'];
             $type   = $filters['type'];
 
-            if ( isset($filters['sector']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($sector) { 
-                $q->where('work_sector', $sector); }); 
+            if ( isset($filters['sector']) ) { $data['lawyers'] = $data['lawyers']->whereHas('specializations', function($q) use($sector) { 
+                $q->where('specialization_id', $sector); }); 
             }
             if ( isset($filters['level']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($level) { 
-                $q->where('litigation_level',$level); }); 
+                $q->where('syndicate_level_id',$level); }); 
             }
             if ( isset($filters['nationality']) ) { $data['lawyers'] = $data['lawyers']->whereHas('user_detail', function($q) use($nat) { 
                 $q->where('nationality_id', $nat); }); 

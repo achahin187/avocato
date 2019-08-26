@@ -339,9 +339,9 @@
                           <label class="master_label mandatory" for="lawyer_spec"> تخصص المحامي</label>
                           <select name="workSector" class="master_input select2" id="lawyer_spec" data-placeholder="التخصص" style="width:100%;" ,>
                               <option value="-1" selected disabled hidden>اختر التخصص</option>
-                            @if ( isset($lawyers_) && !empty($lawyers_) )
-                              @foreach ($lawyers_ as $lawyer)
-                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'غير معرف' }}</option>
+                            @if ( isset($work_sectors) && !empty($work_sectors) )
+                              @foreach ($work_sectors as $lawyer)
+                                <option value="{{ $lawyer->id }}">{{ $lawyer->name }}</option>
                               @endforeach
                             @endif
                           </select>
@@ -352,9 +352,9 @@
                           <label class="master_label mandatory" for="lawyer_degree_in">درجة التقاضي</label>
                           <select name="level" class="master_input select2" id="lawyer_degree_in" data-placeholder="درجة التقاضي" style="width:100%;" ,>
                               <option value="-1" selected disabled hidden>اختر درجة التقاضي</option>
-                            @if ( isset($lawyers_) && !empty($lawyers_) )
-                              @foreach ($lawyers_ as $lawyer)
-                                <option value="{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 0 }}">{{ ($lawyer->user_detail) ? $lawyer->user_detail->litigation_level : 'غير معرف' }}</option>
+                            @if ( isset($syndicate_levels) && !empty($syndicate_levels) )
+                              @foreach ($syndicate_levels as $lawyer)
+                                <option value="{{ $lawyer->id }}">{{ $lawyer->name }}</option>
                               @endforeach
                             @endif
                           </select>
@@ -448,8 +448,8 @@
                     <tr data-lawyer-id="{{ $lawyer->id }}"> 
                       <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
                       <td><span class="cellcontent">{{ ($lawyer->full_name) ? $lawyer->full_name : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? $lawyer->user_detail->work_sector : 'لا يوجد' }}</span></td>
-                      <td><span class="cellcontent">{{ ($lawyer->user_detail) ? ($lawyer->user_detail->litigation_level ? $lawyer->user_detail->litigation_level :'لا يوجد') : 'لا يوجد' }}</span></td>
+                      <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
+                      <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
                       <td><span class="cellcontent">{{ ($lawyer->user_detail) ? Helper::localizations('geo_countries', 'nationality', $lawyer->user_detail->nationality_id) : 'لا يوجد' }}</span></td>
                       {{-- <td><span class="cellcontent">{{ (isset($lawyer->user_detail)) ? $lawyer->user_detail->job_title : 'لا يوجد' }}</span></td> --}}
                       <td><span class="cellcontent"> @if(isset($lawyer->rules)) @foreach($lawyer->rules as $rule) {{$rule->name_ar}} @if(!($loop->last)) <b>-</b> @endif @endforeach  @endif</span></td>

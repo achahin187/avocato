@@ -469,7 +469,7 @@
                                 <td><span class="cellcontent">
 
                                 
-                                <a href="#edit_evaluation_modal{{$rate->pivot->id}}" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
+                                <a href="#" onclick="edit_note('edit_evaluation_modal{{$rate->pivot->id}}')" class= "action-btn bgcolor--fadegreen color--white" id="edit_rating" data-item-id="{{$rate->pivot->id}}">
 
                                  <i class = "fa fa-pencil"></i></a>
                                 <a  href="#"  class= "btn-warning-cancel-rate action-btn bgcolor--fadebrown color--white ">
@@ -478,13 +478,13 @@
 
                                 
                               </tr>
-                              <div class="remodal" data-remodal-id="edit_evaluation_modal{{$rate->pivot->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
+                              <div class="remodal" data-remodal-id="edit_evaluation_modal{{$rate->pivot->id}}" id="edit_evaluation_modal{{$rate->pivot->id}}" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
                                   <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                   <form role="form" action="{{route('notes_edit_admin',$lawyer->id)}}" method="post" accept-charset="utf-8">
                                      {{csrf_field()}}
                                     <div>
                                       <div class="row">
-                                      <input  type="number" value="{{$rate->pivot->id}}" hidden>
+                                      <input  type="number" value="{{$rate->pivot->id}}" hidden name="rate_id" required>
                                         <div class="col-xs-12">
                                           <h3>تعديل التقييم</h3>
                                           <div class="col-md-12 col-sm-12 col-xs-12">
@@ -493,7 +493,7 @@
                                               <select name="rate" class="master_input select2" id="backend_evaluation_lawyer_evaluation" style="width:100%;" required>
                                                 <option selected disabled >اختر التقييم</option>
                                                 @foreach($rates as $rateee)
-                                                <option value="{{$rateee->item_id}}" @if($rate->pivot->rate_id == $rateee->item_id) selected @endif>{{$rate->value}}</option>
+                                                <option value="{{$rateee->item_id}}" @if($rate->pivot->rate_id == $rateee->item_id) selected @endif>{{$rateee->value}}</option>
                                                 @endforeach
                                               </select><span class="master_message color--fadegreen">
                                                 @if ($errors->has('rate'))
@@ -574,6 +574,10 @@
 @endsection
 @section('js')
 <script>
+  function edit_note(id)
+  {
+    $('#'+id).remodal().open();
+  }
   $(document).ready(function(){
 
     $('.btn-warning-cancel').click(function(){

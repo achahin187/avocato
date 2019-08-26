@@ -83,20 +83,31 @@ class MobileController extends Controller
         if ($from && $to) {
             $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
                 $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
+                
             });
         } else if ($from && !$to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
+            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('start_date', '>=', $from);
+                
             });
         } else if (!$from && $to) {
-            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to) {
+            $filter = Users::users(7)->whereHas('subscription', function ($query) use ($from, $to ) {
                 $query->where('end_date', '<=', $to);
+                
             });
         } else {
             $filter = Users::users(7);
         }
 
-
+       
+            if(array_key_exists('search',$request->all()))
+            {
+                // dd($request->all());
+                
+                $filter=$filter->distinct()
+                ->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+            }
+        
         switch ($request->activate) {
             case "1":
                 $filter = $filter->paginate(10);
