@@ -695,7 +695,8 @@ public function branch_edit(Request $request)
   }   
      
      $data['offices'] = $q->whereHas('rules', function ($query) {
-      $query->where('rule_id', 15);
+      $query->where('id', 15);
+      $query->where('parent_id','!=',5);
     })->with('rules')->paginate(10);
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
