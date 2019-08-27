@@ -443,7 +443,7 @@ class CompaniesController extends Controller
         $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$company['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
         $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$company['bouquets'][0]['id'])->get() : [];
             
-        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_mehtods']));
+        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_methods']));
     }
 
     /**
