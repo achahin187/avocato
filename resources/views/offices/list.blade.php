@@ -155,7 +155,7 @@ $(document).on('confirmation', '#two', function () {
                               <td><span class="cellcontent">{{$office->name}}</span></td>
                               <td><span class="cellcontent">{{$office->address}}</span></td>
                               <td><span class="cellcontent">{{$office->mobile}}</span></td>
-                              <td><span class="cellcontent">{{$office->is_active ? 'مفعل':'غير مفعل'}}</td>
+                              <td><a href="{{route('lawyers_activate',$office->id)}}"><span class="cellcontent">@if($office->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</a></span></td>
                               <td><span class="cellcontent"><a href= {{route('offices_show',$office->id)}} ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= {{route('offices_edit',$office->id)}} ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                             </tr>
                           @endforeach
