@@ -92,7 +92,7 @@ $(document).on('confirmation', '#two', function () {
                               <div class="master_field">
                                 <label class="master_label mandatory" for="ID_No">بحث  </label>
                                 <div class="bootstrap-timepicker">
-                                  <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او الرقم القومي او الموبايل" id="search" value="{{ old('search') }}">
+                                  <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او رقم الهاتف" id="search" value="{{ old('search') }}">
                                 </div>
                       
                                 @if ($errors->has('start_date'))
