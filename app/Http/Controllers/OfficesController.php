@@ -682,20 +682,22 @@ public function branch_edit(Request $request)
          $data['offices'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
           if($request->filled('search'))
           {
-            $q = $q->where(function($query) use ($request){
-              $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
-            });
+            $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+            
           }
         
        
     
           
-        })->whereHas('user_detail',function($q) use ($request) {
-          if($request->filled('office_city'))
-          { 
+        });
+        if($request->filled('office_city'))
+          {
+            $data['offices']=$data['offices']->whereHas('user_detail',function($q) use ($request) {
+           
               $q->where('work_sector_area_id',$request->office_city);   
-          }
-        })->whereHas('rules', function ($query) {
+          });
+        }
+        $data['offices'] = $data['offices']->whereHas('rules', function ($query) {
           $query->where('rule_id', 15);
         })->paginate(10);
      
