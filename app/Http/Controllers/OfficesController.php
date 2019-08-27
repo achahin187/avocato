@@ -699,7 +699,8 @@ public function branch_edit(Request $request)
         }
         $data['offices'] = $data['offices']->whereHas('rules', function ($query) {
           $query->where('rule_id', 15);
-        })->paginate(10);
+        });
+        dd($data['offices']->toSql());
      
     
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
