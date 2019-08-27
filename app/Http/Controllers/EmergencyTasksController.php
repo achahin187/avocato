@@ -365,7 +365,7 @@ class EmergencyTasksController extends Controller
             
             $query->whereHas('client',function($q) use ($request){
                 
-                    $q->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+                    $q->where('full_name','like', '%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
                
             });
       
