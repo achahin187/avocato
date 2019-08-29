@@ -99,10 +99,12 @@ class IndividualsCompaniesController extends Controller
             'activate'      => 'required',
             'start_date'    => 'required',
             'end_date'      => 'required',
-            'package_type_id'=> 'required',
-            'duration'      => 'required',
-            'value'         => 'required',
-            'number_of_payments' => 'required'
+            'bouquet_id' => 'required',
+            'duration' => 'required',
+            'value' => 'required',
+            'number_of_installments' => 'required',
+            'payment_method'      => 'required',
+            // 'price_method'      => 'required',
         ]);
         //  dd($validator);
         if ($validator->fails()) {
