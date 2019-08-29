@@ -974,7 +974,7 @@
                             <td><span class="cellcontent">{{ ($ins->start_date) ? $ins->start_date->format('d-m-Y') : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">{{ ($ins->price) ? $ins->price : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">
-                              @if ($ins->is_paid)
+                              @if ($ins->payment_status)
                                 <label class= "data-label bgcolor--fadegreen color--white  ">تم</label>
                               @endif  
                             </span></td>

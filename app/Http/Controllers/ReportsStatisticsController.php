@@ -266,39 +266,33 @@ class ReportsStatisticsController extends Controller
         // Installments
         if ( isset( $filters['code'] ) || isset( $filters['startDate'] ) || isset( $filters['activate1'] ) ) {
             // dd([$filters['code']  , $filters['startDate'] , $filters['activate1']]);
-            $data['installments'] = new Installment;
+            $data['installments'] = new UserBouquetPayment;
 
             if ( isset($filters['code']) ) {
-                $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
-            })->where('subscription_id', $filters['code']);
+                $data['installments'] = $data['installments']->whereHas('user', function($query) {
+            })->where('code', $filters['code']);
             }
 
             if ( isset($filters['startDate']) ) {
                 $startDate = date('Y-m-d', strtotime($filters['startDate']));
-                $data['installments'] = $data['installments']->whereHas('subscription', function($q) use($startDate) {
+                $data['installments'] = $data['installments']->where(function($q) use($startDate) {
                     $q->where('start_date', '>=', $startDate);
                 });
             }
 
             if ( isset($filters['activate1']) ) {
-                if($filters['activate1'] == 1) { 
-                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
-            })->get();
-                }
+               
                 if($filters['activate1'] == 2) {
-                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
-            })->where('is_paid', 1)->get();
+                    $data['installments'] = $data['installments']->where('payment_status', 1)->get();
                 }
                 if($filters['activate1'] == 3) {
-                    $data['installments'] = $data['installments']->whereHas('subscription', function($query) {
-            })->where('is_paid', 0)->get();
-                }
+                    $data['installments'] = $data['installments']->where('payment_status', 0)->get();
+                
             }
 
         } else {
             $data['installments'] = //Installment::all();
-            Installment::whereHas('subscription', function($query) {
-            })->get();
+            UserBouquetPayment::all();
         }
 
         //for export excel after filter 
