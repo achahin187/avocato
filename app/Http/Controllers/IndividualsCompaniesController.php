@@ -104,6 +104,13 @@ class IndividualsCompaniesController extends Controller
             'number_of_payments' => 'required'
         ]);
 
+        if ($validator->fails()) {
+
+            return redirect()->back()
+              ->withErrors($validator)
+              ->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+          }
+
         // upload image to storage/app/public 
         if($request->logo) {
             $img = $request->logo;
