@@ -80,7 +80,8 @@ class IndividualsCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        
+        $validator = Validator::make($request->all(), [
             'company_code'  => 'required',
             'company_name'  => 'required',
             'ind_name'      => 'required',
