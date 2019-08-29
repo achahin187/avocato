@@ -29,6 +29,7 @@ use Illuminate\Validation\Rule;
 use App\Rules;
 use App\Specializations;
 use App\SyndicateLevels;
+use App\UserBouquetPayment;
 
 class ReportsStatisticsController extends Controller
 {
@@ -122,7 +123,7 @@ class ReportsStatisticsController extends Controller
         $data['lawyers_'] = Helper::getUsersBasedOnRules([5])->where('is_active', 1);
         $data['companies_'] = Users::users(9)->get();
         $data['packages_']  = Package_Types::all();
-        $data['installments_'] = Installment::select('subscription_id')->distinct()->get();
+        $data['installments_'] = UserBouquetPayment::all();
         $data['courts_']    = Courts::all();
         $data['tasks_']     = Task_Types::all();
         $data['caseTypes']  = Cases_Types::all();

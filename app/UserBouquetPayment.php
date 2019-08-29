@@ -16,4 +16,14 @@ class UserBouquetPayment extends Model
     {
         return $this->belongsTo('App\BouquetPaymentMethod','payment_method');
     }
+
+    public function bouquet()
+    {
+        return $this->belongsTo('App\Bouquet','bouquet_id');
+    }
+
+    public function User()
+    {
+        return $this->belongsTo('App\Users','user_id');
+    }
 }
