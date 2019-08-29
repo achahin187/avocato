@@ -105,7 +105,7 @@ class IndividualsCompaniesController extends Controller
         ]);
 
         if ($validator->fails()) {
-
+            dd($validator);
             return redirect()->back()
               ->withErrors($validator)
               ->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
@@ -149,6 +149,7 @@ class IndividualsCompaniesController extends Controller
             $user->country_id=session('country');
             $user->save();
         } catch(Exception $ex) {
+            dd($ex);
             $user->forcedelete();
             Session::flash('warning', $ex);
             return redirect()->back()->withInput();
@@ -159,6 +160,7 @@ class IndividualsCompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
+            dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -173,6 +175,7 @@ class IndividualsCompaniesController extends Controller
 
             Users_Rules::insert($data);
         } catch(Exception $ex) {
+            dd($ex . '1');
             Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
@@ -186,6 +189,7 @@ class IndividualsCompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
+            dd($ex . '2');
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -209,6 +213,7 @@ class IndividualsCompaniesController extends Controller
             if(isset($request->discount_percentage)){$user_details->discount_percentage   = $request->discount_percentage;}
             $user_details->save();
         } catch(Exception $ex) {
+            dd($ex . '3');
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -232,6 +237,7 @@ class IndividualsCompaniesController extends Controller
             $subscription->price_method_id = $request->price_method;
             $subscription->save();
         } catch (\Exception $ex) {
+            dd($ex . '4');
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -335,7 +341,7 @@ class IndividualsCompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            
+            dd($ex . '5');
             $user->forcedelete();
             $user->rules->forcedelete();
             $client_passwords->forcedelete();
@@ -363,7 +369,7 @@ class IndividualsCompaniesController extends Controller
 
           } catch (\Exception $e) {
 
-
+            dd($ex . '6');
           }
 
         // redirect with success
