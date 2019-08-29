@@ -225,7 +225,7 @@ class IndividualsCompaniesController extends Controller
         }
 
         // push into subscriptions
-        try {
+        // try {
             $subscription = new UserBouquet;
             $subscription->user_id = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
@@ -239,18 +239,18 @@ class IndividualsCompaniesController extends Controller
             $subscription->is_active = 1;
             $subscription->price_method_id = $request->price_method;
             $subscription->save();
-        } catch (\Exception $ex) {
-            dd($ex . '4');
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        // } catch (\Exception $ex) {
+        //     dd($ex . '4');
+        //     $user->forcedelete();
+        //     $user_rules->forcedelete();
+        //     $client_passwords->forcedelete();
+        //     $user_details->forcedelete();
+        //     Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
 
         // push into installments
-        try {
+        // try {
             if (isset($request->payment) && !empty($request->payment)) {
                 if ($request->number_of_installments != count($request->payment)) {
                     $user->forcedelete();
@@ -343,17 +343,17 @@ class IndividualsCompaniesController extends Controller
                     }
                 }
             }
-        } catch(Exception $ex) {
-            dd($ex . '5');
-            $user->forcedelete();
-            $user->rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            $subscription->forcedelete();
+        // } catch(Exception $ex) {
+        //     dd($ex . '5');
+        //     $user->forcedelete();
+        //     $user->rules->forcedelete();
+        //     $client_passwords->forcedelete();
+        //     $user_details->forcedelete();
+        //     $subscription->forcedelete();
 
-            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        //     Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
          
         try {
 
