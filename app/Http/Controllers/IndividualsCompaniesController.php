@@ -129,7 +129,7 @@ class IndividualsCompaniesController extends Controller
 
         // INSERT COMPANY DATA
         // push into users
-        try {
+        // try {
             $user = new Users();
             $user->parent_id = $request->company_code;
             $user->name      = $request->ind_name;
@@ -148,58 +148,58 @@ class IndividualsCompaniesController extends Controller
             $user->created_by= Auth::user()->id;
             $user->country_id=session('country');
             $user->save();
-        } catch(Exception $ex) {
-            dd($ex);
-            $user->forcedelete();
-            Session::flash('warning', $ex);
-            return redirect()->back()->withInput();
-        }
+        // } catch(Exception $ex) {
+        //     dd($ex);
+        //     $user->forcedelete();
+        //     Session::flash('warning', $ex);
+        //     return redirect()->back()->withInput();
+        // }
 
         // Add Code to company
-        try {
+        // try {
             $user->code = $user->id;
             $user->save();
-        } catch (Exception $ex) {
-            dd($ex);
-            $user->forcedelete();
-            Session::flash('warning', 'خطأ في كود الشركة');
-            return redirect()->back()->withInput();
-        }
+        // } catch (Exception $ex) {
+        //     dd($ex);
+        //     $user->forcedelete();
+        //     Session::flash('warning', 'خطأ في كود الشركة');
+        //     return redirect()->back()->withInput();
+        // }
         
         // push into users_rules
-        try {
+        // try {
             $data = array(
                 array('user_id' => $user->id, 'rule_id' => 6),
                 array('user_id' => $user->id, 'rule_id' => 10)
             );
 
             Users_Rules::insert($data);
-        } catch(Exception $ex) {
-            dd($ex . '1');
-            Users_Rules::where('user_id', $user->id)->forcedelete();
-            Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
-            return redirect()->back()->withInput();
-        }
+        // } catch(Exception $ex) {
+        //     dd($ex . '1');
+        //     Users_Rules::where('user_id', $user->id)->forcedelete();
+        //     Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
+        //     return redirect()->back()->withInput();
+        // }
 
         // push into client_passwords
-        try {
+        // try {
             $client_passwords = new ClientsPasswords;
             $client_passwords->user_id = $user->id;
             $client_passwords->password = $request->password;
             $client_passwords->confirmation = 0;
             $client_passwords->save();
-        } catch(Exception $ex) {
-            dd($ex . '2');
-            $user->forcedelete();
-            $user_rules->forcedelete();
+        // } catch(Exception $ex) {
+        //     dd($ex . '2');
+        //     $user->forcedelete();
+        //     $user_rules->forcedelete();
 
-            Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        //     Session::flash('warning', ' 3# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
         
         // TODO: national_id missing
         // push into users_details
-        try {
+        // try {
             $user_details = new User_Details;
             
             $user_details->user_id       = $user->id;
@@ -212,17 +212,17 @@ class IndividualsCompaniesController extends Controller
             $user_details->work_sector_type      = $request->work_type;
             if(isset($request->discount_percentage)){$user_details->discount_percentage   = $request->discount_percentage;}
             $user_details->save();
-        } catch(Exception $ex) {
-            dd($ex . '3');
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        // } catch(Exception $ex) {
+        //     dd($ex . '3');
+        //     $user->forcedelete();
+        //     $user_rules->forcedelete();
+        //     $client_passwords->forcedelete();
+        //     Session::flash('warning', ' 4# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
 
         // push into subscriptions
-        try {
+        // try {
             $subscription = new UserBouquet;
             $subscription->user_id = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
@@ -236,18 +236,18 @@ class IndividualsCompaniesController extends Controller
             $subscription->is_active = 1;
             $subscription->price_method_id = $request->price_method;
             $subscription->save();
-        } catch (\Exception $ex) {
-            dd($ex . '4');
-            $user->forcedelete();
-            $user_rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        // } catch (\Exception $ex) {
+        //     dd($ex . '4');
+        //     $user->forcedelete();
+        //     $user_rules->forcedelete();
+        //     $client_passwords->forcedelete();
+        //     $user_details->forcedelete();
+        //     Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
 
         // push into installments
-        try {
+        // try {
             if (isset($request->payment) && !empty($request->payment)) {
                 if ($request->number_of_installments != count($request->payment)) {
                     $user->forcedelete();
@@ -340,19 +340,19 @@ class IndividualsCompaniesController extends Controller
                     }
                 }
             }
-        } catch(Exception $ex) {
-            dd($ex . '5');
-            $user->forcedelete();
-            $user->rules->forcedelete();
-            $client_passwords->forcedelete();
-            $user_details->forcedelete();
-            $subscription->forcedelete();
+        // } catch(Exception $ex) {
+        //     dd($ex . '5');
+        //     $user->forcedelete();
+        //     $user->rules->forcedelete();
+        //     $client_passwords->forcedelete();
+        //     $user_details->forcedelete();
+        //     $subscription->forcedelete();
 
-            Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        //     Session::flash('warning', ' 6# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
          
-        try {
+        // try {
 
             $services = BouquetService::all();
             foreach ($services as $service)
@@ -367,10 +367,10 @@ class IndividualsCompaniesController extends Controller
                 $user_bouque->save();
             }
 
-          } catch (\Exception $e) {
+        //   } catch (\Exception $e) {
 
-            dd($ex . '6');
-          }
+        //     dd($ex . '6');
+        //   }
 
         // redirect with success
         $vodafone = new VodafoneSMS;
