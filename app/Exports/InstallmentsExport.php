@@ -6,7 +6,7 @@ use App\Case_;
 use App\Users;
 use App\Tasks;
 use App\Task_Types;
-use App\Installment;
+use App\UserBouquetPayment;
 use App\Courts;
 use App\Cases_Types;
 use App\Geo_Cities;
@@ -49,17 +49,17 @@ class InstallmentsExport implements FromCollection,WithEvents
        
         if(is_null($this->ids)){
 
-        $installments = $data['installments'] = Installment::all();
+        $installments = $data['installments'] = UserBouquetPayment::all();
         foreach($installments as $ins)
         {
             array_push($casesArray,[
             
-          ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد',
-          ($ins->subscription) ? ($ins->subscription->package_type ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد') : 'لا يوجد',
-          ($ins->installment_number) ? $ins->installment_number : 'لا يوجد',
-          ($ins->payment_date) ? $ins->payment_date->format('d-m-Y') : 'لا يوجد',
-          ($ins->value) ? $ins->value : 'لا يوجد',
-          ($ins->is_paid)?'تم':'-'
+          ($ins->user_id) ? (Helper::getUserDetails($ins->user_id) ? Helper::getUserDetails($ins->user_id)->code : 'لا يوجد')  : 'لا يوجد',
+          ($ins->bouquet_id) ? ($ins->bouquet ? $ins->bouquet->name : 'لا يوجد') : 'لا يوجد',
+          ($ins->period) ? $ins->peiod : 'لا يوجد',
+          ($ins->start_date) ? $ins->start_date : 'لا يوجد',
+          ($ins->price) ? $ins->price : 'لا يوجد',
+          ($ins->payment_status)?'تم':'-'
 
              
 
@@ -74,17 +74,16 @@ class InstallmentsExport implements FromCollection,WithEvents
        
         foreach($selects as $select)
         {
-              $ins = $data['installments'] = Installment::find($select);
+              $ins = $data['installments'] = UserBouquetPayment::find($select);
 
             array_push($casesArray,[
             
-          ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد',
-          ($ins->subscription) ? ($ins->subscription->package_type ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد') : 'لا يوجد',
-          ($ins->installment_number) ? $ins->installment_number : 'لا يوجد',
-          ($ins->payment_date) ? $ins->payment_date->format('d-m-Y') : 'لا يوجد',
-          ($ins->value) ? $ins->value : 'لا يوجد',
-          ($ins->is_paid)?'تم':'-'
-
+                ($ins->user_id) ? (Helper::getUserDetails($ins->user_id) ? Helper::getUserDetails($ins->user_id)->code : 'لا يوجد')  : 'لا يوجد',
+                ($ins->bouquet_id) ? ($ins->bouquet ? $ins->bouquet->name : 'لا يوجد') : 'لا يوجد',
+                ($ins->period) ? $ins->peiod : 'لا يوجد',
+                ($ins->start_date) ? $ins->start_date : 'لا يوجد',
+                ($ins->price) ? $ins->price : 'لا يوجد',
+                ($ins->payment_status)?'تم':'-'
              
 
 
