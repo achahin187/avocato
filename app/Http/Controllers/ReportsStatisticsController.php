@@ -297,7 +297,7 @@ class ReportsStatisticsController extends Controller
 
         //for export excel after filter 
           $this->set_filterIDs_session( $data['installments'] , 'installments' );
-        
+    }
         // Urgents
         if ( isset( $filters['userType'] ) ) {
             $data['urgents'] = Helper::getUrgents($filters['userType']);
@@ -422,6 +422,8 @@ class ReportsStatisticsController extends Controller
 
         return $data;
     }
+
+
 
     public function filter(Request $request) {
         if(count($request->all()) > 1) { 
