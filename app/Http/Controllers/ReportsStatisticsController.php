@@ -123,7 +123,7 @@ class ReportsStatisticsController extends Controller
         $data['lawyers_'] = Helper::getUsersBasedOnRules([5])->where('is_active', 1);
         $data['companies_'] = Users::users(9)->get();
         $data['packages_']  = Package_Types::all();
-        $data['installments_'] = UserBouquetPayment::all();
+        $data['installments'] = UserBouquetPayment::all();
         $data['courts_']    = Courts::all();
         $data['tasks_']     = Task_Types::all();
         $data['caseTypes']  = Cases_Types::all();
