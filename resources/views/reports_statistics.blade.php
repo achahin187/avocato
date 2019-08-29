@@ -892,7 +892,7 @@
                             <option value="-1" selected disabled hidden>اختر كود العميل</option>
                             @if ( isset($installments_) && !empty($installments_) )
                               @foreach ($installments_ as $ins)
-                                <option value="{{ $ins->id }}">{{ $ins->user->code }}</option>
+                                <option value="{{ $ins->id }}">{{ ($ins->user_id) ? (Helper::getUserDetails($ins->user_id) ? Helper::getUserDetails($ins->user_id)->code : 'لا يوجد')  : 'لا يوجد'  }}</option>
                               @endforeach
                             @endif
                         </select>
