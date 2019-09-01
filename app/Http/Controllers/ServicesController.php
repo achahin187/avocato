@@ -66,11 +66,13 @@ class ServicesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'client_code' => 'required',
             'service_name' => 'required',
             'service_type' => 'required',
             'service_expenses' => 'required|numeric',
+            'address'=>'required',
         ]);
 
         if ($validator->fails()) {
@@ -86,6 +88,7 @@ class ServicesController extends Controller
         $service->expenses = $request->service_expenses;
         $service->start_datetime = date('Y-m-d');
         $service->end_datetime = date('Y-m-d');
+        $service->task_address = $request->address;
         $service->task_type_id = 3;
         $service->task_status_id = 1;
         $service->country_id=session('country');
@@ -266,9 +269,25 @@ class ServicesController extends Controller
     public function filter(Request $request)
     {
         if ($request->filled('payment_status'))
-            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status)->paginate(10);
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->whereIn('task_payment_status_id', $request->payment_status);
         else
-            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3)->paginate(10);
+            $data['services'] = Tasks::where('country_id',session('country'))->where('task_type_id', 3);
+        
+
+        if($request->filled('search'))
+        {
+            $data['services'] = $data['services']->distinct()->where(function($query) use ($request){
+                $query->where('name','like','%'.$request->search.'%')->orwhere(function($query) use ($request){
+                $query->whereHas('client',function($q) use ($request){
+                    
+                        $q->where('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+                   
+                });
+            }); 
+        });
+        }
+
+            $data['services'] = $data['services']->paginate(10);
 
         $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
 

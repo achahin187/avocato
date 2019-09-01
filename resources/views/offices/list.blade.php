@@ -87,12 +87,27 @@ $(document).on('confirmation', '#two', function () {
                           <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                           <div>
                             <h2 id="modal1Title">فلتر</h2>
+                            <form role="form" action="{{ action('OfficesController@cityFilter') }}" method="POST" enctype="multipart/form-data">
                             <div class="col-md-12 col-sm-12 col-xs-12">
+                              <div class="master_field">
+                                <label class="master_label mandatory" for="ID_No">بحث  </label>
+                                <div class="bootstrap-timepicker">
+                                  <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او رقم الهاتف" id="search" value="{{ old('search') }}">
+                                </div>
+                      
+                                @if ($errors->has('start_date'))
+                                  <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
+                                @endif
+                              {{--  Start date  --}}
+                              </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                            {{-- Search --}}
+             
                               <div class="master_field">
                                 <label class="master_label mandatory" for="office_address">المدينة</label>
                                 {{-- <input class="master_input" type="text" placeholder="المدينة" id="office_address"><span class="master_message color--fadegreen">message</span> --}}
                                 
-                                <form role="form" action="{{ action('OfficesController@cityFilter') }}" method="POST" enctype="multipart/form-data">
+                               
                                   <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
                                   <select class="master_input" name="office_city" id="office_address">
                                   <option value="">اختر المدينة</option>
@@ -140,7 +155,7 @@ $(document).on('confirmation', '#two', function () {
                               <td><span class="cellcontent">{{$office->name}}</span></td>
                               <td><span class="cellcontent">{{$office->address}}</span></td>
                               <td><span class="cellcontent">{{$office->mobile}}</span></td>
-                              <td><span class="cellcontent">{{$office->is_active ? 'مفعل':'غير مفعل'}}</td>
+                              <td><a href="{{route('lawyers_activate',$office->id)}}"><span class="cellcontent">@if($office->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</a></span></td>
                               <td><span class="cellcontent"><a href= {{route('offices_show',$office->id)}} ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-envelope"></i></a><a href= {{route('offices_edit',$office->id)}} ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                             </tr>
                           @endforeach

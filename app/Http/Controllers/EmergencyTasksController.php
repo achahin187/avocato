@@ -357,7 +357,22 @@ class EmergencyTasksController extends Controller
                     }
               }
 
-    })->paginate(10);
+    });
+
+    if($request->filled('search'))
+    {
+      $data['tasks'] = $data['tasks']->distinct()->where(function($query) use ($request){
+            
+            $query->whereHas('client',function($q) use ($request){
+                
+                    $q->where('full_name','like', '%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+               
+            });
+      
+    });
+    }
+
+    $data['tasks'] =$data['tasks']->paginate(10);
 
 
     $data['clients']=Users::where('country_id',session('country'))->whereHas('rules', function ($query) {

@@ -537,24 +537,24 @@
               <div class="col-md-4 col-xs-12">
                   <div class="master_field">
                     <label class="master_label mandatory" for="premium1_amount">{{ 'قيمة القسط رقم ' . $j }}</label>
-                    <input required class="master_input disScroll" name="payment[{{ $i }}][price]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{  $user->bouquet_payment[$i]->pivot->price  }}">
+                    <input required class="master_input disScroll" name="payment[{{ $i }}][price]" type="number" placeholder="قيمة القسط رقم {{ $j }}" id="premium1_amount" value="{{  $company->bouquet_payment[$i]->pivot->price  }}">
                   </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label mandatory" for="premium1_date">تاريخ سداد القسط رقم {{ $j }} </label>
-                      <input required name="payment[{{ $i }}][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $user->bouquet_payment[$i]->pivot->actuall_start_date }}">
+                      <input required name="payment[{{ $i }}][actuall_start_date]" class="datepicker master_input" type="text" placeholder="إختر تاريخ السداد" id="ddate" value="{{ $company->bouquet_payment[$i]->pivot->actuall_start_date }}">
                     </div>
                   </div>
                   <div class="col-md-4 col-xs-12">
                     <div class="master_field">
                     <label class="master_label">حالة القسط رقم {{ $j }}</label>
                   <div class="radio-inline">
-                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="1" {{  $user->bouquet_payment[$i]->pivot->payment_status == 1 ? 'checked' : '' }} >
+                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="1" {{  $company->bouquet_payment[$i]->pivot->payment_status == 1 ? 'checked' : '' }} >
                     <label>نعم</label>
                   </div>
                   <div class="radio-inline">
-                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="0" {{ $user->bouquet_payment[$i]->pivot->payment_status == 0 ? 'checked' : '' }} >
+                    <input type="radio" name="payment[{{ $i }}][payment_status]" value="0" {{ $company->bouquet_payment[$i]->pivot->payment_status == 0 ? 'checked' : '' }} >
                     <label>لا</label>
                   </div>
                 </div>

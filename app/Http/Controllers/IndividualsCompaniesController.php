@@ -80,7 +80,8 @@ class IndividualsCompaniesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        
+        $validator = Validator::make($request->all(), [
             'company_code'  => 'required',
             'company_name'  => 'required',
             'ind_name'      => 'required',
@@ -98,11 +99,20 @@ class IndividualsCompaniesController extends Controller
             'activate'      => 'required',
             'start_date'    => 'required',
             'end_date'      => 'required',
-            'package_type_id'=> 'required',
-            'duration'      => 'required',
-            'value'         => 'required',
-            'number_of_payments' => 'required'
+            'bouquet_id' => 'required',
+            'duration' => 'required',
+            'value' => 'required',
+            'number_of_installments' => 'required',
+            'payment_method'      => 'required',
+            // 'price_method'      => 'required',
         ]);
+        //  dd($validator);
+        if ($validator->fails()) {
+            // dd($validator);
+            return redirect()->back()
+              ->withErrors($validator)
+              ->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+          }
 
         // upload image to storage/app/public 
         if($request->logo) {
@@ -142,6 +152,7 @@ class IndividualsCompaniesController extends Controller
             $user->country_id=session('country');
             $user->save();
         } catch(Exception $ex) {
+            // dd($ex);
             $user->forcedelete();
             Session::flash('warning', $ex);
             return redirect()->back()->withInput();
@@ -152,6 +163,7 @@ class IndividualsCompaniesController extends Controller
             $user->code = $user->id;
             $user->save();
         } catch (Exception $ex) {
+            // dd($ex);
             $user->forcedelete();
             Session::flash('warning', 'خطأ في كود الشركة');
             return redirect()->back()->withInput();
@@ -166,6 +178,7 @@ class IndividualsCompaniesController extends Controller
 
             Users_Rules::insert($data);
         } catch(Exception $ex) {
+            // dd($ex . '1');
             Users_Rules::where('user_id', $user->id)->forcedelete();
             Session::flash('warning', 'حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا #2');
             return redirect()->back()->withInput();
@@ -179,6 +192,7 @@ class IndividualsCompaniesController extends Controller
             $client_passwords->confirmation = 0;
             $client_passwords->save();
         } catch(Exception $ex) {
+            // dd($ex . '2');
             $user->forcedelete();
             $user_rules->forcedelete();
 
@@ -202,6 +216,7 @@ class IndividualsCompaniesController extends Controller
             if(isset($request->discount_percentage)){$user_details->discount_percentage   = $request->discount_percentage;}
             $user_details->save();
         } catch(Exception $ex) {
+            // dd($ex . '3');
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -225,6 +240,7 @@ class IndividualsCompaniesController extends Controller
             $subscription->price_method_id = $request->price_method;
             $subscription->save();
         } catch (\Exception $ex) {
+            // dd($ex . '4');
             $user->forcedelete();
             $user_rules->forcedelete();
             $client_passwords->forcedelete();
@@ -328,7 +344,7 @@ class IndividualsCompaniesController extends Controller
                 }
             }
         } catch(Exception $ex) {
-            
+            // dd($ex . '5');
             $user->forcedelete();
             $user->rules->forcedelete();
             $client_passwords->forcedelete();
@@ -356,7 +372,7 @@ class IndividualsCompaniesController extends Controller
 
           } catch (\Exception $e) {
 
-
+            // dd($ex . '6');
           }
 
         // redirect with success
@@ -822,30 +838,42 @@ class IndividualsCompaniesController extends Controller
         $endto     = Helper::checkDate($request->end_date_to, 2);
 
         // intial join query between `users` & `subscriptions` & `user_details`
-        $users = Users::users(10)->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
-                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                        ->select('user_details.*', 'subscriptions.*', 'users.*');
+        $from = $to = null;
 
-        // check company code
-        if ( $request->company_code) {
-            $users = $users->where('parent_id', $request->company_code);
+        if ($request->start_date) {
+            $from = date("Y-m-d 00:00:00", strtotime($request->start_date));
         }
-        // check package type
-        if( $request->package_type ) {
-            $users = $users->whereIn('package_type_id', $request->package_type);
+        if ($request->end_date) {
+            $to = date("Y-m-d 23:59:59", strtotime($request->end_date));
+        }
+       
+        if ($from && $to) {
+            $users = Users::users(10)->whereHas('subscription', function ($query) use ($from, $to) {
+                $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
+                
+            });
+        } else if ($from && !$to) {
+            $users = Users::users(10)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('start_date', '>=', $from);
+                
+            });
+        } else if (!$from && $to) {
+            $users = Users::users(10)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('end_date', '<=', $to);
+                
+            });
+        } else {
+            $users = Users::users(10);
         }
 
-        // check on start and end dates
-        if($startfrom && $startto && $endfrom && $endto) {
-            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
-            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
+       
+        if($request->has('search'))
+        {
+          $users = $users->distinct()->where(function($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+          });
         }
-
-        // check nationality
-        if($request->nationality) {
-            $users = $users->where('user_details.nationality_id', $request->nationality);
-        }
-
+       
         // check activation 
         switch($request->activate) {
             case "1":

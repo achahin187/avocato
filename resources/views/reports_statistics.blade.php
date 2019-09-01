@@ -892,7 +892,7 @@
                             <option value="-1" selected disabled hidden>اختر كود العميل</option>
                             @if ( isset($installments_) && !empty($installments_) )
                               @foreach ($installments_ as $ins)
-                                <option value="{{ $ins->subscription_id }}">{{ $ins->subscription ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->full_name .' - '. Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد' ) : 'لا يوجد' }}</option>
+                                <option value="{{ $ins->id }}">{{ ($ins->user_id) ? (Helper::getUserDetails($ins->user_id) ? Helper::getUserDetails($ins->user_id)->code : 'لا يوجد')  : 'لا يوجد'  }}</option>
                               @endforeach
                             @endif
                         </select>
@@ -968,13 +968,13 @@
                         @foreach ($installments as $ins)
                           <tr data-installment-id="{{ $ins->id }}">
                             <td><span class="cellcontent"><input type="checkbox" class="checkboxes" /></span></td>
-                            <td><span class="cellcontent">{{ ($ins->subscription) ? (Helper::getUserDetails($ins->subscription->user_id) ? Helper::getUserDetails($ins->subscription->user_id)->code : 'لا يوجد')  : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($ins->subscription) ? ($ins->subscription->package_type ? Helper::localizations('package_types', 'name', $ins->subscription->package_type->id) : 'لا يوجد') : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($ins->installment_number) ? $ins->installment_number : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($ins->payment_date) ? $ins->payment_date->format('d-m-Y') : 'لا يوجد' }}</span></td>
-                            <td><span class="cellcontent">{{ ($ins->value) ? $ins->value : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->user_id) ? (Helper::getUserDetails($ins->user_id) ? Helper::getUserDetails($ins->user_id)->code : 'لا يوجد')  : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->bouquet_id) ? $ins->bouquet->name : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->period) ? $ins->period : 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->start_date) ? $ins->start_date: 'لا يوجد' }}</span></td>
+                            <td><span class="cellcontent">{{ ($ins->price) ? $ins->price : 'لا يوجد' }}</span></td>
                             <td><span class="cellcontent">
-                              @if ($ins->is_paid)
+                              @if ($ins->payment_status)
                                 <label class= "data-label bgcolor--fadegreen color--white  ">تم</label>
                               @endif  
                             </span></td>

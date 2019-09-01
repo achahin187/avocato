@@ -38,7 +38,7 @@ class OfficesController extends Controller
     $q->whereHas('rules', function ($q) {
           $q->where('rule_id', 15);
         });
-    $data['offices'] = $q->with(['user_detail'=>function($w){$w->select('work_sector_area_id','user_id');}])->where('country_id',session('country'))->paginate(10);
+    $data['offices'] = $q->with(['user_detail'=>function($w){$w->select('work_sector_area_id','user_id');}])->paginate(10);
     $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
     return view('offices.list', $data);
@@ -85,6 +85,10 @@ class OfficesController extends Controller
             no all items in the table
      */
     $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+      if($request->has('search'))
+      {
+        $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+      }
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
@@ -673,25 +677,37 @@ public function branch_edit(Request $request)
   
   public function cityFilter(Request $request){
     
-    if(isset($request->office_city)){
+    
        
-        $q = Users::orderBy('id','DESC');
-    $q->whereHas('rules', function ($q) {
-          $q->where('rule_id', 15)->where('country_id',session('country'));
+         $data['offices'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
+          if($request->filled('search'))
+          {
+            $q->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+            
+          }
+        
+       
+    
+          
         });
-    $q->whereHas('user_detail',function($q) use ($request) {
-        $q->where('work_sector_area_id',$request->office_city);
-    });    
+        if($request->filled('office_city'))
+          {
+            $data['offices']=$data['offices']->whereHas('user_detail',function($q) use ($request) {
+           
+              $q->where('work_sector_area_id',$request->office_city);   
+          });
+        }
+        $data['offices'] = $data['offices']->whereHas('rules', function ($query) {
+          $query->where('rule_id', 15);
+        })->paginate(10);
      
-     $data['offices'] = $q->paginate(10);
+    
      $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
      $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-    
+    // dd($data['offices']);
     return view('offices.list', $data);
       
-    }else if($request->office_city == null){
-      return redirect()->route('offices');
-    }     
+       
  
   }
 

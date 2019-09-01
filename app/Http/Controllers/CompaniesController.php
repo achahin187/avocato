@@ -440,10 +440,10 @@ class CompaniesController extends Controller
         $bouquets = Bouquet::where('bouquet_type',1)->get();
         $nationalities = Geo_Countries::all();
         $installments = $company->bouquet_payment ? $company->bouquet_payment: 0;
-        $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$comapny['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
-        $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$comapny['bouquets'][0]['id'])->get() : [];
+        $payment_methods = ($company->bouquets()->count() != 0 ) ? BouquetMethod::where('bouquet_id',$company['bouquets'][0]['bouquet_id'])->with('payment')->get() : [];
+        $price_methods = ($company->bouquets()->count() != 0 ) ? BouquetPrice::where('bouquet_id',$company['bouquets'][0]['id'])->get() : [];
             
-        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_mehtods']));
+        return view('clients.companies.companies_edit', compact(['company', 'password', 'subscription_types', 'nationalities', 'installments','bouquets','payment_methods','price_methods']));
     }
 
     /**
@@ -854,38 +854,41 @@ class CompaniesController extends Controller
                             ->withInput();
         }
 
-        $startfrom = Helper::checkDate($request->start_date_from, 1);
-        $startto   = Helper::checkDate($request->start_date_to, 2);
-        $endfrom   = Helper::checkDate($request->end_date_from, 1);
-        $endto     = Helper::checkDate($request->end_date_to, 2);
+        $from = $to = null;
 
-        // intial join query between `users` & `subscriptions` & `user_details`
-        $users = Users::users(9)->join('user_company_details', 'users.id', '=', 'user_company_details.user_id')
-                        ->join('subscriptions', 'users.id', '=', 'subscriptions.user_id')
-                        ->join('user_details', 'users.id', '=', 'user_details.user_id')
-                        ->select('user_company_details.*', 'user_details.*', 'subscriptions.*', 'users.*');
-
-        // check package type
-        if( $request->package_type ) {
-            $users = $users->whereIn('package_type_id', $request->package_type);
+        if ($request->start_date) {
+            $from = date("Y-m-d 00:00:00", strtotime($request->start_date));
         }
-
-        // check on start and end dates
-        if($startfrom && $startto && $endfrom && $endto) {
-            $users = $users->whereBetween('start_date', [$startfrom, $startto]);
-            $users = $users->whereBetween('end_date', [$endfrom, $endto]);
+        if ($request->end_date) {
+            $to = date("Y-m-d 23:59:59", strtotime($request->end_date));
         }
-
-        // check nationality
-        if($request->nationality) {
-            $users = $users->where('user_details.nationality_id', $request->nationality);
-        }
-        if(array_key_exists('search',$request->all()))
-            {
-                // dd($request->all());
+       
+        if ($from && $to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to) {
+                $query->where('start_date', '>=', $from)->where('end_date', '<=', $to);
                 
-                $users =$users->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
-            }
+            });
+        } else if ($from && !$to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('start_date', '>=', $from);
+                
+            });
+        } else if (!$from && $to) {
+            $users = Users::users(9)->whereHas('subscription', function ($query) use ($from, $to ) {
+                $query->where('end_date', '<=', $to);
+                
+            });
+        } else {
+            $users = Users::users(9);
+        }
+
+       
+        if($request->has('search'))
+        {
+          $users = $users->distinct()->where(function($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+          });
+        }
 
         switch($request->activate) {
             case "1":
