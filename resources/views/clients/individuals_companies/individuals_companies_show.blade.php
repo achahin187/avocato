@@ -75,39 +75,90 @@
           <li class="tab__content_item active">
             <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
               <div class="row">
-                <div class="col-xs-6"><b class="col-xs-3">تاريخ بدء التعاقد</b>
-                  <div class="col-xs-9">@isset($user->subscription->start_date)
-                    {{ $user->subscription ? ($user->subscription->start_date ? $user->subscription->start_date->format("d/m/Y") : 'لا يوجد'  ) : 'لا يوجد' }} @endisset</div>
-                  </div>
-                  <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
-                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->duration : 'لا يوجد' }}</div>
-                  </div>
-                  <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
-                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->value : 'لا يوجد' }}</div>
-                  </div>
-                  <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد</b>
-                    <div class="col-xs-9">{{ $user->subscription ? ( $user->subscription->end_date ? $user->subscription->end_date->format("d/m/Y") : 'لا يوجد' ) : 'لا يوجد' }}</div>
-                  </div>
-                  <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
-                    <div class="col-xs-9"> 
-                      <span class="bgcolor--main_l color--white bradius--small importance padding--small">
-                      
-                      @if ( isset($user->subscription) && !empty($user->subscription) )
-                        @if ( isset($packages) && !empty($packages) && isset($user->subscription->package_type_id) && !empty($user->subscription->package_type_id) )
-                          @foreach($packages as $package)
-                            @if($package->item_id == $user->subscription->package_type_id)
-                            {{ $package->value ? $package->value : 'لا يوجد' }}
-                            @endif
+              @if(isset($user->bouquets))
+                @foreach($user->bouquets as $bouquet)
+                    <div class="col-md-4 col-sm-12">
+                        <table class="table bgcolor--gray_l text-left">
+                          <thead>
+                            <tr class="color--fadeblue bgcolor--gray_mm importance">
+                              <th class="text-center" colspan="4">{{$bouquet->name}}</th>
+                            </tr>
+                            <tr>
+                              <th> الإجمالي</th>
+                              <th> الكوتة</th>
+                              <th> المستهلك</th>
+                              <th> الخاصية</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <?php $all=0; $used=0;?>
+                          @foreach($user['bouquet_services'] as $service)
+                          <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
+                            <tr>
+                              <td> <b>{{$service['pivot']['all_count']}}</b></td>
+                              <td> {{$service['pivot']['count']}}</td>
+                              <td> {{$service['pivot']['used']}}</td>
+                              <td>{{$service['service_name']}}</td>
+                            </tr>
                           @endforeach
-                        @endif
-                      @endif
-
-                    </span>
-                  </div>
-                  </div>
-                  <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط</b>
-                    <div class="col-xs-9">{{ $user->subscription ? $user->subscription->number_of_installments : 'لا يوجد' }}</div>
-                  </div>
+                            <!-- <tr>
+                              <td> <b>50</b></td>
+                              <td> 25</td>
+                              <td> 22</td>
+                              <td>حالات طارئة</td>
+                            </tr>
+                            <tr>
+                              <td> <b>50</b></td>
+                              <td> 25</td>
+                              <td> 22</td>
+                              <td>العقود والصيع</td>
+                            </tr>
+                            <tr>
+                              <td> <b>50</b></td>
+                              <td> 25</td>
+                              <td> 22</td>
+                              <td>الفيتشر الرابعة</td>
+                            </tr> -->
+                            <tr>
+                              <th colspan="4">
+                                <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
+                                  <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($used * 100)/$all}}%</span>
+                                    <div class="slice">
+                                      <div class="bar"></div>
+                                      <div class="fill"></div>
+                                    </div>
+                                  </div>
+                                  <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">{{$all- $used}}</span></div>
+                                </div>
+                              </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                <b class="col-xs-3">تاريخ بدء التعاقد </b>
+                  <div class="col-xs-9">
+                    {{ $bouquet ? (  $bouquet->pivot->start_date ? $bouquet->pivot->start_date : 'لا يوجد' ) : 'لا يوجد' }} </div>
+                </div>
+                <div class="col-xs-6"><b class="col-xs-3">مدة التعاقد </b>
+                  <div class="col-xs-9">{{ $bouquet ? $bouquet->pivot->duration  : 'لا يوجد' }}</div>
+                </div>
+                <div class="col-xs-6"><b class="col-xs-3">قيمة التعاقد </b>
+                  <div class="col-xs-9">{{ $bouquet ? $bouquet->pivot->value : 'لا يوجد' }}</div>
+                </div>
+                <div class="col-xs-6"><b class="col-xs-3">تاريخ نهاية التعاقد </b>
+                  <div class="col-xs-9">{{ $bouquet ? ( $bouquet->pivot->end_date ? $bouquet->pivot->end_date : 'لا يوجد' ) : 'لا يوجد' }}</div>
+                </div>
+                <div class="col-xs-6"><b class="col-xs-3">نوع الباقة </b>
+                  <div class="col-xs-9"> <span class="bgcolor--fadepurple color--white bradius--small importance padding--small">
+                    {{$bouquet ? ($bouquet->bouquet_type == 0) ? "افراد" : "شركات" : "لايوجد"}}
+                  </span></div>
+                </div>
+                <div class="col-xs-6"><b class="col-xs-3">عدد الاقساط </b>
+                  <div class="col-xs-9">{{$bouquet ? $bouquet->pivot->number_of_installments : 'لا يوجد' }}</div>
+                </div>
+            @endforeach
+            @endif
                 </div>
                 <div class="col-lg-12">
                   <table class="table-1" >
