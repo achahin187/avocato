@@ -121,15 +121,19 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($user->subscription->installments as $installment)
-                      <tr>
-                        <td><span class="cellcontent">ا{{ $installment->installment_number ? $installment->installment_number : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ $installment->installment_number ? $installment->value : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent">{{ $installment->installment_number ? $installment->payment_date : 'لا يوجد' }}</span></td>
-                        <td><span class="cellcontent"><i class = "fa {{ $installment->is_paid ? 'color--fadegreen fa-check': 'color--fadebrown fa-times' }}"></i></span></td>
-                        <td><span class="cellcontent"><a href= "#payment_status{{ $installment->id }}" ,  class= "action-btn bgcolor--fadegreen color--white "> <i class = "fa  fa-edit"></i></a></span></td>
-                      </tr>
+                    @if($user->bouquet_payment)
+                    @foreach($user->bouquet_payment as $installment)
+                    <tr>
+                      <td><span class="cellcontent">{{$installment->pivot->period ? $installment->pivot->period : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent"> {{$installment->pivot->price ? $installment->pivot->price : 'لا يوجد'}}</span></td>
+                      <td><span class="cellcontent">{{$installment->pivot->actuall_start_date ? $installment->pivot->actuall_start_date : 'لا يوجد'}} </span></td>
+                      <td><span class="cellcontent"><i class = "fa  {{$installment->pivot->payment_status ? 'color--fadegreen fa-check': 'color--fadebrown fa-times'}}"></i></span></td>
+                      <td><span class="cellcontent"><a href= "#payment_status_{{$installment->pivot->id}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a></span></td>
+                    </tr>
+                   
+                      <div class="clearfix"> </div>
                       @endforeach
+                      @endif
                     </tbody>
                   </table>
                 </div>
