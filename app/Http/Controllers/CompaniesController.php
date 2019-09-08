@@ -210,7 +210,7 @@ class CompaniesController extends Controller
 
         
         // push into subscriptions
-        // try {
+        try {
             $subscription = new UserBouquet;
             $subscription->user_id = $user->id;
             $subscription->start_date = date('Y-m-d H:i:s', strtotime($request->start_date));
@@ -222,16 +222,16 @@ class CompaniesController extends Controller
             $subscription->is_subscribed = 1;
             $subscription->payment_method_id = $request->payment_method;
             $subscription->is_active = 1;
-            $subscription->bouquet_price_id = $request->price_method;
+            $subscription->price_method_id = $request->price_method;
             $subscription->save();
-        // } catch (\Exception $ex) {
-        //     $user->forceDelete();
-        //     // $user->rules->delete();
-        //     $client_passwords->forceDelete();
-        //     $user_details->forceDelete();
-        //     Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-        //     return redirect()->back()->withInput();
-        // }
+        } catch (\Exception $ex) {
+            $user->forceDelete();
+            // $user->rules->delete();
+            $client_passwords->forceDelete();
+            $user_details->forceDelete();
+            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
 
         // push into user_company_detail
         try {
