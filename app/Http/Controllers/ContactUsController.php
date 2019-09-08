@@ -126,7 +126,13 @@ class ContactUsController extends Controller
             ]);
            $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
            $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
-           
+           $branch->update([
+            'is_main'=>$request['is_main'],
+            'longitude'=>$request['longitude'],
+            'latitude'=>$request['latitude'],
+            'address'=>$localization_address,
+            'name'=>$localization_name
+        ]);
           }
            if(array_key_exists('email',$request->all()))
            {
