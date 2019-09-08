@@ -11,6 +11,7 @@ use Excel;
 use Session;
 use App\Exports\SessionsExport;
 use App\Users;
+use Carbon\carbon;
 
 class TasksController extends Controller
 {
@@ -25,6 +26,7 @@ class TasksController extends Controller
         // {
         //     return redirect()->route('choose.country');
         // }
+        // dd($tasks = Tasks::where('is_accepted',0)->where('task_type_id',1)->where('assigned_lawyer_id','!=',null)->where("task_assignment_date","<=",Carbon::now()->subSeconds(600)->toDateTimeString())->toSql());
         $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id',2)->with(['case' => function($q){
             $q->with('clients');
         }])->paginate(10);

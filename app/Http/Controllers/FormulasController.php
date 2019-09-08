@@ -166,10 +166,11 @@ class FormulasController extends Controller
         if ($request->hasFile('file')) {
             $destinationPath = 'contracts';
             $con_name = str_replace(" ","_",$request->contract_name)."_";
-            $fileNameToStore = $destinationPath . '/' . $con_name . time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
+            $fileNameToStore = $destinationPath . '/'. time() . rand(111, 999) . '.' . Input::file('file')->getClientOriginalExtension();
         
             Input::file('file')->move($destinationPath, $fileNameToStore);
         }
+        $formula->extension = '.'.Input::file('file')->getClientOriginalExtension();
         $formula->file = $fileNameToStore;
         $formula->country_id=session('country');
         $formula->lang_id = $request->language;
