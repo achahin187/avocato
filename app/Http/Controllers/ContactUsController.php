@@ -105,8 +105,8 @@ class ContactUsController extends Controller
         }
         try{
             unset($request['_token']);
-            dd($request->lang_id);
-            if($request->lang_id == 2)
+            // dd($request->lang_id);
+            if($request->lang_id == 2 || !$request->has('lang_id'))
             {
                 $branch->update([
                     'name'=>$request['name'],
