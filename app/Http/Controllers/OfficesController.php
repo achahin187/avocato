@@ -404,6 +404,10 @@ class OfficesController extends Controller
       $data['office'] = Users::find($id);
       $data['representative'] = Users::where('parent_id',$id )->with('specializations')->first();
       $data['branches'] = OfficeBranches::where('office_id',$id)->get();
+      if( $data['office'] == NULL ||  $data['representative'] == NULL ) {
+        Session::flash('warning', 'المكنب غير  موجود');
+        return redirect('/offices');
+      } 
       foreach($data['branches'] as $key=>$branch)
       {
         if($branch['country_id'] != null)
