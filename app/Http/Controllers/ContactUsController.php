@@ -105,7 +105,8 @@ class ContactUsController extends Controller
         }
         try{
             unset($request['_token']);
-            if($request->lang_id == 2)
+            // dd($request->lang_id);
+            if($request->lang_id == 2 || !$request->has('lang_id'))
             {
                 $branch->update([
                     'name'=>$request['name'],
@@ -116,7 +117,7 @@ class ContactUsController extends Controller
                 ]);
             }
            
-           if($request->lang_id !='2'){
+           else{
           
             //set lang
             $branch->update([
@@ -126,6 +127,7 @@ class ContactUsController extends Controller
             ]);
            $localization_address =Helper::edit_entity_localization('company_branches', 'address', $branch->id, $request->lang_id,$request->address);
            $localization_name =Helper::edit_entity_localization('company_branches', 'name', $branch->id, $request->lang_id,$request->name);
+           
           }
            if(array_key_exists('email',$request->all()))
            {
