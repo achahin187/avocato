@@ -347,6 +347,7 @@ class ServicesController extends Controller
         $data['courts'] = Courts::where('country_id',session('country'))->get();
         $data['regions'] = Case_::all('region');
         $data['sessions'] = Tasks::where('country_id',session('country'))->where('task_type_id', 2)->get();
+        $data['tab']=2;
         return view('tasks.tasks_normal', $data);
     }
 
