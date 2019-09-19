@@ -30,12 +30,12 @@
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                     <div class="tabs--wrapper">
                       <div class="clearfix"></div>
-                      <ul class="tabs">
+                      <ul id="head-ul"  class="tabs">
                         <li>القضايا المتداولة </li>
-                        <li>الأرشيف </li>
+                        <li class="@if(isset($tab)) @if($tab == 2) active   @endif @endif">الأرشيف </li>
                       </ul>
                       <ul class="tab__content">
-                        <li class="tab__content_item active">
+                        <li class="tab__content_item @if(isset($tab))  @if($tab == 1) active @endif  @else active @endif ">
                           <div class="full-table hide-datatable-pagination">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_cases" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -306,7 +306,7 @@
                           </div>
                           <div class="clearfix"></div>
                         </li>
-                        <li class="tab__content_item">
+                        <li  class="tab__content_item @if(isset($tab)) @if($tab == 2) active @endif @endif">
                           <div class="full-table">
                             <div class="remodal-bg">
                               <div class="remodal" data-remodal-id="filterModal_archive" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -729,4 +729,15 @@
 
   });
 </script>
+
+<script>
+$(document).ready(function(){
+    @if(isset($tab)) 
+      @if($tab != 1)
+        $("#head-ul>li:first").removeClass("active");
+      @endif
+    @endif
+   });
+</script>
+
                        @endsection

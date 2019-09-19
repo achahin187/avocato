@@ -3,7 +3,7 @@
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -31,9 +31,13 @@
                     </div>
                     <div class="col-md-12">
                       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="col-md-12"><span ><b>نص السؤال :</b>&nbsp;
-                            {{$consultation->question}}</span>
-                            <hr><span class="pull-left"><b>مرسل الاستشارة</b>&nbsp;
+                        <div class="col-md-12"><h5>نص السؤال</h5>&nbsp; 
+                            <div  class="text-left" >master-btn{{$consultation->question}} </div>
+                        </div>
+                           
+                        <div class="clearfix"></div>   <hr>
+                        <div class="col-md-12">
+                            <span class="pull-left master-btn" style="background:#f5f5f5;"><b>مرسل الاستشارة: </b>&nbsp;
                             @if(isset($consultation->client))
                             @if(Helper::is_client_individual($consultation->client->id))
                             <a style="font-weight:bold" href="{{route('ind.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->name:''}}</a>
@@ -50,14 +54,20 @@
                             @endif
                             @endif
                             &nbsp;</span>
+                            <span class="pull-left master-btn" style="background:#f5f5f5;"> <b> الاستشارة موجهة الى: </b>&nbsp;
+                            <a style="font-weight:bold" href="#"> محسن مصطفى  
+                            </a> &nbsp; </span>
                           <div class="pull-right">
                             بتاريخ
                             {{$consultation->created_at}}
                             &nbsp;<i class="fa fa-calendar"></i>
                           </div>
+                          </div>
+                          <div class="clearfix"></div>
                         </div>
                         <div class="clearfix"></div>
                       </div>
+                      <div class="clearfix"></div>
                       @foreach($consultation->consultation_reply as $lawyer_reply)
                       <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom" id="lawyer_div.{{$lawyer_reply->id}}">
                         <div class="col-md-12">
@@ -126,6 +136,7 @@
                        <a href="{{route('legal_consultations')}}"><button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="button" onclick="{{route('legal_consultations')}}"><i class="fa fa-times" ></i><span>الغاء</span>
                       </button></a>
                       </div>
+                      <div class="clearfix"></div>
                     </div>
                     <div class="clearfix"></div><a class="master-btn undefined undefined undefined undefined undefined" href="#edit_reply"><span></span></a>
                     <div class="remodal-bg"></div>

@@ -21189,6 +21189,9 @@ h4.panel-title a.trigger.collapsed:before {
 td .cellcontent {
   word-break: break-word;
 }
+th .cellcontent{
+  word-break: normal;
+}
 
 .container-fluid {
   text-align: right;

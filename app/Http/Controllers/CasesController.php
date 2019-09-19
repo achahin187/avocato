@@ -56,7 +56,8 @@ class CasesController extends Controller
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
 
         }
-        return view('cases.cases')->with('cases', $cases)->with('roles', $roles)->with('types', $types)->with('courts', $courts);
+        $tab=1;
+        return view('cases.cases')->with('cases', $cases)->with('roles', $roles)->with('types', $types)->with('courts', $courts)->with('tab', $tab);
     }
 
     /**

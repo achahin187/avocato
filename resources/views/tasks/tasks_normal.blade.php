@@ -479,14 +479,6 @@
 @endsection
 @section('js')
 <script>
-// if (window.location.href.indexOf("services_filter2") > -1) { 
-//   $('#sessions').removeClass("active");
-//   $('#services').addClass("active");
-
-//   $('#sessions_li').removeClass("active");
-//   $('#services_li').addClass("active");
-// }
-
 $(document).ready(function(){
     @if(isset($tab)) 
       @if($tab != 1)
