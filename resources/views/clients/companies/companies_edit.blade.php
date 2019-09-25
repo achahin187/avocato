@@ -404,20 +404,7 @@
             </div>
           </div>
 
-          <div class="col-md-3 col-sm-4 col-xs-12">
-            <div class="master_field">
-              <label class="master_label mandatory" for="price_method_id">طريقه الدفع</label>
-            <select name="price_method" class="master_input disScroll"  required id="price_method_id" required>
-               @foreach($price_methods as $method)
-               <option value="{{$method->id}}" @if($bouquet->pivot->price_method_id == $method->id) selected @endif>{{$method->count_from .'to' .$method->count_to}}</option>
-               @endforeach
-
-               </select>
-               @if ($errors->has('payment_method'))
-                <span class="master_message color--fadegreen">{{ $errors->first('payment_method') }}</span>
-              @endif
-            </div>
-          </div>
+         
      @endforeach
      @else
      {{--  Start date  --}}
@@ -516,7 +503,7 @@
           </div>
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="payment_method_id">عدد الشركه </label>
+              <label class="master_label mandatory" for="price_method_id">عدد الشركه </label>
             <select name="price_method" class="master_input disScroll"  required id="price_method_id" required >
 
                </select>
