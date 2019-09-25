@@ -716,7 +716,7 @@ function get_price_method(id)
                     });
               
               $('#payment_method_id').find('option').remove().end().append(options);
-              
+              get_price_method(id);
               // set_license_fees(id);
                 
               }
