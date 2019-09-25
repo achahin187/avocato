@@ -120,7 +120,9 @@ class ReportsStatisticsController extends Controller
         $data['governorates']  = Geo_Governorates::all();
         $data['cities'] = Geo_Cities::all();
         $data['nationalities'] = Geo_Countries::all();
-        $data['lawyers_'] = Helper::getUsersBasedOnRules([5])->where('is_active', 1);
+        $data['lawyers_'] = Users::whereNull('deleted_at')->where('country_id',session('country'))->whereHas('rules', function ($q) {
+            $q->where('parent_id', 5);
+          })->orderBy('created_at','desc')->get();
         $data['companies_'] = Users::users(9)->get();
         $data['packages_']  = Package_Types::all();
         $data['installments'] = UserBouquetPayment::all();
