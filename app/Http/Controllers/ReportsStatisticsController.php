@@ -120,7 +120,9 @@ class ReportsStatisticsController extends Controller
         $data['governorates']  = Geo_Governorates::all();
         $data['cities'] = Geo_Cities::all();
         $data['nationalities'] = Geo_Countries::all();
-        $data['lawyers'] = Helper::getUsersBasedOnRules([5]);
+        $data['lawyers'] = Users::whereNull('deleted_at')->where('country_id',session('country'))->whereHas('rules', function ($q) {
+            $q->where('parent_id', 5);
+          })->orderBy('created_at','desc')->get();
         $data['companies_'] = Users::users(9)->get();
         $data['packages_']  = Package_Types::all();
         $data['installments'] = UserBouquetPayment::all();
@@ -228,9 +230,10 @@ class ReportsStatisticsController extends Controller
             }
 
             $data['lawyers'] = $data['lawyers']->get();
-        } else {
-            $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
-        }
+        } 
+        // else {
+        //     $data['lawyers'] = Helper::getUsersBasedOnRules([11, 12]);
+        // }
         //for export excel after filter 
           $this->set_filterIDs_session( $data['lawyers'] , 'lawyers' );
    
