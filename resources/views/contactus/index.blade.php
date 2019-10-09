@@ -142,7 +142,7 @@
                                 </div>
                               </div>
                            
-                             <button type="submit">حفظ</button>
+                             <button class="color--gray_d bordercolor--white bradius--small border-btn master-btn" type="submit">حفظ</button>
                        
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         <div>
