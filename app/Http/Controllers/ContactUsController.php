@@ -203,7 +203,7 @@ class ContactUsController extends Controller
 
     public function contactUsAjax($lang_id , $id)
     {
-        if($lang_id==2)
+        if($lang_id==1)
         {
             
         $en = Company_Branch::find($id);
