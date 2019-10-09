@@ -367,7 +367,7 @@
                       <a href= "{{route('ind.edit', ['id' => $user->id])}}" ,  class= "action-btn bgcolor--fadegreen color--white ">
                         <i class = "fa  fa-pencil"></i>
                       </a>
-                      <a href= "#lawyer_notification_{{$lawyer->id}}" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a>
+                      <a href= "#lawyer_notification_{{$user->id}}" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a>
                       {{--  Delete  --}}
                       <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $user->id }}">
                         <i class="fa fa-trash-o"></i>
@@ -376,12 +376,12 @@
                     </span>
                   </td>
                   <td hidden>       
-                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification_{{$lawyer->id}}"><span></span></a>
+                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification_{{$user->id}}"><span></span></a>
                     <div class="remodal-bg"></div>
-                    <div class="remodal" data-remodal-id="lawyer_notification_{{$lawyer->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                    <div class="remodal" data-remodal-id="lawyer_notification_{{$user->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                       <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                       <div>
-                        <form role="form" action="{{route('notification_lawyer',$lawyer->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                        <form role="form" action="{{route('notification_lawyer',$user->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
                                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="row">
                                       <h3>إرسال تنبيه</h3>
