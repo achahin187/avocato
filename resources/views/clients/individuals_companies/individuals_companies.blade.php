@@ -413,7 +413,7 @@
                       <a href="{{ route('ind.com.edit', ['id' => $ind_com->id]) }}" class= "action-btn bgcolor--fadegreen color--white ">
                         <i class = "fa  fa-pencil"></i>
                       </a>
-
+                      <a href= "#lawyer_notification_{{$lawyer->id}}" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a>
                       {{--  Delete  --}}
                       <a href="#" class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord" data-id="{{ $ind_com->id }}">
                         <i class="fa fa-trash-o"></i>
@@ -421,6 +421,39 @@
 
                     </span>
                   </td>
+                  <td hidden>       
+                    <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification_{{$lawyer->id}}"><span></span></a>
+                    <div class="remodal-bg"></div>
+                    <div class="remodal" data-remodal-id="lawyer_notification_{{$lawyer->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                      <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                      <div>
+                        <form role="form" action="{{route('notification_lawyer',$lawyer->id)}}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <div class="row">
+                                      <h3>إرسال تنبيه</h3>
+                                      <div class="col-xs-12">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="send_date">تاريخ الإرسال</label>
+                                      <div class="bootstrap-timepicker">
+                                        <input name="noti_date" class="datepicker master_input" type="text" placeholder="تاريخ الإرسال" id="send_date">
+                                      </div><span class="master_message color--fadegreen"></span>
+                                    </div>
+                                  </div>
+                                  <div class="col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label">نص التنبية</label>
+                                      <textarea id="nots" name="notific" class="master_input" placeholder="نص التنبية"></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="clearfix"></div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              <button class="remodal-confirm" type="submit">إرسال</button>
+                        </form>
+                      </div>
+                    </div>
+                </td>
                 </tr>
               @endforeach
             @endif
