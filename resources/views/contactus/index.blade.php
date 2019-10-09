@@ -141,6 +141,8 @@
                                   </span>
                                 </div>
                               </div>
+                              <button type="submit">حفظ<button>
+                              </form>
                               <div class="clearfix"></div>
                       <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
