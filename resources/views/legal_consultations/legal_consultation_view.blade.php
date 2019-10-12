@@ -54,9 +54,11 @@
                             @endif
                             @endif
                             &nbsp;</span>
+                            @if($consultation->direct_assigned == 1)
                             <span class="pull-left master-btn" style="background:#f5f5f5;"> <b> الاستشارة موجهة الى: </b>&nbsp;
-                            <a style="font-weight:bold" href="#"> محسن مصطفى  
+                            @foreach($consultation->lawyers as $lawyer) <a style="font-weight:bold" href="{{route('lawyers_show',$lawyer->id)}}">  {{$lawyer->full_name}} @endforeach 
                             </a> &nbsp; </span>
+                            @endif
                           <div class="pull-right">
                             بتاريخ
                             {{$consultation->created_at}}
