@@ -36,4 +36,8 @@ class Consultation extends Model
    {
        return $this->belongsTo('App\Users','created_by');
    }
+   public function consultation_lawyers()
+   {
+       return $this->hasMany('App\Consultation_lawyers','consultation_id');
+   }
 }
