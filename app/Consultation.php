@@ -38,6 +38,6 @@ class Consultation extends Model
    }
    public function consultation_lawyers()
    {
-       return $this->hasMany('App\Consultation_lawyers','consultation_id');
+       return $this->hasMany('App\Consultation_Lawyers','consultation_id');
    }
 }
