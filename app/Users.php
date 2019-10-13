@@ -255,7 +255,7 @@ class Users extends Authenticatable
                     ->select(DB::raw("*,
                                 ($unit * ACOS(COS(RADIANS($lat))
                                     * COS(RADIANS(latitude))
-                                    * COS(RADIANS($lng) - RADIANS(longitude))
+                                    * COS(RADIANS($lng) - RADIANS(longtuide))
                                     + SIN(RADIANS($lat))
                                     * SIN(RADIANS(latitude)))) AS distance")
                     )->orderBy('distance','asc');
