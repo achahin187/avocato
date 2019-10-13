@@ -115,7 +115,7 @@ class EmergencyTasksController extends Controller
                  }])->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
                  })->IsActive()->orderBy('distance','ASC')->get();
-        // dd($data['lawyers']);
+        dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
                 if(count($detail->user_detail)>1)
