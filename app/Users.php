@@ -257,7 +257,7 @@ class Users extends Authenticatable
                                     * COS(RADIANS($lng) - RADIANS(longtuide))
                                     + SIN(RADIANS($lat))
                                     * SIN(RADIANS(latitude)))) AS distance")
-                    )->orderBy('distance','asc');
+                    );
     
     }
     public function scopeIsActive($query)
