@@ -95,7 +95,7 @@
                             </div>
                           </div> 
                           <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                          <table class="table-1">
+                          <table class="table-1 pre-scrollable">
                             <thead>
                               <tr class="bgcolor--gray_mm color--gray_d">
                                 <th><span class="cellcontent"></span></th>
