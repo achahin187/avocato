@@ -251,13 +251,11 @@ class Users extends Authenticatable
         $lat = (float) $lat;
         $lng = (float) $lng;
         $radius = (double) $radius;
-        return $query->select(DB::raw("*,
-                                ($unit * ACOS(COS(RADIANS($lat))
+        return $query->select(DB::raw("*,($unit * ACOS(COS(RADIANS($lat))
                                     * COS(RADIANS(latitude))
                                     * COS(RADIANS($lng) - RADIANS(longtuide))
                                     + SIN(RADIANS($lat))
-                                    * SIN(RADIANS(latitude)))) AS distance")
-                    );
+                                    * SIN(RADIANS(latitude)))) AS distance") );
     
     }
     public function scopeIsActive($query)

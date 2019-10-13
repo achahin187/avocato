@@ -111,8 +111,8 @@ class EmergencyTasksController extends Controller
         $query->where('rule_id', '5');
         })->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
-                 })->IsActive()->Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")->orderBy('distance','asc')->toSql();
-        dd($data['lawyers']);
+                 })->IsActive()->Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")->orderBy('distance','asc')->get();
+        // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
                 if(count($detail->user_detail)>1)
