@@ -114,7 +114,7 @@ class EmergencyTasksController extends Controller
                 //  $q->orderby('join_date','desc');
                  }])->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
-                 })->IsActive()->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->get();
+                 })->IsActive()->Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             

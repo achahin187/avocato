@@ -254,9 +254,9 @@ class Users extends Authenticatable
         //   $c = 2 * atan2(sqrt($a), sqrt(1-$a));
         //   $d = round($R * $c); // Distance in km
         $unit = ($unit === "km") ? 6378.10 : 3963.17;
-        $lat = (float) $lat;
-        $lng = (float) $lng;
-        $radius = (double) $radius;
+        // $lat = (float) $lat;
+        // $lng = (float) $lng;
+        // $radius = (double) $radius;
         return $query->select(DB::raw("*,
                             ($unit * ACOS(COS(RADIANS($lat))
                                 * COS(RADIANS(latitude))
