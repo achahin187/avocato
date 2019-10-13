@@ -263,7 +263,7 @@ class Users extends Authenticatable
                                 * COS(RADIANS($lng) - RADIANS(longtuide))
                                 + SIN(RADIANS($lat))
                                 * SIN(RADIANS(latitude)))) AS distance")
-            )->orderBy('distance','asc');
+            )->orderByDesc('distance');
         // return $query->select(DB::raw("*,
         //                     (round($R * $c)) AS distance")
         //     )->orderBy('distance','asc');
