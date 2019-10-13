@@ -245,12 +245,12 @@ class Users extends Authenticatable
     }
     
 
-    public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
+    public function scopeDistance($query, $lat, $lng, $unit = "km")
     {
         $unit = ($unit === "km") ? 6378.10 : 3963.17;
         $lat = (float) $lat;
         $lng = (float) $lng;
-        $radius = (double) $radius;
+        // $radius = (double) $radius;
         return $query->select(DB::raw("*,($unit * ACOS(COS(RADIANS($lat))
                                     * COS(RADIANS(latitude))
                                     * COS(RADIANS($lng) - RADIANS(longtuide))

@@ -121,27 +121,27 @@
                             </thead>
                             <tbody>
                               @foreach($lawyers as $lawyer)
-                          <tr data-lawyer-id="{{$lawyer->id}}">
-                           
-                            <td><span class="cellcontent"><input class="input-in-table" type="radio"  id="{{$lawyer->id}}" name="lawyer_id" class="checkboxes"  value="{{$lawyer->id}}" /></span></td>
-                            
-                            <td><span class="cellcontent">{{$lawyer->code}}</span></td>
-                            <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->nationality->user_detail or ''}}</span></td>
-                            <td><span class="cellcontent ">@foreach($lawyer->specializations as $key =>$spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
-                            <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->address}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
-                            @if($lawyer->is_active)
-                            <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                            @else
-                            <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
-                            @endif
-                            <td><span class="cellcontent">{{$lawyer->distance}}</span></td>
-                          </tr>
-                          @endforeach
+                              <tr data-lawyer-id="{{$lawyer->id}}">
+                              
+                                <td><span class="cellcontent"><input class="input-in-table" type="radio"  id="{{$lawyer->id}}" name="lawyer_id" class="checkboxes"  value="{{$lawyer->id}}" /></span></td>
+                                
+                                <td><span class="cellcontent">{{$lawyer->code}}</span></td>
+                                <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
+                                <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
+                                <td><span class="cellcontent">{{$lawyer->user_detail->nationality->user_detail or ''}}</span></td>
+                                <td><span class="cellcontent ">@foreach($lawyer->specializations as $key =>$spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
+                                <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
+                                <td><span class="cellcontent">{{$lawyer->address}}</span></td>
+                                <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
+                                <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
+                                @if($lawyer->is_active)
+                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                                @else
+                                <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
+                                @endif
+                                <td><span class="cellcontent">{{$lawyer->distance}}</span></td>
+                              </tr>
+                              @endforeach
                             
                             </tbody>
                           </table>
