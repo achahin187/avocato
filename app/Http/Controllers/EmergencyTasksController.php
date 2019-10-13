@@ -111,21 +111,22 @@ class EmergencyTasksController extends Controller
         $query->where('rule_id', '5');
         })->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
+                  $q->with('nationality');
                  })->IsActive()->Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")->orderBy('distance','asc')->get();
         // dd($data['lawyers']);
-        foreach($data['lawyers'] as $detail){
+        // foreach($data['lawyers'] as $detail){
             
-                if(count($detail->user_detail)>1)
-                {
-                    $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
+        //         if(count($detail->user_detail)>1)
+        //         {
+        //             $value=Helper::localizations('geo_countires','nationality',$detail->user_detail->nationality_id);
               
-                $detail['nationality']=$value;
-                }
-                else
-                {
-                    $detail['nationality']='';
-                 }
-                }
+        //         $detail['nationality']=$value;
+        //         }
+        //         else
+        //         {
+        //             $detail['nationality']='';
+        //          }
+        //         }
     	return view('tasks.assign_emergency_task',$data);
     }
 

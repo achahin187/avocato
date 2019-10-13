@@ -31,8 +31,28 @@ class Geo_Countries extends Model
     public function getNameAttribute($value)
     {
         $lang = Session::get('AppLocale');
-        if($lang == 2 or $lang == 3){
-            return Helper::localizations('geo_cities' , 'name' , $this->id , $lang);
+        if($lang == 1 or $lang == 3){
+            return Helper::localizations('geo_countries' , 'name' , $this->id , $lang);
+        }else{
+            return $value;
+        }
+    }
+
+    public function getNationalityAttribute($value)
+    {
+        $lang = Session::get('AppLocale');
+            if($lang == 1 or $lang == 3){
+            return  (Helpers::localizations('geo_countries' , 'name' , $this->id , $lang) != null) ? Helpers::localizations('geo_countries' , 'name' , $this->id , $lang) : $value;
+        }else{
+            return $value;
+        }
+    }
+
+    public function getCurrencyAttribute($value)
+    {
+        $lang = Session::get('AppLocale');
+            if($lang == 1 or $lang == 3){
+            return  (Helpers::localizations('geo_countries' , 'currency' , $this->id , $lang) != null) ? Helpers::localizations('geo_countries' , 'currency' , $this->id , $lang) : $value;
         }else{
             return $value;
         }
