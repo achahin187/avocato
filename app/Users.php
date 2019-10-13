@@ -247,16 +247,23 @@ class Users extends Authenticatable
 
     public function scopeDistance($query, $lat, $lng, $radius = 100, $unit = "km")
     {
-        $R = 6371e3; // metres
-          $dLat = deg2rad($this->latitude - $lat);
-          $dLon = deg2rad($this->longtuide - $lng);
-          $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($lat)) * cos(deg2rad($this->latitude)) * sin($dLon/2) * sin($dLon/2);
+          $R = 6378.10; // metres
+          $dLat = deg2rad($lat - $this->latitude );
+          $dLon = deg2rad($lng - $this->longtuide);
+          $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($this->latitude)) * cos(deg2rad($lat)) * sin($dLon/2) * sin($dLon/2);
           $c = 2 * atan2(sqrt($a), sqrt(1-$a));
           $d = round($R * $c); // Distance in km
         // $unit = ($unit === "km") ? 6378.10 : 3963.17;
         // $lat = (float) $lat;
         // $lng = (float) $lng;
         // $radius = (double) $radius;
+        // return $query->select(DB::raw("*,
+        //                     ($unit * ACOS(COS(RADIANS($lat))
+        //                         * COS(RADIANS(latitude))
+        //                         * COS(RADIANS($lng) - RADIANS(longtuide))
+        //                         + SIN(RADIANS($lat))
+        //                         * SIN(RADIANS(latitude)))) AS distance")
+        //     )->orderBy('distance','asc');
         return $query->select(DB::raw("*,
                             (round($R * $c)) AS distance")
             )->orderBy('distance','asc');
