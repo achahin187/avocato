@@ -107,12 +107,15 @@ class EmergencyTasksController extends Controller
     public function assign_emergency_task($id)
     {
     	$data['task']=Tasks::where('id',$id)->first();
-    	$data['lawyers']=Users::whereHas('rules', function ($query) {
-        $query->where('rule_id', '5');
-        })->whereHas('user_detail',function($q){
-                  $q->where('receive_emergency',1);
-                  $q->with('nationality');
-                 })->IsActive()->Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")->orderBy('distance','asc')->get();
+      $data['lawyers']=Users::Distance($data['task']->client_latitude,$data['task']->client_longitude,50,"km")
+                              ->IsActive()
+                              ->whereHas('rules', function ($query) {
+                                    $query->where('rule_id', '5');
+                                    })->whereHas('user_detail',function($q){
+                                    $q->where('receive_emergency',1);
+                                    $q->with('nationality');
+                                  }) 
+                              ->get();
         // dd($data['lawyers']);
         // foreach($data['lawyers'] as $detail){
             
