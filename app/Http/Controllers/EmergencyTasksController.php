@@ -34,7 +34,7 @@ class EmergencyTasksController extends Controller
       if( $data['task'] == NULL ) {
         Session::flash('warning', 'لم يتم العثور على الحاله الطارئه');
         return redirect('/tasks_emergency');
-    }
+      }
       $data['charges'] = Task_Charges::where('task_id', $id)->get();
       $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
       $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
@@ -111,7 +111,7 @@ class EmergencyTasksController extends Controller
         $query->where('rule_id', '5');
         })->with(['user_detail'=>function($q) {
                 
-                 $q->orderby('join_date','desc');
+                //  $q->orderby('join_date','desc');
                  }])->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
                  })->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->get();
