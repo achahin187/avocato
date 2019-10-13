@@ -268,6 +268,10 @@ class Users extends Authenticatable
                             (round($R * $c)) AS distance")
             )->orderBy('distance','asc');
     }
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
 
     public function bouquets()
     {
