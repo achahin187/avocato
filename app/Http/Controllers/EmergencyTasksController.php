@@ -115,7 +115,7 @@ class EmergencyTasksController extends Controller
                                     $q->where('receive_emergency',1);
                                     $q->with('nationality');
                                   }) 
-                              ->first();
+                              ->paginate(10);
         dd($data['lawyers']);
         // foreach($data['lawyers'] as $detail){
             
