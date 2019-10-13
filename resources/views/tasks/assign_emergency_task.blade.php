@@ -97,9 +97,9 @@
                           <div class="filter__btns">
                             <a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
                             <div class="bottomActions__btns">
-                            @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                            <!-- @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator)
                               {{$lawyers->appends(Request::except('page'))->links()}}
-                            @endif
+                            @endif -->
                             </div>
                           
                             <table class="table-1" style="overflow-y:scroll">
