@@ -114,7 +114,7 @@ class EmergencyTasksController extends Controller
                 //  $q->orderby('join_date','desc');
                  }])->whereHas('user_detail',function($q){
                   $q->where('receive_emergency',1);
-                 })->IsActive()->orderByAsc('distance')->get();
+                 })->IsActive()->orderBy('distance','ASC')->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
