@@ -115,8 +115,8 @@ class EmergencyTasksController extends Controller
                                     $q->where('receive_emergency',1);
                                     $q->with('nationality');
                                   }) 
-                              ->paginate(10);
-        // dd($data['lawyers']);
+                              ->first();
+        dd($data['lawyers']);
         // foreach($data['lawyers'] as $detail){
             
         //         if(count($detail->user_detail)>1)
