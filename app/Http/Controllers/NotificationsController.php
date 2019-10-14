@@ -267,7 +267,7 @@ class NotificationsController extends Controller
             }
             $notification_push->delete();
         }
-        $notifications_push_browser = Notifications_Push::where('mobile_os','browser')->get();
+        $notifications_push_browser = Notifications_Push::where('mobile_os','browser')->orwhereNull('mobile_os')->get();
         foreach($notifications_push_browser as $notification_push) {
             $notification = $notification_push->notification;
             $array["is_sent"] = 1;
