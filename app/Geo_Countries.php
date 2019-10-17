@@ -42,7 +42,7 @@ class Geo_Countries extends Model
     {
         $lang = Session::get('AppLocale');
             if($lang == 1 or $lang == 3){
-            return  (Helpers::localizations('geo_countries' , 'name' , $this->id , $lang) != null) ? Helpers::localizations('geo_countries' , 'name' , $this->id , $lang) : $value;
+            return  (Helper::localizations('geo_countries' , 'name' , $this->id , $lang) != null) ? Helper::localizations('geo_countries' , 'name' , $this->id , $lang) : $value;
         }else{
             return $value;
         }
@@ -52,7 +52,7 @@ class Geo_Countries extends Model
     {
         $lang = Session::get('AppLocale');
             if($lang == 1 or $lang == 3){
-            return  (Helpers::localizations('geo_countries' , 'currency' , $this->id , $lang) != null) ? Helpers::localizations('geo_countries' , 'currency' , $this->id , $lang) : $value;
+            return  (Helper::localizations('geo_countries' , 'currency' , $this->id , $lang) != null) ? Helper::localizations('geo_countries' , 'currency' , $this->id , $lang) : $value;
         }else{
             return $value;
         }
