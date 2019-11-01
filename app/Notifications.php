@@ -23,11 +23,11 @@ class Notifications extends Model
         });
     }
 
-    public function getMsgAttribute($value)
-    {
-        $result = (\App::isLocale('ar')) ? Helper::localizations('notification_types','msg',$this->notification_type_id,1) : Helper::localizations('notification_types','msg',$this->notification_type_id,2);
-        return ($result==null)? $value : $result;
-    }
+    // public function getMsgAttribute($value)
+    // {
+    //     $result = (\App::isLocale('ar')) ? Helper::localizations('notification_types','msg',$this->notification_type_id,1) : Helper::localizations('notification_types','msg',$this->notification_type_id,2);
+    //     return ($result==null)? $value : $result;
+    // }
     public function type()
     {
         return $this->belongsTo('App\notification_types','notification_type_id');
