@@ -83,7 +83,7 @@ class AppServiceProvider extends ServiceProvider
                 if($note->is_read==0)
                     $counter++;
             }
-            // dd($notes);
+            dd($notes);
             \View::share('counter', $counter);
             \View::share('notes', $notes);  
         }); 
