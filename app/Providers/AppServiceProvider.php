@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
             // dd(\Session::get('country'));
             //this code will be executed when the view is composed, so session will be available
             $view->with('country', \Session::get('country') );  
-            $notes = Notifications::where('country_id', \Session::get('country'))->where(function ($query) {
-                $query->where('is_read', '=', 0)->where('is_push', '=', 0)->orWhere(function ($query){
+            $notes = Notifications::where('country_id', \Session::get('country'))->where('is_push', '=', 0)->where(function ($query) {
+                $query->where('is_read', '=', 0)->orWhere(function ($query){
                     $query->where('is_read',1)->whereDate('created_at', DB::raw('CURDATE()'));
                 });
     
