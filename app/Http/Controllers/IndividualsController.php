@@ -546,7 +546,7 @@ class IndividualsController extends Controller
         }
 
         // push into subscriptions
-        // try {
+        try {
             $subscription =  UserBouquet::where('user_id', $user->id)->first();
             if($subscription)
             {
@@ -560,6 +560,7 @@ class IndividualsController extends Controller
                     'number_of_installments' => $request->number_of_installments,
                     'is_subscribed' => 1,
                     'payment_method_id' => $request->payment_method,
+                    'price_method_id' => $request->payment_method,
                     'is_active' => 1,
                 ]);
             }
@@ -576,19 +577,20 @@ class IndividualsController extends Controller
             $subscription->number_of_installments = $request->number_of_installments;
             $subscription->is_subscribed = 1;
             $subscription->payment_method_id = $request->payment_method;
+            $subscription->price_method_id = $request->payment_method;
             $subscription->is_active = 1;
             $subscription->save();
             }
            
             
-        // } catch (\Exception $ex) {
-        //     // $user->forcedelete();
-        //     // $user_rules->forcedelete();
-        //     // $client_passwords->forcedelete();
-        //     // $user_details->forcedelete();
-        //     Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-        //     return redirect()->back()->withInput();
-        // }
+        } catch (\Exception $ex) {
+            // $user->forcedelete();
+            // $user_rules->forcedelete();
+            // $client_passwords->forcedelete();
+            // $user_details->forcedelete();
+            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+            return redirect()->back()->withInput();
+        }
         // try {
         //     $subscription = Subscriptions::where('user_id', $user->id)->first();
         //     $subscription->user_id = $user->id;
