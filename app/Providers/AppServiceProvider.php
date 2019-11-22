@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
     
                 $note['url']='task_emergency_view';
                 }
-                if($note->notification_type_id ==3 || $note->notification_type_id == 24){
+                if($note->notification_type_id ==3 || $note->notification_type_id == 25){
                     $user = Users::find($note->item_id);
                     if($user->getClient()==8){
                         $note['url']='ind.show';
