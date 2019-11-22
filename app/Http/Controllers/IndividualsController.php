@@ -546,7 +546,7 @@ class IndividualsController extends Controller
         }
 
         // push into subscriptions
-        try {
+        // try {
             $subscription =  UserBouquet::where('user_id', $user->id)->first();
             if($subscription)
             {
@@ -581,14 +581,14 @@ class IndividualsController extends Controller
             }
            
             
-        } catch (\Exception $ex) {
-            // $user->forcedelete();
-            // $user_rules->forcedelete();
-            // $client_passwords->forcedelete();
-            // $user_details->forcedelete();
-            Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
-            return redirect()->back()->withInput();
-        }
+        // } catch (\Exception $ex) {
+        //     // $user->forcedelete();
+        //     // $user_rules->forcedelete();
+        //     // $client_passwords->forcedelete();
+        //     // $user_details->forcedelete();
+        //     Session::flash('warning', ' 5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
+        //     return redirect()->back()->withInput();
+        // }
         // try {
         //     $subscription = Subscriptions::where('user_id', $user->id)->first();
         //     $subscription->user_id = $user->id;
