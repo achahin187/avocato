@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if($note->notification_type_id ==25 ){
                     $user = Users::find($note->user_id);
-                    dd($user->getClient());
+                    
                     if($user->getClient()==8){
                         $note['url']='ind.show';
                     }
