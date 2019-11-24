@@ -75,7 +75,10 @@
                                   @foreach($notes as $note)
                                   <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if( ($note->url != null || $note->url != '') && $note->notification_type_id != 25) href="{{route($note->url,$note->item_id)}}" @elseif($note->notification_type_id == 25) href="{{route($note->url,$note->user_id)}}" @endif >
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
-                                    <p>{{$note->msg }}</p>
+                                    <p>{{$note->msg }}
+                                    @if($note->notification_type_id == 25)
+                                   {{ \Helpers::get_bouquet_name($note->item_id)}}
+                                    @endif</p>
                                     <span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span>
                                     </a>
                                     </li>
