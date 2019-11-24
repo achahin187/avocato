@@ -61,6 +61,10 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']='ind.com.show';
                     }
                 }
+                if($note->notification_type_id ==26){
+    
+                    $note['url']='substitutions.view';
+                    }
                 if($note->notification_type_id ==4){
     
                 $note['url']='complains.edit';
