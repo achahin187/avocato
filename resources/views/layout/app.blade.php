@@ -77,7 +77,7 @@
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                     <p>{{$note->msg }}
                                     @if($note->notification_type_id == 25)
-                                   {{ \Helpers::get_bouquet_name($note->item_id)}}
+                                   {{ \Helper::get_bouquet_name($note->item_id)}}
                                     @endif</p>
                                     <span class="notification_date"><i class="fa fa-clock-o"></i>{{$note->created_at}}</span>
                                     </a>
