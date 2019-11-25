@@ -69,7 +69,23 @@ class AppServiceProvider extends ServiceProvider
     
                 $note['url']='complains.edit';
                 }
-                if($note->notification_type_id ==5 and $note->entity_id==11 ){
+                if($note->notification_type_id ==5 )
+                {
+                    $type = Task::find($note->item_id);
+                    if($type == 4)
+                    {
+                        $note['url']='substitutions.view';
+                    }
+                    if($type == 3)
+                    {
+                        $note['url']='services_show';
+                    }
+                    if($type == 1)
+                    {
+                        $note['url']='task_emergency_view';
+                    }
+                }
+                if( $note->entity_id==11 ){
     
                 $note['url']='services_show';
                 }
