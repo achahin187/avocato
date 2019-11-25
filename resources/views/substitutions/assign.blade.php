@@ -504,10 +504,7 @@ if (currentIndex === 5) { //if last step
         });
 
 
-// $('#dp').daterangepicker({
-//          startDate: new Date({{$task->start_datetime->format('Y')}},{{$task->start_datetime->format('m')-1}}, {{$task->start_datetime->format('d')}}),
-//          endDate: new Date({{($task->end_datetime)?$task->end_datetime->format('Y').',':''}}{{($task->end_datetime)?($task->end_datetime->format('m')-1).',':''}} {{($task->end_datetime)?$task->end_datetime->format('d'):''}})
-//      });
+
 
       $('input:radio[name="lawyer_id"]').change(
     function(){
