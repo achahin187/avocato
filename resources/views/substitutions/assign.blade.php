@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                    <form id="horizontal-pill-steps" method="post" action="{{URL('substitution_assign_lawyer/'.$task->id)}}" enctype="multipart/form-data" accept-charset="utf-8">
+                    <form id="horizontal-pill-steps" method="post" action="{{URL('substitutions_assign_lawyer/'.$task->id)}}" enctype="multipart/form-data" accept-charset="utf-8">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <h3>اختيار المحامي</h3>
                       <fieldset>
