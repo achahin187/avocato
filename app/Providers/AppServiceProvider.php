@@ -72,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if($note->notification_type_id ==5 )
                 {
-                    $type = Tasks::find($note->item_id);
+                    $type = Tasks::find($note->item_id)->task_type_id;
                     if($type == 4)
                     {
                         $note['url']='substitutions.view';
