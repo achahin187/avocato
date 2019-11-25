@@ -179,7 +179,7 @@ class SubstitutionsController extends Controller
     {
       $data['substitution'] = Tasks::where('id',$id)->with(['substitution'=>function($q){
         $q->with('type');
-    }])->with('lawyer')->with('lawyer_substitution')->first();
+    }])->where('task_type_id',4)->with('lawyer')->with('lawyer_substitution')->first();
 
 
     if( $data['substitution'] == NULL ) {

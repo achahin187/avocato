@@ -105,7 +105,7 @@ class ServicesController extends Controller
      */
     public function show($id)
     {
-        $data['service'] = Tasks::find($id);
+        $data['service'] = Tasks::where('task_type_id',3)->where('id',$id)->first();
 
         if( $data['service'] == NULL ) {
             Session::flash('warning', 'لم يتم العثور الخدمة');
