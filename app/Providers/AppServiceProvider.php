@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Sheet;
 use DB;
 use App\Users;
 use Session;
+use App\Tasks;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -71,7 +72,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if($note->notification_type_id ==5 )
                 {
-                    $type = Task::find($note->item_id);
+                    $type = Tasks::find($note->item_id);
                     if($type == 4)
                     {
                         $note['url']='substitutions.view';
