@@ -181,7 +181,7 @@ class SubstitutionsController extends Controller
 
     if( $data['substitution'] == NULL ) {
       Session::flash('warning', 'لم يتم العثور على طلب الانابه');
-      return redirect('/services');
+      return redirect('/substitutions');
   }
   // dd($data);
 
