@@ -36,7 +36,7 @@ class SubstitutionsController extends Controller
     	$data['task']=Tasks::where('id',$id)->first();
     	$data['lawyers']=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
-        })->with(['user_detail'=>function($q) {
+        })->where('is_active',1)->with(['user_detail'=>function($q) {
                 
                  $q->orderby('join_date','desc');
                  }])->whereHas('user_detail',function($q){
