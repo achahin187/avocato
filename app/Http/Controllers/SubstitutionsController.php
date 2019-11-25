@@ -16,6 +16,7 @@ use Carbon\carbon;
 use Excel;
 use App\Notification_Types;
 use App\Notifications;
+use App\Notifications_Push;
 use App\Exports\SubstitutionsExport;
 class SubstitutionsController extends Controller
 {
