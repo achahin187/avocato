@@ -89,7 +89,7 @@
             <div class="layer clearfix">
               <div class="tck-info col-xs-12"><span class="tiket-data right light-color col-md-2 col-xs-6">
                 <div class="pull-right">         
-                  {{($service->created_at->format('Y - m - d') != null ): $service->created_at->format('Y - m - d') ? ''}}
+                  {{($service->created_at->format('Y - m - d') != null )? $service->created_at->format('Y - m - d') : ''}}
                   &nbsp;<i class="fa fa-calendar"></i>
                 </div></span><span class="tiket-data light-color col-md-4 col-xs-6"> اسم العميل: <a href="">{{$service->client ? $service->client->full_name : 'لا يوجد'}}</a>&nbsp;<span class="color--sec">(
                   
