@@ -76,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
                     
                     if($type == 4)
                     {
-                        dd($note);
+                        
                         $note['url']='substitutions.view';
                     }
                     elseif($type == 3)
@@ -88,10 +88,10 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']='task_emergency_view';
                     }
                 }
-                if( $note->entity_id==11 ){
+                // if( $note->entity_id==11 ){
     
-                $note['url']='services_show';
-                }
+                // $note['url']='services_show';
+                // }
                 if($note->notification_type_id ==5 and $note->entity_id==14 ){
     
                 $note['url']='case_view';
