@@ -301,7 +301,7 @@ class BouquetsController extends Controller
                           if($user_service != null)
                           {
                             $count = $user_service->count + ($service->service_count / $number_of_installments);
-                            dd($count);
+                            // dd($count);
                             $user_service->update([
                                 'quota'=>$count
                             ]);
