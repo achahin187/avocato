@@ -30,6 +30,7 @@ class BouquetsController extends Controller
     public function view($id)
     {
         $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price_relation')->where('country_id',session('country'))->first();
+        
         return view('bouquets.view',$data);
     }
 
@@ -277,7 +278,7 @@ class BouquetsController extends Controller
 
     public function bouquets_payment_user_update(Request $request , $id)
     {
-        // dd($request->all);
+        dd($request->all);
         try
         {
             UserBouquetPayment::where('id',$id)->update($request->all());
