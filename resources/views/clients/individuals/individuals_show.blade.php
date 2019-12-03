@@ -11,6 +11,10 @@
                   <div class="alert alert-success">
                   {{\session('success')}}
                   </div>
+                  @elseif(\session('error'))
+                  <div class="alert alert-warning">
+                  {{\session('error')}}
+                  </div>
                   @endif
           <div class="col-xs-12">
             <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset($user->image ? $user->image : '')}}">

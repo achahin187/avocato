@@ -6,9 +6,13 @@
     <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{ asset('img/covers/dummy2.jpg') }}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
-            @if(\session('success'))
+                @if(\session('success'))
                   <div class="alert alert-success">
                   {{\session('success')}}
+                  </div>
+                  @elseif(\session('error'))
+                  <div class="alert alert-warning">
+                  {{\session('error')}}
                   </div>
                   @endif
           <div class="col-xs-12">
