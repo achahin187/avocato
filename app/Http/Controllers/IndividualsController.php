@@ -211,10 +211,10 @@ class IndividualsController extends Controller
             $subscription->save();
         } catch (\Exception $ex) {
 
-                $user->rule->forcedelete();
-                $user->client_password->forcedelete();
-                $user->user_detail->forcedelete();
-                $user->forcedelete();
+                // $user->rule->forcedelete();
+                // $user->client_password->forcedelete();
+                // $user->user_detail->forcedelete();
+                // $user->forcedelete();
             // Session::flash('warning', '5# حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
             return redirect()->back()->withInput()->with('warning',' حدث خطأ عند ادخال بيانات العميل ، برجاء مراجعة الحقول ثم حاول مجددا');
         }
