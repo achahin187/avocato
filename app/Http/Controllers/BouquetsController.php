@@ -309,7 +309,7 @@ class BouquetsController extends Controller
                           {
                             $count = $service->service_count / $number_of_installments ; 
                             UserBouquetServiceCount::create([
-                                'user_id'=> $user->id ,
+                                'user_id'=> $bouquet->user_id ,
                                 'bouquet_id' => $bouquet->bouquet_id ,
                                 'service_id' => $service->bouquet_service_id ,
                                 'all_count' => $service->service_count,
