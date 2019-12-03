@@ -278,15 +278,57 @@ class BouquetsController extends Controller
 
     public function bouquets_payment_user_update(Request $request , $id)
     {
-        dd($request->payment_status);
-        try
+        // dd($request->payment_status);
+        // try
         {
-            UserBouquetPayment::where('id',$id)->update($request->all());
+            if($request->payment_status == 1)
+            { 
+                $bouquet = UserBouquetPayment::find($id);
+                $number_of_installments = UserBouquetPayment::find('user_id',Auth::user()->id)->count();
+                UserBouquetPayment::where('id',$id)->update([
+                    "payment_status" => $request->payment_status
+                    ]);
+                    $services = BouquetServiceCount::where('bouquet_id',$bouquet->bouquet_id)->get();
+                    foreach($services as $service)
+                    {
+                        if($service->service_active == 1)
+                        {
+                            
+
+                          $user_service = UserBouquetServiceCount::where('user_id' , \Auth::user()->id )->where('service_id',$service->bouquet_service_id)->first();
+                        //   dd($user_service);
+                          if($user_service != null)
+                          {
+                            $count = $user_service->count + ($service->service_count / $number_of_installments);
+                            $user_service->update([
+                                'quota'=>$count
+                            ]);
+                          }
+                          else
+                          {
+                            $count = $service->service_count / $number_of_installments ; 
+                            UserBouquetServiceCount::create([
+                                'user_id'=> $user->id ,
+                                'bouquet_id' => $bouquet->bouquet_id ,
+                                'service_id' => $service->bouquet_service_id ,
+                                'all_count' => $service->service_count,
+                                'quota'=>$count,
+                                
+                            ]);
+
+                          }
+                           
+
+                        }
+                        
+                    }
+            }
+            
         }
-        catch(\Exception $e)
-        {
-            return redirect()->back()->with('error','error update installment');
-        }
+        // catch(\Exception $e)
+        // {
+        //     return redirect()->back()->with('error','error update installment');
+        // }
 
        return redirect()->back()->with('success','installment updated successfully');
 
