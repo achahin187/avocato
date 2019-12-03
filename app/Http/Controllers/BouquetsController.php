@@ -284,7 +284,7 @@ class BouquetsController extends Controller
             if($request->payment_status == 1)
             { 
                 $bouquet = UserBouquetPayment::find($id);
-                if($bouquet->payment_status == $request->payment_status || $bouquet->payment_status == 1)
+                if($bouquet->payment_status != $request->payment_status || $bouquet->payment_status != 1)
                 {
                     $number_of_installments = UserBouquetPayment::where('user_id',$bouquet->user_id)->get()->count();
                
