@@ -279,14 +279,16 @@ class BouquetsController extends Controller
     public function bouquets_payment_user_update(Request $request , $id)
     {
         // dd($request->payment_status);
-        // try
+        try
         {
             if($request->payment_status == 1)
             { 
                 $bouquet = UserBouquetPayment::find($id);
-                $number_of_installments = UserBouquetPayment::where('user_id',$bouquet->user_id)->get()->count();
+                if($bouquet->payment_status == $request->payment_status || $bouquet->payment_status == 1)
+                {
+                    $number_of_installments = UserBouquetPayment::where('user_id',$bouquet->user_id)->get()->count();
                
-                UserBouquetPayment::where('id',$id)->update([
+                  UserBouquetPayment::where('id',$id)->update([
                     "payment_status" => $request->payment_status
                     ]);
                     $services = BouquetServiceCount::where('bouquet_id',$bouquet->bouquet_id)->get();
@@ -324,13 +326,20 @@ class BouquetsController extends Controller
                         }
                         
                     }
+
+                }
+                else
+                {
+                    return redirect()->back()->with('error','You cannot update this installment');
+                }
+
             }
             
         }
-        // catch(\Exception $e)
-        // {
-        //     return redirect()->back()->with('error','error update installment');
-        // }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','error update installment');
+        }
 
        return redirect()->back()->with('success','installment updated successfully');
 

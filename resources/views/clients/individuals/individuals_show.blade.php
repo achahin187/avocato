@@ -92,7 +92,7 @@
                           <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
                             <tr>
                               <td> <b>{{$service['pivot']['all_count']}}</b></td>
-                              <td> {{$service['pivot']['count']}}</td>
+                              <td> {{$service['pivot']['quota']}}</td>
                               <td> {{$service['pivot']['used']}}</td>
                               <td>{{$service['service_name']}}</td>
                             </tr>
