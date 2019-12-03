@@ -95,7 +95,7 @@
                 <tbody>
                 <?php $all=0; $used=0;?>
                 @foreach($user['bouquet_services'] as $service)
-                <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
+                <?php $all += $service['pivot']['quota']; $used +=$service['pivot']['used']; ?>
                   <tr>
                     <td> <b>{{$service['pivot']['all_count']}}</b></td>
                     <td> {{$service['pivot']['quota']}}</td>
