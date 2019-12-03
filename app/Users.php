@@ -274,6 +274,6 @@ class Users extends Authenticatable
     }
     public function bouquet_payment()
     {
-        return $this->belongsToMany('App\BouquetPaymentMethod', 'user_bouquet_payment', 'user_id', 'payment_method')->withPivot('period','payment_status','start_date','end_date','actuall_start_date','actuall_end_date','comment','price');
+        return $this->belongsToMany('App\BouquetPaymentMethod', 'user_bouquet_payment', 'user_id', 'payment_method')->withPivot('id','period','payment_status','start_date','end_date','actuall_start_date','actuall_end_date','comment','price');
     }
 }
