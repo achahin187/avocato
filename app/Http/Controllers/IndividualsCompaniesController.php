@@ -317,7 +317,7 @@ class IndividualsCompaniesController extends Controller
                                   {
                                     $count = $user_service->count + ($service->service_count / $request->number_of_installments);
                                     $user_service->update([
-                                        'count'=>$count
+                                        'quota'=>$count
                                     ]);
                                   }
                                   else
@@ -328,7 +328,7 @@ class IndividualsCompaniesController extends Controller
                                         'bouquet_id' => $request->bouquet_id ,
                                         'service_id' => $service->bouquet_service_id ,
                                         'all_count' => $service->service_count,
-                                        'count'=>$count,
+                                        'quota'=>$count,
                                         
                                     ]);
 
@@ -355,25 +355,25 @@ class IndividualsCompaniesController extends Controller
             return redirect()->back()->withInput();
         }
          
-        try {
+        // try {
 
-            $services = BouquetService::all();
-            foreach ($services as $service)
-            {
-                $user_bouque = new UserBouquetServiceCount();
-                $user_bouque->user_id = $user->id;
-                $user_bouque->service_id = $service->id;
-                $user_bouque->count = 1000000;
-                $user_bouque->all_count = 1000000;
-                $user_bouque->used = 0;
-                $user_bouque->bouquet_id = 10;
-                $user_bouque->save();
-            }
+        //     $services = BouquetService::all();
+        //     foreach ($services as $service)
+        //     {
+        //         $user_bouque = new UserBouquetServiceCount();
+        //         $user_bouque->user_id = $user->id;
+        //         $user_bouque->service_id = $service->id;
+        //         $user_bouque->count = 1000000;
+        //         $user_bouque->all_count = 1000000;
+        //         $user_bouque->used = 0;
+        //         $user_bouque->bouquet_id = 10;
+        //         $user_bouque->save();
+        //     }
 
-          } catch (\Exception $e) {
+        //   } catch (\Exception $e) {
 
-            // dd($ex . '6');
-          }
+        //     // dd($ex . '6');
+        //   }
 
         // redirect with success
         $vodafone = new VodafoneSMS;
@@ -713,7 +713,7 @@ class IndividualsCompaniesController extends Controller
                                   {
                                     $count = $user_service->count + ($service->service_count / $request->number_of_installments);
                                     $user_service->update([
-                                        'count'=>$count
+                                        'quota'=>$count
                                     ]);
                                   }
                                   else
@@ -724,7 +724,7 @@ class IndividualsCompaniesController extends Controller
                                         'bouquet_id' => $request->bouquet_id ,
                                         'service_id' => $service->bouquet_service_id ,
                                         'all_count' => $service->service_count,
-                                        'count'=>$count,
+                                        'quota'=>$count,
                                         
                                     ]);
 

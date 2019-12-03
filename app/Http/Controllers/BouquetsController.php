@@ -277,7 +277,7 @@ class BouquetsController extends Controller
 
     public function bouquets_payment_user_update(Request $request , $id)
     {
-        dd($request->all);
+        // dd($request->all);
         try
         {
             UserBouquetPayment::where('id',$id)->update($request->all());
