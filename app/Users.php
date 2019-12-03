@@ -270,7 +270,7 @@ class Users extends Authenticatable
     }
     public function bouquet_services()
     {
-        return $this->belongsToMany('App\BouquetService', 'user_bouquet_service_count', 'user_id', 'service_id')->withPivot('count','all_count','used');
+        return $this->belongsToMany('App\BouquetService', 'user_bouquet_service_count', 'user_id', 'service_id')->withPivot('quota','all_count','used');
     }
     public function bouquet_payment()
     {
