@@ -198,22 +198,22 @@
                                     <h3>تغيير حالة القسط</h3>
                                     <div class="master_field">
                                     @if(isset($installment->pivot))
-                                    @if($installment->pivot->payment_status==1)       
-                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
-                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+                                      @if($installment->pivot->payment_status==1)       
+                                        <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
+                                        <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
-                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
+                                        <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
-                                      
-                                      @else
-                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
-                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+                                        
+                                        @else
+                                        <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
+                                        <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
-                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
+                                        <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
-                                      @endif
+                                        @endif
                                       @endif
                                       
                                       
