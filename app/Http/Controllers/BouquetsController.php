@@ -285,7 +285,7 @@ class BouquetsController extends Controller
             { 
                 $bouquet = UserBouquetPayment::find($id);
                 $number_of_installments = UserBouquetPayment::where('user_id',$bouquet->user_id)->get()->count();
-                dd($number_of_installments);
+               
                 UserBouquetPayment::where('id',$id)->update([
                     "payment_status" => $request->payment_status
                     ]);
@@ -301,6 +301,7 @@ class BouquetsController extends Controller
                           if($user_service != null)
                           {
                             $count = $user_service->count + ($service->service_count / $number_of_installments);
+                            dd($count);
                             $user_service->update([
                                 'quota'=>$count
                             ]);
