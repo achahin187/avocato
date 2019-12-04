@@ -30,6 +30,7 @@ class BouquetsController extends Controller
     public function view($id)
     {
         $data['bouquet'] = Bouquet::where('id',$id)->with('payment')->with('services')->with('users')->with('price_relation')->where('country_id',session('country'))->first();
+        
         return view('bouquets.view',$data);
     }
 
@@ -277,10 +278,63 @@ class BouquetsController extends Controller
 
     public function bouquets_payment_user_update(Request $request , $id)
     {
-        dd($request->all);
+        // dd($request->payment_status);
         try
         {
-            UserBouquetPayment::where('id',$id)->update($request->all());
+            if($request->payment_status == 1)
+            { 
+                $bouquet = UserBouquetPayment::find($id);
+                if($bouquet->payment_status != $request->payment_status || $bouquet->payment_status != 1)
+                {
+                    $number_of_installments = UserBouquetPayment::where('user_id',$bouquet->user_id)->get()->count();
+               
+                  UserBouquetPayment::where('id',$id)->update([
+                    "payment_status" => $request->payment_status
+                    ]);
+                    $services = BouquetServiceCount::where('bouquet_id',$bouquet->bouquet_id)->get();
+                    foreach($services as $service)
+                    {
+                        if($service->service_active == 1)
+                        {
+                            
+
+                          $user_service = UserBouquetServiceCount::where('user_id' , $bouquet->user_id )->where('service_id',$service->bouquet_service_id)->first();
+                        //   dd($user_service);
+                          if($user_service != null)
+                          {
+                            $count = $user_service->count + ($service->service_count / $number_of_installments);
+                            // dd($count);
+                            $user_service->update([
+                                'quota'=>$count
+                            ]);
+                          }
+                          else
+                          {
+                            $count = $service->service_count / $number_of_installments ; 
+                            UserBouquetServiceCount::create([
+                                'user_id'=> $bouquet->user_id ,
+                                'bouquet_id' => $bouquet->bouquet_id ,
+                                'service_id' => $service->bouquet_service_id ,
+                                'all_count' => $service->service_count,
+                                'quota'=>$count,
+                                
+                            ]);
+
+                          }
+                           
+
+                        }
+                        
+                    }
+
+                }
+                else
+                {
+                    return redirect()->back()->with('error','You cannot update this installment');
+                }
+
+            }
+            
         }
         catch(\Exception $e)
         {

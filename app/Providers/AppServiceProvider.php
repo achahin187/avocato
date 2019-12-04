@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Sheet;
 use DB;
 use App\Users;
 use Session;
+use App\Tasks;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -69,10 +70,29 @@ class AppServiceProvider extends ServiceProvider
     
                 $note['url']='complains.edit';
                 }
-                if($note->notification_type_id ==5 and $note->entity_id==11 ){
+                // if( $note->entity_id==11 ){
     
-                $note['url']='services_show';
+                // $note['url']='services_show';
+                // }
+                if($note->notification_type_id ==5 || $note->notification_type_id ==27)
+                {
+                    $type = Tasks::find($note->item_id)->task_type_id;
+                    
+                    if($type == 4)
+                    {
+                        
+                        $note['url']='substitutions.view';
+                    }
+                    elseif($type == 3)
+                    {
+                        $note['url']='services_show';
+                    }
+                    elseif($type == 1)
+                    {
+                        $note['url']='task_emergency_view';
+                    }
                 }
+                
                 if($note->notification_type_id ==5 and $note->entity_id==14 ){
     
                 $note['url']='case_view';

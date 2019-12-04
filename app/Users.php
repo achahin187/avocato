@@ -270,10 +270,10 @@ class Users extends Authenticatable
     }
     public function bouquet_services()
     {
-        return $this->belongsToMany('App\BouquetService', 'user_bouquet_service_count', 'user_id', 'service_id')->withPivot('count','all_count','used');
+        return $this->belongsToMany('App\BouquetService', 'user_bouquet_service_count', 'user_id', 'service_id')->withPivot('quota','all_count','used');
     }
     public function bouquet_payment()
     {
-        return $this->belongsToMany('App\BouquetPaymentMethod', 'user_bouquet_payment', 'user_id', 'payment_method')->withPivot('period','payment_status','start_date','end_date','actuall_start_date','actuall_end_date','comment','price');
+        return $this->belongsToMany('App\BouquetPaymentMethod', 'user_bouquet_payment', 'user_id', 'payment_method')->withPivot('id','period','payment_status','start_date','end_date','actuall_start_date','actuall_end_date','comment','price');
     }
 }

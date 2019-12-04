@@ -7,9 +7,13 @@
     <div class="coverglobal text-center bshadow--2" style="background:#000 url( '{{ asset('img/covers/dummy2.jpg') }}') no-repeat center center; background-size:cover;"><span></span>
       <div class="container">
         <div class="row">
-            @if(\session('success'))
+               @if(\session('success'))
                   <div class="alert alert-success">
                   {{\session('success')}}
+                  </div>
+                  @elseif(\session('error'))
+                  <div class="alert alert-warning">
+                  {{\session('error')}}
                   </div>
                   @endif
           <div class="col-xs-12">
@@ -93,10 +97,10 @@
                           <tbody>
                           <?php $all=0; $used=0;?>
                           @foreach($user['bouquet_services'] as $service)
-                          <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
+                          <?php $all += $service['pivot']['quota']; $used +=$service['pivot']['used']; ?>
                             <tr>
                               <td> <b>{{$service['pivot']['all_count']}}</b></td>
-                              <td> {{$service['pivot']['count']}}</td>
+                              <td> {{$service['pivot']['quota']}}</td>
                               <td> {{$service['pivot']['used']}}</td>
                               <td>{{$service['service_name']}}</td>
                             </tr>

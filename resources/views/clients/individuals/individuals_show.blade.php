@@ -11,6 +11,10 @@
                   <div class="alert alert-success">
                   {{\session('success')}}
                   </div>
+                  @elseif(\session('error'))
+                  <div class="alert alert-warning">
+                  {{\session('error')}}
+                  </div>
                   @endif
           <div class="col-xs-12">
             <div class="text-xs-center"><a href=""><img class="coverglobal__avatar" src="{{asset($user->image ? $user->image : '')}}">
@@ -89,10 +93,10 @@
                           <tbody>
                           <?php $all=0; $used=0;?>
                           @foreach($user['bouquet_services'] as $service)
-                          <?php $all += $service['pivot']['count']; $used +=$service['pivot']['used']; ?>
+                          <?php $all += $service['pivot']['quota']; $used +=$service['pivot']['used']; ?>
                             <tr>
                               <td> <b>{{$service['pivot']['all_count']}}</b></td>
-                              <td> {{$service['pivot']['count']}}</td>
+                              <td> {{$service['pivot']['quota']}}</td>
                               <td> {{$service['pivot']['used']}}</td>
                               <td>{{$service['service_name']}}</td>
                             </tr>
@@ -198,22 +202,22 @@
                                     <h3>تغيير حالة القسط</h3>
                                     <div class="master_field">
                                     @if(isset($installment->pivot))
-                                    @if($installment->pivot->payment_status==1)       
-                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
-                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+                                      @if($installment->pivot->payment_status==1)       
+                                        <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" checked="true">
+                                        <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
-                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" >
+                                        <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
-                                      
-                                      @else
-                                      <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
-                                      <label for="done{{$installment->pivot->id}}">تم الدفع</label>
+                                        
+                                        @else
+                                        <input class="icon" type="radio" name="payment_status" id="done{{$installment->pivot->id}}" value="1" >
+                                        <label for="done{{$installment->pivot->id}}">تم الدفع</label>
 
-                                      <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
-                                      <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
+                                        <input class="icon" type="radio" name="payment_status" id="not_done{{$installment->pivot->id}}" value="0" checked="true">
+                                        <label for="not_done{{$installment->pivot->id}}">لم يتم الدفع</label>
 
-                                      @endif
+                                        @endif
                                       @endif
                                       
                                       

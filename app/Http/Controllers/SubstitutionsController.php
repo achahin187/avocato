@@ -14,6 +14,9 @@ use App\Case_Techinical_Report;
 use App\Users;
 use Carbon\carbon;
 use Excel;
+use App\Notification_Types;
+use App\Notifications;
+use App\Notifications_Push;
 use App\Exports\SubstitutionsExport;
 class SubstitutionsController extends Controller
 {
@@ -33,12 +36,10 @@ class SubstitutionsController extends Controller
     	$data['task']=Tasks::where('id',$id)->first();
     	$data['lawyers']=Users::whereHas('rules', function ($query) {
         $query->where('rule_id', '5');
-        })->with(['user_detail'=>function($q) {
+        })->where('is_active',1)->with(['user_detail'=>function($q) {
                 
                  $q->orderby('join_date','desc');
-                 }])->whereHas('user_detail',function($q){
-                  $q->where('receive_emergency',1);
-                 })->Distance($data['task']->client_longitude,$data['task']->client_latitude,50,"km")->get();
+                 }])->with('user_detail')->Distance($data['task']->client_longitude,$data['task']->client_latitude,500,"km")->get();
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             
@@ -176,19 +177,19 @@ class SubstitutionsController extends Controller
     {
       $data['substitution'] = Tasks::where('id',$id)->with(['substitution'=>function($q){
         $q->with('type');
-    }])->with('lawyer')->with('lawyer_substitution')->first();
+    }])->where('task_type_id',4)->with('lawyer')->with('lawyer_substitution')->first();
 
 
     if( $data['substitution'] == NULL ) {
       Session::flash('warning', 'لم يتم العثور على طلب الانابه');
-      return redirect('/services');
+      return redirect('/substitutions');
   }
   // dd($data);
 
   $data['charges'] = Task_Charges::where('task_id', $id)->get();
   $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
   $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
-  $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 3)->get();
+  $data['reports'] = Case_Techinical_Report::where('item_id', $id)->where('technical_report_type_id', 4)->get();
     return view('substitutions.view',$data);
     }
 

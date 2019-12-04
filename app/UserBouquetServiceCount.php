@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserBouquetServiceCount extends Model
 {
     protected $table = 'user_bouquet_service_count';
-    protected $fillable = ['service_id', 'user_id','count' , 'bouquet_id' , 'all_count' , 'used'];
+    protected $fillable = ['service_id', 'user_id','quota' , 'bouquet_id' , 'all_count' , 'used'];
     
     public $timestamps = false;
 
