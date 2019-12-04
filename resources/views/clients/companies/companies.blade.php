@@ -175,12 +175,7 @@
           </div>
         </div>
         <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-        <div class="bottomActions__btns">
-          <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadeorange color--white" href="#">حذف المحدد</a>
-          <a id="printSelected" class="master-btn bradius--small padding--small bgcolor--fadepurple color--white" href="#">طباعة</a>
-          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
-          <a id="exportPDF" class="master-btn bradius--small padding--small bgcolor--fadegreen color--white" href="#">استخراج pdf</a>
-        </div>
+        
         <table class="table-1" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
@@ -411,6 +406,14 @@
           @endif
           </tbody>
         </table>
+
+        <div class="bottomActions__btns">
+          <br>
+          <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white pull-left" href="#">حذف المحدد</a>
+          <a id="printSelected" class="master-btn bradius--small padding--small bgcolor--fadepurple color--white pull-left" href="#">طباعة</a>
+          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white pull-left" href="#">استخراج اكسيل</a>
+          <a id="exportPDF" class="master-btn bradius--small padding--small bgcolor--fadeorange color--white pull-left" href="#">استخراج pdf</a>
+        </div>
       </div>
     </div>
   </div>

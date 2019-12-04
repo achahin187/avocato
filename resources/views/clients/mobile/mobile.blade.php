@@ -115,14 +115,10 @@
 
           </div>
         </div>
-        <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-        <div class="bottomActions__btns">
-          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white" href="#">استخراج اكسيل</a>
-          <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel" href="#">حذف المحدد</a>
-         @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
-          {{$users->appends(Request::except('page'))->links()}}
-          @endif
-        </div>
+        <br>
+        <div class="filter__btns pull-right"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
+        <div class="clearfix"></div>
+        <br>
         <table class="table-1 hide-datatable-pagination" id="dataTableTriggerId_001">
           <thead>
             <tr class="bgcolor--gray_mm color--gray_d">
@@ -207,6 +203,18 @@
             @endforeach
           </tbody>
         </table>
+
+        <div class="bottomActions__btns">
+          <br>
+          <a id="exportSelected" class="master-btn bradius--small padding--small bgcolor--fadeblue color--white pull-left" href="#">استخراج اكسيل</a>
+          <a id="deleteSelected" class="master-btn bradius--small padding--small bgcolor--fadebrown color--white  pull-left" href="#">حذف المحدد</a>
+         <div class="pull-right">
+          @if($users instanceof \Illuminate\Pagination\LengthAwarePaginator)
+            {{$users->appends(Request::except('page'))->links()}}
+            @endif
+          </div>
+          <div class="clearfix"></div>
+        </div>
       </div>
     </div>
   </div>
