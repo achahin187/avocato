@@ -37,35 +37,35 @@ class AppServiceProvider extends ServiceProvider
                 if($note->notification_type_id ==3 ){
                     $user = Users::find($note->item_id);
                     if($user->getClient()==8){
-                        $note['url']='ind.show';
+                        $note['url']=route('ind.show',$note->item_id);
                     }
                     if($user->getClient()==9){
-                        $note['url']='companies.show';
+                        $note['url']=route('companies.show',$note->item_id);
                     }
                     if($user->getClient()==10){
-                        $note['url']='ind.com.show';
+                        $note['url']=route('ind.com.show',$note->item_id);
                     }
                 }
                 elseif($note->notification_type_id ==25 ){
                     $user = Users::find($note->user_id);
                     
                     if($user->getClient()==8){
-                        $note['url']='ind.show';
+                        $note['url']=route('ind.show',$note->user_id);
                     }
                     if($user->getClient()==9){
-                        $note['url']='companies.show';
+                        $note['url']=route('companies.show',$note->user_id);
                     }
                     if($user->getClient()==10){
-                        $note['url']='ind.com.show';
+                        $note['url']=route('ind.com.show',$note->user_id);
                     }
                 }
                 elseif($note->notification_type_id ==26){
     
-                    $note['url']='substitutions.view';
+                    $note['url']=route('substitutions.view',$note->item_id);
                     }
                 elseif($note->notification_type_id ==4){
     
-                $note['url']='complains.edit';
+                $note['url']=route('complains.edit',$note->item_id);
                 }
                 // if( $note->entity_id==11 ){
     
@@ -78,37 +78,33 @@ class AppServiceProvider extends ServiceProvider
                     if($type == 4)
                     {
                         
-                        $note['url']='substitutions.view';
+                        $note['url']=route('substitutions.view',$note->item_id);
                     }
                     elseif($type == 3)
                     {
-                        $note['url']='services_show';
+                        $note['url']=route('services_show',$note->item_id);
                     }
                     elseif($type == 1)
                     {
-                        $note['url']='task_emergency_view';
+                        $note['url']=route('task_emergency_view',$note->item_id);
                     }
                 }
                 
                 elseif($note->notification_type_id ==5 and $note->entity_id==14 ){
     
-                $note['url']='case_view';
-                }
-                elseif($note->notification_type_id ==6){
-    
-                $note['url']='lawyers_show';
+                $note['url']=route('case_view',$note->item_id);
                 }
                 elseif($note->notification_type_id ==7 || $note->notification_type_id ==14 ){
     
-                $note['url']='legal_consultation_view';
+                $note['url']=route('legal_consultation_view',$note->item_id);
                 }
-                elseif($note->notification_type_id ==16){
+                elseif($note->notification_type_id ==16 || $note->notification_type_id ==6){
     
-                    $note['url']='lawyers_show';
+                    $note['url']=route('lawyers_show',$note->item_id);
                     }
                
                 else{
-                    $note['url']='task_emergency_view';
+                    $note['url']=route('task_emergency_view',$note->item_id);
                 }
     
             }
@@ -117,7 +113,7 @@ class AppServiceProvider extends ServiceProvider
                 if($note->is_read==0)
                     $counter++;
             }
-            // dd($notes);
+            dd($notes);
             \View::share('counter', $counter);
             \View::share('notes', $notes);  
         }); 
