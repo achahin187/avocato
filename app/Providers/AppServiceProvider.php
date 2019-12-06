@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
     
                 $note['url']='task_emergency_view';
                 }
-                if($note->notification_type_id ==3 ){
+                elseif($note->notification_type_id ==3 ){
                     $user = Users::find($note->item_id);
                     if($user->getClient()==8){
                         $note['url']='ind.show';
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']='ind.com.show';
                     }
                 }
-                if($note->notification_type_id ==25 ){
+                elseif($note->notification_type_id ==25 ){
                     $user = Users::find($note->user_id);
                     
                     if($user->getClient()==8){
@@ -62,11 +62,11 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']='ind.com.show';
                     }
                 }
-                if($note->notification_type_id ==26){
+                elseif($note->notification_type_id ==26){
     
                     $note['url']='substitutions.view';
                     }
-                if($note->notification_type_id ==4){
+                elseif($note->notification_type_id ==4){
     
                 $note['url']='complains.edit';
                 }
@@ -74,7 +74,7 @@ class AppServiceProvider extends ServiceProvider
     
                 // $note['url']='services_show';
                 // }
-                if($note->notification_type_id ==5 || $note->notification_type_id ==27)
+                elseif($note->notification_type_id ==5 || $note->notification_type_id ==27)
                 {
                     $type = Tasks::find($note->item_id)->task_type_id;
                     
@@ -93,26 +93,29 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
                 
-                if($note->notification_type_id ==5 and $note->entity_id==14 ){
+                elseif($note->notification_type_id ==5 and $note->entity_id==14 ){
     
                 $note['url']='case_view';
                 }
-                if($note->notification_type_id ==6){
+                elseif($note->notification_type_id ==6){
     
                 $note['url']='lawyers_show';
                 }
-                if($note->notification_type_id ==7 || $note->notification_type_id ==14 ){
+                elseif($note->notification_type_id ==7 || $note->notification_type_id ==14 ){
     
                 $note['url']='legal_consultation_view';
                 }
-                if($note->notification_type_id ==16){
+                elseif($note->notification_type_id ==16){
     
                     $note['url']='lawyers_show';
                     }
-                    if($note->notification_type_id ==19 || $note->notification_type_id ==20 || $note->notification_type_id ==23){
+                elseif($note->notification_type_id ==19 || $note->notification_type_id ==20 || $note->notification_type_id ==23){
     
                         $note['url']='task_emergency_view';
                         }
+                else{
+                    $note['url']='task_emergency_view';
+                }
     
             }
             $counter = 0;
