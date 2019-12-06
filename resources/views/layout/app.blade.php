@@ -73,7 +73,7 @@
                               <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i><span class="badge badge-default"> {{$counter}}</span></a>
                                 <ul class="dropdowny-menu" role="menu">
                                   @foreach($notes as $note)
-                                  <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if( ($note->url != null || $note->url != '')href="{{$note->url}}" @endif >
+                                  <li @if($note->is_read==1)class="read" @endif data-notification-id={{$note->id}}><a class="notification" @if($note->url != null || $note->url != '') href="{{$note->url}}" @endif >
                                     <div class="icon-container"><i class="fa fa-volume-up"></i></div>
                                     <p>{{$note->msg }}
                                     @if($note->notification_type_id == 25)
