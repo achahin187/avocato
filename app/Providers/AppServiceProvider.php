@@ -59,7 +59,7 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']=route('ind.com.show',$note->user_id);
                     }
                     elseif($user->getClient()==7){
-                        $note['url']=route('mobile_show.show',$note->user_id);
+                        $note['url']=route('mobile.show',$note->user_id);
                     }
                 }
                 elseif($note->notification_type_id ==26){
@@ -116,7 +116,7 @@ class AppServiceProvider extends ServiceProvider
                 if($note->is_read==0)
                     $counter++;
             }
-            dd($notes);
+            // dd($notes);
             \View::share('counter', $counter);
             \View::share('notes', $notes);  
         }); 
