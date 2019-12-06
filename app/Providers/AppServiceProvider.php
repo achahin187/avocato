@@ -33,11 +33,8 @@ class AppServiceProvider extends ServiceProvider
             })->orderBy('created_at','desc')->get();
                
             foreach($notes as $note){
-                if($note->notification_type_id ==2){
-    
-                $note['url']='task_emergency_view';
-                }
-                elseif($note->notification_type_id ==3 ){
+        
+                if($note->notification_type_id ==3 ){
                     $user = Users::find($note->item_id);
                     if($user->getClient()==8){
                         $note['url']='ind.show';
@@ -74,7 +71,7 @@ class AppServiceProvider extends ServiceProvider
     
                 // $note['url']='services_show';
                 // }
-                elseif($note->notification_type_id ==5 || $note->notification_type_id ==27)
+                elseif( $note->notification_type_id ==5 || $note->notification_type_id ==27 || $note->notification_type_id ==2|| $note->notification_type_id ==19 || $note->notification_type_id ==20 || $note->notification_type_id ==23)
                 {
                     $type = Tasks::find($note->item_id)->task_type_id;
                     
@@ -109,10 +106,7 @@ class AppServiceProvider extends ServiceProvider
     
                     $note['url']='lawyers_show';
                     }
-                elseif($note->notification_type_id ==19 || $note->notification_type_id ==20 || $note->notification_type_id ==23){
-    
-                        $note['url']='task_emergency_view';
-                        }
+               
                 else{
                     $note['url']='task_emergency_view';
                 }
@@ -123,7 +117,7 @@ class AppServiceProvider extends ServiceProvider
                 if($note->is_read==0)
                     $counter++;
             }
-            dd($notes);
+            // dd($notes);
             \View::share('counter', $counter);
             \View::share('notes', $notes);  
         }); 
