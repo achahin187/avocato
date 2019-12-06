@@ -197,7 +197,7 @@ class Users extends Authenticatable
 
         public function getClient(){
       foreach($this->rules as $rule){
-        if($rule->pivot->rule_id==8 or $rule->pivot->rule_id==9 or $rule->pivot->rule_id==10){
+        if($rule->pivot->rule_id==8 or $rule->pivot->rule_id==9 or $rule->pivot->rule_id==10 or $rule->pivot->rule_id==7){
           return $rule->pivot->rule_id;
         }
       }
