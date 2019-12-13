@@ -45,7 +45,7 @@ class SubstitutionsController extends Controller
         })->where('is_active',1)->with(['user_detail'=>function($q) {
                 
                  $q->orderby('join_date','desc');
-                 }])->with('user_detail')->Distance($data['task']->client_longitude,$data['task']->client_latitude,500,"km")->paginate(15);
+                 }])->with('user_detail')->Distance($data['task']->client_longitude,$data['task']->client_latitude,500,"km")->paginate(10);
         // dd($data['lawyers']);
         foreach($data['lawyers'] as $detail){
             

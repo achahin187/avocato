@@ -25,6 +25,10 @@ use App\Notifications_Push;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use App\Specializations;
+use App\SyndicateLevels;
+use App\User_Ratings;
+use App\Geo_Cities;
 class ServicesController extends Controller
 {
     /**
@@ -405,9 +409,14 @@ class ServicesController extends Controller
         $data['types'] = Rules::where('parent_id', 5)->get();
         $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($q) {
             $q->where('rule_id', 5);
-        })->where('is_active', 1)->get();
+        })->where('is_active', 1)->paginate(10);
         $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
         $data['service'] = Tasks::find($id);
+        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+        $data['types'] = Rules::where('parent_id', 5)->get();
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
+        $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
         return view('services.services_lawyer', $data);
     }
 
@@ -442,55 +451,106 @@ class ServicesController extends Controller
             no all items in the table
          */
         $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
-            $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
-            $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
-
-            if ($request->has('types') && $request->types != 0) {
-                $q->whereHas('rules', function ($q) use ($request) {
-                    $q->where('rule_id', $request->types);
-
-                });
+            if($request->has('search'))
+            {
+              $q = $q->where(function($query) use ($request){
+                $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
+              });
+            }
+          $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
+          $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
+    
+         
+          if ($request->has('nationalities') && $request->nationalities != 0) {
+            $q->whereHas('user_detail', function ($q) use ($request) {
+              $q->where('nationality_id', $request->nationalities);
+    
+            });
+          }
+          if ($request->has('work_sector_area_id') && $request->work_sector_area_id != 0) {
+            $q->whereHas('user_detail', function ($q) use ($request) {
+              $q->where('work_sector_area_id', $request->work_sector_area_id);
+    
+            });
+          }
+          if ($request->has('experience') && $request->experience != null) {
+            $q->whereHas('user_detail', function ($q) use ($request) {
+              $q->where('experience', $request->experience);
+    
+            });
+          }
+          if ($request->has('consultation_cost') && $request->consultation_cost != null) {
+            $q->whereHas('user_detail', function ($q) use ($request) {
+              $q->where('consultation_price', $request->consultation_cost);
+    
+            });
+          }
+    
+          if ($request->filled('work_sector')) {
+            $q->whereHas('specializations', function ($q) use ($request) {
+              $q->whereIn('specializations.id',$request->work_sector);
+    
+            });
+          }
+    
+          if ($request->filled('syndicate_level_id')) {
+            $q->whereHas('user_detail', function ($q) use ($request) {
+              $q->where('syndicate_level_id',$request->syndicate_level_id);
+    
+            });
+          }
+    
+          if ($request->filled('date_from') && $request->filled('date_to')) {
+            $q->whereHas('user_detail', function ($q) use ($request, $date_from, $date_to) {
+    
+              $q->whereBetween('join_date', array($date_from, $date_to));
+    
+            });
+          } elseif ($request->filled('date_from')) {
+            $q->whereHas('user_detail', function ($q) use ($request, $date_from) {
+    
+              $q->where('join_date', '>=', $date_from);
+    
+            });
+          } elseif ($request->filled('date_to')) {
+            $q->whereHas('user_detail', function ($q) use ($request, $date_to) {
+    
+              $q->where('join_date', '<=', $date_to);
+    
+            });
+          }
+         
+    
+    
+    
+          })->whereHas('rules',function($q)use($request){
+          if ($request->has('types') && $request->types != 0) {
+           
+              $q->where('rule_id', $request->types);
+    
+            
+          } else {
+           
+              $q->where('parent_id', 5);
+            
+          }
+          })->paginate(10);
+        
+            $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
+            $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+            $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
+            $data['work_sectors'] = Specializations::all();
+            $data['syndicate_levels'] = SyndicateLevels::all();
+            $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
+            foreach ($data['lawyers'] as $lawyer) {
+              $filter_ids[] = $lawyer->id;
+            }
+            if (!empty($filter_ids)) {
+              Session::flash('filter_ids', $filter_ids);
             } else {
-                $q->whereHas('rules', function ($q) {
-                    $q->where('rule_id', 5);
-                });
+              $filter_ids[] = 0;
+              Session::flash('filter_ids', $filter_ids);
             }
-            if ($request->has('nationalities') && $request->nationalities != 0) {
-                $q->whereHas('user_detail', function ($q) use ($request) {
-                    $q->where('nationality_id', $request->nationalities);
-
-                });
-            }
-
-            if ($request->filled('work_sector')) {
-                $q->whereHas('user_detail', function ($q) use ($request) {
-                    $q->where('work_sector', 'like', '%' . $request->work_sector . '%');
-
-                });
-            }
-
-            if ($request->filled('syndicate_level')) {
-                $q->whereHas('user_detail', function ($q) use ($request) {
-                    $q->where('syndicate_level', 'like', '%' . $request->syndicate_level . '%');
-
-                });
-            }
-
-            if ($request->filled('date_from') && $request->filled('date_to')) {
-                $q->whereBetween('last_login', array($date_from, $date_to));
-            } elseif ($request->filled('date_from')) {
-                $q->where('last_login', '>=', $date_from);
-            } elseif ($request->filled('date_to')) {
-                $q->where('last_login', '<=', $date_to);
-            }
-
-
-
-
-        })->get();
-        $data['types'] = Rules::where('parent_id', 5)->get();
-        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-        $data['service'] = Tasks::find($id);
 
         return view('services.services_lawyer', $data);
 
