@@ -25,6 +25,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Helpers\Helper;
+use App\Rules;
+use App\Specializations;
+use App\SyndicateLevels;
+use App\User_Ratings;
 class EmergencyTasksController extends Controller
 {
     public function view($id)
