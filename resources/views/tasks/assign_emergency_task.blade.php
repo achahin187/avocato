@@ -197,7 +197,7 @@
               
               <div class="remodal-bg">
                                     <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                      <form role="form" action="{{route('emergency_lawyer_assign_filter')}}" method="post" accept-charset="utf-8">
+                                      <form role="form" action="{{route('emergency_lawyer_assign_filter',$task->id)}}" method="post" accept-charset="utf-8">
                                         {{csrf_field()}}
                                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                                         <div>
