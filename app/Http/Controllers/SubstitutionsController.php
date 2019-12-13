@@ -257,7 +257,7 @@ class SubstitutionsController extends Controller
         }
     }
 
-    public function emergency_lawyer_assign_filter(Request $request ,$id)
+    public function substitution_lawyer_assign_filter(Request $request ,$id)
     {
       // dd($request->all());
       $data['task']=Tasks::where('id',$id)->first();
