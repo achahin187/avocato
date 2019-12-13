@@ -369,6 +369,7 @@ Route::get('/substitutions', 'SubstitutionsController@index')->name('substitutio
 Route::get('/substitutions_edit', 'SubstitutionsController@edit')->name('substitutions.edit');
 Route::get('/substitutions_assign/{id}', 'SubstitutionsController@assign')->name('substitutions.assign');
 Route::post('/substitutions_assign_lawyer/{id}', 'SubstitutionsController@assign_lawyer')->name('substitutions.assign_lawyer');
+Route::post('/substitution_lawyer_assign_filter/{task_id}', 'EmergencyTasksController@substitution_lawyer_assign_filter')->name('substitution_lawyer_assign_filter');
 Route::get('/substitutions_delete/{id}', 'SubstitutionsController@delete')->name('substitutions.delete');
 Route::post('/substitutions_delete_all', 'SubstitutionsController@delete_all')->name('substitutions.delete_all');
 Route::post('/substitutions_create', 'SubstitutionsController@create')->name('substitutions.create');
