@@ -34,131 +34,125 @@
                             <div class="clearfix"> </div>
                           </div>
                           <div class="full-table hide-datatable-pagination">
-                          <div class="remodal-bg">
-                                <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                                  <form role="form" action="{{route('lawyers_filter')}}" method="post" accept-charset="utf-8">
-                                    {{csrf_field()}}
-                                    <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                                    <div>
-                                      <h2 id="modal1Title">فلتر</h2>
-                                      {{-- Search --}}
-                                      <div class="col-md-6">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="ID_No">بحث  </label>
-                                          <div class="bootstrap-timepicker">
-                                            <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او الرقم القومي او الموبايل" id="search" value="{{ old('search') }}">
-                                          </div>
-                                
-                                          @if ($errors->has('start_date'))
-                                            <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
-                                          @endif
-                                        {{--  Start date  --}}
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label" for="work_sector">التخصص</label>
-                                        <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
-                                        <option value="0">choose Speification ..</option>
-                                                  @foreach($work_sectors as $work_sector)
-                                                  <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                              <div class="remodal-bg">
+                                    <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                      <form role="form" action="{{route('lawyers_filter')}}" method="post" accept-charset="utf-8">
+                                        {{csrf_field()}}
+                                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                        <div>
+                                            <h2 id="modal1Title">فلتر</h2>
+                                            {{-- Search --}}
+                                            <div class="col-md-6">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="ID_No">بحث  </label>
+                                                <div class="bootstrap-timepicker">
+                                                  <input name="search" class=" master_input" type="text" placeholder=" بحث بالاسم اوالكود او الرقم القومي او الموبايل" id="search" value="{{ old('search') }}">
+                                                </div>
+                                      
+                                                @if ($errors->has('start_date'))
+                                                  <span class="master_message color--fadegreen">{{ $errors->first('search') }}</span>
+                                                @endif
+                                                {{--  Start date  --}}
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label" for="work_sector">التخصص</label>
+                                                <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
+                                                        <option value="0">choose Speification ..</option>
+                                                          @foreach($work_sectors as $work_sector)
+                                                          <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
+                                                          @endforeach
+                                                </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label" for="work_sector">التخصص المكانى </label>
+                                                  <select name="work_sector_area_id" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder=" التخصص لمكانى" style="width:100%" >
+                                                          <option value="0">choose city ..</option>
+                                                            @foreach($cities as $city)
+                                                            <option value="{{$city->id}}">{{$city->name}}</option>
+                                                            @endforeach
+                                                  </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
+                                                    <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
+                                                        <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
+                                                        @foreach($syndicate_levels as $syndicate)
+                                                        <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="nationality">الجنسيه</label>
+                                                <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
+                                                  <option value="0" selected="selected">الكل</option>
+                                                  @foreach($nationalities as $nationality)
+                                                  <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
                                                   @endforeach
-                                                </select>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label" for="work_sector">التخصص المكانى </label>
-                                        <select name="work_sector_area_id" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder=" التخصص لمكانى" style="width:100%" >
-                                                <option value="0">choose city ..</option>
-                                                  @foreach($cities as $city)
-                                                  <option value="{{$city->id}}">{{$city->name}}</option>
+                                                </select><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
+                                                <div class="bootstrap-timepicker">
+                                                  <input name="date_from" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_from">
+                                                </div><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
+                                                <div class="bootstrap-timepicker">
+                                                  <input name="date_to" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_to">
+                                                </div><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="work_to">  سنوات الخبره</label>
+                                                <div class="bootstrap-timepicker">
+                                                  <input name="experience" class=" master_input" type="number" placeholder=" سنوات الخبره" id="work_to">
+                                                </div><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="work_to">  سعر الاستشاره</label>
+                                                <div class="bootstrap-timepicker">
+                                                  <input name="consultation_cost" class=" master_input" type="number" placeholder=" سعر الاستشاره" id="work_to">
+                                                </div><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                              <div class="master_field">
+                                                <label class="master_label mandatory" for="work_type">نوع العمل</label>
+                                                <select name="types" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
+                                                  <option value="0" selected="selected">الكل</option>
+                                                  @foreach($types as $type)
+                                                  <option value="{{$type->id}}">{{$type->name_ar}}</option>
                                                   @endforeach
-                                                </select>
+                                                </select><span class="master_message color--fadegreen"></span>
+                                              </div>
+                                            </div>
                                         </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
-                                      <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
-                                                <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
-                                                @foreach($syndicate_levels as $syndicate)
-                                                <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
-                                                @endforeach
-                                                </select>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="nationality">الجنسيه</label>
-                                          <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
-                                            <option value="0" selected="selected">الكل</option>
-                                            @foreach($nationalities as $nationality)
-                                            <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
-                                            @endforeach
-                                          </select><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="work_from">تاريخ الالتحاق من</label>
-                                          <div class="bootstrap-timepicker">
-                                            <input name="date_from" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_from">
-                                          </div><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="work_to">تاريخ الالتحاق الى</label>
-                                          <div class="bootstrap-timepicker">
-                                            <input name="date_to" class="datepicker master_input"  placeholder="تاريخ الالتحاق" id="work_to">
-                                          </div><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="work_to">  سنوات الخبره</label>
-                                          <div class="bootstrap-timepicker">
-                                            <input name="experience" class=" master_input" type="number" placeholder=" سنوات الخبره" id="work_to">
-                                          </div><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="work_to">  سعر الاستشاره</label>
-                                          <div class="bootstrap-timepicker">
-                                            <input name="consultation_cost" class=" master_input" type="number" placeholder=" سعر الاستشاره" id="work_to">
-                                          </div><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <div class="master_field">
-                                          <label class="master_label mandatory" for="work_type">نوع العمل</label>
-                                          <select name="types" class="master_input select2" id="work_type" data-placeholder="نوع العمل " style="width:100%;" ,>
-                                            <option value="0" selected="selected">الكل</option>
-                                            @foreach($types as $type)
-                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
-                                            @endforeach
-                                          </select><span class="master_message color--fadegreen"></span>
-                                        </div>
-                                      </div>
+                                        <div class="clearfix"></div>
+                                        <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                                        <button class="remodal-confirm"  type="submit">فلتر</button>
+                                      </form>
                                     </div>
-                                    <div class="clearfix"></div>
-                                    <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                                    <button class="remodal-confirm"  type="submit">فلتر</button>
-                                  </form>
-                                  </div>
-                            </div>
+                              </div>
                               <div class="filter__btns pull-right">
                                 <br>
                                 <a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors">
                                 <i class="fa fa-filter"></i>filters</a>
-                                <div class="bottomActions__btns">
-                             
-                                  @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator )          
-                                  {{$lawyers->appends(Request::except('page'))->links()}} 
-                                  @endif
-                                </div>
                                 <div class="clearfix"></div>
                                 <br>
                               </div>
