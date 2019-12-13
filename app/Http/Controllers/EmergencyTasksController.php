@@ -130,6 +130,11 @@ class EmergencyTasksController extends Controller
         //             $detail['nationality']='';
         //          }
         //         }
+        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+        $data['types'] = Rules::where('parent_id', 5)->get();
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
+        $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
     	return view('tasks.assign_emergency_task',$data);
     }
 
