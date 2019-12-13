@@ -282,7 +282,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label mandatory" for="license_start_date">تاريخ بدء التعاقد</label>
-              <input name="start_date" value="{{ old('start_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="ddate">
+              <input name="start_date" value="{{ old('start_date') }}" class=" master_input starting_date" type="text" placeholder="إختر تاريخ بدأ التعاقد" id="ddate">
               
               @if ($errors->has('start_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('start_date') }}</span>
@@ -291,11 +291,25 @@
             </div>
           </div>
 
+          {{--  Subscriptions duration  --}}
+          <div class="col-md-3 col-sm-4 col-xs-12">
+            <div class="master_field">
+              <label class="master_label mandatory" for="license_period">مدة التعاقد (بالشهور)</label>
+              <input name="duration" value="{{ old('duration') ? old('duration') : '0' }}" min="0" class="master_input disScroll duration" type="number" placeholder="0" id="license_period">
+            
+              @if ($errors->has('duration'))
+                <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>
+              @endif
+              
+            </div>
+          </div>
+
           {{--  End date  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
-              <label class="master_label mandatory" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="{{ old('end_date') }}" class=" master_input" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate">
+              <label class="master_label" for="license_end_date">تاريخ  نهاية التعاقد</label>
+              <input name="end_date" value="" class=" master_input ending_date" type="text"  readonly>
+              <!-- <input name="end_date" value="{{ old('end_date') }}" class=" master_input ending_date" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate" readonly> -->
               
               @if ($errors->has('end_date'))
                 <span class="master_message color--fadegreen">{{ $errors->first('end_date') }}</span>
@@ -324,18 +338,7 @@
             </div>
           </div>
 
-          {{--  Subscriptions duration  --}}
-          <div class="col-md-3 col-sm-4 col-xs-12">
-            <div class="master_field">
-              <label class="master_label mandatory" for="license_period">مدة التعاقد</label>
-              <input name="duration" value="{{ old('duration') ? old('duration') : '0' }}" min="0" class="master_input disScroll" type="number" placeholder="0" id="license_period">
-            
-              @if ($errors->has('duration'))
-                <span class="master_message color--fadegreen">{{ $errors->first('duration') }}</span>
-              @endif
-              
-            </div>
-          </div>
+          
 
           {{--  Subscribtion value  --}}
           <div class="col-md-3 col-sm-4 col-xs-12">
@@ -398,6 +401,34 @@
 </div>
 @endsection
 @section('js')
+<script>
+  $(document).ready(function(){
+    var new_date = new Date();
+    var new_month = 0;
+    var duration = 0;
+    
+    // $(".starting_date").change(function(){
+    //   starting = document.getElementsByName("start_date").val();
+    // });
+
+    // $('.starting_date').change(function(){
+    //   new_month = new_date.getMonth();
+    //   new_date = new_month + $(".duration").val;
+    //   $(".ending_date").val(new_date);
+    //   alert(new_date);
+    // });
+    
+    // $(".starting_date").datepicker().on('change', function(e){ 
+    //   starting = new Date(e.date).getMonth() + $(".duration").val;
+    //   $(".ending_date").val(starting);
+    // });
+    $("#license_period").change(function(){
+      //$(".ending_date").val(new_date);
+      
+      alert($("#license_period").value);
+    });
+  });
+</script>
 <script>
   function get_payment_method()
   {

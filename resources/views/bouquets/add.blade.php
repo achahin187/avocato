@@ -3,7 +3,7 @@
 <!-- =============== Custom Content ===============-->
 <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover">
                     <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -211,7 +211,7 @@
                         </select>
                       </div>
                     </div> -->
-                    <div class="col-md-10 col-sm-9 col-xs-9">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                       <div class="master_field">
                         <label class="master_label mandatory" for="package_deac">وصف الباقة</label>
                         <textarea class="master_input" name="description" required id="package_deac" placeholder="وصف الباقة" maxlength="150"></textarea>

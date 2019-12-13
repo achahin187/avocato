@@ -3,7 +3,7 @@
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-lg-12">
-                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '../img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
+                  <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( '{{asset('img/covers/dummy2.jpg')}}' ) no-repeat center center; background-size:cover;">
                     <div class="add-mode">Adding mode</div>
                     <div class="row">
                       <div class="col-xs-12">
@@ -26,126 +26,137 @@
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <h3>اختيار المحامي</h3>
                       <fieldset>
-                        <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                          <div class="col-xs-12"><b class="col-sm-1"> المهمة</b>
-                            <div class="col-sm-11">بعض النص</div>
+                        <div class="col-xs-12">
+                          <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                            <div class="col-xs-12"><b class="col-sm-1"> المهمة</b>
+                              <div class="col-sm-11">بعض النص</div>
+                            </div>
+                            <div class="clearfix"> </div>
                           </div>
-                          <div class="clearfix"> </div>
-                        </div>
-                        <div class="full-table">
-                           <div class="remodal-bg">
-                            <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                              <div>
-                                <h2 id="modal1Title">فلتر</h2>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
-                                    <select class="master_input select2" id="lawyer_spec" multiple="multiple" data-placeholder="التخصص" style="width:100%;" ,>
-                                      <option>تعويضات</option>
-                                      <option>تخصص اخر</option>
-                                    </select><span class="master_message color--fadegreen">message content</span>
+                          <div class="full-table hide-datatable-pagination">
+                            <div class="remodal-bg">
+                              <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <h2 id="modal1Title">فلتر</h2>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="lawyer_spec"> التخصص</label>
+                                      <select class="master_input select2" id="lawyer_spec" multiple="multiple" data-placeholder="التخصص" style="width:100%;" ,>
+                                        <option>تعويضات</option>
+                                        <option>تخصص اخر</option>
+                                      </select><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="lawyer_degree">درجه القيد بالنقابه </label>
+                                      <select class="master_input select2" id="lawyer_degree" multiple="multiple" data-placeholder=" درجه القيد بالنقابه" style="width:100%;" ,>
+                                        <option>محامى تحت التمرين</option>
+                                        <option>محامي متمرس</option>
+                                      </select><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
+                                      <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="start_date_from">تاريخ الالتحاق من</label>
+                                      <div class="bootstrap-timepicker">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date_from">
+                                      </div><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="start_date_to">تاريخ الالتحاق الى</label>
+                                      <div class="bootstrap-timepicker">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date_to">
+                                      </div><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="work_type">نوع العمل</label>
+                                      <select class="master_input select2" id="work_type" multiple="multiple" data-placeholder="نوع العمل " style="width:100%;" ,>
+                                        <option>الكل</option>
+                                        <option>معين بالمكتب</option>
+                                        <option>Freelancer</option>
+                                      </select><span class="master_message color--fadegreen">message content</span>
+                                    </div>
                                   </div>
                                 </div>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="lawyer_degree">درجه القيد بالنقابه </label>
-                                    <select class="master_input select2" id="lawyer_degree" multiple="multiple" data-placeholder=" درجه القيد بالنقابه" style="width:100%;" ,>
-                                      <option>محامى تحت التمرين</option>
-                                      <option>محامي متمرس</option>
-                                    </select><span class="master_message color--fadegreen">message content</span>
-                                  </div>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="lawyer_nationality">الجنسية</label>
-                                    <input class="master_input" type="text" placeholder="الجنسية" id="lawyer_nationality"><span class="master_message color--fadegreen">message</span>
-                                  </div>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="start_date_from">تاريخ الالتحاق من</label>
-                                    <div class="bootstrap-timepicker">
-                                      <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date_from">
-                                    </div><span class="master_message color--fadegreen">message content</span>
-                                  </div>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="start_date_to">تاريخ الالتحاق الى</label>
-                                    <div class="bootstrap-timepicker">
-                                      <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date_to">
-                                    </div><span class="master_message color--fadegreen">message content</span>
-                                  </div>
-                                </div>
-                                <div class="col-md-4 col-sm-6 col-xs-12">
-                                  <div class="master_field">
-                                    <label class="master_label mandatory" for="work_type">نوع العمل</label>
-                                    <select class="master_input select2" id="work_type" multiple="multiple" data-placeholder="نوع العمل " style="width:100%;" ,>
-                                      <option>الكل</option>
-                                      <option>معين بالمكتب</option>
-                                      <option>Freelancer</option>
-                                    </select><span class="master_message color--fadegreen">message content</span>
-                                  </div>
-                                </div>
+                                <div class="clearfix"></div>
+                                <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                                <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                              </div>
+                            </div> 
+                              <div class="filter__btns pull-right">
+                                <br>
+                                <a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a>
+                                <div class="clearfix"></div>
+                                <br>
+                              </div>
+                              
+                            
+                              <table  class="dataTable">
+                                <thead>
+                                  <tr class="bgcolor--gray_mm color--gray_d">
+                                    <th><span class="cellcontent">اختيار</span></th>
+                                    <th><span class="cellcontent">كود المحامي</span></th>
+                                    <th><span class="cellcontent">الاسم</span></th>
+                                    <th><span class="cellcontent">الرقم القومي</span></th>
+                                    <th><span class="cellcontent">الجنسية</span></th>
+                                    <th><span class="cellcontent">التخصص</span></th>
+                                    <th><span class="cellcontent">درجة التقاضى</span></th>
+                                    <th><span class="cellcontent">عنوان</span></th>
+                                    <th><span class="cellcontent">هاتف</span></th>
+                                    <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
+                                    <th><span class="cellcontent">تفعيل</span></th>
+                                    <th><span class="cellcontent">المسافه</span></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @foreach($lawyers as $lawyer)
+                                  <tr data-lawyer-id="{{$lawyer->id}}">
+                                  
+                                    <td><span class="cellcontent"><input class="input-in-table" type="radio"  id="{{$lawyer->id}}" name="lawyer_id" class="checkboxes"  value="{{$lawyer->id}}" /></span></td>
+                                    
+                                    <td><span class="cellcontent">{{$lawyer->code}}</span></td>
+                                    <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
+                                    <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
+                                    <td><span class="cellcontent">{{$lawyer->user_detail->nationality->user_detail or ''}}</span></td>
+                                    <td><span class="cellcontent ">@foreach($lawyer->specializations as $key =>$spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
+                                    <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
+                                    <td><span class="cellcontent">{{$lawyer->address}}</span></td>
+                                    <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
+                                    <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
+                                    @if($lawyer->is_active)
+                                    <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
+                                    @else
+                                    <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
+                                    @endif
+                                    <td><span class="cellcontent">{{$lawyer->distance}}</span></td>
+                                  </tr>
+                                  @endforeach
+                                
+                                </tbody>
+                              </table>
+                            <div class="bottomActions__btns">
+                              <br>
+                              <div class="pull-right">
+                                @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator)
+                                  {{$lawyers->appends(Request::except('page'))->links()}}
+                                @endif
                               </div>
                               <div class="clearfix"></div>
-                              <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                              <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
                             </div>
-                          </div> 
-                          <div class="filter__btns">
-                            <a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                            <div class="bottomActions__btns">
-                            <!-- @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator)
-                              {{$lawyers->appends(Request::except('page'))->links()}}
-                            @endif -->
-                            </div>
-                          
-                            <table class="table-1" style="overflow-y:scroll">
-                            <thead>
-                              <tr class="bgcolor--gray_mm color--gray_d">
-                                <th><span class="cellcontent"></span></th>
-                                <th><span class="cellcontent">كود المحامي</span></th>
-                                <th><span class="cellcontent">الاسم</span></th>
-                                <th><span class="cellcontent">الرقم القومي</span></th>
-                                <th><span class="cellcontent">الجنسية</span></th>
-                                <th><span class="cellcontent">التخصص</span></th>
-                                <th><span class="cellcontent">درجة التقاضى</span></th>
-                                <th><span class="cellcontent">عنوان</span></th>
-                                <th><span class="cellcontent">هاتف</span></th>
-                                <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
-                                <th><span class="cellcontent">تفعيل</span></th>
-                                <th><span class="cellcontent">المسافه</span></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @foreach($lawyers as $lawyer)
-                              <tr data-lawyer-id="{{$lawyer->id}}">
-                              
-                                <td><span class="cellcontent"><input class="input-in-table" type="radio"  id="{{$lawyer->id}}" name="lawyer_id" class="checkboxes"  value="{{$lawyer->id}}" /></span></td>
-                                
-                                <td><span class="cellcontent">{{$lawyer->code}}</span></td>
-                                <td><span class="cellcontent full_name" >{{$lawyer->name}}</span></td>
-                                <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                                <td><span class="cellcontent">{{$lawyer->user_detail->nationality->user_detail or ''}}</span></td>
-                                <td><span class="cellcontent ">@foreach($lawyer->specializations as $key =>$spec)@if($key>0)-{{$spec->name}}@else{{$spec->name}}@endif @endforeach</span></td>
-                                <td><span class="cellcontent syndicate_level">{{($lawyer->user_detail->syndicate_levela) ? $lawyer->user_detail->syndicate_levela->name : 'لا يوجد'}}</span></td>
-                                <td><span class="cellcontent">{{$lawyer->address}}</span></td>
-                                <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
-                                <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
-                                @if($lawyer->is_active)
-                                <td><span class="cellcontent"><i class = "fa color--fadegreen fa-check"></i></span></td>
-                                @else
-                                <td><span class="cellcontent"><i class = "fa color--fadebrown fa-times"></i></span></td>
-                                @endif
-                                <td><span class="cellcontent">{{$lawyer->distance}}</span></td>
-                              </tr>
-                              @endforeach
                             
-                            </tbody>
-                          </table>
-                          
+                          </div>
                         </div>
                       </fieldset>
                       <h3>تعيين المهمة حسب الجدول الشهرى للمحامي</h3>
@@ -162,13 +173,13 @@
                           </div>
                           <div class="clearfix"> </div><br>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-12 no-padding">
                           <div class="master_field">
                             <label class="master_label">تاريخ بداية و نهاية المهمة</label>
                              <input name="start_end" id="dp" class="date_range_picker master_input" type="text" placeholder="اكتب تاريخ بداية و نهاية المهمة هنا">
                           </div>
                           <div id="lawyer_tasks">
-                        {{--   <div class="col-lg-12">
+                        {{--   <div class="col-lg-12 ">
                             <div class="panel panel-default">
                               <div class="panel-heading" id="heading-1" role="tab">
                                 <h4 class="panel-title bgcolor--main_l bradius--noborder bshadow--1 padding--small margin--small-top-bottom"><a class="trigger color--white" role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
