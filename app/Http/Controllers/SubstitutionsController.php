@@ -23,6 +23,7 @@ use App\Specializations;
 use App\SyndicateLevels;
 use App\User_Ratings;
 use App\Geo_Cities;
+use Session;
 class SubstitutionsController extends Controller
 {
     public function index()
