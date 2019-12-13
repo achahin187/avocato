@@ -29,6 +29,7 @@ use App\Rules;
 use App\Specializations;
 use App\SyndicateLevels;
 use App\User_Ratings;
+use App\Geo_Cities;
 class EmergencyTasksController extends Controller
 {
     public function view($id)
