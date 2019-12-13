@@ -450,6 +450,7 @@ class ServicesController extends Controller
             Session::flash to send ids of filtered data and extract excel of filtered data
             no all items in the table
          */
+        $data['service']=Tasks::where('id',$id)->first();
         $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
             if($request->has('search'))
             {
