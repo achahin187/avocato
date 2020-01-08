@@ -407,9 +407,9 @@
     var new_month = 0;
     var duration = 0;
     
-    // $(".starting_date").change(function(){
-    //   starting = document.getElementsByName("start_date").val();
-    // });
+    $(".ending_date").change(function(){
+      alert('end_date:'+$(".ending_date").val());
+    });
 
     // $('.starting_date').change(function(){
     //   new_month = new_date.getMonth();
@@ -432,7 +432,7 @@
 <script>
   function get_payment_method()
   {
-    alert('end_date:'+$(".ending_date").val());
+    
     // var id = $('#bouquet_id').val();
      id = $("#license_type").find(':selected').data('id')
   //  alert(id);
