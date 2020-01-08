@@ -94,6 +94,7 @@ class SubstitutionsController extends Controller
                 'is_push'=>$notification_type->is_push,
                 "created_at"=>Carbon::now()->format('Y-m-d H:i:s')
             ]);
+            
              $notification_push=Notifications_Push::create([
                 "notification_id"=>$notification->id,
                 "device_token"=>$user->device_token ,

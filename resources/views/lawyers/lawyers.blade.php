@@ -139,10 +139,14 @@
               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
               <button class="remodal-confirm"  type="submit">فلتر</button>
             </form>
-            </div>
           </div>
-          <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-          <div class="bottomActions__btns"><a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" >ارسال تنبية</a><a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" >استخراج اكسيل</a><a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" >حذف المحدد</a>
+      </div>
+          <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors">
+          <i class="fa fa-filter"></i>filters</a></div>
+          <div class="bottomActions__btns">
+          <a class="noti-all master-btn bradius--small padding--small bgcolor--fadeorange color--white" >ارسال تنبية</a>
+          <a class="excel-btn master-btn bradius--small padding--small bgcolor--fadeblue color--white" >استخراج اكسيل</a>
+          <a class="master-btn bradius--small padding--small bgcolor--fadebrown color--white btn-warning-cancel-all" >حذف المحدد</a>
              @if($lawyers instanceof \Illuminate\Pagination\LengthAwarePaginator )          
             {{$lawyers->appends(Request::except('page'))->links()}} 
             @endif

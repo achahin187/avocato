@@ -308,7 +308,7 @@ class EmergencyTasksController extends Controller
 
 
 
-    })->whereHas('rules',function($q)use($request){
+      })->whereHas('rules',function($q)use($request){
       if ($request->has('types') && $request->types != 0) {
        
           $q->where('rule_id', $request->types);
@@ -319,26 +319,26 @@ class EmergencyTasksController extends Controller
           $q->where('parent_id', 5);
         
       }
-    })->whereHas('user_detail',function($q){
+      })->whereHas('user_detail',function($q){
       $q->where('receive_emergency',1);
       $q->with('nationality');
-    })->paginate(10);
+      })->paginate(10);
     
-    $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
-    $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-    $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
-    $data['work_sectors'] = Specializations::all();
-    $data['syndicate_levels'] = SyndicateLevels::all();
-    $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
-    foreach ($data['lawyers'] as $lawyer) {
-      $filter_ids[] = $lawyer->id;
-    }
-    if (!empty($filter_ids)) {
-      Session::flash('filter_ids', $filter_ids);
-    } else {
-      $filter_ids[] = 0;
-      Session::flash('filter_ids', $filter_ids);
-    }
+        $data['roles'] = Rules::whereBetween('id', array('2', '4'))->get();
+        $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
+        $data['types'] = Rules::whereBetween('id', array('11', '12'))->get();
+        $data['work_sectors'] = Specializations::all();
+        $data['syndicate_levels'] = SyndicateLevels::all();
+        $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
+        foreach ($data['lawyers'] as $lawyer) {
+          $filter_ids[] = $lawyer->id;
+        }
+        if (!empty($filter_ids)) {
+          Session::flash('filter_ids', $filter_ids);
+        } else {
+          $filter_ids[] = 0;
+          Session::flash('filter_ids', $filter_ids);
+        }
       // dd($data);
       return view('tasks.assign_emergency_task',$data);
       // dd($data['lawyers']);

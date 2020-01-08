@@ -308,7 +308,7 @@
           <div class="col-md-3 col-sm-4 col-xs-12">
             <div class="master_field">
               <label class="master_label" for="license_end_date">تاريخ  نهاية التعاقد</label>
-              <input name="end_date" value="" class=" master_input ending_date" type="text"  readonly>
+              <input name="end_date" value="" class=" master_input ending_date" type="text"  >
               <!-- <input name="end_date" value="{{ old('end_date') }}" class=" master_input ending_date" type="text" placeholder="إختر تاريخ نهاية التعاقد" id="ddate" readonly> -->
               
               @if ($errors->has('end_date'))
@@ -432,6 +432,7 @@
 <script>
   function get_payment_method()
   {
+    alert($(".ending_date").val());
     // var id = $('#bouquet_id').val();
      id = $("#license_type").find(':selected').data('id')
   //  alert(id);
