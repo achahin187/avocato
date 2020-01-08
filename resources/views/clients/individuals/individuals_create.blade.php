@@ -425,14 +425,14 @@
     $("#license_period").change(function(){
       //$(".ending_date").val(new_date);
       
-      alert($("#license_period").value);
+      // alert($("#license_period").value);
     });
   });
 </script>
 <script>
   function get_payment_method()
   {
-    alert($(".ending_date").val());
+    alert('end_date:'+$(".ending_date").val());
     // var id = $('#bouquet_id').val();
      id = $("#license_type").find(':selected').data('id')
   //  alert(id);
