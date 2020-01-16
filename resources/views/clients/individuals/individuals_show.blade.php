@@ -122,7 +122,7 @@
                             <tr>
                               <th colspan="4">
                                 <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-                                  <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($all * 100)/$used}}%</span>
+                                  <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($all - $used)/100}}%</span>
                                     <div class="slice">
                                       <div class="bar"></div>
                                       <div class="fill"></div>
