@@ -172,8 +172,9 @@ class EmergencyTasksController extends Controller
       $notification=Notifications::create([
                 "msg"=>$notification_type->msg,
                 "entity_id"=>11,
-                "item_id"=>($client)?$client->id:"0",
+                "item_id"=>($task)?$task->id:"0",
                 "item_name"=>($client)?$client->name:"",
+                "item_user_id"=>($client)?$client->id:"",
                 "user_id"=>$request['lawyer_id'],
                 "notification_type_id"=>11,
                 "is_read"=>0,
