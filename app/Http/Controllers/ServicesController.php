@@ -602,7 +602,7 @@ class ServicesController extends Controller
             "lang_id" => $user->lang_id,
             "user_id" => $request['lawyer']
         ]);
-        return redirect()->back()->with('success', 'تم تعيين محامى بنجاح');
+        return redirect()->route('tasks_normal')->with('success', 'تم تعيين محامى بنجاح');
     }
 
     public function addServiceReport(Request $request){
