@@ -48,7 +48,7 @@
                 {{-- Search --}}
                 <div class="col-md-6">
                   <div class="master_field">
-                    <label class="master_label mandatory" for="ID_No">بحث بالاسم اوالكود </label>
+                  <label class="master_label mandatory" for="ID_No">  بحث بالاسم اوالكود او رقم التليفون </label>
                     <div class="bootstrap-timepicker">
                       <input name="search" class=" master_input" type="text" placeholder="بحث بالاسم اوالكود" id="search" value="{{ old('search') }}">
                     </div>

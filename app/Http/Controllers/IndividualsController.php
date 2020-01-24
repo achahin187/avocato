@@ -813,7 +813,10 @@ class IndividualsController extends Controller
         if($request->has('search'))
         {
           $users = $users->distinct()->where(function($query) use ($request){
-            $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%');
+            $query->where('name','like','%'.$request->search.'%')
+            ->orwhere('full_name','like','%'.$request->search.'%')
+            ->orwhere('code','like','%'.$request->search.'%')
+            ->orwhere('cellphone','like','%'.$request->search.'%');
           });
         }
 
