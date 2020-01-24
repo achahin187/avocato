@@ -266,7 +266,7 @@
                             <div class="col-xs-8 syndicate_level2"></div>
                           </div>
                           <div class="col-md-4"><b class="col-xs-4"> المهمة</b>
-                            <div class="col-xs-8">{{$task->name}}</div>
+                            <div class="col-xs-8">{{$service->name}}</div>
                           </div>
                           <div class="clearfix"> </div><br>
                         </div>
