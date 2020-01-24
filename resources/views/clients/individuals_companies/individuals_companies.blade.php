@@ -468,7 +468,13 @@
     </div>
   </div>
 </div>
-
+<script type="text/javascript">
+    $(function () {
+      $('.datepicker').datepicker({autoclose: true});
+      $(".timepicker").timepicker({showInputs: false});
+    });
+    
+  </script>
   <script>
 
     $(document).ready(function() {
