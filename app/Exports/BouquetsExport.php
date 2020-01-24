@@ -56,7 +56,7 @@ class BouquetsExport implements FromCollection,WithEvents
         $selects = $this->ids;
          foreach($selects as $select)
            {
-            $bouquets = Bouquet::where('id',$select)->with('price_relation')->with('payment')->with('services')->with('users')->where('country_id',session('country'))->first();
+            $bouquet = Bouquet::where('id',$select)->with('price_relation')->with('payment')->with('services')->with('users')->where('country_id',session('country'))->first();
 
             $payment = '';
             foreach($bouquet['payment'] as $value)
