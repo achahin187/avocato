@@ -282,6 +282,8 @@ class NotificationsController extends Controller
 
     public function pushAndroid($registrationIds,$message) {
         // prep the bundle
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        // $url = 'https://android.googleapis.com/gcm/send';
         $msg = array (
               'message' 	=> $message,
               'title'		=> 'This is a title. title',
@@ -303,7 +305,7 @@ class NotificationsController extends Controller
               'Content-Type: application/json'
           );
           $ch = curl_init();
-          curl_setopt( $ch,CURLOPT_URL, 'https://android.googleapis.com/gcm/send' );
+          curl_setopt( $ch,CURLOPT_URL, $url );
           curl_setopt( $ch,CURLOPT_POST, true );
           curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
           curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );

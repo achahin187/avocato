@@ -10,8 +10,10 @@ use App\OfficeBranches;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\UserBouquet;
 use DB;
-
+use App\UserBouquetPayment;
+use App\UserBouquetServiceCount;
 class Users extends Authenticatable
 {
     use SoftDeletes;
@@ -58,6 +60,12 @@ class Users extends Authenticatable
                 }
               }
               }
+              if ( count($user->bouquets)>0) { 
+                UserBouquet::where('user_id',$user->id)->delete();
+                UserBouquetPayment::where('user_id',$user->id)->delete();
+                UserBouquetServiceCount::where('user_id',$user->id)->delete();
+                
+                }
 
             //if ( OfficeBranches::where('office_id',$user->id)->count() >0 ) {OfficeBranches::where('office_id',$user->id)->delete();}
             // if ( count($user->offices)>0 ) {$user->offices()->delete();}

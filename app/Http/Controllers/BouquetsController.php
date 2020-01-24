@@ -213,11 +213,11 @@ class BouquetsController extends Controller
     {
         $bouquet = Bouquet::where('id',$id)->with('users')->first();
         // dd($bouquet->users()->count());
-        if($bouquet->users()->count() > 0 )
-        {
-            session('error','cannot delete this bouquet because it has users ');
-            return redirect()->route('bouquets');  
-        }
+        // if($bouquet->users()->count() > 0 )
+        // {
+        //     session('error','cannot delete this bouquet because it has users ');
+        //     return redirect()->route('bouquets');  
+        // }
         try{
             // $bouquet->price()->delete();
             // $bouquet->payment()->delete();
