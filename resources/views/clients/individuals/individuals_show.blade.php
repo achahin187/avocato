@@ -91,9 +91,9 @@
                             </tr>
                           </thead>
                           <tbody>
-                          <?php $all=0; $used=0;?>
+                          <?php $all=0; $used=0; $all_count=0;?>
                           @foreach($user['bouquet_services'] as $service)
-                          <?php $all += $service['pivot']['quota']; $used +=$service['pivot']['used']; ?>
+                          <?php $all += $service['pivot']['quota']; $used +=$service['pivot']['used']; $all_count +=$service['pivot']['all_count'];?>
                             <tr>
                               <td> <b>{{$service['pivot']['all_count']}}</b></td>
                               <td> {{$service['pivot']['quota']}}</td>
@@ -122,13 +122,13 @@
                             <tr>
                               <th colspan="4">
                                 <div class="stat-box stat-box-3 margin--small-top-bottom bgcolor--white bshadow--1 bradius--small">
-                                  <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : ($all - $used)/100}}%</span>
+                                  <div class="c100 p20 rad_progress_size_small"><span>{{($all == 0) ? 0 : round(($all*100)/$all_count)}}%</span>
                                     <div class="slice">
                                       <div class="bar"></div>
                                       <div class="fill"></div>
                                     </div>
                                   </div>
-                                  <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">{{$all- $used}}</span></div>
+                                  <div class="stat-box-content color--fadeblue"><span class="stat-box-text">الرصيد المتبقي</span><span class="stat-box-number">{{$all}}</span></div>
                                 </div>
                               </th>
                         </tr>
