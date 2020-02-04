@@ -14,6 +14,7 @@ use App\UserBouquet;
 use DB;
 use App\UserBouquetPayment;
 use App\UserBouquetServiceCount;
+use App\Notifications;
 class Users extends Authenticatable
 {
     use SoftDeletes;
@@ -66,6 +67,8 @@ class Users extends Authenticatable
                 UserBouquetServiceCount::where('user_id',$user->id)->delete();
                 
                 }
+               if(count($user->notifications()) > 0)
+                Notifications::where('user_id',$user->id)->orwhere('item_id',$user->id)->orwhere('item_user_id',$user->id)->delete();
               
             //if ( OfficeBranches::where('office_id',$user->id)->count() >0 ) {OfficeBranches::where('office_id',$user->id)->delete();}
             // if ( count($user->offices)>0 ) {$user->offices()->delete();}
