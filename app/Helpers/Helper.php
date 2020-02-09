@@ -423,7 +423,11 @@ class Helper {
       }
 
       public static function get_bouquet_name($id){
-          $name = Bouquet::find($id)->name;
-          return $name;
+          $bouquet = Bouquet::find($id);
+          if($bouquet)
+          {
+              return $bouquet->name;
+          }
+          return '';
       }
 }
