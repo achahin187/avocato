@@ -216,7 +216,11 @@ return [
         'office_phone' => 'رقم الهاتف',
         'office_email' => 'البريد الالكتروني',
         'office_city' => 'المدينة',
-        'case_type' => 'نوع جديد'
+        'case_type' => 'نوع جديد',
+        'title' => 'العنوان',
+        'from' => 'من',
+        'to' => 'إلى',
+        'academic_degree_name' => 'عنوان الدرجة الأكاديميه'
     ],
 
 ];

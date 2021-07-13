@@ -117,6 +117,11 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'title' => 'Title',
+        'from' => 'From',
+        'to' => 'To',
+        'academic_degree_name' => 'Academic degree name'
+    ],
 
 ];
