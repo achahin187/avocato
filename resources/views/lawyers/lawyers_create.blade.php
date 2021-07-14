@@ -287,6 +287,23 @@
                           <input value="{{ old('experience') }}" name="experience" class="master_input" type="number" placeholder="سنوات الخبرة" id="year_experience">
                         </div>
                       </div>
+
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="degree_id">الدرجة العلميه</label>
+                          <select name="degree_id" class="master_input select2" id="degree_id" data-placeholder="الدرجة العلميه " style="width:100%;" ,>
+                          <option value="choose" selected disabled>اختر الدرجة العلميه</option>
+                          @foreach($academic_degrees as $academic_degree)
+                            <option value="{{$academic_degree->id}}">{{$academic_degree->title}} ({{ $academic_degree->from }} - {{ $academic_degree->to }})</option>
+                          @endforeach
+                          </select><span class="master_message color--fadegreen">
+                            @if ($errors->has('degree_id'))
+                              {{ $errors->first('degree_id')}}
+                            @endif
+                          </span>
+                        </div>
+                      </div>
+
                       <div class="col-md-2 col-sm-6 col-xs-6">
                         <div class="master_field">
                           <label class="master_label mandatory" for="consultation_cost">سعر الإستشارة</label>
