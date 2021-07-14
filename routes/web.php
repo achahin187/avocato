@@ -81,6 +81,17 @@ Route::get('/consultations_classification/destroy/{id}', 'ConsultationsClassific
 Route::get('/consultations_classification/exportXLS', 'ConsultationsClassificationController@exportXLS')->name('consult.exportXLS');
 Route::post('/consultations_classification/add_localization', 'ConsultationsClassificationController@add_localization')->name('consultations_classification_add_localization');
 
+Route::group(['prefix' => 'academic_degrees'], function () {
+    Route::get('/', 'AcademicDegreeController@index')->name('degrees');
+    Route::get('/create', 'AcademicDegreeController@create')->name('degrees.create');
+    Route::post('/store', 'AcademicDegreeController@store')->name('degrees.store');
+    Route::get('/edit/{id}', 'AcademicDegreeController@edit')->name('degrees.edit');
+    Route::post('/update/{id}', 'AcademicDegreeController@update')->name('degrees.update');
+    Route::post('/destroy/{id}', 'AcademicDegreeController@destroy')->name('degrees.destroy');
+    Route::post('/destroyall', 'AcademicDegreeController@destroyall')->name('degrees.destroyall');
+    Route::post('/add_localization', 'AcademicDegreeController@add_localization')->name('degrees.add_localization');
+});
+
 Route::get('/about', 'AboutController@index')->name('about');
 Route::get('/about_edit', 'AboutController@edit')->name('about_edit');
 Route::patch('/about_edit', 'AboutController@update')->name('about.update');
@@ -254,24 +265,24 @@ Route::middleware(['roles:1,2,3,4'])->group(function () {
 
 
 Route::middleware(['roles:1,2,3'])->group(function () {
-
-Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
-Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
-Route::get('/lawyers_show/{id}', 'LawyersController@show')->name('lawyers_show');
-Route::get('/lawyers_create', 'LawyersController@create')->name('lawyers_create');
-Route::post('/lawyers_store', 'LawyersController@store')->name('lawyers_store');
-Route::get('/lawyers_edit/{id}', 'LawyersController@edit')->name('lawyers_edit');
-Route::post('/lawyers_update/{id}', 'LawyersController@update')->name('lawyers_update');
-Route::get('/lawyers_destroy_get/{id}', 'LawyersController@destroyGet')->name('lawyers_destroy_get');
-Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name('lawyers_destroy_post');
-Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
-Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
-Route::match(['get', 'post'],'/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
-Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
-Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
-Route::post('/rate_edit_notes', 'LawyersController@rate_edit_notes')->name('notes_edit_admin');
-Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
-Route::get('/lawyers_activate_deactivate/{id}','LawyersController@activateDeactivateLawyer')->name('lawyers_activate');
+    Route::get('/lawyers', 'LawyersController@index')->name('lawyers');
+    Route::get('/lawyers_follow', 'LawyersController@follow')->name('lawyers_follow');
+    Route::get('/lawyers_show/{id}', 'LawyersController@show')->name('lawyers_show');
+    Route::get('/lawyers_create', 'LawyersController@create')->name('lawyers_create');
+    Route::post('/lawyers_store', 'LawyersController@store')->name('lawyers_store');
+    Route::get('/lawyers_edit/{id}', 'LawyersController@edit')->name('lawyers_edit');
+    Route::post('/lawyers_update/{id}', 'LawyersController@update')->name('lawyers_update');
+    Route::get('/lawyers_destroy_get/{id}', 'LawyersController@destroyGet')->name('lawyers_destroy_get');
+    Route::post('/lawyers_destroy_post/{id}', 'LawyersController@destroyPost')->name('lawyers_destroy_post');
+    Route::post('/lawyers_destroy_all', 'LawyersController@destroy_all')->name('lawyers_destroy_all');
+    Route::get('/lawyers_excel', 'LawyersController@excel')->name('lawyers_excel');
+    Route::match(['get', 'post'],'/lawyers_filter', 'LawyersController@filter')->name('lawyers_filter');
+    Route::post('/lawyers_rate/{id}', 'LawyersController@rate')->name('lawyers_rate');
+    Route::get('/rate_edit/{id}', 'LawyersController@rate_edit')->name('notes_edit');
+    Route::post('/rate_edit_notes', 'LawyersController@rate_edit_notes')->name('notes_edit_admin');
+    Route::get('/rate_delete/{id}', 'LawyersController@rate_delete')->name('notes_delete');
+    Route::get('/lawyers_activate_deactivate/{id}','LawyersController@activateDeactivateLawyer')->name('lawyers_activate');
+    Route::post('/lawyers/advertise', 'LawyersController@advertise')->name('lawyers.advertise');
 });
 
 
