@@ -14,6 +14,8 @@ use App\Geo_Countries;
 use App\Entity_Localizations;
 use App\ClientsPasswords;
 use App\OfficeBranches;
+use App\AcademicDegree;
+use App\Call;
 use Validator;
 use Helper;
 use Excel;
@@ -97,6 +99,7 @@ class LawyersController extends Controller
     $data['work_sector_areas'] = Geo_Cities::where('country_id',session('country'))->get();
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
+    $data['academic_degrees'] = AcademicDegree::latest()->get();
     foreach($data['syndicate_levels'] as $content)
     {
       $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,1)) ? Helper::localizations('syndicate_levels','name',$content->id,1) : $content->name;
@@ -323,6 +326,7 @@ class LawyersController extends Controller
     $password = Helper::generateRandom(Users::class, 'password', 8);
     $lawyer->password = bcrypt($password);
     $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
+    $lawyer->degree_id = $request->degree_id;
     $lawyer->save();
     $lawyer->rules()->attach([5, $request->work_type]);
         foreach($request->work_sector as $work_sector)
@@ -409,13 +413,10 @@ class LawyersController extends Controller
     $data['types'] = Entity_Localizations::where('entity_id', 9)->where('field', 'name')->get();
     $data['statuses'] = Entity_Localizations::where('entity_id', 4)->where('field', 'name')->get();
     $data['expenses'] = Expenses::where('lawyer_id', $id)->get();
-
     $data['rates_user'] = $data['lawyer']->rate()->with('rules')->get();
-    //  dd($data['rates_user']);
-    
-    // dd($data['rates_user']);
     $data['rates'] = Entity_Localizations::where('entity_id', 10)->where('field', 'name')->get();
-    // dd($data['rates']);
+    $data['calls'] = $data['lawyer']->calls()->latest()->get();
+
     return view('lawyers.lawyers_show', $data);
   }
 
@@ -483,6 +484,7 @@ class LawyersController extends Controller
     $data['currencies'] = Geo_Countries::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
     $data['codes']=Geo_Countries::all();
+    $data['academic_degrees'] = AcademicDegree::latest()->get();
     foreach($data['syndicate_levels'] as $content)
     {
       $content['name']=(Helper::localizations('syndicate_levels','name',$content->id,1)) ? Helper::localizations('syndicate_levels','name',$content->id,1) : $content->name;
@@ -548,6 +550,7 @@ class LawyersController extends Controller
     $lawyer->country_id = session('country');
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d', strtotime($request->birthdate));
+    $lawyer->degree_id = $request->degree_id;
     if ($request->hasFile('image')) {
       $destinationPath = 'users_images';
       $image_name = $destinationPath . '/' . $request->lawyer_name . time() . rand(111, 999) . '.' . Input::file('image')->getClientOriginalExtension();
@@ -713,5 +716,20 @@ class LawyersController extends Controller
       }
      
        return redirect()->back();
+  }
+
+  public function advertise(Request $request)
+  {
+    $id = $request->id;
+
+    try {
+      $lawyer = Users::find($id);
+      $lawyer->is_advertised = $lawyer->is_advertised ? false : true;
+      $lawyer->save();
+
+      return response()->json(['status' => 'success']);
+    } catch (\Exception $exception) {
+      return response()->json(['status' => 'error']);
+    }
   }
 }
