@@ -87,6 +87,14 @@ return [
     'unique'               => ' :attribute محجوز بالفعل',
     'uploaded'             => 'حقل :attribute فشل فى التحميل.',
     'url'                  => 'The :attribute format is invalid.',
+    'confirmation_title' => 'هل أنت متأكد؟',
+    'confirmation_text' => "لا يمكنك الرجوع عن هذا الإجراء!",
+    'confirmation_button' => 'تأكيد',
+    'confirmation_cancel_button' => 'إلغاء',
+    'confirm_deletion_title' => 'تم المسح!',
+    'confirm_deletion_text' => 'تم مسح البيانات بنجاح',
+    'cancel_title' => 'تم الإلغاء!',
+    'cancel_text' => 'المعلومات مازالت موجودة :)',
 
     /*
     |--------------------------------------------------------------------------

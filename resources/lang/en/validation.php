@@ -87,6 +87,14 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'confirmation_title' => 'Are you sure?',
+    'confirmation_text' => "You won't be able to revert this!",
+    'confirmation_button' => 'Yes, delete it!',
+    'confirmation_cancel_button' => 'Cancel',
+    'confirm_deletion_title' => 'Deleted!',
+    'confirm_deletion_text' => 'Your file has been deleted.',
+    'cancel_title' => 'Yes, delete it!',
+    'cancel_text' => 'Nothing changed :)',
 
     /*
     |--------------------------------------------------------------------------
