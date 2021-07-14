@@ -188,14 +188,19 @@ class Users extends Authenticatable
       return $this->hasMany('App\Case_Techinical_Report', 'assigned_to')->withDefault();
     }
 
-        public function expenses()
+    public function expenses()
     {
         return $this->hasMany('App\Expenses','lawyer_id');
     }
 
-        public function rate()
+    public function rate()
     {
         return $this->belongsToMany('App\Users', 'user_ratings', 'user_id', 'created_by')->withPivot('notes','created_at','rate_id','id','is_approved')->using('App\User_Ratings');
+    }
+
+    public function calls()
+    {
+        return $this->hasMany(Call::class, 'from')->orWhere('to', $this->id);
     }
 
     public function getRole(){
@@ -286,5 +291,10 @@ class Users extends Authenticatable
     public function bouquet_payment()
     {
         return $this->belongsToMany('App\BouquetPaymentMethod', 'user_bouquet_payment', 'user_id', 'payment_method')->withPivot('id','period','payment_status','start_date','end_date','actuall_start_date','actuall_end_date','comment','price');
+    }
+
+    public function degree()
+    {
+        return $this->belongsTo(AcademicDegree::class, 'degree_id');
     }
 }

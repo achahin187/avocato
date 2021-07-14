@@ -60,6 +60,9 @@
                           
                           </div>
                       </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">الدرجة العلميه</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">@if ($lawyer->degree) {{ $lawyer->degree->title }} ({{ $lawyer->degree->from }} - {{ $lawyer->degree->to }}) @endif</div>
+                      </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">سنوات الخبرة</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->user_detail->experience}} سنوات</div>
                       </div>
@@ -90,6 +93,7 @@
                       <li>المصاريف</li>
                       <li>تقييم العملاء</li>
                       <li>تقييم الإدارة</li>
+                      <li>المكالمات</li>
                     </ul>
                     <ul class="tab__content">
                       <li class="tab__content_item active">
@@ -564,6 +568,28 @@
                           </table>
 
                           
+                        </div>
+                      </li>
+                      <li class="tab__content_item">
+                        <div class="cardwrap bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
+                          <table class="table-1">
+                            <thead>
+                              <tr class="bgcolor--gray_mm color--gray_d">
+                                <th><span class="cellcontent">من</span></th>
+                                <th><span class="cellcontent">إلى</span></th>
+                                <th><span class="cellcontent">توقيت المكالمة</span></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($calls as $call)
+                              <tr data-call-id="{{$call->id}}">
+                                <td><span class="cellcontent">{{$call->caller->full_name ?? ''}}</span></td>
+                                <td><span class="cellcontent">{{$call->receiver->full_name ?? ''}}</span></td>
+                                <td><span class="cellcontent">{{$call->created_at}}</span></td>
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
                         </div>
                       </li>
                     </ul>
