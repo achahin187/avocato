@@ -20,9 +20,12 @@ class ConsultationsClassificationController extends Controller
      */
     public function index()
     {
+        $mainTypes = Consultation_Types::where('parent_id',null)->get();
         return view('consultations_classification')
                 ->with('consultations', Consultation_Types::all())
-                ->with('languages', Languages::all());
+                ->with('languages', Languages::all())
+                ->with('mainTypes',$mainTypes)
+            ;
     }
 
     /**
@@ -57,7 +60,8 @@ class ConsultationsClassificationController extends Controller
 
         // Add values
         Consultation_Types::create([
-            'name' => $request->consult_name
+            'name' => $request->consult_name,
+            'parent_id' => $request->parent_id
         ]);
 
         // redirect back with flash message
