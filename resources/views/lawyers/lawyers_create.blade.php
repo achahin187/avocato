@@ -187,6 +187,17 @@
                           </span>
                         </div>
                       </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="order">الترتيب</label>
+                          <input name="order" value="{{ old('order') }}" class="master_input" type="number" min="1" placeholder="ترتيب المحامي" id="lawyer_order">
+                            <span class="master_message color--fadegreen">
+                              @if ($errors->has('order'))
+                                {{ $errors->first('order')}}
+                              @endif
+                            </span> 
+                        </div>
+                      </div>
                       <div class="clearfix"></div>
                     </div>
                     <div class="main-title-conts">

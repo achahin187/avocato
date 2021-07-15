@@ -279,6 +279,7 @@ class LawyersController extends Controller
       'syndicate_level_id' => 'required',
       'syndicate_copy' => 'required|image|mimes:jpg,jpeg,png|max:1024',
       'note' => 'min:0|max:100',
+      'order' => 'nullable|integer|min:1'
     ]);
 
     if ($validator->fails()) {
@@ -327,6 +328,7 @@ class LawyersController extends Controller
     $lawyer->password = bcrypt($password);
     $lawyer->code = Helper::generateRandom(Users::class, 'code', 6);
     $lawyer->degree_id = $request->degree_id;
+    $lawyer->order = $request->order;
     $lawyer->save();
     $lawyer->rules()->attach([5, $request->work_type]);
         foreach($request->work_sector as $work_sector)
@@ -525,6 +527,7 @@ class LawyersController extends Controller
       'work_type' => 'required',
       'litigation_level' => 'required',
       'note' => 'min:0|max:100',
+      'order' => 'nullable|integer|min:1'
     ]);
 
     if ($validator->fails()) {
@@ -551,6 +554,7 @@ class LawyersController extends Controller
     $lawyer->is_active = $request->is_active;
     $lawyer->birthdate = date('Y-m-d', strtotime($request->birthdate));
     $lawyer->degree_id = $request->degree_id;
+    $lawyer->order = $request->order;
     if ($request->hasFile('image')) {
       $destinationPath = 'users_images';
       $image_name = $destinationPath . '/' . $request->lawyer_name . time() . rand(111, 999) . '.' . Input::file('image')->getClientOriginalExtension();

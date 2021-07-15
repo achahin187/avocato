@@ -155,6 +155,7 @@
             <thead>
               <tr class="bgcolor--gray_mm color--gray_d">
                 <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                <th><span class="cellcontent">الترتيب</span></th>
                 <th><span class="cellcontent">كود المحامي</span></th>
                 <th><span class="cellcontent">الاسم</span></th>
                 <th><span class="cellcontent">نوع العمل</span></th>
@@ -175,6 +176,7 @@
               @foreach($lawyers as $lawyer)
               <tr data-lawyer-id="{{$lawyer->id}}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                <td><span class="cellcontent">{{$lawyer->order}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
                 <td><span class="cellcontent">
