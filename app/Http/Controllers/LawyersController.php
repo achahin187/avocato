@@ -20,6 +20,7 @@ use Validator;
 use Helper;
 use Excel;
 use Session;
+use DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
 use App\Exports\LawyersExport;
@@ -143,7 +144,7 @@ class LawyersController extends Controller
      */
     
       $data['lawyers'] = Users::where('country_id',session('country'))->where(function ($q) use ($request) {
-        if($request->has('search'))
+        if($request->has('search') && $request->search)
         {
           $q = $q->where(function($query) use ($request){
             $query->where('name','like','%'.$request->search.'%')->orwhere('full_name','like','%'.$request->search.'%')->orwhere('code','like','%'.$request->search.'%')->orwhere('cellphone','like','%'.$request->search.'%');
@@ -152,7 +153,9 @@ class LawyersController extends Controller
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
-     
+      if ($request->has('order') && $request->filled('order')) {
+        $q->whereNotNull('order')->orderBy(DB::raw("coalesce(order, 0)"), $request->order);
+      }
       if ($request->has('nationalities') && $request->nationalities != 0) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('nationality_id', $request->nationalities);
@@ -211,8 +214,6 @@ class LawyersController extends Controller
 
         });
       }
-     
-
 
 
     })->whereHas('rules',function($q)use($request){

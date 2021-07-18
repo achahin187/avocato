@@ -134,6 +134,16 @@
                     </select><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="order">الترتيب</label>
+                    <select name="order" class="master_input select2" id="custom_order" data-placeholder="عرض البيانات بناءا على الترتيب" style="width:100%;" ,>
+                      <option value="0" selected="selected">الكل</option>
+                      <option value="asc">تصاعدي</option>
+                      <option value="desc">تنازلي</option>
+                    </select><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
               </div>
               <div class="clearfix"></div>
               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
