@@ -47,7 +47,7 @@
                          aria-describedby="modal1Desc">
                         <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                         {{--  Start Form  --}}
-                        <form action="{{ route('consult.store') }}" method="POST" class="resetForm">
+                        <form action="{{ route('consult.store') }}" method="POST" class="resetForm" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div>
                                 <div class="row">
@@ -63,6 +63,16 @@
 
                                                 @if ($errors->has('consult_name'))
                                                     <span class="master_message color--fadegreen">{{ $errors->first('consult_name') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="master_field">
+                                                <input name="image" class="master_input" type="file"
+
+                                                     required  >
+
+                                                @if ($errors->has('image'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('image') }}</span>
                                                 @endif
 
                                             </div>

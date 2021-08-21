@@ -10,7 +10,7 @@ class Consultation_Types extends Model
 {
     protected $primaryKey = 'id';
     protected $table = 'consultation_types';
-    protected $fillable = ['name','parent_id'];
+    protected $fillable = ['name','parent_id','image'];
     protected $hidden = ['created_at', 'updated_at'];
     public $timestamps = true;
     public function consultation()
