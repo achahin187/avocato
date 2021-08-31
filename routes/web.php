@@ -376,6 +376,8 @@ Route::post('/substitutions_create', 'SubstitutionsController@create')->name('su
 Route::get('/substitutions_lawyer_task', 'SubstitutionsController@lawyer_task')->name('substitutions.lawyer_task');
 Route::get('/substitutions_view/{id}', 'SubstitutionsController@show')->name('substitutions.view');
 Route::get('/substitutions/excel', 'SubstitutionsController@excel')->name('substitutions.excel');
+Route::get('real-state-registration-request','RealStateRequestController@index');
+
 
 });
 
@@ -394,7 +396,6 @@ Route::post('/emergency_lawyer_assign_filter/{task_id}', 'EmergencyTasksControll
 Route::get('/emergencytasks_excel', 'EmergencyTasksController@excel')->name('emergencytasks_excel');
 Route::match(['get','post'],'/emergency_task_filter', 'EmergencyTasksController@emergency_task_filter')->name('emergency_task_filter');
 Route::post('/add_emergency_task_document', 'EmergencyTasksController@addEmergencyTaskDocument')->name('add_emergency_task_document');
-
 });
 
 
