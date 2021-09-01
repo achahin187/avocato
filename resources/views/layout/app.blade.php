@@ -162,7 +162,11 @@
                                           @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2)
                                       
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('news_list')}}">الاخبار</a>
-                                      </li>        
+                                      </li>
+                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('real-state-registration-request')}}">طلبات  التسجيل العقاري
+                                         </a>
+                                      </li>
+
                                       @endif
                                       <li class="side__list"> <a class="side__item side__item--sub color--gray_d bgcolor--gary_m ">العملاء</a>
                                         <ul class="side__submenu">

@@ -376,7 +376,7 @@ Route::post('/substitutions_create', 'SubstitutionsController@create')->name('su
 Route::get('/substitutions_lawyer_task', 'SubstitutionsController@lawyer_task')->name('substitutions.lawyer_task');
 Route::get('/substitutions_view/{id}', 'SubstitutionsController@show')->name('substitutions.view');
 Route::get('/substitutions/excel', 'SubstitutionsController@excel')->name('substitutions.excel');
-Route::get('real-state-registration-request','RealStateRequestController@index');
+Route::get('real-state-registration-request','RealStateRequestController@index')->name('real-state-registration-request');
 
 
 });
