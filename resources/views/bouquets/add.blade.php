@@ -1,4 +1,4 @@
-  @extends('layout.app')
+@extends('layout.app')
 @section('content')
 <!-- =============== Custom Content ===============-->
 <div class="row">

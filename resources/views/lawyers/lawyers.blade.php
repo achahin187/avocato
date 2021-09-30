@@ -134,6 +134,16 @@
                     </select><span class="master_message color--fadegreen"></span>
                   </div>
                 </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                  <div class="master_field">
+                    <label class="master_label mandatory" for="order">الترتيب</label>
+                    <select name="order" class="master_input select2" id="custom_order" data-placeholder="عرض البيانات بناءا على الترتيب" style="width:100%;" ,>
+                      <option value="0" selected="selected">الكل</option>
+                      <option value="asc">تصاعدي</option>
+                      <option value="desc">تنازلي</option>
+                    </select><span class="master_message color--fadegreen"></span>
+                  </div>
+                </div>
               </div>
               <div class="clearfix"></div>
               <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
@@ -155,6 +165,7 @@
             <thead>
               <tr class="bgcolor--gray_mm color--gray_d">
                 <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                <th><span class="cellcontent">الترتيب</span></th>
                 <th><span class="cellcontent">كود المحامي</span></th>
                 <th><span class="cellcontent">الاسم</span></th>
                 <th><span class="cellcontent">نوع العمل</span></th>
@@ -166,6 +177,7 @@
                 <th><span class="cellcontent">تاريخ التسجيل</span></th>
                 <th><span class="cellcontent">الجنسية</span></th>
                 <th><span class="cellcontent">تفعيل</span></th>
+                <th><span class="cellcontent">معلن عنه</span></th>
                 <th><span class="cellcontent">الاجراءات</span></th>
                 <th hidden> Notification</th>
               </tr>
@@ -174,6 +186,7 @@
               @foreach($lawyers as $lawyer)
               <tr data-lawyer-id="{{$lawyer->id}}">
                 <td><span class="cellcontent"><input type="checkbox" class="checkboxes input-in-table" /></span></td>
+                <td><span class="cellcontent">{{$lawyer->order}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->full_name}}</span></td>
                 <td><span class="cellcontent">
@@ -197,7 +210,10 @@
                   @endforeach
                   @endisset
                 </span></td>
-              <td><a href="{{route('lawyers_activate',$lawyer->id)}}"><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</a></span></td>
+                <td><a href="{{route('lawyers_activate',$lawyer->id)}}"><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</a></span></td>
+                <td>
+                  <input type="checkbox" @if ($lawyer->is_advertised) checked @endif class="broadcast" data-toggle="toggle" data-off="غير معلن عنه" data-on="معلن عنه" data-size="small" data-onstyle="success" data-offstyle="primary" value="{{$lawyer->id}}">
+                </td>
                   <td><span class="cellcontent"><a href= "{{route('lawyers_show',$lawyer->id)}}" ,  class= "action-btn bgcolor--main color--white "><i class = "fa  fa-eye"></i></a><a href= "#lawyer_notification_{{$lawyer->id}}" ,  class= "noti action-btn bgcolor--fadeorange color--white "><i class = "fa  fa-bell"></i></a><a href= "{{route('lawyers_edit',$lawyer->id)}}" ,  class= "action-btn bgcolor--fadegreen color--white "><i class = "fa  fa-pencil"></i></a><a   class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
                 <td hidden>       
                 <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn undefined undefined undefined undefined undefined" href="#lawyer_notification_{{$lawyer->id}}"><span></span></a>
@@ -281,23 +297,23 @@
           // var _token = '{{csrf_token()}}';
           $('[data-remodal-id=lawyer_notification]').remodal().open();
           // alert(lawyer_id);
-    // $(document).on('confirmation', '.remodal', function () {
-    //         var noti = $('#nots').val(); 
-    //         var time = $("input[name=date]").val();
-    //          $.ajax({
-    //            type:'POST',
-    //            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
-    //            data:{notific:noti,noti_date:time,_token:_token},
-    //            success:function(data){
-    //             // alert(data);
-    //             location.reload();
-    //           }
-    //         });
+          // $(document).on('confirmation', '.remodal', function () {
+          //         var noti = $('#nots').val(); 
+          //         var time = $("input[name=date]").val();
+          //          $.ajax({
+          //            type:'POST',
+          //            url:'{{url('notification_lawyer')}}'+'/'+lawyer_id,
+          //            data:{notific:noti,noti_date:time,_token:_token},
+          //            success:function(data){
+          //             // alert(data);
+          //             location.reload();
+          //           }
+          //         });
+          
+          // });    
+        });
     
-    // });
-              });
-    
-            $('.noti-all').click(function(){
+        $('.noti-all').click(function(){
           var selectedIds = $("input:checkbox:checked").map(function(){
             return $(this).closest('tr').attr('data-lawyer-id');
           }).get();
@@ -308,23 +324,48 @@
             
           var _token = '{{csrf_token()}}';
           $('[data-remodal-id=lawyer_notifications]').remodal().open();
-          $(document).on('confirmation', '#two', function () {
-          // alert(selectedIds);
-            var noti = $('#nots2').val(); 
-            var time = $("input[name=date2]").val();
-             $.ajax({
-               type:'POST',
-               url:'{{url('notification_for_lawyers')}}',
-               data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
-               success:function(data){
-                // alert(data);
-                location.reload();
-              }
+            $(document).on('confirmation', '#two', function () {
+              // alert(selectedIds);
+                var noti = $('#nots2').val(); 
+                var time = $("input[name=date2]").val();
+                $.ajax({
+                  type:'POST',
+                  url:'{{url('notification_for_lawyers')}}',
+                  data:{ids:selectedIds,notific:noti,noti_date:time,_token:_token},
+                  success:function(data){
+                    // alert(data);
+                    location.reload();
+                  }
+                });
             });
-    
-        });
           }
-              });
+        });
+
+        let _token = '{{csrf_token()}}';
+
+        $('.broadcast').change(function() {
+            let id = $(this).attr("value");
+
+            $.ajax({
+                type:'post',
+                url:'{{ route('lawyers.advertise') }}',
+                data:{
+                    _token:_token,
+                    id : id
+                },
+                success:function(data){
+                    if(data['status'] == 'success'){
+                        Swal.fire(
+                        '!تم بنجاح',
+                        'تم التعديل بنجاح',
+                        '!تم بنجاح'
+                        );
+                    }else{
+                        swal("تم الإلغاء", "{{ trans('validation.cancel_text') }}", "error");
+                    }
+                },
+            });
+        })
     
     
         $('.btn-warning-cancel').click(function(){

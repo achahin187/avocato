@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/favicon/favicon-16x16.png')}}">
   <link rel="manifest" href="{{asset('img/favicon/manifest.json')}}">
   <link rel="mask-icon" href="{{asset('img/favicon/safari-pinned-tab.svg')}}" color="#22b681">
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <meta name="msapplication-TileColor" content="#22b681">
   <meta name="msapplication-TileImage" content="/mstile-144x144.png">
   <meta name="theme-color" content="#1c5ba8">
@@ -139,6 +140,7 @@
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('courts_list')}}">اسماء المحاكم</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contracts_formulas_types')}}">انواع الصيغ و العقود</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('consultations_classification')}}">تصنيف الاستشارات</a></li>
+                                          <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('degrees')}}">الدرجات العلمية</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('about')}}">عن جسر الأمان</a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contact_us')}}"> اللينكات </a></li>
                                           <li class="side__sublist"><a class="side__subitem color--gray_d bgcolor--gray_l" href="{{route('contactus_index')}}">اتصل بنا</a></li>
@@ -265,6 +267,7 @@
                          </div>
                          <!-- =============== APP MAIN SCRIPTS ===============-->
                          <script type="text/javascript" src="{{ asset('js/scripts.js') }}"></script>
+                         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
                  <script type="text/javascript">
                            $(document).ready(function(){
                             var path = window.location.href;

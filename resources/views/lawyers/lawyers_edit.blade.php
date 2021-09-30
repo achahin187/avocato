@@ -186,6 +186,18 @@
                         </div>
                       </div>
 
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="order">الترتيب</label>
+                          <input name="order" value="{{$lawyer->order}}" class="master_input" type="number" min="1" placeholder="ترتيب المحامي" id="lawyer_order">
+                            <span class="master_message color--fadegreen">
+                              @if ($errors->has('order'))
+                                {{ $errors->first('order')}}
+                              @endif
+                            </span> 
+                        </div>
+                      </div>
+
                       <div class="clearfix"></div>
                     </div>
                     <div class="main-title-conts">
@@ -296,6 +308,21 @@
                         <div class="master_field">
                           <label class="master_label" for="year_experience">سنوات الخبرة</label>
                           <input value="{{$lawyer->user_detail->experience}}" name="experience" class="master_input" type="number" placeholder="سنوات الخبرة" id="year_experience">
+                        </div>
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="master_field">
+                          <label class="master_label mandatory" for="degree_id">الدرجة العلميه</label>
+                          <select name="degree_id" class="master_input select2" id="degree_id" data-placeholder="الدرجة العلميه " style="width:100%;" ,>
+                          <option value="choose" selected disabled>اختر الدرجة العلميه</option>
+                          @foreach($academic_degrees as $academic_degree)
+                            <option value="{{$academic_degree->id}}" @if ($academic_degree->id == $lawyer->degree_id) selected @endif>{{$academic_degree->title }} ({{ $academic_degree->from }} - {{ $academic_degree->to }})</option>
+                          @endforeach
+                          </select><span class="master_message color--fadegreen">
+                            @if ($errors->has('degree_id'))
+                              {{ $errors->first('degree_id')}}
+                            @endif
+                          </span>
                         </div>
                       </div>
                       <div class="col-md-2 col-sm-6 col-xs-6">

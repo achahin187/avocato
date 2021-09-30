@@ -60,6 +60,9 @@
                           
                           </div>
                       </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">الدرجة العلميه</b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">@if ($lawyer->degree) {{ $lawyer->degree->title }} ({{ $lawyer->degree->from }} - {{ $lawyer->degree->to }}) @endif</div>
+                      </div>
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12">سنوات الخبرة</b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->user_detail->experience}} سنوات</div>
                       </div>
@@ -88,6 +91,7 @@
                       <li>القضايا</li>
                       <li>الخدمات</li>
                       <li>المصاريف</li>
+                      <li>المكالمات</li>
                       <li>تقييم العملاء</li>
                       <li>تقييم الإدارة</li>
                     </ul>
@@ -291,6 +295,28 @@
                         </div>
                       </li>
                       <li class="tab__content_item">
+                        <div class="cardwrap bgcolor--white bradius--noborder bshadow--1 padding--small margin--small-top-bottom">
+                          <table class="table-1">
+                            <thead>
+                              <tr class="bgcolor--gray_mm color--gray_d">
+                                <th><span class="cellcontent">من</span></th>
+                                <th><span class="cellcontent">إلى</span></th>
+                                <th><span class="cellcontent">توقيت المكالمة</span></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach($calls as $call)
+                              <tr data-call-id="{{$call->id}}">
+                                <td><span class="cellcontent">{{$call->caller->full_name ?? ''}}</span></td>
+                                <td><span class="cellcontent">{{$call->receiver->full_name ?? ''}}</span></td>
+                                <td><span class="cellcontent">{{$call->created_at->format('Y - m - d g:i a')}}</span></td>
+                              </tr>
+                              @endforeach
+                            </tbody>
+                          </table>
+                        </div>
+                      </li>
+                      <li class="tab__content_item">
                         <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                           <table class="table-1">
                             <thead>
@@ -340,8 +366,8 @@
                           <div class="col-md-2 col-sm-3 col-xs-12 pull-right"><a class="master-btn color--white bgcolor--fadeblue bradius--small bshadow--0 btn-block" href="#add_evaluation"><i class="fa fa-plus"></i><span>إضافة تقييم</span></a>
                             <div class="remodal-bg"></div>
                             <div class="remodal" data-remodal-id="add_evaluation" role="dialog" aria-labelledby="modal2Title" aria-describedby="modal2Desc">
-                    <form role="form" action="{{route('lawyers_rate',$lawyer->id)}}" method="post" accept-charset="utf-8">
-                        {{csrf_field()}}
+                        <form role="form" action="{{route('lawyers_rate',$lawyer->id)}}" method="post" accept-charset="utf-8">
+                            {{csrf_field()}}
                               <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
                               <div>
                                 <div class="row">
