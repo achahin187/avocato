@@ -103,9 +103,34 @@ class ConsultationsClassificationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // Validation
+        $validator =  Validator::make($request->all(), [
+            'consult_name'  => 'required',
+            'image' => 'nullable|image'
+        ]);
+
+        // Check validation
+        if ($validator->fails()) {
+            return redirect('/consultations_classification#editPopupModal')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        //upload image
+            $image = Input::file('image')->store('consultations_types', 'public');
+        // Update value
+        $consultation_Type = Consultation_Types::find($request->id);
+        $consultation_Type->update([
+            'name' => $request->consult_name,
+            'parent_id' => $request->parent_id,
+            'image' => $image
+        ]);
+
+        // redirect back with flash message
+        Session::flash('success', 'تم تعديل تصنيف إستشاري بنجاح');
+        return redirect('/consultations_classification');
     }
 
     /**

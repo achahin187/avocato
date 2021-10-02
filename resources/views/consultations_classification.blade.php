@@ -85,6 +85,53 @@
                             <button type="submit" class="remodal-confirm">حفظ</button>
                         </form>
                     </div>
+
+                    <div class="remodal" data-remodal-id="editPopupModal" role="dialog" aria-labelledby="modal1Title"
+                         aria-describedby="modal1Desc">
+                        <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                        {{--  Start Form  --}}
+                        <form action="{{ route('consult.update') }}" method="POST" class="resetForm" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id" id="consult_type_id">
+                            <div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3>تعديل</h3>
+                                        <div class="col-xs-12">
+                                            <div class="master_field">
+                                                <label class="master_label" for="ID_No">ادخال تصنيف جديد للاستشارات
+                                                    القانونية</label>
+                                                <input id="consult_name_edit" name="consult_name" class="master_input" type="text"
+                                                       placeholder="نصنيف جديد" id="ID_No"
+                                                       value="{{ old('consult_name') }}">
+
+                                                @if ($errors->has('consult_name'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('consult_name') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="master_field">
+                                                <input name="image" class="master_input" type="file"
+
+                                                     required  >
+
+                                                @if ($errors->has('image'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('image') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="img-container">
+                                                <img id="product_background_preview" height="250" width="250"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <button type="reset" class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                            <button type="submit" class="remodal-confirm">حفظ</button>
+                        </form>
+                    </div>
                     {{--  End Form  --}}
                     <div class="remodal" data-remodal-id="popupModal_2" role="dialog" aria-labelledby="modal1Title"
                          aria-describedby="modal1Desc">
@@ -278,6 +325,8 @@
                            class="action-btn bgcolor--main color--white add_localization">
                           <i class="fa fa-book"></i> &nbsp; اللغات
                         </a>
+                        <a class="action-btn bgcolor--fadegreen color--white "
+                        href="#editPopupModal" onclick="setFormFields({{ $consult }})"><i class = "fa  fa-pencil"></i></i></a>
                         <a class="btn-warning-cancel action-btn bgcolor--fadebrown color--white deleteRecord">
                           <i class="fa fa-trash-o"></i>
                         </a>
@@ -468,6 +517,19 @@
                     console.log(response);
                 }
             });
+        }
+
+        function setFormFields(data) {
+            console.log(data);
+            $('#consult_name_edit').val(data.name);
+            $('#consult_type_id').val(data.id);
+            if (data.image) {
+                $('.img-container').show();
+                $('#product_background_preview').attr('src', '{{ asset('') }}storage/'+data.image)
+            } else {
+                $('.img-container').hide();
+            }
+            
         }
     </script>
 
