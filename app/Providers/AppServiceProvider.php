@@ -33,7 +33,6 @@ class AppServiceProvider extends ServiceProvider
             })->orderBy('created_at','desc')->get();
                
             foreach($notes as $note){
-        
                 if($note->notification_type_id ==3 ){
                     $user = Users::find($note->item_id);
                     if($user->getClient()==8){
@@ -60,6 +59,9 @@ class AppServiceProvider extends ServiceProvider
                     }
                     elseif($user->getClient()==7){
                         $note['url']=route('mobile.show',$note->user_id);
+                    }
+                    else {
+                        $note['url']=route('ind.show',$note->user_id);
                     }
                 }
                 elseif($note->notification_type_id ==26){
