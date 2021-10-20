@@ -253,7 +253,6 @@ class LegalConsultationsController extends Controller
             }
 
         }
-        // dd($consultation);
         return view('legal_consultations.legal_consultation_view')->with('consultation', $consultation);
     }
 

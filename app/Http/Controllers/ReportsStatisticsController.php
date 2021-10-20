@@ -6,7 +6,7 @@ use Auth;
 use Session;
 use Helper;
 use Excel;
-
+use App\Call;
 use App\Case_;
 use App\Users;
 use App\Tasks;
@@ -159,7 +159,7 @@ class ReportsStatisticsController extends Controller
         // free services
         $data['count_free_services'] = Tasks::where('country_id',Auth::user()->country_id)->where('task_type_id', 3)->where('task_payment_status_id', 1)->count();
         // call services
-        $data['call_services'] =0;
+        $data['call_services'] = Call::count();
         $calls= User_Details::whereHas('user',function($q){
             $q->where('country_id',Auth::user()->country_id)->whereHas('rules',function($q){
                 $q->where('rule_id',5);

@@ -75,6 +75,9 @@
                       <div class="row"><b class="col-md-3 col-sm-5 col-xs-12"> تاريخ التسجيل </b>
                         <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->created_at}} </div>
                       </div>
+                      <div class="row"><b class="col-md-3 col-sm-5 col-xs-12"> عدد الزيارات </b>
+                        <div class="col-md-9 col-sm-7 col-xs-12">{{$lawyer->views}} </div>
+                      </div>
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       {{-- <img class="img-responsive" src="https://www.taitradio.com/__data/assets/image/0016/114910/location-sol-header.jpg" height="140" width="450"> --}}

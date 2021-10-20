@@ -34,7 +34,7 @@
                         <div class="col-md-12"><h5>نص السؤال</h5>&nbsp; 
                             <div  class="text-left" >master-btn{{$consultation->question}} </div>
                         </div>
-                           
+                         
                         <div class="clearfix"></div>   <hr>
                         <div class="col-md-12">
                             <span class="pull-left master-btn" style="background:#f5f5f5;"><b>مرسل الاستشارة: </b>&nbsp;
@@ -54,6 +54,41 @@
                             @endif
                             @endif
                             &nbsp;</span>
+                            <span class="pull-left master-btn" style="background:#f5f5f5;"><b>البريد الالكترونى: </b>&nbsp;
+                              @if(isset($consultation->client))
+                              @if(Helper::is_client_individual($consultation->client->id))
+                              <a style="font-weight:bold" href="{{route('ind.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @elseif(Helper::is_client_company($consultation->client->id))
+                              <a style="font-weight:bold" href="{{route('companies.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @elseif(Helper::is_client_individual_company($consultation->client->id))
+                              <a style="font-weight:bold" href="{{route('ind.com.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @elseif(Helper::is_client_mobile($consultation->client->id))
+                              <a style="font-weight:bold" href="{{route('mobile.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @elseif(Helper::is_admin_superadmin($consultation->client->id))
+                              <a style="font-weight:bold" href="#">{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @elseif(Helper::is_lawyer($consultation->client->id))
+                             <a style="font-weight:bold" href="{{route('lawyers_show',$consultation->client->id)}}" >{{($consultation->client)?$consultation->client->email:''}}</a>
+                              @endif
+                              @endif
+                              &nbsp;</span>
+                              &nbsp;</span>
+                              <span class="pull-left master-btn" style="background:#f5f5f5;"><b>رقم المحمول : </b>&nbsp;
+                                @if(isset($consultation->client))
+                                @if(Helper::is_client_individual($consultation->client->id))
+                                <a style="font-weight:bold" href="{{route('ind.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @elseif(Helper::is_client_company($consultation->client->id))
+                                <a style="font-weight:bold" href="{{route('companies.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @elseif(Helper::is_client_individual_company($consultation->client->id))
+                                <a style="font-weight:bold" href="{{route('ind.com.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @elseif(Helper::is_client_mobile($consultation->client->id))
+                                <a style="font-weight:bold" href="{{route('mobile.show',$consultation->client->id)}}">{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @elseif(Helper::is_admin_superadmin($consultation->client->id))
+                                <a style="font-weight:bold" href="#">{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @elseif(Helper::is_lawyer($consultation->client->id))
+                               <a style="font-weight:bold" href="{{route('lawyers_show',$consultation->client->id)}}" >{{($consultation->client)?$consultation->client->mobile :''}}</a>
+                                @endif
+                                @endif
+                                &nbsp;</span>
                             @if($consultation->direct_assigned == 1)
                             <span class="pull-left master-btn" style="background:#f5f5f5;"> <b> الاستشارة موجهة الى: </b>&nbsp;
                             @foreach($consultation->lawyers as $lawyer) <a style="font-weight:bold" href="{{route('lawyers_show',$lawyer->id)}}">  {{$lawyer->full_name}} @endforeach 

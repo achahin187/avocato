@@ -76,6 +76,7 @@
     <div class="stat-box-content color--fadebrown"><span class="stat-box-text">عدد الخدمات المجانية</span><span class="stat-box-number">{{ $count_free_services }}</span></div>
     </div>
 </div>
+
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
   <div class="stat-box margin--small-top-bottom bgcolor--white bshadow--1 bradius--small"><span class="stat-box-icon bgcolor--fadepurple color--white"><i class="fa fa fa-phone"></i></span>
     <div class="stat-box-content color--fadepurple"><span class="stat-box-text">عدد المكالمات من التطبيق</span><span class="stat-box-number">{{$call_services}}</span></div>
