@@ -238,6 +238,12 @@
                                       </li>
                                       
                                       @endif
+                                      @if(auth()->user()->getRole()==1)
+                                      
+                                      <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('payment_index')}}"> عمليه الدفع</a>
+                                      </li>
+                                      
+                                      @endif
                                       @if(auth()->user()->getRole()==1 or auth()->user()->getRole()==2 or auth()->user()->getRole()==3 or auth()->user()->getRole()==4)
 
                                       <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m" href="{{route('records')}}">دفتر المحضرين</a>

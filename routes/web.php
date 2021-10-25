@@ -446,6 +446,8 @@ Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
 
+Route::get('/payment','paymentController@index')->name('payment_index');
+
 //offices
 Route::middleware(['roles:1,2'])->group(function () {
 Route::get('/offices', 'OfficesController@index')->name('offices');
@@ -497,3 +499,5 @@ Route::middleware(['roles:1,2'])->group(function () {
 });
 Route::get('/notifications_cron', 'NotificationsController@notification_cron')->name('notifications.cron');
 Route::get('/push_notification', 'NotificationsController@push_notification')->name('push.notification');
+
+
