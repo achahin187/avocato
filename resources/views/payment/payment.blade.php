@@ -269,7 +269,7 @@
 
 
                 paymentMethod: '',
-                returnUrl: 'http://localhost:8000/payment/store_data',
+                returnUrl: 'https://avocatoapp.net/avocato/backend/public/payment/store_data',
                 signature: '1d5efd50aed5768c1883411c6f8d4feecee5d4ad7d02a8de8d47330c4745aa40'
             };
 
