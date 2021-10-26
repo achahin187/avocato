@@ -446,7 +446,15 @@ Route::post('/Landing/ind', 'LandingController@ind')->name('landing.ind');
 Route::post('/Landing/lawyer', 'LandingController@lawyer')->name('landing.lawyer');
 Route::post('/Landing/office', 'LandingController@office')->name('landing.office');
 
+//payments
 Route::get('/payment','paymentController@index')->name('payment_index');
+Route::get('/payment/store_data','paymentController@store')->name('payment_store');
+Route::get('/payment/destroySelected', 'paymentController@destroySelected')->name('pay.destroySelected');
+Route::get('/payment/destroy/{id}', 'paymentController@destroy')->name('pay.deleteRecord');
+Route::post('/payment/filter', 'paymentController@filter')->name('pay.filter');
+
+
+
 
 //offices
 Route::middleware(['roles:1,2'])->group(function () {
