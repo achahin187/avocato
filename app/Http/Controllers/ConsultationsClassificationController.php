@@ -50,7 +50,7 @@ class ConsultationsClassificationController extends Controller
         // Validation
         $validator =  Validator::make($request->all(), [
             'consult_name'  => 'required',
-            'image' => 'required|image'
+            'image' => 'image'
         ]);
 
         // Check validation
@@ -60,13 +60,16 @@ class ConsultationsClassificationController extends Controller
                             ->withInput();
         }
 
-        //upload image
-           $image = Input::file('image')->store('consultations_types', 'public');
+                    if(isset($request->image)){
+            //upload image
+                    $image = Input::file('image')->store('consultations_types', 'public');
+                    }
+      
         // Add value
         Consultation_Types::create([
             'name' => $request->consult_name,
             'parent_id' => $request->parent_id,
-            'image' => $image
+            'image' => $request->image ? $image : null,
         ]);
 
         // redirect back with flash message
