@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
                         $note['url']=route('mobile.show',$note->user_id);
                     }
                     else {
-                        $note['url']=route('ind.show',$note->user_id);
+                        $note['url']=route('bouquets.view',$note->item_id);
                     }
                 }
                 elseif($note->notification_type_id ==26){

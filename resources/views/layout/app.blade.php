@@ -70,6 +70,7 @@
                             <ul class="navbar-nav">
                               <li class="nav-item"><a class="nav-link   color--gray_d" href=" .html " title=" "> </a></li>
                             </ul>
+                       
                             <ul class="actionsbar desktop-view hidden-xs">
                               <li class="dropdowny"><a class="dropdowny-toggle color--gray_d" href="#"><i class="fa fa-bell"></i><span class="badge badge-default"> {{$counter}}</span></a>
                                 <ul class="dropdowny-menu" role="menu">
