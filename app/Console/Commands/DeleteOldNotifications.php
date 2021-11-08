@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Notification;
+use App\Notifications;
 use Carbon\Carbon;
 class DeleteOldNotifications extends Command
 {
@@ -39,6 +39,6 @@ class DeleteOldNotifications extends Command
     public function handle()
     {
         //delete notifications 
-        $notifications = Notification::query()->whereDate("created_at","<=",Carbon::now()->subMonth(6)->toDateString())->delete();
+        $notifications = Notifications::query()->whereDate("created_at","<=",Carbon::now()->subMonth(6)->toDateString())->delete();
     }
 }

@@ -278,6 +278,7 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request, $id)
     {
+
         $consultation = Consultation::find($id);
         if($consultation->direct_assigned == 1)
         {
@@ -347,8 +348,11 @@ class LegalConsultationsController extends Controller
             "lang_id" => $user->lang_id,
             "user_id" => $consultation->created_by
         ]);
+
         Helper::add_log(4, 13, $consultation->id);
-        return redirect()->route('legal_consultations')->with('consultation_types', $consultation_types);
+        session::flash('message','تم تعديل الرد بنجاح');
+
+        return redirect()->route('legal_consultation_view',$id);
     }
     public function category_consultation(Request $request, $id)
     {

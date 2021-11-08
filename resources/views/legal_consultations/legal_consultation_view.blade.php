@@ -17,9 +17,37 @@
                       </div>
                       @endif
                     </div>
+                    
+
+            
+
                   </div>
                   <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                    @if( session::has('message') )
+                    
+                    <div class="alert alert-success" role="alert">
+                      {{ session::get('message') }}
+                    </div>
+                    @endif
+
                     <div class="main-title-conts">
+                      @if(isset($consultation->communication_method))
+                      @if($consultation->communication_method == 'phone')
+                      <div class="caption">
+                        <h3 >نوع الرد : {{$consultation->communication_method}}   <i style="color:blue" class="fa fa-phone"></i> </h3>
+                      </div>
+                      @elseif ($consultation->communication_method == 'whatsapp')
+                      <div class="caption">
+                        <h3>نوع الرد : {{$consultation->communication_method}}    <i style="color:green" class="fa fa-whatsapp"></i> </h3>
+                      </div>
+
+                      @else
+                      <div class="caption">
+                        <h3>نوع الرد : {{$consultation->communication_method}}   <i  style="color:blue"   class="fa fa-video"></i> </h3>
+                      </div>
+                      @endif
+                      @endif
+                  
                       <div class="caption">
                         <h3>كود الإستشارة: {{$consultation->code}}</h3>
                       </div>
@@ -32,7 +60,7 @@
                     <div class="col-md-12">
                       <div class="cardwrap bgcolor--gray_l bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
                         <div class="col-md-12"><h5>نص السؤال</h5>&nbsp; 
-                            <div  class="text-left" >master-btn{{$consultation->question}} </div>
+                            <div  class="text-left" >{{$consultation->question}} </div>
                         </div>
                          
                         <div class="clearfix"></div>   <hr>

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Excel;
 use Session;
 use App\Exports\FormulasExport;
-use Helper;
+use App\Helpers\Helper;
 use Auth;
 use App\Languages;
 
