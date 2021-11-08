@@ -10,7 +10,7 @@ class Notifications extends Model
     protected $primaryKey = 'id';
     protected $table = 'notifications';
     public $timestamps = false;
-    protected $fillable = ['msg', 'entity_id', 'item_id','item_name', 'user_id', 'notification_type_id', 'is_read', 'is_sent','created_at','is_push','schedule','notification_schedule_id','country_id','item_user_id'];
+    protected $fillable = ['msg', 'entity_id', 'item_id','item_name', 'user_id', 'notification_type_id', 'is_read', 'is_sent','created_at','is_push','schedule','notification_schedule_id','country_id','item_user_id','action'];
 
     protected $dates = ['schedule'];
     
