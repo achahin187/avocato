@@ -254,11 +254,11 @@ class NotificationsController extends Controller
                 $array["is_sent"] = 1;
                 $registrationIds = array($device_token);
                 $message = $notification->msg;
-                if($notification_push->mobile_os == 'android') {
+               /*  if($notification_push->mobile_os == 'android') { */
                     $results [] = $this->pushAndroid($registrationIds, $message);
-                } else if($notification_push->mobile_os == 'ios') {
+            /*     } else if($notification_push->mobile_os == 'ios') {
                      $results [] = $this->pushIos_pem($device_token,$message,$notification->notification_type_id, $notification->item_id);
-                } 
+                }  */
                 if($notification->notification_type_id == 8 ) {
                     $array["created_at"] = Carbon::now();
                 }
