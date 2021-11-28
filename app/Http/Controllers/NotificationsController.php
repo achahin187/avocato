@@ -376,7 +376,7 @@ class NotificationsController extends Controller
                 ]
             );
             $headers = array(
-                'Authorization:key=AAAAcpnQ_a8:APA91bESNDVZSNu2kSSpg84n1BrWXVySJZLwEhElDHw1UpNclGc50V7s-kgHeKTZhWaR12LHdXErxF-eik7eF6c87pPB-_j75LEkNEBG4VLdPub1bSJJsLhGz1_f6aCS-etIrx3Y_h6g',
+                'Authorization:key='.env('FCM_KEY'),
                 'Content-Type: application/json'
             );
     
