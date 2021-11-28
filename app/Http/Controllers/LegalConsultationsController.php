@@ -446,7 +446,6 @@ class LegalConsultationsController extends Controller
 
     public function set_perfect_response(Request $request)
     {
-        dd($request->all());
         $consultation = Consultation::where('id', $request->input('consultation_id'))->with('consultation_reply')->first();
         // dd($consultation->toArray());
         $consultation->update(['is_replied' => 1]);
