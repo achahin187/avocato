@@ -20,10 +20,20 @@ use App\Notifications;
 use App\Notification_Types;
 use App\Notification_Items;
 use App\Notifications_Push;
+use App\Http\Controllers\NotificationsController;
 use App\Languages;
 
 class LegalConsultationsController extends Controller
 {
+
+    protected $notification_fcm;
+
+    public function __construct()
+    {
+        $this->notification_fcm = new NotificationsController();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -278,7 +288,6 @@ class LegalConsultationsController extends Controller
     }
     public function edit_consultation(Request $request, $id)
     {
-
         $consultation = Consultation::find($id);
         if($consultation->direct_assigned == 1)
         {
@@ -342,13 +351,16 @@ class LegalConsultationsController extends Controller
             "created_at" => Carbon::now()->format('Y-m-d H:i:s'),
             'action' => 'consultation',
         ]);
-        $notification_push = Notifications_Push::create([
+         Notifications_Push::create([
             "notification_id" => $notification->id,
             "device_token" => $user->device_token,
             "mobile_os" => $user->mobile_os,
             "lang_id" => $user->lang_id,
             "user_id" => $consultation->created_by
         ]);
+        $registrationIds = array($notification->device_token);
+
+        return  $this->notification_fcm->pushAndroid($registrationIds,$notification_type->msg);
 
         Helper::add_log(4, 13, $consultation->id);
         session::flash('message','تم تعديل الرد بنجاح');
@@ -434,6 +446,7 @@ class LegalConsultationsController extends Controller
 
     public function set_perfect_response(Request $request)
     {
+        dd($request->all());
         $consultation = Consultation::where('id', $request->input('consultation_id'))->with('consultation_reply')->first();
         // dd($consultation->toArray());
         $consultation->update(['is_replied' => 1]);
@@ -463,6 +476,11 @@ class LegalConsultationsController extends Controller
                     "lang_id" => $user->lang_id,
                     "user_id" => $consultation->created_by
                 ]);
+
+                $registrationIds = array($notification->device_token);
+
+              return  $this->notification_fcm->pushAndroid($registrationIds,$notification_type->msg);
+
             } else {
                 $value->update(['is_perfect_answer' => 0]);
             }
