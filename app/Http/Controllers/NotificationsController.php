@@ -354,6 +354,8 @@ class NotificationsController extends Controller
                $result = curl_exec($ch);
 
         }
+        return $result;
+
     }
 
 
