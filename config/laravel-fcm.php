@@ -7,6 +7,6 @@ return [
      * Change to yours
      */
 
-    'server_key' => env('ANDROID_API_KEY', ''),
+    'server_key' => env('FCM_KEY', ''),
 
 ];

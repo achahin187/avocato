@@ -339,7 +339,7 @@ class NotificationsController extends Controller
                $dataString = json_encode($data);
          
                $headers = [
-                   'Authorization: key=AAAA954nDeU:APA91bHHeNm23rm8tfcrLc3U0V37ZSzqqHRHW3VWBts5WBGavSoHbes7VYUblxX5kqL31eU4CmxIM0PGBdDGi8ZJ7eWiFEBbmNhdu8OqtClDTQGN4IWwJdKNweesBe45ruTAW-N3yAZ1',
+                   'Authorization: key=AAAAcpnQ_a8:APA91bESNDVZSNu2kSSpg84n1BrWXVySJZLwEhElDHw1UpNclGc50V7s-kgHeKTZhWaR12LHdXErxF-eik7eF6c87pPB-_j75LEkNEBG4VLdPub1bSJJsLhGz1_f6aCS-etIrx3Y_h6g',
                    'Content-Type: application/json',
                ];
          
@@ -352,8 +352,44 @@ class NotificationsController extends Controller
                curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
          
                $result = curl_exec($ch);
+               curl_close( $ch );
+               header('Content-type:application/json;charset=utf-8');
+               return $result;
 
         }
+
+    }
+
+    
+    public function send_push_notification($device_token , $message)
+    {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+
+            $fields = array(
+                'registration_ids' => [$device_token],
+                'data' => ['notification_text' => $message],
+                "notification" => [
+                    "body" => $message,
+                    
+                    "title" => "sercureNotification",
+                    "icon" => "ic_launcher"
+                ]
+            );
+            $headers = array(
+                'Authorization:key=AAAAcpnQ_a8:APA91bESNDVZSNu2kSSpg84n1BrWXVySJZLwEhElDHw1UpNclGc50V7s-kgHeKTZhWaR12LHdXErxF-eik7eF6c87pPB-_j75LEkNEBG4VLdPub1bSJJsLhGz1_f6aCS-etIrx3Y_h6g',
+                'Content-Type: application/json'
+            );
+    
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+            $result = curl_exec($ch) ;
+            return $result;
 
     }
 
