@@ -339,21 +339,21 @@ class NotificationsController extends Controller
                $dataString = json_encode($data);
          
                $headers = [
-                   'Authorization: key=AAAAcpnQ_a8:APA91bESNDVZSNu2kSSpg84n1BrWXVySJZLwEhElDHw1UpNclGc50V7s-kgHeKTZhWaR12LHdXErxF-eik7eF6c87pPB-_j75LEkNEBG4VLdPub1bSJJsLhGz1_f6aCS-etIrx3Y_h6g',
                    'Content-Type: application/json',
+                   'Authorization: key=AAAAKDJEUxg:APA91bFnwZl5_IRsWW3G91MMQ1_6BSlSZc54_6FtM5vDUKpWZVWUwwl-yRk4VwN6ItBgEBgvMLQBIT-PGmrrMPDck0G65q9N7VyJWaW5CbybotsFbOcQAFXsup4EoOOrAdeFTPze9wlk',
                ];
          
                $ch = curl_init();
          
                curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
                curl_setopt($ch, CURLOPT_POST, true);
+
                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
          
                $result = curl_exec($ch);
                curl_close( $ch );
-               header('Content-type:application/json;charset=utf-8');
                return $result;
 
         }
