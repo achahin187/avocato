@@ -153,10 +153,10 @@ class LawyersController extends Controller
       $date_from = date('Y-m-d H:i:s', strtotime($request->date_from));
       $date_to = date('Y-m-d 23:59:59', strtotime($request->date_to));
 
-      if ($request->has('order') && $request->filled('order')) {
+   /*     if ($request->has('order') && $request->filled('order')) {
         $q->whereNotNull('order')->orderBy(DB::raw("coalesce(order, 0)"), $request->order);
-      }
-      if ($request->has('nationalities') && $request->nationalities != 0) {
+      } */ 
+       if ($request->has('nationalities') && $request->nationalities != 0) {
         $q->whereHas('user_detail', function ($q) use ($request) {
           $q->where('nationality_id', $request->nationalities);
 
@@ -213,7 +213,7 @@ class LawyersController extends Controller
           $q->where('join_date', '<=', $date_to);
 
         });
-      }
+      }  
 
 
     })->whereHas('rules',function($q)use($request){
