@@ -10,6 +10,7 @@ use App\Notifications_Push;
 use App\Notification_Schedules;
 use App\Subscriptions;
 use Validator;
+use App\User;
 use Carbon\Carbon;
 use DB;
 use App\Users;
@@ -241,7 +242,6 @@ class NotificationsController extends Controller
         $notification->is_sent = 1;
         $notification->save();   
         }
-        dd($notifications);
     }
     public function push_notification() {
         $notifications_push = Notifications_Push::whereNotNull('device_token')->get();
@@ -316,6 +316,51 @@ class NotificationsController extends Controller
           header('Content-type:application/json;charset=utf-8');
         return $result;
     }
+
+
+
+
+    public function pushFCM($id, $message)
+    {
+        ini_set('max_execution_time', 0);
+
+        $user = User::where('id', $id)->first();
+        if ($user->device_token !== null) {
+            $data = [
+                "to"=> $user->device_token,
+                   "notification" =>
+                       [
+                           "title" => 'Avocato',
+                           "body" => $message,
+                           'sound'=> 'true',
+                           'icon' => 'logo'
+                       ],
+               ];
+               $dataString = json_encode($data);
+         
+               $headers = [
+                   'Authorization: key=AAAAcpnQ_a8:APA91bESNDVZSNu2kSSpg84n1BrWXVySJZLwEhElDHw1UpNclGc50V7s-kgHeKTZhWaR12LHdXErxF-eik7eF6c87pPB-_j75LEkNEBG4VLdPub1bSJJsLhGz1_f6aCS-etIrx3Y_h6g',
+                   'Content-Type: application/json',
+               ];
+         
+               $ch = curl_init();
+         
+               curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+               curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+         
+               $result = curl_exec($ch);
+
+        }
+    }
+
+
+
+
+
+
     public function pushIos_pem($deviceToken, $message, $notification_type_id, $item_id) {
         $body['aps'] = array(
             'alert' => $message,

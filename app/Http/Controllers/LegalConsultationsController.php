@@ -360,7 +360,7 @@ class LegalConsultationsController extends Controller
         ]);
         $registrationIds = array($notification->device_token);
 
-         return (new NotificationsController())->pushAndroid($notification->device_token,$notification_type->msg);
+         return (new NotificationsController())->pushFCM($user->id,$notification_type->msg);
 
         Helper::add_log(4, 13, $consultation->id);
         session::flash('message','تم تعديل الرد بنجاح');
