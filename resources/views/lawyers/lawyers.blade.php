@@ -214,7 +214,7 @@
                   @endisset
                 </span></td>
                 <td><span class="cellcontent">{{$lawyer->views or ''}}</span></td>
-                <td><span class="cellcontent">{{$lawyer->calls_count->count()}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->calls_number}}</span></td>
                 <td><span class="cellcontent">{{$lawyer->consultations_count->count() }}</span></td>
 
 

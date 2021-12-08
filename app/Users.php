@@ -30,6 +30,12 @@ class Users extends Authenticatable
    protected $dates = ['deleted_at'];
    public $timestamps = true;
 
+   protected $appends = [
+    'consultations_number',
+    'calls_number',
+    'transactions_number',
+    'rates_number'
+];
    // Delete user data from users_rules, user_details, subscriptions, installments and if user is a individual-company delete its record from user_company_detail
    protected static function boot() {
         parent::boot();
@@ -209,6 +215,16 @@ class Users extends Authenticatable
     public function calls_count()
     {
         return $this->hasMany(Call::class,'from');
+    }
+
+    public function getConsultationsNumberAttribute()
+    {
+        return $this->consultations()->count();
+    }
+
+    public function getCallsNumberAttribute()
+    {
+        return $this->calls()->count();
     }
 
     public function getRole(){
