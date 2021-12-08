@@ -42,6 +42,34 @@
             @endif
             </b>
           </div>
+          <div class="pull-left">
+           <div class="pull-left">
+               : البريد الالكترونى 
+           </div>
+            <b>&nbsp;&nbsp;
+            @if(Helper::getUserDetails($complain->user_id))
+            <a href="{{route('mobile.show',Helper::getUserDetails($complain->user_id)->id)}}">
+              {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->email : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
+            </a>
+            @else
+            {{$complain->name}}
+            @endif
+            </b>
+          </div>
+          <div class="pull-left">
+           <div class="pull-left">
+               : رقم الموبايل 
+           </div>
+            <b>&nbsp;&nbsp;
+            @if(Helper::getUserDetails($complain->user_id))
+            <a href="{{route('mobile.show',Helper::getUserDetails($complain->user_id)->id)}}">
+              {{ $complain->user_id ? (Helper::getUserDetails($complain->user_id) ? Helper::getUserDetails($complain->user_id)->mobile  : ($complain->name ? $complain->name : 'لا يوجد')) : ($complain->name ? $complain->name : 'لا يوجد') }}  
+            </a>
+            @else
+            {{$complain->name}}
+            @endif
+            </b>
+          </div>
           <div class="pull-right">
             بتاريخ
             {{ $complain->created_at ? $complain->created_at->format('d/m/Y') : 'لا يوجد' }}
