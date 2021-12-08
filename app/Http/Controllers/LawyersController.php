@@ -63,6 +63,10 @@ class LawyersController extends Controller
     $data['work_sectors'] = Specializations::all();
     $data['syndicate_levels'] = SyndicateLevels::all();
     $data['cities']=Geo_Cities::where('country_id',session('country'))->get();
+
+ 
+    
+
     return view('lawyers.lawyers', $data);
   }
 

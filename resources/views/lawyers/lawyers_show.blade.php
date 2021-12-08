@@ -2,7 +2,6 @@
 @section('content')
 
 
-
               
               <!-- =============== Custom Content ===============-->
               <div class="row">

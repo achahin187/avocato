@@ -148,6 +148,10 @@ class Users extends Authenticatable
    {
        return $this->belongsToMany('App\Consultation','consulation_lawyers','consultation_id','lawyer_id');
    }
+   public function consultations_count()
+   {
+       return $this->hasMany('App\Consultation_Lawyers','lawyer_id');
+   }
 
    public function cases()
     {
@@ -201,6 +205,10 @@ class Users extends Authenticatable
     public function calls()
     {
         return $this->hasMany(Call::class, 'from')->orWhere('to', $this->id);
+    }
+    public function calls_count()
+    {
+        return $this->hasMany(Call::class,'from');
     }
 
     public function getRole(){

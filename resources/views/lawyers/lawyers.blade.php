@@ -176,6 +176,9 @@
                 <th><span class="cellcontent">رقم الموبايل</span></th>
                 <th><span class="cellcontent">تاريخ التسجيل</span></th>
                 <th><span class="cellcontent">الجنسية</span></th>
+                <th><span class="cellcontent">عدد الزيارات</span></th>
+                <th><span class="cellcontent">عدد المكالمات</span></th>
+                <th><span class="cellcontent">عدد الاستشارات</span></th>
                 <th><span class="cellcontent">تفعيل</span></th>
                 <th><span class="cellcontent">معلن عنه</span></th>
                 <th><span class="cellcontent">الاجراءات</span></th>
@@ -210,6 +213,12 @@
                   @endforeach
                   @endisset
                 </span></td>
+                <td><span class="cellcontent">{{$lawyer->views or ''}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->calls_count->count()}}</span></td>
+                <td><span class="cellcontent">{{$lawyer->consultations_count->count() }}</span></td>
+
+
+
                 <td><a href="{{route('lawyers_activate',$lawyer->id)}}"><span class="cellcontent">@if($lawyer->is_active==1)<i class = "fa color--fadegreen fa-check"></i>@else <i class = "fa color--fadebrown fa-times"> @endif</a></span></td>
                 <td>
                   <input type="checkbox" @if ($lawyer->is_advertised) checked @endif class="broadcast" data-toggle="toggle" data-off="غير معلن عنه" data-on="معلن عنه" data-size="small" data-onstyle="success" data-offstyle="primary" value="{{$lawyer->id}}">
