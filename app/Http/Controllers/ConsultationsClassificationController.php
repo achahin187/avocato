@@ -25,8 +25,7 @@ class ConsultationsClassificationController extends Controller
         return view('consultations_classification')
                 ->with('consultations', Consultation_Types::all())
                 ->with('languages', Languages::all())
-                ->with('mainTypes',$mainTypes)
-            ;
+                ->with('mainTypes',$mainTypes);
     }
 
     /**
@@ -50,7 +49,7 @@ class ConsultationsClassificationController extends Controller
         // Validation
         $validator =  Validator::make($request->all(), [
             'consult_name'  => 'required',
-            'image' => 'image'
+            'image' => 'image',
         ]);
 
         // Check validation
@@ -70,6 +69,7 @@ class ConsultationsClassificationController extends Controller
             'name' => $request->consult_name,
             'parent_id' => $request->parent_id,
             'image' => $request->image ? $image : null,
+            'orders' => $request->orders,
         ]);
 
         // redirect back with flash message
@@ -120,15 +120,20 @@ class ConsultationsClassificationController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         }
+        if(isset($request->image)){
 
         //upload image
             $image = Input::file('image')->store('consultations_types', 'public');
+
+        }
         // Update value
         $consultation_Type = Consultation_Types::find($request->id);
         $consultation_Type->update([
             'name' => $request->consult_name,
             'parent_id' => $request->parent_id,
-            'image' => $image
+            'image' => $image ?? null,
+            'orders' => $request->orders ?? null,
+
         ]);
 
         // redirect back with flash message

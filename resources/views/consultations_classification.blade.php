@@ -67,9 +67,20 @@
 
                                             </div>
                                             <div class="master_field">
+                                                <label class="master_label" for="ID_No">ادخال ترتيب
+                                                    </label>
+                                                <input name="orders" class="master_input" type="number"
+                                                       value="{{ old('orders') }}">
+
+                                                @if ($errors->has('orders'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('orders') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="master_field">
                                                 <input name="image" class="master_input" type="file"
 
-                                                     required  >
+                                                       >
 
                                                 @if ($errors->has('image'))
                                                     <span class="master_message color--fadegreen">{{ $errors->first('image') }}</span>
@@ -111,9 +122,20 @@
 
                                             </div>
                                             <div class="master_field">
+                                                <label class="master_label" for="ID_No">ادخال ترتيب
+                                                    </label>
+                                                <input name="orders" id="orders_edit" class="master_input" type="number"
+                                                       value="{{ old('orders') }}">
+
+                                                @if ($errors->has('orders'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('orders') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="master_field">
                                                 <input name="image" class="master_input" type="file"
 
-                                                     required  >
+                                                       >
 
                                                 @if ($errors->has('image'))
                                                     <span class="master_message color--fadegreen">{{ $errors->first('image') }}</span>
@@ -171,6 +193,17 @@
 
                                                 @if ($errors->has('consult_name'))
                                                     <span class="master_message color--fadegreen">{{ $errors->first('consult_name') }}</span>
+                                                @endif
+
+                                            </div>
+                                            <div class="master_field">
+                                                <label class="master_label" for="ID_No">ادخال ترتيب
+                                                    </label>
+                                                <input name="orders" class="master_input" type="number"
+                                                       value="{{ old('orders') }}">
+
+                                                @if ($errors->has('orders'))
+                                                    <span class="master_message color--fadegreen">{{ $errors->first('orders') }}</span>
                                                 @endif
 
                                             </div>
@@ -522,6 +555,7 @@
         function setFormFields(data) {
             console.log(data);
             $('#consult_name_edit').val(data.name);
+            $('#orders_edit').val(data.orders);
             $('#consult_type_id').val(data.id);
             if (data.image) {
                 $('.img-container').show();
