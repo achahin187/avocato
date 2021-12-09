@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\UserBouquet;
+use Auth;
 use DB;
 use App\UserBouquetPayment;
 use App\UserBouquetServiceCount;
@@ -211,10 +212,12 @@ class Users extends Authenticatable
     public function calls()
     {
         return $this->hasMany(Call::class, 'from')->orWhere('to', $this->id);
+
     }
     public function calls_count()
     {
-        return $this->hasMany(Call::class,'from');
+        $calls=Call::where('to', $this->id)->get()->unique('from');
+         return $calls;
     }
 
     public function getConsultationsNumberAttribute()
@@ -224,7 +227,7 @@ class Users extends Authenticatable
 
     public function getCallsNumberAttribute()
     {
-        return $this->calls()->count();
+        return $this->calls_count()->count();
     }
 
     public function getRole(){
