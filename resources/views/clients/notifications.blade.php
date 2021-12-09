@@ -126,7 +126,6 @@
                           @endforeach
                         </tbody>
                       </table>
-                      
                       <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#add_notification"><i class="fa fa-plus"></i><span>إضافة</span></a>
                         <div class="remodal-bg"></div>
                         <div class="remodal" data-remodal-id="add_notification" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
@@ -144,10 +143,21 @@
                                       @foreach ($subscription_types as $types)
                                       <option value="{{ $types->id }}">{{  $types->name }}</option>
                                       @endforeach
+                                
+                                      
+
                                     </select><span class="master_message color--fadegreen">
                                       @if ($errors->has('package_type'))
                                       {{ $errors->first('package_type')}}
                                     @endif</span>
+                                  </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <div class="master_field">
+                                    <label class="master_label mandatory" for="governorate">ارسال الى  جميع المستخدمين</label>
+                                
+                  <input class="form-check-input"  name="users[]" type="checkbox" value="{{ $users->pluck('id') }}" id="flexCheckChecked"/>
+                                      
                                   </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">

@@ -401,7 +401,7 @@ class Helper {
         }
         else
         {
-            return 'ليست باقه';
+            return 'الي جميع المستخدمين';
         }
     }
 

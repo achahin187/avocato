@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
                     }
                     elseif($type == 1)
                     {
-                        $note['url']=route('task_emergency_view',$note->item_id);
+                        $note['url']=route('notifications');
                     }
                 }
                 
@@ -109,7 +109,7 @@ class AppServiceProvider extends ServiceProvider
                     }
                
                 else{
-                    $note['url']=route('task_emergency_view',$note->item_id);
+                    $note['url']=route('notifications');
                 }
     
             }

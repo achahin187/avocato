@@ -8,6 +8,7 @@ use App\Notifications;
 use App\Notification_Items;
 use App\Notifications_Push;
 use App\Notification_Schedules;
+use App\Jobs\sendNotifications;
 use App\Subscriptions;
 use Validator;
 use App\User;
@@ -27,7 +28,9 @@ class NotificationsController extends Controller
         
         $data['subscription_types'] = Bouquet::all();
         $data['notifications'] = Notification_Schedules::all();
-        // dd($data['subscription_types']);
+        $data['users'] = Users::all();
+
+
         return view('clients.notifications',$data);
 
     }
@@ -48,8 +51,8 @@ class NotificationsController extends Controller
      */
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'package_type'=>'required',
-            'date'=>'required',
+/*             'package_type'=>'required',
+ */            'date'=>'required',
             'notification'=>'required',
         ]);
         if ($validator->fails()) {
@@ -57,41 +60,92 @@ class NotificationsController extends Controller
           ->withInput();
         }
         $send_date = date('Y-m-d H:i:s',strtotime($request->date));
-        $packages = implode(',', $request->package_type);
+        if(isset($request->package_type)){
+            $packages = implode(',', $request->package_type);
+
+        }
       
         $notification = new Notification_Schedules;
         $notification->msg = $request->notification;
         $notification->schedule = $send_date;
         $notification->notification_type_id=1;
         $notification->created_at = date('Y-m-d H:i:s');
-        $notification->packages = $packages;
+        $notification->packages = $packages ?? null;
         $notification->save();
         $schedule_id=$notification->id;
-        foreach($request->package_type as $package){
-          $subs = Bouquet::where('id',$package)->with('users')->first();
-        //   dd($subs->users);
-          foreach($subs->users as $user) {
-            //   $user = $sub->user;
-            
-                  $notification = new Notifications;
-                  $notification->msg = $request->notification;
-                  $notification->schedule = $send_date;
-                  $notification->notification_type_id=1;
-                  $notification->is_sent = 0;
-                  $notification->is_push=1;
-                  $notification->user_id = $user->id;
-                  $notification->created_at = date('Y-m-d H:i:s');
-                  $notification->packages = $packages;
-                  $notification->notification_schedule_id=$schedule_id;
-                  $notification->save();
 
-                  // Save Notification Item
-                $item = new Notification_Items;
-                $item->item_id = $package;
-                $item->notification_id = $notification->id;
-                $item->save();
-              }
-          }
+        //check if isset all users
+        if(isset($request->users)){
+          
+
+                $users=Users::all();
+                    foreach($users as $user){
+                        if($user->id ==  1){
+                            $notification = new Notifications;
+                            $notification->msg = $request->notification;
+                            $notification->schedule = $send_date;
+                            $notification->notification_type_id=1;
+                            $notification->is_sent = 0;
+                            $notification->is_push=0;
+                            $notification->user_id = $user->id;
+                            $notification->created_at = date('Y-m-d H:i:s');
+                            $notification->notification_schedule_id=$schedule_id;
+                            $notification->save();
+                        }else{
+
+                            $notification = new Notifications;
+                            $notification->msg = $request->notification;
+                            $notification->schedule = $send_date;
+                            $notification->notification_type_id=1;
+                            $notification->is_sent = 0;
+                            $notification->is_push=1;
+                            $notification->user_id = $user->id;
+                            $notification->created_at = date('Y-m-d H:i:s');
+                            $notification->notification_schedule_id=$schedule_id;
+                            $notification->save();
+
+                        }
+                 
+        
+                        // Save Notification Item
+                      $item = new Notification_Items;
+                      $item->item_id = $user->id;
+                      $item->notification_id = $notification->id;
+                      $item->save();
+                    }
+ 
+     
+
+
+            
+
+        }else{
+            foreach($request->package_type as $package){
+                $subs = Bouquet::where('id',$package)->with('users')->first();
+                foreach($subs->users as $user) {
+                  
+                        $notification = new Notifications;
+                        $notification->msg = $request->notification;
+                        $notification->schedule = $send_date;
+                        $notification->notification_type_id=1;
+                        $notification->is_sent = 0;
+                        $notification->is_push=1;
+                        $notification->user_id = $user->id;
+                        $notification->created_at = date('Y-m-d H:i:s');
+                        $notification->packages = $packages;
+                        $notification->notification_schedule_id=$schedule_id;
+                        $notification->save();
+      
+                        // Save Notification Item
+                      $item = new Notification_Items;
+                      $item->item_id = $package;
+                      $item->notification_id = $notification->id;
+                      $item->save();
+                    }
+                }
+
+        }
+  
          // $notification->noti_items()->save($item);
         return redirect()->route('notifications')->with('success','تم إضافه تنبيه');
     }
