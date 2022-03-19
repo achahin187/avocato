@@ -69,7 +69,7 @@ class TwilioSmsService
 		{
 			$result['msg'] = $e->getMessage();
 		}
-
+ dd($result);
 		return $result;
 	}
 
