@@ -82,6 +82,48 @@ XML;
 	}
 
 
+  public static function send_reply($to,$consultation_answer)
+  {
+   
+    $body = 'your Consultation Answer is : ('.$consultation_answer.') ' ;
+
+		$concatenated_values = 'AccountId='.(new self)->Account_ID.'&Password='.(new self)->API_Password.'&SenderName='.(new self)->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
+
+		$SecureHash =  (new self)->generateKey($concatenated_values);
+    // Don't add any spaces in the following xml code
+    $xmlstr = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<SubmitSMSRequest xmlns="http://www.edafa.com/web2sms/sms/model/" xmlns:xsi="http://www.w3.org/2001/XMLSchemainstance" xsi:schemaLocation="http://www.edafa.com/web2sms/sms/model/ SMSAPI.xsd " xsi:type="SubmitSMSRequest">
+    <AccountId>(new self)->Account_ID</AccountId>
+    <Password>(new self)->API_Password</Password>
+    <SecureHash>$SecureHash</SecureHash>
+    <SMSList>
+        <SenderName>(new self)->Sender_name</SenderName>
+        <ReceiverMSISDN>$to</ReceiverMSISDN>
+        <SMSText>$body</SMSText>
+    </SMSList>
+</SubmitSMSRequest>
+XML;
+
+    $xmlparse = new \SimpleXMLElement($xmlstr);
+    // request in xml format 
+    $xmlr  =$xmlparse->asXML();
+
+     // use Guzzle to post xml  request
+         $uri = 'https://e3len.vodafone.com.eg/web2sms/sms/submit/';
+         $client = new Client();
+
+         $request = new Request(
+         'POST', 
+         $uri,
+         ['Content-Type' => 'application/xml; charset=UTF8' ,'debug' => true],
+
+         $xmlr
+
+         );
+
+         $response = $client->send($request);
+  }
 	public function generateKey($concatenated_values)
 	{
 		
