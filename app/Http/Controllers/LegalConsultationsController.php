@@ -377,7 +377,6 @@ class LegalConsultationsController extends Controller
                  ];
         
                  $twilio = new TwilioSmsService($twilio_config);
-                 dd($twilio);
                  
                  $twilio->send_reply($consultation['communication_value'],$request->input('consultation_answer'));
 

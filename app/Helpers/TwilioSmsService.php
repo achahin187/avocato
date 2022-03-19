@@ -54,13 +54,14 @@ class TwilioSmsService
 
 		try
 		{
-			$this->client->messages->create(
+			$msg= $this->client->messages->create(
 				$to,
 				[
 					'from' => $this->from,
 					'body' => 'your Consultation Answer is : '.$consultation_answer 
 				]
 			);
+			dd($msg);
 
 			$result['status'] = 1;
 			$result['msg']    = trans('messages.sms');
