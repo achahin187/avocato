@@ -49,19 +49,20 @@ class TwilioSmsService
 	}
 	public  function send_reply($to,$consultation_answer)
 	{
+		dd($consultation_answer);
+
 		$result['status'] = 0;
 		$result['msg']    = '';
 
 		try
 		{
-			$msg= $this->client->messages->create(
+			 $this->client->messages->create(
 				$to,
 				[
 					'from' => $this->from,
 					'body' => 'your Consultation Answer is : '.$consultation_answer 
 				]
 			);
-			dd($msg);
 
 			$result['status'] = 1;
 			$result['msg']    = trans('messages.sms');
