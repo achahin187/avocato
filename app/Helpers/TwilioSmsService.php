@@ -47,4 +47,30 @@ class TwilioSmsService
 
 		return $result;
 	}
+	public  function send_reply($to,$consultation_answer)
+	{
+		$result['status'] = 0;
+		$result['msg']    = '';
+
+		try
+		{
+			$this->client->messages->create(
+				$to,
+				[
+					'from' => $this->from,
+					'body' => 'your Consultation Answer is : '.$consultation_answer 
+				]
+			);
+
+			$result['status'] = 1;
+			$result['msg']    = trans('messages.sms');
+		}
+		catch(\Exception $e)
+		{
+			$result['msg'] = $e->getMessage();
+		}
+
+		return $result;
+	}
+
 }

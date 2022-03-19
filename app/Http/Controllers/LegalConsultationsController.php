@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use App\Consultation;
 use Carbon\Carbon;
-use App\Helpers\VodafoneSMS;
+use App\Helpers\TwilioSmsService;
 use App\Users;
 use App\Consultation_Types;
 use Illuminate\Support\Facades\Input;
@@ -371,8 +371,16 @@ class LegalConsultationsController extends Controller
             if(isset($consultation['communication_method']) && $consultation['communication_method'] == 'whatsapp' && $consultation['communication_method'] == 'phone')
             {
 
-                $vodafone = new VodafoneSMS;
-                $vodafone::send_reply($consultation['communication_value'],$request->input('consultation_answer'));
+                $twilio_config = [
+                    'app_id' => 'AC2305889581179ad67b9d34540be8ecc1',
+                    'token'  => '2021c86af33bd8f3b69394a5059c34f0',
+                    'from'   => '+13238701693'
+                 ];
+        
+                 $twilio = new TwilioSmsService($twilio_config);
+                 
+                 $twilio->send_reply($consultation['communication_value'],$request->input('consultation_answer'));
+
             }else{
                 $this->send_consultation_reply_to_email($consultation['communication_value'],$request->input('consultation_answer'));
 
