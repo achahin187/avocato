@@ -49,6 +49,7 @@ class TwilioSmsService
 	}
 	public  function send_reply($to,$consultation_answer)
 	{
+		dd($to);
 		$result['status'] = 0;
 		$result['msg']    = '';
 
@@ -69,7 +70,6 @@ class TwilioSmsService
 		{
 			$result['msg'] = $e->getMessage();
 		}
- dd($result);
 		return $result;
 	}
 
