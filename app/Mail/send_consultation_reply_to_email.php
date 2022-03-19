@@ -33,8 +33,8 @@ class send_consultation_reply_to_email extends Mailable
 
 
         return $this->view('Consultation_Reply', compact('data'))
-                    ->subject('Consultation Reply');
-/*                     ->from(env('MAIL_USERNAME'), env('MAIL_FROM_NAME'));
- */
+                    ->subject('Consultation Reply')
+                    ->from(env('MAIL_USERNAME'), env('MAIL_FROM_ADDRESS'));
+ 
     }
 }
