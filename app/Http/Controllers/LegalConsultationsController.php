@@ -22,6 +22,9 @@ use App\Notification_Items;
 use App\Notifications_Push;
 use App\Http\Controllers\NotificationsController;
 use App\Languages;
+use App\Mail\send_consultation_reply_to_email;
+use Mail;
+
 
 class LegalConsultationsController extends Controller
 {
@@ -363,12 +366,33 @@ class LegalConsultationsController extends Controller
     
     /*          return (new NotificationsController())->pushFCM($user->id,$notification_type->msg);
      */
+        }else{
+            if(isset($consultation['communication_method']) && $consultation['communication_method'] == 'whatsapp' && $consultation['communication_method'] == 'phone')
+            {
+
+            }else{
+                $this->send_consultation_reply_to_email($consultation['communication_value'],$request->input('consultation_answer'));
+
+            }
         }
 
         Helper::add_log(4, 13, $consultation->id);
         session::flash('message','تم تعديل الرد بنجاح');
 
         return redirect()->route('legal_consultation_view',$id);
+    }
+
+    public function send_consultation_reply_to_email($communication_value,$consultation_answer)
+    {
+        try {
+            $data = [
+                'consultation_answer' => $consultation_answer,
+            ];
+            Mail::to($communication_value)->send(new send_consultation_reply_to_email($data));
+
+        } catch (\Exception $ex) {
+
+        }
     }
     public function category_consultation(Request $request, $id)
     {
