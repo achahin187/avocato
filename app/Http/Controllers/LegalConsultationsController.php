@@ -371,7 +371,7 @@ class LegalConsultationsController extends Controller
             if(isset($consultation['communication_method']) && $consultation['communication_method'] == 'whatsapp' && $consultation['communication_method'] == 'phone')
             {
 
-
+                 dd('m');
                 $twilio_config = [
                     'app_id' => 'AC2305889581179ad67b9d34540be8ecc1',
                     'token'  => '2021c86af33bd8f3b69394a5059c34f0',
