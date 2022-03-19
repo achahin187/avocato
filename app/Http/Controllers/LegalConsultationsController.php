@@ -10,6 +10,7 @@ use App\Helpers\Helper;
 use App\Consultation;
 use Carbon\Carbon;
 use App\Helpers\TwilioSmsService;
+use Twilio\Rest\Client;
 use App\Users;
 use App\Consultation_Types;
 use Illuminate\Support\Facades\Input;
@@ -370,15 +371,9 @@ class LegalConsultationsController extends Controller
         }else{
             if( $consultation['communication_method'] == 'whatsapp' || $consultation['communication_method'] == 'phone')
             {
-                $twilio_config = [
-                    'app_id' => 'AC2305889581179ad67b9d34540be8ecc1',
-                    'token'  => '2021c86af33bd8f3b69394a5059c34f0',
-                    'from'   => '+13238701693'
-                 ];
-        
-                 $twilio = new TwilioSmsService($twilio_config);
-                 
-                 $twilio->send_reply($consultation['communication_value'],$request->input('consultation_answer'));
+              
+
+                $this->send_reply($consultation['communication_value'],$request->input('consultation_answer'));
 
             }else{
 
@@ -405,6 +400,24 @@ class LegalConsultationsController extends Controller
 
         }
     }
+
+    public  function send_reply($to,$consultation_answer)
+	{
+
+		$sid = 'AC2305889581179ad67b9d34540be8ecc1'; // Your Account SID from www.twilio.com/console
+        $token ='2021c86af33bd8f3b69394a5059c34f0'; // Your Auth Token from www.twilio.com/console
+        $from   = '+13238701693'; // tour twilio number
+        try{
+            $client = new Client($sid, $token);
+            $message = $client->messages->create(
+                $to, [
+                'from' => $from, // From a valid Twilio number
+                'body' => $consultation_answer
+                ]);
+        }catch(\Exception $e ){
+            //
+        }
+	}
     public function category_consultation(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
