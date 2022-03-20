@@ -40,9 +40,11 @@ class VodafoneSMS
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
 
-    $content=' للتحميل اندرويد/';
+    $android=' للتحميل اندرويد/ shorturl.at/moIZ6';
+    $iphone=' للتحميل للأيفون/ shorturl.at/fqDE8';
+
      
-    $body = 'إجابة الاستشارة الخاصة بك هي: ('.$consultation_answer.') '.$content;
+    $body = 'إجابة الاستشارة الخاصة بك هي: ('.$consultation_answer.') '.$android . '  '.$iphone;
 
 		$concatenated_values = 'AccountId='.$this->Account_ID.'&Password='.$this->API_Password.'&SenderName='.$this->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
 
