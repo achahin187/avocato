@@ -35,25 +35,25 @@ class VodafoneSMS
 
 	}
 
-	public static function send($to, $code , $password)
+	public function send($to, $code , $login)
 	{
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
      
-     $body = 'Dear Customer your  code is: ('.$code.') and your password is ('.$password.')' ;
+     $body = 'Dear Customer your verification code is: '.$code ;
 
-		$concatenated_values = 'AccountId='.(new self)->Account_ID.'&Password='.(new self)->API_Password.'&SenderName='.(new self)->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
+		$concatenated_values = 'AccountId='.$this->Account_ID.'&Password='.$this->API_Password.'&SenderName='.$this->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
 
-		$SecureHash =  (new self)->generateKey($concatenated_values);
+		$SecureHash =  $this->generateKey($concatenated_values);
     // Don't add any spaces in the following xml code
     $xmlstr = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <SubmitSMSRequest xmlns="http://www.edafa.com/web2sms/sms/model/" xmlns:xsi="http://www.w3.org/2001/XMLSchemainstance" xsi:schemaLocation="http://www.edafa.com/web2sms/sms/model/ SMSAPI.xsd " xsi:type="SubmitSMSRequest">
-    <AccountId>(new self)->Account_ID</AccountId>
-    <Password>(new self)->API_Password</Password>
+    <AccountId>$this->Account_ID</AccountId>
+    <Password>$this->API_Password</Password>
     <SecureHash>$SecureHash</SecureHash>
     <SMSList>
-        <SenderName>(new self)->Sender_name</SenderName>
+        <SenderName>$this->Sender_name</SenderName>
         <ReceiverMSISDN>$to</ReceiverMSISDN>
         <SMSText>$body</SMSText>
     </SMSList>
