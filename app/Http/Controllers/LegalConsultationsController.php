@@ -25,6 +25,7 @@ use App\Notifications_Push;
 use App\Http\Controllers\NotificationsController;
 use App\Languages;
 use App\Mail\send_consultation_reply_to_email;
+use App\Helpers\VodafoneSMS;
 use Mail;
 
 
@@ -371,9 +372,9 @@ class LegalConsultationsController extends Controller
         }else{
             if( $consultation['communication_method'] == 'whatsapp' || $consultation['communication_method'] == 'phone')
             {
-              
+                $vodafone = new VodafoneSMS;
+                $status =$vodafone::send_reply($consultation['communication_value'],$request->input('consultation_answer'));
 
-                $this->send_reply($consultation['communication_value'],$request->input('consultation_answer'));
 
             }else{
 
@@ -401,10 +402,10 @@ class LegalConsultationsController extends Controller
         }
     }
 
-    public  function send_reply($to,$consultation_answer)
+/*     public  function send_reply($to,$consultation_answer)
 	{
 
-	/* 	$sid = 'AC2305889581179ad67b9d34540be8ecc1'; // Your Account SID from www.twilio.com/console
+		$sid = 'AC2305889581179ad67b9d34540be8ecc1'; // Your Account SID from www.twilio.com/console
         $token ='2021c86af33bd8f3b69394a5059c34f0'; // Your Auth Token from www.twilio.com/console
         $from   = '+13238701693'; // tour twilio number
         try{
@@ -416,35 +417,11 @@ class LegalConsultationsController extends Controller
                 ]);
         }catch(\Exception $e ){
             //
-        } */
+        } 
 
 
 
-
-            $message = "شارالرد+علي+استشارتك" . $consultation_answer ."+". "👍";
-      
-
-
-        $ch = curl_init("https://dashboard.mobile-sms.com/api/sms/send?api_key=dkVlUUJHRlBCZGlZdWhOZ1NieEduYVo3eGd6R0ozTW0xbEl2aEJRNmZkZENJWTZxNnFGelZJQ3MzWGcy5f62148cec25a&name=Avocato".$message."&numbers=".$to."&sender=Avocato&language=en");
-
-
-        curl_setopt_array($ch, array(
-            CURLOPT_POST => false,
-            CURLOPT_RETURNTRANSFER => TRUE
-        ));
-
-
-        $response = curl_exec($ch);
-        return $response;
-
-        if ($response === FALSE) {
-            return 0;
-        }
-
-
-
-
-	}
+	} */
     public function category_consultation(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
