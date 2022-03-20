@@ -40,7 +40,7 @@ class VodafoneSMS
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
 
-    $content=' للتحميل اندرويد/ https://play.google.com/store/apps/details?id=com.pentavalue.secure_bridge&hl=en&gl=US  للتحميل للايفون / https://apps.apple.com/us/app/avocato/id1381221725';
+    $content=' للتحميل اندرويد/';
      
     $body = 'إجابة الاستشارة الخاصة بك هي: ('.$consultation_answer.') '.$content;
 
