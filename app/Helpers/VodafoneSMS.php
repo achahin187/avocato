@@ -40,7 +40,7 @@ class VodafoneSMS
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
      
-    $body = 'your Consultation Answer is : ('.$consultation_answer.') ' ;
+    $body = 'إجابة الاستشارة الخاصة بك هي: ('.$consultation_answer.') ' ;
 
 		$concatenated_values = 'AccountId='.$this->Account_ID.'&Password='.$this->API_Password.'&SenderName='.$this->Sender_name.'&ReceiverMSISDN='.$to.'&SMSText='.$body.'';
 
