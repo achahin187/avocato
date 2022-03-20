@@ -20,11 +20,11 @@ class VodafoneSMS
      // protected $IP = null;
 
 
-      public function __construct()
+     public function __construct()
 	{
 	  $this->Account_ID =   "101006527";
 
-    $this->API_Password = "Voda@1234";
+     $this->API_Password = "Voda@1234";
 
 
       $this->Sender_name = "Avocato";
@@ -124,10 +124,12 @@ XML;
 
          $response = $client->send($request);
   }
+
+
 	public function generateKey($concatenated_values)
 	{
 		
-        $hash =  hash_hmac('SHA256',$concatenated_values,(new self)->Secret_key);
+        $hash =  hash_hmac('SHA256',$concatenated_values,$this->Secret_key);
         $hash = strtoupper($hash);
         return $hash ; 
 
