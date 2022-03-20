@@ -40,8 +40,8 @@ class VodafoneSMS
 		// $to =  user mobile number
 		// $code = sms text body ** Note : Ignore as you can special characters 
 
-    $android=' للتحميل اندرويد/ shorturl.at/moIZ6';
-    $iphone=' للتحميل للأيفون/ shorturl.at/fqDE8';
+    $android=' للتحميل التطبيق اندرويد/ shorturl.at/moIZ6';
+    $iphone=' للتحميل التطبيق  للأيفون/ shorturl.at/fqDE8';
 
      
     $body = 'إجابة الاستشارة الخاصة بك هي: ('.$consultation_answer.') '.$android . '  '.$iphone;
