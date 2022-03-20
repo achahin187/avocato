@@ -373,7 +373,7 @@ class LegalConsultationsController extends Controller
             if( $consultation['communication_method'] == 'whatsapp' || $consultation['communication_method'] == 'phone')
             {
                 $vodafone = new VodafoneSMS;
-                $vodafone->send($consultation['communication_value'],$request->input('consultation_answer'),$login=null);
+                $vodafone->send($consultation['communication_value'],$request->input('consultation_answer'));
 
 
             }else{
