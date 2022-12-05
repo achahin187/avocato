@@ -53,7 +53,7 @@ class paymentController extends Controller
             ]);
 
 
-            response()->json(['result' => 'success', 'status' => 200]);
+            return   response()->json(['result' => 'success', 'status' => 200]);
         }
     }
 
