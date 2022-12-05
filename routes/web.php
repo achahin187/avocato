@@ -437,7 +437,6 @@ Route::group(['middleware' => ['country']], function () {
 
     //payments
     Route::get('/payment', 'paymentController@index')->name('payment_index');
-    Route::post('/payment/store_data', 'paymentController@store')->name('payment_store');
     Route::get('/payment/destroySelected', 'paymentController@destroySelected')->name('pay.destroySelected');
     Route::get('/payment/destroy/{id}', 'paymentController@destroy')->name('pay.deleteRecord');
     Route::post('/payment/filter', 'paymentController@filter')->name('pay.filter');
