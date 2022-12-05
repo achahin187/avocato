@@ -182,7 +182,7 @@
                         @if ($payment->name)
                             <td><span class="cellcontent">{{ $payment->name ?? '' }}</span></td>
                         @else
-                            لا يوجد
+                            <td><span class="cellcontent">{{ '' }}</span></td>
                         @endif
 
                         {{-- mobile --}}
