@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Payment;
 use App\Users;
 use Session;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 
 class paymentController extends Controller
 {
-    
+
 
     public function index(Request $request)
     {
@@ -21,40 +22,43 @@ class paymentController extends Controller
         $nationalities = Geo_Countries::all();
 
 
-        $payments=Payment::all();
+        $payments = Payment::all();
 
-        return view('payment.payment',compact('payments','nationalities'))->with('users', Users::users(8)->where('country_id',Auth::user()->country_id)->get());
+        return view('payment.payment', compact('payments', 'nationalities'))->with('users', Users::users(8)->where('country_id', Auth::user()->country_id)->get());
     }
 
     public function store(Request $request)
     {
         $data = $request->all();
 
-        if($data['statusCode'] == 200){
+        if (isset($data) && count($data) > 0) {
+
             Payment::create([
-                'type' => $data['type'],
-                'referenceNumber' => $data['referenceNumber'],
-                'merchantRefNumber' => $data['merchantRefNumber'],
-                'orderAmount' => $data['orderAmount'],
-                'paymentAmount' => $data['paymentAmount'],
-                'fawryFees' => $data['fawryFees'],
-                'paymentMethod' => $data['paymentMethod'],
-                'orderStatus' => $data['orderStatus'],
-                'name' => $data['customerName'],
-                'Mobile' => $data['customerMobile'],
-                'Mail' => $data['customerMail'],
-                'customerProfileId' => $data['customerProfileId'],
-                'signature' => $data['signature'],
-                'statusCode' => $data['statusCode'],
-                'statusDescription'=> $data['statusDescription'],
+                'type' => $data['type'] ?? null,
+                'referenceNumber' => $data['referenceNumber'] ?? $data['fawryRefNumber'],
+                'merchantRefNumber' => $data['merchantRefNumber'] ?? null,
+                'orderAmount' => $data['orderAmount'] ?? null,
+                'paymentAmount' => $data['paymentAmount'] ?? null,
+                'fawryFees' => $data['fawryFees'] ?? null,
+                'paymentMethod' => $data['paymentMethod'] ?? null,
+                'orderStatus' => $data['orderStatus'] ?? null,
+                'name' => $data['customerName'] ?? null,
+                'Mobile' => $data['customerMobile'] ?? null,
+                'Mail' => $data['customerMail'] ?? null,
+                'customerProfileId' => $data['customerProfileId'] ?? null,
+                'signature' => $data['signature'] ?? null,
+                'statusCode' => $data['statusCode'] ?? null,
+                'statusDescription' => $data['statusDescription'] ?? null,
+                'requestId' => $data['requestId'] ?? null,
             ]);
+
+
+            return redirect()->route('payment_index');
         }
-        
-         return redirect()->route('payment_index');
     }
 
 
-  /**
+    /**
      * Delete selected rows
      */
     public function destroySelected(Request $request)
@@ -78,7 +82,6 @@ class paymentController extends Controller
         return response()->json([
             'success' => 'Record has been deleted successfully!'
         ]);
-    
     }
 
 
@@ -95,19 +98,18 @@ class paymentController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-      
-        $users=Users::all();
-   
 
-       
-        if($request->has('search'))
-        {
-          $users = $users->distinct()->where(function($query) use ($request){
-            $query->where('name','like','%'.$request->search.'%')
-            ->orwhere('full_name','like','%'.$request->search.'%')
-            ->orwhere('code','like','%'.$request->search.'%')
-            ->orwhere('cellphone','like','%'.$request->search.'%');
-          });
+        $users = Users::all();
+
+
+
+        if ($request->has('search')) {
+            $users = $users->distinct()->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orwhere('full_name', 'like', '%' . $request->search . '%')
+                    ->orwhere('code', 'like', '%' . $request->search . '%')
+                    ->orwhere('cellphone', 'like', '%' . $request->search . '%');
+            });
         }
 
         // check nationality
@@ -136,5 +138,4 @@ class paymentController extends Controller
 
         return view('payment.payment', compact(['packages', 'subscriptions', 'nationalities']))->with('filters', $users);
     }
-
 }
