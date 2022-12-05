@@ -53,7 +53,7 @@ class paymentController extends Controller
             ]);
 
 
-            return redirect()->route('payment_index');
+            response()->json(['result' => 'success', 'status' => 200]);
         }
     }
 
