@@ -678,6 +678,9 @@
                     </fieldset>
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    
+                    <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                    <button class="remodal-confirm" type="submit">حفظ</button>
                   </form>
                 </div>
               </div>
