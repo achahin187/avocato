@@ -1035,7 +1035,7 @@
            @endsection
 
 
-    @section('js')
+    @section('javascript')
     <script type="text/javascript">
       $(document).ready(function(){ 
 
