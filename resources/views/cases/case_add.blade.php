@@ -778,10 +778,6 @@
      */
     </script>
     <script type="text/javascript">
-        var i = 0;
-        var clients = {{ $data['clients'] }};
-
-
         function set_client_data(id, i, clients) {
             var code = document.getElementById('client_code_' + i);
             var name = document.getElementById('client_name_' + i);
