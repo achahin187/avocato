@@ -1,11 +1,10 @@
 @extends('layout.app')
 @section('content')
-
               <!-- =============== Custom Content ===============-->
-              <div class="row" >
+              <div class="row">
                 <div class="col-md-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
-                    <div class="add-mode">Adding mode</div>
+                    <div class="edit-mode">Editing mode</div>
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="text-xs-center">
@@ -22,464 +21,767 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-                  <form id="horizontal-pill-steps" action="{{ route('add_new_case') }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-                    {{ csrf_field() }}
-                    <h3>معلومات الموكل \ الخصم</h3>
-                    <fieldset>
-                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="main-title-conts">
-                          <div class="caption">
-                            <h3 class="color--main">الموكلين</h3>
+                  <form action="{{ URL('edit_case/'.$case->id) }}" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+                   <input type="hidden" name="_token" value="{{csrf_token()}}">
+                  <div class="tabs--wrapper">
+                    <div class="clearfix"></div>
+                    <ul class="tabs">
+                      <li>معلومات الموكل</li>
+                      <li>التحقيقات</li>
+                      <li>معلومات القضية </li>
+                      <li> تغيير المحامي</li>
+                    </ul>
+                    <ul class="tab__content">
+                      <li class="tab__content_item active">
+                        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                          <div class="main-title-conts">
+                            <div class="caption">
+                              <h3 class="color--main">الموكلين</h3>
+                            </div>
+                            <div class="actions"><a class="undefined undefined undefined undefined master-btn" type="button" href=""></a>
+                            </div><span class="mainseparator bgcolor--main"></span>
                           </div>
-                          <div class="actions"><a class="undefined undefined undefined undefined master-btn" type="button" href=""></a>
-                          </div><span class="mainseparator bgcolor--main"></span>
-                        </div>
-                        <div class="add_new_client" id="add_new_client">
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
-                           <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})" required>
-                            <option value="-1" selected disabled hidden>إختر كود العميل</option>
+                          <div class="add_new_client" id="add_new_client">
+                            
+                            <?php $i=0; ?>
+                            @foreach($case->case_clients as $case_client)
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="client_code_{{$i}}">كود العميل</label>
+                              <select class="master_input select2"  id="client_code_{{$i}}" name="client_code[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$clients}})">
+                              <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($clients as $client)
+                             @if($client->id == $case_client->client_id)
+                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}" selected>{{ $client->code .' - '. $client->name}}</option>
+                              @else
                               <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
+                              @endif
                             @endforeach
                               
                             </select><span class="master_message color--fadegreen">
-                               @if ($errors->has('client_code'))
+                              @if ($errors->has('client_code'))
                                     {{ $errors->first('client_code')}}
                                     @endif
-                            </span>
+                                  </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_name_0">اسم الموكل</label>
-                            <input class="master_input"  id="client_name_0" name="client_name[0]"  readonly>
-                            
-                            <span class="master_message color--fadegreen">بعض النص </span>
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="client_name_{{$i}}">اسم الموكل</label>
+                             <input class="master_input"  id="client_name_{{$i}}" name="client_name[{{$i}}]"  readonly><span class="master_message color--fadegreen">بعض النص </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_number_0">رقم الهاتف</label>
-                            <input class="master_input" type="text" placeholder="رقم الهاتف" id="client_number_0" name="client_number[0]" readonly><span class="master_message color--fadegreen">message</span>
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="client_number_{{$i}}">رقم الهاتف</label>
+                              <input class="master_input" type="text" placeholder="رقم الهاتف" id="client_number_{{$i}}" name="client_number[{{$i}}]" readonly><span class="master_message color--fadegreen">message</span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_character_0">صفته</label>
-                            <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;" class="required">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="client_character_{{$i}}">صفته</label>
+                            <select class="master_input select2" id="client_character_{{$i}}" name="client_character[{{$i}}]" style="width:100%;">
                               @foreach($roles as $role)
+                              @if($role->id == $case_client->case_client_role_id)
+                              <option value="{{$role->id}}" selected>{{$role->name_ar}}</option>
+                              @else
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
+                              @endif
+
                               @endforeach
                             </select><span class="master_message color--fadegreen">message content</span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="authorization_num_0">رقم التوكيل</label>
-                            <input class="master_input required" type="text" placeholder="رقم التوكيل" id="authorization_num_0" name="authorization_num[0]" required><span class="master_message color--fadegreen">
+                          <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="authorization_num_{{$i}}">رقم التوكيل</label>
+                            <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num_{{$i}}" name="authorization_num[{{$i}}]" value="{{$case_client->attorney_number}}"><span class="master_message color--fadegreen">
                                @if ($errors->has('authorization_num'))
                                     {{ $errors->first('authorization_num')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-9 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_address_0">عنوانه</label>
-                            <input class="master_input" type="text" placeholder="عنوانه" id="client_address_0" name="client_address[0]" readonly><span class="master_message color--fadegreen">بعض النص </span>
+                          <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="client_address_{{$i}}">عنوانه</label>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="client_address_{{$i}}" name="client_address[{{$i}}]" readonly><span class="master_message color--fadegreen">بعض النص </span>
+                            </div>
                           </div>
+                          @endforeach
+
+
                         </div>
-                      </div>
-                        <div class="col-md-3 col-md-offset-9">
-                          <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="button" onclick="add_more_clients();"><span>اضافة المزيد</span>
+                          <div class="col-md-3 col-md-offset-9">
+                            <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="button" onclick="add_more_clients()"><span>اضافة المزيد</span>
                           </button>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div><br>
-                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="main-title-conts">
-                          <div class="caption">
-                            <h3 class="color--main">الخصم</h3>
+                            
                           </div>
-                          <div class="actions"><a class="undefined undefined undefined undefined master-btn" type="button" href=""></a>
-                          </div><span class="mainseparator bgcolor--main"></span>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory " for="enemy_name">اسم الخصم</label>
-                            <input class="master_input required" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name" required><span class="master_message color--fadegreen">
-                              @if ($errors->has('enemy_name'))
+                          <div class="clearfix"></div>
+                        </div><br>
+                        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                          <div class="main-title-conts">
+                            <div class="caption">
+                              <h3 class="color--main">الخصم</h3>
+                            </div>
+                            <div class="actions"><a class="undefined undefined undefined undefined master-btn" type="button" href=""></a>
+                            </div><span class="mainseparator bgcolor--main"></span>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="enemy_name">اسم الخصم</label>
+                            <input class="master_input" type="text" placeholder="اسم الخصم" id="enemy_name" name="enemy_name" value="{{$case->contender_name}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_name'))
                                     {{ $errors->first('enemy_name')}}
                                     @endif
                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory " for="enemy_type">صفته</label>
-                            <select class="master_input select2 required" id="enemy_type" name="enemy_type" style="width:100%;" required>
+                          <div class="col-md-6">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="enemy_type">صفته</label>
+                            <select class="master_input select2" id="enemy_type" name="enemy_type" style="width:100%;">
                               @foreach($roles as $role)
+                              @if($role->id == $case->contender_case_client_role_id)
+                              <option value="{{$role->id}}" selected>{{$role->name_ar}}</option>
+                              @else
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
+                              @endif
                               @endforeach
                             </select><span class="master_message color--fadegreen">
-                               @if ($errors->has('enemy_type'))
+                              @if ($errors->has('enemy_type'))
                                     {{ $errors->first('enemy_type')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
-                            <input class="master_input required" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer" required><span class="master_message color--fadegreen" >
-                              @if ($errors->has('enemy_lawyer'))
+                          <div class="col-md-6">
+                            <div class="master_field">
+                               <label class="master_label mandatory" for="enemy_address">عنوانه</label>
+                            <input class="master_input" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address" value="{{$case->contender_address}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_address'))
+                                    {{ $errors->first('enemy_address')}}
+                                    @endif
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="enemy_lawyer">محاميه</label>
+                            <input class="master_input" type="text" placeholder="محاميه" id="enemy_lawyer" name="enemy_lawyer" value="{{$case->contender_laywer}}"><span class="master_message color--fadegreen">
+                               @if ($errors->has('enemy_lawyer'))
                                     {{ $errors->first('enemy_lawyer')}}
                                     @endif
                              </span>
-                          </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="enemy_address">عنوانه</label>
-                            <input class="master_input required" type="text" placeholder="عنوانه" id="enemy_address" name="enemy_address" required><span class="master_message color--fadegreen" >
-                              @if ($errors->has('enemy_address'))
-                                    {{ $errors->first('enemy_address')}}
-                                    @endif
-                             </span>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div>
-                    </fieldset>
-                    <h3>التحقيقات</h3>
-                    <fieldset>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <div class="col-xs-4">
-                            <div class="master_field">
-                              <label class="master_label" for="investigation_no">رقم المحضر</label>
-                              <input class="master_input required" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no" required><span class="master_message color--fadegreen">
-                                @if ($errors->has('investigation_no'))
-                                    {{ $errors->first('investigation_no')}}
-                                    @endif
-                              </span>
                             </div>
                           </div>
-                          <div class="col-xs-4">
+                          <div class="col-md-6">
                             <div class="master_field">
-                              <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
-                              <select class="master_input select2 required" id="investigation_type" name="investigation_type" style="width:100%;" required>
-      
-                                    @foreach($cases_record_types as $type)
-                                    <option value="{{$type->id}}">{{$type->name}}</option>
-                                    @endforeach
-                                          
-                              </select><span class="master_message color--fadegreen">
-                                @if ($errors->has('investigation_type'))
-                                    {{ $errors->first('investigation_type')}}
-                                    @endif
-                              </span>
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="master_field">
-                              <label class="master_label mandatory">تاريخ</label>
-                              <div class="bootstrap-timepicker">
-                                <input class="datepicker master_input required" type="text" placeholder="تاريخ المحضر" id="investigation_date" name="investigation_date" required>
-                              </div><span class="master_message color--fadegreen">
-                                @if ($errors->has('investigation_date'))
-                                    {{ $errors->first('investigation_date')}}
-                                    @endif
-                              </span>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="master_field">
-                              <label class="master_label" for="docs_upload">إرفاق ملفات</label>
-                              <div class="file-upload">
-                                <div class="file-select">
-                                  <div class="file-select-name" id="noFile">إرفاق ملفات</div>
-                                  <input class="chooseFile" type="file" name="docs_upload[]" id="docs_upload"  multiple="multiple">
-                                </div>
-                              </div><span class="master_message color--fadegreen">message</span>
+                              <label class="master_label mandatory" for="authorization_num">رقم التوكيل</label>
+                              <input class="master_input" type="number" placeholder="رقم التوكيل" id="authorization_num"><span class="master_message color--fadegreen">
+                               
+                                  </span>
                             </div>
                           </div>
                           <div class="clearfix"></div>
                         </div>
-                      </div>
-                    </fieldset>
-                    <h3>معلومات القضية </h3>
-                    <fieldset>
-                      <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
-                            <input class="master_input required" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num" required><span class="master_message color--fadegreen">
-                              @if ($errors->has('folder_num'))
+                      </li>
+                      <li class="tab__content_item">
+                        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                          <div class="col-lg-12">
+                            <table class="table-1">
+                              <thead>
+                                <tr class="bgcolor--gray_mm color--gray_d">
+                                  <th><span class="cellcontent">رقم المحضر</span></th>
+                                  <th><span class="cellcontent">نوع المحضر</span></th>
+                                  <th><span class="cellcontent">تاريخ المحضر</span></th>
+                                  <th><span class="cellcontent">الملفات المرفقة</span></th>
+                                  <th><span class="cellcontent">الإجراءات</span></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+
+                    
+                                @foreach($case->case_records as $record)
+                                <tr data-record-id="{{$record->id}}">
+
+                                  <td><span class="cellcontent">{{$record->record_number}}</span></td>
+                                  <td><span class="cellcontent">{{$record->record_type_id}}</span></td>
+                                  <td><span class="cellcontent">{{$record->record_date}}</span></td>
+                                  <td><span class="cellcontent"><a href="#investigation_attachment/{{$record->id}}" ,  class= "action-btn bgcolor--main color--white "> الملفات المرفقة &nbsp; <i class = "fa  fa-paperclip"></i></a></span></td>
+                                  <td><span class="cellcontent"><a href="#"  class= "btn-warning-cancel action-btn bgcolor--fadebrown color--white "><i class = "fa  fa-trash-o"></i></a></span></td>
+
+
+
+                                  <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment/{{$record->id}}" style="display: none;"><span></span></a>
+                            <div class="remodal-bg"></div>
+                            <div class="remodal" data-remodal-id="investigation_attachment/{{$record->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <h3>الملفات المرفقة للتحقيق بتاريخ 12/12/2018</h3>
+                                    <ul class="mailbox-attachments clearfix right-text">
+                                      @foreach($record->case_record_documents as $document)
+                                      <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="{{asset($document->file)}}"><i class="fa fa-paperclip"></i>&nbsp;
+                                            {{$document->name}}<br></a><span class="mailbox-attachment-size"><a class="pull-right" href="{{URL('download_document/'.$document->id  )}}'"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                      @endforeach
+                                      
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              <button class="remodal-confirm" ><a href="{{URL('download_all_documents/'.$record->id)}}">تحميل الكل</a></button>
+                            
+                            </div>
+
+
+                                </tr>
+                                @endforeach
+
+
+                               
+                              </tbody>
+                            </table>
+                            <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <h2 class="title">title of the changing log in</h2>
+                                <div class="log-content">
+                                  <div class="log-container">
+                                    <table class="log-table">
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <th>log title</th>
+                                        <th>user</th>
+                                        <th>time</th>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-2 col-sm-3 colxs-12"><a class="master-btn color--white bgcolor--main bradius--small bshadow--0 btn-block" href="#new_investigation"><i class="fa fa-plus"></i><span>إضافة</span></a>
+                              <div class="remodal-bg"></div>
+                              {{-- <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>إضافة محضر</h3>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label" for="investigation_no">رقم المحضر</label>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
+                                          </select><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory">تاريخ</label>
+                                          <div class="bootstrap-timepicker">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date" id="investigation_date">
+                                          </div><span class="master_message color--fadegreen">message content</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="master_field">
+                                          <label class="master_label" for="record_documents">إرفاق ملفات</label>
+                                          <div class="file-upload">
+                                            <div class="file-select">
+                                              <div class="file-select-name" id="noFile">إرفاق ملفات</div>
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="record_documents" multiple>
+                                            </div>
+                                          </div><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                <button class="remodal-confirm" onclick="add_record({{$case->id}})">حفظ</button>
+                              </div> --}}
+                            </div>
+                            <a class="master-btn undefined undefined undefined undefined undefined" href="#investigation_attachment"><span></span></a>
+                            <div class="remodal-bg"></div>
+                            <div class="remodal" data-remodal-id="investigation_attachment" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <div class="row">
+                                  <div class="col-xs-12">
+                                    <h3>الملفات المرفقة للتحقيق بتاريخ 12/12/2018</h3>
+                                    <ul class="mailbox-attachments clearfix right-text">
+                                      <li><span class="mailbox-attachment-icon"><i class="fa fa-file-pdf-o"></i></span>
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
+                                            report.pdf<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                      <li><span class="mailbox-attachment-icon"><i class="fa fa-file-word-o"></i></span>
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-paperclip"></i>&nbsp;
+                                            App_Desc.docx<br></a><span class="mailbox-attachment-size">1,245 KB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                      <li><span class="mailbox-attachment-icon has-img"><img src="https://unsplash.it/300/300/?random" alt="Attachment"></span>
+                                        <div class="mailbox-attachment-info"><a class="mailbox-attachment-name" href="#"><i class="fa fa-camera"></i>&nbsp;
+                                            photo1.png<br></a><span class="mailbox-attachment-size">2.67 MB<a class="pull-right" href="#"><i class="fa fa-cloud-download"></i></a></span></div>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div><br>
+                              <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                              <button class="remodal-confirm" data-remodal-action="confirm">تحميل الكل</button>
+                            </div>
+                          </div>
+                          <div class="clearfix"></div>
+                        </div>
+                      </li>
+                      <li class="tab__content_item">
+                        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom">
+                          <div class="col-md-4">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="folder_num">رقم الملف بالمكتب</label>
+                            <input class="master_input" type="number" placeholder="رقم الملف بالمكتب" id="folder_num" name="folder_num" value="{{$case->office_file_number}}"><span class="master_message color--fadegreen"> @if ($errors->has('folder_num'))
                                     {{ $errors->first('folder_num')}}
                                     @endif
-                            </span>
+                                  </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
-                            <input class="master_input required" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num" required><span class="master_message color--fadegreen">
-                               @if ($errors->has('claim_num'))
+                          <div class="col-md-4">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="claim_num">رقم الدعوى</label>
+                            <input class="master_input" type="number" placeholder="رقم الدعوى" id="claim_num" name="claim_num" value="{{$case->claim_number}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('claim_num'))
                                     {{ $errors->first('claim_num')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
-                            <input class="master_input required" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees" required><span class="master_message color--fadegreen">
-                               @if ($errors->has('case_fees'))
+                          <div class="col-md-4">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_fees">رسوم الدعوى</label>
+                            <input class="master_input" type="number" placeholder="رسوم الدعوى" id="case_fees" name="case_fees" value="{{$case->claim_expenses}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('case_fees'))
                                     {{ $errors->first('case_fees')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_type">نوع القضية</label>
-                            <select class="master_input select2 required" id="case_type" name="case_type" style="width:100%;" required>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_type">نوع القضية</label>
+                            <select class="master_input select2" id="case_type" name="case_type" style="width:100%;">
                               @foreach($cases_types as $type)
+                              @if($type->id == $case->case_type_id)
+                              <option value="{{$type->id}}" selected>{{$type->name}}</option>
+                              @else
                               <option value="{{$type->id}}">{{$type->name}}</option>
+                              @endif
+
                               @endforeach
                             </select><span class="master_message color--fadegreen">
-                               @if ($errors->has('case_type'))
+                              @if ($errors->has('case_type'))
                                     {{ $errors->first('case_type')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="court_name">المحكمة التى تنظر امامها</label>
-                            <select class="master_input select2" id="court_name" name="court_name" style="width:100%;" >
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="court_name">المحكمة التى تنظر امامها</label>
+                            <select class="master_input select2" id="court_name" name="court_name" style="width:100%;">
                               @foreach($courts as $court)
+                              @if($court->id == $case->court_id)
+                              <option value="{{$court->id}}" selected>{{$court->name}}</option>
+                              @else
                               <option value="{{$court->id}}">{{$court->name}}</option>
+                              @endif
                               @endforeach
                             </select><span class="master_message color--fadegreen">
                               @if ($errors->has('court_name'))
                                     {{ $errors->first('court_name')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="governorate">المحافظة</label>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="governorate">المحافظة</label>
                             <select class="master_input select2" id="governorate" name="governorate" style="width:100%;">
                              @foreach($governorates as $governorate)
+                             @if($governorate->id == $case->geo_governorate_id)
+                              <option value="{{$governorate->id}}" selected>{{$governorate->name}}</option>
+                              @else
                               <option value="{{$governorate->id}}">{{$governorate->name}}</option>
+                              @endif
                               @endforeach
                             </select><span class="master_message color--fadegreen">
-                               @if ($errors->has('governorate'))
+                                 @if ($errors->has('governorate'))
                                     {{ $errors->first('governorate')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="city">المدينة</label>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="city">المدينة</label>
                             <select class="master_input select2" id="city" name="city" style="width:100%;">
                               @foreach($cities as $city)
+                              @if($city->id == $case->geo_city_id)
+                              <option value="{{$city->id}}" selected>{{$city->name}}</option>
+                              @else
                               <option value="{{$city->id}}">{{$city->name}}</option>
+                              @endif
                               @endforeach
                             </select><span class="master_message color--fadegreen">
-                              @if ($errors->has('city'))
+                               @if ($errors->has('city'))
                                     {{ $errors->first('city')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="circle">الدائرة</label>
-                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" >
-                              <span class="master_message color--fadegreen">
-                                @if ($errors->has('circle'))
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                               <label class="master_label mandatory" for="circle">الدائرة</label>
+                            <input class="master_input" id="circle" name="circle" type="text" data-placeholder="الدائرة" style="width:100%;" value="{{$case->region}}"><span class="master_message color--fadegreen">
+                              @if ($errors->has('circle'))
                                     {{ $errors->first('circle')}}
                                     @endif
-                              </span>
+                            </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_year">السنة</label>
-                            <input class=" master_input required case_year" type="text" placeholder="السنة" id="case_year"  name="case_year" required><span class="master_message color--fadegreen">
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_year">السنة</label>
+                            <input class="master_input" type="number" placeholder="السنة" id="case_year"  name="case_year" value="{{$case->claim_year}}"><span class="master_message color--fadegreen">
                                @if ($errors->has('case_year'))
                                     {{ $errors->first('case_year')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_date">تاريخ قيد الدعوى </label>
                             <div class="bootstrap-timepicker">
-                              <input class="datepicker master_input required" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date" required>
+                              <input class="datepicker master_input" type="text" placeholder="تاريخ قيد الدعوى " id="case_date" name="case_date" value="{{$case->claim_date}}">
                             </div><span class="master_message color--fadegreen">
                               @if ($errors->has('case_date'))
                                     {{ $errors->first('case_date')}}
                                     @endif
                             </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
-                            <input class="date_range_picker master_input required" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang" required><span class="master_message color--fadegreen">
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_dateRang">تاريخ بدء / نهاية القضية</label>
+                            <input class="date_range_picker master_input" type="text" placeholder="ex:John Doe" id="case_dateRang" name="case_dateRang" value="{{$case->case_startdate}}-{{$case->case_enddate}}"><span class="master_message color--fadegreen"> 
                               @if ($errors->has('case_dateRang'))
                                     {{ $errors->first('case_dateRang')}}
                                     @endif
-                            </span>
-                          </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
-                            <input class="master_input" type="number" placeholder="مصروفات القضية" id="case_fees" name="case_fees"><span class="master_message color--fadegreen">
-                              @if ($errors->has('case_fees'))
-                                    {{ $errors->first('case_fees')}}
-                                    @endif
                                   </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory">صور مستندات القضية</label>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="case_fees">مصروفات الدعوى</label>
+                            <input class="master_input" type="number" placeholder="مصروفات القضية" ><span class="master_message color--fadegreen">
+                              
+                            </span>
+                            </div>
+                          </div>
+                          <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory">صور مستندات القضية</label>
                             <div class="file-upload">
                               <div class="file-select">
                                 <div class="file-select-name" id="noFile">صور مستندات القضية </div>
                                 <input class="chooseFile" type="file" name="chooseFile_case[]" multiple>
                               </div>
                             </div><span class="master_message color--fadegreen">message content</span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-md-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="subject">الموضوع</label>
-                            <input class="master_input required" type="text" placeholder="الموضوع" id="subject" name="subject" required><span class="master_message color--fadegreen">@if ($errors->has('subject'))
+                          <div class="col-md-12">
+                            <div class="master_field">
+                              <label class="master_label mandatory" for="subject">الموضوع</label>
+                            <input class="master_input" type="text" placeholder="الموضوع" id="subject" name="subject" value="{{$case->case_body}}"><span class="master_message color--fadegreen">
+                                @if ($errors->has('subject'))
                                     {{ $errors->first('subject')}}
                                     @endif
-                                  </span>
+                            </span>
+                            </div>
                           </div>
-                        </div>
-                        <div class="col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="notes">ملاحظات</label>
-                            <textarea class="master_input" name="notes" id="notes" placeholder="ملاحظات"></textarea><span class="master_message color--fadegreen">message</span>
-                          </div>
-                        </div>
-                        <div class="clearfix"></div>
-                      </div>
-                    </fieldset>
-                    <h3>المحامي المسئول</h3>
-                    <fieldset>
-                      <div class="full-table">
-                        <div class="remodal-bg">
-                          <div class="remodal" id="confirm" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                           
-                            <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                          <div>
-                            <h2 id="modal1Title">فلتر</h2>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_code">كود المحامى</label>
-                                <input class="master_input" type="text" placeholder="كود المحامى" id="lawyer_code" name="lawyer_code"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_name">اسم المحامى</label>
-                                <input class="master_input" type="text" placeholder="اسم المحامى" id="lawyer_name" name="lawyer_name"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_id">الرقم القومي</label>
-                                <input class="master_input" type="number" placeholder="الرقم القومي" id="lawyer_national_id" name="lawyer_national_id"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
+                          <div class="col-xs-12">
                             <div class="master_field">
-                              <label class="master_label mandatory" for="nationality">الجنسيه</label>
-                              <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
-                                <option value="0" selected="selected">الكل</option>
-                                @foreach($nationalities as $nationality)
-                                <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
-                                @endforeach
-                              </select><span class="master_message color--fadegreen"></span>
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="master_field">
-                              <label class="master_label" for="work_sector">التخصص</label>
-                            <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
-                            <option value="0">choose Speification ..</option>
-                                      @foreach($work_sectors as $work_sector)
-                                      <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
-                                      @endforeach
-                                    </select>
-                            </div>
-                            </div>
-                            <div class="col-md-6">
-                            <div class="master_field">
-                                <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
-                                   <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
-                                      <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
-                                      @foreach($syndicate_levels as $syndicate)
-                                      <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
-                                      @endforeach
-                                   </select>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="lawyer_tel">الهاتف</label>
-                                <input class="master_input" type="number" placeholder="الهاتف" id="lawyer_tel" name="lawyer_tel"><span class="master_message color--fadegreen">message</span>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <div class="master_field">
-                                <label class="master_label mandatory" for="start_date">تاريخ الالتحاق</label>
-                                <div class="bootstrap-timepicker">
-                                  <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="start_date" name="start_date">
-                                </div><span class="master_message color--fadegreen">message content</span>
-                              </div>
+                              <label class="master_label mandatory" for="notes">ملاحظات</label>
+                            <textarea class="master_input" name="notes" id="notes" placeholder="ملاحظات" value="{{$case->case_notes}}"></textarea><span class="master_message color--fadegreen">message</span>
                             </div>
                           </div>
                           <div class="clearfix"></div>
-                          <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
-                          <button class="remodal-confirm "  value="filter" onclick="filter_lawyers();">فلتر</button>
-                           </div>
                         </div>
-                        <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
-                        <table class="table-1" id="dataTableTriggerId_001">
-                          <thead>
-                            <tr class="bgcolor--gray_mm color--gray_d">
-                              <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
-                              <th><span class="cellcontent">كود المحامي</span></th>
-                              <th><span class="cellcontent">الاسم</span></th>
-                              <th><span class="cellcontent">الرقم القومي</span></th>
-                              <th><span class="cellcontent">الجنسية</span></th>
-                              <th><span class="cellcontent">التخصص</span></th>
-                              <th><span class="cellcontent">درجة التقاضى</span></th>
-                              <th><span class="cellcontent">عنوان</span></th>
-                              <th><span class="cellcontent">هاتف</span></th>
-                              <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
-                              <th><span class="cellcontent">تفعيل</span></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                             @foreach($lawyers as $lawyer)
+                      </li>
+                      <li class="tab__content_item">
+                        <div class="cardwrap bgcolor--white bradius--noborder   bshadow--1 padding--small margin--small-top-bottom"><br>
+                          <div class="col-md-12"><b class="col-xs-2"> المحامي المسئول</b>
+                            <div class="col-xs-10"> 
+
+                          @foreach($lawyers as $lawyer)
+                          @foreach($case->lawyers as $case_lawyer)
+                          @if($lawyer->id == $case_lawyer->id)
+                          <a href="{{URL('lawyers_show/'.$lawyer->id)}}">{{$lawyer->name}}</a>&nbsp; &amp; &nbsp;
+                          @endif
+                          @endforeach
+                          @endforeach
+
+                        </div>
+                          </div>
+                          <div class="clearfix"> </div>
+                          <div class="full-table">
+                            <div class="remodal-bg">
+                              <div class="remodal" data-remodal-id="filterModal_sponsors" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <h2 id="modal1Title">فلتر</h2>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No">كود المحامى</label>
+                                      <input class="master_input" type="number" placeholder="كود المحامى" id="ID_No"><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No">اسم المحامى</label>
+                                      <input class="master_input" type="text" placeholder="اسم المحامى" id="ID_No"><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="circle">الدائرة</label>
+                                      <select class="master_input select2" id="circle" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
+                                        <option>دائرة العباسية</option>
+                                        <option>دائرة الدقي</option>
+                                      </select><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="circle">الدائرة</label>
+                                      <select class="master_input select2" id="circle" multiple="multiple" data-placeholder="الدائرة" style="width:100%;" ,>
+                                        <option>دائرة العباسية</option>
+                                        <option>دائرة الدقي</option>
+                                      </select><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No"> التخصص</label>
+                                      <select class="master_input select2" id="ID_No" multiple="multiple" data-placeholder="التخصص" style="width:100%;" ,>
+                                        <option>تعويضات</option>
+                                        <option>تخصص اخر</option>
+                                      </select><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No">درجة التقاضي</label>
+                                      <select class="master_input select2" id="ID_No" multiple="multiple" data-placeholder="درجة التقاضي" style="width:100%;" ,>
+                                        <option>محامى تحت التمرين</option>
+                                        <option>محامي متمرس</option>
+                                      </select><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No">الهاتف</label>
+                                      <input class="master_input" type="number" placeholder="الهاتف" id="ID_No"><span class="master_message color--fadegreen">message</span>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="master_field">
+                                      <label class="master_label mandatory" for="ID_No">تاريخ الالتحاق</label>
+                                      <div class="bootstrap-timepicker">
+                                        <input class="datepicker master_input" type="text" placeholder="تاريخ الالتحاق" id="ID_No">
+                                      </div><span class="master_message color--fadegreen">message content</span>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <button class="remodal-cancel" data-remodal-action="cancel">الغاء</button>
+                                <button class="remodal-confirm" data-remodal-action="confirm">فلتر</button>
+                              </div>
+                            </div>
+                            <div class="filter__btns"><a class="master-btn bgcolor--main color--white bradius--small" href="#filterModal_sponsors"><i class="fa fa-filter"></i>filters</a></div>
+                            <table class="table-1">
+                              <thead>
+                                <tr class="bgcolor--gray_mm color--gray_d">
+                                  <th><span class="cellcontent">&lt;input type=&quot;checkbox&quot; name=&quot;select-all&quot; id=&quot;select-all&quot; /&gt;</span></th>
+                                  <th><span class="cellcontent">كود المحامي</span></th>
+                                  <th><span class="cellcontent">الاسم</span></th>
+                                  <th><span class="cellcontent">الرقم القومي</span></th>
+                                  <th><span class="cellcontent">الجنسية</span></th>
+                                  <th><span class="cellcontent">التخصص</span></th>
+                                  <th><span class="cellcontent">درجة التقاضى</span></th>
+                                  <th><span class="cellcontent">عنوان</span></th>
+                                  <th><span class="cellcontent">هاتف</span></th>
+                                  <th><span class="cellcontent">تاريخ الإلتحاق</span></th>
+                                  <th><span class="cellcontent">تفعيل</span></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach($lawyers as $lawyer)
                           <tr data-lawyer-id="{{$lawyer->id}}">
                            
                             <td><span class="cellcontent"><input class="input-in-table" type="checkbox"  id="{{$lawyer->id}}" name="lawyer_id[{{$lawyer->id}}]" class="checkboxes" /></span></td>
@@ -487,17 +789,9 @@
                             <td><span class="cellcontent">{{$lawyer->code}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->name}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->national_id or ''}}</span></td>
-                            <td><span class="cellcontent">
-                              @isset($lawyer->user_detail->nationality->id)
-                              @foreach($nationalities as $nationality)
-                              @if($lawyer->user_detail->nationality->id == $nationality->item_id)
-                              {{$nationality->value}}
-                              @endif
-                              @endforeach
-                              @endisset
-                            </span></td>
-                            <td><span class="cellcontent">@foreach($lawyer->specializations as $spec){{$spec->name}}-@endforeach</span></td>
-                            <td><span class="cellcontent">{{$lawyer->user_detail->syndicate_levela->name or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->nationality or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->work_sector or ''}}</span></td>
+                            <td><span class="cellcontent">{{$lawyer->user_detail->litigation_level or ''}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->address}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->mobile}}</span></td>
                             <td><span class="cellcontent">{{$lawyer->user_detail->join_date or ''}}</span></td>
@@ -508,178 +802,238 @@
                             @endif
                           </tr>
                           @endforeach
-                            
-                          </tbody>
-                        </table>
-                        <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
-                          <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
-                          <div>
-                            <h2 class="title">title of the changing log in</h2>
-                            <div class="log-content">
-                              <div class="log-container">
-                                <table class="log-table">
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <th>log title</th>
-                                    <th>user</th>
-                                    <th>time</th>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>January</td>
-                                    <td>$100</td>
-                                    <td>$100</td>
-                                  </tr>
-                                  <tr class="log-row" data-link="https://www.google.com.eg/">
-                                    <td>February</td>
-                                    <td>$80</td>
-                                    <td>$80</td>
-                                  </tr>
-                                </table>
+                                
+                              </tbody>
+                            </table>
+                            <div class="remodal log-custom" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                              <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                              <div>
+                                <h2 class="title">title of the changing log in</h2>
+                                <div class="log-content">
+                                  <div class="log-container">
+                                    <table class="log-table">
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <th>log title</th>
+                                        <th>user</th>
+                                        <th>time</th>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>January</td>
+                                        <td>$100</td>
+                                        <td>$100</td>
+                                      </tr>
+                                      <tr class="log-row" data-link="https://www.google.com.eg/">
+                                        <td>February</td>
+                                        <td>$80</td>
+                                        <td>$80</td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      {{-- <input class="finish-btn sf-right sf-btn" type="submit" value="finish"/> --}}
-                   {{--    <input class=" date-own form-control" style="width: 300px;" type="text"> --}}
-                    </fieldset>
-
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  </form>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-2 col-xs-6">
+                    <button class="master-btn undefined btn-block color--white bgcolor--fadepurple bradius--small bshadow--0" type="submit"><i class="fa fa-save"></i><span>حفظ</span>
+                    </button>
+                  </div>
+                  <div class="col-md-2 col-xs-6">
+                    <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--small bshadow--0" type="submit"><i class="fa fa-times"></i><span>الغاء</span>
+                    </button>
+                  </div>
+                  <div class="clearfix"></div><br>
+                </form>
                 </div>
               </div>
               <!-- =============== PAGE VENDOR Triggers ===============-->
-
+               <div class="remodal" data-remodal-id="new_investigation" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                                <form action="{{URL('add_record_ajax/'.$case->id)}}" method="post"  enctype="multipart/form-data" accept-charset="utf-8">
+                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="remodal-close" data-remodal-action="close" aria-label="Close"></button>
+                                <div>
+                                  <div class="row">
+                                    <div class="col-xs-12">
+                                      <h3>إضافة محضر</h3>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label" for="investigation_no">رقم المحضر</label>
+                                          <input class="master_input" type="text" placeholder="رقم المحضر" id="investigation_no" name="investigation_no"><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
+                                          <select class="master_input select2" id="investigation_type" name="investigation_type" style="width:100%;">
+                                            @foreach($cases_record_types as $type)
+                                            <option value="{{$type->id}}">{{$type->name_ar}}</option>
+                                            @endforeach
+                                          </select><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="master_field">
+                                          <label class="master_label mandatory">تاريخ</label>
+                                          <div class="bootstrap-timepicker">
+                                            <input class="datepicker master_input" type="text" placeholder="تاريخ الاستشارة" name="record_date">
+                                          </div><span class="master_message color--fadegreen">message content</span>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                        <div class="master_field">
+                                          <label class="master_label" for="docs_upload">إرفاق ملفات</label>
+                                          <div class="file-upload">
+                                            <div class="file-select">
+                                              <div class="file-select-name" id="noFile">إرفاق ملفات</div>
+                                              <input class="chooseFile" type="file" name="record_documents[]" id="docs_upload" multiple>
+                                            </div>
+                                          </div><span class="master_message color--fadegreen">message</span>
+                                        </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                    </div>
+                                  </div>
+                                </div><br>
+                                <button class="remodal-cancel" data-remodal-action="cancel">إلغاء</button>
+                                <button class="remodal-confirm" type="submit">حفظ</button>
+                              </form>
+                              </div>
            @endsection
+
 
            @section('javascript')
            <script type="text/javascript">
