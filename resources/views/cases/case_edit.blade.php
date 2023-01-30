@@ -1040,7 +1040,7 @@
       $(document).ready(function(){ 
 
         var i={{$client_count}};
-        var clients = "{{ $clients }}";
+        var clients = {{ $clients }};
         function add_more_clients()
                 {
                   i++;
