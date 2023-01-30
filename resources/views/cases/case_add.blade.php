@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('content')
-
+   
+@dd($data)
               <!-- =============== Custom Content ===============-->
               <div class="row" id="filter_">
                 <div class="col-md-12">
