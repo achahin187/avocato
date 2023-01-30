@@ -102,6 +102,7 @@ class CasesController extends Controller
 
         $data['work_sectors'] = Specializations::all();
         $data['syndicate_levels'] = SyndicateLevels::all();
+        dd($data);
 
         return view('cases.case_add', $data);
     }
