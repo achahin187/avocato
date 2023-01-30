@@ -2,7 +2,7 @@
 @section('content')
 
               <!-- =============== Custom Content ===============-->
-              <div class="row" id="filter_">
+              <div class="row" >
                 <div class="col-md-12">
                   <div class="cover-inside-container margin--small-top-bottom bradius--small bshadow--1" style="background:  url( 'img/covers/dummy2.jpg ' ) no-repeat center center; background-size:cover;">
                     <div class="add-mode">Adding mode</div>
@@ -41,7 +41,6 @@
                            <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})" required>
                             <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($clients as $client)
-                              {{-- <option value="{{$client->id}}">{{$client->code}}</option> --}}
                               <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
                             @endforeach
                               
