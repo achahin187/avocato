@@ -1,6 +1,5 @@
 @extends('layout.app')
 @section('content')
-@dd($case->case_records )
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-md-12">
