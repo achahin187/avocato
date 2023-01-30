@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
    <?php
-dd($data)
+dd($data['clients'])
 
 ?>
               <!-- =============== Custom Content ===============-->
