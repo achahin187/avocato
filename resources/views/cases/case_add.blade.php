@@ -42,7 +42,7 @@
                               <?php $i=0; ?>
 
                               <label class="master_label mandatory" for="client_code_{{$i}}">كود العميل</label>
-                              <select class="master_input select2"  id="client_code_{{$i}}" name="client_code[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$clients}})">
+                              <select class="master_input select2"  id="client_code_{{$i}}" name="client_code[{{$i}}]" style="width:100%;" onchange="set_client_data(this.value,{{$i}},{{$data['clients']}})">
                                 <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($data['clients'] as $client)
                               <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
