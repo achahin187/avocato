@@ -35,22 +35,7 @@
                           </div><span class="mainseparator bgcolor--main"></span>
                         </div>
                         <div class="add_new_client" id="add_new_client">
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="master_field">
-                            <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
-                           <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})" required>
-                            <option value="-1" selected disabled hidden>إختر كود العميل</option>
-                            @foreach($clients as $client)
-                              <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
-                            @endforeach
-                              
-                            </select><span class="master_message color--fadegreen">
-                               @if ($errors->has('client_code'))
-                                    {{ $errors->first('client_code')}}
-                                    @endif
-                            </span>
-                          </div> 
-                        </div>
+           
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_name_0">اسم الموكل</label>
