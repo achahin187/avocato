@@ -209,7 +209,6 @@ class CasesController extends Controller
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
         }
-        dd($case, $clients, $cases_record_types, $cases_types, $courts, $governorates, $countries, $cities, $lawyers, $roles);
         return view('cases.case_edit')->with('case', $case)
             ->with('clients', $clients)
             ->with('cases_record_types', $cases_record_types)
