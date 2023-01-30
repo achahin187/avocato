@@ -215,7 +215,7 @@ class CasesController extends Controller
             ->with('cases_record_types', $cases_record_types)
             ->with('cases_types', $cases_types)
             ->with(['courts' => $courts, 'governorates' => $governorates, 'countries' => $countries, 'cities' => $cities, 'lawyers' => $lawyers, 'roles' => $roles])
-            ->with('client_count', count($case->clients->toArray()));
+            ->with('client_count', count($case->clients));
     }
 
 
