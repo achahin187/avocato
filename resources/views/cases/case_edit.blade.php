@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('content')
+@dd($case->case_records )
               <!-- =============== Custom Content ===============-->
               <div class="row">
                 <div class="col-md-12">
@@ -201,7 +202,7 @@
                               </thead>
                               <tbody>
 
-
+                    
                                 @foreach($case->case_records as $record)
                                 <tr data-record-id="{{$record->id}}">
 
