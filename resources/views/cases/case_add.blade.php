@@ -685,7 +685,7 @@
 
            @section('javascript')
            <script type="text/javascript">
-           $(document).ready(function(){
+/*            $(document).ready(function(){
             $(function () {
                 $('#case_year').datepicker({
                 format: "yyyy",
@@ -698,7 +698,7 @@
                 });
 
           });
-
+ */
        
               </script>
               <script type="text/javascript">
