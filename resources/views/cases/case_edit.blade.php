@@ -1037,7 +1037,6 @@
 
     @section('javascript')
     <script type="text/javascript">
-      $(document).ready(function(){ 
 
         var i={{$client_count}};
         var clients = {{ $case->case_clients }};
@@ -1117,7 +1116,6 @@
           // console.log(files);
         }
  $('input#record_documents').on('change', prepareUpload);
-       });
 
 
     
