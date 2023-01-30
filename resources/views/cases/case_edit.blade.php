@@ -58,7 +58,6 @@
                                                     name="client_code[{{ $i }}]" style="width:100%;"
                                                     onchange="set_client_data(this.value,{{ $i }},{{ $clients }})">
                                                     <option value="-1" selected disabled hidden>إختر كود العميل</option>
-                                                    @dd($clients)
                                                     @foreach ($clients as $client)
                                                         @if ($client->id == $case_client->client_id)
                                                             <option id="comcode" value="{{ $client->id }}"
@@ -1245,6 +1244,39 @@
 
             var i = {{ $client_count }};
 
+            function add_more_clients() {
+                i++;
+                var div = document.getElementById('add_new_client');
+                // alert(i);
+                // alert("'client_code_"+i"'");
+                div.innerHTML +=
+                    '<div class="col-md-3 col-sm-6 col-xs-12">  <div class="master_field"><label class="master_label mandatory" for="client_code_' +
+                    i + '">كود العميل</label><select class="master_input select2"  id="client_code_' + i +
+                    '" name="client_code[' + i + ']" style="width:100%;" onchange="set_client_data(' + this.value +
+                    ' ,' + i +
+                    ',{{ $clients }})"><option value="-1" selected disabled hidden>إختر كود العميل</option>@foreach ($clients as $client) <
+                option value = "{{ $role->id }}" > {{ $role->name_ar }} < /option>/ ** *
+                    script_placeholder ** * /} / * ___directives_script_3___ * /</select > < span class =
+                    "master_message color--fadegreen" > message content < /span>  </div > <
+                    /div><div class="col-md-3 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="authorization_num_'+i+'">رقم التوكيل</label >
+                    <
+                    input class = "master_input"
+                type = "number"
+                placeholder = "رقم التوكيل"
+                id = "authorization_num_'+i+'"
+                name = "authorization_num['+i+']" > < span class = "master_message color--fadegreen" > message <
+                    /span> </div > <
+                    /div> <div class="col-md-9 col-sm-6 col-xs-12"> <div class="master_field"> <label class="master_label mandatory" for="client_address_'+i+'">عنوانه</label >
+                    <
+                    input class = "master_input"
+                type = "text"
+                placeholder = "عنوانه"
+                id = "client_address_'+i+'"
+                name = "client_address['+i+']"
+                readonly > < span class = "master_message color--fadegreen" > بعض النص < /span> </div > <
+                    /div>';
+                // alert(i);
+            }
 
 
 
