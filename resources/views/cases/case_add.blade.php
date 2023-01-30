@@ -38,7 +38,7 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_code_0">كود العميل</label>                       
-                           <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$clients}})" required>
+                           <select class="master_input select2 required"  id="client_code_0" name="client_code[0]" style="width:100%;" onchange="set_client_data(this.value,0,{{$data['clients']}})" required>
                             <option value="-1" selected disabled hidden>إختر كود العميل</option>
                             @foreach($data['clients'] as $client)
                               <option id="comcode" value="{{ $client->id }}" data-id="{{ $client->id}}">{{ $client->code .' - '. $client->name}}</option>
@@ -69,7 +69,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="client_character_0">صفته</label>
                             <select class="master_input select2" id="client_character_0" name="client_character[0]" style="width:100%;" class="required">
-                              @foreach($roles as $role)
+                              @foreach($data['roles'] as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">message content</span>
@@ -120,7 +120,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory " for="enemy_type">صفته</label>
                             <select class="master_input select2 required" id="enemy_type" name="enemy_type" style="width:100%;" required>
-                              @foreach($roles as $role)
+                              @foreach($data['roles'] as $role)
                               <option value="{{$role->id}}">{{$role->name_ar}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">
@@ -172,7 +172,7 @@
                               <label class="master_label mandatory" for="investigation_type"> نوع المحضر </label>
                               <select class="master_input select2 required" id="investigation_type" name="investigation_type" style="width:100%;" required>
       
-                                    @foreach($cases_record_types as $type)
+                                    @foreach($data['cases_record_types'] as $type)
                                     <option value="{{$type->id}}">{{$type->name}}</option>
                                     @endforeach
                                           
@@ -247,7 +247,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="case_type">نوع القضية</label>
                             <select class="master_input select2 required" id="case_type" name="case_type" style="width:100%;" required>
-                              @foreach($cases_types as $type)
+                              @foreach($data['cases_types'] as $type)
                               <option value="{{$type->id}}">{{$type->name}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">
@@ -261,7 +261,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="court_name">المحكمة التى تنظر امامها</label>
                             <select class="master_input select2" id="court_name" name="court_name" style="width:100%;" >
-                              @foreach($courts as $court)
+                              @foreach($data['courts'] as $court)
                               <option value="{{$court->id}}">{{$court->name}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">
@@ -275,7 +275,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="governorate">المحافظة</label>
                             <select class="master_input select2" id="governorate" name="governorate" style="width:100%;">
-                             @foreach($governorates as $governorate)
+                             @foreach($data['governorates'] as $governorate)
                               <option value="{{$governorate->id}}">{{$governorate->name}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">
@@ -289,7 +289,7 @@
                           <div class="master_field">
                             <label class="master_label mandatory" for="city">المدينة</label>
                             <select class="master_input select2" id="city" name="city" style="width:100%;">
-                              @foreach($cities as $city)
+                              @foreach($data['cities'] as $city)
                               <option value="{{$city->id}}">{{$city->name}}</option>
                               @endforeach
                             </select><span class="master_message color--fadegreen">
@@ -413,7 +413,7 @@
                               <label class="master_label mandatory" for="nationality">الجنسيه</label>
                               <select name="nationalities" class="master_input select2" id="nationality" data-placeholder="نوع العمل " style="width:100%;" ,>
                                 <option value="0" selected="selected">الكل</option>
-                                @foreach($nationalities as $nationality)
+                                @foreach($data['nationalities'] as $nationality)
                                 <option value="{{$nationality->item_id}}">{{$nationality->value}}</option>
                                 @endforeach
                               </select><span class="master_message color--fadegreen"></span>
@@ -424,7 +424,7 @@
                               <label class="master_label" for="work_sector">التخصص</label>
                             <select name="work_sector[]" class="master_input select2" id="lawyer_type" multiple="multiple" data-placeholder="التخصص" style="width:100%" >
                             <option value="0">choose Speification ..</option>
-                                      @foreach($work_sectors as $work_sector)
+                                      @foreach($data['work_sectors'] as $work_sector)
                                       <option value="{{$work_sector->id}}">{{$work_sector->name}}</option>
                                       @endforeach
                                     </select>
@@ -435,7 +435,7 @@
                                 <label class="master_label" for="lawyer_degree_in">درجة القيد بالنقابة</label>
                                    <select name="syndicate_level_id" class="master_input" id="syndicate_level_id">
                                       <option value="choose" selected disabled>اختر درجه القيد بالنقابه</option>
-                                      @foreach($syndicate_levels as $syndicate)
+                                      @foreach($data['syndicate_levels'] as $syndicate)
                                       <option value="{{$syndicate->id}}">{{$syndicate->name}}</option>
                                       @endforeach
                                    </select>
@@ -479,7 +479,7 @@
                             </tr>
                           </thead>
                           <tbody>
-                             @foreach($lawyers as $lawyer)
+                             @foreach($data['lawyers'] as $lawyer)
                           <tr data-lawyer-id="{{$lawyer->id}}">
                            
                             <td><span class="cellcontent"><input class="input-in-table" type="checkbox"  id="{{$lawyer->id}}" name="lawyer_id[{{$lawyer->id}}]" class="checkboxes" /></span></td>
