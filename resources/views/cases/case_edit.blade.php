@@ -43,7 +43,6 @@
                           </div>
                           <div class="add_new_client" id="add_new_client">
                             
-                            @dd($case->case_clients)
                             <?php $i=0; ?>
                             @foreach($case->case_clients as $case_client)
                           <div class="col-md-3 col-sm-6 col-xs-12">

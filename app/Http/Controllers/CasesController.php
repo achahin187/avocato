@@ -46,17 +46,16 @@ class CasesController extends Controller
      */
     public function index()
     {
-        
-        $cases = Case_::where('country_id',session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->paginate(10);
-        
+
+        $cases = Case_::where('country_id', session('country'))->with('case_types')->with('governorates')->with('cities')->with('courts')->paginate(10);
+
         $roles = Case_Client_Role::all();
         $types = Cases_Types::all();
-        $courts = Courts::where('country_id',session('country'))->get();
+        $courts = Courts::where('country_id', session('country'))->get();
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
-
         }
-        $tab=1;
+        $tab = 1;
         return view('cases.cases')->with('cases', $cases)->with('roles', $roles)->with('types', $types)->with('courts', $courts)->with('tab', $tab);
     }
 
@@ -67,7 +66,7 @@ class CasesController extends Controller
      */
     public function create()
     {
-        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['clients'] = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $data['cases_record_types'] = Case_Record_Type::all();
@@ -75,11 +74,11 @@ class CasesController extends Controller
             $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
         }
         $data['cases_types'] = Cases_Types::all();
-        $data['courts'] = Courts::where('country_id',session('country'))->get();
-        $data['governorates'] = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['courts'] = Courts::where('country_id', session('country'))->get();
+        $data['governorates'] = Geo_Governorates::where('country_id', session('country'))->get();
         $data['countries'] = Geo_Countries::all();
-        $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
-        $data['lawyers'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['cities'] = Geo_Cities::where('country_id', session('country'))->get();
+        $data['lawyers'] = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
@@ -98,13 +97,12 @@ class CasesController extends Controller
 
         foreach ($data['roles'] as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
-
         }
         $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-        
+
         $data['work_sectors'] = Specializations::all();
         $data['syndicate_levels'] = SyndicateLevels::all();
-        return view('cases.case_add' , $data);
+        return view('cases.case_add', $data);
     }
 
     /**
@@ -125,12 +123,12 @@ class CasesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         // dd( app()->getLocale());
         $cases_record_types = Case_Record_Type::all();
         // dd($cases_record_types);
-         // redirect to home page if user is not found
-        if( Case_::find($id) == NULL ) {
+        // redirect to home page if user is not found
+        if (Case_::find($id) == NULL) {
             Session::flash('warning', 'لم يتم العثور القضية');
             return redirect('/cases');
         }
@@ -143,7 +141,7 @@ class CasesController extends Controller
         }])->with(['case_records' => function ($q) {
             $q->with('case_record_types');
             $q->with('case_record_documents');
-        }])->with(['case_documents'=>function($q){
+        }])->with(['case_documents' => function ($q) {
             $q->with('case_document_details');
         }])->first();
         return view('cases.case_view')->with('case', $case)->with('cases_record_types', $cases_record_types);
@@ -153,7 +151,7 @@ class CasesController extends Controller
     {
         $case = Case_::find($id);
 
-        if( $case == NULL ) {
+        if ($case == NULL) {
             Session::flash('warning', 'لم يتم العثور الارشيف');
             return redirect('/cases');
         }
@@ -170,7 +168,7 @@ class CasesController extends Controller
     public function edit($id)
     {
         // redirect to home page if user is not found
-        if( Case_::find($id) == NULL ) {
+        if (Case_::find($id) == NULL) {
             Session::flash('warning', 'لم يتم العثور القضية');
             return redirect('/cases');
         }
@@ -178,7 +176,7 @@ class CasesController extends Controller
         $case = Case_::where('id', $id)->with(['case_records' => function ($q) {
             $q->with('case_record_documents');
         }])->first();
-        $clients = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $clients = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $cases_record_types = Case_Record_Type::all();
@@ -186,11 +184,11 @@ class CasesController extends Controller
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
         }
         $cases_types = Cases_Types::all();
-        $courts = Courts::where('country_id',session('country'))->get();
-        $governorates = Geo_Governorates::where('country_id',session('country'))->get();
+        $courts = Courts::where('country_id', session('country'))->get();
+        $governorates = Geo_Governorates::where('country_id', session('country'))->get();
         $countries = Geo_Countries::all();
-        $cities = Geo_Cities::where('country_id',session('country'))->get();
-        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $cities = Geo_Cities::where('country_id', session('country'))->get();
+        $lawyers = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '5');
         })->with(['user_detail' => function ($q) {
             $q->orderby('join_date', 'desc');
@@ -205,20 +203,19 @@ class CasesController extends Controller
                 $detail['nationality'] = '';
             }
         }
-        
+
         $roles = Case_Client_Role::all();
 
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
-
         }
-        
+        dd($case);
         return view('cases.case_edit')->with('case', $case)
-                                        ->with('clients', $clients)
-                                        ->with('cases_record_types', $cases_record_types)
-                                        ->with('cases_types', $cases_types)
-                                        ->with(['courts' => $courts, 'governorates' => $governorates, 'countries' => $countries, 'cities' => $cities, 'lawyers' => $lawyers, 'roles' => $roles])
-                                        ->with('client_count', count($case->clients->toArray()));
+            ->with('clients', $clients)
+            ->with('cases_record_types', $cases_record_types)
+            ->with('cases_types', $cases_types)
+            ->with(['courts' => $courts, 'governorates' => $governorates, 'countries' => $countries, 'cities' => $cities, 'lawyers' => $lawyers, 'roles' => $roles])
+            ->with('client_count', count($case->clients->toArray()));
     }
 
 
@@ -276,7 +273,7 @@ class CasesController extends Controller
             'case_body' => $request['subject'],
             'case_notes' => $request['notes'],
             'created_by' => \Auth::user()->id,
-            'country_id'=>session('country')
+            'country_id' => session('country')
         ]);
         $case->save();
         if ($request->has('lawyer_id')) {
@@ -299,7 +296,6 @@ class CasesController extends Controller
         }
         Helper::add_log(4, 11, $id);
         return redirect()->route('cases')->with('success', 'تم تعديل القضيه بنجاح');
-     
     }
 
 
@@ -347,7 +343,6 @@ class CasesController extends Controller
             Case_Lawyer::where('case_id', $id)->delete();
             Case_Record::where('case_id', $id)->delete();
             Case_techinical_Report::where('case_id', $id)->delete();
-
         }
         return redirect()->route('cases');
     }
@@ -409,7 +404,7 @@ class CasesController extends Controller
             'case_body' => $request['subject'],
             'case_notes' => $request['notes'],
             'created_by' => \Auth::user()->id,
-            'country_id'=>session('country')
+            'country_id' => session('country')
         ]);
         for ($i = 0; $i < count($request['client_code']); $i++) {
             Case_Client::Create([
@@ -432,7 +427,7 @@ class CasesController extends Controller
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-     
+
                 Input::file('docs_upload')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -444,10 +439,10 @@ class CasesController extends Controller
         }
         //  if($request->hasFile('chooseFile_case')){
         // foreach ($request->docs_upload as  $key => $file) {
-            
+
         //     $destinationPath='cases_images';
         //     $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
-       
+
         //     Input::file('chooseFile_case')[$key]->move($destinationPath,$fileNameToStore);
         // }
         // }
@@ -459,7 +454,7 @@ class CasesController extends Controller
                 ]);
             }
         }
-   
+
         // return $this->create();
         Helper::add_log(3, 11, $case->id);
         return redirect()->route('cases')->with('success', 'تم إضافه قضيه جديده بنجاح');
@@ -467,7 +462,7 @@ class CasesController extends Controller
     function lawyers_filter(Request $request)
     {
         // $request = (array)json_decode($request->getContent(), true);
-        $lawyers = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $lawyers = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
 
             $query->where('rule_id', '5');
         })->where(function ($query) use ($request) {
@@ -486,13 +481,9 @@ class CasesController extends Controller
             }
             if ($request->filled('work_sector')) {
                 $q->whereHas('specializations', function ($q) use ($request) {
-                  $q->whereIn('specializations.id',$request->work_sector);
-        
+                    $q->whereIn('specializations.id', $request->work_sector);
                 });
-              }
-        
-             
-
+            }
         })->with(['user_detail' => function ($query) use ($request) {
 
             if ($request->has('lawyer_level') && $request['lawyer_level'] != '') {
@@ -512,37 +503,32 @@ class CasesController extends Controller
                 $query->where('work_sector', $request->lawyer_work_sector);
             }
             if ($request->has('nationalities') && $request->nationalities != 0) {
-               
-                  $q->where('nationality_id', $request->nationalities);
-        
-                
-              }
-              if ($request->filled('syndicate_level_id')) {
-                
-                  $q->where('syndicate_level_id',$request->syndicate_level_id);
-        
-               
-              }
+
+                $q->where('nationality_id', $request->nationalities);
+            }
+            if ($request->filled('syndicate_level_id')) {
+
+                $q->where('syndicate_level_id', $request->syndicate_level_id);
+            }
 
 
             $query->orderby('join_date', 'desc');
         }])->get();
-     
+
         foreach ($lawyers as $detail) {
             if (count(Consultation_Lawyers::where('lawyer_id', $detail->id)->where('consultation_id', $id)->first())) {
-         
+
                 $detail['assigned'] = 1;
             } else {
                 $detail['assigned'] = 0;
             }
             if (count($detail->user_detail) != 0) {
                 $value = Helper::localizations('geo_countires', 'nationality', $detail->user_detail->nationality_id);
-             
+
                 $detail['nationality'] = $value;
             } else {
                 $detail['nationality'] = '';
             }
-
         }
 
         return $this->filter_create($lawyers);
@@ -550,7 +536,7 @@ class CasesController extends Controller
     }
     public function filter_create($lawyers)
     {
-        $data['clients'] = Users::where('country_id',session('country'))->whereHas('rules', function ($query) {
+        $data['clients'] = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
         $data['cases_record_types'] = Case_Record_Type::all();
@@ -558,23 +544,21 @@ class CasesController extends Controller
             $value['name'] = Helper::localizations('case_record_types', 'name', $value->id);
         }
         $data['cases_types'] = Cases_Types::all();
-        $data['courts'] = Courts::where('country_id',session('country'))->get();
-        $data['governorates'] = Geo_Governorates::where('country_id',session('country'))->get();
+        $data['courts'] = Courts::where('country_id', session('country'))->get();
+        $data['governorates'] = Geo_Governorates::where('country_id', session('country'))->get();
         $data['countries'] = Geo_Countries::all();
-        $data['cities'] = Geo_Cities::where('country_id',session('country'))->get();
+        $data['cities'] = Geo_Cities::where('country_id', session('country'))->get();
         $data['lawyers'] = $lawyers;
         $data['roles'] = Case_Client_Role::all();
 
         foreach ($data['roles'] as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
-
         }
         $data['nationalities'] = Entity_Localizations::where('field', 'nationality')->where('entity_id', 6)->get();
-        
+
         $data['work_sectors'] = Specializations::all();
         $data['syndicate_levels'] = SyndicateLevels::all();
-        return view('cases.case_add' , $data);
-        
+        return view('cases.case_add', $data);
     }
     public function change_case_state($id)
     {
@@ -584,7 +568,6 @@ class CasesController extends Controller
         $case->update(['archived' => $state]);
 
         return redirect()->route('case_view', $id);
-
     }
 
 
@@ -593,12 +576,12 @@ class CasesController extends Controller
     {
         $task = Tasks::where('case_id', $id)->orderBy('id', 'desc')->first();
 
-           $client_id = Case_Client::where('case_id',$id)->select('client_id')->first();
-      
-           if(!$client_id == null){
-               $client_id= $client_id->client_id;
-           }
-       if ($task) {
+        $client_id = Case_Client::where('case_id', $id)->select('client_id')->first();
+
+        if (!$client_id == null) {
+            $client_id = $client_id->client_id;
+        }
+        if ($task) {
             Tasks::create([
                 'case_id' => $id,
                 'level' => $request['degree'],
@@ -623,12 +606,12 @@ class CasesController extends Controller
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'task_type_id' => 2,
-                'country_id'=>session('country'),
+                'country_id' => session('country'),
                 'client_id' => $client_id,
             ]);
         }
-        
-       
+
+
         return redirect()->route('case_view', $id);
     }
 
@@ -636,7 +619,7 @@ class CasesController extends Controller
     //add record
     public function add_record(Request $request, $id)
     {
-    //   dd($request->all());
+        //   dd($request->all());
         $case_record = Case_Record::Create([
             'case_id' => $id,
             'record_number' => $request['investigation_no'],
@@ -645,12 +628,12 @@ class CasesController extends Controller
             'created_by' => \Auth::user()->id,
         ]);
         if ($request->has('record_documents')) {
-   
+
             foreach ($request->record_documents as $key => $file) {
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-          
+
                 Input::file('record_documents')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -665,47 +648,47 @@ class CasesController extends Controller
     public function add_record_ajax(Request $request, $id)
     {
 
-          // return response()->json($_GET['files']);
-// return response()->json($_GET['files']);
+        // return response()->json($_GET['files']);
+        // return response()->json($_GET['files']);
 
-// $case_record=Case_Record::Create([
-//             'case_id'=>$id,
-//             'record_number'=>$request['investigation_no'],
-//             'record_type_id'=>$request['investigation_type'],
-//             'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
-//             'created_by'=>\Auth::user()->id,
-//         ]);
-// if(isset($_GET['files'])){
+        // $case_record=Case_Record::Create([
+        //             'case_id'=>$id,
+        //             'record_number'=>$request['investigation_no'],
+        //             'record_type_id'=>$request['investigation_type'],
+        //             'record_date'=>date('y-m-d h:i:s',strtotime($request['investigation_date'])),
+        //             'created_by'=>\Auth::user()->id,
+        //         ]);
+        // if(isset($_GET['files'])){
 
-   
-//     // return response()->json(file_put_contents('sara',serialize($request['files'])));
-//      $error = false;
-//     $files = array();
 
-//     $uploaddir = public_bath().'/case_documents/';
-//         foreach($_GET['files']  as $file) {
-//              return response()->json($file);
-//             if(move_uploaded_file($file, $uploaddir .basename($file)))
-//                 {
-//                     $files[] = $uploaddir .$file;
-//                 }
-//                 else
-//                 {
-//                     $error = true;
-//                 }
-//               // return response()->json($file['tmp_name']);
-//             // $destinationPath='investigation_images';
-//             // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
+        //     // return response()->json(file_put_contents('sara',serialize($request['files'])));
+        //      $error = false;
+        //     $files = array();
 
-//             // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
+        //     $uploaddir = public_bath().'/case_documents/';
+        //         foreach($_GET['files']  as $file) {
+        //              return response()->json($file);
+        //             if(move_uploaded_file($file, $uploaddir .basename($file)))
+        //                 {
+        //                     $files[] = $uploaddir .$file;
+        //                 }
+        //                 else
+        //                 {
+        //                     $error = true;
+        //                 }
+        //               // return response()->json($file['tmp_name']);
+        //             // $destinationPath='investigation_images';
+        //             // $fileNameToStore=$destinationPath.'/'.time().rand(111,999).'.'.$file->getClientOriginalExtension();
 
-//             // Case_Record_Document::Create([
-//             //     'record_id'=>$case_record->id,
-//             //     'name'=>$file->getClientOriginalName(),
-//             //     'file'=>$fileNameToStore,
-//             //     ]);
-//         }
-//         }
+        //             // Input::file('files')[$key]->move($destinationPath,$fileNameToStore);
+
+        //             // Case_Record_Document::Create([
+        //             //     'record_id'=>$case_record->id,
+        //             //     'name'=>$file->getClientOriginalName(),
+        //             //     'file'=>$fileNameToStore,
+        //             //     ]);
+        //         }
+        //         }
         $case_record = Case_Record::Create([
             'case_id' => $id,
             'record_number' => $request['investigation_no'],
@@ -714,12 +697,12 @@ class CasesController extends Controller
             'created_by' => \Auth::user()->id,
         ]);
         if ($request->has('record_documents')) {
-   
+
             foreach ($request->record_documents as $key => $file) {
 
                 $destinationPath = 'investigation_images';
                 $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $file->getClientOriginalExtension();
-          
+
                 Input::file('record_documents')[$key]->move($destinationPath, $fileNameToStore);
 
                 Case_Record_Document::Create([
@@ -748,20 +731,20 @@ class CasesController extends Controller
         // $split =explode('.',$document->file);
         // $ext = end($split);
 
-    // $headers = array(
-    //           'Content-Type: application/text',
-    //         );
+        // $headers = array(
+        //           'Content-Type: application/text',
+        //         );
 
         return response()->download($file, $document->name);
     }
-    
+
     public function download_case_document($id)
     {
         $document = Case_Document_Details::find($id);
         $file = public_path() . "/" . $document->file;
-        if(file_exists($file)){
-        return response()->download($file, $document->name);
-        }else{
+        if (file_exists($file)) {
+            return response()->download($file, $document->name);
+        } else {
             Session::flash('error', 'File not found !');
             return redirect()->back();
         }
@@ -777,34 +760,33 @@ class CasesController extends Controller
             foreach ($docuemnts->case_record_documents as $document) {
                 $file = $document->file;
                 $zipper->zip('investigations.zip')->add($file);
-
             }
             $zipper->close();
             return response()->download(public_path() . "/investigations.zip")->deleteFileAfterSend(true);
         }
         return redirect()->back();
-         // return response()->download(public_path()."/investigations.zip");
+        // return response()->download(public_path()."/investigations.zip");
     }
     public function download_all_case_documents($id)
     {
         $zipper = new \Chumper\Zipper\Zipper;
         $docuemnts = Case_Document::where('id', $id)->with('case_document_details')->first();
-        if ($docuemnts->case_document_details->count()> 0) {
+        if ($docuemnts->case_document_details->count() > 0) {
             foreach ($docuemnts->case_document_details as $document) {
                 $file = $document->file;
                 $files_counter = 0;
-                if(file_exists(public_path() . "/" .$file)){
-                $zipper->zip('reports.zip')->add($file);
-                $files_counter ++;
-                 }
+                if (file_exists(public_path() . "/" . $file)) {
+                    $zipper->zip('reports.zip')->add($file);
+                    $files_counter++;
+                }
             }
             $zipper->close();
-               if($files_counter > 0 ){
-            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
-        }else{
-            Session::flash('error', 'File not found !');
-            return redirect()->back();
-        }
+            if ($files_counter > 0) {
+                return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+            } else {
+                Session::flash('error', 'File not found !');
+                return redirect()->back();
+            }
         }
         return redirect()->back();
     }
@@ -813,33 +795,32 @@ class CasesController extends Controller
         $zipper = new \Chumper\Zipper\Zipper;
         $docuemnts = Case_Document::where('case_id', $id)->with('case_document_details')->get();
         if (count($docuemnts) > 0) {
-            foreach($docuemnts as $docuemnt)
-            {
+            foreach ($docuemnts as $docuemnt) {
                 foreach ($docuemnt->case_document_details as $doc) {
                     $file = $doc->file;
                     $files_counter = 0;
-                    if(file_exists(public_path() . "/" .$file)){
-                    $zipper->zip('reports.zip')->add($file);
-                    $files_counter ++;
-                     }
+                    if (file_exists(public_path() . "/" . $file)) {
+                        $zipper->zip('reports.zip')->add($file);
+                        $files_counter++;
+                    }
                 }
             }
-           
+
             $zipper->close();
-               if($files_counter > 0 ){
-            return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
-        }else{
-            Session::flash('error', 'File not found !');
-            return redirect()->back();
-        }
+            if ($files_counter > 0) {
+                return response()->download(public_path() . "/reports.zip")->deleteFileAfterSend(true);
+            } else {
+                Session::flash('error', 'File not found !');
+                return redirect()->back();
+            }
         }
         return redirect()->back();
     }
 
     public function filter_cases(Request $request)
     {
-       
-        $cases = Case_::where('country_id',session('country'))->where(function ($q) use ($request) {
+
+        $cases = Case_::where('country_id', session('country'))->where(function ($q) use ($request) {
 
             if ($request->filled('case_type')) {
                 $q->where('case_type_id', $request->case_type);
@@ -863,10 +844,9 @@ class CasesController extends Controller
         $courts = Courts::all();
         foreach ($roles as $role) {
             $role['name_ar'] = Helper::localizations('case_client_roles', 'name', $role->id);
-
         }
         return view('cases.cases')->with('cases', $cases)->with('roles', $roles)->with('types', $types)->with('courts', $courts);
-       // return redirect()->back();
+        // return redirect()->back();
     }
     public function excel()
     {
@@ -890,7 +870,8 @@ class CasesController extends Controller
         }
     }
 
-    public function addCaseReport(Request $request){
+    public function addCaseReport(Request $request)
+    {
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'report_file' => 'required|max:3000',
@@ -907,73 +888,62 @@ class CasesController extends Controller
         $case_report = Case_Techinical_Report::create([
             'technical_report_type_id' => 2,
             'case_id' => $request->case_id,
-        //    'item_id' => $id,
+            //    'item_id' => $id,
             'body' => $request->report_desc,
             'created_by' => \Auth::user()->id,
-          ]);
-          
-          if ($request->hasFile('report_file')) {
-  
-           
-  
-                $destinationPath = 'reports';
-                $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $request->report_file->getClientOriginalExtension();
-     
-                Input::file('report_file')->move($destinationPath, $fileNameToStore);
-  
-               
-                Case_Techinical_Report_Document::create([
-                  'case_techinical_report_id' => $case_report->id,
-                  'file' => $fileNameToStore,
-                ]);
-            
+        ]);
 
+        if ($request->hasFile('report_file')) {
+
+
+
+            $destinationPath = 'reports';
+            $fileNameToStore = $destinationPath . '/' . time() . rand(111, 999) . '.' . $request->report_file->getClientOriginalExtension();
+
+            Input::file('report_file')->move($destinationPath, $fileNameToStore);
+
+
+            Case_Techinical_Report_Document::create([
+                'case_techinical_report_id' => $case_report->id,
+                'file' => $fileNameToStore,
+            ]);
         }
         return redirect()->back();
     }
 
-    public function downloadTechinicalReportDocument($id){
+    public function downloadTechinicalReportDocument($id)
+    {
 
         $document = Case_Techinical_Report_Document::find($id);
 
         $file = public_path() . "/" . $document->file;
         // dd($file);
-        if(file_exists($file)){
-        return response()->download($file, $document->name);
-        }else{
+        if (file_exists($file)) {
+            return response()->download($file, $document->name);
+        } else {
             Session::flash('error', 'File not found !');
             return redirect()->back();
         }
-
-
-    
     }
 
-    public function downloadAllTechinicalDocuments($id){
-        
+    public function downloadAllTechinicalDocuments($id)
+    {
+
         $zipper = new \Chumper\Zipper\Zipper;
 
         $reports = Case_Techinical_Report::where('case_id', $id)->with('case_tachinical_report_documents')->get();
-        
 
-            foreach ($reports as $report) {
-            
-             foreach($report->case_tachinical_report_documents as $document)               
-                $file =$document->file;
-                $zipper->zip('techinical_report.zip')->add($file);
-          
-            }
-            $zipper->close();
-            if(file_exists(public_path() . "/".'techinical_report.zip')){
-                return response()->download(public_path() . "/techinical_report.zip")->deleteFileAfterSend(true);
-           
-          
-         }
+
+        foreach ($reports as $report) {
+
+            foreach ($report->case_tachinical_report_documents as $document)
+                $file = $document->file;
+            $zipper->zip('techinical_report.zip')->add($file);
+        }
+        $zipper->close();
+        if (file_exists(public_path() . "/" . 'techinical_report.zip')) {
+            return response()->download(public_path() . "/techinical_report.zip")->deleteFileAfterSend(true);
+        }
         return redirect()->back();
-
-
-    
     }
-
-
 }
