@@ -179,6 +179,7 @@ class CasesController extends Controller
         $clients = Users::where('country_id', session('country'))->whereHas('rules', function ($query) {
             $query->where('rule_id', '6');
         })->get();
+        dd($clients);
         $cases_record_types = Case_Record_Type::all();
         foreach ($cases_record_types as $value) {
             $value['name_ar'] = Helper::localizations('case_report_types', 'name', $value->id);
