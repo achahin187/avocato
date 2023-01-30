@@ -113,7 +113,7 @@
 
                         </div>
                           <div class="col-md-3 col-md-offset-9">
-                            <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="button" onclick="add_more_clients();"><span>اضافة المزيد</span>
+                            <button class="master-btn undefined btn-block color--white bgcolor--fadebrown bradius--rounded bshadow--0" type="button" onclick="add_more_clients()"><span>اضافة المزيد</span>
                           </button>
                             
                           </div>
