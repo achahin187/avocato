@@ -188,9 +188,11 @@
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('issues_types') }}">انواع القضايا</a></li>
-                                                <li class="side__sublist"><a
+
+                                                {{-- <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('specializations') }}">التخصصات</a></li>
+                                                        href="{{ route('specializations') }}">التخصصات</a></li>}}
+
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('governorates_cities') }}">المدن و
@@ -198,7 +200,9 @@
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('courts_list') }}">اسماء المحاكم</a></li>
-                                                <li class="side__sublist"><a
+
+
+                                  {{-- <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('contracts_formulas_types') }}">انواع الصيغ و
                                                         العقود</a></li>
@@ -227,7 +231,7 @@
                                                         href="{{ route('privacy') }}">سياسة الخصوصية</a></li>
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li>
+                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li> --}}
                                             </ul>
                                         </li>
 
@@ -484,7 +488,7 @@
                             this.g.beginPath();
                             this.g.strokeStyle = this.pColor;
                             this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, pa.s, pa.e, pa
-                            .d);
+                                .d);
                             this.g.stroke();
                         }
 
@@ -1113,7 +1117,7 @@ if (currentIndex === 5) { //if last step
                 marker.setVisible(true);
 
                 bindDataToForm(place.formatted_address, place.geometry.location.lat(), place.geometry.location
-                .lng());
+                    .lng());
                 infowindow.setContent(place.formatted_address);
                 infowindow.open(map, marker);
 
