@@ -202,7 +202,7 @@
                                                         href="{{ route('courts_list') }}">اسماء المحاكم</a></li>
 
 
-                                                <li class="side__sublist"><a
+                                                {{--         <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('contracts_formulas_types') }}">انواع الصيغ و
                                                         العقود</a></li>
@@ -231,7 +231,7 @@
                                                         href="{{ route('privacy') }}">سياسة الخصوصية</a></li>
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li>
+                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li> --}}
                                             </ul>
                                         </li>
 
