@@ -191,7 +191,7 @@
 
                                                 {{-- <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('specializations') }}">التخصصات</a></li>}}
+                                                        href="{{ route('specializations') }}">التخصصات</a></li> --}}
 
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
@@ -202,7 +202,7 @@
                                                         href="{{ route('courts_list') }}">اسماء المحاكم</a></li>
 
 
-                                  <li class="side__sublist"><a
+                                                <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('contracts_formulas_types') }}">انواع الصيغ و
                                                         العقود</a></li>
@@ -231,7 +231,7 @@
                                                         href="{{ route('privacy') }}">سياسة الخصوصية</a></li>
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li> 
+                                                        href="{{ route('bouquets') }}">تعريف الباقات</a></li>
                                             </ul>
                                         </li>
 
@@ -246,9 +246,9 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2)
                                         <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('news_list') }}">الاخبار</a>
                                         </li>
@@ -262,9 +262,9 @@
                                             class="side__item side__item--sub color--gray_d bgcolor--gary_m ">العملاء</a>
                                         <ul class="side__submenu">
                                             @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2)
+                                                    1 or
+                                                    auth()->user()->getRole() ==
+                                                        2)
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('clients') }}">محتوى</a></li>
@@ -274,13 +274,13 @@
                                                         href="{{ route('notifications') }}">التنبيهات</a></li>
                                             @endif
                                             @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        3 or
-    auth()->user()->getRole() ==
-        4)
+                                                    1 or
+                                                    auth()->user()->getRole() ==
+                                                        2 or
+                                                    auth()->user()->getRole() ==
+                                                        3 or
+                                                    auth()->user()->getRole() ==
+                                                        4)
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('complains') }}">الشكاوى و الاستفسارات</a></li>
@@ -288,19 +288,19 @@
                                         </ul>
                                     </li>
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        3)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2 or
+                                            auth()->user()->getRole() ==
+                                                3)
                                         <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('lawyers') }}">السادة المحامين</a>
                                         </li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2)
                                         <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('offices') }}">مكاتب المحاماة</a>
                                         </li>
@@ -310,11 +310,11 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        3)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2 or
+                                            auth()->user()->getRole() ==
+                                                3)
                                         <li class="side__list"> <a
                                                 class="side__item side__item--sub color--gray_d bgcolor--gary_m ">القضايا
                                                 و الخدمات</a>
@@ -329,29 +329,29 @@
                                         </li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        4)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2 or
+                                            auth()->user()->getRole() ==
+                                                4)
                                         <li class="side__list"> <a
                                                 class="side__item side__item--sub color--gray_d bgcolor--gary_m ">المهام</a>
                                             <ul class="side__submenu">
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2)
                                         <li class="side__sublist"><a
                                                 class="side__subitem color--gray_d bgcolor--gray_l"
                                                 href="{{ route('tasks_normal') }}">المهام العادية</a></li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        4)
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2 or
+                                            auth()->user()->getRole() ==
+                                                4)
                                         <li class="side__sublist"><a
                                                 class="side__subitem color--gray_d bgcolor--gray_l"
                                                 href="{{ route('tasks_emergency') }}">الحالات الطارئة</a></li>
@@ -372,13 +372,13 @@
                                 </li>
                             @endif
                             @if (auth()->user()->getRole() ==
-        1 or
-    auth()->user()->getRole() ==
-        2 or
-    auth()->user()->getRole() ==
-        3 or
-    auth()->user()->getRole() ==
-        4)
+                                    1 or
+                                    auth()->user()->getRole() ==
+                                        2 or
+                                    auth()->user()->getRole() ==
+                                        3 or
+                                    auth()->user()->getRole() ==
+                                        4)
                                 <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                         href="{{ route('records') }}">دفتر المحضرين</a>
                                 </li>
@@ -610,549 +610,549 @@ if (currentIndex === 5) { //if last step
 
       
       </script> --}}
-                                                <script type="text/javascript">
-                                                    $(document).ready(function() {
-                                                        "use strict";
+    <script type="text/javascript">
+        $(document).ready(function() {
+            "use strict";
 
-                                                        $('.btn-message').click(function() {
-                                                            swal("Here's a message!");
-                                                        });
+            $('.btn-message').click(function() {
+                swal("Here's a message!");
+            });
 
-                                                        $('.btn-title-text').click(function() {
-                                                            swal("Here's a message!", "It's pretty, isn't it?")
-                                                        });
+            $('.btn-title-text').click(function() {
+                swal("Here's a message!", "It's pretty, isn't it?")
+            });
 
-                                                        $('.btn-timer').click(function() {
-                                                            swal({
-                                                                title: "Auto close alert!",
-                                                                text: "I will close in 2 seconds.",
-                                                                timer: 2000,
-                                                                showConfirmButton: false
-                                                            });
-                                                        });
+            $('.btn-timer').click(function() {
+                swal({
+                    title: "Auto close alert!",
+                    text: "I will close in 2 seconds.",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            });
 
-                                                        $('.btn-success').click(function() {
-                                                            swal("Good job!", "You clicked the button!", "success");
-                                                        });
+            $('.btn-success').click(function() {
+                swal("Good job!", "You clicked the button!", "success");
+            });
 
-                                                        $('.btn-warning-confirm').click(function() {
-                                                            swal({
-                                                                    title: "هل أنت متأكد؟",
-                                                                    text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-                                                                    type: "warning",
-                                                                    showCancelButton: true,
-                                                                    confirmButtonColor: '#4f5c6b',
-                                                                    confirmButtonText: 'نعم متأكد',
-                                                                    closeOnConfirm: false
-                                                                },
-                                                                function() {
-                                                                    swal("تم الحذف!", "تم الحذف بنجاح", "success");
-                                                                });
-                                                        });
+            $('.btn-warning-confirm').click(function() {
+                swal({
+                        title: "هل أنت متأكد؟",
+                        text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: '#4f5c6b',
+                        confirmButtonText: 'نعم متأكد',
+                        closeOnConfirm: false
+                    },
+                    function() {
+                        swal("تم الحذف!", "تم الحذف بنجاح", "success");
+                    });
+            });
 
-                                                        // $('.btn-warning-cancel').click(function(){
-                                                        //   swal({
-                                                        //     title: "هل أنت متأكد؟",
-                                                        //     text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
-                                                        //     type: "warning",
-                                                        //     showCancelButton: true,
-                                                        //     confirmButtonColor: '#DD6B55',
-                                                        //     confirmButtonText: 'نعم متأكد!',
-                                                        //     cancelButtonText: "إلغاء",
-                                                        //     closeOnConfirm: false,
-                                                        //     closeOnCancel: false
-                                                        //   },
-                                                        //   function(isConfirm){
-                                                        //     if (isConfirm){
+            // $('.btn-warning-cancel').click(function(){
+            //   swal({
+            //     title: "هل أنت متأكد؟",
+            //     text: "لن تستطيع إسترجاع هذه المعلومة لاحقا",
+            //     type: "warning",
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#DD6B55',
+            //     confirmButtonText: 'نعم متأكد!',
+            //     cancelButtonText: "إلغاء",
+            //     closeOnConfirm: false,
+            //     closeOnCancel: false
+            //   },
+            //   function(isConfirm){
+            //     if (isConfirm){
 
-                                                        //       swal("تم الحذف!", "تم الحذف بنجاح", "success");
-                                                        //     } else {
-                                                        //       swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
-                                                        //     }
-                                                        //   });
-                                                        // });
+            //       swal("تم الحذف!", "تم الحذف بنجاح", "success");
+            //     } else {
+            //       swal("تم الإلغاء", "المعلومات مازالت موجودة :)", "error");
+            //     }
+            //   });
+            // });
 
-                                                        $('.btn-custom-icon').click(function() {
-                                                            swal({
-                                                                title: "Sweet!",
-                                                                text: "Here's a custom image.",
-                                                                imageUrl: 'img/favicon/apple-touch-icon-152x152.png'
-                                                            });
-                                                        });
+            $('.btn-custom-icon').click(function() {
+                swal({
+                    title: "Sweet!",
+                    text: "Here's a custom image.",
+                    imageUrl: 'img/favicon/apple-touch-icon-152x152.png'
+                });
+            });
 
-                                                        $('.btn-message-html').click(function() {
-                                                            swal({
-                                                                title: "HTML <small>Title</small>!",
-                                                                text: 'A custom <span style="color:#F8BB86">html<span> message.',
-                                                                html: true
-                                                            });
-                                                        });
+            $('.btn-message-html').click(function() {
+                swal({
+                    title: "HTML <small>Title</small>!",
+                    text: 'A custom <span style="color:#F8BB86">html<span> message.',
+                    html: true
+                });
+            });
 
-                                                        $('.btn-input').click(function() {
-                                                            swal({
-                                                                    title: "An input!",
-                                                                    text: 'Write something interesting:',
-                                                                    type: 'input',
-                                                                    showCancelButton: true,
-                                                                    closeOnConfirm: false,
-                                                                    animation: "slide-from-top",
-                                                                    inputPlaceholder: "Write something",
-                                                                },
-                                                                function(inputValue) {
-                                                                    if (inputValue === false) return false;
+            $('.btn-input').click(function() {
+                swal({
+                        title: "An input!",
+                        text: 'Write something interesting:',
+                        type: 'input',
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        animation: "slide-from-top",
+                        inputPlaceholder: "Write something",
+                    },
+                    function(inputValue) {
+                        if (inputValue === false) return false;
 
-                                                                    if (inputValue === "") {
-                                                                        swal.showInputError("You need to write something!");
-                                                                        return false;
-                                                                    }
+                        if (inputValue === "") {
+                            swal.showInputError("You need to write something!");
+                            return false;
+                        }
 
-                                                                    swal("Nice!", 'You wrote: ' + inputValue, "success");
+                        swal("Nice!", 'You wrote: ' + inputValue, "success");
 
-                                                                });
-                                                        });
+                    });
+            });
 
-                                                        $('.btn-theme').click(function() {
-                                                            swal({
-                                                                title: "Themes!",
-                                                                text: "Here's the Twitter theme for SweetAlert!",
-                                                                confirmButtonText: "Cool!",
-                                                                customClass: 'twitter'
-                                                            });
-                                                        });
+            $('.btn-theme').click(function() {
+                swal({
+                    title: "Themes!",
+                    text: "Here's the Twitter theme for SweetAlert!",
+                    confirmButtonText: "Cool!",
+                    customClass: 'twitter'
+                });
+            });
 
-                                                        $('.btn-ajax').click(function() {
-                                                            swal({
-                                                                title: 'Ajax request example',
-                                                                text: 'Submit to run ajax request',
-                                                                type: 'info',
-                                                                showCancelButton: true,
-                                                                closeOnConfirm: false,
-                                                                showLoaderOnConfirm: true,
-                                                            }, function() {
-                                                                setTimeout(function() {
-                                                                    swal('Ajax request finished!');
-                                                                }, 2000);
-                                                            });
-                                                        });
+            $('.btn-ajax').click(function() {
+                swal({
+                    title: 'Ajax request example',
+                    text: 'Submit to run ajax request',
+                    type: 'info',
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                }, function() {
+                    setTimeout(function() {
+                        swal('Ajax request finished!');
+                    }, 2000);
+                });
+            });
 
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $.fn.stars = function() {
-                                                        return $(this).each(function() {
-                                                            var rating = $(this).data("rating");
-                                                            var numStars = $(this).data("numStars");
-                                                            var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
-                                                            var halfStar = ((rating % 1) !== 0) ? '<i class="fa fa-star-half-empty"></i>' : '';
-                                                            var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o"></i>');
-                                                            $(this).html(fullStar + halfStar + noStar);
-                                                        });
-                                                    }
-                                                    $('.stars').stars();
-                                                </script>
-                                                <script type="text/javascript">
-                                                    var swiper = new Swiper('.slider .swiper-container', {
-                                                        pagination: '.swiper-pagination',
-                                                        paginationClickable: true,
-                                                        nextButton: '.swiper-button-next',
-                                                        prevButton: '.swiper-button-prev',
-                                                        autoplay: 2500,
-                                                        keyboardControl: true,
-                                                        loop: true,
-                                                        autoplayDisableOnInteraction: false,
-                                                        mousewheelControl: false,
-                                                    });
-                                                    var swiper = new Swiper('.slidespercolumn .swiper-container', {
-                                                        slidesPerView: 3,
-                                                        slidesPerColumn: 2,
-                                                        paginationClickable: true,
-                                                        spaceBetween: 5,
-                                                        autoplay: 2500,
-                                                        keyboardControl: true,
-                                                        loop: false,
-                                                        autoplayDisableOnInteraction: false,
-                                                        mousewheelControl: false,
+        });
+    </script>
+    <script type="text/javascript">
+        $.fn.stars = function() {
+            return $(this).each(function() {
+                var rating = $(this).data("rating");
+                var numStars = $(this).data("numStars");
+                var fullStar = new Array(Math.floor(rating + 1)).join('<i class="fa fa-star"></i>');
+                var halfStar = ((rating % 1) !== 0) ? '<i class="fa fa-star-half-empty"></i>' : '';
+                var noStar = new Array(Math.floor(numStars + 1 - rating)).join('<i class="fa fa-star-o"></i>');
+                $(this).html(fullStar + halfStar + noStar);
+            });
+        }
+        $('.stars').stars();
+    </script>
+    <script type="text/javascript">
+        var swiper = new Swiper('.slider .swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            autoplay: 2500,
+            keyboardControl: true,
+            loop: true,
+            autoplayDisableOnInteraction: false,
+            mousewheelControl: false,
+        });
+        var swiper = new Swiper('.slidespercolumn .swiper-container', {
+            slidesPerView: 3,
+            slidesPerColumn: 2,
+            paginationClickable: true,
+            spaceBetween: 5,
+            autoplay: 2500,
+            keyboardControl: true,
+            loop: false,
+            autoplayDisableOnInteraction: false,
+            mousewheelControl: false,
 
-                                                    });
+        });
 
-                                                    var swiper = new Swiper('.slideperview .swiper-container', {
-                                                        pagination: '.swiper-pagination',
-                                                        slidesPerView: 4,
-                                                        paginationClickable: true,
-                                                        spaceBetween: 5,
-                                                        nextButton: '.swiper-button-next',
-                                                        prevButton: '.swiper-button-prev',
-                                                        autoplay: 2500,
-                                                        keyboardControl: true,
-                                                        loop: true,
-                                                        autoplayDisableOnInteraction: false,
-                                                        mousewheelControl: false,
+        var swiper = new Swiper('.slideperview .swiper-container', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 4,
+            paginationClickable: true,
+            spaceBetween: 5,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            autoplay: 2500,
+            keyboardControl: true,
+            loop: true,
+            autoplayDisableOnInteraction: false,
+            mousewheelControl: false,
 
-                                                    });
+        });
 
-                                                    var galleryTop = new Swiper('.gallery-swiper-slider .gallery-top', {
-                                                        nextButton: '.swiper-button-next',
-                                                        prevButton: '.swiper-button-prev',
-                                                        spaceBetween: 10,
-                                                        loop: true,
-                                                        loopedSlides: 5,
-                                                        mousewheelControl: false,
+        var galleryTop = new Swiper('.gallery-swiper-slider .gallery-top', {
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 10,
+            loop: true,
+            loopedSlides: 5,
+            mousewheelControl: false,
 
-                                                    });
-                                                    var galleryThumbs = new Swiper('.gallery-swiper-slider .gallery-thumbs', {
-                                                        spaceBetween: 10,
-                                                        slidesPerView: 4,
-                                                        touchRatio: 0.2,
-                                                        loop: true,
-                                                        loopedSlides: 5,
-                                                        slideToClickedSlide: true,
-                                                        mousewheelControl: false,
+        });
+        var galleryThumbs = new Swiper('.gallery-swiper-slider .gallery-thumbs', {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            touchRatio: 0.2,
+            loop: true,
+            loopedSlides: 5,
+            slideToClickedSlide: true,
+            mousewheelControl: false,
 
-                                                    });
-                                                    galleryTop.params.control = galleryThumbs;
-                                                    galleryThumbs.params.control = galleryTop;
-                                                </script>
+        });
+        galleryTop.params.control = galleryThumbs;
+        galleryThumbs.params.control = galleryTop;
+    </script>
 
-                                                <script type="text/javascript">
-                                                    $(document).ready(function() {
-                                                        if ($('html').attr('lang') == 'ar') {
-                                                            var datatable_one = $(".table-1").DataTable({
-                                                                'columnDefs': [{
-                                                                    'targets': 0,
-                                                                    'searchable': true,
-                                                                    'orderable': false,
-                                                                    'className': 'this-include-check'
+    <script type="text/javascript">
+        $(document).ready(function() {
+            if ($('html').attr('lang') == 'ar') {
+                var datatable_one = $(".table-1").DataTable({
+                    'columnDefs': [{
+                        'targets': 0,
+                        'searchable': true,
+                        'orderable': false,
+                        'className': 'this-include-check'
 
-                                                                }],
-                                                                'order': [1, 'asc'],
+                    }],
+                    'order': [1, 'asc'],
 
-                                                                dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ',
-                                                                "language": {
-                                                                    "search": "dd",
-                                                                    "sLengthMenu": "عرض _MENU_  ",
-                                                                    search: " البحث _INPUT_",
-                                                                    searchPlaceholder: "ابحث فى الجدول",
+                    dom: '   <"row"    <" filterbar" flr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ',
+                    "language": {
+                        "search": "dd",
+                        "sLengthMenu": "عرض _MENU_  ",
+                        search: " البحث _INPUT_",
+                        searchPlaceholder: "ابحث فى الجدول",
 
-                                                                    "emptyTable": "لا توجد بيانات متاحه فى الجدول",
-                                                                    "info": "عرض _START_ إلى _END_ من أصل _TOTAL_ مُدخل",
-                                                                    "infoEmpty": " عرض  0 to 0 of 0 مُدخل",
-                                                                    "infoFiltered": "(filtered from _MAX_ total entries)",
+                        "emptyTable": "لا توجد بيانات متاحه فى الجدول",
+                        "info": "عرض _START_ إلى _END_ من أصل _TOTAL_ مُدخل",
+                        "infoEmpty": " عرض  0 to 0 of 0 مُدخل",
+                        "infoFiltered": "(filtered from _MAX_ total entries)",
 
-                                                                    "loadingRecords": "جارى التحميل...",
-                                                                    "processing": "جارى المعالجة...",
-                                                                    "zeroRecords": "لا توجد نتائج مطابقة",
-                                                                    "paginate": {
-                                                                        "first": "الاول",
-                                                                        "last": "الاخير",
-                                                                        "next": "التالى",
-                                                                        "previous": "السابق"
-                                                                    },
-                                                                    "aria": {
-                                                                        "sortAscending": ": رتب تصاعدياً",
-                                                                        "sortDescending": ": رتب تنازلياً"
-                                                                    }
-
-
-                                                                }
-                                                            });
+                        "loadingRecords": "جارى التحميل...",
+                        "processing": "جارى المعالجة...",
+                        "zeroRecords": "لا توجد نتائج مطابقة",
+                        "paginate": {
+                            "first": "الاول",
+                            "last": "الاخير",
+                            "next": "التالى",
+                            "previous": "السابق"
+                        },
+                        "aria": {
+                            "sortAscending": ": رتب تصاعدياً",
+                            "sortDescending": ": رتب تنازلياً"
+                        }
 
 
-                                                            //-trigger check all 
-                                                            $('#dataTableTriggerId_001 #select-all').on('click', function() {
-                                                                // Check/uncheck all checkboxes in the table
-                                                                var rows = datatable_one.rows().nodes();
-                                                                $('input.input-in-table', rows).prop('checked', this.checked);
-                                                            });
+                    }
+                });
 
 
-                                                        } else {
-                                                            var datatable_one = $("#dataTableTriggerId_001").DataTable({
-                                                                'columnDefs': [{
-                                                                    'targets': 0,
-                                                                    'searchable': true,
-                                                                    'orderable': false,
-                                                                    'className': 'this-include-check'
-
-                                                                }],
-                                                                'order': [1, 'asc'],
-
-                                                                dom: '   <"row"    <" filterbar" f + <"quick_filter_cont"  > + lr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ',
-                                                                "language": {
-                                                                    "search": "dd",
-                                                                    "sLengthMenu": "Entries _MENU_  ",
-                                                                    search: " Search _INPUT_",
-                                                                    searchPlaceholder: "Search table ..."
-                                                                }
-                                                            });
-                                                            //-trigger check all 
-                                                            $('#dataTableTriggerId_001 #select-all').on('click', function() {
-                                                                // Check/uncheck all checkboxes in the table
-                                                                var rows = datatable_one.rows().nodes();
-                                                                $('input.input-in-table', rows).prop('checked', this.checked);
-                                                            });
-                                                        }
+                //-trigger check all 
+                $('#dataTableTriggerId_001 #select-all').on('click', function() {
+                    // Check/uncheck all checkboxes in the table
+                    var rows = datatable_one.rows().nodes();
+                    $('input.input-in-table', rows).prop('checked', this.checked);
+                });
 
 
-                                                        $('.table-2').DataTable({
-                                                            "paging": true,
-                                                            "lengthChange": false,
-                                                            "searching": false,
-                                                            "ordering": true,
-                                                            "info": true,
-                                                            "autoWidth": false
-                                                        });
+            } else {
+                var datatable_one = $("#dataTableTriggerId_001").DataTable({
+                    'columnDefs': [{
+                        'targets': 0,
+                        'searchable': true,
+                        'orderable': false,
+                        'className': 'this-include-check'
 
-                                                        $(".full-table").each(function() {
-                                                            $(this).find(".filter__btns").appendTo($(this).find(".filter__btns_cont"));
-                                                            $(this).find(".sortingr__btns").appendTo($(this).find(".sortingr__btns_cont"));
-                                                            $(this).find(".bottomActions__btns").appendTo($(this).find(".tableActions__btns_cont"));
-                                                            $(this).find(".quick_filter").appendTo($(this).find(".quick_filter_cont"));
-                                                            $(this).find(".view_options").appendTo($(this).find(".view_options_cont"));
+                    }],
+                    'order': [1, 'asc'],
 
-                                                        });
-
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $(function() {
-                                                        $('.date_range_picker').daterangepicker();
-                                                        $('.date_time_range_picker').daterangepicker({
-                                                            timePicker: true,
-                                                            timePickerIncrement: 30,
-                                                            format: 'MM/DD/YYYY h:mm A'
-                                                        });
-                                                    });
-
-                                                    $(function() {
-                                                        $('.reservation').daterangepicker();
-                                                        $('.reservationtime').daterangepicker({
-                                                            timePicker: true,
-                                                            timePickerIncrement: 30,
-                                                            format: 'MM/DD/YYYY h:mm A'
-                                                        });
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $(function() {
-                                                        $().bootstrapSwitch && $(".make-switch").bootstrapSwitch();
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $(function() {
-                                                        $('.datepicker-popup').pickadate();
-                                                        $('.timepicker-popup').pickatime();
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $(function() {
-                                                        $('.datepicker').datepicker({
-                                                            autoclose: true
-                                                        });
-                                                        $(".timepicker").timepicker({
-                                                            showInputs: false
-                                                        });
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $(function() {
-                                                        $(".select2").select2();
-                                                    });
-                                                </script>
-                                                <script type="text/javascript">
-                                                    (function() {
-                                                        var options = {};
-                                                        $('.js-uploader__box').uploader(options);
-                                                    }());
-                                                </script>
-                                                <script type="text/javascript">
-                                                    $('.tree ul').fadeIn();
-                                                    $(document).on('click', '.tree span', function(e) {
-                                                        $(this).next('ul').fadeToggle();
-                                                        e.stopPropagation();
-                                                    });
-                                                    $(document).on('change', '.tree input[type=checkbox]', function(e) {
-                                                        $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
-                                                        $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
-                                                        e.stopPropagation();
-                                                    });
-                                                </script>
-                                                <script type="text/javascript"></script>
-                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
-                                                <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
-                                                <script type="text/javascript">
-                                                    $('.notification').click(function() {
-                                                        var _token = '{{ csrf_token() }}';
-                                                        var notification_id = $(this).parent().attr('data-notification-id');
-                                                        $.ajax({
-                                                            type: 'POST',
-                                                            url: '{{ url('notifications_change') }}' + '/' + notification_id,
-                                                            data: {
-                                                                _token: _token
-                                                            },
-                                                            success: function(response) {}
-                                                        });
-
-                                                    });
-                                                </script>
+                    dom: '   <"row"    <" filterbar" f + <"quick_filter_cont"  > + lr + <"sortingr__btns_cont"  >> <"filter__btns_cont"  >    >  <"row"   <"col-xs-12"  t>    >  <"row"<"tableActions__btns_cont"> <"viewing-pagination"pi>  > ',
+                    "language": {
+                        "search": "dd",
+                        "sLengthMenu": "Entries _MENU_  ",
+                        search: " Search _INPUT_",
+                        searchPlaceholder: "Search table ..."
+                    }
+                });
+                //-trigger check all 
+                $('#dataTableTriggerId_001 #select-all').on('click', function() {
+                    // Check/uncheck all checkboxes in the table
+                    var rows = datatable_one.rows().nodes();
+                    $('input.input-in-table', rows).prop('checked', this.checked);
+                });
+            }
 
 
-                                                {{-- Google maps API key --}}
-                                                <script async defer
-                                                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places&callback=initMap&language=ar"
-                                                    type="text/javascript"></script>
+            $('.table-2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
 
-                                                {{-- Map script --}}
-                                                <script>
-                                                    var map;
+            $(".full-table").each(function() {
+                $(this).find(".filter__btns").appendTo($(this).find(".filter__btns_cont"));
+                $(this).find(".sortingr__btns").appendTo($(this).find(".sortingr__btns_cont"));
+                $(this).find(".bottomActions__btns").appendTo($(this).find(".tableActions__btns_cont"));
+                $(this).find(".quick_filter").appendTo($(this).find(".quick_filter_cont"));
+                $(this).find(".view_options").appendTo($(this).find(".view_options_cont"));
 
-                                                    function initMap() {
-                                                        @if (isset($data->latitude) && isset($data->longitude))
-                                                            var myLatlng = {
-                                                                lat: {{ $data->latitude }},
-                                                                lng: {{ $data->longitude }}
-                                                            };
-                                                        @else
-                                                            var myLatlng = {
-                                                                lat: 30.042701,
-                                                                lng: 31.432662
-                                                            };
-                                                        @endif
+            });
 
-                                                        var geocoder = new google.maps.Geocoder;
-                                                        map = new google.maps.Map(document.getElementById('map'), {
-                                                            center: new google.maps.LatLng(myLatlng),
-                                                            zoom: 14,
-                                                            mapTypeId: 'roadmap'
-                                                        });
-                                                        var marker = new google.maps.Marker({
-                                                            position: myLatlng,
-                                                            map: map,
-                                                            draggable: true,
-                                                            title: 'Click to zoom'
-                                                        });
-                                                        google.maps.event.addListener(map, 'click', function(event) {
-                                                            placeMarker(event.latLng);
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('.date_range_picker').daterangepicker();
+            $('.date_time_range_picker').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                format: 'MM/DD/YYYY h:mm A'
+            });
+        });
 
-                                                            document.getElementById("lat").value = event.latLng.lat();
-                                                            document.getElementById("lng").value = event.latLng.lng();
-                                                            geocoder.geocode({
-                                                                'latLng': event.latLng
-                                                            }, function(results, status) {
-                                                                if (status == google.maps.GeocoderStatus.OK) {
+        $(function() {
+            $('.reservation').daterangepicker();
+            $('.reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 30,
+                format: 'MM/DD/YYYY h:mm A'
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $().bootstrapSwitch && $(".make-switch").bootstrapSwitch();
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('.datepicker-popup').pickadate();
+            $('.timepicker-popup').pickatime();
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $('.datepicker').datepicker({
+                autoclose: true
+            });
+            $(".timepicker").timepicker({
+                showInputs: false
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $(".select2").select2();
+        });
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var options = {};
+            $('.js-uploader__box').uploader(options);
+        }());
+    </script>
+    <script type="text/javascript">
+        $('.tree ul').fadeIn();
+        $(document).on('click', '.tree span', function(e) {
+            $(this).next('ul').fadeToggle();
+            e.stopPropagation();
+        });
+        $(document).on('change', '.tree input[type=checkbox]', function(e) {
+            $(this).siblings('ul').find("input[type='checkbox']").prop('checked', this.checked);
+            $(this).parentsUntil('.tree').children("input[type='checkbox']").prop('checked', this.checked);
+            e.stopPropagation();
+        });
+    </script>
+    <script type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alasql/0.3.7/alasql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.9.2/xlsx.core.min.js"></script>
+    <script type="text/javascript">
+        $('.notification').click(function() {
+            var _token = '{{ csrf_token() }}';
+            var notification_id = $(this).parent().attr('data-notification-id');
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('notifications_change') }}' + '/' + notification_id,
+                data: {
+                    _token: _token
+                },
+                success: function(response) {}
+            });
 
-                                                                    if (results[0]) {
-                                                                        document.getElementById("address").value = results[0].formatted_address;
-
-                                                                    }
-                                                                }
-                                                            });
-                                                        });
-
-                                                        function placeMarker(location) {
-                                                            if (marker == undefined) {
-                                                                marker = new google.maps.Marker({
-                                                                    position: location,
-                                                                    map: map,
-                                                                    animation: google.maps.Animation.DROP,
-                                                                });
-                                                            } else {
-                                                                marker.setPosition(location);
-                                                            }
-                                                            map.setCenter(location);
-                                                        }
-                                                    }
-                                                </script>
-
-
-                                                <script>
-                                                    /* script */
-                                                    function initMap() {
-                                                        @if (isset($data->latitude) && isset($data->longitude))
-                                                            var latlng = {
-                                                                lat: {{ $data->latitude }},
-                                                                lng: {{ $data->longitude }}
-                                                            };
-                                                        @else
-                                                            var latlng = {
-                                                                lat: 30.042701,
-                                                                lng: 31.432662
-                                                            };
-                                                        @endif
-
-                                                        // var latlng = new google.maps.LatLng(28.5355161,77.39102649999995);
-                                                        var map = new google.maps.Map(document.getElementById('map'), {
-                                                            center: latlng,
-                                                            zoom: 13
-                                                        });
-                                                        var marker = new google.maps.Marker({
-                                                            map: map,
-                                                            position: latlng,
-                                                            draggable: true,
-                                                            anchorPoint: new google.maps.Point(0, -29)
-                                                        });
-                                                        //  var input = document.getElementById('searchInput');
-                                                        var input = document.getElementById('pac-input');
-                                                        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-                                                        var geocoder = new google.maps.Geocoder();
-                                                        var autocomplete = new google.maps.places.Autocomplete(input);
-                                                        autocomplete.bindTo('bounds', map);
-                                                        var infowindow = new google.maps.InfoWindow();
-                                                        autocomplete.addListener('place_changed', function() {
-                                                            infowindow.close();
-                                                            marker.setVisible(false);
-                                                            var place = autocomplete.getPlace();
-                                                            if (!place.geometry) {
-                                                                window.alert("Autocomplete's returned place contains no geometry");
-                                                                return;
-                                                            }
-                                                            // If the place has a geometry, then present it on a map.
-                                                            if (place.geometry.viewport) {
-                                                                map.fitBounds(place.geometry.viewport);
-                                                            } else {
-                                                                map.setCenter(place.geometry.location);
-                                                                map.setZoom(17);
-                                                            }
-
-                                                            marker.setPosition(place.geometry.location);
-                                                            marker.setVisible(true);
-
-                                                            bindDataToForm(place.formatted_address, place.geometry.location.lat(), place.geometry.location
-                                                                .lng());
-                                                            infowindow.setContent(place.formatted_address);
-                                                            infowindow.open(map, marker);
-
-                                                        });
-                                                        // this function will work on marker move event into map 
-                                                        google.maps.event.addListener(marker, 'dragend', function() {
-                                                            geocoder.geocode({
-                                                                'latLng': marker.getPosition()
-                                                            }, function(results, status) {
-                                                                if (status == google.maps.GeocoderStatus.OK) {
-                                                                    if (results[0]) {
-                                                                        bindDataToForm(results[0].formatted_address, marker.getPosition().lat(), marker
-                                                                            .getPosition().lng());
-                                                                        infowindow.setContent(results[0].formatted_address);
-                                                                        infowindow.open(map, marker);
-                                                                    }
-                                                                }
-                                                            });
-                                                        });
-                                                    }
-
-                                                    function bindDataToForm(address, lat, lng) {
-                                                        //  document.getElementById('searchInput').value = address;
-                                                        document.getElementById('pac-input').value = address;
-                                                        document.getElementById('lat').value = lat;
-                                                        document.getElementById('lng').value = lng;
-                                                    }
-                                                    // google.maps.event.addDomListener(window, 'load', initialize);
-                                                </script>
+        });
+    </script>
 
 
+    {{-- Google maps API key --}}
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCknR0jhKTIB33f2CLFhBzgp0mj2Tn2q5k&libraries=places&callback=initMap&language=ar"
+        type="text/javascript"></script>
+
+    {{-- Map script --}}
+    <script>
+        var map;
+
+        function initMap() {
+            @if (isset($data->latitude) && isset($data->longitude))
+                var myLatlng = {
+                    lat: {{ $data->latitude }},
+                    lng: {{ $data->longitude }}
+                };
+            @else
+                var myLatlng = {
+                    lat: 30.042701,
+                    lng: 31.432662
+                };
+            @endif
+
+            var geocoder = new google.maps.Geocoder;
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: new google.maps.LatLng(myLatlng),
+                zoom: 14,
+                mapTypeId: 'roadmap'
+            });
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                draggable: true,
+                title: 'Click to zoom'
+            });
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+
+                document.getElementById("lat").value = event.latLng.lat();
+                document.getElementById("lng").value = event.latLng.lng();
+                geocoder.geocode({
+                    'latLng': event.latLng
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+
+                        if (results[0]) {
+                            document.getElementById("address").value = results[0].formatted_address;
+
+                        }
+                    }
+                });
+            });
+
+            function placeMarker(location) {
+                if (marker == undefined) {
+                    marker = new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                    });
+                } else {
+                    marker.setPosition(location);
+                }
+                map.setCenter(location);
+            }
+        }
+    </script>
+
+
+    <script>
+        /* script */
+        function initMap() {
+            @if (isset($data->latitude) && isset($data->longitude))
+                var latlng = {
+                    lat: {{ $data->latitude }},
+                    lng: {{ $data->longitude }}
+                };
+            @else
+                var latlng = {
+                    lat: 30.042701,
+                    lng: 31.432662
+                };
+            @endif
+
+            // var latlng = new google.maps.LatLng(28.5355161,77.39102649999995);
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: latlng,
+                zoom: 13
+            });
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng,
+                draggable: true,
+                anchorPoint: new google.maps.Point(0, -29)
+            });
+            //  var input = document.getElementById('searchInput');
+            var input = document.getElementById('pac-input');
+            // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            var geocoder = new google.maps.Geocoder();
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+            var infowindow = new google.maps.InfoWindow();
+            autocomplete.addListener('place_changed', function() {
+                infowindow.close();
+                marker.setVisible(false);
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    window.alert("Autocomplete's returned place contains no geometry");
+                    return;
+                }
+                // If the place has a geometry, then present it on a map.
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+
+                marker.setPosition(place.geometry.location);
+                marker.setVisible(true);
+
+                bindDataToForm(place.formatted_address, place.geometry.location.lat(), place.geometry.location
+                    .lng());
+                infowindow.setContent(place.formatted_address);
+                infowindow.open(map, marker);
+
+            });
+            // this function will work on marker move event into map 
+            google.maps.event.addListener(marker, 'dragend', function() {
+                geocoder.geocode({
+                    'latLng': marker.getPosition()
+                }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            bindDataToForm(results[0].formatted_address, marker.getPosition().lat(), marker
+                                .getPosition().lng());
+                            infowindow.setContent(results[0].formatted_address);
+                            infowindow.open(map, marker);
+                        }
+                    }
+                });
+            });
+        }
+
+        function bindDataToForm(address, lat, lng) {
+            //  document.getElementById('searchInput').value = address;
+            document.getElementById('pac-input').value = address;
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+        }
+        // google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 
 
 
-                                                @yield('js')
+
+
+    @yield('js')
 </body>
 
 </html>
