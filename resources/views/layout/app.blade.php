@@ -235,36 +235,36 @@
                                             </ul>
                                         </li>
 
-                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                        {{--    <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('formulas') }}">العقود و الصيغ</a>
-                                        </li>
+                                        </li> --}}
                                     @endif
 
                                     @if (auth()->user()->getRole() == 1)
-                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                        {{--      <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('users_list') }}">المستخدمين</a>
-                                        </li>
+                                        </li> --}}
                                     @endif
                                     @if (auth()->user()->getRole() ==
                                             1 or
                                             auth()->user()->getRole() ==
                                                 2)
-                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                        {{--           <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('news_list') }}">الاخبار</a>
                                         </li>
                                         <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('real-state-registration-request') }}">طلبات التسجيل
                                                 العقاري
                                             </a>
-                                        </li>
+                                        </li> --}}
                                     @endif
-                                    <li class="side__list"> <a
+                                    {{--                    <li class="side__list"> <a
                                             class="side__item side__item--sub color--gray_d bgcolor--gary_m ">العملاء</a>
                                         <ul class="side__submenu">
                                             @if (auth()->user()->getRole() ==
-                                                    1 or
-                                                    auth()->user()->getRole() ==
-                                                        2)
+        1 or
+    auth()->user()->getRole() ==
+        2)
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('clients') }}">محتوى</a></li>
@@ -274,40 +274,40 @@
                                                         href="{{ route('notifications') }}">التنبيهات</a></li>
                                             @endif
                                             @if (auth()->user()->getRole() ==
-                                                    1 or
-                                                    auth()->user()->getRole() ==
-                                                        2 or
-                                                    auth()->user()->getRole() ==
-                                                        3 or
-                                                    auth()->user()->getRole() ==
-                                                        4)
+        1 or
+    auth()->user()->getRole() ==
+        2 or
+    auth()->user()->getRole() ==
+        3 or
+    auth()->user()->getRole() ==
+        4)
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('complains') }}">الشكاوى و الاستفسارات</a></li>
                                             @endif
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                     @if (auth()->user()->getRole() ==
                                             1 or
                                             auth()->user()->getRole() ==
                                                 2 or
                                             auth()->user()->getRole() ==
                                                 3)
-                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                        {{--    <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('lawyers') }}">السادة المحامين</a>
-                                        </li>
+                                        </li> --}}
                                     @endif
                                     @if (auth()->user()->getRole() ==
                                             1 or
                                             auth()->user()->getRole() ==
                                                 2)
-                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                        {{--        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('offices') }}">مكاتب المحاماة</a>
                                         </li>
 
                                         <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                                 href="{{ route('legal_consultations') }}">الاستشارات القانونية</a>
-                                        </li>
+                                        </li> --}}
                                     @endif
                                     @if (auth()->user()->getRole() ==
                                             1 or
@@ -322,36 +322,36 @@
                                                 <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
                                                         href="{{ route('cases') }}">القضايا</a></li>
-                                                <li class="side__sublist"><a
+                                                {{--   <li class="side__sublist"><a
                                                         class="side__subitem color--gray_d bgcolor--gray_l"
-                                                        href="{{ route('services') }}">الخدمات</a></li>
+                                                        href="{{ route('services') }}">الخدمات</a></li> --}}
                                             </ul>
                                         </li>
                                     @endif
-                                    @if (auth()->user()->getRole() ==
-                                            1 or
-                                            auth()->user()->getRole() ==
-                                                2 or
-                                            auth()->user()->getRole() ==
-                                                4)
+                                    {{--          @if (auth()->user()->getRole() ==
+        1 or
+    auth()->user()->getRole() ==
+        2 or
+    auth()->user()->getRole() ==
+        4)
                                         <li class="side__list"> <a
                                                 class="side__item side__item--sub color--gray_d bgcolor--gary_m ">المهام</a>
                                             <ul class="side__submenu">
                                     @endif
                                     @if (auth()->user()->getRole() ==
-                                            1 or
-                                            auth()->user()->getRole() ==
-                                                2)
+        1 or
+    auth()->user()->getRole() ==
+        2)
                                         <li class="side__sublist"><a
                                                 class="side__subitem color--gray_d bgcolor--gray_l"
                                                 href="{{ route('tasks_normal') }}">المهام العادية</a></li>
                                     @endif
                                     @if (auth()->user()->getRole() ==
-                                            1 or
-                                            auth()->user()->getRole() ==
-                                                2 or
-                                            auth()->user()->getRole() ==
-                                                4)
+        1 or
+    auth()->user()->getRole() ==
+        2 or
+    auth()->user()->getRole() ==
+        4)
                                         <li class="side__sublist"><a
                                                 class="side__subitem color--gray_d bgcolor--gray_l"
                                                 href="{{ route('tasks_emergency') }}">الحالات الطارئة</a></li>
@@ -360,30 +360,30 @@
                                                 href="{{ route('substitutions') }}">طلبات الانابه </a></li>
                                     @endif
                             </ul>
-                            </li>
-                            @if (auth()->user()->getRole() == 1)
-                                <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
-                                        href="{{ route('reports_statistics') }}">تقارير و احصائيات</a>
-                                </li>
-                            @endif
-                            @if (auth()->user()->getRole() == 1)
+                            </li> --}}
+                                    @if (auth()->user()->getRole() == 1)
+                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                                href="{{ route('reports_statistics') }}">تقارير و احصائيات</a>
+                                        </li>
+                                    @endif
+                                    {{--          @if (auth()->user()->getRole() == 1)
                                 <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
                                         href="{{ route('payment_index') }}"> عمليه الدفع</a>
                                 </li>
-                            @endif
-                            @if (auth()->user()->getRole() ==
-                                    1 or
-                                    auth()->user()->getRole() ==
-                                        2 or
-                                    auth()->user()->getRole() ==
-                                        3 or
-                                    auth()->user()->getRole() ==
-                                        4)
-                                <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
-                                        href="{{ route('records') }}">دفتر المحضرين</a>
-                                </li>
-                            @endif
-                            @endif
+                            @endif --}}
+                                    @if (auth()->user()->getRole() ==
+                                            1 or
+                                            auth()->user()->getRole() ==
+                                                2 or
+                                            auth()->user()->getRole() ==
+                                                3 or
+                                            auth()->user()->getRole() ==
+                                                4)
+                                        <li class="side__list"> <a class="side__item color--gray_d bgcolor--gray_m"
+                                                href="{{ route('records') }}">دفتر المحضرين</a>
+                                        </li>
+                                    @endif
+                                @endif
                             </ul>
                         </div>
                     </nav>
